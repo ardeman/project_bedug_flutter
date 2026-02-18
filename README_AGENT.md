@@ -30,6 +30,18 @@ import 'dart:io';
 import 'package:flutter/foundation.dart'; // kIsWeb lives here
 ```
 
+### Theme Brightness Rule — Use App Theme
+
+When user can switch theme mode inside the app, always derive brightness from `Theme.of(context)`, not platform brightness.
+
+```dart
+// ✅ Correct (respects app theme mode: system/light/dark)
+final isDark = Theme.of(ctx).brightness == Brightness.dark;
+
+// ❌ Wrong (can lag / mismatch when app theme is overridden)
+final isDark = MediaQuery.of(ctx).platformBrightness == Brightness.dark;
+```
+
 ---
 
 ## ❌ Hard Rules — Never Break These
@@ -228,6 +240,7 @@ Never hardcode hex colors directly.
 | Icon shows as `?` | `CupertinoIcons` on macOS | Use `Icons.*` |
 | `No Material widget found` | `ListTile` in Sliver without ancestor | Wrap with `Material(color: Colors.transparent)` |
 | `BackdropFilter` has no blur effect | Inside opaque modal | Use `PageRouteBuilder(opaque: false)` |
+| Light colors remain after switching to dark mode | Using `platformBrightness` for app-controlled theme | Use `Theme.of(ctx).brightness` and ensure delegates rebuild when brightness changes |
 | Bottom nav label clipped | Height too small | Add `MediaQuery.of(ctx).padding.bottom` |
 | iOS build fails for `home_widget` | Deployment target too low | Set iOS deployment target to `14.0` in `ios/Podfile` and Xcode build settings |
 | `Can't find ')' to match '('` | Mismatched brackets from patching | Rewrite the full class cleanly |
@@ -239,6 +252,7 @@ Never hardcode hex colors directly.
 Before writing or editing any code, confirm:
 
 - [ ] Platform check uses `_isApple` getter (not hardcoded)
+- [ ] Theme-aware UI uses `Theme.of(context).brightness` for app-controlled theme modes
 - [ ] No `CupertinoIcons` used
 - [ ] No `CupertinoListTile` used
 - [ ] `ListTile` inside `SliverList`/`CustomScrollView` is wrapped with `Material`
@@ -248,3 +262,29 @@ Before writing or editing any code, confirm:
 - [ ] `Scaffold` has `extendBody: true` when using liquid glass nav bar
 - [ ] Nav bar height includes `MediaQuery.of(ctx).padding.bottom`
 - [ ] Tested mentally on macOS/iOS path AND Android path
+
+---
+
+## 🧾 Commit Messages (Conventional Commits)
+
+Format:
+
+```text
+<type>(<scope>): <description>
+```
+
+Examples:
+- `fix(theme): apply app-theme brightness immediately`
+- `docs(readme): add commit message validation commands`
+
+Validate latest commit subject:
+
+```bash
+git log -1 --pretty=%s | grep -E '^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([a-z0-9._/-]+\))?!?: .+'
+```
+
+Install repo-managed hooks (Husky-like):
+
+```bash
+./scripts/install_git_hooks.sh
+```

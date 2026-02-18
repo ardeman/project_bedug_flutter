@@ -17,6 +17,35 @@ Cross-platform Muslim prayer time app with Hijri calendar, localized UI, and ada
 - In-app theme switching (System/Light/Dark) updates immediately across prayer cards, app bars, nav bars, and glass overlays.
 - UI brightness is derived from the active app theme (`Theme.of(context).brightness`) instead of system platform brightness, to avoid delayed or partial color updates when user theme mode is changed inside the app.
 
+## Commit Message Convention
+
+Use Conventional Commits:
+
+```text
+<type>(<scope>): <description>
+```
+
+Examples:
+- `fix(theme): apply app-theme brightness immediately`
+- `docs(readme): add commit message validation guide`
+
+Common types:
+- `feat`, `fix`, `docs`, `refactor`, `test`, `chore`, `build`, `ci`, `perf`, `style`, `revert`
+
+Validate the latest commit subject locally:
+
+```bash
+git log -1 --pretty=%s | grep -E '^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([a-z0-9._/-]+\))?!?: .+'
+```
+
+Husky-like hook setup (repo-managed git hooks):
+
+```bash
+./scripts/install_git_hooks.sh
+```
+
+This installs `core.hooksPath=.githooks` and validates commit messages automatically on every `git commit`.
+
 ## Supported Platforms
 
 | Platform | Design System | Status |

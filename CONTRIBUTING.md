@@ -26,6 +26,41 @@ docs/what-changed             # documentation only
 
 ---
 
+## 🧾 Commit Messages (Conventional Commits)
+
+Use this format:
+
+```text
+<type>(<scope>): <description>
+```
+
+Examples:
+- `fix(theme): apply app-theme brightness immediately`
+- `docs(contributing): add commit validation commands`
+
+Recommended types:
+- `feat`, `fix`, `docs`, `refactor`, `test`, `chore`, `build`, `ci`, `perf`, `style`, `revert`
+
+Validate your latest commit subject:
+
+```bash
+git log -1 --pretty=%s | grep -E '^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([a-z0-9._/-]+\))?!?: .+'
+```
+
+Install repo-managed hooks (Husky-like):
+
+```bash
+./scripts/install_git_hooks.sh
+```
+
+Quick test (should fail):
+
+```bash
+git commit --allow-empty -m "bad message"
+```
+
+---
+
 ## 💻 Development Setup
 
 ```bash
@@ -51,6 +86,7 @@ Before opening a pull request, make sure:
 ### Platform Adaptive UI
 - [ ] UI changes tested on **both** Apple (macOS/iOS) and Material (Android) paths
 - [ ] Platform check uses `_isApple` getter — never hardcoded `Platform.isIOS` alone
+- [ ] Theme-aware colors use `Theme.of(context).brightness` when app theme mode is user-controlled
 - [ ] No `CupertinoIcons` — use `Icons.*` instead
 - [ ] No `CupertinoListTile` — use `ListTile` with `Material` ancestor
 - [ ] Blur overlays use `PageRouteBuilder(opaque: false)` — not `showModalBottomSheet`
@@ -110,8 +146,8 @@ Open a GitHub issue with:
 Follow standard Dart/Flutter conventions:
 
 ```dart
-// ✅ Good — descriptive, follows Dart style
-final isDark = MediaQuery.of(ctx).platformBrightness == Brightness.dark;
+// ✅ Good — follows in-app theme mode
+final isDark = Theme.of(ctx).brightness == Brightness.dark;
 
 // ✅ Good — private classes prefixed with _
 class _LiquidGlassCard extends StatelessWidget { ... }
