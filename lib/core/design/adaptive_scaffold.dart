@@ -1,47 +1,46 @@
 import 'package:flutter/material.dart';
-import 'platform_design.dart';
-import 'liquid_glass.dart';
+import 'package:cupertino_native/cupertino_native.dart';
 
-/// Scaffold utama yang adaptive per platform
+import 'liquid_glass.dart';
+import 'platform_capabilities.dart';
+import 'platform_design.dart';
+import 'sf_symbols.dart';
+
+class AdaptiveNavigationDestination {
+  final Object icon;
+  final Object? selectedIcon;
+  final String label;
+  final bool isSearch;
+
+  const AdaptiveNavigationDestination({
+    required this.icon,
+    this.selectedIcon,
+    required this.label,
+    this.isSearch = false,
+  });
+}
+
+/// Scaffold adaptive dengan API destination-driven seperti contoh iOS26 scaffold.
 class AdaptiveScaffold extends StatelessWidget {
   final String title;
-  final Widget body;
-  final int currentIndex;
-  final ValueChanged<int> onNavTap;
+  final int selectedIndex;
+  final ValueChanged<int> onDestinationSelected;
+  final List<AdaptiveNavigationDestination> destinations;
+  final Widget child;
   final List<Widget>? appBarActions;
   final Widget? leading;
-
-  static const _navItems = [
-    LiquidGlassNavItem(
-      icon: Icons.access_time_outlined,
-      activeIcon: Icons.access_time_filled,
-      label: 'Sholat',
-    ),
-    LiquidGlassNavItem(
-      icon: Icons.calendar_today_outlined,
-      activeIcon: Icons.calendar_today,
-      label: 'Kalender',
-    ),
-    LiquidGlassNavItem(
-      icon: Icons.explore_outlined,
-      activeIcon: Icons.explore,
-      label: 'Kiblat',
-    ),
-    LiquidGlassNavItem(
-      icon: Icons.settings_outlined,
-      activeIcon: Icons.settings,
-      label: 'Setelan',
-    ),
-  ];
+  final bool showAppBar;
 
   const AdaptiveScaffold({
     super.key,
     required this.title,
-    required this.body,
-    required this.currentIndex,
-    required this.onNavTap,
+    required this.selectedIndex,
+    required this.onDestinationSelected,
+    required this.destinations,
+    required this.child,
     this.appBarActions,
     this.leading,
+    this.showAppBar = true,
   });
 
   @override
@@ -53,116 +52,144 @@ class AdaptiveScaffold extends StatelessWidget {
     };
   }
 
-  // ── Apple ────────────────────────────────────────────────────────────────
   Widget _buildApple(BuildContext ctx) {
     final isDark = Theme.of(ctx).brightness == Brightness.dark;
+    final nativeItems = destinations
+        .map(
+          (d) => CNTabBarItem(
+            label: d.label,
+            icon: CNSymbol(_symbolNameFor(d.selectedIcon ?? d.icon)),
+          ),
+        )
+        .toList(growable: false);
+    final navItems = destinations
+        .map(
+          (d) => LiquidGlassNavItem(
+            icon: _materialIconFor(d.icon),
+            activeIcon: _materialIconFor(d.selectedIcon ?? d.icon),
+            label: d.label,
+          ),
+        )
+        .toList(growable: false);
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       extendBody: true,
       backgroundColor:
           isDark ? const Color(0xFF000000) : const Color(0xFFF2F2F7),
-      appBar: LiquidGlassAppBar(
-        title: title,
-        actions: appBarActions,
-        leading: leading,
-      ),
-      body: body,
-      bottomNavigationBar: LiquidGlassNavBar(
-        currentIndex: currentIndex,
-        onTap: onNavTap,
-        items: _navItems,
-      ),
+      appBar: showAppBar
+          ? LiquidGlassAppBar(
+              title: title,
+              actions: appBarActions,
+              leading: leading,
+            )
+          : null,
+      body: child,
+      bottomNavigationBar: PlatformCapabilities.isIOS
+          ? CNTabBar(
+              currentIndex: selectedIndex,
+              onTap: onDestinationSelected,
+              items: nativeItems,
+            )
+          : LiquidGlassNavBar(
+              currentIndex: selectedIndex,
+              onTap: onDestinationSelected,
+              items: navItems,
+            ),
     );
   }
 
-  // ── Material / Android ───────────────────────────────────────────────────
   Widget _buildMaterial(BuildContext ctx) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-        actions: appBarActions,
-        leading: leading,
-      ),
-      body: body,
+      appBar: showAppBar
+          ? AppBar(
+              title: Text(title),
+              actions: appBarActions,
+              leading: leading,
+            )
+          : null,
+      body: child,
       bottomNavigationBar: NavigationBar(
-        selectedIndex: currentIndex,
-        onDestinationSelected: onNavTap,
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.access_time_outlined),
-            selectedIcon: Icon(Icons.access_time_filled),
-            label: 'Sholat',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.calendar_today_outlined),
-            selectedIcon: Icon(Icons.calendar_today),
-            label: 'Kalender',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.explore_outlined),
-            selectedIcon: Icon(Icons.explore),
-            label: 'Kiblat',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.settings_outlined),
-            selectedIcon: Icon(Icons.settings),
-            label: 'Setelan',
-          ),
-        ],
+        selectedIndex: selectedIndex,
+        onDestinationSelected: onDestinationSelected,
+        destinations: destinations
+            .map(
+              (d) => NavigationDestination(
+                icon: Icon(_materialIconFor(d.icon)),
+                selectedIcon: Icon(_materialIconFor(d.selectedIcon ?? d.icon)),
+                label: d.label,
+              ),
+            )
+            .toList(growable: false),
       ),
     );
   }
 
-  // ── Fluent / Windows ─────────────────────────────────────────────────────
   Widget _buildFluent(BuildContext ctx) {
     final isDark = Theme.of(ctx).brightness == Brightness.dark;
     return Scaffold(
       backgroundColor:
           isDark ? const Color(0xFF202020) : const Color(0xFFF3F3F3),
-      appBar: AppBar(
-        title: Text(title,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
-        elevation: 0,
-        backgroundColor:
-            isDark ? const Color(0xFF2C2C2C) : const Color(0xFFFFFFFF),
-        actions: appBarActions,
-        leading: leading,
-      ),
+      appBar: showAppBar
+          ? AppBar(
+              title: Text(
+                title,
+                style:
+                    const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+              ),
+              elevation: 0,
+              backgroundColor: isDark ? const Color(0xFF2C2C2C) : Colors.white,
+              actions: appBarActions,
+              leading: leading,
+            )
+          : null,
       body: Row(
         children: [
-          // Fluent left navigation rail
           NavigationRail(
-            selectedIndex: currentIndex,
-            onDestinationSelected: onNavTap,
+            selectedIndex: selectedIndex,
+            onDestinationSelected: onDestinationSelected,
             backgroundColor: isDark ? const Color(0xFF2C2C2C) : Colors.white,
             labelType: NavigationRailLabelType.all,
-            destinations: const [
-              NavigationRailDestination(
-                icon: Icon(Icons.access_time_outlined),
-                selectedIcon: Icon(Icons.access_time_filled),
-                label: Text('Sholat'),
-              ),
-              NavigationRailDestination(
-                icon: Icon(Icons.calendar_today_outlined),
-                selectedIcon: Icon(Icons.calendar_today),
-                label: Text('Kalender'),
-              ),
-              NavigationRailDestination(
-                icon: Icon(Icons.explore_outlined),
-                selectedIcon: Icon(Icons.explore),
-                label: Text('Kiblat'),
-              ),
-              NavigationRailDestination(
-                icon: Icon(Icons.settings_outlined),
-                selectedIcon: Icon(Icons.settings),
-                label: Text('Setelan'),
-              ),
-            ],
+            destinations: destinations
+                .map(
+                  (d) => NavigationRailDestination(
+                    icon: Icon(_materialIconFor(d.icon)),
+                    selectedIcon:
+                        Icon(_materialIconFor(d.selectedIcon ?? d.icon)),
+                    label: Text(d.label),
+                  ),
+                )
+                .toList(growable: false),
           ),
           const VerticalDivider(thickness: 1, width: 1),
-          Expanded(child: body),
+          Expanded(child: child),
         ],
       ),
     );
+  }
+
+  String _symbolNameFor(Object icon) {
+    if (icon is String) return icon;
+    if (icon is IconData) {
+      if (icon == Icons.access_time_outlined || icon == Icons.access_time_filled) {
+        return 'clock.fill';
+      }
+      if (icon == Icons.calendar_month_outlined || icon == Icons.calendar_month) {
+        return 'calendar.circle.fill';
+      }
+      if (icon == Icons.settings_outlined || icon == Icons.settings) {
+        return 'gearshape.fill';
+      }
+      if (icon == Icons.search) return 'magnifyingglass';
+    }
+    return 'circle.fill';
+  }
+
+  IconData _materialIconFor(Object icon) {
+    if (icon is IconData) return icon;
+    if (icon is String) {
+      return SFSymbols.resolve(icon) ?? Icons.circle;
+    }
+    return Icons.circle;
   }
 }

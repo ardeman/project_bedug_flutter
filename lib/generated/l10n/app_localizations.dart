@@ -354,6 +354,84 @@ abstract class AppLocalizations {
   /// **'System Settings → Privacy & Security → Location Services → bedug → Allow'**
   String get locationGuide;
 
+  /// No description provided for @locationModeAuto.
+  ///
+  /// In id, this message translates to:
+  /// **'Deteksi lokasi otomatis'**
+  String get locationModeAuto;
+
+  /// No description provided for @locationModeAutoDescOn.
+  ///
+  /// In id, this message translates to:
+  /// **'Menggunakan GPS perangkat'**
+  String get locationModeAutoDescOn;
+
+  /// No description provided for @locationModeAutoDescOff.
+  ///
+  /// In id, this message translates to:
+  /// **'Gunakan kota manual'**
+  String get locationModeAutoDescOff;
+
+  /// No description provided for @city.
+  ///
+  /// In id, this message translates to:
+  /// **'Kota'**
+  String get city;
+
+  /// No description provided for @cityRequiredHint.
+  ///
+  /// In id, this message translates to:
+  /// **'Wajib dipilih jika deteksi otomatis dimatikan'**
+  String get cityRequiredHint;
+
+  /// No description provided for @selectCity.
+  ///
+  /// In id, this message translates to:
+  /// **'Pilih kota'**
+  String get selectCity;
+
+  /// No description provided for @cityRequiredError.
+  ///
+  /// In id, this message translates to:
+  /// **'Pilih kota terlebih dahulu di Pengaturan.'**
+  String get cityRequiredError;
+
+  /// No description provided for @locationServiceDisabled.
+  ///
+  /// In id, this message translates to:
+  /// **'Layanan lokasi tidak aktif. Aktifkan di System Settings.'**
+  String get locationServiceDisabled;
+
+  /// No description provided for @locationPermissionDenied.
+  ///
+  /// In id, this message translates to:
+  /// **'Izin lokasi ditolak.'**
+  String get locationPermissionDenied;
+
+  /// No description provided for @locationPermissionDeniedForever.
+  ///
+  /// In id, this message translates to:
+  /// **'Izin lokasi ditolak permanen.\nBuka System Settings → Privacy & Security → Location Services → bedug → Allow, lalu coba lagi.'**
+  String get locationPermissionDeniedForever;
+
+  /// No description provided for @notificationChannelName.
+  ///
+  /// In id, this message translates to:
+  /// **'Waktu Sholat'**
+  String get notificationChannelName;
+
+  /// No description provided for @notificationChannelDescription.
+  ///
+  /// In id, this message translates to:
+  /// **'Pengingat azan untuk sholat harian'**
+  String get notificationChannelDescription;
+
+  /// No description provided for @openAction.
+  ///
+  /// In id, this message translates to:
+  /// **'Buka'**
+  String get openAction;
+
   /// No description provided for @retry.
   ///
   /// In id, this message translates to:

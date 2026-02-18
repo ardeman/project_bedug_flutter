@@ -1,25 +1,30 @@
+import 'dart:ui';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:adhan/adhan.dart';
+import '../../generated/l10n/app_localizations.dart';
 
 class NotificationService {
   static final _plugin = FlutterLocalNotificationsPlugin();
 
   static Future<void> init() async {
+    final l10n = _resolveL10n();
     const android = AndroidInitializationSettings('@mipmap/ic_launcher');
-    const darwin  = DarwinInitializationSettings(
+    const darwin = DarwinInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
       requestSoundPermission: true,
     );
-    const linux = LinuxInitializationSettings(defaultActionName: 'Buka');
+    final linux =
+        LinuxInitializationSettings(defaultActionName: l10n.openAction);
 
     await _plugin.initialize(
-      settings: const InitializationSettings(
+      settings: InitializationSettings(
         android: android,
-        iOS:     darwin,
-        macOS:   darwin,
-        linux:   linux,
+        iOS: darwin,
+        macOS: darwin,
+        linux: linux,
       ),
     );
 
@@ -30,14 +35,15 @@ class NotificationService {
   }
 
   static Future<void> schedulePrayerNotifications(PrayerTimes times) async {
+    final l10n = _resolveL10n();
     await _plugin.cancelAll();
 
     final prayers = <int, (String, String, DateTime?)>{
-      0: ('🌙 Subuh',   'Waktu Subuh telah tiba',   times.fajr),
-      1: ('☀️ Dzuhur',  'Waktu Dzuhur telah tiba',  times.dhuhr),
-      2: ('🌤 Ashar',   'Waktu Ashar telah tiba',   times.asr),
-      3: ('🌅 Maghrib', 'Waktu Maghrib telah tiba', times.maghrib),
-      4: ('🌙 Isya',    'Waktu Isya telah tiba',    times.isha),
+      0: ('🌙 ${l10n.fajr}', l10n.notifSubuh, times.fajr),
+      1: ('☀️ ${l10n.dhuhr}', l10n.notifDzuhur, times.dhuhr),
+      2: ('🌤 ${l10n.asr}', l10n.notifAshar, times.asr),
+      3: ('🌅 ${l10n.maghrib}', l10n.notifMaghrib, times.maghrib),
+      4: ('🌙 ${l10n.isha}', l10n.notifIsya, times.isha),
     };
 
     for (final e in prayers.entries) {
@@ -46,24 +52,33 @@ class NotificationService {
 
       // v20: zonedSchedule pakai named params, title & body opsional
       await _plugin.zonedSchedule(
-        id:                  e.key,
-        scheduledDate:       tz.TZDateTime.from(dt, tz.local),
+        id: e.key,
+        scheduledDate: tz.TZDateTime.from(dt, tz.local),
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-        title:               title,
-        body:                body,
-        notificationDetails: const NotificationDetails(
+        title: title,
+        body: body,
+        notificationDetails: NotificationDetails(
           android: AndroidNotificationDetails(
             'bedug_channel',
-            'Waktu Sholat',
-            channelDescription: 'Pengingat azan untuk sholat harian',
+            l10n.notificationChannelName,
+            channelDescription: l10n.notificationChannelDescription,
             importance: Importance.high,
-            priority:   Priority.high,
+            priority: Priority.high,
           ),
-          iOS:   DarwinNotificationDetails(),
+          iOS: DarwinNotificationDetails(),
           macOS: DarwinNotificationDetails(),
           linux: LinuxNotificationDetails(),
         ),
       );
+    }
+  }
+
+  static AppLocalizations _resolveL10n() {
+    final locale = PlatformDispatcher.instance.locale;
+    try {
+      return lookupAppLocalizations(locale);
+    } catch (_) {
+      return lookupAppLocalizations(const Locale('id'));
     }
   }
 }

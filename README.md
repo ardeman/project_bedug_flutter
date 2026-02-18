@@ -8,6 +8,11 @@ Cross-platform Muslim prayer time app with Hijri calendar, localized UI, and ada
 - Live next-prayer countdown
 - Hijri calendar view
 - Adhan notification integration
+- Flexible location source:
+  - Auto detect from device GPS, or
+  - Manual city selection from Settings
+- City is required when auto location is disabled
+- Location header shows nearest city fallback (not raw coordinates) when reverse geocoding is unavailable
 - Multi-language UI: Indonesian, English, Arabic, Malay
 - Adaptive UI by platform: Liquid Glass (iOS/macOS), Material 3 (Android/Linux), Fluent-like layout (Windows)
 - Shared, reusable "Calculation Method" picker with animated slide + drag-to-dismiss
@@ -16,6 +21,7 @@ Cross-platform Muslim prayer time app with Hijri calendar, localized UI, and ada
 
 - In-app theme switching (System/Light/Dark) updates immediately across prayer cards, app bars, nav bars, and glass overlays.
 - UI brightness is derived from the active app theme (`Theme.of(context).brightness`) instead of system platform brightness, to avoid delayed or partial color updates when user theme mode is changed inside the app.
+- Apple liquid-glass navigation targets iOS 26+ and macOS 26+ as the project baseline.
 
 ## Commit Message Convention
 
@@ -62,8 +68,9 @@ This installs `core.hooksPath=.githooks` and validates commit messages automatic
 
 - Flutter SDK 3.31+ recommended
 - Dart SDK 3.x
-- Xcode 14+ (for iOS/macOS)
-- iOS deployment target 14.0+ (required by `home_widget`)
+- Xcode 26+ (for iOS/macOS)
+- iOS deployment target 26.0+
+- macOS deployment target 26.0+
 - Android Studio (for Android)
 
 ### Installation
@@ -116,6 +123,7 @@ The app supports 4 languages. To add a new language:
 Notes:
 - Do not hardcode user-facing strings in widgets.
 - Use `AppLocalizations.of(context)` for all labels and messages.
+- Do not hardcode thrown error messages either; localize them through app localization.
 
 ## Calculation Methods
 

@@ -139,6 +139,49 @@ class AppLocalizationsId extends AppLocalizations {
       'System Settings → Privacy & Security → Location Services → bedug → Allow';
 
   @override
+  String get locationModeAuto => 'Deteksi lokasi otomatis';
+
+  @override
+  String get locationModeAutoDescOn => 'Menggunakan GPS perangkat';
+
+  @override
+  String get locationModeAutoDescOff => 'Gunakan kota manual';
+
+  @override
+  String get city => 'Kota';
+
+  @override
+  String get cityRequiredHint =>
+      'Wajib dipilih jika deteksi otomatis dimatikan';
+
+  @override
+  String get selectCity => 'Pilih kota';
+
+  @override
+  String get cityRequiredError => 'Pilih kota terlebih dahulu di Pengaturan.';
+
+  @override
+  String get locationServiceDisabled =>
+      'Layanan lokasi tidak aktif. Aktifkan di System Settings.';
+
+  @override
+  String get locationPermissionDenied => 'Izin lokasi ditolak.';
+
+  @override
+  String get locationPermissionDeniedForever =>
+      'Izin lokasi ditolak permanen.\nBuka System Settings → Privacy & Security → Location Services → bedug → Allow, lalu coba lagi.';
+
+  @override
+  String get notificationChannelName => 'Waktu Sholat';
+
+  @override
+  String get notificationChannelDescription =>
+      'Pengingat azan untuk sholat harian';
+
+  @override
+  String get openAction => 'Buka';
+
+  @override
   String get retry => 'Coba Lagi';
 
   @override

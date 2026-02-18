@@ -42,6 +42,18 @@ final isDark = Theme.of(ctx).brightness == Brightness.dark;
 final isDark = MediaQuery.of(ctx).platformBrightness == Brightness.dark;
 ```
 
+### Liquid Glass Capability Gate
+
+Project baseline is iOS 26+ and macOS 26+, so liquid-glass navigation is the default on Apple platforms.
+
+### Location Behavior (CRITICAL)
+
+- Prayer time source location supports:
+  - Auto detect GPS
+  - Manual city selection from settings
+- If auto detect is disabled, city selection is required.
+- If reverse geocoding cannot resolve an address, show nearest supported city name (not raw coordinates).
+
 ---
 
 ## ❌ Hard Rules — Never Break These
@@ -214,6 +226,8 @@ ref.read(prayerProvider.notifier).load()           // trigger reload
 ref.watch(nextPrayerProvider)                      // NextPrayer { key, time }
 ref.watch(settingsProvider)                        // AppSettings { method, themeMode, ... }
 ref.read(settingsProvider.notifier).setMethod(m)   // update calculation method
+ref.read(settingsProvider.notifier).setUseAutoLocation(v)
+ref.read(settingsProvider.notifier).setSelectedCityId(id)
 ref.watch(localeProvider)                          // Locale
 ```
 
@@ -242,7 +256,8 @@ Never hardcode hex colors directly.
 | `BackdropFilter` has no blur effect | Inside opaque modal | Use `PageRouteBuilder(opaque: false)` |
 | Light colors remain after switching to dark mode | Using `platformBrightness` for app-controlled theme | Use `Theme.of(ctx).brightness` and ensure delegates rebuild when brightness changes |
 | Bottom nav label clipped | Height too small | Add `MediaQuery.of(ctx).padding.bottom` |
-| iOS build fails for `home_widget` | Deployment target too low | Set iOS deployment target to `14.0` in `ios/Podfile` and Xcode build settings |
+| iOS/macOS build fails due deployment target | Deployment target too low | Set iOS and macOS deployment target to `26.0` in Podfiles and Xcode build settings |
+| iOS/macOS build fails due toolchain mismatch | Xcode too old for iOS 26/macOS 26 targets | Use Xcode `26+` |
 | `Can't find ')' to match '('` | Mismatched brackets from patching | Rewrite the full class cleanly |
 
 ---
@@ -259,6 +274,7 @@ Before writing or editing any code, confirm:
 - [ ] Blur overlays use `PageRouteBuilder(opaque: false)`, not `showModalBottomSheet`
 - [ ] Colors use `AppColors.*`
 - [ ] All visible user strings use `AppLocalizations` (no hardcoded text)
+- [ ] Error/exception messages shown to users are localized (no hardcoded throws)
 - [ ] `Scaffold` has `extendBody: true` when using liquid glass nav bar
 - [ ] Nav bar height includes `MediaQuery.of(ctx).padding.bottom`
 - [ ] Tested mentally on macOS/iOS path AND Android path

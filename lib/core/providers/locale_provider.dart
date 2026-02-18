@@ -49,28 +49,41 @@ const localeDisplayNames = {
 
 const _kMethod = 'calc_method';
 const _kMadhab = 'madhab';
-const _kTheme  = 'theme_mode';
+const _kTheme = 'theme_mode';
+const _kUseAutoLocation = 'use_auto_location';
+const _kSelectedCityId = 'selected_city_id';
 
 class AppSettings {
   final AppCalculationMethod method;
   final bool isHanafi;
   final int themeMode;
+  final bool useAutoLocation;
+  final String? selectedCityId;
 
   const AppSettings({
-    this.method    = AppCalculationMethod.kemenag,
-    this.isHanafi  = false,
+    this.method = AppCalculationMethod.kemenag,
+    this.isHanafi = false,
     this.themeMode = 0,
+    this.useAutoLocation = true,
+    this.selectedCityId,
   });
 
   AppSettings copyWith({
     AppCalculationMethod? method,
     bool? isHanafi,
     int? themeMode,
-  }) => AppSettings(
-    method:    method    ?? this.method,
-    isHanafi:  isHanafi  ?? this.isHanafi,
-    themeMode: themeMode ?? this.themeMode,
-  );
+    bool? useAutoLocation,
+    String? selectedCityId,
+    bool clearSelectedCity = false,
+  }) =>
+      AppSettings(
+        method: method ?? this.method,
+        isHanafi: isHanafi ?? this.isHanafi,
+        themeMode: themeMode ?? this.themeMode,
+        useAutoLocation: useAutoLocation ?? this.useAutoLocation,
+        selectedCityId:
+            clearSelectedCity ? null : (selectedCityId ?? this.selectedCityId),
+      );
 }
 
 class SettingsNotifier extends Notifier<AppSettings> {
@@ -83,9 +96,11 @@ class SettingsNotifier extends Notifier<AppSettings> {
   Future<void> _load() async {
     final p = await SharedPreferences.getInstance();
     state = AppSettings(
-      method:    AppCalculationMethod.values[p.getInt(_kMethod) ?? 0],
-      isHanafi:  p.getBool(_kMadhab) ?? false,
-      themeMode: p.getInt(_kTheme)   ?? 0,
+      method: AppCalculationMethod.values[p.getInt(_kMethod) ?? 0],
+      isHanafi: p.getBool(_kMadhab) ?? false,
+      themeMode: p.getInt(_kTheme) ?? 0,
+      useAutoLocation: p.getBool(_kUseAutoLocation) ?? true,
+      selectedCityId: p.getString(_kSelectedCityId),
     );
   }
 
@@ -105,6 +120,22 @@ class SettingsNotifier extends Notifier<AppSettings> {
     state = state.copyWith(themeMode: mode);
     final p = await SharedPreferences.getInstance();
     await p.setInt(_kTheme, mode);
+  }
+
+  Future<void> setUseAutoLocation(bool enabled) async {
+    state = state.copyWith(useAutoLocation: enabled);
+    final p = await SharedPreferences.getInstance();
+    await p.setBool(_kUseAutoLocation, enabled);
+  }
+
+  Future<void> setSelectedCityId(String? cityId) async {
+    state = state.copyWith(selectedCityId: cityId);
+    final p = await SharedPreferences.getInstance();
+    if (cityId == null || cityId.isEmpty) {
+      await p.remove(_kSelectedCityId);
+      return;
+    }
+    await p.setString(_kSelectedCityId, cityId);
   }
 }
 

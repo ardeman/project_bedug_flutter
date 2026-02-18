@@ -18,29 +18,56 @@ class _HijriCalendarScreenState extends State<HijriCalendarScreen> {
   @override
   void initState() {
     super.initState();
-    _today     = HijriCalendar.now();
-    _viewYear  = _today.hYear;
+    _today = HijriCalendar.now();
+    _viewYear = _today.hYear;
     _viewMonth = _today.hMonth;
   }
 
   void _prev() => setState(() {
-    _viewMonth--;
-    if (_viewMonth < 1) { _viewMonth = 12; _viewYear--; }
-  });
+        _viewMonth--;
+        if (_viewMonth < 1) {
+          _viewMonth = 12;
+          _viewYear--;
+        }
+      });
 
   void _next() => setState(() {
-    _viewMonth++;
-    if (_viewMonth > 12) { _viewMonth = 1; _viewYear++; }
-  });
+        _viewMonth++;
+        if (_viewMonth > 12) {
+          _viewMonth = 1;
+          _viewYear++;
+        }
+      });
 
   DateTime _toGreg(int hY, int hM, int hD) =>
       HijriCalendar().hijriToGregorian(hY, hM, hD);
 
+  String _monthName(AppLocalizations l10n, int month) {
+    return switch (month) {
+      1 => l10n.muharram,
+      2 => l10n.safar,
+      3 => l10n.rabiAlAwwal,
+      4 => l10n.rabiAlThani,
+      5 => l10n.jumadaAlUla,
+      6 => l10n.jumadaAlAkhirah,
+      7 => l10n.rajab,
+      8 => l10n.shaban,
+      9 => l10n.ramadan,
+      10 => l10n.shawwal,
+      11 => l10n.dhuAlQidah,
+      12 => l10n.dhuAlHijjah,
+      _ => '',
+    };
+  }
+
+  String _fullHijriDate(AppLocalizations l10n, HijriCalendar h) =>
+      '${h.hDay} ${_monthName(l10n, h.hMonth)} ${h.hYear} H';
+
   @override
   Widget build(BuildContext ctx) {
     final l10n = AppLocalizations.of(ctx);
-    final days         = buildHijriMonth(_viewYear, _viewMonth);
-    final firstGreg    = _toGreg(_viewYear, _viewMonth, 1);
+    final days = buildHijriMonth(_viewYear, _viewMonth);
+    final firstGreg = _toGreg(_viewYear, _viewMonth, 1);
     final startWeekday = firstGreg.weekday % 7;
 
     return Scaffold(
@@ -56,7 +83,7 @@ class _HijriCalendarScreenState extends State<HijriCalendarScreen> {
           color: AppColors.emerald.withOpacity(.12),
           padding: const EdgeInsets.symmetric(vertical: 12),
           child: Text(
-            '${l10n.today}: ${hijriFullDate(_today)}',
+            '${l10n.today}: ${_fullHijriDate(l10n, _today)}',
             textAlign: TextAlign.center,
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
           ),
@@ -64,7 +91,7 @@ class _HijriCalendarScreenState extends State<HijriCalendarScreen> {
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           IconButton(icon: const Icon(Icons.chevron_left), onPressed: _prev),
           Text(
-            '${hijriMonthName(_viewMonth)} $_viewYear H',
+            '${_monthName(l10n, _viewMonth)} $_viewYear H',
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           IconButton(icon: const Icon(Icons.chevron_right), onPressed: _next),
@@ -72,14 +99,23 @@ class _HijriCalendarScreenState extends State<HijriCalendarScreen> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Row(
-            children: [l10n.sun, l10n.mon, l10n.tue, l10n.wed, l10n.thu, l10n.fri, l10n.sat]
+            children: [
+              l10n.sun,
+              l10n.mon,
+              l10n.tue,
+              l10n.wed,
+              l10n.thu,
+              l10n.fri,
+              l10n.sat
+            ]
                 .map((d) => Expanded(
                       child: Center(
-                        child: Text(d, style: TextStyle(
-                          color: d == l10n.fri ? AppColors.emerald : null,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 12,
-                        )),
+                        child: Text(d,
+                            style: TextStyle(
+                              color: d == l10n.fri ? AppColors.emerald : null,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 12,
+                            )),
                       ),
                     ))
                 .toList(),
@@ -96,11 +132,11 @@ class _HijriCalendarScreenState extends State<HijriCalendarScreen> {
             itemCount: startWeekday + days.length,
             itemBuilder: (ctx, i) {
               if (i < startWeekday) return const SizedBox();
-              final day  = days[i - startWeekday];
+              final day = days[i - startWeekday];
               final greg = _toGreg(day.hYear, day.hMonth, day.hDay);
-              final isToday = day.hDay   == _today.hDay &&
-                              day.hMonth == _today.hMonth &&
-                              day.hYear  == _today.hYear;
+              final isToday = day.hDay == _today.hDay &&
+                  day.hMonth == _today.hMonth &&
+                  day.hYear == _today.hYear;
 
               return Container(
                 margin: const EdgeInsets.all(2),
@@ -111,15 +147,17 @@ class _HijriCalendarScreenState extends State<HijriCalendarScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('${day.hDay}', style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 13,
-                      color: isToday ? Colors.white : null,
-                    )),
-                    Text('${greg.day}', style: TextStyle(
-                      fontSize: 9,
-                      color: isToday ? Colors.white70 : Colors.grey,
-                    )),
+                    Text('${day.hDay}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                          color: isToday ? Colors.white : null,
+                        )),
+                    Text('${greg.day}',
+                        style: TextStyle(
+                          fontSize: 9,
+                          color: isToday ? Colors.white70 : Colors.grey,
+                        )),
                   ],
                 ),
               );

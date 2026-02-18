@@ -138,6 +138,48 @@ class AppLocalizationsMs extends AppLocalizations {
       'System Settings → Privacy & Security → Location Services → bedug → Allow';
 
   @override
+  String get locationModeAuto => 'Kesan lokasi automatik';
+
+  @override
+  String get locationModeAutoDescOn => 'Menggunakan GPS peranti';
+
+  @override
+  String get locationModeAutoDescOff => 'Gunakan bandar manual';
+
+  @override
+  String get city => 'Bandar';
+
+  @override
+  String get cityRequiredHint => 'Wajib dipilih jika kesan automatik dimatikan';
+
+  @override
+  String get selectCity => 'Pilih bandar';
+
+  @override
+  String get cityRequiredError => 'Sila pilih bandar dahulu di Tetapan.';
+
+  @override
+  String get locationServiceDisabled =>
+      'Perkhidmatan lokasi tidak aktif. Sila aktifkan di System Settings.';
+
+  @override
+  String get locationPermissionDenied => 'Kebenaran lokasi ditolak.';
+
+  @override
+  String get locationPermissionDeniedForever =>
+      'Kebenaran lokasi ditolak secara kekal.\nBuka System Settings → Privacy & Security → Location Services → bedug → Allow, kemudian cuba lagi.';
+
+  @override
+  String get notificationChannelName => 'Waktu Solat';
+
+  @override
+  String get notificationChannelDescription =>
+      'Peringatan azan untuk solat harian';
+
+  @override
+  String get openAction => 'Buka';
+
+  @override
   String get retry => 'Cuba Semula';
 
   @override

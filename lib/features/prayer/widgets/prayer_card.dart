@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../core/design/platform_design.dart';
 import '../../../core/design/liquid_glass.dart';
+import '../../../generated/l10n/app_localizations.dart';
 
 /// Card waktu sholat — adaptive berdasarkan platform
 class PrayerTimeCard extends StatelessWidget {
@@ -62,6 +63,7 @@ class _AppleCard extends StatelessWidget {
   @override
   Widget build(BuildContext ctx) {
     final isDark = Theme.of(ctx).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(ctx);
     return GestureDetector(
       onTap: onTap,
       child: LiquidGlass(
@@ -107,7 +109,7 @@ class _AppleCard extends StatelessWidget {
                   ),
                   if (isNext)
                     Text(
-                      'Berikutnya',
+                      l10n.upNext,
                       style: TextStyle(
                         fontSize: 12,
                         color:
@@ -150,6 +152,7 @@ class _MaterialCard extends StatelessWidget {
   @override
   Widget build(BuildContext ctx) {
     final cs = Theme.of(ctx).colorScheme;
+    final l10n = AppLocalizations.of(ctx);
     return Card(
       elevation: isActive ? 3 : 1,
       color: isActive ? cs.primaryContainer : cs.surfaceContainerHighest,
@@ -177,7 +180,7 @@ class _MaterialCard extends StatelessWidget {
                               isActive ? cs.onPrimaryContainer : cs.onSurface,
                         )),
                     if (isNext)
-                      Text('Berikutnya',
+                      Text(l10n.upNext,
                           style: TextStyle(fontSize: 12, color: cs.primary)),
                   ],
                 ),
@@ -212,6 +215,7 @@ class _FluentCard extends StatelessWidget {
   @override
   Widget build(BuildContext ctx) {
     final isDark = Theme.of(ctx).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(ctx);
     // Fluent Acrylic simulation
     return ClipRRect(
       borderRadius: BorderRadius.circular(8),
@@ -258,8 +262,8 @@ class _FluentCard extends StatelessWidget {
                             color: isDark ? Colors.white : Colors.black87,
                           )),
                       if (isNext)
-                        const Text('Berikutnya',
-                            style: TextStyle(
+                        Text(l10n.upNext,
+                            style: const TextStyle(
                               fontSize: 12,
                               color: Color(0xFF0078D4),
                             )),

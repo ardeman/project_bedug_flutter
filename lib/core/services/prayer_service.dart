@@ -1,24 +1,53 @@
 import 'package:adhan/adhan.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:home_widget/home_widget.dart';
+import '../../generated/l10n/app_localizations.dart';
+import '../constants/city_catalog.dart';
 import '../providers/locale_provider.dart';
 import 'kemenag_method.dart';
+
+class PrayerLoadException implements Exception {
+  final String message;
+  final bool showLocationGuide;
+
+  const PrayerLoadException(this.message, {this.showLocationGuide = false});
+
+  @override
+  String toString() => message;
+}
 
 // ── State ─────────────────────────────────────────────────────────────────────
 class PrayerState {
   final PrayerTimes? times;
+  final String? locationLabel;
   final bool loading;
   final String? error;
+  final bool showLocationGuide;
 
-  const PrayerState({this.times, this.loading = true, this.error});
+  const PrayerState({
+    this.times,
+    this.locationLabel,
+    this.loading = true,
+    this.error,
+    this.showLocationGuide = false,
+  });
 
-  PrayerState copyWith({PrayerTimes? times, bool? loading, String? error}) =>
+  PrayerState copyWith({
+    PrayerTimes? times,
+    String? locationLabel,
+    bool? loading,
+    String? error,
+    bool? showLocationGuide,
+  }) =>
       PrayerState(
-        times:   times   ?? this.times,
+        times: times ?? this.times,
+        locationLabel: locationLabel ?? this.locationLabel,
         loading: loading ?? this.loading,
-        error:   error,           // error bisa null (reset)
+        error: error, // error bisa null (reset)
+        showLocationGuide: showLocationGuide ?? this.showLocationGuide,
       );
 }
 
@@ -28,7 +57,10 @@ class PrayerNotifier extends Notifier<PrayerState> {
   PrayerState build() {
     // Tunggu settingsProvider siap sebelum load
     ref.listen(settingsProvider, (prev, next) {
-      if (prev?.method != next.method || prev?.isHanafi != next.isHanafi) {
+      if (prev?.method != next.method ||
+          prev?.isHanafi != next.isHanafi ||
+          prev?.useAutoLocation != next.useAutoLocation ||
+          prev?.selectedCityId != next.selectedCityId) {
         load();
       }
     });
@@ -38,10 +70,26 @@ class PrayerNotifier extends Notifier<PrayerState> {
   }
 
   Future<void> load() async {
-    state = state.copyWith(loading: true, error: null);
+    state =
+        state.copyWith(loading: true, error: null, showLocationGuide: false);
     try {
-      final pos    = await _getPosition();
-      final coords = Coordinates(pos.latitude, pos.longitude);
+      final settings = ref.read(settingsProvider);
+      final Coordinates coords;
+      final String locationLabel;
+
+      if (settings.useAutoLocation) {
+        final pos = await _getPosition();
+        coords = Coordinates(pos.latitude, pos.longitude);
+        locationLabel = await _resolveLocationLabel(pos);
+      } else {
+        final city = _findCityById(settings.selectedCityId);
+        if (city == null) {
+          throw PrayerLoadException(_l10n.cityRequiredError);
+        }
+        coords = Coordinates(city.latitude, city.longitude);
+        locationLabel = city.name;
+      }
+
       final method = ref.read(settingsProvider).method;
       final params = method.getParameters();
       if (ref.read(settingsProvider).isHanafi) {
@@ -51,31 +99,90 @@ class PrayerNotifier extends Notifier<PrayerState> {
       final times = PrayerTimes.today(coords, params);
       await _saveToWidget(times);
 
-      state = state.copyWith(times: times, loading: false);
+      state = state.copyWith(
+        times: times,
+        locationLabel: locationLabel,
+        loading: false,
+      );
     } catch (e) {
-      state = state.copyWith(loading: false, error: e.toString());
+      if (e is PrayerLoadException) {
+        state = state.copyWith(
+          loading: false,
+          error: e.message,
+          showLocationGuide: e.showLocationGuide,
+        );
+      } else {
+        state = state.copyWith(loading: false, error: e.toString());
+      }
     }
   }
 
+  CityOption? _findCityById(String? cityId) {
+    if (cityId == null || cityId.isEmpty) return null;
+    for (final city in supportedCities) {
+      if (city.id == cityId) return city;
+    }
+    return null;
+  }
+
+  CityOption? _nearestCity(double latitude, double longitude) {
+    if (supportedCities.isEmpty) return null;
+    CityOption nearest = supportedCities.first;
+    double minDistance = Geolocator.distanceBetween(
+      latitude,
+      longitude,
+      nearest.latitude,
+      nearest.longitude,
+    );
+
+    for (final city in supportedCities.skip(1)) {
+      final distance = Geolocator.distanceBetween(
+        latitude,
+        longitude,
+        city.latitude,
+        city.longitude,
+      );
+      if (distance < minDistance) {
+        minDistance = distance;
+        nearest = city;
+      }
+    }
+    return nearest;
+  }
+
+  AppLocalizations get _l10n =>
+      lookupAppLocalizations(ref.read(localeProvider));
+
   Future<Position> _getPosition() async {
     final enabled = await Geolocator.isLocationServiceEnabled();
-    if (!enabled) throw Exception('Layanan lokasi tidak aktif. Aktifkan di System Settings.');
+    if (!enabled) {
+      throw PrayerLoadException(
+        _l10n.locationServiceDisabled,
+        showLocationGuide: true,
+      );
+    }
 
     LocationPermission perm = await Geolocator.checkPermission();
 
     if (perm == LocationPermission.deniedForever) {
       await Geolocator.openAppSettings();
-      throw Exception('Izin lokasi ditolak permanen.\nBuka System Settings → Privacy & Security → Location Services → bedug → Allow, lalu coba lagi.');
+      throw PrayerLoadException(
+        _l10n.locationPermissionDeniedForever,
+        showLocationGuide: true,
+      );
     }
 
     if (perm == LocationPermission.denied) {
       perm = await Geolocator.requestPermission();
       if (perm == LocationPermission.denied) {
-        throw Exception('Izin lokasi ditolak.');
+        throw PrayerLoadException(_l10n.locationPermissionDenied);
       }
       if (perm == LocationPermission.deniedForever) {
         await Geolocator.openAppSettings();
-        throw Exception('Izin lokasi ditolak permanen.\nBuka System Settings → Privacy & Security → Location Services → bedug → Allow, lalu coba lagi.');
+        throw PrayerLoadException(
+          _l10n.locationPermissionDeniedForever,
+          showLocationGuide: true,
+        );
       }
     }
 
@@ -87,6 +194,35 @@ class PrayerNotifier extends Notifier<PrayerState> {
     );
   }
 
+  Future<String> _resolveLocationLabel(Position pos) async {
+    try {
+      final placemarks = await placemarkFromCoordinates(
+        pos.latitude,
+        pos.longitude,
+      );
+      if (placemarks.isNotEmpty) {
+        final p = placemarks.first;
+        final parts = <String>[
+          if ((p.locality ?? '').trim().isNotEmpty) p.locality!.trim(),
+          if ((p.subAdministrativeArea ?? '').trim().isNotEmpty)
+            p.subAdministrativeArea!.trim(),
+          if ((p.administrativeArea ?? '').trim().isNotEmpty)
+            p.administrativeArea!.trim(),
+          if ((p.country ?? '').trim().isNotEmpty) p.country!.trim(),
+        ];
+        final unique = <String>[];
+        for (final part in parts) {
+          if (!unique.contains(part)) unique.add(part);
+        }
+        if (unique.isNotEmpty) return unique.take(3).join(', ');
+      }
+    } catch (_) {}
+
+    final nearest = _nearestCity(pos.latitude, pos.longitude);
+    return nearest?.name ??
+        '${pos.latitude.toStringAsFixed(4)}, ${pos.longitude.toStringAsFixed(4)}';
+  }
+
   Future<void> _saveToWidget(PrayerTimes t) async {
     // home_widget hanya support Android & iOS
     if (defaultTargetPlatform != TargetPlatform.android &&
@@ -95,15 +231,15 @@ class PrayerNotifier extends Notifier<PrayerState> {
     }
     try {
       await Future.wait([
-        HomeWidget.saveWidgetData('fajr',    _fmt(t.fajr)),
-        HomeWidget.saveWidgetData('dhuhr',   _fmt(t.dhuhr)),
-        HomeWidget.saveWidgetData('asr',     _fmt(t.asr)),
+        HomeWidget.saveWidgetData('fajr', _fmt(t.fajr)),
+        HomeWidget.saveWidgetData('dhuhr', _fmt(t.dhuhr)),
+        HomeWidget.saveWidgetData('asr', _fmt(t.asr)),
         HomeWidget.saveWidgetData('maghrib', _fmt(t.maghrib)),
-        HomeWidget.saveWidgetData('isha',    _fmt(t.isha)),
+        HomeWidget.saveWidgetData('isha', _fmt(t.isha)),
       ]);
       await HomeWidget.updateWidget(
         androidName: 'BedugWidgetProvider',
-        iOSName:     'BedugWidget',
+        iOSName: 'BedugWidget',
       );
     } catch (_) {}
   }

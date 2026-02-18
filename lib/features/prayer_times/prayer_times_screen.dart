@@ -47,6 +47,7 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
     final state = ref.watch(prayerProvider);
     final next = ref.watch(nextPrayerProvider);
     final nextName = _prayerLabel(l10n, next.key);
+    final locationLabel = state.locationLabel ?? '--';
     final isDark = Theme.of(ctx).brightness == Brightness.dark;
 
     return Scaffold(
@@ -60,6 +61,7 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                   delegate: _LiquidGlassAppBar(
                     l10n: l10n,
                     nextName: nextName,
+                    locationLabel: locationLabel,
                     remaining: _remaining,
                     isDark: isDark,
                     onTune: () => _showMethodPicker(ctx),
@@ -83,6 +85,29 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.location_on_outlined,
+                                  size: 14,
+                                  color: Colors.white70,
+                                ),
+                                const SizedBox(width: 4),
+                                Flexible(
+                                  child: Text(
+                                    locationLabel,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      color: Colors.white70,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 4),
                             Text(l10n.nextPrayer,
                                 style: const TextStyle(
                                     color: Colors.white70, fontSize: 14)),
@@ -128,7 +153,7 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                         textAlign: TextAlign.center,
                         style: const TextStyle(color: Colors.grey)),
                     const SizedBox(height: 8),
-                    if (state.error!.contains('System Settings'))
+                    if (state.showLocationGuide)
                       Padding(
                         padding: EdgeInsets.only(bottom: 8),
                         child: Text(
@@ -209,6 +234,7 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
 class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
   final AppLocalizations l10n;
   final String nextName;
+  final String locationLabel;
   final Duration remaining;
   final bool isDark;
   final VoidCallback onTune;
@@ -217,6 +243,7 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
   const _LiquidGlassAppBar({
     required this.l10n,
     required this.nextName,
+    required this.locationLabel,
     required this.remaining,
     required this.isDark,
     required this.onTune,
@@ -231,6 +258,7 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
   @override
   bool shouldRebuild(_LiquidGlassAppBar old) =>
       old.nextName != nextName ||
+      old.locationLabel != locationLabel ||
       old.remaining != remaining ||
       old.isDark != isDark;
 
@@ -301,6 +329,29 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(height: kToolbarHeight * 0.3),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.location_on_outlined,
+                              size: 14,
+                              color: Colors.white.withOpacity(0.75),
+                            ),
+                            const SizedBox(width: 4),
+                            Flexible(
+                              child: Text(
+                                locationLabel,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: Colors.white.withOpacity(0.75),
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 4),
                         Text(l10n.nextPrayer,
                             style: TextStyle(
                                 color: Colors.white.withOpacity(0.8),
@@ -324,12 +375,36 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
                     alignment: Alignment.centerLeft,
                     child: Padding(
                       padding: const EdgeInsets.only(left: 16),
-                      child: Text(nextName,
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.w600,
-                            color: isDark ? Colors.white : Colors.black87,
-                          )),
+                      child: Row(
+                        children: [
+                          Flexible(
+                            child: Text(
+                              nextName,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.w600,
+                                color: isDark ? Colors.white : Colors.black87,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Flexible(
+                            child: Text(
+                              locationLabel,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: isDark
+                                    ? Colors.white.withOpacity(0.7)
+                                    : Colors.black54,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

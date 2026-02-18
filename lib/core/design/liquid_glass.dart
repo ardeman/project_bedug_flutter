@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'sf_symbols.dart';
 
 /// Liquid Glass effect widget — Apple only
 /// Simulasi efek kaca cair dari iOS 26 / macOS 26
@@ -168,85 +169,165 @@ class LiquidGlassNavBar extends StatelessWidget {
     final isDark = Theme.of(ctx).brightness == Brightness.dark;
     final bottom = MediaQuery.of(ctx).padding.bottom;
 
-    return ClipRect(
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-        child: Container(
-          height: 56 + bottom,
-          padding: EdgeInsets.only(bottom: bottom),
-          decoration: BoxDecoration(
-            color: isDark
-                ? const Color(0xFF1C1C1E).withOpacity(0.72)
-                : Colors.white.withOpacity(0.72),
-            border: Border(
-              top: BorderSide(
-                color: isDark
-                    ? Colors.white.withOpacity(0.1)
-                    : Colors.black.withOpacity(0.08),
-                width: 0.5,
+    final selectedColor = isDark ? Colors.white : CupertinoColors.activeBlue;
+    final unselectedColor = isDark
+        ? Colors.white.withValues(alpha: 0.72)
+        : Colors.black.withValues(alpha: 0.58);
+
+    return Padding(
+      padding: EdgeInsets.fromLTRB(16, 0, 16, bottom > 0 ? 8 : 12),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(36),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 26, sigmaY: 26),
+          child: Container(
+            height: 72,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: isDark
+                    ? [
+                        const Color(0xFF1C1F28).withValues(alpha: 0.82),
+                        const Color(0xFF10141B).withValues(alpha: 0.76),
+                      ]
+                    : [
+                        Colors.white.withValues(alpha: 0.80),
+                        Colors.white.withValues(alpha: 0.68),
+                      ],
               ),
-            ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: List.generate(items.length, (i) {
-              final selected = i == currentIndex;
-              final item = items[i];
-              return GestureDetector(
-                onTap: () => onTap(i),
-                behavior: HitTestBehavior.opaque,
-                child: SizedBox(
-                  width: 64,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      AnimatedContainer(
-                        duration: const Duration(milliseconds: 200),
-                        curve: Curves.easeOutCubic,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 4),
-                        decoration: selected
-                            ? BoxDecoration(
-                                color: (isDark ? Colors.white : Colors.black)
-                                    .withOpacity(0.1),
-                                borderRadius: BorderRadius.circular(12),
-                              )
-                            : null,
-                        child: Icon(
-                          selected ? item.activeIcon : item.icon,
-                          size: 24,
-                          color: selected
-                              ? CupertinoColors.activeBlue
-                              : (isDark ? Colors.white54 : Colors.black45),
-                        ),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        item.label,
-                        style: TextStyle(
-                          fontSize: 10,
-                          fontWeight:
-                              selected ? FontWeight.w600 : FontWeight.w400,
-                          color: selected
-                              ? CupertinoColors.activeBlue
-                              : (isDark ? Colors.white54 : Colors.black45),
-                        ),
-                      ),
-                    ],
-                  ),
+              borderRadius: BorderRadius.circular(36),
+              border: Border.all(
+                color: isDark
+                    ? Colors.white.withValues(alpha: 0.14)
+                    : Colors.white.withValues(alpha: 0.82),
+                width: 0.9,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: isDark ? 0.32 : 0.14),
+                  blurRadius: 24,
+                  offset: const Offset(0, 10),
                 ),
-              );
-            }),
+              ],
+            ),
+            child: LayoutBuilder(
+              builder: (ctx, constraints) {
+                const navPadding = 6.0;
+                final slotWidth = constraints.maxWidth / items.length;
+                final pillWidth = slotWidth - (navPadding * 2);
+                final pillLeft = (currentIndex * slotWidth) + navPadding;
+
+                return Stack(
+                  children: [
+                    AnimatedPositioned(
+                      duration: const Duration(milliseconds: 320),
+                      curve: Curves.easeOutCubic,
+                      left: pillLeft,
+                      top: navPadding,
+                      bottom: navPadding,
+                      width: pillWidth,
+                      child: IgnorePointer(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(28),
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(28),
+                                color: isDark
+                                    ? Colors.white.withValues(alpha: 0.13)
+                                    : Colors.white.withValues(alpha: 0.62),
+                                border: Border.all(
+                                  color: isDark
+                                      ? Colors.white.withValues(alpha: 0.2)
+                                      : Colors.white.withValues(alpha: 0.75),
+                                  width: 0.8,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Row(
+                      children: List.generate(items.length, (i) {
+                        final selected = i == currentIndex;
+                        final item = items[i];
+                        return Expanded(
+                          child: GestureDetector(
+                            onTap: () => onTap(i),
+                            behavior: HitTestBehavior.opaque,
+                            child: Padding(
+                              padding: const EdgeInsets.all(navPadding),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  AnimatedSwitcher(
+                                    duration: const Duration(milliseconds: 220),
+                                    transitionBuilder: (child, anim) =>
+                                        FadeTransition(
+                                      opacity: anim,
+                                      child: ScaleTransition(
+                                          scale: anim, child: child),
+                                    ),
+                                    child: Icon(
+                                      _resolveIconData(
+                                        selected ? item.activeIcon : item.icon,
+                                        fallback: selected
+                                            ? Icons.circle
+                                            : Icons.circle_outlined,
+                                      ),
+                                      key: ValueKey('${selected}_$i'),
+                                      size: 22,
+                                      color: selected
+                                          ? selectedColor
+                                          : unselectedColor,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    item.label,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: selected
+                                          ? FontWeight.w600
+                                          : FontWeight.w500,
+                                      color: selected
+                                          ? selectedColor
+                                          : unselectedColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
+                    ),
+                  ],
+                );
+              },
+            ),
           ),
         ),
       ),
     );
   }
+
+  IconData _resolveIconData(Object icon, {required IconData fallback}) {
+    if (icon is IconData) return icon;
+    if (icon is String) return SFSymbols.resolve(icon) ?? fallback;
+    return fallback;
+  }
 }
 
 class LiquidGlassNavItem {
-  final IconData icon;
-  final IconData activeIcon;
+  final Object icon;
+  final Object activeIcon;
   final String label;
   const LiquidGlassNavItem(
       {required this.icon, required this.activeIcon, required this.label});

@@ -138,6 +138,47 @@ class AppLocalizationsAr extends AppLocalizations {
       'إعدادات النظام ← الخصوصية والأمان ← خدمات الموقع ← bedug ← سماح';
 
   @override
+  String get locationModeAuto => 'اكتشاف الموقع تلقائيًا';
+
+  @override
+  String get locationModeAutoDescOn => 'استخدام GPS الجهاز';
+
+  @override
+  String get locationModeAutoDescOff => 'استخدام مدينة يدوية';
+
+  @override
+  String get city => 'المدينة';
+
+  @override
+  String get cityRequiredHint => 'مطلوب اختيارها عند إيقاف الاكتشاف التلقائي';
+
+  @override
+  String get selectCity => 'اختر المدينة';
+
+  @override
+  String get cityRequiredError => 'يرجى اختيار المدينة أولًا من الإعدادات.';
+
+  @override
+  String get locationServiceDisabled =>
+      'خدمة الموقع غير مفعلة. يرجى تفعيلها من إعدادات النظام.';
+
+  @override
+  String get locationPermissionDenied => 'تم رفض إذن الموقع.';
+
+  @override
+  String get locationPermissionDeniedForever =>
+      'تم رفض إذن الموقع بشكل دائم.\nافتح إعدادات النظام ← الخصوصية والأمان ← خدمات الموقع ← bedug ← سماح، ثم حاول مرة أخرى.';
+
+  @override
+  String get notificationChannelName => 'أوقات الصلاة';
+
+  @override
+  String get notificationChannelDescription => 'تذكيرات الأذان للصلوات اليومية';
+
+  @override
+  String get openAction => 'فتح';
+
+  @override
   String get retry => 'إعادة المحاولة';
 
   @override

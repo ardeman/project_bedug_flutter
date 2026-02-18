@@ -139,6 +139,48 @@ class AppLocalizationsEn extends AppLocalizations {
       'System Settings → Privacy & Security → Location Services → bedug → Allow';
 
   @override
+  String get locationModeAuto => 'Auto-detect location';
+
+  @override
+  String get locationModeAutoDescOn => 'Using device GPS';
+
+  @override
+  String get locationModeAutoDescOff => 'Use manual city';
+
+  @override
+  String get city => 'City';
+
+  @override
+  String get cityRequiredHint => 'Required when auto-detect is turned off';
+
+  @override
+  String get selectCity => 'Select city';
+
+  @override
+  String get cityRequiredError => 'Please select a city first in Settings.';
+
+  @override
+  String get locationServiceDisabled =>
+      'Location service is disabled. Please enable it in System Settings.';
+
+  @override
+  String get locationPermissionDenied => 'Location permission denied.';
+
+  @override
+  String get locationPermissionDeniedForever =>
+      'Location permission permanently denied.\nOpen System Settings → Privacy & Security → Location Services → bedug → Allow, then try again.';
+
+  @override
+  String get notificationChannelName => 'Prayer Times';
+
+  @override
+  String get notificationChannelDescription =>
+      'Azan reminders for daily prayers';
+
+  @override
+  String get openAction => 'Open';
+
+  @override
   String get retry => 'Retry';
 
   @override

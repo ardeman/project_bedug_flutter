@@ -12,17 +12,17 @@ class BedugApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext ctx, WidgetRef ref) {
-    final locale   = ref.watch(localeProvider);
+    final locale = ref.watch(localeProvider);
     final settings = ref.watch(settingsProvider);
 
     final themeMode = switch (settings.themeMode) {
-      1    => ThemeMode.light,
-      2    => ThemeMode.dark,
-      _    => ThemeMode.system,
+      1 => ThemeMode.light,
+      2 => ThemeMode.dark,
+      _ => ThemeMode.system,
     };
 
     return MaterialApp(
-      title: 'Bedug',
+      onGenerateTitle: (ctx) => AppLocalizations.of(ctx).appName,
       debugShowCheckedModeBanner: false,
       locale: locale,
       supportedLocales: supportedLocales,
@@ -33,7 +33,7 @@ class BedugApp extends ConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       themeMode: themeMode,
-      theme:     _buildTheme(Brightness.light),
+      theme: _buildTheme(Brightness.light),
       darkTheme: _buildTheme(Brightness.dark),
       home: const HomeScreen(),
     );
