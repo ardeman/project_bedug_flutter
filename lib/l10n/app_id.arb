@@ -1,0 +1,188 @@
+{
+  "@@locale": "id",
+  "@@last_modified": "2024-01-01",
+
+  "appName": "Bedug",
+  "@appName": { "description": "Application name" },
+
+  "appTagline": "Pengingat sholat, seperti bedug di kampung halamanmu.",
+  "@appTagline": { "description": "App tagline shown on splash/about screen" },
+
+  "prayerTimes": "Waktu Sholat",
+  "@prayerTimes": { "description": "Prayer times screen title" },
+
+  "hijriCalendar": "Kalender Hijriyah",
+  "@hijriCalendar": { "description": "Hijri calendar screen title" },
+
+  "settings": "Pengaturan",
+  "@settings": {},
+
+  "nextPrayer": "Sholat Berikutnya",
+  "@nextPrayer": {},
+
+  "upNext": "Selanjutnya",
+  "@upNext": {},
+
+  "recommended": "Rekomendasi",
+  "@recommended": {},
+
+  "fajr": "Subuh",
+  "@fajr": { "description": "Fajr prayer name in Indonesian" },
+
+  "sunrise": "Terbit",
+  "@sunrise": {},
+
+  "dhuhr": "Dzuhur",
+  "@dhuhr": {},
+
+  "asr": "Ashar",
+  "@asr": {},
+
+  "maghrib": "Maghrib",
+  "@maghrib": {},
+
+  "isha": "Isya",
+  "@isha": {},
+
+  "calculationMethod": "Metode Hisab",
+  "@calculationMethod": {},
+
+  "calculationMethodDesc": "Pilih metode perhitungan waktu sholat",
+  "@calculationMethodDesc": {},
+
+  "methodKemenag": "Kementerian Agama RI",
+  "@methodKemenag": {},
+
+  "methodMWL": "Muslim World League",
+  "@methodMWL": {},
+
+  "methodISNA": "ISNA (Amerika Utara)",
+  "@methodISNA": {},
+
+  "methodEgyptian": "Otoritas Mesir",
+  "@methodEgyptian": {},
+
+  "methodUmmAlQura": "Umm Al-Qura (Arab Saudi)",
+  "@methodUmmAlQura": {},
+
+  "methodKarachi": "Universitas Karachi",
+  "@methodKarachi": {},
+
+  "methodKuwait": "Kuwait",
+  "@methodKuwait": {},
+
+  "methodQatar": "Qatar",
+  "@methodQatar": {},
+
+  "methodSingapore": "Singapura",
+  "@methodSingapore": {},
+
+  "methodTurkey": "Turki",
+  "@methodTurkey": {},
+
+  "madhab": "Mazhab",
+  "@madhab": {},
+
+  "madhabShafi": "Syafi'i",
+  "@madhabShafi": {},
+
+  "madhabHanafi": "Hanafi",
+  "@madhabHanafi": {},
+
+  "azanNotifications": "Notifikasi Azan",
+  "@azanNotifications": {},
+
+  "allPrayers": "Semua Sholat",
+  "@allPrayers": {},
+
+  "theme": "Tampilan",
+  "@theme": {},
+
+  "themeSystem": "Ikuti Sistem",
+  "@themeSystem": {},
+
+  "themeLight": "Terang",
+  "@themeLight": {},
+
+  "themeDark": "Gelap",
+  "@themeDark": {},
+
+  "language": "Bahasa",
+  "@language": {},
+
+  "widgetStyle": "Gaya Widget",
+  "@widgetStyle": {},
+
+  "widgetCompact": "Ringkas",
+  "@widgetCompact": {},
+
+  "about": "Tentang Aplikasi",
+  "@about": {},
+
+  "version": "Versi {version}",
+  "@version": {
+    "placeholders": {
+      "version": { "type": "Object" }
+    }
+  },
+
+  "locationError": "Gagal mendapatkan lokasi. Pastikan GPS aktif.",
+  "@locationError": {},
+
+  "locationGuide": "System Settings → Privacy & Security → Location Services → bedug → Allow",
+  "@locationGuide": {},
+
+  "retry": "Coba Lagi",
+  "@retry": {},
+
+  "loading": "Memuat...",
+  "@loading": {},
+
+  "today": "Hari Ini",
+  "@today": {},
+
+  "hijriToday": "Tanggal Hijriyah Hari Ini",
+  "@hijriToday": {},
+
+  "gregorianDate": "Tanggal Masehi",
+  "@gregorianDate": {},
+
+  "sun": "Min",
+  "@sun": {},
+  "mon": "Sen",
+  "@mon": {},
+  "tue": "Sel",
+  "@tue": {},
+  "wed": "Rab",
+  "@wed": {},
+  "thu": "Kam",
+  "@thu": {},
+  "fri": "Jum",
+  "@fri": {},
+  "sat": "Sab",
+  "@sat": {},
+
+  "muharram":    "Muharram",
+  "safar":       "Safar",
+  "rabiAlAwwal": "Rabi'ul Awal",
+  "rabiAlThani": "Rabi'ul Akhir",
+  "jumadaAlUla": "Jumadil Awal",
+  "jumadaAlAkhirah": "Jumadil Akhir",
+  "rajab":       "Rajab",
+  "shaban":      "Sya'ban",
+  "ramadan":     "Ramadan",
+  "shawwal":     "Syawal",
+  "dhuAlQidah":  "Dzulqa'dah",
+  "dhuAlHijjah": "Dzulhijjah",
+
+  "notifSubuh": "Waktu Subuh telah tiba",
+  "@notifSubuh": {},
+  "notifDzuhur": "Waktu Dzuhur telah tiba",
+  "@notifDzuhur": {},
+  "notifAshar": "Waktu Ashar telah tiba",
+  "@notifAshar": {},
+  "notifMaghrib": "Waktu Maghrib telah tiba",
+  "@notifMaghrib": {},
+  "notifIsya": "Waktu Isya telah tiba",
+  "@notifIsya": {}
+}

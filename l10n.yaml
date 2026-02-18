@@ -1,0 +1,7 @@
+# l10n.yaml – placed at Flutter project root
+arb-dir: lib/l10n
+template-arb-file: app_id.arb      # Indonesian is the template/default
+output-localization-file: app_localizations.dart
+output-class: AppLocalizations
+output-dir: lib/generated/l10n
+nullable-getter: false
