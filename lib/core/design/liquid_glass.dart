@@ -1,6 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:cupertino_native/cupertino_native.dart';
+import '../constants/app_colors.dart';
 import 'sf_symbols.dart';
 
 /// Liquid Glass effect widget — Apple only
@@ -169,7 +172,7 @@ class LiquidGlassNavBar extends StatelessWidget {
     final isDark = Theme.of(ctx).brightness == Brightness.dark;
     final bottom = MediaQuery.of(ctx).padding.bottom;
 
-    final selectedColor = isDark ? Colors.white : CupertinoColors.activeBlue;
+    final selectedColor = AppColors.emerald;
     final unselectedColor = isDark
         ? Colors.white.withValues(alpha: 0.72)
         : Colors.black.withValues(alpha: 0.58);
@@ -271,13 +274,11 @@ class LiquidGlassNavBar extends StatelessWidget {
                                       child: ScaleTransition(
                                           scale: anim, child: child),
                                     ),
-                                    child: Icon(
-                                      _resolveIconData(
-                                        selected ? item.activeIcon : item.icon,
-                                        fallback: selected
-                                            ? Icons.circle
-                                            : Icons.circle_outlined,
-                                      ),
+                                    child: _buildNavIcon(
+                                      selected ? item.activeIcon : item.icon,
+                                      fallback: selected
+                                          ? Icons.circle
+                                          : Icons.circle_outlined,
                                       key: ValueKey('${selected}_$i'),
                                       size: 22,
                                       color: selected
@@ -318,10 +319,46 @@ class LiquidGlassNavBar extends StatelessWidget {
     );
   }
 
-  IconData _resolveIconData(Object icon, {required IconData fallback}) {
-    if (icon is IconData) return icon;
-    if (icon is String) return SFSymbols.resolve(icon) ?? fallback;
-    return fallback;
+  Widget _buildNavIcon(
+    Object icon, {
+    required IconData fallback,
+    required Key key,
+    required double size,
+    required Color color,
+  }) {
+    if (icon is String && _supportsNativeAppleSymbols) {
+      return CNIcon(
+        key: key,
+        symbol: CNSymbol(
+          icon,
+          size: size,
+          color: color,
+          mode: CNSymbolRenderingMode.monochrome,
+        ),
+      );
+    }
+
+    if (icon is String) {
+      return Icon(
+        SFSymbols.materialFallback(icon),
+        key: key,
+        size: size,
+        color: color,
+      );
+    }
+
+    return Icon(
+      icon is IconData ? icon : fallback,
+      key: key,
+      size: size,
+      color: color,
+    );
+  }
+
+  bool get _supportsNativeAppleSymbols {
+    if (kIsWeb) return false;
+    return defaultTargetPlatform == TargetPlatform.iOS ||
+        defaultTargetPlatform == TargetPlatform.macOS;
   }
 }
 

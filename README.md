@@ -23,6 +23,15 @@ Cross-platform Muslim prayer time app with Hijri calendar, localized UI, and ada
 - UI brightness is derived from the active app theme (`Theme.of(context).brightness`) instead of system platform brightness, to avoid delayed or partial color updates when user theme mode is changed inside the app.
 - Apple liquid-glass navigation targets iOS 26+ and macOS 26+ as the project baseline.
 
+## Recent Updates
+
+- Apple icon pipeline now uses native SF Symbols (`cupertino_native`) instead of `CupertinoIcons`.
+- Active tab color in Liquid Glass nav uses `AppColors.emerald` for consistent brand color.
+- Prayer header collapse behavior on Apple keeps green system gradient, keeps countdown visible in compact mode, and aligns action buttons vertically.
+- Location loading now handles GPS timeout more gracefully:
+  - falls back to last known position when possible
+  - avoids showing raw exception text to users
+
 ## Commit Message Convention
 
 Use Conventional Commits:

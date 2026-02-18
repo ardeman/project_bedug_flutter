@@ -1,25 +1,22 @@
-import 'package:flutter/cupertino.dart';
-
-import 'platform_capabilities.dart';
+import 'package:flutter/material.dart';
 
 class SFSymbols {
   SFSymbols._();
 
-  static IconData? resolve(String name) {
-    if (!PlatformCapabilities.isIOS) return null;
+  static IconData materialFallback(String name) {
     return switch (name) {
-      'house.fill' => CupertinoIcons.house_fill,
-      'house' => CupertinoIcons.house,
-      'calendar' => CupertinoIcons.calendar,
-      'calendar.circle.fill' => CupertinoIcons.calendar_circle_fill,
-      'gearshape.fill' => CupertinoIcons.gear_alt_fill,
-      'gearshape' => CupertinoIcons.gear,
-      'clock.fill' => CupertinoIcons.time_solid,
-      'clock' => CupertinoIcons.time,
-      'magnifyingglass' => CupertinoIcons.search,
-      'person.fill' => CupertinoIcons.person_fill,
-      'person' => CupertinoIcons.person,
-      _ => null,
+      'house.fill' => Icons.home,
+      'house' => Icons.home_outlined,
+      'calendar' => Icons.calendar_month_outlined,
+      'calendar.circle.fill' => Icons.calendar_month,
+      'gearshape.fill' => Icons.settings,
+      'gearshape' => Icons.settings_outlined,
+      'clock.fill' => Icons.access_time_filled,
+      'clock' => Icons.access_time_outlined,
+      'magnifyingglass' => Icons.search,
+      'person.fill' => Icons.person,
+      'person' => Icons.person_outline,
+      _ => Icons.circle_outlined,
     };
   }
 }

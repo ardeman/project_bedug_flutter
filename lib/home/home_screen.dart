@@ -30,26 +30,28 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     final destinations = [
       AdaptiveNavigationDestination(
-        icon: PlatformCapabilities.isIOS ? 'clock' : Icons.access_time_outlined,
-        selectedIcon: PlatformCapabilities.isIOS
+        icon:
+            PlatformCapabilities.isApple ? 'clock' : Icons.access_time_outlined,
+        selectedIcon: PlatformCapabilities.isApple
             ? 'clock.fill'
             : Icons.access_time_filled,
         label: l10n.prayerTimes,
       ),
       AdaptiveNavigationDestination(
-        icon: PlatformCapabilities.isIOS
+        icon: PlatformCapabilities.isApple
             ? 'calendar'
             : Icons.calendar_month_outlined,
-        selectedIcon: PlatformCapabilities.isIOS
+        selectedIcon: PlatformCapabilities.isApple
             ? 'calendar.circle.fill'
             : Icons.calendar_month,
         label: l10n.hijriCalendar,
       ),
       AdaptiveNavigationDestination(
-        icon:
-            PlatformCapabilities.isIOS ? 'gearshape' : Icons.settings_outlined,
+        icon: PlatformCapabilities.isApple
+            ? 'gearshape'
+            : Icons.settings_outlined,
         selectedIcon:
-            PlatformCapabilities.isIOS ? 'gearshape.fill' : Icons.settings,
+            PlatformCapabilities.isApple ? 'gearshape.fill' : Icons.settings,
         label: l10n.settings,
       ),
     ];

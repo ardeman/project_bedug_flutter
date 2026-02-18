@@ -59,7 +59,6 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
               ? SliverPersistentHeader(
                   pinned: true,
                   delegate: _LiquidGlassAppBar(
-                    l10n: l10n,
                     nextName: nextName,
                     locationLabel: locationLabel,
                     remaining: _remaining,
@@ -107,10 +106,6 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 4),
-                            Text(l10n.nextPrayer,
-                                style: const TextStyle(
-                                    color: Colors.white70, fontSize: 14)),
                             const SizedBox(height: 4),
                             Text(nextName,
                                 style: const TextStyle(
@@ -232,7 +227,6 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
 
 // ── Liquid Glass App Bar ───────────────────────────────────────────────────────
 class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
-  final AppLocalizations l10n;
   final String nextName;
   final String locationLabel;
   final Duration remaining;
@@ -241,7 +235,6 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
   final VoidCallback onRefresh;
 
   const _LiquidGlassAppBar({
-    required this.l10n,
     required this.nextName,
     required this.locationLabel,
     required this.remaining,
@@ -265,6 +258,10 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
   @override
   Widget build(BuildContext ctx, double shrinkOffset, bool overlapsContent) {
     final progress = (shrinkOffset / (maxExtent - minExtent)).clamp(0.0, 1.0);
+    final collapsedProgress = (progress * 2 - 1).clamp(0.0, 1.0);
+    final collapsedActionTop = (minExtent - kToolbarHeight) / 2;
+    final actionTop = lerpDouble(0, collapsedActionTop, collapsedProgress)!;
+    const actionAreaWidth = 116.0;
 
     return ClipRect(
       child: BackdropFilter(
@@ -275,16 +272,8 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                Color.lerp(
-                        AppColors.emerald,
-                        isDark ? const Color(0xFF1C1C1E) : Colors.white,
-                        progress)!
-                    .withOpacity(progress < 0.5 ? 1.0 : 0.82),
-                Color.lerp(
-                        AppColors.teal,
-                        isDark ? const Color(0xFF1C1C1E) : Colors.white,
-                        progress)!
-                    .withOpacity(progress < 0.5 ? 1.0 : 0.82),
+                AppColors.emerald.withValues(alpha: isDark ? 0.9 : 1),
+                AppColors.teal.withValues(alpha: isDark ? 0.9 : 1),
               ],
             ),
             border: Border(
@@ -304,22 +293,27 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
               children: [
                 // Actions
                 Positioned(
-                  top: 0,
+                  top: actionTop,
                   right: 4,
-                  child: Row(children: [
-                    _GlassIconButton(
-                      icon: Icons.tune,
-                      onTap: onTune,
-                      frosted: progress > 0.5,
-                      isDark: isDark,
+                  child: SizedBox(
+                    height: kToolbarHeight,
+                    child: Center(
+                      child: Row(children: [
+                        _GlassIconButton(
+                          icon: Icons.tune,
+                          onTap: onTune,
+                          frosted: progress > 0.35,
+                          isDark: isDark,
+                        ),
+                        _GlassIconButton(
+                          icon: Icons.refresh,
+                          onTap: onRefresh,
+                          frosted: progress > 0.35,
+                          isDark: isDark,
+                        ),
+                      ]),
                     ),
-                    _GlassIconButton(
-                      icon: Icons.refresh,
-                      onTap: onRefresh,
-                      frosted: progress > 0.5,
-                      isDark: isDark,
-                    ),
-                  ]),
+                  ),
                 ),
                 // Expanded content
                 Opacity(
@@ -352,11 +346,6 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
                           ],
                         ),
                         const SizedBox(height: 4),
-                        Text(l10n.nextPrayer,
-                            style: TextStyle(
-                                color: Colors.white.withOpacity(0.8),
-                                fontSize: 14)),
-                        const SizedBox(height: 4),
                         Text(nextName,
                             style: const TextStyle(
                                 color: Colors.white,
@@ -370,39 +359,45 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
                 ),
                 // Collapsed title
                 Opacity(
-                  opacity: (progress * 2 - 1).clamp(0.0, 1.0),
+                  opacity: collapsedProgress,
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 16),
+                      padding: const EdgeInsets.only(
+                          left: 16, right: actionAreaWidth),
                       child: Row(
                         children: [
-                          Flexible(
-                            child: Text(
-                              nextName,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.w600,
-                                color: isDark ? Colors.white : Colors.black87,
-                              ),
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  locationLabel,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.white.withValues(alpha: 0.82),
+                                  ),
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  nextName,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                           const SizedBox(width: 8),
-                          Flexible(
-                            child: Text(
-                              locationLabel,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: isDark
-                                    ? Colors.white.withOpacity(0.7)
-                                    : Colors.black54,
-                              ),
-                            ),
-                          ),
+                          _LiquidCountdownBadge(
+                              remaining: remaining, compact: true),
                         ],
                       ),
                     ),
@@ -647,7 +642,8 @@ class _MaterialCard extends StatelessWidget {
 // ── Liquid Countdown Badge ────────────────────────────────────────────────────
 class _LiquidCountdownBadge extends StatelessWidget {
   final Duration remaining;
-  const _LiquidCountdownBadge({required this.remaining});
+  final bool compact;
+  const _LiquidCountdownBadge({required this.remaining, this.compact = false});
 
   @override
   Widget build(BuildContext ctx) {
@@ -655,16 +651,24 @@ class _LiquidCountdownBadge extends StatelessWidget {
     final h = remaining.inHours.toString().padLeft(2, '0');
     final m = (remaining.inMinutes % 60).toString().padLeft(2, '0');
     final s = (remaining.inSeconds % 60).toString().padLeft(2, '0');
+    final radius = compact ? 16.0 : 22.0;
+    final fontSize = compact ? 15.0 : 22.0;
+    final horizontal = compact ? 12.0 : 22.0;
+    final vertical = compact ? 6.0 : 10.0;
 
     return ClipRRect(
-      borderRadius: BorderRadius.circular(22),
+      borderRadius: BorderRadius.circular(radius),
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+        filter: ImageFilter.blur(
+          sigmaX: compact ? 8 : 12,
+          sigmaY: compact ? 8 : 12,
+        ),
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 10),
+          padding:
+              EdgeInsets.symmetric(horizontal: horizontal, vertical: vertical),
           decoration: BoxDecoration(
             color: Colors.white.withOpacity(0.18),
-            borderRadius: BorderRadius.circular(22),
+            borderRadius: BorderRadius.circular(radius),
             border:
                 Border.all(color: Colors.white.withOpacity(0.35), width: 0.8),
             boxShadow: [
@@ -676,11 +680,11 @@ class _LiquidCountdownBadge extends StatelessWidget {
             ],
           ),
           child: Text('$h:$m:$s',
-              style: const TextStyle(
+              style: TextStyle(
                 color: Colors.white,
-                fontSize: 22,
+                fontSize: fontSize,
                 fontWeight: FontWeight.bold,
-                fontFeatures: [FontFeature.tabularFigures()],
+                fontFeatures: const [FontFeature.tabularFigures()],
               )),
         ),
       ),

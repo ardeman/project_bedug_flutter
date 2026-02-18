@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:adhan/adhan.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -112,7 +114,11 @@ class PrayerNotifier extends Notifier<PrayerState> {
           showLocationGuide: e.showLocationGuide,
         );
       } else {
-        state = state.copyWith(loading: false, error: e.toString());
+        state = state.copyWith(
+          loading: false,
+          error: _l10n.locationError,
+          showLocationGuide: true,
+        );
       }
     }
   }
@@ -186,12 +192,22 @@ class PrayerNotifier extends Notifier<PrayerState> {
       }
     }
 
-    return Geolocator.getCurrentPosition(
-      locationSettings: const LocationSettings(
-        accuracy: LocationAccuracy.low, // Lebih cepat untuk hisab
-        timeLimit: Duration(seconds: 10),
-      ),
-    );
+    try {
+      return await Geolocator.getCurrentPosition(
+        locationSettings: const LocationSettings(
+          accuracy: LocationAccuracy.low, // Lebih cepat untuk hisab
+          timeLimit: Duration(seconds: 10),
+        ),
+      );
+    } on TimeoutException {
+      final lastKnown = await Geolocator.getLastKnownPosition();
+      if (lastKnown != null) return lastKnown;
+      throw PrayerLoadException(_l10n.locationError, showLocationGuide: true);
+    } catch (_) {
+      final lastKnown = await Geolocator.getLastKnownPosition();
+      if (lastKnown != null) return lastKnown;
+      throw PrayerLoadException(_l10n.locationError, showLocationGuide: true);
+    }
   }
 
   Future<String> _resolveLocationLabel(Position pos) async {

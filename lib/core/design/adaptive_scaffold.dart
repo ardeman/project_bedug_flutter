@@ -65,8 +65,8 @@ class AdaptiveScaffold extends StatelessWidget {
     final navItems = destinations
         .map(
           (d) => LiquidGlassNavItem(
-            icon: _materialIconFor(d.icon),
-            activeIcon: _materialIconFor(d.selectedIcon ?? d.icon),
+            icon: d.icon,
+            activeIcon: d.selectedIcon ?? d.icon,
             label: d.label,
           ),
         )
@@ -171,10 +171,12 @@ class AdaptiveScaffold extends StatelessWidget {
   String _symbolNameFor(Object icon) {
     if (icon is String) return icon;
     if (icon is IconData) {
-      if (icon == Icons.access_time_outlined || icon == Icons.access_time_filled) {
+      if (icon == Icons.access_time_outlined ||
+          icon == Icons.access_time_filled) {
         return 'clock.fill';
       }
-      if (icon == Icons.calendar_month_outlined || icon == Icons.calendar_month) {
+      if (icon == Icons.calendar_month_outlined ||
+          icon == Icons.calendar_month) {
         return 'calendar.circle.fill';
       }
       if (icon == Icons.settings_outlined || icon == Icons.settings) {
@@ -188,7 +190,7 @@ class AdaptiveScaffold extends StatelessWidget {
   IconData _materialIconFor(Object icon) {
     if (icon is IconData) return icon;
     if (icon is String) {
-      return SFSymbols.resolve(icon) ?? Icons.circle;
+      return SFSymbols.materialFallback(icon);
     }
     return Icons.circle;
   }
