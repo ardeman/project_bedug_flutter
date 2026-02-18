@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+
+set -eu
+
+repo_root="$(git rev-parse --show-toplevel)"
+
+"$repo_root/scripts/analyze_staged_dart.sh"
+

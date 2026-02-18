@@ -50,7 +50,9 @@ Husky-like hook setup (repo-managed git hooks):
 ./scripts/install_git_hooks.sh
 ```
 
-This installs `core.hooksPath=.githooks` and validates commit messages automatically on every `git commit`.
+This installs `core.hooksPath=.githooks` and runs:
+- `pre-commit`: `flutter analyze` on staged `.dart` files
+- `commit-msg`: Conventional Commit message validation
 
 ## Supported Platforms
 
