@@ -66,7 +66,7 @@ class _CalculationMethodPickerSheetState
 
   @override
   Widget build(BuildContext ctx) {
-    final isDark = MediaQuery.of(ctx).platformBrightness == Brightness.dark;
+    final isDark = Theme.of(ctx).brightness == Brightness.dark;
     final bottom = MediaQuery.of(ctx).padding.bottom;
     final h = MediaQuery.of(ctx).size.height;
 
@@ -124,12 +124,14 @@ class _CalculationMethodPickerSheetState
                               }
                             },
                             child: Padding(
-                              padding: const EdgeInsets.only(top: 8, bottom: 10),
+                              padding:
+                                  const EdgeInsets.only(top: 8, bottom: 10),
                               child: Container(
                                 width: 36,
                                 height: 4,
                                 decoration: BoxDecoration(
-                                  color: isDark ? Colors.white24 : Colors.black12,
+                                  color:
+                                      isDark ? Colors.white24 : Colors.black12,
                                   borderRadius: BorderRadius.circular(2),
                                 ),
                               ),
@@ -156,7 +158,8 @@ class _CalculationMethodPickerSheetState
                                 final i = entry.$1;
                                 final method = entry.$2;
                                 final isSelected =
-                                    ref.watch(settingsProvider).method == method;
+                                    ref.watch(settingsProvider).method ==
+                                        method;
                                 final isKemenag =
                                     method == AppCalculationMethod.kemenag;
                                 return TweenAnimationBuilder<double>(
@@ -178,8 +181,8 @@ class _CalculationMethodPickerSheetState
                                         horizontal: 12, vertical: 2),
                                     decoration: BoxDecoration(
                                       color: isSelected
-                                          ? AppColors.emerald.withValues(
-                                              alpha: .08)
+                                          ? AppColors.emerald
+                                              .withValues(alpha: .08)
                                           : Colors.transparent,
                                       borderRadius: BorderRadius.circular(12),
                                     ),
@@ -214,7 +217,8 @@ class _CalculationMethodPickerSheetState
                                           ? Container(
                                               padding:
                                                   const EdgeInsets.symmetric(
-                                                      horizontal: 8, vertical: 3),
+                                                      horizontal: 8,
+                                                      vertical: 3),
                                               decoration: BoxDecoration(
                                                 color: AppColors.emerald
                                                     .withValues(alpha: .15),
@@ -248,7 +252,7 @@ class _CalculationMethodPickerSheetState
                       ),
                     ),
                   ),
-                                ),
+                ),
               ),
             ),
           ),

@@ -45,8 +45,9 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
   Widget build(BuildContext ctx) {
     final l10n = AppLocalizations.of(ctx);
     final state = ref.watch(prayerProvider);
-    final next  = ref.watch(nextPrayerProvider);
+    final next = ref.watch(nextPrayerProvider);
     final nextName = _prayerLabel(l10n, next.key);
+    final isDark = Theme.of(ctx).brightness == Brightness.dark;
 
     return Scaffold(
       extendBodyBehindAppBar: _isApple,
@@ -60,6 +61,7 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                     l10n: l10n,
                     nextName: nextName,
                     remaining: _remaining,
+                    isDark: isDark,
                     onTune: () => _showMethodPicker(ctx),
                     onRefresh: () => ref.read(prayerProvider.notifier).load(),
                   ),
@@ -82,7 +84,8 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(l10n.nextPrayer,
-                                style: const TextStyle(color: Colors.white70, fontSize: 14)),
+                                style: const TextStyle(
+                                    color: Colors.white70, fontSize: 14)),
                             const SizedBox(height: 4),
                             Text(nextName,
                                 style: const TextStyle(
@@ -118,7 +121,8 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(24),
                   child: Column(mainAxisSize: MainAxisSize.min, children: [
-                    const Icon(Icons.location_off, size: 48, color: Colors.grey),
+                    const Icon(Icons.location_off,
+                        size: 48, color: Colors.grey),
                     const SizedBox(height: 12),
                     Text(state.error!,
                         textAlign: TextAlign.center,
@@ -130,7 +134,8 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                         child: Text(
                           l10n.locationGuide,
                           textAlign: TextAlign.center,
-                          style: const TextStyle(fontSize: 12, color: Colors.grey),
+                          style:
+                              const TextStyle(fontSize: 12, color: Colors.grey),
                         ),
                       ),
                     const SizedBox(height: 4),
@@ -172,14 +177,16 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
     };
   }
 
-  List<Widget> _buildPrayerCards(BuildContext ctx, dynamic times, String nextKey) {
+  List<Widget> _buildPrayerCards(
+      BuildContext ctx, dynamic times, String nextKey) {
     final l10n = AppLocalizations.of(ctx);
     final prayers = [
       _PrayerEntry('fajr', l10n.fajr, Icons.bedtime_outlined, times.fajr),
       _PrayerEntry('sunrise', l10n.sunrise, Icons.wb_twilight, times.sunrise),
       _PrayerEntry('dhuhr', l10n.dhuhr, Icons.wb_sunny_outlined, times.dhuhr),
       _PrayerEntry('asr', l10n.asr, Icons.wb_cloudy_outlined, times.asr),
-      _PrayerEntry('maghrib', l10n.maghrib, Icons.nights_stay_outlined, times.maghrib),
+      _PrayerEntry(
+          'maghrib', l10n.maghrib, Icons.nights_stay_outlined, times.maghrib),
       _PrayerEntry('isha', l10n.isha, Icons.dark_mode_outlined, times.isha),
     ];
     return prayers
@@ -203,6 +210,7 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
   final AppLocalizations l10n;
   final String nextName;
   final Duration remaining;
+  final bool isDark;
   final VoidCallback onTune;
   final VoidCallback onRefresh;
 
@@ -210,21 +218,25 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
     required this.l10n,
     required this.nextName,
     required this.remaining,
+    required this.isDark,
     required this.onTune,
     required this.onRefresh,
   });
 
-  @override double get minExtent => kToolbarHeight + 44;
-  @override double get maxExtent => 240;
+  @override
+  double get minExtent => kToolbarHeight + 44;
+  @override
+  double get maxExtent => 240;
 
   @override
   bool shouldRebuild(_LiquidGlassAppBar old) =>
-      old.nextName != nextName || old.remaining != remaining;
+      old.nextName != nextName ||
+      old.remaining != remaining ||
+      old.isDark != isDark;
 
   @override
   Widget build(BuildContext ctx, double shrinkOffset, bool overlapsContent) {
     final progress = (shrinkOffset / (maxExtent - minExtent)).clamp(0.0, 1.0);
-    final isDark   = MediaQuery.of(ctx).platformBrightness == Brightness.dark;
 
     return ClipRect(
       child: BackdropFilter(
@@ -235,12 +247,16 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                Color.lerp(AppColors.emerald,
-                    isDark ? const Color(0xFF1C1C1E) : Colors.white,
-                    progress)!.withOpacity(progress < 0.5 ? 1.0 : 0.82),
-                Color.lerp(AppColors.teal,
-                    isDark ? const Color(0xFF1C1C1E) : Colors.white,
-                    progress)!.withOpacity(progress < 0.5 ? 1.0 : 0.82),
+                Color.lerp(
+                        AppColors.emerald,
+                        isDark ? const Color(0xFF1C1C1E) : Colors.white,
+                        progress)!
+                    .withOpacity(progress < 0.5 ? 1.0 : 0.82),
+                Color.lerp(
+                        AppColors.teal,
+                        isDark ? const Color(0xFF1C1C1E) : Colors.white,
+                        progress)!
+                    .withOpacity(progress < 0.5 ? 1.0 : 0.82),
               ],
             ),
             border: Border(
@@ -260,7 +276,8 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
               children: [
                 // Actions
                 Positioned(
-                  top: 0, right: 4,
+                  top: 0,
+                  right: 4,
                   child: Row(children: [
                     _GlassIconButton(
                       icon: Icons.tune,
@@ -286,7 +303,8 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
                         SizedBox(height: kToolbarHeight * 0.3),
                         Text(l10n.nextPrayer,
                             style: TextStyle(
-                                color: Colors.white.withOpacity(0.8), fontSize: 14)),
+                                color: Colors.white.withOpacity(0.8),
+                                fontSize: 14)),
                         const SizedBox(height: 4),
                         Text(nextName,
                             style: const TextStyle(
@@ -352,14 +370,17 @@ class _GlassIconButton extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(6),
                     decoration: BoxDecoration(
-                      color: (isDark ? Colors.white : Colors.black).withOpacity(0.1),
+                      color: (isDark ? Colors.white : Colors.black)
+                          .withOpacity(0.1),
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(
-                        color: (isDark ? Colors.white : Colors.black).withOpacity(0.12),
+                        color: (isDark ? Colors.white : Colors.black)
+                            .withOpacity(0.12),
                         width: 0.5,
                       ),
                     ),
-                    child: Icon(icon, size: 18,
+                    child: Icon(icon,
+                        size: 18,
                         color: isDark ? Colors.white : Colors.black87),
                   ),
                 ),
@@ -383,7 +404,7 @@ class _LiquidGlassCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctx) {
-    final isDark = MediaQuery.of(ctx).platformBrightness == Brightness.dark;
+    final isDark = Theme.of(ctx).brightness == Brightness.dark;
     final t = entry.time;
     final timeStr = t == null
         ? '--:--'
@@ -442,14 +463,16 @@ class _LiquidGlassCard extends StatelessWidget {
               child: Row(
                 children: [
                   Container(
-                    width: 42, height: 42,
+                    width: 42,
+                    height: 42,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: isNext
                           ? Colors.white.withOpacity(0.2)
                           : AppColors.emerald.withOpacity(0.12),
                     ),
-                    child: Icon(entry.icon, size: 20,
+                    child: Icon(entry.icon,
+                        size: 20,
                         color: isNext ? Colors.white : AppColors.emerald),
                   ),
                   const SizedBox(width: 16),
@@ -567,7 +590,8 @@ class _LiquidCountdownBadge extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.white.withOpacity(0.18),
             borderRadius: BorderRadius.circular(22),
-            border: Border.all(color: Colors.white.withOpacity(0.35), width: 0.8),
+            border:
+                Border.all(color: Colors.white.withOpacity(0.35), width: 0.8),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.08),

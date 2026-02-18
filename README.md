@@ -12,6 +12,11 @@ Cross-platform Muslim prayer time app with Hijri calendar, localized UI, and ada
 - Adaptive UI by platform: Liquid Glass (iOS/macOS), Material 3 (Android/Linux), Fluent-like layout (Windows)
 - Shared, reusable "Calculation Method" picker with animated slide + drag-to-dismiss
 
+## Theme Behavior
+
+- In-app theme switching (System/Light/Dark) updates immediately across prayer cards, app bars, nav bars, and glass overlays.
+- UI brightness is derived from the active app theme (`Theme.of(context).brightness`) instead of system platform brightness, to avoid delayed or partial color updates when user theme mode is changed inside the app.
+
 ## Supported Platforms
 
 | Platform | Design System | Status |

@@ -52,11 +52,16 @@ class _AppleCard extends StatelessWidget {
   final String prayerName, time;
   final bool isNext, isActive;
   final VoidCallback? onTap;
-  const _AppleCard({required this.prayerName, required this.time, required this.isNext, required this.isActive, this.onTap});
+  const _AppleCard(
+      {required this.prayerName,
+      required this.time,
+      required this.isNext,
+      required this.isActive,
+      this.onTap});
 
   @override
   Widget build(BuildContext ctx) {
-    final isDark = MediaQuery.of(ctx).platformBrightness == Brightness.dark;
+    final isDark = Theme.of(ctx).brightness == Brightness.dark;
     return GestureDetector(
       onTap: onTap,
       child: LiquidGlass(
@@ -105,9 +110,8 @@ class _AppleCard extends StatelessWidget {
                       'Berikutnya',
                       style: TextStyle(
                         fontSize: 12,
-                        color: isActive
-                            ? Colors.white70
-                            : const Color(0xFF007AFF),
+                        color:
+                            isActive ? Colors.white70 : const Color(0xFF007AFF),
                       ),
                     ),
                 ],
@@ -136,7 +140,12 @@ class _MaterialCard extends StatelessWidget {
   final String prayerName, time;
   final bool isNext, isActive;
   final VoidCallback? onTap;
-  const _MaterialCard({required this.prayerName, required this.time, required this.isNext, required this.isActive, this.onTap});
+  const _MaterialCard(
+      {required this.prayerName,
+      required this.time,
+      required this.isNext,
+      required this.isActive,
+      this.onTap});
 
   @override
   Widget build(BuildContext ctx) {
@@ -161,20 +170,25 @@ class _MaterialCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(prayerName, style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      color: isActive ? cs.onPrimaryContainer : cs.onSurface,
-                    )),
-                    if (isNext) Text('Berikutnya', style: TextStyle(fontSize: 12, color: cs.primary)),
+                    Text(prayerName,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color:
+                              isActive ? cs.onPrimaryContainer : cs.onSurface,
+                        )),
+                    if (isNext)
+                      Text('Berikutnya',
+                          style: TextStyle(fontSize: 12, color: cs.primary)),
                   ],
                 ),
               ),
-              Text(time, style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: isActive ? cs.onPrimaryContainer : cs.onSurface,
-                fontFeatures: const [FontFeature.tabularFigures()],
-              )),
+              Text(time,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: isActive ? cs.onPrimaryContainer : cs.onSurface,
+                    fontFeatures: const [FontFeature.tabularFigures()],
+                  )),
             ],
           ),
         ),
@@ -188,11 +202,16 @@ class _FluentCard extends StatelessWidget {
   final String prayerName, time;
   final bool isNext, isActive;
   final VoidCallback? onTap;
-  const _FluentCard({required this.prayerName, required this.time, required this.isNext, required this.isActive, this.onTap});
+  const _FluentCard(
+      {required this.prayerName,
+      required this.time,
+      required this.isNext,
+      required this.isActive,
+      this.onTap});
 
   @override
   Widget build(BuildContext ctx) {
-    final isDark = MediaQuery.of(ctx).platformBrightness == Brightness.dark;
+    final isDark = Theme.of(ctx).brightness == Brightness.dark;
     // Fluent Acrylic simulation
     return ClipRRect(
       borderRadius: BorderRadius.circular(8),
@@ -205,12 +224,17 @@ class _FluentCard extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               color: isActive
-                  ? const Color(0xFF0078D4).withOpacity(0.15) // Fluent accent blue
-                  : (isDark ? Colors.white.withOpacity(0.06) : Colors.white.withOpacity(0.7)),
+                  ? const Color(0xFF0078D4)
+                      .withOpacity(0.15) // Fluent accent blue
+                  : (isDark
+                      ? Colors.white.withOpacity(0.06)
+                      : Colors.white.withOpacity(0.7)),
               border: Border.all(
                 color: isActive
                     ? const Color(0xFF0078D4).withOpacity(0.5)
-                    : (isDark ? Colors.white12 : Colors.black.withOpacity(0.08)),
+                    : (isDark
+                        ? Colors.white12
+                        : Colors.black.withOpacity(0.08)),
                 width: isActive ? 1 : 0.5,
               ),
             ),
@@ -228,22 +252,27 @@ class _FluentCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(prayerName, style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: isDark ? Colors.white : Colors.black87,
-                      )),
-                      if (isNext) const Text('Berikutnya', style: TextStyle(
-                        fontSize: 12, color: Color(0xFF0078D4),
-                      )),
+                      Text(prayerName,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: isDark ? Colors.white : Colors.black87,
+                          )),
+                      if (isNext)
+                        const Text('Berikutnya',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Color(0xFF0078D4),
+                            )),
                     ],
                   ),
                 ),
-                Text(time, style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: isDark ? Colors.white : Colors.black87,
-                  fontFeatures: const [FontFeature.tabularFigures()],
-                )),
+                Text(time,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: isDark ? Colors.white : Colors.black87,
+                      fontFeatures: const [FontFeature.tabularFigures()],
+                    )),
               ],
             ),
           ),
@@ -255,11 +284,11 @@ class _FluentCard extends StatelessWidget {
 
 IconData _iconFor(String name) {
   return switch (name.toLowerCase()) {
-    'subuh' || 'fajr'    => Icons.nights_stay_outlined,
-    'dzuhur' || 'dhuhr'  => Icons.wb_sunny_outlined,
-    'ashar' || 'asr'     => Icons.wb_cloudy_outlined,
-    'maghrib'            => Icons.wb_twilight_outlined,
-    'isya' || 'isha'     => Icons.dark_mode_outlined,
-    _                    => Icons.access_time,
+    'subuh' || 'fajr' => Icons.nights_stay_outlined,
+    'dzuhur' || 'dhuhr' => Icons.wb_sunny_outlined,
+    'ashar' || 'asr' => Icons.wb_cloudy_outlined,
+    'maghrib' => Icons.wb_twilight_outlined,
+    'isya' || 'isha' => Icons.dark_mode_outlined,
+    _ => Icons.access_time,
   };
 }

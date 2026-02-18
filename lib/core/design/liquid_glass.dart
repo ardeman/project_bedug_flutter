@@ -45,10 +45,11 @@ class LiquidGlass extends StatelessWidget {
                 tintColor.withOpacity(tintOpacity - 0.05),
               ],
             ),
-            border: border ?? Border.all(
-              color: Colors.white.withOpacity(0.25),
-              width: 0.8,
-            ),
+            border: border ??
+                Border.all(
+                  color: Colors.white.withOpacity(0.25),
+                  width: 0.8,
+                ),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.08),
@@ -108,7 +109,7 @@ class LiquidGlassAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext ctx) {
-    final isDark = MediaQuery.of(ctx).platformBrightness == Brightness.dark;
+    final isDark = Theme.of(ctx).brightness == Brightness.dark;
     return ClipRect(
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
@@ -138,7 +139,9 @@ class LiquidGlassAppBar extends StatelessWidget implements PreferredSizeWidget {
                 color: isDark ? Colors.white : Colors.black,
               ),
             ),
-            trailing: actions != null ? Row(mainAxisSize: MainAxisSize.min, children: actions!) : null,
+            trailing: actions != null
+                ? Row(mainAxisSize: MainAxisSize.min, children: actions!)
+                : null,
             centerMiddle: centerTitle,
           ),
         ),
@@ -162,7 +165,7 @@ class LiquidGlassNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctx) {
-    final isDark = MediaQuery.of(ctx).platformBrightness == Brightness.dark;
+    final isDark = Theme.of(ctx).brightness == Brightness.dark;
     final bottom = MediaQuery.of(ctx).padding.bottom;
 
     return ClipRect(
@@ -200,10 +203,12 @@ class LiquidGlassNavBar extends StatelessWidget {
                       AnimatedContainer(
                         duration: const Duration(milliseconds: 200),
                         curve: Curves.easeOutCubic,
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 4),
                         decoration: selected
                             ? BoxDecoration(
-                                color: (isDark ? Colors.white : Colors.black).withOpacity(0.1),
+                                color: (isDark ? Colors.white : Colors.black)
+                                    .withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(12),
                               )
                             : null,
@@ -220,7 +225,8 @@ class LiquidGlassNavBar extends StatelessWidget {
                         item.label,
                         style: TextStyle(
                           fontSize: 10,
-                          fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
+                          fontWeight:
+                              selected ? FontWeight.w600 : FontWeight.w400,
                           color: selected
                               ? CupertinoColors.activeBlue
                               : (isDark ? Colors.white54 : Colors.black45),
@@ -242,7 +248,8 @@ class LiquidGlassNavItem {
   final IconData icon;
   final IconData activeIcon;
   final String label;
-  const LiquidGlassNavItem({required this.icon, required this.activeIcon, required this.label});
+  const LiquidGlassNavItem(
+      {required this.icon, required this.activeIcon, required this.label});
 }
 
 /// Modal / Bottom Sheet dengan Liquid Glass
@@ -252,7 +259,8 @@ class LiquidGlassSheet extends StatelessWidget {
 
   const LiquidGlassSheet({super.key, required this.child, this.title});
 
-  static Future<T?> show<T>(BuildContext ctx, {required Widget child, String? title}) {
+  static Future<T?> show<T>(BuildContext ctx,
+      {required Widget child, String? title}) {
     return showCupertinoModalPopup<T>(
       context: ctx,
       builder: (_) => LiquidGlassSheet(child: child, title: title),
@@ -261,7 +269,7 @@ class LiquidGlassSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctx) {
-    final isDark = MediaQuery.of(ctx).platformBrightness == Brightness.dark;
+    final isDark = Theme.of(ctx).brightness == Brightness.dark;
     final bottom = MediaQuery.of(ctx).padding.bottom;
 
     return ClipRRect(

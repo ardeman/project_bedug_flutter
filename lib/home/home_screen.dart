@@ -83,13 +83,13 @@ class _LiquidGlassNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctx) {
-    final isDark = MediaQuery.of(ctx).platformBrightness == Brightness.dark;
+    final isDark = Theme.of(ctx).brightness == Brightness.dark;
     final bottom = MediaQuery.of(ctx).padding.bottom;
 
     final items = [
-      (Icons.access_time_outlined,  Icons.access_time_filled,  l10n.prayerTimes),
-      (Icons.calendar_month_outlined, Icons.calendar_month,    l10n.hijriCalendar),
-      (Icons.settings_outlined,      Icons.settings,           l10n.settings),
+      (Icons.access_time_outlined, Icons.access_time_filled, l10n.prayerTimes),
+      (Icons.calendar_month_outlined, Icons.calendar_month, l10n.hijriCalendar),
+      (Icons.settings_outlined, Icons.settings, l10n.settings),
     ];
 
     return ClipRect(
@@ -151,9 +151,8 @@ class _LiquidGlassNavBar extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 10,
-                          fontWeight: selected
-                              ? FontWeight.w600
-                              : FontWeight.w400,
+                          fontWeight:
+                              selected ? FontWeight.w600 : FontWeight.w400,
                           color: selected
                               ? AppColors.emerald
                               : (isDark ? Colors.white54 : Colors.black38),

@@ -55,12 +55,12 @@ class AdaptiveScaffold extends StatelessWidget {
 
   // ── Apple ────────────────────────────────────────────────────────────────
   Widget _buildApple(BuildContext ctx) {
+    final isDark = Theme.of(ctx).brightness == Brightness.dark;
     return Scaffold(
       extendBodyBehindAppBar: true,
       extendBody: true,
-      backgroundColor: MediaQuery.of(ctx).platformBrightness == Brightness.dark
-          ? const Color(0xFF000000)
-          : const Color(0xFFF2F2F7),
+      backgroundColor:
+          isDark ? const Color(0xFF000000) : const Color(0xFFF2F2F7),
       appBar: LiquidGlassAppBar(
         title: title,
         actions: appBarActions,
@@ -115,13 +115,16 @@ class AdaptiveScaffold extends StatelessWidget {
 
   // ── Fluent / Windows ─────────────────────────────────────────────────────
   Widget _buildFluent(BuildContext ctx) {
-    final isDark = MediaQuery.of(ctx).platformBrightness == Brightness.dark;
+    final isDark = Theme.of(ctx).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: isDark ? const Color(0xFF202020) : const Color(0xFFF3F3F3),
+      backgroundColor:
+          isDark ? const Color(0xFF202020) : const Color(0xFFF3F3F3),
       appBar: AppBar(
-        title: Text(title, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
+        title: Text(title,
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
         elevation: 0,
-        backgroundColor: isDark ? const Color(0xFF2C2C2C) : const Color(0xFFFFFFFF),
+        backgroundColor:
+            isDark ? const Color(0xFF2C2C2C) : const Color(0xFFFFFFFF),
         actions: appBarActions,
         leading: leading,
       ),
