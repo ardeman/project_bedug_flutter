@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:cupertino_native/cupertino_native.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../generated/l10n/app_localizations.dart';
 import '../../core/constants/app_colors.dart';
@@ -21,6 +22,7 @@ class PrayerTimesScreen extends ConsumerStatefulWidget {
 class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
   Timer? _tick;
   Duration _remaining = Duration.zero;
+  bool _isMethodPickerOpen = false;
 
   @override
   void initState() {
@@ -227,12 +229,18 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
         .toList();
   }
 
-  void _showMethodPicker(BuildContext ctx) {
-    showCalculationMethodPicker(
-      ctx,
-      ref,
-      current: ref.read(settingsProvider).method,
-    );
+  Future<void> _showMethodPicker(BuildContext ctx) async {
+    if (_isMethodPickerOpen) return;
+    _isMethodPickerOpen = true;
+    try {
+      await showCalculationMethodPicker(
+        ctx,
+        ref,
+        current: ref.read(settingsProvider).method,
+      );
+    } finally {
+      _isMethodPickerOpen = false;
+    }
   }
 }
 
@@ -473,32 +481,48 @@ class _GlassIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctx) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: frosted
-            ? ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
-                  child: Container(
-                    padding: const EdgeInsets.all(6),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        color: Colors.white.withValues(alpha: 0.12),
-                        width: 0.5,
-                      ),
-                    ),
-                    child: Icon(icon, size: 18, color: Colors.white),
-                  ),
-                ),
-              )
-            : Icon(icon, size: 22, color: Colors.white),
+    final iconButton = CNButton.icon(
+      icon: CNSymbol(
+        _sfSymbolFor(icon),
+        size: frosted ? 18 : 22,
+        color: Colors.white,
+        mode: CNSymbolRenderingMode.monochrome,
       ),
+      tint: Colors.white,
+      onPressed: onTap,
+      style: CNButtonStyle.plain,
+      size: frosted ? 30 : 32,
     );
+
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: frosted
+          ? ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+                child: Container(
+                  padding: const EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: Colors.white.withValues(alpha: 0.12),
+                      width: 0.5,
+                    ),
+                  ),
+                  child: iconButton,
+                ),
+              ),
+            )
+          : iconButton,
+    );
+  }
+
+  String _sfSymbolFor(IconData value) {
+    if (value == Icons.tune) return 'slider.horizontal.3';
+    if (value == Icons.refresh) return 'arrow.clockwise';
+    return 'circle';
   }
 }
 

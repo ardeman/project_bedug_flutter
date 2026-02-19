@@ -84,17 +84,27 @@ class _NativeAppleMethodSheet extends ConsumerWidget {
     final l10n = AppLocalizations.of(ctx);
     final selectedMethod = ref.watch(settingsProvider).method;
     final isDark = Theme.of(ctx).brightness == Brightness.dark;
+    final navBg = isDark
+        ? const Color(0xFF1C1C1E).withValues(alpha: 0.96)
+        : const Color(0xFFF8F8FA).withValues(alpha: 0.96);
     return CupertinoPageScaffold(
-      backgroundColor: isDark ? const Color(0xFF111114) : const Color(0xFFF8F8FA),
       navigationBar: CupertinoNavigationBar(
-        middle: Text(l10n.calculationMethod),
+        backgroundColor: navBg,
+        automaticBackgroundVisibility: false,
+        middle: Text(
+          l10n.calculationMethod,
+          style: TextStyle(
+            color: isDark ? Colors.white : const Color(0xFF1C1C1E),
+            fontWeight: FontWeight.w700,
+          ),
+        ),
       ),
       child: SafeArea(
         top: false,
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
               child: Text(
                 l10n.calculationMethodDesc,
                 textAlign: TextAlign.center,
@@ -112,7 +122,8 @@ class _NativeAppleMethodSheet extends ConsumerWidget {
                   final isSelected = selectedMethod == method;
                   final isKemenag = method == AppCalculationMethod.kemenag;
                   return CupertinoButton(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 12),
                     onPressed: () {
                       ref.read(settingsProvider.notifier).setMethod(method);
                       Navigator.of(ctx, rootNavigator: true).pop();
@@ -133,17 +144,20 @@ class _NativeAppleMethodSheet extends ConsumerWidget {
                             style: TextStyle(
                               color: isSelected
                                   ? AppColors.emerald
-                                  : (isDark ? Colors.white : const Color(0xFF1C1C1E)),
+                                  : (isDark
+                                      ? Colors.white
+                                      : const Color(0xFF1C1C1E)),
                               fontSize: 20,
-                              fontWeight:
-                                  isSelected ? FontWeight.w600 : FontWeight.w400,
+                              fontWeight: isSelected
+                                  ? FontWeight.w600
+                                  : FontWeight.w400,
                             ),
                           ),
                         ),
                         if (isKemenag)
                           Container(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 4),
                             decoration: BoxDecoration(
                               color: AppColors.emerald.withValues(alpha: .15),
                               borderRadius: BorderRadius.circular(8),
