@@ -52,10 +52,9 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
     final mq = MediaQuery.of(ctx);
     final isPortrait = mq.orientation == Orientation.portrait;
     final topInset = mq.padding.top;
-    final hasDynamicIsland =
-        !kIsWeb && Platform.isIOS && isPortrait && topInset >= 54;
-    final minCollapsedExtent =
-        kToolbarHeight + (hasDynamicIsland ? (topInset + 6) : 44);
+    final isIosPortrait = !kIsWeb && Platform.isIOS && isPortrait;
+    final minCollapsedExtent = kToolbarHeight +
+        (isIosPortrait ? (topInset + 8).clamp(44.0, 62.0) : 44.0);
 
     return Scaffold(
       extendBodyBehindAppBar: _isApple,
@@ -70,7 +69,8 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                     locationLabel: locationLabel,
                     remaining: _remaining,
                     minCollapsedExtent: minCollapsedExtent,
-                    hasDynamicIsland: hasDynamicIsland,
+                    isIosPortrait: isIosPortrait,
+                    topInset: topInset,
                     isDark: isDark,
                     onTune: () => _showMethodPicker(ctx),
                     onRefresh: () => ref.read(prayerProvider.notifier).load(),
@@ -242,7 +242,8 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
   final String locationLabel;
   final Duration remaining;
   final double minCollapsedExtent;
-  final bool hasDynamicIsland;
+  final bool isIosPortrait;
+  final double topInset;
   final bool isDark;
   final VoidCallback onTune;
   final VoidCallback onRefresh;
@@ -252,7 +253,8 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
     required this.locationLabel,
     required this.remaining,
     required this.minCollapsedExtent,
-    required this.hasDynamicIsland,
+    required this.isIosPortrait,
+    required this.topInset,
     required this.isDark,
     required this.onTune,
     required this.onRefresh,
@@ -269,16 +271,20 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
       old.locationLabel != locationLabel ||
       old.remaining != remaining ||
       old.minCollapsedExtent != minCollapsedExtent ||
-      old.hasDynamicIsland != hasDynamicIsland ||
+      old.isIosPortrait != isIosPortrait ||
+      old.topInset != topInset ||
       old.isDark != isDark;
 
   @override
   Widget build(BuildContext ctx, double shrinkOffset, bool overlapsContent) {
     final progress = (shrinkOffset / (maxExtent - minExtent)).clamp(0.0, 1.0);
     final collapsedProgress = (progress * 2 - 1).clamp(0.0, 1.0);
-    final collapsedActionTopMax = hasDynamicIsland ? 12.0 : 22.0;
-    final collapsedActionTop =
-        ((minExtent - kToolbarHeight) / 2).clamp(0.0, collapsedActionTopMax);
+    final isLargeInsetIosPortrait = isIosPortrait && topInset >= 54;
+    final collapsedActionTop = isIosPortrait
+        ? (isLargeInsetIosPortrait ? 0.0 : 2.0)
+        : ((minExtent - kToolbarHeight) / 2).clamp(0.0, 22.0);
+    final iosPortraitLift =
+        isLargeInsetIosPortrait ? ((topInset - 54) / 2).clamp(0.0, 3.0) : 0.0;
     final actionTop = lerpDouble(0, collapsedActionTop, collapsedProgress)!;
     const actionAreaWidth = 116.0;
 
@@ -312,7 +318,7 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
               children: [
                 // Actions
                 Positioned(
-                  top: actionTop,
+                  top: actionTop - iosPortraitLift,
                   right: 4,
                   child: SizedBox(
                     height: kToolbarHeight,
