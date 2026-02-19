@@ -458,18 +458,14 @@ class _GlassIconButton extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(6),
                     decoration: BoxDecoration(
-                      color: (isDark ? Colors.white : Colors.black)
-                          .withValues(alpha: 0.1),
+                      color: Colors.white.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(
-                        color: (isDark ? Colors.white : Colors.black)
-                            .withValues(alpha: 0.12),
+                        color: Colors.white.withValues(alpha: 0.12),
                         width: 0.5,
                       ),
                     ),
-                    child: Icon(icon,
-                        size: 18,
-                        color: isDark ? Colors.white : Colors.black87),
+                    child: Icon(icon, size: 18, color: Colors.white),
                   ),
                 ),
               )
