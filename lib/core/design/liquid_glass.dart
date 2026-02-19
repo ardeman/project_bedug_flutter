@@ -155,7 +155,7 @@ class LiquidGlassAppBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 /// Bottom Navigation Bar with Liquid Glass
-class LiquidGlassNavBar extends StatelessWidget {
+class LiquidGlassNavBar extends StatefulWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
   final List<LiquidGlassNavItem> items;
@@ -166,6 +166,43 @@ class LiquidGlassNavBar extends StatelessWidget {
     required this.onTap,
     required this.items,
   });
+
+  @override
+  State<LiquidGlassNavBar> createState() => _LiquidGlassNavBarState();
+}
+
+class _LiquidGlassNavBarState extends State<LiquidGlassNavBar> {
+  int? _draggedToIndex;
+  bool _isDraggingNav = false;
+
+  bool get _supportsMacDrag =>
+      !kIsWeb && defaultTargetPlatform == TargetPlatform.macOS;
+
+  void _onNavDragStart(DragStartDetails _) {
+    _draggedToIndex = widget.currentIndex;
+    if (_supportsMacDrag) {
+      setState(() => _isDraggingNav = true);
+    }
+  }
+
+  void _onNavDragUpdate(DragUpdateDetails details, double width) {
+    if (!_supportsMacDrag || width <= 0) return;
+    final slotWidth = width / widget.items.length;
+    final rawIndex = (details.localPosition.dx / slotWidth).floor();
+    final nextIndex = rawIndex.clamp(0, widget.items.length - 1);
+
+    if (nextIndex != _draggedToIndex && nextIndex != widget.currentIndex) {
+      _draggedToIndex = nextIndex;
+      widget.onTap(nextIndex);
+    }
+  }
+
+  void _onNavDragEnd(DragEndDetails _) {
+    _draggedToIndex = null;
+    if (_supportsMacDrag) {
+      setState(() => _isDraggingNav = false);
+    }
+  }
 
   @override
   Widget build(BuildContext ctx) {
@@ -217,12 +254,28 @@ class LiquidGlassNavBar extends StatelessWidget {
             child: LayoutBuilder(
               builder: (ctx, constraints) {
                 const navPadding = 6.0;
-                final slotWidth = constraints.maxWidth / items.length;
+                final slotWidth = constraints.maxWidth / widget.items.length;
                 final pillWidth = slotWidth - (navPadding * 2);
-                final pillLeft = (currentIndex * slotWidth) + navPadding;
+                final pillLeft = (widget.currentIndex * slotWidth) + navPadding;
 
-                return Stack(
-                  children: [
+                return MouseRegion(
+                  cursor: _supportsMacDrag
+                      ? (_isDraggingNav
+                          ? SystemMouseCursors.grabbing
+                          : SystemMouseCursors.grab)
+                      : MouseCursor.defer,
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onHorizontalDragStart:
+                        _supportsMacDrag ? _onNavDragStart : null,
+                    onHorizontalDragUpdate: _supportsMacDrag
+                        ? (details) =>
+                            _onNavDragUpdate(details, constraints.maxWidth)
+                        : null,
+                    onHorizontalDragEnd:
+                        _supportsMacDrag ? _onNavDragEnd : null,
+                    child: Stack(
+                    children: [
                     AnimatedPositioned(
                       duration: const Duration(milliseconds: 320),
                       curve: Curves.easeOutCubic,
@@ -253,63 +306,71 @@ class LiquidGlassNavBar extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Row(
-                      children: List.generate(items.length, (i) {
-                        final selected = i == currentIndex;
-                        final item = items[i];
-                        return Expanded(
-                          child: GestureDetector(
-                            onTap: () => onTap(i),
-                            behavior: HitTestBehavior.opaque,
-                            child: Padding(
-                              padding: const EdgeInsets.all(navPadding),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  AnimatedSwitcher(
-                                    duration: const Duration(milliseconds: 220),
-                                    transitionBuilder: (child, anim) =>
-                                        FadeTransition(
-                                      opacity: anim,
-                                      child: ScaleTransition(
-                                          scale: anim, child: child),
-                                    ),
-                                    child: _buildNavIcon(
-                                      selected ? item.activeIcon : item.icon,
-                                      fallback: selected
-                                          ? Icons.circle
-                                          : Icons.circle_outlined,
-                                      key: ValueKey('${selected}_$i'),
-                                      size: 22,
-                                      color: selected
-                                          ? selectedColor
-                                          : unselectedColor,
-                                    ),
+                      Row(
+                        children: List.generate(widget.items.length, (i) {
+                          final selected = i == widget.currentIndex;
+                          final item = widget.items[i];
+                          return Expanded(
+                            child: MouseRegion(
+                              cursor: SystemMouseCursors.click,
+                              child: GestureDetector(
+                                onTap: () => widget.onTap(i),
+                                behavior: HitTestBehavior.opaque,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(navPadding),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      AnimatedSwitcher(
+                                        duration:
+                                            const Duration(milliseconds: 220),
+                                        transitionBuilder: (child, anim) =>
+                                            FadeTransition(
+                                          opacity: anim,
+                                          child: ScaleTransition(
+                                              scale: anim, child: child),
+                                        ),
+                                        child: _buildNavIcon(
+                                          selected
+                                              ? item.activeIcon
+                                              : item.icon,
+                                          fallback: selected
+                                              ? Icons.circle
+                                              : Icons.circle_outlined,
+                                          key: ValueKey('${selected}_$i'),
+                                          size: 22,
+                                          color: selected
+                                              ? selectedColor
+                                              : unselectedColor,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 2),
+                                      Text(
+                                        item.label,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: selected
+                                              ? FontWeight.w600
+                                              : FontWeight.w500,
+                                          color: selected
+                                              ? selectedColor
+                                              : unselectedColor,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  const SizedBox(height: 2),
-                                  Text(
-                                    item.label,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      fontWeight: selected
-                                          ? FontWeight.w600
-                                          : FontWeight.w500,
-                                      color: selected
-                                          ? selectedColor
-                                          : unselectedColor,
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      }),
-                    ),
-                  ],
+                          );
+                        }),
+                      ),
+                    ],
+                  ),
+                ),
                 );
               },
             ),

@@ -341,103 +341,109 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
                   ),
                 ),
                 // Expanded content
-                Opacity(
-                  opacity: (1 - progress * 2).clamp(0.0, 1.0),
-                  child: Center(
-                    child: LayoutBuilder(
-                      builder: (context, constraints) {
-                        final compact = constraints.maxHeight < 150;
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                                height: compact ? 8 : kToolbarHeight * 0.3),
-                            if (!compact)
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.location_on_outlined,
-                                    size: 14,
-                                    color: Colors.white.withValues(alpha: 0.75),
-                                  ),
-                                  const SizedBox(width: 4),
-                                  Flexible(
-                                    child: Text(
-                                      locationLabel,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        color: Colors.white
-                                            .withValues(alpha: 0.75),
-                                        fontSize: 12,
+                IgnorePointer(
+                  child: Opacity(
+                    opacity: (1 - progress * 2).clamp(0.0, 1.0),
+                    child: Center(
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          final compact = constraints.maxHeight < 150;
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                  height: compact ? 8 : kToolbarHeight * 0.3),
+                              if (!compact)
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.location_on_outlined,
+                                      size: 14,
+                                      color:
+                                          Colors.white.withValues(alpha: 0.75),
+                                    ),
+                                    const SizedBox(width: 4),
+                                    Flexible(
+                                      child: Text(
+                                        locationLabel,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          color: Colors.white
+                                              .withValues(alpha: 0.75),
+                                          fontSize: 12,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
+                              SizedBox(height: compact ? 2 : 4),
+                              Text(
+                                nextName,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: compact ? 24 : 28,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            SizedBox(height: compact ? 2 : 4),
-                            Text(
-                              nextName,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: compact ? 24 : 28,
-                                fontWeight: FontWeight.bold,
+                              SizedBox(height: compact ? 6 : 10),
+                              _LiquidCountdownBadge(
+                                remaining: remaining,
+                                compact: compact,
                               ),
-                            ),
-                            SizedBox(height: compact ? 6 : 10),
-                            _LiquidCountdownBadge(
-                              remaining: remaining,
-                              compact: compact,
-                            ),
-                          ],
-                        );
-                      },
+                            ],
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),
                 // Collapsed title
-                Opacity(
-                  opacity: collapsedProgress,
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          left: 16, right: actionAreaWidth),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  locationLabel,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.white.withValues(alpha: 0.82),
+                IgnorePointer(
+                  child: Opacity(
+                    opacity: collapsedProgress,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 16, right: actionAreaWidth),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    locationLabel,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color:
+                                          Colors.white.withValues(alpha: 0.82),
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(height: 2),
-                                Text(
-                                  nextName,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.white,
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    nextName,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                          const SizedBox(width: 8),
-                          _LiquidCountdownBadge(
-                              remaining: remaining, compact: true),
-                        ],
+                            const SizedBox(width: 8),
+                            _LiquidCountdownBadge(
+                                remaining: remaining, compact: true),
+                          ],
+                        ),
                       ),
                     ),
                   ),
