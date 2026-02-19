@@ -510,13 +510,22 @@ class _LiquidGlassCard extends StatelessWidget {
   @override
   Widget build(BuildContext ctx) {
     final isDark = Theme.of(ctx).brightness == Brightness.dark;
+    final mq = MediaQuery.of(ctx);
+    final isLandscape = mq.orientation == Orientation.landscape;
+    final sideInsetLeft = isLandscape ? mq.padding.left : 0.0;
+    final sideInsetRight = isLandscape ? mq.padding.right : 0.0;
     final t = entry.time;
     final timeStr = t == null
         ? '--:--'
         : '${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}';
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+      padding: EdgeInsets.fromLTRB(
+        16 + sideInsetLeft,
+        5,
+        16 + sideInsetRight,
+        5,
+      ),
       child: Material(
         color: Colors.transparent,
         child: ClipRRect(
