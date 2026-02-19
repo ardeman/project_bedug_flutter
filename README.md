@@ -31,8 +31,10 @@ Cross-platform Muslim prayer time app with Hijri calendar, localized UI, and ada
 - Active tab color in Liquid Glass nav uses `AppColors.emerald` for consistent brand color.
 - Calculation Method picker uses native Apple sheet on iOS/macOS for platform-consistent behavior.
 - Prayer header collapse behavior on Apple keeps green system gradient, keeps countdown visible in compact mode, and aligns action buttons vertically.
+- Apple prayer app bar now adapts collapsed height/controls for portrait Dynamic Island devices.
 - Location loading now handles GPS timeout more gracefully:
-  - falls back to last known position when possible
+  - uses high-accuracy Android GPS settings for emulator/device consistency
+  - falls back to last known position only when recent
   - avoids showing raw exception text to users
 
 ## Commit Message Convention

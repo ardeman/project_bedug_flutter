@@ -279,6 +279,7 @@ Before writing or editing any code, confirm:
 - [ ] Error/exception messages shown to users are localized (no hardcoded throws)
 - [ ] `Scaffold` has `extendBody: true` when using liquid glass nav bar
 - [ ] Nav bar height includes `MediaQuery.of(ctx).padding.bottom`
+- [ ] Apple sliver app bar collapsed height/action offsets account for portrait Dynamic Island safe area
 - [ ] Tested mentally on macOS/iOS path AND Android path
 
 ---
