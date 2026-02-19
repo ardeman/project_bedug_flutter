@@ -90,6 +90,7 @@ Before opening a pull request, make sure:
 - [ ] No `CupertinoIcons` — use `Icons.*` instead
 - [ ] No `CupertinoListTile` — use `ListTile` with `Material` ancestor
 - [ ] Blur overlays use `PageRouteBuilder(opaque: false)` — not `showModalBottomSheet`
+- [ ] Native non-blur Apple sheets (e.g. `CupertinoActionSheet`) are acceptable when native behavior is intended
 
 ### Liquid Glass (Apple platforms)
 - [ ] `Scaffold` has `extendBody: true` when using liquid glass nav bar

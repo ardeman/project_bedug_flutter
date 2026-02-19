@@ -87,7 +87,7 @@ Future<void> _showNativeAppleMethodPicker(
                     ),
                     const SizedBox(width: 8),
                     Flexible(
-                      child: Text(calculationMethodLabel(sheetCtx, method)),
+                      child: Text(_nativeMethodLabel(sheetCtx, method)),
                     ),
                   ],
                 ),
@@ -100,6 +100,12 @@ Future<void> _showNativeAppleMethodPicker(
 
   if (selected == null) return;
   ref.read(settingsProvider.notifier).setMethod(selected);
+}
+
+String _nativeMethodLabel(BuildContext ctx, AppCalculationMethod method) {
+  final base = calculationMethodLabel(ctx, method);
+  if (method != AppCalculationMethod.kemenag) return base;
+  return '$base (${AppLocalizations.of(ctx).recommended})';
 }
 
 class _CalculationMethodPickerSheet extends ConsumerStatefulWidget {

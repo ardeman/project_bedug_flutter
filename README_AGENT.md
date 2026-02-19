@@ -101,6 +101,7 @@ Navigator.of(ctx).push(
   ),
 );
 ```
+Exception: native non-blur sheets (e.g. `CupertinoActionSheet`) are allowed on Apple platforms.
 
 ### 5. Always account for system padding in nav bar height
 ```dart
@@ -271,7 +272,8 @@ Before writing or editing any code, confirm:
 - [ ] No `CupertinoIcons` used
 - [ ] No `CupertinoListTile` used
 - [ ] `ListTile` inside `SliverList`/`CustomScrollView` is wrapped with `Material`
-- [ ] Blur overlays use `PageRouteBuilder(opaque: false)`, not `showModalBottomSheet`
+- [ ] Blur overlays use `PageRouteBuilder(opaque: false)`, not `showModalBottomSheet` / `showCupertinoModalPopup`
+- [ ] Native non-blur Apple sheets (e.g. `CupertinoActionSheet`) are used when native platform behavior is desired
 - [ ] Colors use `AppColors.*`
 - [ ] All visible user strings use `AppLocalizations` (no hardcoded text)
 - [ ] Error/exception messages shown to users are localized (no hardcoded throws)

@@ -15,7 +15,9 @@ Cross-platform Muslim prayer time app with Hijri calendar, localized UI, and ada
 - Location header shows nearest city fallback (not raw coordinates) when reverse geocoding is unavailable
 - Multi-language UI: Indonesian, English, Arabic, Malay
 - Adaptive UI by platform: Liquid Glass (iOS/macOS), Material 3 (Android/Linux), Fluent-like layout (Windows)
-- Shared, reusable "Calculation Method" picker with animated slide + drag-to-dismiss
+- Platform-adaptive "Calculation Method" picker:
+  - Native Cupertino action sheet on iOS/macOS
+  - Liquid-glass custom sheet on non-Apple platforms
 
 ## Theme Behavior
 
@@ -27,6 +29,7 @@ Cross-platform Muslim prayer time app with Hijri calendar, localized UI, and ada
 
 - Apple icon pipeline now uses native SF Symbols (`cupertino_native`) instead of `CupertinoIcons`.
 - Active tab color in Liquid Glass nav uses `AppColors.emerald` for consistent brand color.
+- Calculation Method picker uses native Apple sheet on iOS/macOS for platform-consistent behavior.
 - Prayer header collapse behavior on Apple keeps green system gradient, keeps countdown visible in compact mode, and aligns action buttons vertically.
 - Location loading now handles GPS timeout more gracefully:
   - falls back to last known position when possible
