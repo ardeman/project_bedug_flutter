@@ -46,6 +46,14 @@ final isDark = MediaQuery.of(ctx).platformBrightness == Brightness.dark;
 
 Project baseline is iOS 26+ and macOS 26+, so liquid-glass navigation is the default on Apple platforms.
 
+### macOS Window Chrome (CRITICAL)
+
+For macOS liquid-glass style, keep window chrome behavior in `macos/Runner/MainFlutterWindow.swift`:
+- Hide title text and extend content into title bar (`titleVisibility = .hidden`, `titlebarAppearsTransparent = true`, `.fullSizeContentView`).
+- Keep window draggability from background (`isMovableByWindowBackground = true`).
+- Use rounded app surface (`isOpaque = false`, clear background, Flutter view corner radius).
+- Reposition traffic-light buttons with explicit top/left inset and keep it updated on resize.
+
 ### Location Behavior (CRITICAL)
 
 - Prayer time source location supports:
