@@ -7,7 +7,7 @@ import '../constants/app_colors.dart';
 import 'sf_symbols.dart';
 
 /// Liquid Glass effect widget — Apple only
-/// Simulasi efek kaca cair dari iOS 26 / macOS 26
+/// Simulation liquid glass effect from iOS 26 / macOS 26
 class LiquidGlass extends StatelessWidget {
   final Widget child;
   final double borderRadius;
@@ -76,7 +76,7 @@ class LiquidGlass extends StatelessWidget {
   }
 }
 
-/// Liquid Glass — varian gelap (untuk dark mode)
+/// Liquid Glass — dark varian
 class LiquidGlassDark extends LiquidGlass {
   const LiquidGlassDark({
     super.key,
@@ -93,7 +93,7 @@ class LiquidGlassDark extends LiquidGlass {
         );
 }
 
-/// App Bar dengan Liquid Glass
+/// App Bar with Liquid Glass
 class LiquidGlassAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final List<Widget>? actions;
@@ -154,7 +154,7 @@ class LiquidGlassAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 }
 
-/// Bottom Navigation Bar dengan Liquid Glass
+/// Bottom Navigation Bar with Liquid Glass
 class LiquidGlassNavBar extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
@@ -370,7 +370,7 @@ class LiquidGlassNavItem {
       {required this.icon, required this.activeIcon, required this.label});
 }
 
-/// Modal / Bottom Sheet dengan Liquid Glass
+/// Modal / Bottom Sheet with Liquid Glass
 class LiquidGlassSheet extends StatelessWidget {
   final Widget child;
   final String? title;

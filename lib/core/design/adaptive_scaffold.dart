@@ -21,7 +21,7 @@ class AdaptiveNavigationDestination {
   });
 }
 
-/// Scaffold adaptive dengan API destination-driven seperti contoh iOS26 scaffold.
+/// Scaffold adaptive with API destination-driven, example: iOS26 scaffold.
 class AdaptiveScaffold extends StatelessWidget {
   final String title;
   final int selectedIndex;
