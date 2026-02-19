@@ -139,6 +139,14 @@ class AppLocalizationsId extends AppLocalizations {
       'System Settings → Privacy & Security → Location Services → bedug → Allow';
 
   @override
+  String get locationGuideApple =>
+      'System Settings → Privacy & Security → Location Services → bedug → Allow';
+
+  @override
+  String get locationGuideAndroid =>
+      'Setelan → Aplikasi → bedug → Izin → Lokasi → Izinkan';
+
+  @override
   String get locationModeAuto => 'Deteksi lokasi otomatis';
 
   @override
@@ -165,11 +173,27 @@ class AppLocalizationsId extends AppLocalizations {
       'Layanan lokasi tidak aktif. Aktifkan di System Settings.';
 
   @override
+  String get locationServiceDisabledApple =>
+      'Layanan lokasi tidak aktif. Aktifkan di System Settings.';
+
+  @override
+  String get locationServiceDisabledAndroid =>
+      'Layanan lokasi tidak aktif. Aktifkan Lokasi (GPS) di Setelan Android.';
+
+  @override
   String get locationPermissionDenied => 'Izin lokasi ditolak.';
 
   @override
   String get locationPermissionDeniedForever =>
       'Izin lokasi ditolak permanen.\nBuka System Settings → Privacy & Security → Location Services → bedug → Allow, lalu coba lagi.';
+
+  @override
+  String get locationPermissionDeniedForeverApple =>
+      'Izin lokasi ditolak permanen.\nBuka System Settings → Privacy & Security → Location Services → bedug → Allow, lalu coba lagi.';
+
+  @override
+  String get locationPermissionDeniedForeverAndroid =>
+      'Izin lokasi ditolak permanen.\nBuka Setelan → Aplikasi → bedug → Izin → Lokasi → Izinkan, lalu coba lagi.';
 
   @override
   String get notificationChannelName => 'Waktu Sholat';

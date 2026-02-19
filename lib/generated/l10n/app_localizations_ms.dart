@@ -138,6 +138,14 @@ class AppLocalizationsMs extends AppLocalizations {
       'System Settings → Privacy & Security → Location Services → bedug → Allow';
 
   @override
+  String get locationGuideApple =>
+      'System Settings → Privacy & Security → Location Services → bedug → Allow';
+
+  @override
+  String get locationGuideAndroid =>
+      'Tetapan → Aplikasi → bedug → Kebenaran → Lokasi → Benarkan';
+
+  @override
   String get locationModeAuto => 'Kesan lokasi automatik';
 
   @override
@@ -163,11 +171,27 @@ class AppLocalizationsMs extends AppLocalizations {
       'Perkhidmatan lokasi tidak aktif. Sila aktifkan di System Settings.';
 
   @override
+  String get locationServiceDisabledApple =>
+      'Perkhidmatan lokasi tidak aktif. Sila aktifkan di System Settings.';
+
+  @override
+  String get locationServiceDisabledAndroid =>
+      'Perkhidmatan lokasi tidak aktif. Sila aktifkan Lokasi (GPS) di Tetapan Android.';
+
+  @override
   String get locationPermissionDenied => 'Kebenaran lokasi ditolak.';
 
   @override
   String get locationPermissionDeniedForever =>
       'Kebenaran lokasi ditolak secara kekal.\nBuka System Settings → Privacy & Security → Location Services → bedug → Allow, kemudian cuba lagi.';
+
+  @override
+  String get locationPermissionDeniedForeverApple =>
+      'Kebenaran lokasi ditolak secara kekal.\nBuka System Settings → Privacy & Security → Location Services → bedug → Allow, kemudian cuba lagi.';
+
+  @override
+  String get locationPermissionDeniedForeverAndroid =>
+      'Kebenaran lokasi ditolak secara kekal.\nBuka Tetapan → Aplikasi → bedug → Kebenaran → Lokasi → Benarkan, kemudian cuba lagi.';
 
   @override
   String get notificationChannelName => 'Waktu Solat';

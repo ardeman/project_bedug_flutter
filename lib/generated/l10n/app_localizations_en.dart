@@ -139,6 +139,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'System Settings → Privacy & Security → Location Services → bedug → Allow';
 
   @override
+  String get locationGuideApple =>
+      'System Settings → Privacy & Security → Location Services → bedug → Allow';
+
+  @override
+  String get locationGuideAndroid =>
+      'Settings → Apps → bedug → Permissions → Location → Allow';
+
+  @override
   String get locationModeAuto => 'Auto-detect location';
 
   @override
@@ -164,11 +172,27 @@ class AppLocalizationsEn extends AppLocalizations {
       'Location service is disabled. Please enable it in System Settings.';
 
   @override
+  String get locationServiceDisabledApple =>
+      'Location service is disabled. Please enable it in System Settings.';
+
+  @override
+  String get locationServiceDisabledAndroid =>
+      'Location service is disabled. Please enable Location (GPS) in Android Settings.';
+
+  @override
   String get locationPermissionDenied => 'Location permission denied.';
 
   @override
   String get locationPermissionDeniedForever =>
       'Location permission permanently denied.\nOpen System Settings → Privacy & Security → Location Services → bedug → Allow, then try again.';
+
+  @override
+  String get locationPermissionDeniedForeverApple =>
+      'Location permission permanently denied.\nOpen System Settings → Privacy & Security → Location Services → bedug → Allow, then try again.';
+
+  @override
+  String get locationPermissionDeniedForeverAndroid =>
+      'Location permission permanently denied.\nOpen Settings → Apps → bedug → Permissions → Location → Allow, then try again.';
 
   @override
   String get notificationChannelName => 'Prayer Times';

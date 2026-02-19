@@ -152,7 +152,9 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                       Padding(
                         padding: EdgeInsets.only(bottom: 8),
                         child: Text(
-                          l10n.locationGuide,
+                          _isApple
+                              ? l10n.locationGuideApple
+                              : l10n.locationGuideAndroid,
                           textAlign: TextAlign.center,
                           style:
                               const TextStyle(fontSize: 12, color: Colors.grey),

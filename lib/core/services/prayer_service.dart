@@ -159,11 +159,24 @@ class PrayerNotifier extends Notifier<PrayerState> {
   AppLocalizations get _l10n =>
       lookupAppLocalizations(ref.read(localeProvider));
 
+  bool get _isApplePlatform =>
+      !kIsWeb &&
+      (defaultTargetPlatform == TargetPlatform.iOS ||
+          defaultTargetPlatform == TargetPlatform.macOS);
+
+  String get _locationServiceDisabledMessage => _isApplePlatform
+      ? _l10n.locationServiceDisabledApple
+      : _l10n.locationServiceDisabledAndroid;
+
+  String get _locationPermissionDeniedForeverMessage => _isApplePlatform
+      ? _l10n.locationPermissionDeniedForeverApple
+      : _l10n.locationPermissionDeniedForeverAndroid;
+
   Future<Position> _getPosition() async {
     final enabled = await Geolocator.isLocationServiceEnabled();
     if (!enabled) {
       throw PrayerLoadException(
-        _l10n.locationServiceDisabled,
+        _locationServiceDisabledMessage,
         showLocationGuide: true,
       );
     }
@@ -173,7 +186,7 @@ class PrayerNotifier extends Notifier<PrayerState> {
     if (perm == LocationPermission.deniedForever) {
       await Geolocator.openAppSettings();
       throw PrayerLoadException(
-        _l10n.locationPermissionDeniedForever,
+        _locationPermissionDeniedForeverMessage,
         showLocationGuide: true,
       );
     }
@@ -186,7 +199,7 @@ class PrayerNotifier extends Notifier<PrayerState> {
       if (perm == LocationPermission.deniedForever) {
         await Geolocator.openAppSettings();
         throw PrayerLoadException(
-          _l10n.locationPermissionDeniedForever,
+          _locationPermissionDeniedForeverMessage,
           showLocationGuide: true,
         );
       }
@@ -194,20 +207,40 @@ class PrayerNotifier extends Notifier<PrayerState> {
 
     try {
       return await Geolocator.getCurrentPosition(
-        locationSettings: const LocationSettings(
-          accuracy: LocationAccuracy.low, // Lebih cepat untuk hisab
-          timeLimit: Duration(seconds: 10),
-        ),
+        locationSettings: _locationSettings,
       );
     } on TimeoutException {
-      final lastKnown = await Geolocator.getLastKnownPosition();
+      final lastKnown = await _getRecentLastKnownPosition();
       if (lastKnown != null) return lastKnown;
       throw PrayerLoadException(_l10n.locationError, showLocationGuide: true);
     } catch (_) {
-      final lastKnown = await Geolocator.getLastKnownPosition();
+      final lastKnown = await _getRecentLastKnownPosition();
       if (lastKnown != null) return lastKnown;
       throw PrayerLoadException(_l10n.locationError, showLocationGuide: true);
     }
+  }
+
+  LocationSettings get _locationSettings {
+    if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
+      return AndroidSettings(
+        accuracy: LocationAccuracy.high,
+        distanceFilter: 0,
+        forceLocationManager: true,
+        timeLimit: Duration(seconds: 15),
+      );
+    }
+    return const LocationSettings(
+      accuracy: LocationAccuracy.high,
+      timeLimit: Duration(seconds: 15),
+    );
+  }
+
+  Future<Position?> _getRecentLastKnownPosition() async {
+    final lastKnown = await Geolocator.getLastKnownPosition();
+    if (lastKnown == null) return null;
+    final age = DateTime.now().difference(lastKnown.timestamp);
+    if (age > const Duration(minutes: 5)) return null;
+    return lastKnown;
   }
 
   Future<String> _resolveLocationLabel(Position pos) async {

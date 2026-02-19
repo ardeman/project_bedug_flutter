@@ -354,6 +354,18 @@ abstract class AppLocalizations {
   /// **'System Settings → Privacy & Security → Location Services → bedug → Allow'**
   String get locationGuide;
 
+  /// No description provided for @locationGuideApple.
+  ///
+  /// In id, this message translates to:
+  /// **'System Settings → Privacy & Security → Location Services → bedug → Allow'**
+  String get locationGuideApple;
+
+  /// No description provided for @locationGuideAndroid.
+  ///
+  /// In id, this message translates to:
+  /// **'Setelan → Aplikasi → bedug → Izin → Lokasi → Izinkan'**
+  String get locationGuideAndroid;
+
   /// No description provided for @locationModeAuto.
   ///
   /// In id, this message translates to:
@@ -402,6 +414,18 @@ abstract class AppLocalizations {
   /// **'Layanan lokasi tidak aktif. Aktifkan di System Settings.'**
   String get locationServiceDisabled;
 
+  /// No description provided for @locationServiceDisabledApple.
+  ///
+  /// In id, this message translates to:
+  /// **'Layanan lokasi tidak aktif. Aktifkan di System Settings.'**
+  String get locationServiceDisabledApple;
+
+  /// No description provided for @locationServiceDisabledAndroid.
+  ///
+  /// In id, this message translates to:
+  /// **'Layanan lokasi tidak aktif. Aktifkan Lokasi (GPS) di Setelan Android.'**
+  String get locationServiceDisabledAndroid;
+
   /// No description provided for @locationPermissionDenied.
   ///
   /// In id, this message translates to:
@@ -413,6 +437,18 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Izin lokasi ditolak permanen.\nBuka System Settings → Privacy & Security → Location Services → bedug → Allow, lalu coba lagi.'**
   String get locationPermissionDeniedForever;
+
+  /// No description provided for @locationPermissionDeniedForeverApple.
+  ///
+  /// In id, this message translates to:
+  /// **'Izin lokasi ditolak permanen.\nBuka System Settings → Privacy & Security → Location Services → bedug → Allow, lalu coba lagi.'**
+  String get locationPermissionDeniedForeverApple;
+
+  /// No description provided for @locationPermissionDeniedForeverAndroid.
+  ///
+  /// In id, this message translates to:
+  /// **'Izin lokasi ditolak permanen.\nBuka Setelan → Aplikasi → bedug → Izin → Lokasi → Izinkan, lalu coba lagi.'**
+  String get locationPermissionDeniedForeverAndroid;
 
   /// No description provided for @notificationChannelName.
   ///

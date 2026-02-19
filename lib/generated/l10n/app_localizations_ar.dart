@@ -138,6 +138,14 @@ class AppLocalizationsAr extends AppLocalizations {
       'إعدادات النظام ← الخصوصية والأمان ← خدمات الموقع ← bedug ← سماح';
 
   @override
+  String get locationGuideApple =>
+      'إعدادات النظام ← الخصوصية والأمان ← خدمات الموقع ← bedug ← سماح';
+
+  @override
+  String get locationGuideAndroid =>
+      'الإعدادات ← التطبيقات ← bedug ← الأذونات ← الموقع ← سماح';
+
+  @override
   String get locationModeAuto => 'اكتشاف الموقع تلقائيًا';
 
   @override
@@ -163,11 +171,27 @@ class AppLocalizationsAr extends AppLocalizations {
       'خدمة الموقع غير مفعلة. يرجى تفعيلها من إعدادات النظام.';
 
   @override
+  String get locationServiceDisabledApple =>
+      'خدمة الموقع غير مفعلة. يرجى تفعيلها من إعدادات النظام.';
+
+  @override
+  String get locationServiceDisabledAndroid =>
+      'خدمة الموقع غير مفعلة. يرجى تفعيل الموقع (GPS) من إعدادات أندرويد.';
+
+  @override
   String get locationPermissionDenied => 'تم رفض إذن الموقع.';
 
   @override
   String get locationPermissionDeniedForever =>
       'تم رفض إذن الموقع بشكل دائم.\nافتح إعدادات النظام ← الخصوصية والأمان ← خدمات الموقع ← bedug ← سماح، ثم حاول مرة أخرى.';
+
+  @override
+  String get locationPermissionDeniedForeverApple =>
+      'تم رفض إذن الموقع بشكل دائم.\nافتح إعدادات النظام ← الخصوصية والأمان ← خدمات الموقع ← bedug ← سماح، ثم حاول مرة أخرى.';
+
+  @override
+  String get locationPermissionDeniedForeverAndroid =>
+      'تم رفض إذن الموقع بشكل دائم.\nافتح الإعدادات ← التطبيقات ← bedug ← الأذونات ← الموقع ← سماح، ثم حاول مرة أخرى.';
 
   @override
   String get notificationChannelName => 'أوقات الصلاة';
