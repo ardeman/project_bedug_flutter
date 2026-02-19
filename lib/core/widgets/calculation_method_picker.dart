@@ -1,3 +1,7 @@
+import 'dart:ui';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -27,6 +31,10 @@ Future<void> showCalculationMethodPicker(
   WidgetRef ref, {
   required AppCalculationMethod current,
 }) {
+  if (_isApple) {
+    return _showNativeAppleMethodPicker(ctx, ref, current: current);
+  }
+
   final l10n = AppLocalizations.of(ctx);
   return Navigator.of(ctx).push(
     PageRouteBuilder<void>(
@@ -42,6 +50,56 @@ Future<void> showCalculationMethodPicker(
       transitionsBuilder: (_, __, ___, child) => child,
     ),
   );
+}
+
+bool get _isApple =>
+    !kIsWeb &&
+    (defaultTargetPlatform == TargetPlatform.iOS ||
+        defaultTargetPlatform == TargetPlatform.macOS);
+
+Future<void> _showNativeAppleMethodPicker(
+  BuildContext ctx,
+  WidgetRef ref, {
+  required AppCalculationMethod current,
+}) async {
+  final selected = await showCupertinoModalPopup<AppCalculationMethod>(
+    context: ctx,
+    builder: (sheetCtx) {
+      final l10n = AppLocalizations.of(sheetCtx);
+      return CupertinoActionSheet(
+        title: Text(l10n.calculationMethod),
+        message: Text(l10n.calculationMethodDesc),
+        actions: AppCalculationMethod.values
+            .map(
+              (method) => CupertinoActionSheetAction(
+                isDefaultAction: method == current,
+                onPressed: () => Navigator.pop(sheetCtx, method),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      method == current
+                          ? Icons.check_circle
+                          : Icons.radio_button_unchecked,
+                      size: 18,
+                      color:
+                          method == current ? AppColors.emerald : Colors.grey,
+                    ),
+                    const SizedBox(width: 8),
+                    Flexible(
+                      child: Text(calculationMethodLabel(sheetCtx, method)),
+                    ),
+                  ],
+                ),
+              ),
+            )
+            .toList(growable: false),
+      );
+    },
+  );
+
+  if (selected == null) return;
+  ref.read(settingsProvider.notifier).setMethod(selected);
 }
 
 class _CalculationMethodPickerSheet extends ConsumerStatefulWidget {
@@ -89,166 +147,181 @@ class _CalculationMethodPickerSheetState
                       const BorderRadius.vertical(top: Radius.circular(20)),
                   child: Transform.translate(
                     offset: Offset(0, routeOffset + _dragOffset),
-                    child: Container(
-                      height: h * 0.6,
-                      padding: EdgeInsets.only(bottom: bottom),
-                      decoration: BoxDecoration(
-                        color: isDark
-                            ? const Color(0xFF1C1C1E).withValues(alpha: .88)
-                            : Colors.white.withValues(alpha: .88),
-                        border: Border(
-                          top: BorderSide(
-                            color: Colors.white.withValues(alpha: .25),
-                            width: 0.5,
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 28, sigmaY: 28),
+                      child: Container(
+                        height: h * 0.6,
+                        padding: EdgeInsets.only(bottom: bottom),
+                        decoration: BoxDecoration(
+                          color: isDark
+                              ? const Color(0xFF1C1C1E).withValues(alpha: .78)
+                              : Colors.white.withValues(alpha: .78),
+                          border: Border(
+                            top: BorderSide(
+                              color: Colors.white.withValues(alpha: .25),
+                              width: 0.5,
+                            ),
                           ),
                         ),
-                      ),
-                      child: Column(
-                        children: [
-                          GestureDetector(
-                            behavior: HitTestBehavior.opaque,
-                            onVerticalDragUpdate: (details) {
-                              if (details.delta.dy <= 0) return;
-                              setState(() {
-                                _dragOffset = (_dragOffset + details.delta.dy)
-                                    .clamp(0, 220);
-                              });
-                            },
-                            onVerticalDragEnd: (details) {
-                              final shouldClose = _dragOffset > 72 ||
-                                  (details.primaryVelocity ?? 0) > 700;
-                              if (shouldClose) {
-                                Navigator.pop(ctx);
-                              } else {
-                                setState(() => _dragOffset = 0);
-                              }
-                            },
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 8, bottom: 10),
-                              child: Container(
-                                width: 36,
-                                height: 4,
-                                decoration: BoxDecoration(
-                                  color:
-                                      isDark ? Colors.white24 : Colors.black12,
-                                  borderRadius: BorderRadius.circular(2),
+                        child: Column(
+                          children: [
+                            GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onVerticalDragUpdate: (details) {
+                                if (details.delta.dy <= 0) return;
+                                setState(() {
+                                  _dragOffset = (_dragOffset + details.delta.dy)
+                                      .clamp(0, 220);
+                                });
+                              },
+                              onVerticalDragEnd: (details) {
+                                final shouldClose = _dragOffset > 72 ||
+                                    (details.primaryVelocity ?? 0) > 700;
+                                if (shouldClose) {
+                                  Navigator.pop(ctx);
+                                } else {
+                                  setState(() => _dragOffset = 0);
+                                }
+                              },
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 8, bottom: 10),
+                                child: Container(
+                                  width: 36,
+                                  height: 4,
+                                  decoration: BoxDecoration(
+                                    color: isDark
+                                        ? Colors.white24
+                                        : Colors.black12,
+                                    borderRadius: BorderRadius.circular(2),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 14),
-                            child: Text(
-                              widget.title,
-                              style: const TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.w600,
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 14),
+                              child: Text(
+                                widget.title,
+                                style: const TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                             ),
-                          ),
-                          Divider(
-                            height: 1,
-                            color: isDark ? Colors.white12 : Colors.black12,
-                          ),
-                          Expanded(
-                            child: ListView(
-                              children: AppCalculationMethod.values.indexed
-                                  .map((entry) {
-                                final i = entry.$1;
-                                final method = entry.$2;
-                                final isSelected =
-                                    ref.watch(settingsProvider).method ==
-                                        method;
-                                final isKemenag =
-                                    method == AppCalculationMethod.kemenag;
-                                return TweenAnimationBuilder<double>(
-                                  tween: Tween(begin: 0, end: 1),
-                                  duration:
-                                      Duration(milliseconds: 220 + (i * 45)),
-                                  curve: Curves.easeOutCubic,
-                                  builder: (context, value, child) => Opacity(
-                                    opacity: value,
-                                    child: Transform.translate(
-                                      offset: Offset(0, (1 - value) * 16),
-                                      child: child,
-                                    ),
-                                  ),
-                                  child: AnimatedContainer(
-                                    duration: const Duration(milliseconds: 220),
-                                    curve: Curves.easeOut,
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 12, vertical: 2),
-                                    decoration: BoxDecoration(
-                                      color: isSelected
-                                          ? AppColors.emerald
-                                              .withValues(alpha: .08)
-                                          : Colors.transparent,
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    child: ListTile(
-                                      leading: AnimatedSwitcher(
-                                        duration:
-                                            const Duration(milliseconds: 180),
-                                        child: isSelected
-                                            ? const Icon(
-                                                Icons.check_circle,
-                                                key: ValueKey('selected'),
-                                                color: AppColors.emerald,
-                                              )
-                                            : const Icon(
-                                                Icons.radio_button_unchecked,
-                                                key: ValueKey('unselected'),
-                                                color: Colors.grey,
-                                              ),
-                                      ),
-                                      title: Text(
-                                        calculationMethodLabel(ctx, method),
-                                        style: TextStyle(
-                                          fontWeight: isSelected
-                                              ? FontWeight.w600
-                                              : FontWeight.normal,
-                                          color: isSelected
-                                              ? AppColors.emerald
-                                              : null,
+                            Divider(
+                              height: 1,
+                              color: isDark ? Colors.white12 : Colors.black12,
+                            ),
+                            Expanded(
+                              child: MediaQuery.removePadding(
+                                context: ctx,
+                                removeTop: true,
+                                child: ListView(
+                                  padding: const EdgeInsets.only(top: 4),
+                                  children: AppCalculationMethod.values.indexed
+                                      .map((entry) {
+                                    final i = entry.$1;
+                                    final method = entry.$2;
+                                    final isSelected =
+                                        ref.watch(settingsProvider).method ==
+                                            method;
+                                    final isKemenag =
+                                        method == AppCalculationMethod.kemenag;
+                                    return TweenAnimationBuilder<double>(
+                                      tween: Tween(begin: 0, end: 1),
+                                      duration: Duration(
+                                          milliseconds: 220 + (i * 45)),
+                                      curve: Curves.easeOutCubic,
+                                      builder: (context, value, child) =>
+                                          Opacity(
+                                        opacity: value,
+                                        child: Transform.translate(
+                                          offset: Offset(0, (1 - value) * 16),
+                                          child: child,
                                         ),
                                       ),
-                                      trailing: isKemenag
-                                          ? Container(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
+                                      child: AnimatedContainer(
+                                        duration:
+                                            const Duration(milliseconds: 220),
+                                        curve: Curves.easeOut,
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 12, vertical: 2),
+                                        decoration: BoxDecoration(
+                                          color: isSelected
+                                              ? AppColors.emerald
+                                                  .withValues(alpha: .08)
+                                              : Colors.transparent,
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                        ),
+                                        child: ListTile(
+                                          leading: AnimatedSwitcher(
+                                            duration: const Duration(
+                                                milliseconds: 180),
+                                            child: isSelected
+                                                ? const Icon(
+                                                    Icons.check_circle,
+                                                    key: ValueKey('selected'),
+                                                    color: AppColors.emerald,
+                                                  )
+                                                : const Icon(
+                                                    Icons
+                                                        .radio_button_unchecked,
+                                                    key: ValueKey('unselected'),
+                                                    color: Colors.grey,
+                                                  ),
+                                          ),
+                                          title: Text(
+                                            calculationMethodLabel(ctx, method),
+                                            style: TextStyle(
+                                              fontWeight: isSelected
+                                                  ? FontWeight.w600
+                                                  : FontWeight.normal,
+                                              color: isSelected
+                                                  ? AppColors.emerald
+                                                  : null,
+                                            ),
+                                          ),
+                                          trailing: isKemenag
+                                              ? Container(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
                                                       horizontal: 8,
                                                       vertical: 3),
-                                              decoration: BoxDecoration(
-                                                color: AppColors.emerald
-                                                    .withValues(alpha: .15),
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                              ),
-                                              child: Text(
-                                                AppLocalizations.of(ctx)
-                                                    .recommended,
-                                                style: const TextStyle(
-                                                  color: AppColors.emerald,
-                                                  fontSize: 11,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            )
-                                          : null,
-                                      onTap: () {
-                                        ref
-                                            .read(settingsProvider.notifier)
-                                            .setMethod(method);
-                                        Navigator.pop(ctx);
-                                      },
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
+                                                  decoration: BoxDecoration(
+                                                    color: AppColors.emerald
+                                                        .withValues(alpha: .15),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
+                                                  child: Text(
+                                                    AppLocalizations.of(ctx)
+                                                        .recommended,
+                                                    style: const TextStyle(
+                                                      color: AppColors.emerald,
+                                                      fontSize: 11,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                )
+                                              : null,
+                                          onTap: () {
+                                            ref
+                                                .read(settingsProvider.notifier)
+                                                .setMethod(method);
+                                            Navigator.pop(ctx);
+                                          },
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
