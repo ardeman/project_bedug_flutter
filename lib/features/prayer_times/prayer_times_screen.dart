@@ -51,9 +51,11 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
     final isDark = Theme.of(ctx).brightness == Brightness.dark;
     final mq = MediaQuery.of(ctx);
     final isPortrait = mq.orientation == Orientation.portrait;
+    final topInset = mq.padding.top;
     final hasDynamicIsland =
-        !kIsWeb && Platform.isIOS && isPortrait && mq.padding.top >= 54;
-    final minCollapsedExtent = kToolbarHeight + (hasDynamicIsland ? 58 : 44);
+        !kIsWeb && Platform.isIOS && isPortrait && topInset >= 54;
+    final minCollapsedExtent =
+        kToolbarHeight + (hasDynamicIsland ? (topInset + 6) : 44);
 
     return Scaffold(
       extendBodyBehindAppBar: _isApple,
@@ -277,7 +279,6 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
     final collapsedActionTopMax = hasDynamicIsland ? 12.0 : 22.0;
     final collapsedActionTop =
         ((minExtent - kToolbarHeight) / 2).clamp(0.0, collapsedActionTopMax);
-    final dynamicIslandCompensation = hasDynamicIsland ? -14.0 : 0.0;
     final actionTop = lerpDouble(0, collapsedActionTop, collapsedProgress)!;
     const actionAreaWidth = 116.0;
 
@@ -311,7 +312,7 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
               children: [
                 // Actions
                 Positioned(
-                  top: actionTop + dynamicIslandCompensation,
+                  top: actionTop,
                   right: 4,
                   child: SizedBox(
                     height: kToolbarHeight,
