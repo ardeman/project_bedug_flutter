@@ -1,4 +1,4 @@
-package com.bedug.bedug
+package com.bedug.app
 
 import io.flutter.embedding.android.FlutterActivity
 
