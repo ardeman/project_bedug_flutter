@@ -61,51 +61,113 @@ Future<void> _showNativeAppleMethodPicker(
   BuildContext ctx,
   WidgetRef ref, {
   required AppCalculationMethod current,
-}) async {
-  final selected = await showCupertinoModalPopup<AppCalculationMethod>(
+}) {
+  return showCupertinoSheet<void>(
     context: ctx,
-    builder: (sheetCtx) {
-      final l10n = AppLocalizations.of(sheetCtx);
-      return CupertinoActionSheet(
-        title: Text(l10n.calculationMethod),
-        message: Text(l10n.calculationMethodDesc),
-        actions: AppCalculationMethod.values
-            .map(
-              (method) => CupertinoActionSheetAction(
-                isDefaultAction: method == current,
-                onPressed: () => Navigator.pop(sheetCtx, method),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      method == current
-                          ? Icons.check_circle
-                          : Icons.radio_button_unchecked,
-                      size: 18,
-                      color:
-                          method == current ? AppColors.emerald : Colors.grey,
-                    ),
-                    const SizedBox(width: 8),
-                    Flexible(
-                      child: Text(_nativeMethodLabel(sheetCtx, method)),
-                    ),
-                  ],
-                ),
-              ),
-            )
-            .toList(growable: false),
-      );
-    },
+    showDragHandle: true,
+    topGap: 0.08,
+    builder: (sheetCtx) => _NativeAppleMethodSheet(
+      current: current,
+    ),
   );
-
-  if (selected == null) return;
-  ref.read(settingsProvider.notifier).setMethod(selected);
 }
 
-String _nativeMethodLabel(BuildContext ctx, AppCalculationMethod method) {
-  final base = calculationMethodLabel(ctx, method);
-  if (method != AppCalculationMethod.kemenag) return base;
-  return '$base (${AppLocalizations.of(ctx).recommended})';
+class _NativeAppleMethodSheet extends ConsumerWidget {
+  final AppCalculationMethod current;
+
+  const _NativeAppleMethodSheet({
+    required this.current,
+  });
+
+  @override
+  Widget build(BuildContext ctx, WidgetRef ref) {
+    final l10n = AppLocalizations.of(ctx);
+    final selectedMethod = ref.watch(settingsProvider).method;
+    final isDark = Theme.of(ctx).brightness == Brightness.dark;
+    return CupertinoPageScaffold(
+      backgroundColor: isDark ? const Color(0xFF111114) : const Color(0xFFF8F8FA),
+      navigationBar: CupertinoNavigationBar(
+        middle: Text(l10n.calculationMethod),
+      ),
+      child: SafeArea(
+        top: false,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+              child: Text(
+                l10n.calculationMethodDesc,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 13,
+                  color: isDark ? Colors.white70 : Colors.black54,
+                ),
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: AppCalculationMethod.values.length,
+                itemBuilder: (context, index) {
+                  final method = AppCalculationMethod.values[index];
+                  final isSelected = selectedMethod == method;
+                  final isKemenag = method == AppCalculationMethod.kemenag;
+                  return CupertinoButton(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    onPressed: () {
+                      ref.read(settingsProvider.notifier).setMethod(method);
+                      Navigator.of(ctx, rootNavigator: true).pop();
+                    },
+                    child: Row(
+                      children: [
+                        Icon(
+                          isSelected
+                              ? Icons.check_circle
+                              : Icons.radio_button_unchecked,
+                          size: 20,
+                          color: isSelected ? AppColors.emerald : Colors.grey,
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Text(
+                            calculationMethodLabel(ctx, method),
+                            style: TextStyle(
+                              color: isSelected
+                                  ? AppColors.emerald
+                                  : (isDark ? Colors.white : const Color(0xFF1C1C1E)),
+                              fontSize: 20,
+                              fontWeight:
+                                  isSelected ? FontWeight.w600 : FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                        if (isKemenag)
+                          Container(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: AppColors.emerald.withValues(alpha: .15),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              l10n.recommended,
+                              style: const TextStyle(
+                                color: AppColors.emerald,
+                                fontSize: 11,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class _CalculationMethodPickerSheet extends ConsumerStatefulWidget {
