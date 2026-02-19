@@ -187,7 +187,7 @@ class PrayerNotifier extends Notifier<PrayerState> {
       await Geolocator.openAppSettings();
       throw PrayerLoadException(
         _locationPermissionDeniedForeverMessage,
-        showLocationGuide: true,
+        showLocationGuide: false,
       );
     }
 
@@ -200,7 +200,7 @@ class PrayerNotifier extends Notifier<PrayerState> {
         await Geolocator.openAppSettings();
         throw PrayerLoadException(
           _locationPermissionDeniedForeverMessage,
-          showLocationGuide: true,
+          showLocationGuide: false,
         );
       }
     }
