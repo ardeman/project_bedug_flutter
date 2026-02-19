@@ -344,41 +344,55 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
                 Opacity(
                   opacity: (1 - progress * 2).clamp(0.0, 1.0),
                   child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(height: kToolbarHeight * 0.3),
-                        Row(
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        final compact = constraints.maxHeight < 150;
+                        return Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(
-                              Icons.location_on_outlined,
-                              size: 14,
-                              color: Colors.white.withValues(alpha: 0.75),
-                            ),
-                            const SizedBox(width: 4),
-                            Flexible(
-                              child: Text(
-                                locationLabel,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: Colors.white.withValues(alpha: 0.75),
-                                  fontSize: 12,
-                                ),
+                            SizedBox(
+                                height: compact ? 8 : kToolbarHeight * 0.3),
+                            if (!compact)
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.location_on_outlined,
+                                    size: 14,
+                                    color: Colors.white.withValues(alpha: 0.75),
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Flexible(
+                                    child: Text(
+                                      locationLabel,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        color: Colors.white
+                                            .withValues(alpha: 0.75),
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            SizedBox(height: compact ? 2 : 4),
+                            Text(
+                              nextName,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: compact ? 24 : 28,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
+                            SizedBox(height: compact ? 6 : 10),
+                            _LiquidCountdownBadge(
+                              remaining: remaining,
+                              compact: compact,
+                            ),
                           ],
-                        ),
-                        const SizedBox(height: 4),
-                        Text(nextName,
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 28,
-                                fontWeight: FontWeight.bold)),
-                        const SizedBox(height: 10),
-                        _LiquidCountdownBadge(remaining: remaining),
-                      ],
+                        );
+                      },
                     ),
                   ),
                 ),
