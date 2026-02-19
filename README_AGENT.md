@@ -53,6 +53,7 @@ Project baseline is iOS 26+ and macOS 26+, so liquid-glass navigation is the def
   - Manual city selection from settings
 - If auto detect is disabled, city selection is required.
 - If reverse geocoding cannot resolve an address, show nearest supported city name (not raw coordinates).
+- In denied-forever location state, show a single actionable guidance message (avoid duplicate guide lines).
 
 ---
 
@@ -280,6 +281,8 @@ Before writing or editing any code, confirm:
 - [ ] `Scaffold` has `extendBody: true` when using liquid glass nav bar
 - [ ] Nav bar height includes `MediaQuery.of(ctx).padding.bottom`
 - [ ] Apple sliver app bar collapsed height/action offsets account for portrait Dynamic Island safe area
+- [ ] Apple landscape layouts account for horizontal safe-area cutouts so trailing content is not clipped
+- [ ] Apple collapse transitions avoid RenderFlex overflow at compact heights
 - [ ] Tested mentally on macOS/iOS path AND Android path
 
 ---

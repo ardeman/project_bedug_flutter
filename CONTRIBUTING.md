@@ -97,6 +97,8 @@ Before opening a pull request, make sure:
 - [ ] `Scaffold` has `extendBodyBehindAppBar: true` when using liquid glass app bar
 - [ ] Nav bar height includes `MediaQuery.of(ctx).padding.bottom`
 - [ ] `ListTile` inside `SliverList` is wrapped with `Material(color: Colors.transparent)`
+- [ ] Apple landscape screens account for left/right safe-area insets (no clipped trailing text near cutouts)
+- [ ] Apple collapsing headers do not overflow at compact heights
 
 ### Localization
 - [ ] New user-facing strings added to all 4 ARB files (`id`, `en`, `ar`, `ms`)
