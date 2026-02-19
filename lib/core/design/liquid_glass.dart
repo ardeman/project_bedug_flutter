@@ -45,24 +45,24 @@ class LiquidGlass extends StatelessWidget {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                tintColor.withOpacity(tintOpacity + 0.05),
-                tintColor.withOpacity(tintOpacity - 0.05),
+                tintColor.withValues(alpha: tintOpacity + 0.05),
+                tintColor.withValues(alpha: tintOpacity - 0.05),
               ],
             ),
             border: border ??
                 Border.all(
-                  color: Colors.white.withOpacity(0.25),
+                  color: Colors.white.withValues(alpha: 0.25),
                   width: 0.8,
                 ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.08),
+                color: Colors.black.withValues(alpha: 0.08),
                 blurRadius: 32,
                 spreadRadius: -4,
                 offset: const Offset(0, 8),
               ),
               BoxShadow(
-                color: Colors.white.withOpacity(0.6),
+                color: Colors.white.withValues(alpha: 0.6),
                 blurRadius: 1,
                 spreadRadius: 0,
                 offset: const Offset(0, -0.5),
@@ -122,13 +122,13 @@ class LiquidGlassAppBar extends StatelessWidget implements PreferredSizeWidget {
           padding: EdgeInsets.only(top: MediaQuery.of(ctx).padding.top),
           decoration: BoxDecoration(
             color: isDark
-                ? const Color(0xFF1C1C1E).withOpacity(0.72)
-                : Colors.white.withOpacity(0.72),
+                ? const Color(0xFF1C1C1E).withValues(alpha: 0.72)
+                : Colors.white.withValues(alpha: 0.72),
             border: Border(
               bottom: BorderSide(
                 color: isDark
-                    ? Colors.white.withOpacity(0.1)
-                    : Colors.black.withOpacity(0.08),
+                    ? Colors.white.withValues(alpha: 0.1)
+                    : Colors.black.withValues(alpha: 0.08),
                 width: 0.5,
               ),
             ),
@@ -381,7 +381,7 @@ class LiquidGlassSheet extends StatelessWidget {
       {required Widget child, String? title}) {
     return showCupertinoModalPopup<T>(
       context: ctx,
-      builder: (_) => LiquidGlassSheet(child: child, title: title),
+      builder: (_) => LiquidGlassSheet(title: title, child: child),
     );
   }
 
@@ -398,12 +398,12 @@ class LiquidGlassSheet extends StatelessWidget {
           padding: EdgeInsets.only(bottom: bottom),
           decoration: BoxDecoration(
             color: isDark
-                ? const Color(0xFF1C1C1E).withOpacity(0.78)
-                : Colors.white.withOpacity(0.78),
+                ? const Color(0xFF1C1C1E).withValues(alpha: 0.78)
+                : Colors.white.withValues(alpha: 0.78),
             borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
             border: Border(
               top: BorderSide(
-                color: Colors.white.withOpacity(0.2),
+                color: Colors.white.withValues(alpha: 0.2),
                 width: 0.5,
               ),
             ),

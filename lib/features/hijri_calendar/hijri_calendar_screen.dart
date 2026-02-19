@@ -80,7 +80,7 @@ class _HijriCalendarScreenState extends State<HijriCalendarScreen> {
       body: Column(children: [
         Container(
           width: double.infinity,
-          color: AppColors.emerald.withOpacity(.12),
+          color: AppColors.emerald.withValues(alpha: .12),
           padding: const EdgeInsets.symmetric(vertical: 12),
           child: Text(
             '${l10n.today}: ${_fullHijriDate(l10n, _today)}',

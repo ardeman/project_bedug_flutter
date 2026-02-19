@@ -82,7 +82,8 @@ class _AppleCard extends StatelessWidget {
               height: 44,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: (isDark ? Colors.white : Colors.black).withOpacity(0.08),
+                color: (isDark ? Colors.white : Colors.black)
+                    .withValues(alpha: 0.08),
               ),
               child: Icon(
                 _iconFor(prayerName),
@@ -229,16 +230,16 @@ class _FluentCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               color: isActive
                   ? const Color(0xFF0078D4)
-                      .withOpacity(0.15) // Fluent accent blue
+                      .withValues(alpha: 0.15) // Fluent accent blue
                   : (isDark
-                      ? Colors.white.withOpacity(0.06)
-                      : Colors.white.withOpacity(0.7)),
+                      ? Colors.white.withValues(alpha: 0.06)
+                      : Colors.white.withValues(alpha: 0.7)),
               border: Border.all(
                 color: isActive
-                    ? const Color(0xFF0078D4).withOpacity(0.5)
+                    ? const Color(0xFF0078D4).withValues(alpha: 0.5)
                     : (isDark
                         ? Colors.white12
-                        : Colors.black.withOpacity(0.08)),
+                        : Colors.black.withValues(alpha: 0.08)),
                 width: isActive ? 1 : 0.5,
               ),
             ),

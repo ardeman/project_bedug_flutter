@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:adhan/adhan.dart';
 
 void main() {
@@ -13,6 +15,8 @@ void main() {
     'isha': t.isha,
   };
   for (final e in list.entries) {
-    print('${e.key}: raw=${e.value.toIso8601String()} isUtc=${e.value.isUtc} local=${e.value.toLocal().toIso8601String()}');
+    stdout.writeln(
+      '${e.key}: raw=${e.value.toIso8601String()} isUtc=${e.value.isUtc} local=${e.value.toLocal().toIso8601String()}',
+    );
   }
 }

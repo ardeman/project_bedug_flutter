@@ -280,8 +280,8 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
               bottom: BorderSide(
                 color: progress > 0.5
                     ? (isDark
-                        ? Colors.white.withOpacity(0.1 * progress)
-                        : Colors.black.withOpacity(0.08 * progress))
+                        ? Colors.white.withValues(alpha: 0.1 * progress)
+                        : Colors.black.withValues(alpha: 0.08 * progress))
                     : Colors.transparent,
                 width: 0.5,
               ),
@@ -329,7 +329,7 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
                             Icon(
                               Icons.location_on_outlined,
                               size: 14,
-                              color: Colors.white.withOpacity(0.75),
+                              color: Colors.white.withValues(alpha: 0.75),
                             ),
                             const SizedBox(width: 4),
                             Flexible(
@@ -338,7 +338,7 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
-                                  color: Colors.white.withOpacity(0.75),
+                                  color: Colors.white.withValues(alpha: 0.75),
                                   fontSize: 12,
                                 ),
                               ),
@@ -441,11 +441,11 @@ class _GlassIconButton extends StatelessWidget {
                     padding: const EdgeInsets.all(6),
                     decoration: BoxDecoration(
                       color: (isDark ? Colors.white : Colors.black)
-                          .withOpacity(0.1),
+                          .withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(
                         color: (isDark ? Colors.white : Colors.black)
-                            .withOpacity(0.12),
+                            .withValues(alpha: 0.12),
                         width: 0.5,
                       ),
                     ),
@@ -499,32 +499,32 @@ class _LiquidGlassCard extends StatelessWidget {
                   end: Alignment.bottomRight,
                   colors: isNext
                       ? [
-                          AppColors.emerald.withOpacity(0.55),
-                          AppColors.teal.withOpacity(0.45),
+                          AppColors.emerald.withValues(alpha: 0.55),
+                          AppColors.teal.withValues(alpha: 0.45),
                         ]
                       : isDark
                           ? [
-                              Colors.white.withOpacity(0.09),
-                              Colors.white.withOpacity(0.05),
+                              Colors.white.withValues(alpha: 0.09),
+                              Colors.white.withValues(alpha: 0.05),
                             ]
                           : [
-                              Colors.white.withOpacity(0.72),
-                              Colors.white.withOpacity(0.55),
+                              Colors.white.withValues(alpha: 0.72),
+                              Colors.white.withValues(alpha: 0.55),
                             ],
                 ),
                 border: Border.all(
                   color: isNext
-                      ? Colors.white.withOpacity(0.3)
+                      ? Colors.white.withValues(alpha: 0.3)
                       : (isDark
-                          ? Colors.white.withOpacity(0.12)
-                          : Colors.white.withOpacity(0.8)),
+                          ? Colors.white.withValues(alpha: 0.12)
+                          : Colors.white.withValues(alpha: 0.8)),
                   width: 0.8,
                 ),
                 boxShadow: [
                   BoxShadow(
                     color: isNext
-                        ? AppColors.emerald.withOpacity(0.2)
-                        : Colors.black.withOpacity(isDark ? 0.2 : 0.06),
+                        ? AppColors.emerald.withValues(alpha: 0.2)
+                        : Colors.black.withValues(alpha: isDark ? 0.2 : 0.06),
                     blurRadius: isNext ? 24 : 12,
                     offset: const Offset(0, 4),
                   ),
@@ -538,8 +538,8 @@ class _LiquidGlassCard extends StatelessWidget {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: isNext
-                          ? Colors.white.withOpacity(0.2)
-                          : AppColors.emerald.withOpacity(0.12),
+                          ? Colors.white.withValues(alpha: 0.2)
+                          : AppColors.emerald.withValues(alpha: 0.12),
                     ),
                     child: Icon(entry.icon,
                         size: 20,
@@ -562,7 +562,7 @@ class _LiquidGlassCard extends StatelessWidget {
                           Text(l10n.upNext,
                               style: TextStyle(
                                 fontSize: 12,
-                                color: Colors.white.withOpacity(0.75),
+                                color: Colors.white.withValues(alpha: 0.75),
                               )),
                       ],
                     ),
@@ -667,13 +667,13 @@ class _LiquidCountdownBadge extends StatelessWidget {
           padding:
               EdgeInsets.symmetric(horizontal: horizontal, vertical: vertical),
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.18),
+            color: Colors.white.withValues(alpha: 0.18),
             borderRadius: BorderRadius.circular(radius),
-            border:
-                Border.all(color: Colors.white.withOpacity(0.35), width: 0.8),
+            border: Border.all(
+                color: Colors.white.withValues(alpha: 0.35), width: 0.8),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.08),
+                color: Colors.black.withValues(alpha: 0.08),
                 blurRadius: 16,
                 offset: const Offset(0, 4),
               ),
