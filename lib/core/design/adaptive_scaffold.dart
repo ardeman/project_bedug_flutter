@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cupertino_native/cupertino_native.dart';
 
+import '../constants/app_colors.dart';
 import 'liquid_glass.dart';
 import 'platform_capabilities.dart';
 import 'platform_design.dart';
@@ -89,6 +90,7 @@ class AdaptiveScaffold extends StatelessWidget {
           ? CNTabBar(
               currentIndex: selectedIndex,
               onTap: onDestinationSelected,
+              tint: AppColors.emerald,
               items: nativeItems,
             )
           : LiquidGlassNavBar(
