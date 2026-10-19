@@ -289,4 +289,83 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get notifIsya => 'Tiba waktu solat Isyak';
+
+  @override
+  String get worship => 'Ibadah';
+
+  @override
+  String get qibla => 'Kiblat';
+
+  @override
+  String qiblaBearing(String degrees, String direction) {
+    return '$degrees° dari utara ($direction)';
+  }
+
+  @override
+  String qiblaDistance(String km) {
+    return '$km km ke Kaabah';
+  }
+
+  @override
+  String get qiblaFaceNorthHint =>
+      'Halakan bahagian atas skrin ke utara, kemudian ikut anak panah.';
+
+  @override
+  String get qiblaFindNorthHint =>
+      'Cari arah utara dengan kompas telefon, aplikasi peta atau kedudukan matahari.';
+
+  @override
+  String get qiblaRotateHint =>
+      'Pusingkan peranti sehingga anak panah menghala lurus ke atas.';
+
+  @override
+  String get qiblaFacing => 'Anda menghadap kiblat';
+
+  @override
+  String get qiblaCalibrate =>
+      'Ketepatan kompas rendah. Gerakkan peranti membentuk angka 8.';
+
+  @override
+  String qiblaSunLeft(String degrees) {
+    return 'Kiblat $degrees° di sebelah kiri matahari.';
+  }
+
+  @override
+  String qiblaSunRight(String degrees) {
+    return 'Kiblat $degrees° di sebelah kanan matahari.';
+  }
+
+  @override
+  String get qiblaSunAhead => 'Kiblat sehala dengan matahari.';
+
+  @override
+  String get qiblaSunBehind => 'Kiblat betul-betul membelakangi matahari.';
+
+  @override
+  String get qiblaNoLocation =>
+      'Lokasi belum tersedia. Tetapkan lokasi dalam Tetapan.';
+
+  @override
+  String get dirN => 'utara';
+
+  @override
+  String get dirNE => 'timur laut';
+
+  @override
+  String get dirE => 'timur';
+
+  @override
+  String get dirSE => 'tenggara';
+
+  @override
+  String get dirS => 'selatan';
+
+  @override
+  String get dirSW => 'barat daya';
+
+  @override
+  String get dirW => 'barat';
+
+  @override
+  String get dirNW => 'barat laut';
 }

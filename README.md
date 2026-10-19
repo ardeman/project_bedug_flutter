@@ -98,6 +98,8 @@ lib/
     widgets/         Shared widgets (calculation method picker)
   features/
     prayer_times/    Prayer times screen
+    worship/         Worship tab (hosts Qibla, later the tracker, tasbih, duas)
+    qibla/           Qibla compass card
     prayer/          Prayer card widget
     hijri_calendar/  Hijri calendar screen
     settings/        Settings screen
@@ -151,7 +153,7 @@ Bedug grows from a prayer-times app into a companion for a Muslim's day, week an
 
 **Phase 1: Daily prayer (next)**
 
-1. **Qibla direction:** compass screen using `adhan`'s `Qibla` bearing plus the device heading (new sensor dependency). Desktop shows the bearing and a map-style arrow, since there is no compass.
+1. **Qibla direction (done):** compass card in the new Worship tab, using `adhan`'s `Qibla` bearing and the device heading from `flutter_compass` on iOS and Android. Desktop has no compass, so the dial stays north-up and shows the bearing, the distance and the Qibla's angle from the sun while it is up.
 2. **Prayer tracker:** mark each of the five prayers as done (on time, late, missed), with a daily and weekly view, streaks and a qada (make-up) count.
 3. **Notification control:** per-prayer on/off, a reminder N minutes before adhan, and a choice of adhan sound.
 4. **Extra times:** imsak, sunrise (end of Subuh), dhuha, and the last third of the night for tahajud.

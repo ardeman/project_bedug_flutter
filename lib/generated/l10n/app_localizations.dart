@@ -641,6 +641,138 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Waktu Isya telah tiba'**
   String get notifIsya;
+
+  /// No description provided for @worship.
+  ///
+  /// In id, this message translates to:
+  /// **'Ibadah'**
+  String get worship;
+
+  /// No description provided for @qibla.
+  ///
+  /// In id, this message translates to:
+  /// **'Kiblat'**
+  String get qibla;
+
+  /// No description provided for @qiblaBearing.
+  ///
+  /// In id, this message translates to:
+  /// **'{degrees}° dari utara ({direction})'**
+  String qiblaBearing(String degrees, String direction);
+
+  /// No description provided for @qiblaDistance.
+  ///
+  /// In id, this message translates to:
+  /// **'{km} km ke Ka\'bah'**
+  String qiblaDistance(String km);
+
+  /// No description provided for @qiblaFaceNorthHint.
+  ///
+  /// In id, this message translates to:
+  /// **'Hadapkan bagian atas layar ke utara, lalu ikuti panah.'**
+  String get qiblaFaceNorthHint;
+
+  /// No description provided for @qiblaFindNorthHint.
+  ///
+  /// In id, this message translates to:
+  /// **'Cari arah utara dengan kompas di ponsel, aplikasi peta, atau posisi matahari.'**
+  String get qiblaFindNorthHint;
+
+  /// No description provided for @qiblaRotateHint.
+  ///
+  /// In id, this message translates to:
+  /// **'Putar perangkat sampai panah menunjuk lurus ke atas.'**
+  String get qiblaRotateHint;
+
+  /// No description provided for @qiblaFacing.
+  ///
+  /// In id, this message translates to:
+  /// **'Anda menghadap kiblat'**
+  String get qiblaFacing;
+
+  /// No description provided for @qiblaCalibrate.
+  ///
+  /// In id, this message translates to:
+  /// **'Kompas kurang akurat. Gerakkan perangkat membentuk angka 8.'**
+  String get qiblaCalibrate;
+
+  /// No description provided for @qiblaSunLeft.
+  ///
+  /// In id, this message translates to:
+  /// **'Kiblat {degrees}° di sebelah kiri matahari.'**
+  String qiblaSunLeft(String degrees);
+
+  /// No description provided for @qiblaSunRight.
+  ///
+  /// In id, this message translates to:
+  /// **'Kiblat {degrees}° di sebelah kanan matahari.'**
+  String qiblaSunRight(String degrees);
+
+  /// No description provided for @qiblaSunAhead.
+  ///
+  /// In id, this message translates to:
+  /// **'Kiblat searah dengan matahari.'**
+  String get qiblaSunAhead;
+
+  /// No description provided for @qiblaSunBehind.
+  ///
+  /// In id, this message translates to:
+  /// **'Kiblat tepat membelakangi matahari.'**
+  String get qiblaSunBehind;
+
+  /// No description provided for @qiblaNoLocation.
+  ///
+  /// In id, this message translates to:
+  /// **'Lokasi belum tersedia. Atur lokasi di Pengaturan.'**
+  String get qiblaNoLocation;
+
+  /// No description provided for @dirN.
+  ///
+  /// In id, this message translates to:
+  /// **'utara'**
+  String get dirN;
+
+  /// No description provided for @dirNE.
+  ///
+  /// In id, this message translates to:
+  /// **'timur laut'**
+  String get dirNE;
+
+  /// No description provided for @dirE.
+  ///
+  /// In id, this message translates to:
+  /// **'timur'**
+  String get dirE;
+
+  /// No description provided for @dirSE.
+  ///
+  /// In id, this message translates to:
+  /// **'tenggara'**
+  String get dirSE;
+
+  /// No description provided for @dirS.
+  ///
+  /// In id, this message translates to:
+  /// **'selatan'**
+  String get dirS;
+
+  /// No description provided for @dirSW.
+  ///
+  /// In id, this message translates to:
+  /// **'barat daya'**
+  String get dirSW;
+
+  /// No description provided for @dirW.
+  ///
+  /// In id, this message translates to:
+  /// **'barat'**
+  String get dirW;
+
+  /// No description provided for @dirNW.
+  ///
+  /// In id, this message translates to:
+  /// **'barat laut'**
+  String get dirNW;
 }
 
 class _AppLocalizationsDelegate

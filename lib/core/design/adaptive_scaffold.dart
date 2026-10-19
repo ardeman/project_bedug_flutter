@@ -177,6 +177,9 @@ class AdaptiveScaffold extends StatelessWidget {
           icon == Icons.access_time_filled) {
         return 'clock.fill';
       }
+      if (icon == Icons.mosque_outlined || icon == Icons.mosque) {
+        return 'moon.stars.fill';
+      }
       if (icon == Icons.calendar_month_outlined ||
           icon == Icons.calendar_month) {
         return 'calendar.circle.fill';

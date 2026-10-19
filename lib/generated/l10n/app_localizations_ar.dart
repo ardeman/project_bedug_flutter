@@ -288,4 +288,81 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get notifIsya => 'حان وقت صلاة العشاء';
+
+  @override
+  String get worship => 'العبادة';
+
+  @override
+  String get qibla => 'القبلة';
+
+  @override
+  String qiblaBearing(String degrees, String direction) {
+    return '$degrees° من الشمال ($direction)';
+  }
+
+  @override
+  String qiblaDistance(String km) {
+    return '$km كم إلى الكعبة';
+  }
+
+  @override
+  String get qiblaFaceNorthHint =>
+      'وجّه أعلى الشاشة نحو الشمال، ثم اتبع السهم.';
+
+  @override
+  String get qiblaFindNorthHint =>
+      'حدّد الشمال ببوصلة الهاتف أو تطبيق خرائط أو موقع الشمس.';
+
+  @override
+  String get qiblaRotateHint => 'أدِر الجهاز حتى يشير السهم إلى الأعلى مباشرة.';
+
+  @override
+  String get qiblaFacing => 'أنت تتجه نحو القبلة';
+
+  @override
+  String get qiblaCalibrate =>
+      'دقة البوصلة منخفضة. حرّك الجهاز على شكل الرقم 8.';
+
+  @override
+  String qiblaSunLeft(String degrees) {
+    return 'القبلة على بعد $degrees° إلى يسار الشمس.';
+  }
+
+  @override
+  String qiblaSunRight(String degrees) {
+    return 'القبلة على بعد $degrees° إلى يمين الشمس.';
+  }
+
+  @override
+  String get qiblaSunAhead => 'القبلة باتجاه الشمس.';
+
+  @override
+  String get qiblaSunBehind => 'القبلة في الاتجاه المعاكس للشمس تمامًا.';
+
+  @override
+  String get qiblaNoLocation => 'الموقع غير متاح بعد. حدّده في الإعدادات.';
+
+  @override
+  String get dirN => 'الشمال';
+
+  @override
+  String get dirNE => 'الشمال الشرقي';
+
+  @override
+  String get dirE => 'الشرق';
+
+  @override
+  String get dirSE => 'الجنوب الشرقي';
+
+  @override
+  String get dirS => 'الجنوب';
+
+  @override
+  String get dirSW => 'الجنوب الغربي';
+
+  @override
+  String get dirW => 'الغرب';
+
+  @override
+  String get dirNW => 'الشمال الغربي';
 }

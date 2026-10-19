@@ -290,4 +290,83 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get notifIsya => 'Isha prayer time has arrived';
+
+  @override
+  String get worship => 'Worship';
+
+  @override
+  String get qibla => 'Qibla';
+
+  @override
+  String qiblaBearing(String degrees, String direction) {
+    return '$degrees° from north ($direction)';
+  }
+
+  @override
+  String qiblaDistance(String km) {
+    return '$km km to the Kaaba';
+  }
+
+  @override
+  String get qiblaFaceNorthHint =>
+      'Point the top of the screen north, then follow the arrow.';
+
+  @override
+  String get qiblaFindNorthHint =>
+      'Find north with a phone compass, a map app, or the sun.';
+
+  @override
+  String get qiblaRotateHint =>
+      'Turn the device until the arrow points straight up.';
+
+  @override
+  String get qiblaFacing => 'You are facing the Qibla';
+
+  @override
+  String get qiblaCalibrate =>
+      'Compass accuracy is low. Move the device in a figure 8.';
+
+  @override
+  String qiblaSunLeft(String degrees) {
+    return 'The Qibla is $degrees° to the left of the sun.';
+  }
+
+  @override
+  String qiblaSunRight(String degrees) {
+    return 'The Qibla is $degrees° to the right of the sun.';
+  }
+
+  @override
+  String get qiblaSunAhead => 'The Qibla is toward the sun.';
+
+  @override
+  String get qiblaSunBehind => 'The Qibla is directly away from the sun.';
+
+  @override
+  String get qiblaNoLocation =>
+      'Location isn\'t available yet. Set it in Settings.';
+
+  @override
+  String get dirN => 'north';
+
+  @override
+  String get dirNE => 'northeast';
+
+  @override
+  String get dirE => 'east';
+
+  @override
+  String get dirSE => 'southeast';
+
+  @override
+  String get dirS => 'south';
+
+  @override
+  String get dirSW => 'southwest';
+
+  @override
+  String get dirW => 'west';
+
+  @override
+  String get dirNW => 'northwest';
 }

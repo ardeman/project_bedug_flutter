@@ -13,6 +13,8 @@ class SFSymbols {
       'gearshape' => Icons.settings_outlined,
       'clock.fill' => Icons.access_time_filled,
       'clock' => Icons.access_time_outlined,
+      'moon.stars.fill' => Icons.mosque,
+      'moon.stars' => Icons.mosque_outlined,
       'magnifyingglass' => Icons.search,
       'person.fill' => Icons.person,
       'person' => Icons.person_outline,
