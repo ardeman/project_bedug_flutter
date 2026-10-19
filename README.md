@@ -1,154 +1,117 @@
-# Bedug - Muslim Prayer Times App
+# Bedug
 
-Cross-platform Muslim prayer time app with Hijri calendar, localized UI, and adaptive platform design.
+A cross-platform Muslim prayer times app with a Hijri calendar, in Indonesian, English, Arabic and Malay.
+
+- **Prayer times** from Kemenag RI by default, or one of several global calculation methods, with a live countdown to the next prayer and adhan notifications.
+- **Hijri calendar** view.
+- **Location** from GPS (auto detect) or a city picked in Settings.
+- **Adaptive design:** Liquid Glass on iOS and macOS, Material 3 on Android and Linux, a Fluent-style layout on Windows.
 
 ## Features
 
-- Accurate prayer times (default: Kemenag RI, plus multiple global methods)
-- Live next-prayer countdown
-- Hijri calendar view
-- Adhan notification integration
-- Flexible location source:
+- Live next-prayer countdown and adhan notifications.
+- Location source:
   - Auto detect from device GPS, or
-  - Manual city selection from Settings
-- City is required when auto location is disabled
-- Location header shows nearest city fallback (not raw coordinates) when reverse geocoding is unavailable
-- Multi-language UI: Indonesian, English, Arabic, Malay
-- Adaptive UI by platform: Liquid Glass (iOS/macOS), Material 3 (Android/Linux), Fluent-like layout (Windows)
-- Platform-adaptive "Calculation Method" picker:
-  - Native Cupertino sheet on iOS/macOS
-  - Liquid-glass custom sheet on non-Apple platforms
+  - Manual city selection from Settings (required when auto detect is off).
+- When reverse geocoding fails, the header shows the nearest supported city, never raw coordinates.
+- GPS timeouts are handled gracefully: high-accuracy settings on Android, a recent last-known position as fallback, and no raw exception text shown to users.
+- In-app theme switching (System / Light / Dark) updates every card, bar and glass overlay at once.
+- Calculation method picker: a native Cupertino sheet on iOS/macOS, a liquid-glass sheet elsewhere.
+- Apple-specific polish:
+  - Native SF Symbols (`cupertino_native`) for icons and app bar buttons.
+  - Prayer header that collapses into a compact bar, keeps the countdown visible and adapts to the Dynamic Island in portrait and to camera cutouts in landscape.
+  - macOS window with a hidden, transparent title bar, rounded corners and inset traffic-light buttons. Tabs can be selected by dragging across the nav bar.
 
-## Theme Behavior
+## Supported platforms
 
-- In-app theme switching (System/Light/Dark) updates immediately across prayer cards, app bars, nav bars, and glass overlays.
-- UI brightness is derived from the active app theme (`Theme.of(context).brightness`) instead of system platform brightness, to avoid delayed or partial color updates when user theme mode is changed inside the app.
-- Apple liquid-glass navigation targets iOS 26+ and macOS 26+ as the project baseline.
-
-## Recent Updates
-
-- Apple icon pipeline now uses native SF Symbols (`cupertino_native`) instead of `CupertinoIcons`.
-- Active tab color in Liquid Glass nav uses `AppColors.emerald` for consistent brand color.
-- Calculation Method picker uses native Apple sheet on iOS/macOS for platform-consistent behavior.
-- macOS window now uses hidden/transparent title bar with rounded full-size content and tuned traffic-light button insets for liquid-glass styling.
-- Prayer header collapse behavior on Apple keeps green system gradient, keeps countdown visible in compact mode, and aligns action buttons vertically.
-- Prayer header expanded content now uses compact fallback sizing to prevent tiny overflows during collapse transitions.
-- Apple prayer app bar now adapts collapsed height/controls for portrait Dynamic Island devices and keeps action button alignment consistent across iPhone 16e/17/Air variants.
-- Apple prayer cards now respect landscape safe-area insets, preventing right-edge time text overlap near camera/island cutouts.
-- Location loading now handles GPS timeout more gracefully:
-  - uses high-accuracy Android GPS settings for emulator/device consistency
-  - falls back to last known position only when recent
-  - avoids showing raw exception text to users
-  - avoids duplicate denied-forever location guidance text in the UI
-
-## Commit Message Convention
-
-Use Conventional Commits:
-
-```text
-<type>(<scope>): <description>
-```
-
-Examples:
-- `fix(theme): apply app-theme brightness immediately`
-- `docs(readme): add commit message validation guide`
-
-Common types:
-- `feat`, `fix`, `docs`, `refactor`, `test`, `chore`, `build`, `ci`, `perf`, `style`, `revert`
-
-Validate the latest commit subject locally:
-
-```bash
-git log -1 --pretty=%s | grep -E '^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([a-z0-9._/-]+\))?!?: .+'
-```
-
-Husky-like hook setup (repo-managed git hooks):
-
-```bash
-./scripts/install_git_hooks.sh
-```
-
-This installs `core.hooksPath=.githooks` and runs:
-- `pre-commit`: `flutter analyze` on staged `.dart` files
-- `commit-msg`: Conventional Commit message validation
-
-## Supported Platforms
-
-| Platform | Design System | Status |
-|---|---|---|
-| iOS | Liquid Glass | ✅ |
-| macOS | Liquid Glass | ✅ |
+| Platform | Design system | Status |
+| --- | --- | --- |
+| iOS 26+ | Liquid Glass | ✅ |
+| macOS 26+ | Liquid Glass | ✅ |
 | Android | Material Design 3 | ✅ |
 | Windows | Fluent Design | ✅ |
 | Linux | Material Design 3 | ✅ |
 
-## Getting Started
+## Getting started
 
-### Prerequisites
+Prerequisites: the [Flutter SDK](https://docs.flutter.dev/get-started/install) (3.31+) on the stable channel, plus the toolchain for the platform you target: Xcode 26+ for iOS/macOS (deployment targets are 26.0), Android Studio for Android. Run `flutter doctor` to check.
 
-- Flutter SDK 3.31+ recommended
-- Dart SDK 3.x
-- Xcode 26+ (for iOS/macOS)
-- iOS deployment target 26.0+
-- macOS deployment target 26.0+
-- Android Studio (for Android)
-
-### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/bedug.git
-cd bedug
-
-# Install dependencies
+```sh
 flutter pub get
-
-# Generate localization files
 flutter gen-l10n
-
-# Run the app
-flutter run
+./scripts/install_git_hooks.sh
+flutter run -d macos   # or: iphone, android, windows, linux
 ```
 
-### Run on specific platform
+## Commands
 
-```bash
-flutter run -d macos      # macOS
-flutter run -d iphone     # iOS Simulator
-flutter run -d android    # Android Emulator
-flutter run -d windows    # Windows
+| Task | Command |
+| --- | --- |
+| Install dependencies | `flutter pub get` |
+| Generate localizations | `flutter gen-l10n` |
+| Run (debug) | `flutter run -d <device>` |
+| List devices | `flutter devices` |
+| Format changed files | `dart format <files>` |
+| Static analysis | `flutter analyze` |
+| Tests | `flutter test` |
+| Install Git hooks (once per clone) | `./scripts/install_git_hooks.sh` |
+| Check the adhan calculation from the command line | `dart run bin/check_adhan.dart` |
+| Release build | `flutter build <apk\|appbundle\|ipa\|macos\|windows\|linux>` |
+
+**Checks**: run both before every commit. They must pass with no errors or warnings:
+
+```sh
+flutter analyze && flutter test
 ```
 
-## Tech Stack
+### Commit messages
 
-| Category | Package |
-|---|---|
-| State management | `flutter_riverpod` |
-| Prayer times | `adhan` |
-| Notifications | `flutter_local_notifications` |
-| Location | `geolocator` |
-| Localization | `flutter_localizations` + `gen-l10n` |
-| Hijri calendar | `hijri` |
-| Timezone | `timezone` |
+Commit subjects use Conventional Commits: `type(scope)!: description`, with optional scope and `!` for breaking changes. Allowed types are `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore` and `revert`. For example: `fix(theme): apply app-theme brightness immediately`.
 
-## Localization
+`./scripts/install_git_hooks.sh` sets `core.hooksPath=.githooks`, which runs:
 
-The app supports 4 languages. To add a new language:
+- `pre-commit`: `flutter analyze` on staged `.dart` files (`scripts/analyze_staged_dart.sh`).
+- `commit-msg`: Conventional Commit validation (`scripts/validate_commit_msg.sh`).
 
-1. Create `lib/l10n/app_XX.arb` (where `XX` is the language code)
-2. Add translations for all keys
-3. Run `flutter gen-l10n`
-4. Add the locale to `supportedLocales` in `app.dart`
+To check the latest subject by hand:
 
-Notes:
-- Do not hardcode user-facing strings in widgets.
-- Use `AppLocalizations.of(context)` for all labels and messages.
-- Do not hardcode thrown error messages either; localize them through app localization.
+```sh
+git log -1 --pretty=%s | grep -E '^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([a-z0-9._/-]+\))?!?: .+'
+```
 
-## Calculation Methods
+## Project layout
+
+```text
+lib/
+  main.dart          Entry point
+  app.dart           MaterialApp, theme, locale
+  home/              Main scaffold with the adaptive bottom nav
+  core/
+    constants/       AppColors, city catalog
+    design/          Platform detection, adaptive scaffold, liquid glass, SF Symbols
+    providers/       localeProvider, settingsProvider
+    services/        Prayer times, Kemenag method, notifications
+    utils/           Hijri helpers
+    widgets/         Shared widgets (calculation method picker)
+  features/
+    prayer_times/    Prayer times screen
+    prayer/          Prayer card widget
+    hijri_calendar/  Hijri calendar screen
+    settings/        Settings screen
+  l10n/              ARB files (app_id.arb is the template)
+  generated/l10n/    Generated localizations (do not edit)
+bin/                 Command-line helper scripts
+scripts/             Git hook scripts
+.githooks/           Versioned Git hooks
+test/                Widget tests
+android/ ios/ macos/ windows/ linux/
+                     Platform runners
+```
+
+## Calculation methods
 
 | Method | Region |
-|---|---|
+| --- | --- |
 | Kemenag RI ⭐ | Indonesia (default) |
 | Muslim World League | Global |
 | ISNA | North America |
@@ -160,31 +123,48 @@ Notes:
 | Singapore | Singapore |
 | Turkey | Turkey |
 
-## Project Structure
+## Localization
 
-```
-lib/
-├── main.dart
-├── app.dart
-├── home/
-│   └── home_screen.dart
-├── core/
-│   ├── constants/
-│   ├── providers/
-│   ├── services/
-│   └── widgets/
-├── features/
-│   ├── prayer_times/
-│   ├── hijri_calendar/
-│   └── settings/
-└── generated/
-    └── l10n/
-```
+The app ships in Indonesian (template), English, Arabic and Malay. To add a language:
 
-## Contributing
+1. Create `lib/l10n/app_XX.arb` (`XX` is the language code) with every key from `app_id.arb`.
+2. Run `flutter gen-l10n`.
+3. Add the locale to `supportedLocales` in `lib/app.dart`.
+4. Switch to it in Settings and check every screen.
 
-Please read [README_AGENT.md](./README_AGENT.md) if you're using an AI coding assistant.
+## macOS
+
+- The window chrome lives in `macos/Runner/MainFlutterWindow.swift`: hidden title, transparent title bar, full-size content, rounded corners, movable by background, and traffic-light buttons placed at a fixed inset that is kept on resize.
+- Deployment target is macOS 26.0 and needs Xcode 26+.
+
+## Tech stack
+
+| Category | Package |
+| --- | --- |
+| State management | `flutter_riverpod` |
+| Prayer times | `adhan` |
+| Hijri calendar | `hijri` |
+| Location | `geolocator`, `geocoding` |
+| Notifications | `flutter_local_notifications` |
+| Home screen widget | `home_widget` (Android, iOS) |
+| Native Apple controls | `cupertino_native` |
+| Storage | `shared_preferences` |
+| Localization | `flutter_localizations` + `gen-l10n`, `intl` |
+| Timezone | `timezone` |
+
+## Documentation map
+
+Each topic has one home. Update that file instead of copying its content somewhere else.
+
+| File | Audience | Owns |
+| --- | --- | --- |
+| `README.md` | Everyone | Overview, setup, commands, layout |
+| `AGENTS.md` | AI coding agents (and humans who want the rules) | Conventions, platform UI rules, guardrails, definition of done |
+| `CLAUDE.md`, `GEMINI.md` | Claude Code, Gemini CLI | Only an import of `AGENTS.md` |
+| `CONTRIBUTING.md` | Human contributors | Branches, bug reports, feature requests, pull requests |
+
+Codex, Cursor, GitHub Copilot, Windsurf, Jules, Aider, Zed and other agents that follow the [AGENTS.md](https://agents.md) convention read `AGENTS.md` directly.
 
 ## License
 
-MIT License — see [LICENSE](./LICENSE) for details.
+MIT License.
