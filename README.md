@@ -213,7 +213,7 @@ The current look needs a redesign on every platform. Screens read the accent fro
 
 1. **Re-theme:** "refined emerald": a deep emerald on warm sand (light) or green-black (dark), gold as the highlight, Plus Jakarta Sans, flat cards with large radii and pill-shaped controls.
    1. **Tokens and theme (done):** palette in `AppColors`, `AppSpacing` / `AppRadii` and the component themes in `lib/core/theme/`.
-   2. **Screen migration (next):** move each screen's inline styles (sizes, colors, radii, paddings) onto the text theme and tokens, one screen per commit: prayer times, liquid glass, method picker, calendar, settings, worship. Check each on Apple, Android, Windows and Linux in light and dark.
+   2. **Screen migration (next):** move each screen's inline styles (sizes, colors, radii, paddings) onto the text theme and tokens, one screen per commit: prayer times (done), liquid glass, method picker, calendar, settings, worship. Check each on Apple, Android, Windows and Linux in light and dark.
 2. **Liquid glass package:** replace our `BackdropFilter` glass (nav bar, cards, sheets) on iOS and macOS with [`liquid_glass_easy`](https://pub.dev/packages/liquid_glass_easy), a shader lens with real refraction. Keep the `IgnorePointer`, double-open and safe-area rules from `AGENTS.md`.
 
 ### Revenue: ads and infaq

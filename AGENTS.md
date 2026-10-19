@@ -46,7 +46,7 @@ Each platform gets its own design system. Check the platform before rendering an
 
 - `Scaffold` uses `extendBody: true` and `extendBodyBehindAppBar: true` so content scrolls behind the glass bars.
 - Nav bar height includes the system inset: `64 + MediaQuery.of(ctx).padding.bottom`.
-- Glass card: `Material(color: Colors.transparent)` → `ClipRRect(borderRadius: 18)` → `BackdropFilter(ImageFilter.blur(sigmaX: 20, sigmaY: 20))` → a container with a white gradient (alpha ~0.72 → 0.55) and a thin white border.
+- Glass card: `Material(color: Colors.transparent)` → `ClipRRect(borderRadius: AppRadii.lg)` → `BackdropFilter(ImageFilter.blur(sigmaX: 20, sigmaY: 20))` → a container with a white gradient (alpha ~0.72 → 0.55) and a thin white border.
 - Frosted bar: `ClipRect` → `BackdropFilter(blur 24)` → a container colored `Color(0xFF1C1C1E)` (dark) or white (light) at alpha 0.72.
 - Full-screen blur overlay (sheet, modal): push a `PageRouteBuilder(opaque: false, barrierColor: Colors.transparent)` whose page is a tap-to-dismiss `Scaffold(backgroundColor: Colors.black38)` with the glass panel aligned to the bottom.
 - Decorative layers (gradients, blur) stacked above tappable controls are wrapped in `IgnorePointer`, or they swallow taps on the app bar icons.
