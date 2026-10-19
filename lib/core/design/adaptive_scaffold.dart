@@ -90,7 +90,7 @@ class AdaptiveScaffold extends StatelessWidget {
           ? CNTabBar(
               currentIndex: selectedIndex,
               onTap: onDestinationSelected,
-              tint: AppColors.emerald,
+              tint: AppColors.accentOf(ctx),
               items: nativeItems,
             )
           : LiquidGlassNavBar(

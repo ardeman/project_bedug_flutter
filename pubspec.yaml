@@ -37,6 +37,22 @@ flutter:
     enable-swift-package-manager: false
   generate: true
   uses-material-design: true
+  assets:
+    - assets/fonts/plus_jakarta_sans/OFL.txt
+  # Brand typeface, bundled so the app stays offline first (SIL OFL 1.1,
+  # license in assets/fonts/plus_jakarta_sans/OFL.txt).
+  fonts:
+    - family: PlusJakartaSans
+      fonts:
+        - asset: assets/fonts/plus_jakarta_sans/PlusJakartaSans-Regular.ttf
+        - asset: assets/fonts/plus_jakarta_sans/PlusJakartaSans-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/plus_jakarta_sans/PlusJakartaSans-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/plus_jakarta_sans/PlusJakartaSans-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/plus_jakarta_sans/PlusJakartaSans-ExtraBold.ttf
+          weight: 800
 
 # App identifiers:
 #   Android: com.bedug.app

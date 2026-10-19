@@ -211,7 +211,7 @@ class _QiblaCardState extends ConsumerState<QiblaCard> {
       Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.wb_sunny_outlined, color: AppColors.gold),
+          Icon(Icons.wb_sunny_outlined, color: theme.colorScheme.tertiary),
           const SizedBox(width: 8),
           Flexible(child: Text(text, style: theme.textTheme.bodyMedium)),
         ],

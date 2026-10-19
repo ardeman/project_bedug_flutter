@@ -209,7 +209,7 @@ class _LiquidGlassNavBarState extends State<LiquidGlassNavBar> {
     final isDark = Theme.of(ctx).brightness == Brightness.dark;
     final bottom = MediaQuery.of(ctx).padding.bottom;
 
-    final selectedColor = AppColors.emerald;
+    final selectedColor = AppColors.accentOf(ctx);
     final unselectedColor = isDark
         ? Colors.white.withValues(alpha: 0.72)
         : Colors.black.withValues(alpha: 0.58);
@@ -275,102 +275,105 @@ class _LiquidGlassNavBarState extends State<LiquidGlassNavBar> {
                     onHorizontalDragEnd:
                         _supportsMacDrag ? _onNavDragEnd : null,
                     child: Stack(
-                    children: [
-                    AnimatedPositioned(
-                      duration: const Duration(milliseconds: 320),
-                      curve: Curves.easeOutCubic,
-                      left: pillLeft,
-                      top: navPadding,
-                      bottom: navPadding,
-                      width: pillWidth,
-                      child: IgnorePointer(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(28),
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(28),
-                                color: isDark
-                                    ? Colors.white.withValues(alpha: 0.13)
-                                    : Colors.white.withValues(alpha: 0.62),
-                                border: Border.all(
-                                  color: isDark
-                                      ? Colors.white.withValues(alpha: 0.2)
-                                      : Colors.white.withValues(alpha: 0.75),
-                                  width: 0.8,
+                      children: [
+                        AnimatedPositioned(
+                          duration: const Duration(milliseconds: 320),
+                          curve: Curves.easeOutCubic,
+                          left: pillLeft,
+                          top: navPadding,
+                          bottom: navPadding,
+                          width: pillWidth,
+                          child: IgnorePointer(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(28),
+                              child: BackdropFilter(
+                                filter:
+                                    ImageFilter.blur(sigmaX: 14, sigmaY: 14),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(28),
+                                    color: isDark
+                                        ? Colors.white.withValues(alpha: 0.13)
+                                        : Colors.white.withValues(alpha: 0.62),
+                                    border: Border.all(
+                                      color: isDark
+                                          ? Colors.white.withValues(alpha: 0.2)
+                                          : Colors.white
+                                              .withValues(alpha: 0.75),
+                                      width: 0.8,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                      Row(
-                        children: List.generate(widget.items.length, (i) {
-                          final selected = i == widget.currentIndex;
-                          final item = widget.items[i];
-                          return Expanded(
-                            child: MouseRegion(
-                              cursor: SystemMouseCursors.click,
-                              child: GestureDetector(
-                                onTap: () => widget.onTap(i),
-                                behavior: HitTestBehavior.opaque,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(navPadding),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      AnimatedSwitcher(
-                                        duration:
-                                            const Duration(milliseconds: 220),
-                                        transitionBuilder: (child, anim) =>
-                                            FadeTransition(
-                                          opacity: anim,
-                                          child: ScaleTransition(
-                                              scale: anim, child: child),
+                        Row(
+                          children: List.generate(widget.items.length, (i) {
+                            final selected = i == widget.currentIndex;
+                            final item = widget.items[i];
+                            return Expanded(
+                              child: MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                child: GestureDetector(
+                                  onTap: () => widget.onTap(i),
+                                  behavior: HitTestBehavior.opaque,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(navPadding),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        AnimatedSwitcher(
+                                          duration:
+                                              const Duration(milliseconds: 220),
+                                          transitionBuilder: (child, anim) =>
+                                              FadeTransition(
+                                            opacity: anim,
+                                            child: ScaleTransition(
+                                                scale: anim, child: child),
+                                          ),
+                                          child: _buildNavIcon(
+                                            selected
+                                                ? item.activeIcon
+                                                : item.icon,
+                                            fallback: selected
+                                                ? Icons.circle
+                                                : Icons.circle_outlined,
+                                            key: ValueKey('${selected}_$i'),
+                                            size: 22,
+                                            color: selected
+                                                ? selectedColor
+                                                : unselectedColor,
+                                          ),
                                         ),
-                                        child: _buildNavIcon(
-                                          selected
-                                              ? item.activeIcon
-                                              : item.icon,
-                                          fallback: selected
-                                              ? Icons.circle
-                                              : Icons.circle_outlined,
-                                          key: ValueKey('${selected}_$i'),
-                                          size: 22,
-                                          color: selected
-                                              ? selectedColor
-                                              : unselectedColor,
+                                        const SizedBox(height: 2),
+                                        Text(
+                                          item.label,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 10,
+                                            fontWeight: selected
+                                                ? FontWeight.w600
+                                                : FontWeight.w500,
+                                            color: selected
+                                                ? selectedColor
+                                                : unselectedColor,
+                                          ),
                                         ),
-                                      ),
-                                      const SizedBox(height: 2),
-                                      Text(
-                                        item.label,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: 10,
-                                          fontWeight: selected
-                                              ? FontWeight.w600
-                                              : FontWeight.w500,
-                                          color: selected
-                                              ? selectedColor
-                                              : unselectedColor,
-                                        ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          );
-                        }),
-                      ),
-                    ],
+                            );
+                          }),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
                 );
               },
             ),

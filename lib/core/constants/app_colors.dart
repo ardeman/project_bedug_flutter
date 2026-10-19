@@ -4,11 +4,23 @@ import '../theme/app_theme.dart';
 
 class AppColors {
   AppColors._();
-  static const emerald = Color(0xFF2ECC71);
-  static const teal = Color(0xFF1ABC9C);
-  static const darkBg = Color(0xFF0F1923);
-  static const lightBg = Color(0xFFF5F7FA);
-  static const gold = Color(0xFFF39C12);
+  // Brand palette ("refined emerald"). Each color has a lighter dark-mode
+  // twin so it keeps its contrast on the dark surfaces.
+  static const emerald = Color(0xFF1F7A5A);
+  static const emeraldDark = Color(0xFF4FBF8F);
+  static const teal = Color(0xFF2A8C82);
+  static const tealDark = Color(0xFF5CC7BA);
+  static const gold = Color(0xFFC99A3B);
+  static const goldDark = Color(0xFFE2B65C);
+
+  // Warm sand background and white cards in light mode; green-black
+  // background and green-tinted cards in dark mode.
+  static const lightBg = Color(0xFFF7F4EE);
+  static const lightSurface = Color(0xFFFFFFFF);
+  static const lightText = Color(0xFF16201B);
+  static const darkBg = Color(0xFF0E1512);
+  static const darkSurface = Color(0xFF17201C);
+  static const darkText = Color(0xFFE8EFEB);
 
   // Adwaita (libadwaita 1.6) window, view and card backgrounds and text.
   static const adwaitaLightWindow = Color(0xFFFAFAFB);

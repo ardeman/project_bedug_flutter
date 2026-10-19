@@ -24,7 +24,8 @@ A change is done only when the **Checks** command in `README.md` passes. If you 
   ```
 
 - User-facing text, including error messages shown to users, goes through `AppLocalizations` with keys in every ARB file under `lib/l10n/`. Never hardcode strings or throw hardcoded messages. Never edit `lib/generated/l10n/`; run `flutter gen-l10n`.
-- Colors come from `AppColors` (`emerald` primary, `teal` secondary, `darkBg`, `lightBg`, and the Adwaita and Breeze palettes). Never hardcode hex colors. In widgets, use `AppColors.accentOf(ctx)` and `AppColors.secondaryOf(ctx)` rather than `emerald` and `teal`, so the accent follows the desktop on Linux; the theme itself is built in `lib/core/theme/app_theme.dart`.
+- Colors come from `AppColors` (`emerald` primary, `teal` secondary, `gold` highlight, each with a `…Dark` twin, plus the backgrounds, surfaces and the Adwaita and Breeze palettes). Never hardcode hex colors. In widgets, use `AppColors.accentOf(ctx)`, `AppColors.secondaryOf(ctx)` and `Theme.of(ctx).colorScheme.tertiary` (gold) rather than the constants, so colors follow dark mode and the Linux desktop accent; the theme itself is built in `lib/core/theme/app_theme.dart`.
+- Text styles come from `Theme.of(ctx).textTheme` (font: bundled Plus Jakarta Sans), spacing from `AppSpacing` and corner radii from `AppRadii` (`lib/core/theme/app_tokens.dart`). Override a text style with `copyWith` instead of building a new `TextStyle` with a raw `fontSize`.
 - Code comments are in English.
 
 ## Platform design
@@ -100,4 +101,5 @@ Record architectural choices here as one line each: date, decision, reason.
 - 2026-10-19: App icons are SVG sources in `assets/branding/` rendered by `scripts/render_brand_icons.swift` and generated with `flutter_launcher_icons`, so the brand art has one editable source.
 - 2026-10-19: Apple builds use CocoaPods only (Swift Package Manager off in `pubspec.yaml`) and the Podfiles silence plugin warnings, because `cupertino_native` has no SPM support and mixed builds let plugin warnings through.
 - 2026-10-19: Revenue comes from AdMob ads on Android and iOS plus an in-app "infaq" that removes them (external Trakteer/Ko-fi links on Windows and Linux), so the free app earns while supporters get it ad-free.
+- 2026-10-19: Re-theme as "refined emerald" with Plus Jakarta Sans bundled under `assets/fonts/` (not `google_fonts`), so the app stays offline first and its typeface was designed in Indonesia.
 - 2026-10-19: On Linux the theme follows GNOME (Adwaita) or KDE (Breeze) and reads the accent from the XDG settings portal over D-Bus (`dbus` package), so the app looks native without a GTK plugin.
