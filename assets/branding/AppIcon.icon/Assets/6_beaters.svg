@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <!-- Icon Composer layer (bottom to top by number): The two beaters. Flat on purpose; the system adds the glass. -->
+  <g transform="translate(512 520) scale(1.2) translate(-540 -608)">
+    <path d="M772 770 L736 562 M818 748 L790 522" stroke="#7A4A22" stroke-width="16" stroke-linecap="round" fill="none"/><g fill="#0F1923"><circle cx="733" cy="546" r="27"/><circle cx="787" cy="506" r="27"/></g>
+  </g>
+</svg>

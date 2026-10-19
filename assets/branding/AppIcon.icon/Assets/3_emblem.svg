@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <!-- Icon Composer layer (bottom to top by number): The hoops and the crescent and star carved on the barrel. Flat on purpose; the system adds the glass. -->
+  <g transform="translate(512 520) scale(1.2) translate(-540 -608)">
+    <g fill="#0F1923"><path d="M378.1 377.9 A69.1 162.1 0 0 0 378.1 702.1 L396.1 704.8 A70.3 164.8 0 0 1 396.1 375.2 Z"/><path d="M646.1 378.1 A69.1 161.9 0 0 0 646.1 701.9 L664.1 699.1 A67.9 159.1 0 0 1 664.1 380.9 Z"/></g><g fill="#0E6655" transform="translate(456 540) scale(0.78)"><path d="M94.7 32.1 A100 100 0 1 1 -7.8 -99.7 A84 84 0 1 0 94.7 32.1 Z"/><polygon points="57.4,-74.5 59.6,-43.0 89.9,-34.3 60.7,-22.5 61.8,9.1 41.5,-15.1 11.8,-4.3 28.5,-31.1 9.1,-56.0 39.7,-48.3"/></g>
+  </g>
+</svg>

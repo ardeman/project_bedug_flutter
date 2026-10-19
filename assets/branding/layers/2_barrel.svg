@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <!-- Icon Composer layer (bottom to top by number): The drum barrel, ending on the drum head's edge so the see-through head shows no seam. Flat on purpose; the system adds the glass. -->
+  <g transform="translate(512 520) scale(1.2) translate(-540 -608)">
+    <path d="M712 390 Q500 345 320 390 A64 150 0 0 0 320 690 Q500 735 712 690 A64 150 0 0 1 712 390 Z" fill="#FFFFFF"/>
+  </g>
+</svg>

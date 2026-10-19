@@ -60,7 +60,7 @@ iOS and macOS builds use CocoaPods only: Swift Package Manager is turned off in 
 | Tests | `flutter test` |
 | Install Git hooks (once per clone) | `./scripts/install_git_hooks.sh` |
 | Check the adhan calculation from the command line | `dart run bin/check_adhan.dart` |
-| Regenerate app icons after editing `assets/branding/*.svg` (macOS) | `swift scripts/render_brand_icons.swift && dart run flutter_launcher_icons` |
+| Regenerate the Android and Windows icons after editing `assets/branding/*.svg` (macOS) | `swift scripts/render_brand_icons.swift && dart run flutter_launcher_icons` |
 | Release build | `flutter build <apk\|appbundle\|ipa\|macos\|windows\|linux>` |
 
 **Checks**: run both before every commit. They must pass with no errors or warnings:
@@ -110,6 +110,8 @@ lib/
   generated/l10n/    Generated localizations (do not edit)
 bin/                 Command-line helper scripts
 assets/branding/     App icon sources (SVG) and their 1024px renders
+  AppIcon.icon/      Icon Composer icon for iOS and macOS
+  layers/            Flat Icon Composer layers for the Apple icon
 assets/fonts/        Bundled brand font (Plus Jakarta Sans, OFL)
 scripts/             Git hook scripts, icon renderer
 .githooks/           Versioned Git hooks

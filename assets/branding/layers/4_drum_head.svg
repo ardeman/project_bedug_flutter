@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <!-- Icon Composer layer (bottom to top by number): The gold drum head. Flat on purpose; the system adds the glass. -->
+  <g transform="translate(512 520) scale(1.2) translate(-540 -608)">
+    <ellipse cx="712" cy="540" rx="64" ry="150" fill="#F39C12"/><ellipse cx="712" cy="540" rx="44" ry="122" fill="#F7B547"/>
+  </g>
+</svg>

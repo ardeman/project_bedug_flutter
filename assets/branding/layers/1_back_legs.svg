@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <!-- Icon Composer layer (bottom to top by number): The two stand legs behind the barrel. Flat on purpose; the system adds the glass. -->
+  <g transform="translate(512 520) scale(1.2) translate(-540 -608)">
+    <path d="M470 610 L325 870 M700 610 L555 870" stroke="#5A3418" stroke-width="24" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>

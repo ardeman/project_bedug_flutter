@@ -82,7 +82,7 @@ These come from real crashes and broken UI.
 - **Mismatched brackets after a patch** (`Can't find ')' to match '('`): rewrite the whole class cleanly instead of patching again.
 - **Platform folders** (`android/`, `ios/`, `macos/`, etc.) are mostly generated. Edit them only for platform config (window chrome, permissions, deployment targets, app ID). Never edit `**/GeneratedPluginRegistrant.*`, `ios/Flutter/Generated.xcconfig` or anything under `build/` or `.dart_tool/`.
 - **App identity:** don't change the package name `bedug` or the ID `com.bedug.app` without being asked. The display name is `Bedug` and the publisher is `Ardeman` on every platform.
-- **App icons:** edit the SVGs in `assets/branding/`, never the generated platform icons. After `dart run flutter_launcher_icons`, revert its change to `ios/Runner.xcodeproj/project.pbxproj` (it overwrites `ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS`).
+- **App icons:** edit the SVGs in `assets/branding/`, never the generated platform icons. iOS and macOS use `assets/branding/AppIcon.icon`, edited in Icon Composer and referenced by both Xcode projects; keep `ios: false` and `macos: generate: false` for `flutter_launcher_icons`, and keep the flat layers in `assets/branding/layers/` in sync with what you import into it.
 - **Version:** bump `version:` in `pubspec.yaml` only when asked.
 
 ## Keeping docs current
@@ -106,3 +106,4 @@ Record architectural choices here as one line each: date, decision, reason.
 - 2026-10-19: Re-theme as "refined emerald" with Plus Jakarta Sans bundled under `assets/fonts/` (not `google_fonts`), so the app stays offline first and its typeface was designed in Indonesia.
 - 2026-10-19: On Linux the theme follows GNOME (Adwaita) or KDE (Breeze) and reads the accent from the XDG settings portal over D-Bus (`dbus` package), so the app looks native without a GTK plugin.
 - 2026-10-19: Liquid Glass on iOS and macOS comes from `liquid_glass_easy` (refracting lenses, lite glass in lists) and `cupertino_native` is removed, because the package gives real refraction everywhere and `cupertino_native` is being deprecated.
+- 2026-10-20: Android and Windows keep the flat icon art; iOS and macOS use the layered Icon Composer icon `assets/branding/AppIcon.icon` (built from `assets/branding/layers/`), so the system renders Liquid Glass and the Default, Dark, Clear and Tinted modes itself.

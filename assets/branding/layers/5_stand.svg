@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <!-- Icon Composer layer (bottom to top by number): The crossbar and the two stand legs in front of the barrel. Flat on purpose; the system adds the glass. -->
+  <g transform="translate(512 520) scale(1.2) translate(-540 -608)">
+    <g stroke-linecap="round" fill="none"><path d="M400 760 L630 760" stroke="#6B3E1C" stroke-width="24"/><path d="M335 640 L475 870 M565 642 L705 870" stroke="#8A5527" stroke-width="26"/></g>
+  </g>
+</svg>

@@ -59,8 +59,10 @@ flutter:
 #   iOS/macOS: com.bedug.app
 #   Windows: com.bedug.app
 
-# App icons. Sources are the SVGs in assets/branding/; after editing them run:
+# App icons for Android and Windows. Sources are the SVGs in assets/branding/;
+# after editing them run:
 #   swift scripts/render_brand_icons.swift && dart run flutter_launcher_icons
+# iOS and macOS use the Icon Composer icon assets/branding/AppIcon.icon instead.
 flutter_launcher_icons:
   image_path: assets/branding/icon.png
   android: true
@@ -68,11 +70,9 @@ flutter_launcher_icons:
   adaptive_icon_background: assets/branding/icon_background.png
   adaptive_icon_foreground: assets/branding/icon_foreground.png
   adaptive_icon_monochrome: assets/branding/icon_monochrome.png
-  ios: true
-  remove_alpha_ios: true
+  ios: false
   macos:
-    generate: true
-    image_path: assets/branding/icon_macos.png
+    generate: false
   windows:
     generate: true
     icon_size: 256
