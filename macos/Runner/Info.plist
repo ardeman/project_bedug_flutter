@@ -34,5 +34,7 @@
 	<string>Bedug membutuhkan lokasi untuk menghitung waktu salat yang akurat</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Bedug membutuhkan lokasi untuk menghitung waktu salat yang akurat</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	</dict>
 </plist>
