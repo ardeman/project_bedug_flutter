@@ -21,25 +21,28 @@ class PrayerTimesScreen extends ConsumerStatefulWidget {
 
 class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
   Timer? _tick;
-  Duration _remaining = Duration.zero;
+  // Only the countdown badges listen, so a tick doesn't rebuild the screen.
+  final _remaining = ValueNotifier<Duration>(Duration.zero);
   bool _isMethodPickerOpen = false;
 
   @override
   void initState() {
     super.initState();
+    _update();
     _tick = Timer.periodic(const Duration(seconds: 1), (_) => _update());
   }
 
   void _update() {
     final next = ref.read(nextPrayerProvider);
     if (next.time != null && mounted) {
-      setState(() => _remaining = next.time!.difference(DateTime.now()));
+      _remaining.value = next.time!.difference(DateTime.now());
     }
   }
 
   @override
   void dispose() {
     _tick?.cancel();
+    _remaining.dispose();
     super.dispose();
   }
 
@@ -248,7 +251,7 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
 class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
   final String nextName;
   final String locationLabel;
-  final Duration remaining;
+  final ValueListenable<Duration> remaining;
   final double minCollapsedExtent;
   final bool isIosPortrait;
   final double topInset;
@@ -715,16 +718,20 @@ class _MaterialCard extends StatelessWidget {
 
 // ── Liquid Countdown Badge ────────────────────────────────────────────────────
 class _LiquidCountdownBadge extends StatelessWidget {
-  final Duration remaining;
+  final ValueListenable<Duration> remaining;
   final bool compact;
   const _LiquidCountdownBadge({required this.remaining, this.compact = false});
 
   @override
   Widget build(BuildContext ctx) {
-    if (remaining.isNegative) return const SizedBox();
-    final h = remaining.inHours.toString().padLeft(2, '0');
-    final m = (remaining.inMinutes % 60).toString().padLeft(2, '0');
-    final s = (remaining.inSeconds % 60).toString().padLeft(2, '0');
+    return ValueListenableBuilder<Duration>(
+      valueListenable: remaining,
+      builder: (_, value, __) => _buildBadge(value),
+    );
+  }
+
+  Widget _buildBadge(Duration value) {
+    if (value.isNegative) return const SizedBox();
     final radius = compact ? 16.0 : 22.0;
     final fontSize = compact ? 15.0 : 22.0;
     final horizontal = compact ? 12.0 : 22.0;
@@ -753,7 +760,7 @@ class _LiquidCountdownBadge extends StatelessWidget {
               ),
             ],
           ),
-          child: Text('$h:$m:$s',
+          child: Text(_formatCountdown(value),
               style: TextStyle(
                 color: Colors.white,
                 fontSize: fontSize,
@@ -768,26 +775,35 @@ class _LiquidCountdownBadge extends StatelessWidget {
 
 // ── Material Countdown Badge (non-Apple) ──────────────────────────────────────
 class _CountdownBadge extends StatelessWidget {
-  final Duration remaining;
+  final ValueListenable<Duration> remaining;
   const _CountdownBadge({required this.remaining});
 
   @override
   Widget build(BuildContext ctx) {
-    if (remaining.isNegative) return const SizedBox();
-    final h = remaining.inHours.toString().padLeft(2, '0');
-    final m = (remaining.inMinutes % 60).toString().padLeft(2, '0');
-    final s = (remaining.inSeconds % 60).toString().padLeft(2, '0');
+    return ValueListenableBuilder<Duration>(
+      valueListenable: remaining,
+      builder: (_, value, __) => _buildBadge(value),
+    );
+  }
+
+  Widget _buildBadge(Duration value) {
+    if (value.isNegative) return const SizedBox();
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       decoration: BoxDecoration(
         color: Colors.white24,
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Text('$h:$m:$s',
+      child: Text(_formatCountdown(value),
           style: const TextStyle(
               color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold)),
     );
   }
+}
+
+String _formatCountdown(Duration d) {
+  String two(int n) => n.toString().padLeft(2, '0');
+  return '${two(d.inHours)}:${two(d.inMinutes % 60)}:${two(d.inSeconds % 60)}';
 }
 
 // ── Prayer Entry model ────────────────────────────────────────────────────────
