@@ -18,7 +18,7 @@ A cross-platform Muslim prayer times app with a Hijri calendar, in Indonesian, E
 - In-app theme switching (System / Light / Dark) updates every card, bar and glass overlay at once.
 - Calculation method picker: a native Cupertino sheet on iOS/macOS, a liquid-glass sheet elsewhere.
 - Apple-specific polish:
-  - Native SF Symbols (`cupertino_native`) for icons and app bar buttons.
+  - Liquid Glass from `liquid_glass_easy`: a refracting tab bar with a draggable pill, glass app bar buttons and countdown, and lite glass prayer cards.
   - Prayer header that collapses into a compact bar, keeps the countdown visible and adapts to the Dynamic Island in portrait and to camera cutouts in landscape.
   - macOS window with a hidden, transparent title bar, rounded corners and inset traffic-light buttons. Tabs can be selected by dragging across the nav bar.
 
@@ -45,7 +45,7 @@ flutter gen-l10n
 flutter run -d macos   # or: iphone, android, windows, linux
 ```
 
-iOS and macOS builds use CocoaPods only: Swift Package Manager is turned off in `pubspec.yaml` because `cupertino_native` doesn't support it. Warnings from plugin code are silenced in `ios/Podfile` and `macos/Podfile`. Flutter still prints a "plugins do not support Swift Package Manager" notice on every Apple build; it's expected and harmless.
+iOS and macOS builds use CocoaPods only: Swift Package Manager is turned off in `pubspec.yaml`. It was turned off for `cupertino_native`, which has since been removed; turning SPM back on is a separate change. Warnings from plugin code are silenced in `ios/Podfile` and `macos/Podfile`. Flutter still prints a "plugins do not support Swift Package Manager" notice on every Apple build; it's expected and harmless.
 
 ## Commands
 
@@ -93,7 +93,7 @@ lib/
   home/              Main scaffold with the adaptive bottom nav
   core/
     constants/       AppColors, city catalog
-    design/          Platform and Linux desktop detection, adaptive scaffold, liquid glass, SF Symbols
+    design/          Platform and Linux desktop detection, adaptive scaffold, liquid glass, SF Symbol names
     providers/       localeProvider, settingsProvider, systemAccentProvider
     theme/           buildAppTheme, BrandColors (accent from the theme), AppSpacing / AppRadii tokens
     services/        Prayer times, Kemenag method, notifications
@@ -214,7 +214,7 @@ The current look needs a redesign on every platform. Screens read the accent fro
 1. **Re-theme:** "refined emerald": a deep emerald on warm sand (light) or green-black (dark), gold as the highlight, Plus Jakarta Sans, flat cards with large radii and pill-shaped controls.
    1. **Tokens and theme (done):** palette in `AppColors`, `AppSpacing` / `AppRadii` and the component themes in `lib/core/theme/`.
    2. **Screen migration (next):** move each screen's inline styles (sizes, colors, radii, paddings) onto the text theme and tokens, one screen per commit: prayer times (done), liquid glass, method picker, calendar, settings, worship. Check each on Apple, Android, Windows and Linux in light and dark.
-2. **Liquid glass package:** replace our `BackdropFilter` glass (nav bar, cards, sheets) on iOS and macOS with [`liquid_glass_easy`](https://pub.dev/packages/liquid_glass_easy), a shader lens with real refraction. Keep the `IgnorePointer`, double-open and safe-area rules from `AGENTS.md`.
+2. **Liquid glass package (done; check on iOS and macOS devices):** replace our `BackdropFilter` glass (nav bar, cards, sheets) on iOS and macOS with [`liquid_glass_easy`](https://pub.dev/packages/liquid_glass_easy), a shader lens with real refraction. Keep the `IgnorePointer`, double-open and safe-area rules from `AGENTS.md`.
 
 ### Revenue: ads and infaq
 
@@ -283,7 +283,7 @@ The infaq method depends on where the build is distributed, not only on the plat
 | Hijri calendar | `hijri` |
 | Location | `geolocator`, `geocoding` |
 | Notifications | `flutter_local_notifications` |
-| Native Apple controls | `cupertino_native` |
+| Liquid Glass | `liquid_glass_easy` |
 | Storage | `shared_preferences` |
 | Localization | `flutter_localizations` + `gen-l10n`, `intl` |
 | Timezone | `timezone` |

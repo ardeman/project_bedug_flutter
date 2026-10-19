@@ -1,12 +1,12 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../generated/l10n/app_localizations.dart';
+import 'package:liquid_glass_easy/liquid_glass_easy.dart';
 import '../constants/app_colors.dart';
+import '../theme/app_tokens.dart';
 import '../providers/locale_provider.dart';
 import '../services/kemenag_method.dart';
 
@@ -234,30 +234,26 @@ class _CalculationMethodPickerSheetState
                 Positioned(
                   left: 0,
                   right: 0,
-                  bottom: -(routeOffset + _dragOffset),
+                  // The panel runs one corner radius past the screen edge,
+                  // so only its top corners show.
+                  bottom: -(routeOffset + _dragOffset) - AppRadii.xl,
                   child: GestureDetector(
                     onTap: () {},
                     child: RepaintBoundary(
-                      child: ClipRRect(
-                        borderRadius: const BorderRadius.vertical(
-                            top: Radius.circular(20)),
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 28, sigmaY: 28),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: LiquidGlassLite(
+                          shape:
+                              const LiquidGlassShape.continuousRoundedRectangle(
+                                  cornerRadius: AppRadii.xl),
+                          blur: 28,
+                          color: isDark
+                              ? Colors.black.withValues(alpha: .55)
+                              : Colors.white.withValues(alpha: .78),
                           child: Container(
-                            height: h * 0.6,
-                            padding: EdgeInsets.only(bottom: bottom),
-                            decoration: BoxDecoration(
-                              color: isDark
-                                  ? const Color(0xFF1C1C1E)
-                                      .withValues(alpha: .78)
-                                  : Colors.white.withValues(alpha: .78),
-                              border: Border(
-                                top: BorderSide(
-                                  color: Colors.white.withValues(alpha: .25),
-                                  width: 0.5,
-                                ),
-                              ),
-                            ),
+                            height: h * 0.6 + AppRadii.xl,
+                            padding:
+                                EdgeInsets.only(bottom: bottom + AppRadii.xl),
                             child: Column(
                               children: [
                                 GestureDetector(

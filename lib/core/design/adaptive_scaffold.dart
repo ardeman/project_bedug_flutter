@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:cupertino_native/cupertino_native.dart';
 
-import '../constants/app_colors.dart';
 import 'liquid_glass.dart';
-import 'platform_capabilities.dart';
 import 'platform_design.dart';
 import 'sf_symbols.dart';
 
@@ -55,19 +52,11 @@ class AdaptiveScaffold extends StatelessWidget {
 
   Widget _buildApple(BuildContext ctx) {
     final isDark = Theme.of(ctx).brightness == Brightness.dark;
-    final nativeItems = destinations
-        .map(
-          (d) => CNTabBarItem(
-            label: d.label,
-            icon: CNSymbol(_symbolNameFor(d.selectedIcon ?? d.icon)),
-          ),
-        )
-        .toList(growable: false);
     final navItems = destinations
         .map(
-          (d) => LiquidGlassNavItem(
-            icon: d.icon,
-            activeIcon: d.selectedIcon ?? d.icon,
+          (d) => GlassNavItem(
+            icon: _materialIconFor(d.icon),
+            activeIcon: _materialIconFor(d.selectedIcon ?? d.icon),
             label: d.label,
           ),
         )
@@ -79,25 +68,24 @@ class AdaptiveScaffold extends StatelessWidget {
       backgroundColor:
           isDark ? const Color(0xFF000000) : const Color(0xFFF2F2F7),
       appBar: showAppBar
-          ? LiquidGlassAppBar(
-              title: title,
+          ? AppBar(
+              title: Text(title),
               actions: appBarActions,
               leading: leading,
             )
           : null,
-      body: child,
-      bottomNavigationBar: PlatformCapabilities.isIOS
-          ? CNTabBar(
-              currentIndex: selectedIndex,
-              onTap: onDestinationSelected,
-              tint: AppColors.accentOf(ctx),
-              items: nativeItems,
-            )
-          : LiquidGlassNavBar(
-              currentIndex: selectedIndex,
-              onTap: onDestinationSelected,
-              items: navItems,
-            ),
+      // The glass bar floats over the page so content refracts through it.
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          child,
+          GlassNavBar(
+            currentIndex: selectedIndex,
+            onTap: onDestinationSelected,
+            items: navItems,
+          ),
+        ],
+      ),
     );
   }
 
@@ -168,28 +156,6 @@ class AdaptiveScaffold extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  String _symbolNameFor(Object icon) {
-    if (icon is String) return icon;
-    if (icon is IconData) {
-      if (icon == Icons.access_time_outlined ||
-          icon == Icons.access_time_filled) {
-        return 'clock.fill';
-      }
-      if (icon == Icons.mosque_outlined || icon == Icons.mosque) {
-        return 'moon.stars.fill';
-      }
-      if (icon == Icons.calendar_month_outlined ||
-          icon == Icons.calendar_month) {
-        return 'calendar.circle.fill';
-      }
-      if (icon == Icons.settings_outlined || icon == Icons.settings) {
-        return 'gearshape.fill';
-      }
-      if (icon == Icons.search) return 'magnifyingglass';
-    }
-    return 'circle.fill';
   }
 
   IconData _materialIconFor(Object icon) {

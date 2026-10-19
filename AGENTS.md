@@ -34,7 +34,7 @@ Each platform gets its own design system. Check the platform before rendering an
 
 | Platform | Design system | Style |
 | --- | --- | --- |
-| iOS / macOS | Liquid Glass | `BackdropFilter` blur + frosted overlay |
+| iOS / macOS | Liquid Glass | `liquid_glass_easy` lenses (refraction) and lite glass |
 | Android / Linux | Material Design 3 | `NavigationBar`, `Card`, dynamic color; on GNOME and KDE, Adwaita or Breeze colors, fonts and the system accent (`lib/core/design/linux_desktop.dart`) |
 | Windows | Fluent Design | `NavigationRail`, acrylic-style containers |
 
@@ -45,18 +45,19 @@ Each platform gets its own design system. Check the platform before rendering an
 ### Liquid Glass
 
 - `Scaffold` uses `extendBody: true` and `extendBodyBehindAppBar: true` so content scrolls behind the glass bars.
-- Nav bar height includes the system inset: `64 + MediaQuery.of(ctx).padding.bottom`.
-- Glass card: `Material(color: Colors.transparent)` → `ClipRRect(borderRadius: AppRadii.lg)` → `BackdropFilter(ImageFilter.blur(sigmaX: 20, sigmaY: 20))` → a container with a white gradient (alpha ~0.72 → 0.55) and a thin white border.
-- Frosted bar: `ClipRect` → `BackdropFilter(blur 24)` → a container colored `Color(0xFF1C1C1E)` (dark) or white (light) at alpha 0.72.
+- All glass comes from [`liquid_glass_easy`](https://pub.dev/packages/liquid_glass_easy); don't hand-build it from `BackdropFilter`. Glass that floats over content (nav bar, app bar capsule, buttons, badges) is a refracting `LiquidGlassLens` or a package component (`LiquidGlassTabBar`, `LiquidGlassButton`), tinted with `glassTintOf(ctx)` from `lib/core/design/liquid_glass.dart`. Glass that scrolls with a list (prayer cards) or may render on Skia (the method picker on other platforms) is `LiquidGlassLite`: the package advises against lenses inside scrollables, and Skia can't refract.
+- The nav bar (`GlassNavBar`, a `LiquidGlassTabBar`) floats in a `Stack` over the page, not in `bottomNavigationBar`. It is `64` tall plus a bottom margin, so lists end with enough padding to scroll clear of it.
+- Glass card: `Material(color: Colors.transparent)` → `LiquidGlassLite(shape: continuousRoundedRectangle(cornerRadius: AppRadii.lg))` with a white tint (alpha ~0.62 light, ~0.07 dark).
+- Don't give a lens an `Opacity` of zero to hide it; also set `visibility: false` so it stops reading the backdrop.
 - Full-screen blur overlay (sheet, modal): push a `PageRouteBuilder(opaque: false, barrierColor: Colors.transparent)` whose page is a tap-to-dismiss `Scaffold(backgroundColor: Colors.black38)` with the glass panel aligned to the bottom.
 - Decorative layers (gradients, blur) stacked above tappable controls are wrapped in `IgnorePointer`, or they swallow taps on the app bar icons.
-- On iOS/macOS the prayer-times app bar icons are native `cupertino_native` buttons (`CNButton.icon` with a `CNSymbol` SF Symbol), mapped from Material `IconData` by `_sfSymbolFor` in `prayer_times_screen.dart`. A new icon needs a mapping there; `SFSymbols.materialFallback` maps the other way.
+- On iOS/macOS the prayer-times app bar icons are round `LiquidGlassButton`s with Material `Icons.*`. Their color moves from white (over the accent hero) to `onSurface` as the bar collapses.
 - Apple sliver app bars: the collapsed height and action offsets account for the Dynamic Island in portrait, landscape layouts respect horizontal safe-area cutouts, and the expanded header uses compact sizing so collapsing never overflows a `RenderFlex`.
 
 ### macOS window and nav bar
 
 - Keep the window chrome in `macos/Runner/MainFlutterWindow.swift`: `titleVisibility = .hidden`, `titlebarAppearsTransparent = true`, `.fullSizeContentView`, `isMovableByWindowBackground = true`, `isOpaque = false` with a clear background and a corner radius on the Flutter view, and traffic-light buttons repositioned at an explicit top/left inset, updated on every resize.
-- The liquid-glass nav bar (`lib/core/design/liquid_glass.dart`) selects tabs by horizontal drag on macOS only. The cursor is `grab` on hover, `grabbing` while dragging and `click` over a tab.
+- The nav bar's selection pill can be tapped or dragged between tabs on every Apple platform; `LiquidGlassTabBar` handles it.
 
 ### Sheets
 
@@ -73,7 +74,7 @@ Each platform gets its own design system. Check the platform before rendering an
 
 These come from real crashes and broken UI.
 
-- **No `CupertinoIcons`:** they render as `?` boxes on macOS. Use `Icons.*`, or SF Symbols through `cupertino_native`.
+- **No `CupertinoIcons`:** they render as `?` boxes on macOS. Use `Icons.*`.
 - **No `CupertinoListTile`.**
 - **`ListTile` inside a `SliverList` / `CustomScrollView`** must be wrapped in `Material(color: Colors.transparent)`, or it throws "No Material widget found".
 - **No `showModalBottomSheet` or `showCupertinoModalPopup` for blur overlays:** `BackdropFilter` doesn't blur inside them on macOS. Use the `PageRouteBuilder(opaque: false)` overlay above.
@@ -96,10 +97,11 @@ Record architectural choices here as one line each: date, decision, reason.
 - `flutter_riverpod` for state, `shared_preferences` for settings.
 - Kemenag RI is the default calculation method; `adhan` provides the others.
 - Apple platforms target iOS 26+ / macOS 26+ so Liquid Glass can be the default without a capability gate.
-- Native Apple controls come from `cupertino_native` (SF Symbols, buttons), not `CupertinoIcons`, which don't render on macOS.
+- Native Apple controls came from `cupertino_native` (SF Symbols, buttons), not `CupertinoIcons`, which don't render on macOS. Superseded below.
 - The calculation method picker uses a native Cupertino sheet on Apple platforms; blur overlays elsewhere use `PageRouteBuilder`.
 - 2026-10-19: App icons are SVG sources in `assets/branding/` rendered by `scripts/render_brand_icons.swift` and generated with `flutter_launcher_icons`, so the brand art has one editable source.
-- 2026-10-19: Apple builds use CocoaPods only (Swift Package Manager off in `pubspec.yaml`) and the Podfiles silence plugin warnings, because `cupertino_native` has no SPM support and mixed builds let plugin warnings through.
+- 2026-10-19: Apple builds use CocoaPods only (Swift Package Manager off in `pubspec.yaml`) and the Podfiles silence plugin warnings, because `cupertino_native` had no SPM support and mixed builds let plugin warnings through.
 - 2026-10-19: Revenue comes from AdMob ads on Android and iOS plus an in-app "infaq" that removes them (external Trakteer/Ko-fi links on Windows and Linux), so the free app earns while supporters get it ad-free.
 - 2026-10-19: Re-theme as "refined emerald" with Plus Jakarta Sans bundled under `assets/fonts/` (not `google_fonts`), so the app stays offline first and its typeface was designed in Indonesia.
 - 2026-10-19: On Linux the theme follows GNOME (Adwaita) or KDE (Breeze) and reads the accent from the XDG settings portal over D-Bus (`dbus` package), so the app looks native without a GTK plugin.
+- 2026-10-19: Liquid Glass on iOS and macOS comes from `liquid_glass_easy` (refracting lenses, lite glass in lists) and `cupertino_native` is removed, because the package gives real refraction everywhere and `cupertino_native` is being deprecated.

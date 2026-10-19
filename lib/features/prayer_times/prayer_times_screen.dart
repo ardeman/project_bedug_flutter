@@ -3,10 +3,11 @@ import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:cupertino_native/cupertino_native.dart';
+import 'package:liquid_glass_easy/liquid_glass_easy.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../generated/l10n/app_localizations.dart';
 import '../../core/constants/app_colors.dart';
+import '../../core/design/liquid_glass.dart';
 import '../../core/theme/app_tokens.dart';
 import '../../core/services/prayer_service.dart';
 import '../../core/providers/locale_provider.dart';
@@ -249,6 +250,9 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
 }
 
 // ── Liquid Glass App Bar ───────────────────────────────────────────────────────
+// Expanded, an accent hero with a glass countdown lens. Collapsing fades the
+// hero out, so the list scrolls under a scroll-edge band, and the title moves
+// into a floating glass capsule. The action buttons are glass throughout.
 class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
   final String nextName;
   final String locationLabel;
@@ -272,6 +276,12 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
     required this.onRefresh,
   });
 
+  /// Diameter of the round glass action buttons.
+  static const _actionSize = 40.0;
+
+  /// Height of the collapsed title capsule: two text lines plus padding.
+  static const _capsuleHeight = 48.0;
+
   @override
   double get minExtent => minCollapsedExtent;
   @override
@@ -289,7 +299,9 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(BuildContext ctx, double shrinkOffset, bool overlapsContent) {
-    final textTheme = Theme.of(ctx).textTheme;
+    final theme = Theme.of(ctx);
+    final textTheme = theme.textTheme;
+    final onSurface = theme.colorScheme.onSurface;
     final progress = (shrinkOffset / (maxExtent - minExtent)).clamp(0.0, 1.0);
     final collapsedProgress = (progress * 2 - 1).clamp(0.0, 1.0);
     final isLargeInsetIosPortrait = isIosPortrait && topInset >= 54;
@@ -299,171 +311,212 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
     final iosPortraitLift =
         isLargeInsetIosPortrait ? ((topInset - 54) / 2).clamp(0.0, 3.0) : 0.0;
     final actionTop = lerpDouble(0, collapsedActionTop, collapsedProgress)!;
-    const actionAreaWidth = 116.0;
+    // Two buttons, the gap between them, the right inset and the gap to
+    // the title capsule.
+    const actionAreaWidth =
+        _actionSize * 2 + AppSpacing.xs + AppSpacing.sm + AppSpacing.md;
+    // White over the accent hero, the text color once it has faded.
+    final actionColor = Color.lerp(Colors.white, onSurface, progress)!;
 
-    return ClipRect(
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 20 * progress, sigmaY: 20 * progress),
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                AppColors.accentOf(ctx).withValues(alpha: isDark ? 0.9 : 1),
-                AppColors.secondaryOf(ctx).withValues(alpha: isDark ? 0.9 : 1),
-              ],
-            ),
-            border: Border(
-              bottom: BorderSide(
-                color: progress > 0.5
-                    ? (isDark
-                        ? Colors.white.withValues(alpha: 0.1 * progress)
-                        : Colors.black.withValues(alpha: 0.08 * progress))
-                    : Colors.transparent,
-                width: 0.5,
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        // Hero background, fading out as the bar collapses.
+        IgnorePointer(
+          child: Opacity(
+            opacity: 1 - progress,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    AppColors.accentOf(ctx).withValues(alpha: isDark ? 0.9 : 1),
+                    AppColors.secondaryOf(ctx)
+                        .withValues(alpha: isDark ? 0.9 : 1),
+                  ],
+                ),
               ),
             ),
           ),
-          child: SafeArea(
-            bottom: false,
-            child: Stack(
-              children: [
-                // Actions
-                Positioned(
-                  top: actionTop - iosPortraitLift,
-                  right: 4,
-                  child: SizedBox(
-                    height: kToolbarHeight,
-                    child: Center(
-                      child: Row(children: [
-                        _GlassIconButton(
-                          icon: Icons.tune,
-                          onTap: onTune,
-                          frosted: progress > 0.35,
-                          isDark: isDark,
-                        ),
-                        _GlassIconButton(
-                          icon: Icons.refresh,
-                          onTap: onRefresh,
-                          frosted: progress > 0.35,
-                          isDark: isDark,
-                        ),
-                      ]),
+        ),
+        // Scroll edge: keeps the floating glass legible over the list.
+        IgnorePointer(
+          child: Opacity(
+            opacity: collapsedProgress,
+            child: LiquidGlassScrollEdge(
+              edge: LiquidGlassEdge.top,
+              color: theme.scaffoldBackgroundColor.withValues(alpha: 0.85),
+            ),
+          ),
+        ),
+        SafeArea(
+          bottom: false,
+          child: Stack(
+            children: [
+              // Expanded content
+              IgnorePointer(
+                child: Opacity(
+                  opacity: (1 - progress * 2).clamp(0.0, 1.0),
+                  child: Center(
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        final compact = constraints.maxHeight < 150;
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                                height: compact
+                                    ? AppSpacing.xs
+                                    : kToolbarHeight * 0.3),
+                            if (!compact)
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.location_on_outlined,
+                                    size: 14,
+                                    color: Colors.white.withValues(alpha: 0.75),
+                                  ),
+                                  const SizedBox(width: AppSpacing.xxs),
+                                  Flexible(
+                                    child: Text(
+                                      locationLabel,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: textTheme.bodySmall?.copyWith(
+                                        color: Colors.white
+                                            .withValues(alpha: 0.75),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            if (!compact)
+                              const SizedBox(height: AppSpacing.xxs),
+                            Text(
+                              nextName,
+                              style: (compact
+                                      ? textTheme.headlineSmall
+                                      : textTheme.headlineMedium)
+                                  ?.copyWith(color: Colors.white),
+                            ),
+                            SizedBox(
+                                height:
+                                    compact ? AppSpacing.xs : AppSpacing.sm),
+                            _LiquidCountdownBadge(
+                              remaining: remaining,
+                              compact: compact,
+                              visible: progress < 0.5,
+                            ),
+                          ],
+                        );
+                      },
                     ),
                   ),
                 ),
-                // Expanded content
-                IgnorePointer(
-                  child: Opacity(
-                    opacity: (1 - progress * 2).clamp(0.0, 1.0),
-                    child: Center(
-                      child: LayoutBuilder(
-                        builder: (context, constraints) {
-                          final compact = constraints.maxHeight < 150;
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                  height: compact
-                                      ? AppSpacing.xs
-                                      : kToolbarHeight * 0.3),
-                              if (!compact)
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.location_on_outlined,
-                                      size: 14,
-                                      color:
-                                          Colors.white.withValues(alpha: 0.75),
-                                    ),
-                                    const SizedBox(width: AppSpacing.xxs),
-                                    Flexible(
-                                      child: Text(
+              ),
+              // Collapsed title, in a floating glass capsule
+              IgnorePointer(
+                child: Opacity(
+                  opacity: collapsedProgress,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          left: AppSpacing.md, right: actionAreaWidth),
+                      child: SizedBox(
+                        height: _capsuleHeight,
+                        child: LiquidGlassLens(
+                          visibility: collapsedProgress > 0,
+                          style: LiquidGlassStyle(
+                            shape: const LiquidGlassShape
+                                .continuousRoundedRectangle(
+                                cornerRadius: _capsuleHeight / 2),
+                            color: glassTintOf(ctx),
+                            blur: 6,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: AppSpacing.md),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
                                         locationLabel,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         style: textTheme.bodySmall?.copyWith(
-                                          color: Colors.white
-                                              .withValues(alpha: 0.75),
+                                          color:
+                                              onSurface.withValues(alpha: 0.7),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                      Text(
+                                        nextName,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: textTheme.titleMedium
+                                            ?.copyWith(color: onSurface),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              if (!compact)
-                                const SizedBox(height: AppSpacing.xxs),
-                              Text(
-                                nextName,
-                                style: (compact
-                                        ? textTheme.headlineSmall
-                                        : textTheme.headlineMedium)
-                                    ?.copyWith(color: Colors.white),
-                              ),
-                              SizedBox(
-                                  height:
-                                      compact ? AppSpacing.xs : AppSpacing.sm),
-                              _LiquidCountdownBadge(
-                                remaining: remaining,
-                                compact: compact,
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-                // Collapsed title
-                IgnorePointer(
-                  child: Opacity(
-                    opacity: collapsedProgress,
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: AppSpacing.md, right: actionAreaWidth),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    locationLabel,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: textTheme.bodySmall?.copyWith(
-                                      color:
-                                          Colors.white.withValues(alpha: 0.82),
-                                    ),
-                                  ),
-                                  Text(
-                                    nextName,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: textTheme.titleLarge
-                                        ?.copyWith(color: Colors.white),
-                                  ),
-                                ],
-                              ),
+                                const SizedBox(width: AppSpacing.xs),
+                                ValueListenableBuilder<Duration>(
+                                  valueListenable: remaining,
+                                  builder: (_, value, __) => value.isNegative
+                                      ? const SizedBox()
+                                      : Text(
+                                          _formatCountdown(value),
+                                          style:
+                                              textTheme.titleMedium?.copyWith(
+                                            fontWeight: FontWeight.w700,
+                                            color: AppColors.accentOf(ctx),
+                                            fontFeatures: const [
+                                              FontFeature.tabularFigures()
+                                            ],
+                                          ),
+                                        ),
+                                ),
+                              ],
                             ),
-                            const SizedBox(width: AppSpacing.xs),
-                            _LiquidCountdownBadge(
-                                remaining: remaining, compact: true),
-                          ],
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+              // Actions, last so they stay on top and tappable
+              Positioned(
+                top: actionTop - iosPortraitLift,
+                right: AppSpacing.sm,
+                child: SizedBox(
+                  height: kToolbarHeight,
+                  child: Row(children: [
+                    _GlassIconButton(
+                      icon: Icons.tune,
+                      onTap: onTune,
+                      color: actionColor,
+                    ),
+                    const SizedBox(width: AppSpacing.xs),
+                    _GlassIconButton(
+                      icon: Icons.refresh,
+                      onTap: onRefresh,
+                      color: actionColor,
+                    ),
+                  ]),
+                ),
+              ),
+            ],
           ),
         ),
-      ),
+      ],
     );
   }
 }
@@ -472,60 +525,31 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
 class _GlassIconButton extends StatelessWidget {
   final IconData icon;
   final VoidCallback onTap;
-  final bool frosted;
-  final bool isDark;
+  final Color color;
 
   const _GlassIconButton({
     required this.icon,
     required this.onTap,
-    required this.frosted,
-    required this.isDark,
+    required this.color,
   });
 
   @override
   Widget build(BuildContext ctx) {
-    final iconButton = CNButton.icon(
-      icon: CNSymbol(
-        _sfSymbolFor(icon),
-        size: frosted ? 18 : 22,
-        color: Colors.white,
-        mode: CNSymbolRenderingMode.monochrome,
-      ),
-      tint: Colors.white,
+    const size = _LiquidGlassAppBar._actionSize;
+    return LiquidGlassButton(
+      icon: icon,
       onPressed: onTap,
-      style: CNButtonStyle.plain,
-      size: frosted ? 30 : 32,
+      width: size,
+      height: size,
+      padding: EdgeInsets.zero,
+      iconSize: 20,
+      foregroundColor: color,
+      style: LiquidGlassStyle(
+        shape: const LiquidGlassShape.continuousRoundedRectangle(
+            cornerRadius: size / 2),
+        color: glassTintOf(ctx),
+      ),
     );
-
-    return Padding(
-      padding: const EdgeInsets.all(AppSpacing.xs),
-      child: frosted
-          ? ClipRRect(
-              borderRadius: BorderRadius.circular(AppRadii.sm),
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
-                child: Container(
-                  padding: const EdgeInsets.all(AppSpacing.xxs),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(AppRadii.sm),
-                    border: Border.all(
-                      color: Colors.white.withValues(alpha: 0.12),
-                      width: 0.5,
-                    ),
-                  ),
-                  child: iconButton,
-                ),
-              ),
-            )
-          : iconButton,
-    );
-  }
-
-  String _sfSymbolFor(IconData value) {
-    if (value == Icons.tune) return 'slider.horizontal.3';
-    if (value == Icons.refresh) return 'arrow.clockwise';
-    return 'circle';
   }
 }
 
@@ -563,94 +587,73 @@ class _LiquidGlassCard extends StatelessWidget {
       ),
       child: Material(
         color: Colors.transparent,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(AppRadii.lg),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(
-                sigmaX: isNext ? 28 : 18, sigmaY: isNext ? 28 : 18),
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
-              padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.md, vertical: AppSpacing.sm),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(AppRadii.lg),
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: isNext
-                      ? [
-                          AppColors.accentOf(ctx).withValues(alpha: 0.55),
-                          AppColors.secondaryOf(ctx).withValues(alpha: 0.45),
-                        ]
-                      : isDark
-                          ? [
-                              Colors.white.withValues(alpha: 0.09),
-                              Colors.white.withValues(alpha: 0.05),
-                            ]
-                          : [
-                              Colors.white.withValues(alpha: 0.72),
-                              Colors.white.withValues(alpha: 0.55),
-                            ],
-                ),
-                border: Border.all(
-                  color: isNext
-                      ? Colors.white.withValues(alpha: 0.3)
-                      : (isDark
-                          ? Colors.white.withValues(alpha: 0.12)
-                          : Colors.white.withValues(alpha: 0.8)),
-                  width: 0.8,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: isNext
-                        ? AppColors.accentOf(ctx).withValues(alpha: 0.2)
-                        : Colors.black.withValues(alpha: isDark ? 0.2 : 0.06),
-                    blurRadius: isNext ? 24 : 12,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    width: 42,
-                    height: 42,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: isNext
-                          ? Colors.white.withValues(alpha: 0.2)
-                          : AppColors.accentOf(ctx).withValues(alpha: 0.12),
-                    ),
-                    child: Icon(entry.icon,
-                        size: 20,
-                        color: isNext ? Colors.white : AppColors.accentOf(ctx)),
-                  ),
-                  const SizedBox(width: AppSpacing.md),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(entry.label,
-                            style: theme.textTheme.titleMedium?.copyWith(
-                              color: isNext ? Colors.white : onSurface,
-                            )),
-                        if (isNext)
-                          Text(l10n.upNext,
-                              style: theme.textTheme.bodySmall?.copyWith(
-                                color: Colors.white.withValues(alpha: 0.75),
-                              )),
+        // Lite glass: frost, tint and the lit rim without the shader, since
+        // lenses inside a scrolling list fight the package's design.
+        child: LiquidGlassLite(
+          shape: const LiquidGlassShape.continuousRoundedRectangle(
+              cornerRadius: AppRadii.lg),
+          blur: isNext ? 14 : 10,
+          color: isNext
+              ? Colors.transparent
+              : (isDark
+                  ? Colors.white.withValues(alpha: 0.07)
+                  : Colors.white.withValues(alpha: 0.62)),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.md, vertical: AppSpacing.sm),
+            decoration: BoxDecoration(
+              gradient: isNext
+                  ? LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        AppColors.accentOf(ctx).withValues(alpha: 0.55),
+                        AppColors.secondaryOf(ctx).withValues(alpha: 0.45),
                       ],
-                    ),
+                    )
+                  : null,
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: 42,
+                  height: 42,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: isNext
+                        ? Colors.white.withValues(alpha: 0.2)
+                        : AppColors.accentOf(ctx).withValues(alpha: 0.12),
                   ),
-                  Text(timeStr,
-                      style: theme.textTheme.titleLarge?.copyWith(
-                        fontFeatures: const [FontFeature.tabularFigures()],
-                        color: isNext
-                            ? Colors.white
-                            : (isDark ? onSurface : AppColors.accentOf(ctx)),
-                      )),
-                ],
-              ),
+                  child: Icon(entry.icon,
+                      size: 20,
+                      color: isNext ? Colors.white : AppColors.accentOf(ctx)),
+                ),
+                const SizedBox(width: AppSpacing.md),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(entry.label,
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            color: isNext ? Colors.white : onSurface,
+                          )),
+                      if (isNext)
+                        Text(l10n.upNext,
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: Colors.white.withValues(alpha: 0.75),
+                            )),
+                    ],
+                  ),
+                ),
+                Text(timeStr,
+                    style: theme.textTheme.titleLarge?.copyWith(
+                      fontFeatures: const [FontFeature.tabularFigures()],
+                      color: isNext
+                          ? Colors.white
+                          : (isDark ? onSurface : AppColors.accentOf(ctx)),
+                    )),
+              ],
             ),
           ),
         ),
@@ -720,10 +723,18 @@ class _MaterialCard extends StatelessWidget {
 }
 
 // ── Liquid Countdown Badge ────────────────────────────────────────────────────
+// A glass capsule that refracts the accent hero behind it.
 class _LiquidCountdownBadge extends StatelessWidget {
   final ValueListenable<Duration> remaining;
   final bool compact;
-  const _LiquidCountdownBadge({required this.remaining, this.compact = false});
+
+  /// False once the hero has faded, so the lens stops reading the backdrop.
+  final bool visible;
+  const _LiquidCountdownBadge({
+    required this.remaining,
+    this.compact = false,
+    this.visible = true,
+  });
 
   @override
   Widget build(BuildContext ctx) {
@@ -741,38 +752,23 @@ class _LiquidCountdownBadge extends StatelessWidget {
         : textTheme.titleLarge;
     final horizontal = compact ? AppSpacing.sm : AppSpacing.lg;
     final vertical = compact ? AppSpacing.xxs : AppSpacing.xs;
-    // Taller than the badge, so the corners form a pill.
-    const radius = AppRadii.xl;
 
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(radius),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(
-          sigmaX: compact ? 8 : 12,
-          sigmaY: compact ? 8 : 12,
-        ),
-        child: Container(
-          padding:
-              EdgeInsets.symmetric(horizontal: horizontal, vertical: vertical),
-          decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.18),
-            borderRadius: BorderRadius.circular(radius),
-            border: Border.all(
-                color: Colors.white.withValues(alpha: 0.35), width: 0.8),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.08),
-                blurRadius: 16,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Text(_formatCountdown(value),
-              style: style?.copyWith(
-                color: Colors.white,
-                fontFeatures: const [FontFeature.tabularFigures()],
-              )),
-        ),
+    return LiquidGlassLens(
+      visibility: visible,
+      style: LiquidGlassStyle(
+        // Taller than the badge, so the corners form a pill.
+        shape: const LiquidGlassShape.continuousRoundedRectangle(
+            cornerRadius: AppRadii.xl),
+        color: Colors.white.withValues(alpha: 0.14),
+      ),
+      child: Padding(
+        padding:
+            EdgeInsets.symmetric(horizontal: horizontal, vertical: vertical),
+        child: Text(_formatCountdown(value),
+            style: style?.copyWith(
+              color: Colors.white,
+              fontFeatures: const [FontFeature.tabularFigures()],
+            )),
       ),
     );
   }

@@ -20,9 +20,9 @@ dependencies:
   timezone: ^0.11.2
   shared_preferences: ^2.2.3
   intl: ^0.20.2
-  cupertino_native: ^0.1.1
   flutter_compass: ^0.8.1
   dbus: ^0.7.15
+  liquid_glass_easy: ^5.0.0
 
 dev_dependencies:
   flutter_test:
@@ -31,8 +31,8 @@ dev_dependencies:
   flutter_launcher_icons: ^0.14.4
 
 flutter:
-  # cupertino_native has no Swift Package Manager support, so Apple builds
-  # use CocoaPods only (no mixed SPM/CocoaPods setup).
+  # Apple builds use CocoaPods only (no mixed SPM/CocoaPods setup). This was
+  # for cupertino_native, since removed; re-enabling SPM is a separate change.
   config:
     enable-swift-package-manager: false
   generate: true
