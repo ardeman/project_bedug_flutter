@@ -296,7 +296,7 @@ The build copies the font and `icon.svg` from `assets/`, so the brand has one so
 
 1. In the Cloudflare dashboard, go to **Workers & Pages → Create → Import a repository** and pick this repository.
 2. Project name `bedug` (it must match `name` in `wrangler.jsonc`), build command `python3 site/build.py`, deploy command `npx wrangler deploy` (the default), path `/`.
-3. Under the Worker's **Settings → Build → Build watch paths**, include `site/*`, `assets/fonts/*`, `assets/branding/*` and `wrangler.jsonc`, so app-only commits don't redeploy the site.
+3. Under the Worker's **Settings → Build → Build watch paths**, include `site/**`, `assets/fonts/**`, `assets/branding/**` and `wrangler.jsonc` (and remove the default `*`), so app-only commits don't redeploy the site.
 4. Under **Settings → Domains & Routes**, add the custom domain `bedug.ardeman.com`. This needs `ardeman.com` as a zone in the same Cloudflare account.
 
 Every push to `master` deploys, and other branches get preview URLs.
