@@ -602,7 +602,11 @@ class _LiquidGlassCard extends StatelessWidget {
             duration: const Duration(milliseconds: 300),
             padding: const EdgeInsets.symmetric(
                 horizontal: AppSpacing.md, vertical: AppSpacing.sm),
-            decoration: BoxDecoration(
+            // Same continuous corners as the glass, which doesn't clip
+            // its child on every renderer.
+            decoration: ShapeDecoration(
+              shape: RoundedSuperellipseBorder(
+                  borderRadius: BorderRadius.circular(AppRadii.lg)),
               gradient: isNext
                   ? LinearGradient(
                       begin: Alignment.topLeft,

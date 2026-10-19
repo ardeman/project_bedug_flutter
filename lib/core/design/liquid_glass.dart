@@ -37,48 +37,60 @@ class GlassNavBar extends StatelessWidget {
   /// Widest the bar grows on tablets and desktop windows.
   static const _maxWidth = 440.0;
 
-  /// Gap between the bar and the bottom edge: above the home indicator,
-  /// or just off the window edge.
-  static double _marginOf(BuildContext ctx) =>
-      MediaQuery.of(ctx).padding.bottom > 0 ? AppSpacing.lg : AppSpacing.sm;
+  /// Gap between the bar and the screen's bottom edge on devices with a
+  /// home indicator. Like the native iOS 26 tab bar, the bar sits inside
+  /// the bottom safe-area inset (34pt on Face ID iPhones), not above it.
+  static const _homeIndicatorGap = 21.0;
 
-  /// How much of the screen bottom the floating bar covers, for the bottom
-  /// padding of the page under it.
+  /// Gap between the bar and the bottom edge: over the home indicator
+  /// area, or just off the window edge.
+  static double _bottomGapOf(BuildContext ctx) =>
+      MediaQuery.of(ctx).padding.bottom > 0 ? _homeIndicatorGap : AppSpacing.sm;
+
+  /// How much of the screen bottom the floating bar covers, measured from
+  /// the bottom edge, for the bottom padding of the page under it.
   static double occupiedHeight(BuildContext ctx) =>
-      _marginOf(ctx) + height + AppSpacing.xs;
+      _bottomGapOf(ctx) + height + AppSpacing.xs;
 
   @override
   Widget build(BuildContext ctx) {
     final theme = Theme.of(ctx);
     final mq = MediaQuery.of(ctx);
     final width = math.min(mq.size.width - AppSpacing.md * 2, _maxWidth);
-    return LiquidGlassTabBar(
-      items: [
-        for (final item in items)
-          LiquidGlassTabBarItem(
-            icon: item.icon,
-            selectedIcon: item.activeIcon,
-            label: item.label,
-            // Long translations would wrap and overflow the bar.
-            labelBuilder: (_, l) => Text(
-              l.text ?? '',
-              style: l.textStyle,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+    final bottomGap = _bottomGapOf(ctx);
+    // The tab bar adds the bottom safe-area inset to its margin; drop the
+    // inset so the gap is measured from the screen edge.
+    return MediaQuery.removePadding(
+      context: ctx,
+      removeBottom: true,
+      child: LiquidGlassTabBar(
+        items: [
+          for (final item in items)
+            LiquidGlassTabBarItem(
+              icon: item.icon,
+              selectedIcon: item.activeIcon,
+              label: item.label,
+              // Long translations would wrap and overflow the bar.
+              labelBuilder: (_, l) => Text(
+                l.text ?? '',
+                style: l.textStyle,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
-          ),
-      ],
-      selectedIndex: currentIndex,
-      onChanged: onTap,
-      width: width,
-      height: height,
-      margin: EdgeInsets.only(bottom: _marginOf(ctx)),
-      style: LiquidGlassTabBar.defaultStyle.copyWith(color: glassTintOf(ctx)),
-      itemStyle: LiquidGlassTabItemStyle(
-        selectedColor: AppColors.accentOf(ctx),
-        unselectedColor: theme.colorScheme.onSurface.withValues(alpha: 0.62),
-        iconSize: 22,
-        labelFontSize: theme.textTheme.labelSmall?.fontSize ?? 11,
+        ],
+        selectedIndex: currentIndex,
+        onChanged: onTap,
+        width: width,
+        height: height,
+        margin: EdgeInsets.only(bottom: bottomGap),
+        style: LiquidGlassTabBar.defaultStyle.copyWith(color: glassTintOf(ctx)),
+        itemStyle: LiquidGlassTabItemStyle(
+          selectedColor: AppColors.accentOf(ctx),
+          unselectedColor: theme.colorScheme.onSurface.withValues(alpha: 0.62),
+          iconSize: 22,
+          labelFontSize: theme.textTheme.labelSmall?.fontSize ?? 11,
+        ),
       ),
     );
   }
