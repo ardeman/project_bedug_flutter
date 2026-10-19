@@ -21,6 +21,7 @@ A cross-platform Muslim prayer times app with a Hijri calendar, in Indonesian, E
   - Liquid Glass from `liquid_glass_easy`: a refracting tab bar with a draggable pill, glass app bar buttons and countdown, and lite glass prayer cards.
   - Prayer header that collapses into a compact bar, keeps the countdown visible and adapts to the Dynamic Island in portrait and to camera cutouts in landscape.
   - macOS window with a hidden, transparent title bar, rounded corners and inset traffic-light buttons. Tabs can be selected by dragging across the nav bar.
+  - A layered Icon Composer app icon, so iOS and macOS render it in Liquid Glass and in the Default, Dark, Clear and Tinted icon modes.
 
 ## Supported platforms
 
@@ -61,6 +62,7 @@ iOS and macOS builds use CocoaPods only: Swift Package Manager is turned off in 
 | Install Git hooks (once per clone) | `./scripts/install_git_hooks.sh` |
 | Check the adhan calculation from the command line | `dart run bin/check_adhan.dart` |
 | Regenerate the Android and Windows icons after editing `assets/branding/*.svg` (macOS) | `swift scripts/render_brand_icons.swift && dart run flutter_launcher_icons` |
+| Edit the iOS and macOS icon (re-import any changed layer from `assets/branding/layers/`) | `open -a "Icon Composer" assets/branding/AppIcon.icon` |
 | Release build | `flutter build <apk\|appbundle\|ipa\|macos\|windows\|linux>` |
 
 **Checks**: run both before every commit. They must pass with no errors or warnings:
@@ -217,6 +219,8 @@ The current look needs a redesign on every platform. Screens read the accent fro
    1. **Tokens and theme (done):** palette in `AppColors`, `AppSpacing` / `AppRadii` and the component themes in `lib/core/theme/`.
    2. **Screen migration (next):** move each screen's inline styles (sizes, colors, radii, paddings) onto the text theme and tokens, one screen per commit: prayer times (done), liquid glass, method picker, calendar, settings, worship. Check each on Apple, Android, Windows and Linux in light and dark.
 2. **Liquid glass package (done; check on iOS and macOS devices):** replace our `BackdropFilter` glass (nav bar, cards, sheets) on iOS and macOS with [`liquid_glass_easy`](https://pub.dev/packages/liquid_glass_easy), a shader lens with real refraction. Keep the `IgnorePointer`, double-open and safe-area rules from `AGENTS.md`.
+3. **Apple app icon (done):** a layered Icon Composer icon (`assets/branding/AppIcon.icon`) gives iOS and macOS a Liquid Glass icon with Default, Dark, Clear and Tinted modes; Android and Windows keep the flat icon.
+4. **Home screen widget (next):** a next-prayer widget on iOS (WidgetKit extension, data shared from Flutter) that supports the full-color, tinted and clear rendering modes.
 
 ### Revenue: ads and infaq
 
