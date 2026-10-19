@@ -153,11 +153,11 @@ Bedug grows from a prayer-times app into a companion for a Muslim's day, week an
 
 **Phase 1: Daily prayer (next)**
 
-1. **Qibla direction (done):** compass card in the new Worship tab, using `adhan`'s `Qibla` bearing and the device heading from `flutter_compass` on iOS and Android. Desktop has no compass, so the dial stays north-up and shows the bearing, the distance and the Qibla's angle from the sun while it is up.
+1. **Qibla direction (done):** compass card in the new Worship tab, using `adhan`'s `Qibla` bearing and the device heading from `flutter_compass` on iOS and Android (add `home_widget` and the native widget targets). Desktop has no compass, so the dial stays north-up and shows the bearing, the distance and the Qibla's angle from the sun while it is up.
 2. **Prayer tracker:** mark each of the five prayers as done (on time, late, missed), with a daily and weekly view, streaks and a qada (make-up) count.
 3. **Notification control:** per-prayer on/off, a reminder N minutes before adhan, and a choice of adhan sound.
 4. **Extra times:** imsak, sunrise (end of Subuh), dhuha, and the last third of the night for tahajud.
-5. **Home screen widgets:** next prayer and countdown on iOS and Android (`home_widget` is already a dependency).
+5. **Home screen widgets:** next prayer and countdown on iOS and Android (add `home_widget` and the native widget targets).
 
 **Phase 2: Dzikir and dua**
 
@@ -270,7 +270,6 @@ The infaq method depends on where the build is distributed, not only on the plat
 | Hijri calendar | `hijri` |
 | Location | `geolocator`, `geocoding` |
 | Notifications | `flutter_local_notifications` |
-| Home screen widget | `home_widget` (Android, iOS) |
 | Native Apple controls | `cupertino_native` |
 | Storage | `shared_preferences` |
 | Localization | `flutter_localizations` + `gen-l10n`, `intl` |

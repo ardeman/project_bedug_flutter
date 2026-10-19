@@ -8,7 +8,23 @@ import '../../generated/l10n/app_localizations.dart';
 class NotificationService {
   static final _plugin = FlutterLocalNotificationsPlugin();
 
-  static Future<void> init() async {
+  /// Completes with whether the plugin initialized on this platform.
+  static Future<bool>? _ready;
+
+  /// Starts initialization once; [schedulePrayerNotifications] waits for it.
+  static Future<bool> init() => _ready ??= _init();
+
+  static Future<bool> _init() async {
+    try {
+      await _initialize();
+      return true;
+    } catch (_) {
+      // No notification support on this platform (or in tests).
+      return false;
+    }
+  }
+
+  static Future<void> _initialize() async {
     final l10n = _resolveL10n();
     const android = AndroidInitializationSettings('@mipmap/ic_launcher');
     const darwin = DarwinInitializationSettings(
@@ -34,8 +50,13 @@ class NotificationService {
         ?.requestNotificationsPermission();
   }
 
-  static Future<void> schedulePrayerNotifications(PrayerTimes times) async {
-    final l10n = _resolveL10n();
+  /// Replaces the scheduled adhan notifications with today's remaining
+  /// prayers, in the app's language [l10n].
+  static Future<void> schedulePrayerNotifications(
+    PrayerTimes times,
+    AppLocalizations l10n,
+  ) async {
+    if (!await init()) return;
     await _plugin.cancelAll();
 
     final prayers = <int, (String, String, DateTime?)>{
@@ -50,7 +71,7 @@ class NotificationService {
       final (title, body, dt) = e.value;
       if (dt == null || dt.isBefore(DateTime.now())) continue;
 
-      // v20: zonedSchedule pakai named params, title & body opsional
+      // v20+: zonedSchedule takes named params; title and body are optional.
       await _plugin.zonedSchedule(
         id: e.key,
         scheduledDate: tz.TZDateTime.from(dt, tz.local),

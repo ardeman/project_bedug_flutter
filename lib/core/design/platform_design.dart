@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 
-/// Deteksi platform untuk adaptive design
+/// Platform detection for the adaptive design.
 enum DesignSystem { liquidGlass, materialYou, fluentDesign }
 
 class PlatformDesign {

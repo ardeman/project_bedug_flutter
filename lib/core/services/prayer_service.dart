@@ -1,15 +1,13 @@
-import 'dart:async';
-
 import 'package:adhan/adhan.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:home_widget/home_widget.dart';
 import '../../generated/l10n/app_localizations.dart';
 import '../constants/city_catalog.dart';
 import '../providers/locale_provider.dart';
 import 'kemenag_method.dart';
+import 'notification_service.dart';
 
 class PrayerLoadException implements Exception {
   final String message;
@@ -48,16 +46,20 @@ class PrayerState {
         times: times ?? this.times,
         locationLabel: locationLabel ?? this.locationLabel,
         loading: loading ?? this.loading,
-        error: error, // error bisa null (reset)
+        error: error, // Always replaced, so omitting it clears the error.
         showLocationGuide: showLocationGuide ?? this.showLocationGuide,
       );
 }
 
 // ── Notifier ──────────────────────────────────────────────────────────────────
 class PrayerNotifier extends Notifier<PrayerState> {
+  /// Incremented by every [load], so a slow earlier load can't overwrite the
+  /// result of a newer one.
+  int _loadId = 0;
+
   @override
   PrayerState build() {
-    // Tunggu settingsProvider siap sebelum load
+    // Reload when a setting that affects the times changes.
     ref.listen(settingsProvider, (prev, next) {
       if (prev?.method != next.method ||
           prev?.isHanafi != next.isHanafi ||
@@ -66,12 +68,13 @@ class PrayerNotifier extends Notifier<PrayerState> {
         load();
       }
     });
-    // Load setelah frame pertama selesai
-    Future.microtask(() => load());
+    // Load after build returns, since state can't be set during build.
+    Future.microtask(load);
     return const PrayerState(loading: true);
   }
 
   Future<void> load() async {
+    final loadId = ++_loadId;
     state =
         state.copyWith(loading: true, error: null, showLocationGuide: false);
     try {
@@ -92,56 +95,40 @@ class PrayerNotifier extends Notifier<PrayerState> {
         locationLabel = city.name;
       }
 
-      final method = ref.read(settingsProvider).method;
-      final params = method.getParameters();
-      if (ref.read(settingsProvider).isHanafi) {
-        params.madhab = Madhab.hanafi;
-      }
-
+      final params = settings.method.getParameters();
+      if (settings.isHanafi) params.madhab = Madhab.hanafi;
       final times = PrayerTimes.today(coords, params);
-      await _saveToWidget(times);
 
+      if (loadId != _loadId) return;
+      NotificationService.schedulePrayerNotifications(times, _l10n)
+          .catchError((_) {});
       state = state.copyWith(
         times: times,
         locationLabel: locationLabel,
         loading: false,
       );
     } catch (e) {
-      if (e is PrayerLoadException) {
-        state = state.copyWith(
-          loading: false,
-          error: e.message,
-          showLocationGuide: e.showLocationGuide,
-        );
-      } else {
-        state = state.copyWith(
-          loading: false,
-          error: _l10n.locationError,
-          showLocationGuide: true,
-        );
-      }
+      if (loadId != _loadId) return;
+      final error = e is PrayerLoadException
+          ? e
+          : PrayerLoadException(_l10n.locationError, showLocationGuide: true);
+      state = state.copyWith(
+        loading: false,
+        error: error.message,
+        showLocationGuide: error.showLocationGuide,
+      );
     }
   }
 
   CityOption? _findCityById(String? cityId) {
     if (cityId == null || cityId.isEmpty) return null;
-    for (final city in supportedCities) {
-      if (city.id == cityId) return city;
-    }
-    return null;
+    return supportedCities.where((c) => c.id == cityId).firstOrNull;
   }
 
   CityOption? _nearestCity(double latitude, double longitude) {
-    if (supportedCities.isEmpty) return null;
-    CityOption nearest = supportedCities.first;
-    double minDistance = Geolocator.distanceBetween(
-      latitude,
-      longitude,
-      nearest.latitude,
-      nearest.longitude,
-    );
-
-    for (final city in supportedCities.skip(1)) {
+    CityOption? nearest;
+    var minDistance = double.infinity;
+    for (final city in supportedCities) {
       final distance = Geolocator.distanceBetween(
         latitude,
         longitude,
@@ -181,39 +168,25 @@ class PrayerNotifier extends Notifier<PrayerState> {
       );
     }
 
-    LocationPermission perm = await Geolocator.checkPermission();
-
-    if (perm == LocationPermission.deniedForever) {
-      await Geolocator.openAppSettings();
-      throw PrayerLoadException(
-        _locationPermissionDeniedForeverMessage,
-        showLocationGuide: false,
-      );
-    }
-
+    var perm = await Geolocator.checkPermission();
     if (perm == LocationPermission.denied) {
       perm = await Geolocator.requestPermission();
       if (perm == LocationPermission.denied) {
         throw PrayerLoadException(_l10n.locationPermissionDenied);
       }
-      if (perm == LocationPermission.deniedForever) {
-        await Geolocator.openAppSettings();
-        throw PrayerLoadException(
-          _locationPermissionDeniedForeverMessage,
-          showLocationGuide: false,
-        );
-      }
+    }
+    if (perm == LocationPermission.deniedForever) {
+      await Geolocator.openAppSettings();
+      // One actionable message; the separate location guide would repeat it.
+      throw PrayerLoadException(_locationPermissionDeniedForeverMessage);
     }
 
     try {
       return await Geolocator.getCurrentPosition(
         locationSettings: _locationSettings,
       );
-    } on TimeoutException {
-      final lastKnown = await _getRecentLastKnownPosition();
-      if (lastKnown != null) return lastKnown;
-      throw PrayerLoadException(_l10n.locationError, showLocationGuide: true);
     } catch (_) {
+      // Covers the timeout too: fall back to a recent last-known fix.
       final lastKnown = await _getRecentLastKnownPosition();
       if (lastKnown != null) return lastKnown;
       throw PrayerLoadException(_l10n.locationError, showLocationGuide: true);
@@ -245,9 +218,10 @@ class PrayerNotifier extends Notifier<PrayerState> {
 
   Future<String> _resolveLocationLabel(Position pos) async {
     try {
-      final placemarks = await placemarkFromCoordinates(
+      final placemarks = await Geocoding().placemarkFromCoordinates(
         pos.latitude,
         pos.longitude,
+        locale: ref.read(localeProvider),
       );
       if (placemarks.isNotEmpty) {
         final p = placemarks.first;
@@ -259,10 +233,8 @@ class PrayerNotifier extends Notifier<PrayerState> {
             p.administrativeArea!.trim(),
           if ((p.country ?? '').trim().isNotEmpty) p.country!.trim(),
         ];
-        final unique = <String>[];
-        for (final part in parts) {
-          if (!unique.contains(part)) unique.add(part);
-        }
+        // A set literal keeps insertion order and drops repeated names.
+        final unique = {...parts};
         if (unique.isNotEmpty) return unique.take(3).join(', ');
       }
     } catch (_) {}
@@ -270,32 +242,6 @@ class PrayerNotifier extends Notifier<PrayerState> {
     final nearest = _nearestCity(pos.latitude, pos.longitude);
     return nearest?.name ??
         '${pos.latitude.toStringAsFixed(4)}, ${pos.longitude.toStringAsFixed(4)}';
-  }
-
-  Future<void> _saveToWidget(PrayerTimes t) async {
-    // home_widget hanya support Android & iOS
-    if (defaultTargetPlatform != TargetPlatform.android &&
-        defaultTargetPlatform != TargetPlatform.iOS) {
-      return;
-    }
-    try {
-      await Future.wait([
-        HomeWidget.saveWidgetData('fajr', _fmt(t.fajr)),
-        HomeWidget.saveWidgetData('dhuhr', _fmt(t.dhuhr)),
-        HomeWidget.saveWidgetData('asr', _fmt(t.asr)),
-        HomeWidget.saveWidgetData('maghrib', _fmt(t.maghrib)),
-        HomeWidget.saveWidgetData('isha', _fmt(t.isha)),
-      ]);
-      await HomeWidget.updateWidget(
-        androidName: 'BedugWidgetProvider',
-        iOSName: 'BedugWidget',
-      );
-    } catch (_) {}
-  }
-
-  String _fmt(DateTime? d) {
-    if (d == null) return '--:--';
-    return '${d.hour.toString().padLeft(2, '0')}:${d.minute.toString().padLeft(2, '0')}';
   }
 }
 
@@ -309,7 +255,7 @@ final nextPrayerProvider = Provider<({String key, DateTime? time})>((ref) {
   if (times == null) return (key: '--', time: null);
 
   final now = DateTime.now();
-  final Map<String, DateTime> schedule = {
+  final schedule = {
     'fajr': times.fajr,
     'dhuhr': times.dhuhr,
     'asr': times.asr,
@@ -322,7 +268,7 @@ final nextPrayerProvider = Provider<({String key, DateTime? time})>((ref) {
       return (key: e.key, time: e.value);
     }
   }
-  // Setelah Isya, tampilkan Subuh hari berikutnya agar countdown tidak negatif.
+  // After Isha, count down to the next day's Fajr so it never goes negative.
   final nextFajr = times.fajr.add(const Duration(days: 1));
   return (key: 'fajr', time: nextFajr);
 });

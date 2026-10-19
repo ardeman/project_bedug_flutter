@@ -66,17 +66,22 @@ Future<void> _showNativeAppleMethodPicker(
     context: ctx,
     showDragHandle: true,
     topGap: 0.08,
-    builder: (sheetCtx) => _NativeAppleMethodSheet(
+    // Sharing the controller lets a downward drag at the top of the list
+    // dismiss the sheet, like native iOS sheets.
+    scrollableBuilder: (sheetCtx, controller) => _NativeAppleMethodSheet(
       current: current,
+      controller: controller,
     ),
   );
 }
 
 class _NativeAppleMethodSheet extends ConsumerWidget {
   final AppCalculationMethod current;
+  final ScrollController controller;
 
   const _NativeAppleMethodSheet({
     required this.current,
+    required this.controller,
   });
 
   @override
@@ -116,6 +121,7 @@ class _NativeAppleMethodSheet extends ConsumerWidget {
             ),
             Expanded(
               child: ListView.builder(
+                controller: controller,
                 itemCount: AppCalculationMethod.values.length,
                 itemBuilder: (context, index) {
                   final method = AppCalculationMethod.values[index];

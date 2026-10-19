@@ -3,27 +3,28 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../services/kemenag_method.dart';
 
+// ─── Preferences ──────────────────────────────────────────────────────────────
+
+/// The app's [SharedPreferences], loaded once in `main` and provided through a
+/// `ProviderScope` override, so settings are read synchronously on the first
+/// frame instead of switching from defaults after a frame.
+final sharedPreferencesProvider = Provider<SharedPreferences>(
+  (ref) => throw UnimplementedError('Override sharedPreferencesProvider'),
+);
+
 // ─── Locale Provider ──────────────────────────────────────────────────────────
 
 const _kLocale = 'app_locale';
 
 class LocaleNotifier extends Notifier<Locale> {
-  @override
-  Locale build() {
-    Future.microtask(() => _load()); // load async setelah build selesai
-    return const Locale('id');
-  }
+  SharedPreferences get _prefs => ref.read(sharedPreferencesProvider);
 
-  Future<void> _load() async {
-    final prefs = await SharedPreferences.getInstance();
-    final code = prefs.getString(_kLocale);
-    if (code != null) state = Locale(code);
-  }
+  @override
+  Locale build() => Locale(_prefs.getString(_kLocale) ?? 'id');
 
   Future<void> setLocale(Locale locale) async {
     state = locale;
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_kLocale, locale.languageCode);
+    await _prefs.setString(_kLocale, locale.languageCode);
   }
 }
 
@@ -87,16 +88,17 @@ class AppSettings {
 }
 
 class SettingsNotifier extends Notifier<AppSettings> {
+  SharedPreferences get _prefs => ref.read(sharedPreferencesProvider);
+
   @override
   AppSettings build() {
-    Future.microtask(() => _load()); // load async setelah build selesai
-    return const AppSettings();
-  }
-
-  Future<void> _load() async {
-    final p = await SharedPreferences.getInstance();
-    state = AppSettings(
-      method: AppCalculationMethod.values[p.getInt(_kMethod) ?? 0],
+    final p = _prefs;
+    final methodIndex = p.getInt(_kMethod) ?? 0;
+    return AppSettings(
+      // Guard against an index stored by a build with more methods.
+      method: methodIndex < AppCalculationMethod.values.length
+          ? AppCalculationMethod.values[methodIndex]
+          : AppCalculationMethod.kemenag,
       isHanafi: p.getBool(_kMadhab) ?? false,
       themeMode: p.getInt(_kTheme) ?? 0,
       useAutoLocation: p.getBool(_kUseAutoLocation) ?? true,
@@ -106,36 +108,32 @@ class SettingsNotifier extends Notifier<AppSettings> {
 
   Future<void> setMethod(AppCalculationMethod m) async {
     state = state.copyWith(method: m);
-    final p = await SharedPreferences.getInstance();
-    await p.setInt(_kMethod, m.index);
+    await _prefs.setInt(_kMethod, m.index);
   }
 
   Future<void> setMadhab(bool isHanafi) async {
     state = state.copyWith(isHanafi: isHanafi);
-    final p = await SharedPreferences.getInstance();
-    await p.setBool(_kMadhab, isHanafi);
+    await _prefs.setBool(_kMadhab, isHanafi);
   }
 
   Future<void> setThemeMode(int mode) async {
     state = state.copyWith(themeMode: mode);
-    final p = await SharedPreferences.getInstance();
-    await p.setInt(_kTheme, mode);
+    await _prefs.setInt(_kTheme, mode);
   }
 
   Future<void> setUseAutoLocation(bool enabled) async {
     state = state.copyWith(useAutoLocation: enabled);
-    final p = await SharedPreferences.getInstance();
-    await p.setBool(_kUseAutoLocation, enabled);
+    await _prefs.setBool(_kUseAutoLocation, enabled);
   }
 
   Future<void> setSelectedCityId(String? cityId) async {
-    state = state.copyWith(selectedCityId: cityId);
-    final p = await SharedPreferences.getInstance();
     if (cityId == null || cityId.isEmpty) {
-      await p.remove(_kSelectedCityId);
+      state = state.copyWith(clearSelectedCity: true);
+      await _prefs.remove(_kSelectedCityId);
       return;
     }
-    await p.setString(_kSelectedCityId, cityId);
+    state = state.copyWith(selectedCityId: cityId);
+    await _prefs.setString(_kSelectedCityId, cityId);
   }
 }
 
