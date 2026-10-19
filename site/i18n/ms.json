@@ -176,7 +176,7 @@
       {
         "heading": "Laman web ini",
         "body": [
-          "bedug.ardeman.com tidak menggunakan kuki, analitik atau skrip pihak ketiga, dan menyajikan fonnya sendiri. Laman ini dihoskan di Cloudflare Pages, dan Cloudflare memproses alamat IP serta butiran permintaan anda untuk menghantar dan melindungi laman; lihat <a href=\"{cloudflare_privacy}\">dasar privasi Cloudflare</a>."
+          "bedug.ardeman.com tidak menggunakan kuki, analitik atau skrip pihak ketiga, dan menyajikan fonnya sendiri. Laman ini dihoskan di Cloudflare, dan Cloudflare memproses alamat IP serta butiran permintaan anda untuk menghantar dan melindungi laman; lihat <a href=\"{cloudflare_privacy}\">dasar privasi Cloudflare</a>."
         ]
       },
       {

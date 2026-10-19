@@ -1,4 +1,4 @@
-# Cloudflare Pages response headers. The site has no scripts at all.
+# Cloudflare response headers. The site has no scripts at all.
 /*
   Content-Security-Policy: default-src 'none'; style-src 'self'; font-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
   X-Content-Type-Options: nosniff

@@ -280,7 +280,7 @@ The infaq method depends on where the build is distributed, not only on the plat
 
 ## Website
 
-The landing page at [bedug.ardeman.com](https://bedug.ardeman.com) is a static site with no scripts, built by `site/build.py` (Python standard library only) and hosted on Cloudflare Pages. It has a home page and a privacy policy in Indonesian (at `/`), English (`/en/`), Arabic (`/ar/`, right to left) and Malay (`/ms/`).
+The landing page at [bedug.ardeman.com](https://bedug.ardeman.com) is a static site with no scripts, built by `site/build.py` (Python standard library only) and served as static assets by a Cloudflare Worker (`wrangler.jsonc`). It has a home page and a privacy policy in Indonesian (at `/`), English (`/en/`), Arabic (`/ar/`, right to left) and Malay (`/ms/`).
 
 | Path | Holds |
 | --- | --- |
@@ -288,15 +288,16 @@ The landing page at [bedug.ardeman.com](https://bedug.ardeman.com) is a static s
 | `site/config.json` | Site URL, locales, links, and the store and infaq URLs (`null` shows "coming soon") |
 | `site/static/` | Stylesheet, Cloudflare `_headers`, `robots.txt`, and a 512px copy of `assets/branding/icon.png` for social previews (refresh it with `sips -Z 512` when the icon changes) |
 | `site/dist/` | Build output, not committed |
+| `wrangler.jsonc` | Cloudflare Worker config that serves `site/dist/` |
 
 The build copies the font and `icon.svg` from `assets/`, so the brand has one source. When a store listing or the Trakteer and Ko-fi pages go live, put the URL in `site/config.json`. When the app gains or changes a feature that the home page or the privacy policy describes, update every `site/i18n/*.json`.
 
-**Cloudflare Pages setup (once):**
+**Cloudflare setup (once):**
 
-1. In the Cloudflare dashboard, go to **Workers & Pages → Create → Pages → Connect to Git** and pick this repository.
-2. Build settings: framework preset **None**, build command `python3 site/build.py`, build output directory `site/dist`, root directory empty, production branch `master`.
-3. Under **Settings → Build → Build watch paths**, include `site/*`, `assets/fonts/*` and `assets/branding/*`, so app-only commits don't redeploy the site.
-4. Under **Custom domains**, add `bedug.ardeman.com`. If `ardeman.com` uses Cloudflare DNS, the record is created for you; otherwise add a CNAME `bedug` → `<project>.pages.dev` at the DNS provider.
+1. In the Cloudflare dashboard, go to **Workers & Pages → Create → Import a repository** and pick this repository.
+2. Project name `bedug` (it must match `name` in `wrangler.jsonc`), build command `python3 site/build.py`, deploy command `npx wrangler deploy` (the default), path `/`.
+3. Under the Worker's **Settings → Build → Build watch paths**, include `site/*`, `assets/fonts/*`, `assets/branding/*` and `wrangler.jsonc`, so app-only commits don't redeploy the site.
+4. Under **Settings → Domains & Routes**, add the custom domain `bedug.ardeman.com`. This needs `ardeman.com` as a zone in the same Cloudflare account.
 
 Every push to `master` deploys, and other branches get preview URLs.
 

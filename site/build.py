@@ -4,7 +4,7 @@
 Content lives in site/i18n/<locale>.json, links in site/config.json and the
 styles in site/static/. The fonts and the icon are copied from the app's own
 assets so the brand has one source. Standard library only, so Cloudflare
-Pages can run it as the build command: `python3 site/build.py`.
+can run it as the build command: `python3 site/build.py`.
 """
 
 import hashlib
@@ -335,7 +335,7 @@ class Site:
     # 404 ----------------------------------------------------------------
 
     def not_found(self):
-        # One page for every locale: Cloudflare Pages serves /404.html for any
+        # One page for every locale: Cloudflare serves /404.html for any
         # missing path, so it shows each language's short message.
         loc = self.default
         s = self.strings[loc]

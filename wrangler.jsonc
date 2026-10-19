@@ -1,0 +1,10 @@
+// Cloudflare Workers config for the landing page (site/). The Worker only
+// serves the static files that `python3 site/build.py` writes to site/dist.
+{
+  "name": "bedug",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./site/dist",
+    "not_found_handling": "404-page"
+  }
+}

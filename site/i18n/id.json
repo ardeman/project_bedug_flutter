@@ -176,7 +176,7 @@
       {
         "heading": "Situs web ini",
         "body": [
-          "bedug.ardeman.com tidak memakai cookie, analitik maupun skrip pihak ketiga, dan menyajikan font-nya sendiri. Situs ini di-hosting di Cloudflare Pages, dan Cloudflare memproses alamat IP serta detail permintaanmu untuk mengirim dan melindungi situs; lihat <a href=\"{cloudflare_privacy}\">kebijakan privasi Cloudflare</a>."
+          "bedug.ardeman.com tidak memakai cookie, analitik maupun skrip pihak ketiga, dan menyajikan font-nya sendiri. Situs ini di-hosting di Cloudflare, dan Cloudflare memproses alamat IP serta detail permintaanmu untuk mengirim dan melindungi situs; lihat <a href=\"{cloudflare_privacy}\">kebijakan privasi Cloudflare</a>."
         ]
       },
       {

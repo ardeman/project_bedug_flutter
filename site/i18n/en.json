@@ -176,7 +176,7 @@
       {
         "heading": "This website",
         "body": [
-          "bedug.ardeman.com uses no cookies, no analytics and no third-party scripts, and serves its fonts itself. It is hosted on Cloudflare Pages, and Cloudflare processes your IP address and request details to deliver and protect the site; see the <a href=\"{cloudflare_privacy}\">Cloudflare privacy policy</a>."
+          "bedug.ardeman.com uses no cookies, no analytics and no third-party scripts, and serves its fonts itself. It is hosted on Cloudflare, and Cloudflare processes your IP address and request details to deliver and protect the site; see the <a href=\"{cloudflare_privacy}\">Cloudflare privacy policy</a>."
         ]
       },
       {
