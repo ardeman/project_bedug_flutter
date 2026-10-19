@@ -13,8 +13,8 @@
     "privacy": "Privasi"
   },
   "meta": {
-    "title": "Bedug · Jadwal sholat, kiblat dan kalender Hijriyah",
-    "description": "Bedug adalah aplikasi jadwal sholat gratis dengan hitung mundur, pengingat azan, kalender Hijriyah dan kompas kiblat. Privat, bisa offline, dan terasa pas di iOS, Android, macOS, Windows dan Linux."
+    "title": "Bedug · Jadwal salat, kiblat dan kalender Hijriyah",
+    "description": "Bedug adalah aplikasi jadwal salat gratis dengan hitung mundur, pengingat azan, kalender Hijriyah dan kompas kiblat. Privat, bisa offline, dan terasa pas di iOS, Android, macOS, Windows dan Linux."
   },
   "prayers": {
     "fajr": "Subuh",
@@ -23,34 +23,34 @@
     "maghrib": "Maghrib",
     "isha": "Isya"
   },
-  "next_prayer": "Sholat berikutnya",
+  "next_prayer": "Salat berikutnya",
   "mock": {
-    "label": "Bedug menampilkan jadwal sholat hari ini di Jakarta, dengan Ashar sebagai sholat berikutnya",
+    "label": "Bedug menampilkan jadwal salat hari ini di Jakarta, dengan Ashar sebagai salat berikutnya",
     "place": "Jakarta",
     "hijri": "9 Jumadil Awal 1448",
     "times": ["04:38", "11:52", "15:13", "17:52", "19:03"]
   },
   "hero": {
     "eyebrow": "Gratis · Tanpa akun · Bisa offline",
-    "title": "Setiap sholat, tepat waktu.",
-    "lead": "Bedug memanggilmu sholat, seperti bedug di masjid kampung halaman. Jadwal akurat di mana pun kamu berada, hitung mundur, pengingat azan, kalender Hijriyah dan kompas kiblat, di ponsel dan komputermu.",
+    "title": "Setiap salat, tepat waktu.",
+    "lead": "Bedug memanggilmu salat, seperti bedug di masjid kampung halaman. Jadwal akurat di mana pun kamu berada, hitung mundur, pengingat azan, kalender Hijriyah dan kompas kiblat, di ponsel dan komputermu.",
     "cta_download": "Dapatkan Bedug",
     "cta_infaq": "Berinfak",
     "badges": ["iPhone & iPad", "Android", "Mac", "Windows", "Linux"]
   },
   "features": {
-    "title": "Semua yang kamu butuhkan untuk sholat lima waktu",
+    "title": "Semua yang kamu butuhkan untuk salat lima waktu",
     "lead": "Mudah dipakai, teliti dalam hal kecil, dan nyaman di mata.",
     "items": [
       {
         "icon": "clock",
-        "title": "Jadwal sholat akurat",
+        "title": "Jadwal salat akurat",
         "body": "Kemenag RI sebagai bawaan, atau salah satu dari sembilan metode internasional seperti Muslim World League, ISNA dan Umm al-Qura, dengan Ashar mazhab Syafi'i atau Hanafi."
       },
       {
         "icon": "bell",
         "title": "Hitung mundur dan azan",
-        "body": "Lihat sekilas berapa lama lagi menuju sholat berikutnya, dan dapatkan notifikasi azan saat waktunya tiba."
+        "body": "Lihat sekilas berapa lama lagi menuju salat berikutnya, dan dapatkan notifikasi azan saat waktunya tiba."
       },
       {
         "icon": "calendar",
@@ -80,7 +80,7 @@
       {
         "icon": "shield",
         "title": "Privat dan offline",
-        "body": "Tanpa akun dan tanpa pendaftaran. Jadwal sholat dihitung di perangkatmu, dan pengaturanmu tidak pernah keluar darinya."
+        "body": "Tanpa akun dan tanpa pendaftaran. Jadwal salat dihitung di perangkatmu, dan pengaturanmu tidak pernah keluar darinya."
       }
     ]
   },
@@ -102,7 +102,7 @@
     "title": "Infak untuk Bedug",
     "lead": "Bedug gratis dan akan tetap gratis. Di Android dan iOS, Bedug menampilkan banner kecil di beberapa layar. Infak mendukung pengembangan Bedug dan mematikan iklan.",
     "points": [
-      "Tidak ada iklan di layar jadwal sholat dan kiblat, dan tidak ada iklan layar penuh.",
+      "Tidak ada iklan di layar jadwal salat dan kiblat, dan tidak ada iklan layar penuh.",
       "Iklan judi, minuman keras dan kencan diblokir.",
       "Infak berapa pun mematikan iklan. Infak bebas iklan juga kembali saat kamu memasang ulang aplikasi.",
       "Infakmu membiayai pengembangan Bedug, bukan untuk lembaga amal atau pihak ketiga."
@@ -116,10 +116,10 @@
   },
   "roadmap": {
     "title": "Yang akan datang",
-    "lead": "Bedug tumbuh dari aplikasi jadwal sholat menjadi teman ibadah harian, mingguan dan tahunanmu.",
+    "lead": "Bedug tumbuh dari aplikasi jadwal salat menjadi teman ibadah harian, mingguan dan tahunanmu.",
     "items": [
-      { "phase": "Berikutnya", "title": "Catatan sholat", "body": "Tandai setiap sholat tepat waktu, terlambat atau terlewat, lengkap dengan rangkaian hari dan hitungan qadha." },
-      { "phase": "Berikutnya", "title": "Pengingat lebih cerdas", "body": "Azan aktif atau mati per waktu sholat, pengingat sebelum azan, dan pilihan suara azan." },
+      { "phase": "Berikutnya", "title": "Catatan salat", "body": "Tandai setiap salat tepat waktu, terlambat atau terlewat, lengkap dengan rangkaian hari dan hitungan qadha." },
+      { "phase": "Berikutnya", "title": "Pengingat lebih cerdas", "body": "Azan aktif atau mati per waktu salat, pengingat sebelum azan, dan pilihan suara azan." },
       { "phase": "Berikutnya", "title": "Waktu tambahan dan widget", "body": "Imsak, terbit, dhuha dan sepertiga malam terakhir, serta widget layar utama." },
       { "phase": "Nanti", "title": "Dzikir dan doa", "body": "Penghitung tasbih, dzikir pagi dan petang, doa harian dan Asmaul Husna." },
       { "phase": "Nanti", "title": "Al-Qur'an", "body": "Pembaca dengan terjemahan dan penanda, serta perencana khatam." },
@@ -127,7 +127,7 @@
     ],
     "follow": "Ikuti perkembangannya di <a href=\"{repo}\">GitHub</a>."
   },
-  "footer_tagline": "Pengingat sholat, seperti bedug di kampung halamanmu.",
+  "footer_tagline": "Pengingat salat, seperti bedug di kampung halamanmu.",
   "footer_label": "Kaki halaman",
   "footer_contact": "Kontak",
   "not_found": {
@@ -136,14 +136,14 @@
   },
   "privacy": {
     "meta_title": "Kebijakan privasi · Bedug",
-    "meta_description": "Cara Bedug menangani datamu: jadwal sholat dihitung di perangkatmu, tidak ada akun, dan pengaturanmu tetap bersamamu.",
+    "meta_description": "Cara Bedug menangani datamu: jadwal salat dihitung di perangkatmu, tidak ada akun, dan pengaturanmu tetap bersamamu.",
     "title": "Kebijakan privasi",
     "updated": "Berlaku sejak 20 Oktober 2026",
-    "intro": "Bedug adalah aplikasi jadwal sholat yang diterbitkan oleh Ardeman. Kebijakan ini menjelaskan data apa yang digunakan aplikasi dan situs web ini, serta alasannya. Bedug tidak memiliki akun maupun server sendiri, sehingga datamu tetap berada di perangkatmu.",
+    "intro": "Bedug adalah aplikasi jadwal salat yang diterbitkan oleh Ardeman. Kebijakan ini menjelaskan data apa yang digunakan aplikasi dan situs web ini, serta alasannya. Bedug tidak memiliki akun maupun server sendiri, sehingga datamu tetap berada di perangkatmu.",
     "summary_title": "Singkatnya",
     "summary": [
       "Tanpa akun, tanpa pendaftaran, tanpa server Bedug.",
-      "Lokasimu digunakan di perangkatmu untuk menghitung jadwal sholat dan arah kiblat.",
+      "Lokasimu digunakan di perangkatmu untuk menghitung jadwal salat dan arah kiblat.",
       "Pengaturanmu hanya disimpan di perangkatmu.",
       "Di Android dan iOS, Google AdMob menampilkan iklan sampai kamu berinfak.",
       "Situs web ini tidak memakai cookie maupun analitik."
@@ -152,7 +152,7 @@
       {
         "heading": "Data yang digunakan aplikasi",
         "body": [
-          "<strong>Lokasi.</strong> Saat deteksi otomatis aktif, Bedug meminta lokasi dari perangkatmu untuk menghitung jadwal sholat dan arah kiblat. Koordinat itu digunakan di perangkatmu dan tidak dikirim kepada kami. Untuk menampilkan nama kotamu, Bedug memakai layanan geocoding bawaan perangkat, yang mengirim koordinat ke Apple (di iOS dan macOS) atau Google (di Android); lihat kebijakan privasi <a href=\"{apple_privacy}\">Apple</a> dan <a href=\"{google_privacy}\">Google</a>. Jika kamu mematikan deteksi otomatis dan memilih kota, Bedug tidak menggunakan lokasimu.",
+          "<strong>Lokasi.</strong> Saat deteksi otomatis aktif, Bedug meminta lokasi dari perangkatmu untuk menghitung jadwal salat dan arah kiblat. Koordinat itu digunakan di perangkatmu dan tidak dikirim kepada kami. Untuk menampilkan nama kotamu, Bedug memakai layanan geocoding bawaan perangkat, yang mengirim koordinat ke Apple (di iOS dan macOS) atau Google (di Android); lihat kebijakan privasi <a href=\"{apple_privacy}\">Apple</a> dan <a href=\"{google_privacy}\">Google</a>. Jika kamu mematikan deteksi otomatis dan memilih kota, Bedug tidak menggunakan lokasimu.",
           "<strong>Kompas.</strong> Kompas kiblat membaca sensor arah perangkatmu. Hasilnya hanya digunakan di perangkatmu.",
           "<strong>Pengaturan.</strong> Metode perhitungan, kota, bahasa, tema dan pilihan notifikasimu disimpan di perangkatmu dan terhapus saat kamu menghapus aplikasi.",
           "<strong>Notifikasi.</strong> Notifikasi azan dijadwalkan di perangkatmu. Tidak ada server yang mengirimkannya."

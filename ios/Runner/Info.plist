@@ -67,8 +67,8 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Bedug membutuhkan lokasi untuk menghitung waktu sholat yang akurat</string>
+	<string>Bedug membutuhkan lokasi untuk menghitung waktu salat yang akurat</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Bedug membutuhkan lokasi untuk menghitung waktu sholat yang akurat</string>
+	<string>Bedug membutuhkan lokasi untuk menghitung waktu salat yang akurat</string>
 </dict>
 </plist>

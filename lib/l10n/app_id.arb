@@ -5,10 +5,10 @@
   "appName": "Bedug",
   "@appName": { "description": "Application name" },
 
-  "appTagline": "Pengingat sholat, seperti bedug di kampung halamanmu.",
+  "appTagline": "Pengingat salat, seperti bedug di kampung halamanmu.",
   "@appTagline": { "description": "App tagline shown on splash/about screen" },
 
-  "prayerTimes": "Waktu Sholat",
+  "prayerTimes": "Waktu Salat",
   "@prayerTimes": { "description": "Prayer times screen title" },
 
   "hijriCalendar": "Kalender Hijriyah",
@@ -17,7 +17,7 @@
   "settings": "Pengaturan",
   "@settings": {},
 
-  "nextPrayer": "Sholat Berikutnya",
+  "nextPrayer": "Salat Berikutnya",
   "@nextPrayer": {},
 
   "upNext": "Selanjutnya",
@@ -47,7 +47,7 @@
   "calculationMethod": "Metode Hisab",
   "@calculationMethod": {},
 
-  "calculationMethodDesc": "Pilih metode perhitungan waktu sholat",
+  "calculationMethodDesc": "Pilih metode perhitungan waktu salat",
   "@calculationMethodDesc": {},
 
   "methodKemenag": "Kementerian Agama RI",
@@ -92,7 +92,7 @@
   "azanNotifications": "Notifikasi Azan",
   "@azanNotifications": {},
 
-  "allPrayers": "Semua Sholat",
+  "allPrayers": "Semua Salat",
   "@allPrayers": {},
 
   "theme": "Tampilan",
@@ -163,9 +163,9 @@
   "@locationPermissionDeniedForeverApple": {},
   "locationPermissionDeniedForeverAndroid": "Izin lokasi ditolak permanen.\nBuka Setelan → Aplikasi → bedug → Izin → Lokasi → Izinkan, lalu coba lagi.",
   "@locationPermissionDeniedForeverAndroid": {},
-  "notificationChannelName": "Waktu Sholat",
+  "notificationChannelName": "Waktu Salat",
   "@notificationChannelName": {},
-  "notificationChannelDescription": "Pengingat azan untuk sholat harian",
+  "notificationChannelDescription": "Pengingat azan untuk salat harian",
   "@notificationChannelDescription": {},
   "openAction": "Buka",
   "@openAction": {},

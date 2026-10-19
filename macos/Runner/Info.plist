@@ -29,10 +29,10 @@
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Bedug membutuhkan lokasi untuk menghitung waktu sholat yang akurat</string>
+	<string>Bedug membutuhkan lokasi untuk menghitung waktu salat yang akurat</string>
 	<key>NSLocationUsageDescription</key>
-	<string>Bedug membutuhkan lokasi untuk menghitung waktu sholat yang akurat</string>
+	<string>Bedug membutuhkan lokasi untuk menghitung waktu salat yang akurat</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Bedug membutuhkan lokasi untuk menghitung waktu sholat yang akurat</string>
+	<string>Bedug membutuhkan lokasi untuk menghitung waktu salat yang akurat</string>
 	</dict>
 </plist>

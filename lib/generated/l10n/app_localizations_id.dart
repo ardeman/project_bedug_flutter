@@ -13,10 +13,10 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get appTagline =>
-      'Pengingat sholat, seperti bedug di kampung halamanmu.';
+      'Pengingat salat, seperti bedug di kampung halamanmu.';
 
   @override
-  String get prayerTimes => 'Waktu Sholat';
+  String get prayerTimes => 'Waktu Salat';
 
   @override
   String get hijriCalendar => 'Kalender Hijriyah';
@@ -25,7 +25,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get settings => 'Pengaturan';
 
   @override
-  String get nextPrayer => 'Sholat Berikutnya';
+  String get nextPrayer => 'Salat Berikutnya';
 
   @override
   String get upNext => 'Selanjutnya';
@@ -55,7 +55,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get calculationMethod => 'Metode Hisab';
 
   @override
-  String get calculationMethodDesc => 'Pilih metode perhitungan waktu sholat';
+  String get calculationMethodDesc => 'Pilih metode perhitungan waktu salat';
 
   @override
   String get methodKemenag => 'Kementerian Agama RI';
@@ -100,7 +100,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get azanNotifications => 'Notifikasi Azan';
 
   @override
-  String get allPrayers => 'Semua Sholat';
+  String get allPrayers => 'Semua Salat';
 
   @override
   String get theme => 'Tampilan';
@@ -196,11 +196,11 @@ class AppLocalizationsId extends AppLocalizations {
       'Izin lokasi ditolak permanen.\nBuka Setelan → Aplikasi → bedug → Izin → Lokasi → Izinkan, lalu coba lagi.';
 
   @override
-  String get notificationChannelName => 'Waktu Sholat';
+  String get notificationChannelName => 'Waktu Salat';
 
   @override
   String get notificationChannelDescription =>
-      'Pengingat azan untuk sholat harian';
+      'Pengingat azan untuk salat harian';
 
   @override
   String get openAction => 'Buka';

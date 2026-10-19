@@ -21,7 +21,7 @@ class SettingsScreen extends ConsumerWidget {
       extendBodyBehindAppBar: PlatformCapabilities.isApple,
       appBar: GlassTopBar(title: l10n.settings),
       body: ListView(children: [
-        // ── Section: Sholat ─────────────────────────────────────────────────
+        // ── Section: Salat ─────────────────────────────────────────────────
         _SectionHeader(l10n.prayerTimes),
 
         // Metode Hisab

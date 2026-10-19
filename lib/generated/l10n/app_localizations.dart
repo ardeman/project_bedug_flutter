@@ -111,13 +111,13 @@ abstract class AppLocalizations {
   /// App tagline shown on splash/about screen
   ///
   /// In id, this message translates to:
-  /// **'Pengingat sholat, seperti bedug di kampung halamanmu.'**
+  /// **'Pengingat salat, seperti bedug di kampung halamanmu.'**
   String get appTagline;
 
   /// Prayer times screen title
   ///
   /// In id, this message translates to:
-  /// **'Waktu Sholat'**
+  /// **'Waktu Salat'**
   String get prayerTimes;
 
   /// Hijri calendar screen title
@@ -135,7 +135,7 @@ abstract class AppLocalizations {
   /// No description provided for @nextPrayer.
   ///
   /// In id, this message translates to:
-  /// **'Sholat Berikutnya'**
+  /// **'Salat Berikutnya'**
   String get nextPrayer;
 
   /// No description provided for @upNext.
@@ -195,7 +195,7 @@ abstract class AppLocalizations {
   /// No description provided for @calculationMethodDesc.
   ///
   /// In id, this message translates to:
-  /// **'Pilih metode perhitungan waktu sholat'**
+  /// **'Pilih metode perhitungan waktu salat'**
   String get calculationMethodDesc;
 
   /// No description provided for @methodKemenag.
@@ -285,7 +285,7 @@ abstract class AppLocalizations {
   /// No description provided for @allPrayers.
   ///
   /// In id, this message translates to:
-  /// **'Semua Sholat'**
+  /// **'Semua Salat'**
   String get allPrayers;
 
   /// No description provided for @theme.
@@ -453,13 +453,13 @@ abstract class AppLocalizations {
   /// No description provided for @notificationChannelName.
   ///
   /// In id, this message translates to:
-  /// **'Waktu Sholat'**
+  /// **'Waktu Salat'**
   String get notificationChannelName;
 
   /// No description provided for @notificationChannelDescription.
   ///
   /// In id, this message translates to:
-  /// **'Pengingat azan untuk sholat harian'**
+  /// **'Pengingat azan untuk salat harian'**
   String get notificationChannelDescription;
 
   /// No description provided for @openAction.
