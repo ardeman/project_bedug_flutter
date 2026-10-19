@@ -64,6 +64,8 @@ iOS and macOS builds use CocoaPods only: Swift Package Manager is turned off in 
 | Regenerate the Android and Windows icons after editing `assets/branding/*.svg` (macOS) | `swift scripts/render_brand_icons.swift && dart run flutter_launcher_icons` |
 | Edit the iOS and macOS icon (re-import any changed layer from `assets/branding/layers/`) | `open -a "Icon Composer" assets/branding/AppIcon.icon` |
 | Release build | `flutter build <apk\|appbundle\|ipa\|macos\|windows\|linux>` |
+| Build the landing page into `site/dist/` | `python3 site/build.py` |
+| Preview the landing page | `python3 site/build.py && python3 -m http.server -d site/dist` |
 
 **Checks**: run both before every commit. They must pass with no errors or warnings:
 
@@ -115,6 +117,7 @@ assets/branding/     App icon sources (SVG) and their 1024px renders
   AppIcon.icon/      Icon Composer icon for iOS and macOS
   layers/            Flat Icon Composer layers for the Apple icon
 assets/fonts/        Bundled brand font (Plus Jakarta Sans, OFL)
+site/                Landing page (bedug.ardeman.com), see "Website" below
 scripts/             Git hook scripts, icon renderer
 .githooks/           Versioned Git hooks
 test/                Widget tests
@@ -275,6 +278,28 @@ The infaq method depends on where the build is distributed, not only on the plat
 - Create the AdMob, Trakteer and Ko-fi accounts and put the handles in the code. Debug builds use AdMob test IDs, so coding doesn't wait on this.
 - Enroll in Apple's Small Business Program so the App Store takes 15% instead of 30% (Google applies 15% to the first US$1M a year automatically).
 
+## Website
+
+The landing page at [bedug.ardeman.com](https://bedug.ardeman.com) is a static site with no scripts, built by `site/build.py` (Python standard library only) and hosted on Cloudflare Pages. It has a home page and a privacy policy in Indonesian (at `/`), English (`/en/`), Arabic (`/ar/`, right to left) and Malay (`/ms/`).
+
+| Path | Holds |
+| --- | --- |
+| `site/i18n/<locale>.json` | All page text, one file per language with the same keys |
+| `site/config.json` | Site URL, locales, links, and the store and infaq URLs (`null` shows "coming soon") |
+| `site/static/` | Stylesheet, Cloudflare `_headers`, `robots.txt`, and a 512px copy of `assets/branding/icon.png` for social previews (refresh it with `sips -Z 512` when the icon changes) |
+| `site/dist/` | Build output, not committed |
+
+The build copies the font and `icon.svg` from `assets/`, so the brand has one source. When a store listing or the Trakteer and Ko-fi pages go live, put the URL in `site/config.json`. When the app gains or changes a feature that the home page or the privacy policy describes, update every `site/i18n/*.json`.
+
+**Cloudflare Pages setup (once):**
+
+1. In the Cloudflare dashboard, go to **Workers & Pages → Create → Pages → Connect to Git** and pick this repository.
+2. Build settings: framework preset **None**, build command `python3 site/build.py`, build output directory `site/dist`, root directory empty, production branch `master`.
+3. Under **Settings → Build → Build watch paths**, include `site/*`, `assets/fonts/*` and `assets/branding/*`, so app-only commits don't redeploy the site.
+4. Under **Custom domains**, add `bedug.ardeman.com`. If `ardeman.com` uses Cloudflare DNS, the record is created for you; otherwise add a CNAME `bedug` → `<project>.pages.dev` at the DNS provider.
+
+Every push to `master` deploys, and other branches get preview URLs.
+
 ## macOS
 
 - The window chrome lives in `macos/Runner/MainFlutterWindow.swift`: hidden title, transparent title bar, full-size content, rounded corners, movable by background, and traffic-light buttons placed at a fixed inset that is kept on resize.
@@ -304,6 +329,7 @@ Each topic has one home. Update that file instead of copying its content somewhe
 | `AGENTS.md` | AI coding agents (and humans who want the rules) | Conventions, platform UI rules, guardrails, definition of done |
 | `CLAUDE.md`, `GEMINI.md` | Claude Code, Gemini CLI | Only an import of `AGENTS.md` |
 | `CONTRIBUTING.md` | Human contributors | Branches, bug reports, feature requests, pull requests |
+| `site/i18n/*.json` | Website visitors | Landing page copy and the privacy policy |
 
 Codex, Cursor, GitHub Copilot, Windsurf, Jules, Aider, Zed and other agents that follow the [AGENTS.md](https://agents.md) convention read `AGENTS.md` directly.
 

@@ -1,0 +1,208 @@
+{
+  "lang_name": "English",
+  "dir": "ltr",
+  "og_locale": "en_US",
+  "skip": "Skip to content",
+  "language": "Language",
+  "nav_label": "Main",
+  "nav": {
+    "features": "Features",
+    "download": "Download",
+    "infaq": "Infaq",
+    "roadmap": "Roadmap",
+    "privacy": "Privacy"
+  },
+  "meta": {
+    "title": "Bedug · Prayer times, Qibla and Hijri calendar",
+    "description": "Bedug is a free prayer-times app with a live countdown, adhan reminders, a Hijri calendar and a Qibla compass. Private, offline and at home on iOS, Android, macOS, Windows and Linux."
+  },
+  "prayers": {
+    "fajr": "Fajr",
+    "dhuhr": "Dhuhr",
+    "asr": "Asr",
+    "maghrib": "Maghrib",
+    "isha": "Isha"
+  },
+  "next_prayer": "Next prayer",
+  "mock": {
+    "label": "Bedug showing today's prayer times in Jakarta, with Asr up next",
+    "place": "Jakarta",
+    "hijri": "9 Jumada al-Ula 1448",
+    "times": ["04:38", "11:52", "15:13", "17:52", "19:03"]
+  },
+  "hero": {
+    "eyebrow": "Free · No account · Works offline",
+    "title": "Every prayer, right on time.",
+    "lead": "Bedug calls you to prayer like the mosque drum it's named after. Accurate times for wherever you are, a live countdown, adhan reminders, a Hijri calendar and a Qibla compass, on your phone and your computer.",
+    "cta_download": "Get Bedug",
+    "cta_infaq": "Give an infaq",
+    "badges": ["iPhone & iPad", "Android", "Mac", "Windows", "Linux"]
+  },
+  "features": {
+    "title": "Everything for the five daily prayers",
+    "lead": "Simple to use, careful with the details, and calm on the eyes.",
+    "items": [
+      {
+        "icon": "clock",
+        "title": "Accurate prayer times",
+        "body": "Kemenag RI by default, or one of nine global methods such as Muslim World League, ISNA and Umm al-Qura, with the Shafi'i or Hanafi Asr."
+      },
+      {
+        "icon": "bell",
+        "title": "Live countdown and adhan",
+        "body": "See how long until the next prayer at a glance, and get an adhan notification when it's time."
+      },
+      {
+        "icon": "calendar",
+        "title": "Hijri calendar",
+        "body": "Today's Hijri date always in view, and a calendar to browse the Hijri months."
+      },
+      {
+        "icon": "compass",
+        "title": "Qibla compass",
+        "body": "Turn your phone toward the Kaaba. On a computer, Bedug shows the bearing, the distance to Makkah and the Qibla's angle from the sun."
+      },
+      {
+        "icon": "pin",
+        "title": "Your location, your choice",
+        "body": "Let GPS find you, or pick your city by hand and keep location off. Bedug always shows a city name, never raw coordinates."
+      },
+      {
+        "icon": "globe",
+        "title": "Four languages",
+        "body": "Indonesian, English, Arabic and Malay, with a full right-to-left layout in Arabic."
+      },
+      {
+        "icon": "devices",
+        "title": "At home on every device",
+        "body": "Liquid Glass on iPhone and Mac, Material You on Android, Fluent on Windows, and the Adwaita or Breeze look on Linux."
+      },
+      {
+        "icon": "shield",
+        "title": "Private and offline",
+        "body": "No account and no sign-up. Prayer times are calculated on your device, and your settings never leave it."
+      }
+    ]
+  },
+  "download": {
+    "title": "Get Bedug",
+    "lead": "Free on every platform.",
+    "note": "Bedug is in development. The store links appear here as each version is released.",
+    "get": "Get it",
+    "coming_soon": "Coming soon"
+  },
+  "stores": {
+    "appstore": { "name": "App Store", "devices": "iPhone and iPad · iOS 26 or later" },
+    "play": { "name": "Google Play", "devices": "Android phones and tablets" },
+    "macappstore": { "name": "Mac App Store", "devices": "Mac · macOS 26 or later" },
+    "msstore": { "name": "Microsoft Store", "devices": "Windows 10 and 11" },
+    "flathub": { "name": "Flathub", "devices": "Linux" }
+  },
+  "infaq": {
+    "title": "Infaq for Bedug",
+    "lead": "Bedug is free and stays free. On Android and iOS it shows a small banner on a few screens. An infaq supports Bedug's development and turns the ads off.",
+    "points": [
+      "No ads on the prayer times or Qibla screens, and no full-screen ads.",
+      "Ads for gambling, alcohol and dating are blocked.",
+      "Any infaq turns the ads off. The ad-free infaq also comes back when you reinstall.",
+      "Your infaq funds Bedug's development. It doesn't go to a charity or a third party."
+    ],
+    "in_app": "In the Android and Apple apps, give an infaq from Settings through Google Play or the App Store. On Windows and Linux, use the links here.",
+    "links_soon": "The infaq links open with the first release.",
+    "via": {
+      "trakteer": "Infaq via Trakteer",
+      "kofi": "Infaq via Ko-fi"
+    }
+  },
+  "roadmap": {
+    "title": "What's coming",
+    "lead": "Bedug is growing from a prayer-times app into a companion for your day, your week and your year.",
+    "items": [
+      { "phase": "Next", "title": "Prayer tracker", "body": "Mark each prayer as on time, late or missed, with streaks and a qada count." },
+      { "phase": "Next", "title": "Smarter reminders", "body": "Adhan on or off per prayer, a reminder before adhan, and a choice of adhan sound." },
+      { "phase": "Next", "title": "More times and widgets", "body": "Imsak, sunrise, dhuha and the last third of the night, plus home screen widgets." },
+      { "phase": "Later", "title": "Dzikir and dua", "body": "A tasbih counter, morning and evening dzikir, daily duas and the Asmaul Husna." },
+      { "phase": "Later", "title": "Quran", "body": "A reader with translation and bookmarks, and a khatam planner." },
+      { "phase": "Later", "title": "The Islamic year", "body": "Hijri events, a Ramadan mode with sahur and iftar countdowns, and sunnah fasting reminders." }
+    ],
+    "follow": "Follow the work on <a href=\"{repo}\">GitHub</a>."
+  },
+  "footer_tagline": "Your prayer reminder, rooted in Nusantara tradition.",
+  "footer_label": "Footer",
+  "footer_contact": "Contact",
+  "not_found": {
+    "title": "Page not found",
+    "home": "Back to Bedug"
+  },
+  "privacy": {
+    "meta_title": "Privacy policy · Bedug",
+    "meta_description": "How Bedug handles your data: prayer times are calculated on your device, there is no account, and your settings stay with you.",
+    "title": "Privacy policy",
+    "updated": "Effective 20 October 2026",
+    "intro": "Bedug is a prayer-times app published by Ardeman. This policy explains what data the app and this website use, and why. Bedug has no account and no server of its own, so your data stays on your device.",
+    "summary_title": "In short",
+    "summary": [
+      "No account, no sign-up, no Bedug server.",
+      "Your location is used on your device to calculate prayer times and the Qibla.",
+      "Your settings are stored only on your device.",
+      "On Android and iOS, Google AdMob shows ads until you give an infaq.",
+      "This website uses no cookies and no analytics."
+    ],
+    "sections": [
+      {
+        "heading": "Data the app uses",
+        "body": [
+          "<strong>Location.</strong> With auto detect on, Bedug asks your device for its location to calculate prayer times and the Qibla direction. The coordinates are used on your device and are not sent to us. To show your city's name, Bedug uses your device's built-in geocoding service, which sends the coordinates to Apple (on iOS and macOS) or Google (on Android); see the <a href=\"{apple_privacy}\">Apple</a> and <a href=\"{google_privacy}\">Google</a> privacy policies. If you turn auto detect off and pick a city, Bedug doesn't use your location.",
+          "<strong>Compass.</strong> The Qibla compass reads your device's heading sensor. The reading is used on your device only.",
+          "<strong>Settings.</strong> Your calculation method, city, language, theme and notification choices are stored on your device and are deleted when you uninstall the app.",
+          "<strong>Notifications.</strong> Adhan notifications are scheduled on your device. No server sends them."
+        ]
+      },
+      {
+        "heading": "Ads",
+        "body": [
+          "Bedug for Android and iOS shows ads from Google AdMob. Bedug for macOS, Windows and Linux shows no ads. AdMob may collect your device's advertising identifier, your IP address and how you interact with ads, to show and measure ads and to prevent fraud. See <a href=\"{google_partners}\">how Google uses information from apps that use its services</a>.",
+          "Where the law requires it, such as in the European Economic Area and the United Kingdom, Bedug asks for your consent with Google's consent form before showing personalized ads. On iOS, Bedug asks for your permission to track. If you decline, you see only non-personalized ads, and you can change your choice later in the app.",
+          "Once you give an infaq, Bedug stops showing ads."
+        ]
+      },
+      {
+        "heading": "Infaq",
+        "body": [
+          "In the Android and Apple apps, an infaq is an in-app purchase handled by Google Play or the App Store. We don't receive your payment details. The app only learns whether the purchase succeeded and stores that on your device to turn the ads off.",
+          "An infaq through <a href=\"{trakteer}\">Trakteer</a> or <a href=\"{kofi}\">Ko-fi</a> is handled by that service under its own privacy policy. It shares with us only what you choose to give, such as a name and a message."
+        ]
+      },
+      {
+        "heading": "This website",
+        "body": [
+          "bedug.ardeman.com uses no cookies, no analytics and no third-party scripts, and serves its fonts itself. It is hosted on Cloudflare Pages, and Cloudflare processes your IP address and request details to deliver and protect the site; see the <a href=\"{cloudflare_privacy}\">Cloudflare privacy policy</a>."
+        ]
+      },
+      {
+        "heading": "Children",
+        "body": [
+          "Bedug is not directed at children under 13, and we don't knowingly collect data from them."
+        ]
+      },
+      {
+        "heading": "Your choices",
+        "body": [
+          "You can turn location off and pick a city instead, turn notifications off, change your ad consent, and remove all of Bedug's data by uninstalling the app. We keep no data about you on any server, so there is nothing for us to export or delete."
+        ]
+      },
+      {
+        "heading": "Changes",
+        "body": [
+          "If this policy changes, we'll update this page and the effective date at the top."
+        ]
+      },
+      {
+        "heading": "Contact",
+        "body": [
+          "Questions about this policy? Open an issue on <a href=\"{issues}\">GitHub</a>."
+        ]
+      }
+    ]
+  }
+}

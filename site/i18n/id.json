@@ -1,0 +1,208 @@
+{
+  "lang_name": "Bahasa Indonesia",
+  "dir": "ltr",
+  "og_locale": "id_ID",
+  "skip": "Langsung ke isi",
+  "language": "Bahasa",
+  "nav_label": "Utama",
+  "nav": {
+    "features": "Fitur",
+    "download": "Unduh",
+    "infaq": "Infak",
+    "roadmap": "Rencana",
+    "privacy": "Privasi"
+  },
+  "meta": {
+    "title": "Bedug · Jadwal sholat, kiblat dan kalender Hijriyah",
+    "description": "Bedug adalah aplikasi jadwal sholat gratis dengan hitung mundur, pengingat azan, kalender Hijriyah dan kompas kiblat. Privat, bisa offline, dan terasa pas di iOS, Android, macOS, Windows dan Linux."
+  },
+  "prayers": {
+    "fajr": "Subuh",
+    "dhuhr": "Dzuhur",
+    "asr": "Ashar",
+    "maghrib": "Maghrib",
+    "isha": "Isya"
+  },
+  "next_prayer": "Sholat berikutnya",
+  "mock": {
+    "label": "Bedug menampilkan jadwal sholat hari ini di Jakarta, dengan Ashar sebagai sholat berikutnya",
+    "place": "Jakarta",
+    "hijri": "9 Jumadil Awal 1448",
+    "times": ["04:38", "11:52", "15:13", "17:52", "19:03"]
+  },
+  "hero": {
+    "eyebrow": "Gratis · Tanpa akun · Bisa offline",
+    "title": "Setiap sholat, tepat waktu.",
+    "lead": "Bedug memanggilmu sholat, seperti bedug di masjid kampung halaman. Jadwal akurat di mana pun kamu berada, hitung mundur, pengingat azan, kalender Hijriyah dan kompas kiblat, di ponsel dan komputermu.",
+    "cta_download": "Dapatkan Bedug",
+    "cta_infaq": "Berinfak",
+    "badges": ["iPhone & iPad", "Android", "Mac", "Windows", "Linux"]
+  },
+  "features": {
+    "title": "Semua yang kamu butuhkan untuk sholat lima waktu",
+    "lead": "Mudah dipakai, teliti dalam hal kecil, dan nyaman di mata.",
+    "items": [
+      {
+        "icon": "clock",
+        "title": "Jadwal sholat akurat",
+        "body": "Kemenag RI sebagai bawaan, atau salah satu dari sembilan metode internasional seperti Muslim World League, ISNA dan Umm al-Qura, dengan Ashar mazhab Syafi'i atau Hanafi."
+      },
+      {
+        "icon": "bell",
+        "title": "Hitung mundur dan azan",
+        "body": "Lihat sekilas berapa lama lagi menuju sholat berikutnya, dan dapatkan notifikasi azan saat waktunya tiba."
+      },
+      {
+        "icon": "calendar",
+        "title": "Kalender Hijriyah",
+        "body": "Tanggal Hijriyah hari ini selalu terlihat, dan kalender untuk menjelajahi bulan-bulan Hijriyah."
+      },
+      {
+        "icon": "compass",
+        "title": "Kompas kiblat",
+        "body": "Arahkan ponselmu ke Ka'bah. Di komputer, Bedug menampilkan arah, jarak ke Makkah dan sudut kiblat dari matahari."
+      },
+      {
+        "icon": "pin",
+        "title": "Lokasi, sesuai pilihanmu",
+        "body": "Biarkan GPS menemukanmu, atau pilih kotamu sendiri dan matikan lokasi. Bedug selalu menampilkan nama kota, bukan koordinat mentah."
+      },
+      {
+        "icon": "globe",
+        "title": "Empat bahasa",
+        "body": "Indonesia, Inggris, Arab dan Melayu, dengan tampilan kanan-ke-kiri penuh untuk bahasa Arab."
+      },
+      {
+        "icon": "devices",
+        "title": "Terasa pas di setiap perangkat",
+        "body": "Liquid Glass di iPhone dan Mac, Material You di Android, Fluent di Windows, serta tampilan Adwaita atau Breeze di Linux."
+      },
+      {
+        "icon": "shield",
+        "title": "Privat dan offline",
+        "body": "Tanpa akun dan tanpa pendaftaran. Jadwal sholat dihitung di perangkatmu, dan pengaturanmu tidak pernah keluar darinya."
+      }
+    ]
+  },
+  "download": {
+    "title": "Dapatkan Bedug",
+    "lead": "Gratis di semua platform.",
+    "note": "Bedug sedang dikembangkan. Tautan toko muncul di sini begitu setiap versi dirilis.",
+    "get": "Unduh",
+    "coming_soon": "Segera hadir"
+  },
+  "stores": {
+    "appstore": { "name": "App Store", "devices": "iPhone dan iPad · iOS 26 ke atas" },
+    "play": { "name": "Google Play", "devices": "Ponsel dan tablet Android" },
+    "macappstore": { "name": "Mac App Store", "devices": "Mac · macOS 26 ke atas" },
+    "msstore": { "name": "Microsoft Store", "devices": "Windows 10 dan 11" },
+    "flathub": { "name": "Flathub", "devices": "Linux" }
+  },
+  "infaq": {
+    "title": "Infak untuk Bedug",
+    "lead": "Bedug gratis dan akan tetap gratis. Di Android dan iOS, Bedug menampilkan banner kecil di beberapa layar. Infak mendukung pengembangan Bedug dan mematikan iklan.",
+    "points": [
+      "Tidak ada iklan di layar jadwal sholat dan kiblat, dan tidak ada iklan layar penuh.",
+      "Iklan judi, minuman keras dan kencan diblokir.",
+      "Infak berapa pun mematikan iklan. Infak bebas iklan juga kembali saat kamu memasang ulang aplikasi.",
+      "Infakmu membiayai pengembangan Bedug, bukan untuk lembaga amal atau pihak ketiga."
+    ],
+    "in_app": "Di aplikasi Android dan Apple, berinfak dari Pengaturan melalui Google Play atau App Store. Di Windows dan Linux, gunakan tautan di sini.",
+    "links_soon": "Tautan infak dibuka bersama rilis pertama.",
+    "via": {
+      "trakteer": "Infak lewat Trakteer",
+      "kofi": "Infak lewat Ko-fi"
+    }
+  },
+  "roadmap": {
+    "title": "Yang akan datang",
+    "lead": "Bedug tumbuh dari aplikasi jadwal sholat menjadi teman ibadah harian, mingguan dan tahunanmu.",
+    "items": [
+      { "phase": "Berikutnya", "title": "Catatan sholat", "body": "Tandai setiap sholat tepat waktu, terlambat atau terlewat, lengkap dengan rangkaian hari dan hitungan qadha." },
+      { "phase": "Berikutnya", "title": "Pengingat lebih cerdas", "body": "Azan aktif atau mati per waktu sholat, pengingat sebelum azan, dan pilihan suara azan." },
+      { "phase": "Berikutnya", "title": "Waktu tambahan dan widget", "body": "Imsak, terbit, dhuha dan sepertiga malam terakhir, serta widget layar utama." },
+      { "phase": "Nanti", "title": "Dzikir dan doa", "body": "Penghitung tasbih, dzikir pagi dan petang, doa harian dan Asmaul Husna." },
+      { "phase": "Nanti", "title": "Al-Qur'an", "body": "Pembaca dengan terjemahan dan penanda, serta perencana khatam." },
+      { "phase": "Nanti", "title": "Tahun Hijriyah", "body": "Hari besar Islam, mode Ramadhan dengan hitung mundur sahur dan berbuka, dan pengingat puasa sunnah." }
+    ],
+    "follow": "Ikuti perkembangannya di <a href=\"{repo}\">GitHub</a>."
+  },
+  "footer_tagline": "Pengingat sholat, seperti bedug di kampung halamanmu.",
+  "footer_label": "Kaki halaman",
+  "footer_contact": "Kontak",
+  "not_found": {
+    "title": "Halaman tidak ditemukan",
+    "home": "Kembali ke Bedug"
+  },
+  "privacy": {
+    "meta_title": "Kebijakan privasi · Bedug",
+    "meta_description": "Cara Bedug menangani datamu: jadwal sholat dihitung di perangkatmu, tidak ada akun, dan pengaturanmu tetap bersamamu.",
+    "title": "Kebijakan privasi",
+    "updated": "Berlaku sejak 20 Oktober 2026",
+    "intro": "Bedug adalah aplikasi jadwal sholat yang diterbitkan oleh Ardeman. Kebijakan ini menjelaskan data apa yang digunakan aplikasi dan situs web ini, serta alasannya. Bedug tidak memiliki akun maupun server sendiri, sehingga datamu tetap berada di perangkatmu.",
+    "summary_title": "Singkatnya",
+    "summary": [
+      "Tanpa akun, tanpa pendaftaran, tanpa server Bedug.",
+      "Lokasimu digunakan di perangkatmu untuk menghitung jadwal sholat dan arah kiblat.",
+      "Pengaturanmu hanya disimpan di perangkatmu.",
+      "Di Android dan iOS, Google AdMob menampilkan iklan sampai kamu berinfak.",
+      "Situs web ini tidak memakai cookie maupun analitik."
+    ],
+    "sections": [
+      {
+        "heading": "Data yang digunakan aplikasi",
+        "body": [
+          "<strong>Lokasi.</strong> Saat deteksi otomatis aktif, Bedug meminta lokasi dari perangkatmu untuk menghitung jadwal sholat dan arah kiblat. Koordinat itu digunakan di perangkatmu dan tidak dikirim kepada kami. Untuk menampilkan nama kotamu, Bedug memakai layanan geocoding bawaan perangkat, yang mengirim koordinat ke Apple (di iOS dan macOS) atau Google (di Android); lihat kebijakan privasi <a href=\"{apple_privacy}\">Apple</a> dan <a href=\"{google_privacy}\">Google</a>. Jika kamu mematikan deteksi otomatis dan memilih kota, Bedug tidak menggunakan lokasimu.",
+          "<strong>Kompas.</strong> Kompas kiblat membaca sensor arah perangkatmu. Hasilnya hanya digunakan di perangkatmu.",
+          "<strong>Pengaturan.</strong> Metode perhitungan, kota, bahasa, tema dan pilihan notifikasimu disimpan di perangkatmu dan terhapus saat kamu menghapus aplikasi.",
+          "<strong>Notifikasi.</strong> Notifikasi azan dijadwalkan di perangkatmu. Tidak ada server yang mengirimkannya."
+        ]
+      },
+      {
+        "heading": "Iklan",
+        "body": [
+          "Bedug untuk Android dan iOS menampilkan iklan dari Google AdMob. Bedug untuk macOS, Windows dan Linux tidak menampilkan iklan. AdMob dapat mengumpulkan ID iklan perangkatmu, alamat IP dan interaksimu dengan iklan, untuk menampilkan dan mengukur iklan serta mencegah penipuan. Lihat <a href=\"{google_partners}\">cara Google menggunakan informasi dari aplikasi yang memakai layanannya</a>.",
+          "Jika diwajibkan hukum, misalnya di Kawasan Ekonomi Eropa dan Inggris, Bedug meminta persetujuanmu melalui formulir persetujuan Google sebelum menampilkan iklan yang dipersonalisasi. Di iOS, Bedug meminta izinmu untuk pelacakan. Jika kamu menolak, kamu hanya melihat iklan yang tidak dipersonalisasi, dan pilihanmu bisa diubah kapan saja di aplikasi.",
+          "Setelah kamu berinfak, Bedug berhenti menampilkan iklan."
+        ]
+      },
+      {
+        "heading": "Infak",
+        "body": [
+          "Di aplikasi Android dan Apple, infak adalah pembelian dalam aplikasi yang diproses oleh Google Play atau App Store. Kami tidak menerima detail pembayaranmu. Aplikasi hanya mengetahui apakah pembelian berhasil dan menyimpannya di perangkatmu untuk mematikan iklan.",
+          "Infak melalui <a href=\"{trakteer}\">Trakteer</a> atau <a href=\"{kofi}\">Ko-fi</a> diproses oleh layanan tersebut sesuai kebijakan privasinya masing-masing. Layanan itu hanya membagikan kepada kami apa yang kamu pilih untuk diberikan, seperti nama dan pesan."
+        ]
+      },
+      {
+        "heading": "Situs web ini",
+        "body": [
+          "bedug.ardeman.com tidak memakai cookie, analitik maupun skrip pihak ketiga, dan menyajikan font-nya sendiri. Situs ini di-hosting di Cloudflare Pages, dan Cloudflare memproses alamat IP serta detail permintaanmu untuk mengirim dan melindungi situs; lihat <a href=\"{cloudflare_privacy}\">kebijakan privasi Cloudflare</a>."
+        ]
+      },
+      {
+        "heading": "Anak-anak",
+        "body": [
+          "Bedug tidak ditujukan untuk anak di bawah 13 tahun, dan kami tidak dengan sengaja mengumpulkan data dari mereka."
+        ]
+      },
+      {
+        "heading": "Pilihanmu",
+        "body": [
+          "Kamu bisa mematikan lokasi dan memilih kota, mematikan notifikasi, mengubah persetujuan iklan, dan menghapus semua data Bedug dengan menghapus aplikasi. Kami tidak menyimpan data tentangmu di server mana pun, jadi tidak ada yang perlu kami ekspor atau hapus."
+        ]
+      },
+      {
+        "heading": "Perubahan",
+        "body": [
+          "Jika kebijakan ini berubah, kami akan memperbarui halaman ini dan tanggal berlakunya di bagian atas."
+        ]
+      },
+      {
+        "heading": "Kontak",
+        "body": [
+          "Ada pertanyaan tentang kebijakan ini? Buka issue di <a href=\"{issues}\">GitHub</a>."
+        ]
+      }
+    ]
+  }
+}

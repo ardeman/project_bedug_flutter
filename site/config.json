@@ -1,0 +1,26 @@
+{
+  "site_url": "https://bedug.ardeman.com",
+  "default_locale": "id",
+  "locales": ["id", "en", "ar", "ms"],
+  "links": {
+    "repo": "https://github.com/ardeman/project_bedug_flutter",
+    "issues": "https://github.com/ardeman/project_bedug_flutter/issues",
+    "google_partners": "https://policies.google.com/technologies/partner-sites",
+    "apple_privacy": "https://www.apple.com/legal/privacy/",
+    "google_privacy": "https://policies.google.com/privacy",
+    "cloudflare_privacy": "https://www.cloudflare.com/privacypolicy/",
+    "trakteer": "https://trakteer.id",
+    "kofi": "https://ko-fi.com"
+  },
+  "stores": [
+    { "id": "appstore", "icon": "phone", "url": null },
+    { "id": "play", "icon": "phone", "url": null },
+    { "id": "macappstore", "icon": "laptop", "url": null },
+    { "id": "msstore", "icon": "monitor", "url": null },
+    { "id": "flathub", "icon": "monitor", "url": null }
+  ],
+  "infaq": {
+    "trakteer": null,
+    "kofi": null
+  }
+}
