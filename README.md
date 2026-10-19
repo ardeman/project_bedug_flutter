@@ -203,6 +203,59 @@ Linux should look like the desktop it runs on instead of Android's Material 3.
 
 Flutter stays the framework: React Native has no maintained Linux target.
 
+### Revenue: ads and infaq
+
+Bedug stays free. It earns from ads on mobile, and users can give an **infaq** (in Indonesian: *infak*) that supports development and turns the ads off. The feature is always called "infaq", never "tip" or "donation". All copy says the infaq **supports Bedug's development**, because App Store guidelines 3.2.1(vi) and 3.2.2 reject apps that look like they collect money for charity.
+
+| Platform | Ads | Infaq |
+| --- | --- | --- |
+| Android | AdMob (`google_mobile_ads`) | In-app purchase (`in_app_purchase`, Play Billing, which in Indonesia supports e-wallets and carrier billing) |
+| iOS | AdMob | In-app purchase (StoreKit) |
+| macOS | None: AdMob has no macOS SDK | In-app purchase (StoreKit) |
+| Windows, Linux | None: AdMob has no desktop SDK | External links via `url_launcher`: [Trakteer](https://trakteer.id) (QRIS, e-wallets, bank transfer) listed first for the Indonesian locale, [Ko-fi](https://ko-fi.com) (PayPal, cards) listed first for other locales |
+
+Store rules require developer support on iOS, macOS and Android to go through in-app purchase, so the external links appear only on Windows and Linux.
+
+**Distribution channels**
+
+The infaq method depends on where the build is distributed, not only on the platform. Store billing works only inside its own store, and some stores ban ad SDKs. Each build passes `--dart-define=CHANNEL=<channel>`, and `infaqProvider` and the ad code read it.
+
+| Channel | Builds | Ads | Infaq |
+| --- | --- | --- | --- |
+| `play` | Android on Google Play | AdMob | Play Billing |
+| `appstore` | iOS App Store, Mac App Store | AdMob on iOS only | StoreKit |
+| `direct` | Windows (Microsoft Store), Linux (Flathub); later perhaps an Android APK and a macOS DMG | AdMob on an Android APK only (expect lower fill: app-ads.txt can't verify an app without a store listing) | Trakteer / Ko-fi links |
+| `fdroid` (later) | Android on F-Droid | None | Trakteer / Ko-fi links, plus F-Droid's Donate metadata |
+
+- Rollout order: `play` and `appstore` (iOS and the Mac App Store) first, since that's where users and ad revenue are. Then `direct` for Windows on the Microsoft Store and Linux on Flathub. A direct Android APK, a macOS DMG, Snap, AppImage and `fdroid` are skipped for now.
+- F-Droid bans proprietary SDKs, so a define flag is not enough there. Its build recipe must remove `google_mobile_ads` and `in_app_purchase` from `pubspec.yaml` with a pre-build patch, and the code must compile without them.
+- In-app purchase on macOS works only in a Mac App Store build. A DMG build uses the links.
+- Skipped for now: Huawei AppGallery (no Google services, so it would need Huawei's own IAP and ads SDK), Samsung Galaxy Store (check whether its policy requires Samsung IAP first), and EU alternative iOS marketplaces.
+
+**Phase 1: Infaq (next)**
+
+1. **Store setup (manual):** paid-apps agreement, tax and bank details. Create the same product IDs in App Store Connect and Play Console:
+   - consumables `infaq_small`, `infaq_medium` and `infaq_large` at Rp 10k, 25k and 50k (matching price tiers abroad), which can be given repeatedly;
+   - a non-consumable `infaq_ad_free` at Rp 29k (about US$1.99), which can be restored on a new device.
+   Create the Trakteer and Ko-fi pages. In the App Store review notes, explain: "Infaq is a voluntary in-app purchase that funds Bedug's development. No money goes to a charity or a third party."
+2. **`lib/features/infaq/`:** an `infaqProvider` that picks in-app purchase or links from the build channel, loads the products, buys and completes purchases, restores `infaq_ad_free`, and handles cancellation and errors. It stores an `adFree` flag in `shared_preferences`. Any infaq sets the flag. Only `infaq_ad_free` survives a reinstall, and the sheet says so.
+3. **UI:** an "Infaq" entry in Settings opens a sheet with the tiers, a restore button and a thank-you state after payment. Use a liquid-glass or native sheet on Apple platforms, guarded against opening twice; an M3 bottom sheet on Android; and link buttons on Windows and Linux. No nag pop-ups.
+4. **l10n keys** (`infaq*`) in every ARB file, and tests for the provider (with a fake `InAppPurchase` platform) and for the Settings entry.
+
+**Phase 2: Ads (Android and iOS)**
+
+1. **Setup:** AdMob app and ad-unit IDs in `AndroidManifest.xml` and `Info.plist`. Test IDs in debug builds.
+2. **Consent:** the UMP consent form (GDPR and other regions) and App Tracking Transparency on iOS (`app_tracking_transparency`). When the user declines, serve non-personalized ads. Update the iOS privacy manifest, the App Store privacy labels and the Play Data Safety form, and tick **Contains ads** in Play Console.
+3. **Target audience 13+** in Play Console and App Store Connect. Including children under 13 brings in Google's Families policy and Apple's Kids rules: child-directed ads only, which earn less.
+4. **Placement:** one adaptive banner above the nav bar on the Calendar and Settings tabs, padded for the glass nav bar and the safe area. No ads on prayer times, qibla or (later) the Quran, dzikir and dua screens, and no interstitials. The banner carries a short "Your infaq turns off the ads" line that opens the infaq sheet. Hide every ad when `adFree` is set.
+5. **Content filter:** in the AdMob console, block gambling, alcohol, dating and other sensitive categories. This matters for a Muslim audience, and online gambling ads are a known problem in Indonesia.
+6. **Tests:** ads are hidden when `adFree` is set and are never built on macOS, Windows or Linux.
+
+**Owner setup (not code)**
+
+- Create the AdMob, Trakteer and Ko-fi accounts and put the handles in the code. Debug builds use AdMob test IDs, so coding doesn't wait on this.
+- Enroll in Apple's Small Business Program so the App Store takes 15% instead of 30% (Google applies 15% to the first US$1M a year automatically).
+
 ## macOS
 
 - The window chrome lives in `macos/Runner/MainFlutterWindow.swift`: hidden title, transparent title bar, full-size content, rounded corners, movable by background, and traffic-light buttons placed at a fixed inset that is kept on resize.
