@@ -27,6 +27,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.4
 
 flutter:
   generate: true
@@ -36,3 +37,21 @@ flutter:
 #   Android: com.bedug.app
 #   iOS/macOS: com.bedug.app
 #   Windows: com.bedug.app
+
+# App icons. Sources are the SVGs in assets/branding/; after editing them run:
+#   swift scripts/render_brand_icons.swift && dart run flutter_launcher_icons
+flutter_launcher_icons:
+  image_path: assets/branding/icon.png
+  android: true
+  min_sdk_android: 21
+  adaptive_icon_background: assets/branding/icon_background.png
+  adaptive_icon_foreground: assets/branding/icon_foreground.png
+  adaptive_icon_monochrome: assets/branding/icon_monochrome.png
+  ios: true
+  remove_alpha_ios: true
+  macos:
+    generate: true
+    image_path: assets/branding/icon_macos.png
+  windows:
+    generate: true
+    icon_size: 256

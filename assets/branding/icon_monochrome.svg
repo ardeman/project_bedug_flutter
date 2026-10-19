@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <!-- Android themed (monochrome) icon: white silhouette of the foreground, tinted by the OS. -->
+  <defs>
+    <mask id="cut">
+      <rect x="-200" y="-200" width="1400" height="1400" fill="#FFFFFF"/>
+      <g fill="none" stroke="#000000" stroke-width="16">
+        
+        <ellipse cx="712" cy="540" rx="74" ry="160"/>
+        <path d="M335 640 L475 870 M565 642 L705 870 M400 760 L630 760" stroke-width="58" stroke-linecap="round"/>
+        <path d="M772 770 L736 562 M818 748 L790 522" stroke-width="40" stroke-linecap="round"/>
+        <circle cx="733" cy="546" r="37"/><circle cx="787" cy="506" r="37"/>
+      </g>
+      <ellipse cx="712" cy="540" rx="44" ry="122" fill="#000000"/>
+      <path d="M378.1 377.9 A69.1 162.1 0 0 0 378.1 702.1 L396.1 704.8 A70.3 164.8 0 0 1 396.1 375.2 Z" fill="#000000"/><path d="M646.1 378.1 A69.1 161.9 0 0 0 646.1 701.9 L664.1 699.1 A67.9 159.1 0 0 1 664.1 380.9 Z" fill="#000000"/>
+      <g fill="#000000" transform="translate(456 540) scale(0.78)"><path d="M94.7 32.1 A100 100 0 1 1 -7.8 -99.7 A84 84 0 1 0 94.7 32.1 Z"/><polygon points="57.4,-74.5 59.6,-43.0 89.9,-34.3 60.7,-22.5 61.8,9.1 41.5,-15.1 11.8,-4.3 28.5,-31.1 9.1,-56.0 39.7,-48.3"/></g>
+    </mask>
+    <mask id="behind">
+      <rect x="-200" y="-200" width="1400" height="1400" fill="#FFFFFF"/>
+      <path d="M712 390 Q500 345 320 390 A64 150 0 0 0 320 690 Q500 735 712 690 Z" fill="#000000" stroke="#000000" stroke-width="36"/>
+    </mask>
+  </defs>
+  <g transform="translate(512 512) scale(0.64) translate(-512 -512)" fill="#FFFFFF">
+    <g transform="translate(512 520) scale(1.2) translate(-540 -608)">
+      <g mask="url(#cut)">
+                <path d="M712 390 Q500 345 320 390 A64 150 0 0 0 320 690 Q500 735 712 690 Z"/>
+        <ellipse cx="712" cy="540" rx="64" ry="150"/>
+      </g>
+      <path d="M470 610 L325 870 M700 610 L555 870" stroke="#FFFFFF" stroke-width="24" stroke-linecap="round" mask="url(#behind)"/>
+      <path d="M335 640 L475 870 M565 642 L705 870 M400 760 L630 760" stroke="#FFFFFF" stroke-width="26" stroke-linecap="round"/>
+      <path d="M772 770 L736 562 M818 748 L790 522" stroke="#FFFFFF" stroke-width="16" stroke-linecap="round"/>
+      <circle cx="733" cy="546" r="27"/><circle cx="787" cy="506" r="27"/>
+    </g>
+  </g>
+</svg>

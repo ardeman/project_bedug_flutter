@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.bedug" "\0"
-            VALUE "FileDescription", "bedug" "\0"
+            VALUE "CompanyName", "Ardeman" "\0"
+            VALUE "FileDescription", "Bedug" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "bedug" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2026 com.bedug. All rights reserved." "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2026 Ardeman. All rights reserved." "\0"
             VALUE "OriginalFilename", "bedug.exe" "\0"
-            VALUE "ProductName", "bedug" "\0"
+            VALUE "ProductName", "Bedug" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

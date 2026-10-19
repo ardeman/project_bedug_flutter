@@ -78,7 +78,8 @@ These come from real crashes and broken UI.
 - **No `showModalBottomSheet` or `showCupertinoModalPopup` for blur overlays:** `BackdropFilter` doesn't blur inside them on macOS. Use the `PageRouteBuilder(opaque: false)` overlay above.
 - **Mismatched brackets after a patch** (`Can't find ')' to match '('`): rewrite the whole class cleanly instead of patching again.
 - **Platform folders** (`android/`, `ios/`, `macos/`, etc.) are mostly generated. Edit them only for platform config (window chrome, permissions, deployment targets, app ID). Never edit `**/GeneratedPluginRegistrant.*`, `ios/Flutter/Generated.xcconfig` or anything under `build/` or `.dart_tool/`.
-- **App identity:** don't change the package name `bedug` or the ID `com.bedug.app` without being asked.
+- **App identity:** don't change the package name `bedug` or the ID `com.bedug.app` without being asked. The display name is `Bedug` and the publisher is `Ardeman` on every platform.
+- **App icons:** edit the SVGs in `assets/branding/`, never the generated platform icons. After `dart run flutter_launcher_icons`, revert its change to `ios/Runner.xcodeproj/project.pbxproj` (it overwrites `ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS`).
 - **Version:** bump `version:` in `pubspec.yaml` only when asked.
 
 ## Keeping docs current
@@ -96,3 +97,4 @@ Record architectural choices here as one line each: date, decision, reason.
 - Apple platforms target iOS 26+ / macOS 26+ so Liquid Glass can be the default without a capability gate.
 - Native Apple controls come from `cupertino_native` (SF Symbols, buttons), not `CupertinoIcons`, which don't render on macOS.
 - The calculation method picker uses a native Cupertino sheet on Apple platforms; blur overlays elsewhere use `PageRouteBuilder`.
+- 2026-10-19: App icons are SVG sources in `assets/branding/` rendered by `scripts/render_brand_icons.swift` and generated with `flutter_launcher_icons`, so the brand art has one editable source.
