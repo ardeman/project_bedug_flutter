@@ -301,6 +301,21 @@ The build copies the font and `icon.svg` from `assets/`, so the brand has one so
 
 Every push to `master` deploys, and other branches get preview URLs.
 
+## iOS release (TestFlight)
+
+The App Store Connect record is **Bedug: Jadwal Salat** (bundle ID `com.ardeman.bedug`, SKU `bedug`, primary language Indonesian), signed by team `B36A8H9S8E` with automatic signing. To ship a build to TestFlight:
+
+1. `flutter build ipa --build-number=<n>`, where `<n>` is higher than the last uploaded build. This leaves `version:` in `pubspec.yaml` alone.
+2. Upload `build/ios/ipa/*.ipa` with the Transporter app, or open `build/ios/archive/Runner.xcarchive` in Xcode and choose **Distribute App → App Store Connect**.
+3. When processing finishes (10–30 minutes), answer export compliance in the TestFlight tab and add testers. Internal testers can install it right away; external testers need Beta App Review.
+
+The store listing follows KBBI ("salat") in the name and subtitle, and reaches people who type other spellings through the hidden Keywords field:
+
+- **Subtitle:** `Azan, Kiblat & Imsakiyah`
+- **Keywords:** `sholat,shalat,solat,adzan,waktu,muslim,ramadan,imsak,doa,masjid,kalender,hijriah,puasa`
+
+macOS uses the same bundle ID; add it in App Store Connect with **+** next to the iOS app. A Mac App Store build also needs the App Sandbox and Apple Distribution plus installer certificates.
+
 ## macOS
 
 - The window chrome lives in `macos/Runner/MainFlutterWindow.swift`: hidden title, transparent title bar, full-size content, rounded corners, movable by background, and traffic-light buttons placed at a fixed inset that is kept on resize.
