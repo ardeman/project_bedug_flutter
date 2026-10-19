@@ -267,5 +267,11 @@
   "dirW": "barat",
   "@dirW": {},
   "dirNW": "barat laut",
-  "@dirNW": {}
+  "@dirNW": {},
+
+  "nextDaysSchedule": "{count} hari ke depan",
+  "@nextDaysSchedule": {
+    "description": "Title of the multi-day prayer times table",
+    "placeholders": { "count": { "type": "int" } }
+  }
 }

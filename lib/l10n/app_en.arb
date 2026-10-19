@@ -109,5 +109,8 @@
   "dirS": "south",
   "dirSW": "southwest",
   "dirW": "west",
-  "dirNW": "northwest"
+  "dirNW": "northwest",
+
+  "nextDaysSchedule": "Next {count} days",
+  "@nextDaysSchedule": {}
 }

@@ -369,4 +369,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dirNW => 'northwest';
+
+  @override
+  String nextDaysSchedule(int count) {
+    return 'Next $count days';
+  }
 }

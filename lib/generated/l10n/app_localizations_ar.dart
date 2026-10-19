@@ -365,4 +365,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get dirNW => 'الشمال الغربي';
+
+  @override
+  String nextDaysSchedule(int count) {
+    return 'الأيام الـ$count القادمة';
+  }
 }

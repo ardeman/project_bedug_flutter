@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
+import 'package:adhan/adhan.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:liquid_glass_easy/liquid_glass_easy.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import '../../generated/l10n/app_localizations.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/design/liquid_glass.dart';
@@ -194,6 +196,8 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
               delegate: SliverChildListDelegate([
                 SizedBox(height: _isApple ? AppSpacing.xs : AppSpacing.md),
                 ..._buildPrayerCards(ctx, state.times!, next.key),
+                if (state.schedule.isNotEmpty)
+                  _ScheduleSection(schedule: state.schedule, l10n: l10n),
                 // Room to scroll the last card clear of the floating nav bar.
                 const SizedBox(height: 100),
               ]),
@@ -817,6 +821,160 @@ String _formatCountdown(Duration d) {
 }
 
 // ── Prayer Entry model ────────────────────────────────────────────────────────
+// ── 30-day schedule ───────────────────────────────────────────────────────────
+// A compact table, one row per day, below today's cards. Lite glass on Apple
+// (it scrolls with the list), the theme's flat card elsewhere.
+class _ScheduleSection extends StatelessWidget {
+  final List<PrayerTimes> schedule;
+  final AppLocalizations l10n;
+  const _ScheduleSection({required this.schedule, required this.l10n});
+
+  @override
+  Widget build(BuildContext ctx) {
+    final theme = Theme.of(ctx);
+    final isDark = theme.brightness == Brightness.dark;
+    final mq = MediaQuery.of(ctx);
+    final isLandscape = mq.orientation == Orientation.landscape;
+    final sideInsetLeft = isLandscape ? mq.padding.left : 0.0;
+    final sideInsetRight = isLandscape ? mq.padding.right : 0.0;
+    final dateFormat =
+        DateFormat.MMMEd(Localizations.localeOf(ctx).toLanguageTag());
+    final headerStyle = theme.textTheme.labelSmall?.copyWith(
+      color: theme.colorScheme.onSurfaceVariant,
+    );
+    final timeStyle = theme.textTheme.bodySmall?.copyWith(
+      fontFeatures: const [FontFeature.tabularFigures()],
+    );
+    final todayStyle = timeStyle?.copyWith(
+      color: AppColors.accentOf(ctx),
+      fontWeight: FontWeight.w700,
+    );
+
+    final table = Padding(
+      padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
+      child: Column(
+        children: [
+          _ScheduleRow(
+            date: const SizedBox.shrink(),
+            cells: [
+              for (final name in [
+                l10n.fajr,
+                l10n.sunrise,
+                l10n.dhuhr,
+                l10n.asr,
+                l10n.maghrib,
+                l10n.isha,
+              ])
+                Text(name, style: headerStyle),
+            ],
+          ),
+          for (final (i, day) in schedule.indexed) ...[
+            Divider(
+                height: 1, color: theme.dividerColor.withValues(alpha: 0.4)),
+            _ScheduleRow(
+              date: Text(
+                dateFormat.format(_dateOf(day)),
+                style: i == 0 ? todayStyle : timeStyle,
+              ),
+              cells: [
+                for (final t in [
+                  day.fajr,
+                  day.sunrise,
+                  day.dhuhr,
+                  day.asr,
+                  day.maghrib,
+                  day.isha,
+                ])
+                  Text(_hhmm(t), style: i == 0 ? todayStyle : timeStyle),
+              ],
+            ),
+          ],
+        ],
+      ),
+    );
+
+    final card = _isApple
+        ? Material(
+            color: Colors.transparent,
+            child: LiquidGlassLite(
+              shape: const LiquidGlassShape.continuousRoundedRectangle(
+                  cornerRadius: AppRadii.lg),
+              blur: 10,
+              color: isDark
+                  ? Colors.white.withValues(alpha: 0.07)
+                  : Colors.white.withValues(alpha: 0.62),
+              child: table,
+            ),
+          )
+        : DecoratedBox(
+            decoration: ShapeDecoration(
+              color: theme.cardTheme.color ?? theme.cardColor,
+              shape: theme.cardTheme.shape ??
+                  RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(AppRadii.lg)),
+            ),
+            child: table,
+          );
+
+    return Padding(
+      padding: EdgeInsets.fromLTRB(
+        AppSpacing.md + sideInsetLeft,
+        AppSpacing.lg,
+        AppSpacing.md + sideInsetRight,
+        AppSpacing.xxs,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(
+                left: AppSpacing.xxs, bottom: AppSpacing.xs),
+            child: Text(l10n.nextDaysSchedule(schedule.length),
+                style: theme.textTheme.titleMedium),
+          ),
+          card,
+        ],
+      ),
+    );
+  }
+
+  static DateTime _dateOf(PrayerTimes day) {
+    final d = day.dateComponents;
+    return DateTime(d.year, d.month, d.day);
+  }
+
+  static String _hhmm(DateTime t) =>
+      '${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}';
+}
+
+class _ScheduleRow extends StatelessWidget {
+  final Widget date;
+  final List<Widget> cells;
+  const _ScheduleRow({required this.date, required this.cells});
+
+  @override
+  Widget build(BuildContext ctx) {
+    // Scale down rather than clip, so long names and dates fit narrow phones.
+    Widget fit(Widget child, AlignmentGeometry alignment) => FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: alignment,
+          child: child,
+        );
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
+      child: Row(
+        children: [
+          // The date column is wider than a time column.
+          Expanded(flex: 3, child: fit(date, AlignmentDirectional.centerStart)),
+          for (final c in cells)
+            Expanded(flex: 2, child: fit(c, Alignment.center)),
+        ],
+      ),
+    );
+  }
+}
+
 class _PrayerEntry {
   final String key;
   final String label;

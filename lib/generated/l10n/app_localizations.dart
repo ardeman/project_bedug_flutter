@@ -773,6 +773,12 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'barat laut'**
   String get dirNW;
+
+  /// Title of the multi-day prayer times table
+  ///
+  /// In id, this message translates to:
+  /// **'{count} hari ke depan'**
+  String nextDaysSchedule(int count);
 }
 
 class _AppLocalizationsDelegate
