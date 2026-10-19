@@ -30,6 +30,10 @@ dev_dependencies:
   flutter_launcher_icons: ^0.14.4
 
 flutter:
+  # cupertino_native has no Swift Package Manager support, so Apple builds
+  # use CocoaPods only (no mixed SPM/CocoaPods setup).
+  config:
+    enable-swift-package-manager: false
   generate: true
   uses-material-design: true
 

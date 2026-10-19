@@ -45,6 +45,8 @@ flutter gen-l10n
 flutter run -d macos   # or: iphone, android, windows, linux
 ```
 
+iOS and macOS builds use CocoaPods only: Swift Package Manager is turned off in `pubspec.yaml` because `cupertino_native` doesn't support it. Warnings from plugin code are silenced in `ios/Podfile` and `macos/Podfile`. Flutter still prints a "plugins do not support Swift Package Manager" notice on every Apple build; it's expected and harmless.
+
 ## Commands
 
 | Task | Command |

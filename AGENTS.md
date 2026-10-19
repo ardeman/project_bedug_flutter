@@ -98,4 +98,5 @@ Record architectural choices here as one line each: date, decision, reason.
 - Native Apple controls come from `cupertino_native` (SF Symbols, buttons), not `CupertinoIcons`, which don't render on macOS.
 - The calculation method picker uses a native Cupertino sheet on Apple platforms; blur overlays elsewhere use `PageRouteBuilder`.
 - 2026-10-19: App icons are SVG sources in `assets/branding/` rendered by `scripts/render_brand_icons.swift` and generated with `flutter_launcher_icons`, so the brand art has one editable source.
+- 2026-10-19: Apple builds use CocoaPods only (Swift Package Manager off in `pubspec.yaml`) and the Podfiles silence plugin warnings, because `cupertino_native` has no SPM support and mixed builds let plugin warnings through.
 - 2026-10-19: Revenue comes from AdMob ads on Android and iOS plus an in-app "infaq" that removes them (external Trakteer/Ko-fi links on Windows and Linux), so the free app earns while supporters get it ad-free.
