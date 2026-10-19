@@ -55,9 +55,9 @@ flutter:
           weight: 800
 
 # App identifiers:
-#   Android: com.bedug.app
-#   iOS/macOS: com.bedug.app
-#   Windows: com.bedug.app
+#   Android, Linux: com.ardeman.bedug
+#   iOS/macOS: com.ardeman.bedug
+#   Windows: com.ardeman.bedug
 
 # App icons for Android and Windows. Sources are the SVGs in assets/branding/;
 # after editing them run:

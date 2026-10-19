@@ -8,7 +8,7 @@
 PRODUCT_NAME = bedug
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.bedug.app
+PRODUCT_BUNDLE_IDENTIFIER = com.ardeman.bedug
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2026 Ardeman. All rights reserved.
