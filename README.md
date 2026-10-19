@@ -30,7 +30,9 @@ A cross-platform Muslim prayer times app with a Hijri calendar, in Indonesian, E
 | macOS 26+ | Liquid Glass | ✅ |
 | Android | Material Design 3 | ✅ |
 | Windows | Fluent Design | ✅ |
-| Linux | Material Design 3 | ✅ |
+| Linux | Material Design 3 today; following the desktop (Adwaita on GNOME, Breeze on KDE) is planned | ✅ (desktop theming 🚧) |
+
+See the [roadmap](#roadmap) for the Linux plan.
 
 ## Getting started
 
@@ -131,6 +133,71 @@ The app ships in Indonesian (template), English, Arabic and Malay. To add a lang
 2. Run `flutter gen-l10n`.
 3. Add the locale to `supportedLocales` in `lib/app.dart`.
 4. Switch to it in Settings and check every screen.
+
+## Roadmap
+
+### Features: support daily Muslim activity
+
+Bedug grows from a prayer-times app into a companion for a Muslim's day, week and year. Phases ship in order; each one is usable on its own.
+
+**Principles for every phase**
+
+- **Offline first, private by default.** Everything works without a network or an account, and the user's worship data (tracker, tasbih counts, bookmarks) stays on the device. Any sync is opt-in and comes later.
+- **Trusted, licensed content.** Quran text, translations, duas and dzikir come from named sources whose license allows bundling (for example Tanzil for Quran text, Kemenag RI for the Indonesian translation). Each source is credited in the app.
+- **Content is data, not UI strings.** Religious texts ship as per-locale JSON under `assets/content/<locale>/`. Only UI labels go through `AppLocalizations`.
+- **Every feature on every platform design** (Liquid Glass, Material 3, Fluent), in all four languages, including right-to-left Arabic.
+
+**Phase 1: Daily prayer (next)**
+
+1. **Qibla direction:** compass screen using `adhan`'s `Qibla` bearing plus the device heading (new sensor dependency). Desktop shows the bearing and a map-style arrow, since there is no compass.
+2. **Prayer tracker:** mark each of the five prayers as done (on time, late, missed), with a daily and weekly view, streaks and a qada (make-up) count.
+3. **Notification control:** per-prayer on/off, a reminder N minutes before adhan, and a choice of adhan sound.
+4. **Extra times:** imsak, sunrise (end of Subuh), dhuha, and the last third of the night for tahajud.
+5. **Home screen widgets:** next prayer and countdown on iOS and Android (`home_widget` is already a dependency).
+
+**Phase 2: Dzikir and dua**
+
+1. **Tasbih counter:** large tap target with haptics, presets (33 × subhanallah, alhamdulillah, allahu akbar) and custom targets.
+2. **Morning and evening dzikir** (dzikir pagi/petang): Arabic, transliteration and translation, with a reminder after Subuh and Asar.
+3. **Daily duas** by situation (waking, eating, travel, entering the mosque) and the **Asmaul Husna**.
+4. **After-prayer dzikir** offered from the prayer tracker once a prayer is marked done.
+
+**Phase 3: Quran**
+
+1. **Reader:** surah and juz lists, Arabic text with translation, adjustable font size, last-read position and bookmarks.
+2. **Khatam planner:** pick a finish date, get a daily target, track progress.
+3. **Ayah of the day** on the prayer-times screen and in the widget.
+4. **Audio recitation (later):** streamed per ayah with download for offline use; needs a source and a storage budget first.
+
+**Phase 4: The Islamic year**
+
+1. **Events on the Hijri calendar:** Ramadan, Eid al-Fitr, Eid al-Adha, Arafah, Ashura, Isra Mi'raj, Mawlid, Ayyamul Bidh, with optional reminders.
+2. **Hijri date adjustment** of ±1 or 2 days, because local announcements (such as Indonesia's sidang isbat) can differ from the calculated date.
+3. **Ramadan mode:** sahur and iftar countdown, fasting log, and tarawih in the prayer tracker.
+4. **Sunnah fasting reminders:** Monday and Thursday, Ayyamul Bidh, Arafah, Ashura.
+
+**Phase 5: Beyond the device (later)**
+
+1. **Zakat calculator:** zakat maal and fitrah, with the nisab entered manually first and a gold-price source added later.
+2. **Nearby mosques:** needs a maps or places provider, so it waits on a cost and privacy review.
+3. **Optional backup and sync** of tracker data across devices.
+
+**Navigation.** Three tabs can't hold this. Phase 1 adds a **Worship** tab (Qibla, tracker, and later tasbih and dua); Phase 3 adds a **Quran** tab, giving five: Prayer times, Worship, Quran, Calendar, Settings.
+
+**Open decisions**
+
+- Storage for tracker and reading history: `shared_preferences` won't scale past Phase 1; choose a local database (for example `drift`) before Phase 1 step 2.
+- Content sources and licenses for each language's Quran translation, duas and dzikir.
+- Whether Phase 1 ships as one release or feature by feature.
+
+### Linux: follow the desktop environment
+
+Linux should look like the desktop it runs on instead of Android's Material 3.
+
+1. **Theme first (next):** detect the desktop from `XDG_CURRENT_DESKTOP` (fallback `DESKTOP_SESSION`); use Adwaita colors and fonts on GNOME-family desktops (GNOME, Budgie, Pantheon, Cinnamon) and Breeze on KDE; pick up the system accent color and dark/light preference, with the in-app theme override still winning. Other desktops keep Material 3. The layout stays as it is.
+2. **Native chrome (later):** a libadwaita-style header bar with a view switcher on GNOME, and Breeze sidebar navigation and cards on KDE. This waits until step 1 has been checked on real GNOME and KDE machines.
+
+Flutter stays the framework: React Native has no maintained Linux target.
 
 ## macOS
 
