@@ -158,7 +158,7 @@ class _QiblaCardState extends ConsumerState<QiblaCard> {
               textAlign: TextAlign.center,
               style: facing
                   ? theme.textTheme.titleMedium?.copyWith(
-                      color: AppColors.emerald,
+                      color: AppColors.accentOf(ctx),
                       fontWeight: FontWeight.bold,
                     )
                   : null,
@@ -253,8 +253,10 @@ class _QiblaDial extends StatelessWidget {
         painter: _DialPainter(
           bearing: bearing,
           tickColor: scheme.onSurfaceVariant,
-          ringColor: highlight ? AppColors.emerald : scheme.outlineVariant,
+          ringColor:
+              highlight ? AppColors.accentOf(ctx) : scheme.outlineVariant,
           northColor: scheme.error,
+          arrowColor: AppColors.accentOf(ctx),
         ),
         child: Center(
           child: Transform.rotate(
@@ -263,7 +265,8 @@ class _QiblaDial extends StatelessWidget {
             child: Icon(
               Icons.mosque,
               size: 36,
-              color: highlight ? AppColors.emerald : scheme.onSurfaceVariant,
+              color:
+                  highlight ? AppColors.accentOf(ctx) : scheme.onSurfaceVariant,
             ),
           ),
         ),
@@ -277,12 +280,14 @@ class _DialPainter extends CustomPainter {
   final Color tickColor;
   final Color ringColor;
   final Color northColor;
+  final Color arrowColor;
 
   _DialPainter({
     required this.bearing,
     required this.tickColor,
     required this.ringColor,
     required this.northColor,
+    required this.arrowColor,
   });
 
   @override
@@ -324,7 +329,7 @@ class _DialPainter extends CustomPainter {
     final start = center + dir * (radius * 0.28);
     final tip = center + dir * (radius - 30);
     final arrow = Paint()
-      ..color = AppColors.emerald
+      ..color = arrowColor
       ..strokeWidth = 6
       ..strokeCap = StrokeCap.round;
     canvas.drawLine(start, tip - dir * 14, arrow);
@@ -335,7 +340,7 @@ class _DialPainter extends CustomPainter {
       ..lineTo(
           (tip - dir * 22 - normal * 12).dx, (tip - dir * 22 - normal * 12).dy)
       ..close();
-    canvas.drawPath(head, Paint()..color = AppColors.emerald);
+    canvas.drawPath(head, Paint()..color = arrowColor);
   }
 
   /// Unit vector for a compass bearing (0 = up, clockwise).
@@ -349,5 +354,6 @@ class _DialPainter extends CustomPainter {
       old.bearing != bearing ||
       old.tickColor != tickColor ||
       old.ringColor != ringColor ||
-      old.northColor != northColor;
+      old.northColor != northColor ||
+      old.arrowColor != arrowColor;
 }

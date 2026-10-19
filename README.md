@@ -89,12 +89,13 @@ git log -1 --pretty=%s | grep -E '^(feat|fix|docs|style|refactor|perf|test|build
 ```text
 lib/
   main.dart          Entry point
-  app.dart           MaterialApp, theme, locale
+  app.dart           MaterialApp, locale
   home/              Main scaffold with the adaptive bottom nav
   core/
     constants/       AppColors, city catalog
-    design/          Platform detection, adaptive scaffold, liquid glass, SF Symbols
-    providers/       localeProvider, settingsProvider
+    design/          Platform and Linux desktop detection, adaptive scaffold, liquid glass, SF Symbols
+    providers/       localeProvider, settingsProvider, systemAccentProvider
+    theme/           buildAppTheme, BrandColors (accent from the theme)
     services/        Prayer times, Kemenag method, notifications
     utils/           Hijri helpers
     widgets/         Shared widgets (calculation method picker)
@@ -200,10 +201,17 @@ Bedug grows from a prayer-times app into a companion for a Muslim's day, week an
 
 Linux should look like the desktop it runs on instead of Android's Material 3.
 
-1. **Theme first (next):** detect the desktop from `XDG_CURRENT_DESKTOP` (fallback `DESKTOP_SESSION`); use Adwaita colors and fonts on GNOME-family desktops (GNOME, Budgie, Pantheon, Cinnamon) and Breeze on KDE; pick up the system accent color and dark/light preference, with the in-app theme override still winning. Other desktops keep Material 3. The layout stays as it is.
+1. **Theme first (done; check on real GNOME and KDE machines):** detect the desktop from `XDG_CURRENT_DESKTOP` (fallback `DESKTOP_SESSION`); use Adwaita colors and fonts on GNOME-family desktops (GNOME, Budgie, Pantheon, Cinnamon) and Breeze on KDE; pick up the system accent color and dark/light preference, with the in-app theme override still winning. Other desktops keep Material 3. The layout stays as it is. Without a portal accent (GNOME before 47) the accent stays emerald.
 2. **Native chrome (later):** a libadwaita-style header bar with a view switcher on GNOME, and Breeze sidebar navigation and cards on KDE. This waits until step 1 has been checked on real GNOME and KDE machines.
 
 Flutter stays the framework: React Native has no maintained Linux target.
+
+### Design: re-theme the app
+
+The current look needs a redesign on every platform. Screens read the accent from the theme (`AppColors.accentOf`, `BrandColors` in `lib/core/theme/app_theme.dart`), so a new palette and type scale go in one place.
+
+1. **Re-theme (next):** a new palette, typography, spacing and card style for all platforms, built in `lib/core/theme/`, checked on Apple, Android, Windows and Linux in light and dark.
+2. **Liquid glass package:** replace our `BackdropFilter` glass (nav bar, cards, sheets) on iOS and macOS with [`liquid_glass_easy`](https://pub.dev/packages/liquid_glass_easy), a shader lens with real refraction. Keep the `IgnorePointer`, double-open and safe-area rules from `AGENTS.md`.
 
 ### Revenue: ads and infaq
 

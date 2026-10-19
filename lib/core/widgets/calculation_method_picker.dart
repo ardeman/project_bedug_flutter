@@ -141,7 +141,9 @@ class _NativeAppleMethodSheet extends ConsumerWidget {
                               ? Icons.check_circle
                               : Icons.radio_button_unchecked,
                           size: 20,
-                          color: isSelected ? AppColors.emerald : Colors.grey,
+                          color: isSelected
+                              ? AppColors.accentOf(ctx)
+                              : Colors.grey,
                         ),
                         const SizedBox(width: 10),
                         Expanded(
@@ -149,7 +151,7 @@ class _NativeAppleMethodSheet extends ConsumerWidget {
                             calculationMethodLabel(ctx, method),
                             style: TextStyle(
                               color: isSelected
-                                  ? AppColors.emerald
+                                  ? AppColors.accentOf(ctx)
                                   : (isDark
                                       ? Colors.white
                                       : const Color(0xFF1C1C1E)),
@@ -165,13 +167,14 @@ class _NativeAppleMethodSheet extends ConsumerWidget {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 4),
                             decoration: BoxDecoration(
-                              color: AppColors.emerald.withValues(alpha: .15),
+                              color: AppColors.accentOf(ctx)
+                                  .withValues(alpha: .15),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Text(
                               l10n.recommended,
-                              style: const TextStyle(
-                                color: AppColors.emerald,
+                              style: TextStyle(
+                                color: AppColors.accentOf(ctx),
                                 fontSize: 11,
                                 fontWeight: FontWeight.w700,
                               ),
@@ -345,7 +348,7 @@ class _CalculationMethodPickerSheetState
                                                 horizontal: 12, vertical: 2),
                                             decoration: BoxDecoration(
                                               color: isSelected
-                                                  ? AppColors.emerald
+                                                  ? AppColors.accentOf(ctx)
                                                       .withValues(alpha: .08)
                                                   : Colors.transparent,
                                               borderRadius:
@@ -356,12 +359,13 @@ class _CalculationMethodPickerSheetState
                                                 duration: const Duration(
                                                     milliseconds: 180),
                                                 child: isSelected
-                                                    ? const Icon(
+                                                    ? Icon(
                                                         Icons.check_circle,
                                                         key: ValueKey(
                                                             'selected'),
                                                         color:
-                                                            AppColors.emerald,
+                                                            AppColors.accentOf(
+                                                                ctx),
                                                       )
                                                     : const Icon(
                                                         Icons
@@ -379,7 +383,7 @@ class _CalculationMethodPickerSheetState
                                                       ? FontWeight.w600
                                                       : FontWeight.normal,
                                                   color: isSelected
-                                                      ? AppColors.emerald
+                                                      ? AppColors.accentOf(ctx)
                                                       : null,
                                                 ),
                                               ),
@@ -390,9 +394,11 @@ class _CalculationMethodPickerSheetState
                                                           horizontal: 8,
                                                           vertical: 3),
                                                       decoration: BoxDecoration(
-                                                        color: AppColors.emerald
-                                                            .withValues(
-                                                                alpha: .15),
+                                                        color:
+                                                            AppColors.accentOf(
+                                                                    ctx)
+                                                                .withValues(
+                                                                    alpha: .15),
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(8),
@@ -400,9 +406,9 @@ class _CalculationMethodPickerSheetState
                                                       child: Text(
                                                         AppLocalizations.of(ctx)
                                                             .recommended,
-                                                        style: const TextStyle(
-                                                          color:
-                                                              AppColors.emerald,
+                                                        style: TextStyle(
+                                                          color: AppColors
+                                                              .accentOf(ctx),
                                                           fontSize: 11,
                                                           fontWeight:
                                                               FontWeight.bold,

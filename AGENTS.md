@@ -24,7 +24,7 @@ A change is done only when the **Checks** command in `README.md` passes. If you 
   ```
 
 - User-facing text, including error messages shown to users, goes through `AppLocalizations` with keys in every ARB file under `lib/l10n/`. Never hardcode strings or throw hardcoded messages. Never edit `lib/generated/l10n/`; run `flutter gen-l10n`.
-- Colors come from `AppColors` (`emerald` primary, `teal` secondary, `darkBg`, `lightBg`). Never hardcode hex colors.
+- Colors come from `AppColors` (`emerald` primary, `teal` secondary, `darkBg`, `lightBg`, and the Adwaita and Breeze palettes). Never hardcode hex colors. In widgets, use `AppColors.accentOf(ctx)` and `AppColors.secondaryOf(ctx)` rather than `emerald` and `teal`, so the accent follows the desktop on Linux; the theme itself is built in `lib/core/theme/app_theme.dart`.
 - Code comments are in English.
 
 ## Platform design
@@ -34,7 +34,7 @@ Each platform gets its own design system. Check the platform before rendering an
 | Platform | Design system | Style |
 | --- | --- | --- |
 | iOS / macOS | Liquid Glass | `BackdropFilter` blur + frosted overlay |
-| Android / Linux | Material Design 3 | `NavigationBar`, `Card`, dynamic color |
+| Android / Linux | Material Design 3 | `NavigationBar`, `Card`, dynamic color; on GNOME and KDE, Adwaita or Breeze colors, fonts and the system accent (`lib/core/design/linux_desktop.dart`) |
 | Windows | Fluent Design | `NavigationRail`, acrylic-style containers |
 
 - Detect Apple with `PlatformDesign.isApple` / `PlatformCapabilities.isApple` (`lib/core/design/`), or a local getter that checks `kIsWeb` first: `!kIsWeb && (Platform.isIOS || Platform.isMacOS)`. `kIsWeb` needs `package:flutter/foundation.dart`.
@@ -100,3 +100,4 @@ Record architectural choices here as one line each: date, decision, reason.
 - 2026-10-19: App icons are SVG sources in `assets/branding/` rendered by `scripts/render_brand_icons.swift` and generated with `flutter_launcher_icons`, so the brand art has one editable source.
 - 2026-10-19: Apple builds use CocoaPods only (Swift Package Manager off in `pubspec.yaml`) and the Podfiles silence plugin warnings, because `cupertino_native` has no SPM support and mixed builds let plugin warnings through.
 - 2026-10-19: Revenue comes from AdMob ads on Android and iOS plus an in-app "infaq" that removes them (external Trakteer/Ko-fi links on Windows and Linux), so the free app earns while supporters get it ad-free.
+- 2026-10-19: On Linux the theme follows GNOME (Adwaita) or KDE (Breeze) and reads the accent from the XDG settings portal over D-Bus (`dbus` package), so the app looks native without a GTK plugin.

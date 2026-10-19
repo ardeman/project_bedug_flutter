@@ -14,7 +14,7 @@ class WorshipScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.worship),
-        backgroundColor: AppColors.emerald,
+        backgroundColor: AppColors.accentOf(ctx),
         foregroundColor: Colors.white,
         centerTitle: true,
       ),

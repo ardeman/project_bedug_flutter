@@ -18,7 +18,7 @@ class SettingsScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.settings),
-        backgroundColor: AppColors.emerald,
+        backgroundColor: AppColors.accentOf(ctx),
         foregroundColor: Colors.white,
         centerTitle: true,
       ),
@@ -29,7 +29,7 @@ class SettingsScreen extends ConsumerWidget {
         // Metode Hisab
         ListTile(
           leading:
-              const Icon(Icons.calculate_outlined, color: AppColors.emerald),
+              Icon(Icons.calculate_outlined, color: AppColors.accentOf(ctx)),
           title: Text(l10n.calculationMethod),
           subtitle: Text(calculationMethodLabel(ctx, settings.method)),
           trailing: const Icon(Icons.chevron_right),
@@ -42,7 +42,7 @@ class SettingsScreen extends ConsumerWidget {
 
         // Mazhab
         ListTile(
-          leading: const Icon(Icons.school_outlined, color: AppColors.emerald),
+          leading: Icon(Icons.school_outlined, color: AppColors.accentOf(ctx)),
           title: Text(l10n.madhab),
           trailing: ToggleButtons(
             isSelected: [!settings.isHanafi, settings.isHanafi],
@@ -50,7 +50,7 @@ class SettingsScreen extends ConsumerWidget {
                 ref.read(settingsProvider.notifier).setMadhab(i == 1),
             borderRadius: BorderRadius.circular(8),
             selectedColor: Colors.white,
-            fillColor: AppColors.emerald,
+            fillColor: AppColors.accentOf(ctx),
             children: [
               Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -64,20 +64,20 @@ class SettingsScreen extends ConsumerWidget {
 
         // Notifikasi
         ListTile(
-          leading: const Icon(Icons.notifications_outlined,
-              color: AppColors.emerald),
+          leading: Icon(Icons.notifications_outlined,
+              color: AppColors.accentOf(ctx)),
           title: Text(l10n.azanNotifications),
           subtitle: Text(l10n.allPrayers),
           trailing: Switch(
             value: true,
-            activeThumbColor: AppColors.emerald,
+            activeThumbColor: AppColors.accentOf(ctx),
             onChanged: (_) {},
           ),
         ),
 
         ListTile(
           leading:
-              const Icon(Icons.my_location_outlined, color: AppColors.emerald),
+              Icon(Icons.my_location_outlined, color: AppColors.accentOf(ctx)),
           title: Text(l10n.locationModeAuto),
           subtitle: Text(
             settings.useAutoLocation
@@ -86,15 +86,15 @@ class SettingsScreen extends ConsumerWidget {
           ),
           trailing: Switch(
             value: settings.useAutoLocation,
-            activeThumbColor: AppColors.emerald,
+            activeThumbColor: AppColors.accentOf(ctx),
             onChanged: (enabled) =>
                 ref.read(settingsProvider.notifier).setUseAutoLocation(enabled),
           ),
         ),
 
         ListTile(
-          leading: const Icon(Icons.location_city_outlined,
-              color: AppColors.emerald),
+          leading: Icon(Icons.location_city_outlined,
+              color: AppColors.accentOf(ctx)),
           title: Text(l10n.city),
           subtitle: !settings.useAutoLocation && settings.selectedCityId == null
               ? Text(
@@ -124,7 +124,7 @@ class SettingsScreen extends ConsumerWidget {
         _SectionHeader(l10n.theme),
 
         ListTile(
-          leading: const Icon(Icons.palette_outlined, color: AppColors.emerald),
+          leading: Icon(Icons.palette_outlined, color: AppColors.accentOf(ctx)),
           title: Text(l10n.theme),
           trailing: DropdownButton<int>(
             value: settings.themeMode,
@@ -147,7 +147,7 @@ class SettingsScreen extends ConsumerWidget {
 
         ListTile(
           leading:
-              const Icon(Icons.language_outlined, color: AppColors.emerald),
+              Icon(Icons.language_outlined, color: AppColors.accentOf(ctx)),
           title: Text(l10n.language),
           trailing: DropdownButton<String>(
             value: locale.languageCode,
@@ -174,7 +174,7 @@ class SettingsScreen extends ConsumerWidget {
         _SectionHeader(l10n.about),
 
         ListTile(
-          leading: const Icon(Icons.widgets_outlined, color: AppColors.emerald),
+          leading: Icon(Icons.widgets_outlined, color: AppColors.accentOf(ctx)),
           title: Text(l10n.widgetStyle),
           subtitle: Text(l10n.widgetCompact),
           trailing: const Icon(Icons.chevron_right),
@@ -182,7 +182,7 @@ class SettingsScreen extends ConsumerWidget {
         ),
 
         ListTile(
-          leading: const Icon(Icons.info_outline, color: AppColors.emerald),
+          leading: Icon(Icons.info_outline, color: AppColors.accentOf(ctx)),
           title: Text(l10n.about),
           subtitle: Text(l10n.version('1.0.0')),
           onTap: () {},
@@ -206,7 +206,7 @@ class _SectionHeader extends StatelessWidget {
             style: TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.bold,
-              color: AppColors.emerald,
+              color: AppColors.accentOf(ctx),
               letterSpacing: 1.2,
             )),
       );

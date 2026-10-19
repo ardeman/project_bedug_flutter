@@ -84,14 +84,17 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
               : SliverAppBar(
                   expandedHeight: 200,
                   pinned: true,
-                  backgroundColor: AppColors.emerald,
+                  backgroundColor: AppColors.accentOf(ctx),
                   flexibleSpace: FlexibleSpaceBar(
                     background: Container(
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         gradient: LinearGradient(
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
-                          colors: [AppColors.emerald, AppColors.teal],
+                          colors: [
+                            AppColors.accentOf(ctx),
+                            AppColors.secondaryOf(ctx)
+                          ],
                         ),
                       ),
                       child: SafeArea(
@@ -179,7 +182,7 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                       icon: const Icon(Icons.refresh),
                       label: Text(l10n.retry),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.emerald,
+                        backgroundColor: AppColors.accentOf(ctx),
                         foregroundColor: Colors.white,
                       ),
                       onPressed: () => ref.read(prayerProvider.notifier).load(),
@@ -308,8 +311,8 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                AppColors.emerald.withValues(alpha: isDark ? 0.9 : 1),
-                AppColors.teal.withValues(alpha: isDark ? 0.9 : 1),
+                AppColors.accentOf(ctx).withValues(alpha: isDark ? 0.9 : 1),
+                AppColors.secondaryOf(ctx).withValues(alpha: isDark ? 0.9 : 1),
               ],
             ),
             border: Border(
@@ -576,8 +579,8 @@ class _LiquidGlassCard extends StatelessWidget {
                   end: Alignment.bottomRight,
                   colors: isNext
                       ? [
-                          AppColors.emerald.withValues(alpha: 0.55),
-                          AppColors.teal.withValues(alpha: 0.45),
+                          AppColors.accentOf(ctx).withValues(alpha: 0.55),
+                          AppColors.secondaryOf(ctx).withValues(alpha: 0.45),
                         ]
                       : isDark
                           ? [
@@ -600,7 +603,7 @@ class _LiquidGlassCard extends StatelessWidget {
                 boxShadow: [
                   BoxShadow(
                     color: isNext
-                        ? AppColors.emerald.withValues(alpha: 0.2)
+                        ? AppColors.accentOf(ctx).withValues(alpha: 0.2)
                         : Colors.black.withValues(alpha: isDark ? 0.2 : 0.06),
                     blurRadius: isNext ? 24 : 12,
                     offset: const Offset(0, 4),
@@ -616,11 +619,11 @@ class _LiquidGlassCard extends StatelessWidget {
                       shape: BoxShape.circle,
                       color: isNext
                           ? Colors.white.withValues(alpha: 0.2)
-                          : AppColors.emerald.withValues(alpha: 0.12),
+                          : AppColors.accentOf(ctx).withValues(alpha: 0.12),
                     ),
                     child: Icon(entry.icon,
                         size: 20,
-                        color: isNext ? Colors.white : AppColors.emerald),
+                        color: isNext ? Colors.white : AppColors.accentOf(ctx)),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
@@ -651,7 +654,7 @@ class _LiquidGlassCard extends StatelessWidget {
                         fontFeatures: const [FontFeature.tabularFigures()],
                         color: isNext
                             ? Colors.white
-                            : (isDark ? Colors.white : AppColors.emerald),
+                            : (isDark ? Colors.white : AppColors.accentOf(ctx)),
                       )),
                 ],
               ),
@@ -685,7 +688,7 @@ class _MaterialCard extends StatelessWidget {
       duration: const Duration(milliseconds: 300),
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       decoration: BoxDecoration(
-        color: isNext ? AppColors.emerald : Theme.of(ctx).cardColor,
+        color: isNext ? AppColors.accentOf(ctx) : Theme.of(ctx).cardColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: const [
           BoxShadow(color: Colors.black12, blurRadius: 8, offset: Offset(0, 2))
@@ -694,7 +697,7 @@ class _MaterialCard extends StatelessWidget {
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
         leading: Icon(entry.icon,
-            color: isNext ? Colors.white : AppColors.emerald, size: 28),
+            color: isNext ? Colors.white : AppColors.accentOf(ctx), size: 28),
         title: Text(entry.label,
             style: TextStyle(
               fontWeight: FontWeight.w600,
@@ -705,7 +708,7 @@ class _MaterialCard extends StatelessWidget {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: isNext ? Colors.white : AppColors.emerald,
+              color: isNext ? Colors.white : AppColors.accentOf(ctx),
             )),
         subtitle: isNext
             ? Text(l10n.upNext,

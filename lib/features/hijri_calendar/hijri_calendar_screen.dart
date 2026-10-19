@@ -74,13 +74,13 @@ class _HijriCalendarScreenState extends State<HijriCalendarScreen> {
       appBar: AppBar(
         title: Text(l10n.hijriCalendar),
         centerTitle: true,
-        backgroundColor: AppColors.emerald,
+        backgroundColor: AppColors.accentOf(ctx),
         foregroundColor: Colors.white,
       ),
       body: Column(children: [
         Container(
           width: double.infinity,
-          color: AppColors.emerald.withValues(alpha: .12),
+          color: AppColors.accentOf(ctx).withValues(alpha: .12),
           padding: const EdgeInsets.symmetric(vertical: 12),
           child: Text(
             '${l10n.today}: ${_fullHijriDate(l10n, _today)}',
@@ -112,7 +112,9 @@ class _HijriCalendarScreenState extends State<HijriCalendarScreen> {
                       child: Center(
                         child: Text(d,
                             style: TextStyle(
-                              color: d == l10n.fri ? AppColors.emerald : null,
+                              color: d == l10n.fri
+                                  ? AppColors.accentOf(ctx)
+                                  : null,
                               fontWeight: FontWeight.w600,
                               fontSize: 12,
                             )),
@@ -141,7 +143,7 @@ class _HijriCalendarScreenState extends State<HijriCalendarScreen> {
               return Container(
                 margin: const EdgeInsets.all(2),
                 decoration: BoxDecoration(
-                  color: isToday ? AppColors.emerald : null,
+                  color: isToday ? AppColors.accentOf(ctx) : null,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Column(
