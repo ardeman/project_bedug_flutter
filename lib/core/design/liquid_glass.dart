@@ -5,6 +5,7 @@ import 'package:liquid_glass_easy/liquid_glass_easy.dart';
 
 import '../constants/app_colors.dart';
 import '../theme/app_tokens.dart';
+import 'platform_capabilities.dart';
 
 /// Glass tint for bars and controls that float over content: milky in
 /// light mode, smoked in dark mode, so their icons and text stay legible.
@@ -36,11 +37,20 @@ class GlassNavBar extends StatelessWidget {
   /// Widest the bar grows on tablets and desktop windows.
   static const _maxWidth = 440.0;
 
+  /// Gap between the bar and the bottom edge: above the home indicator,
+  /// or just off the window edge.
+  static double _marginOf(BuildContext ctx) =>
+      MediaQuery.of(ctx).padding.bottom > 0 ? AppSpacing.lg : AppSpacing.sm;
+
+  /// How much of the screen bottom the floating bar covers, for the bottom
+  /// padding of the page under it.
+  static double occupiedHeight(BuildContext ctx) =>
+      _marginOf(ctx) + height + AppSpacing.xs;
+
   @override
   Widget build(BuildContext ctx) {
     final theme = Theme.of(ctx);
     final mq = MediaQuery.of(ctx);
-    final bottomInset = mq.padding.bottom;
     final width = math.min(mq.size.width - AppSpacing.md * 2, _maxWidth);
     return LiquidGlassTabBar(
       items: [
@@ -62,10 +72,7 @@ class GlassNavBar extends StatelessWidget {
       onChanged: onTap,
       width: width,
       height: height,
-      // Float above the home indicator, or just off the window edge.
-      margin: EdgeInsets.only(
-        bottom: bottomInset > 0 ? AppSpacing.lg : AppSpacing.sm,
-      ),
+      margin: EdgeInsets.only(bottom: _marginOf(ctx)),
       style: LiquidGlassTabBar.defaultStyle.copyWith(color: glassTintOf(ctx)),
       itemStyle: LiquidGlassTabItemStyle(
         selectedColor: AppColors.accentOf(ctx),
@@ -87,4 +94,79 @@ class GlassNavItem {
     required this.activeIcon,
     required this.label,
   });
+}
+
+/// The top bar of a tab. On iOS and macOS the title floats in a glass
+/// capsule over a scroll-edge band, so the page scrolls under it; give the
+/// [Scaffold] `extendBodyBehindAppBar: PlatformCapabilities.isApple`.
+/// Elsewhere it is the accent [AppBar].
+class GlassTopBar extends StatelessWidget implements PreferredSizeWidget {
+  final String title;
+
+  const GlassTopBar({super.key, required this.title});
+
+  /// Height of the title capsule: one title line plus padding.
+  static const _capsuleHeight = 40.0;
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+
+  @override
+  Widget build(BuildContext ctx) {
+    final theme = Theme.of(ctx);
+    if (!PlatformCapabilities.isApple) {
+      return AppBar(
+        title: Text(title),
+        backgroundColor: AppColors.accentOf(ctx),
+        foregroundColor: Colors.white,
+        centerTitle: true,
+      );
+    }
+
+    return SizedBox(
+      height: kToolbarHeight + MediaQuery.of(ctx).padding.top,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          // Scroll edge: keeps the title legible over the page below.
+          IgnorePointer(
+            child: LiquidGlassScrollEdge(
+              edge: LiquidGlassEdge.top,
+              color: theme.scaffoldBackgroundColor.withValues(alpha: 0.85),
+            ),
+          ),
+          SafeArea(
+            bottom: false,
+            child: Center(
+              child: SizedBox(
+                height: _capsuleHeight,
+                child: LiquidGlassLens(
+                  style: LiquidGlassStyle(
+                    shape: const LiquidGlassShape.continuousRoundedRectangle(
+                        cornerRadius: _capsuleHeight / 2),
+                    color: glassTintOf(ctx),
+                    blur: 6,
+                  ),
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+                    child: Center(
+                      widthFactor: 1,
+                      child: Text(
+                        title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: theme.textTheme.titleMedium
+                            ?.copyWith(color: theme.colorScheme.onSurface),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../core/constants/app_colors.dart';
+import '../../core/design/liquid_glass.dart';
+import '../../core/design/platform_capabilities.dart';
 import '../../generated/l10n/app_localizations.dart';
 import '../qibla/widgets/qibla_card.dart';
 
@@ -12,12 +13,8 @@ class WorshipScreen extends StatelessWidget {
   Widget build(BuildContext ctx) {
     final l10n = AppLocalizations.of(ctx);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.worship),
-        backgroundColor: AppColors.accentOf(ctx),
-        foregroundColor: Colors.white,
-        centerTitle: true,
-      ),
+      extendBodyBehindAppBar: PlatformCapabilities.isApple,
+      appBar: GlassTopBar(title: l10n.worship),
       body: Center(
         child: ConstrainedBox(
           // Keep the card readable on wide desktop windows.

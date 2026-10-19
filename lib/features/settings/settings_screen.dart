@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../core/design/liquid_glass.dart';
+import '../../core/design/platform_capabilities.dart';
 import '../../generated/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/constants/city_catalog.dart';
@@ -16,12 +18,8 @@ class SettingsScreen extends ConsumerWidget {
     final locale = ref.watch(localeProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.settings),
-        backgroundColor: AppColors.accentOf(ctx),
-        foregroundColor: Colors.white,
-        centerTitle: true,
-      ),
+      extendBodyBehindAppBar: PlatformCapabilities.isApple,
+      appBar: GlassTopBar(title: l10n.settings),
       body: ListView(children: [
         // ── Section: Sholat ─────────────────────────────────────────────────
         _SectionHeader(l10n.prayerTimes),

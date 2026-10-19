@@ -52,6 +52,7 @@ class AdaptiveScaffold extends StatelessWidget {
 
   Widget _buildApple(BuildContext ctx) {
     final isDark = Theme.of(ctx).brightness == Brightness.dark;
+    final mq = MediaQuery.of(ctx);
     final navItems = destinations
         .map(
           (d) => GlassNavItem(
@@ -78,7 +79,15 @@ class AdaptiveScaffold extends StatelessWidget {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          child,
+          // Lists end clear of the floating bar.
+          MediaQuery(
+            data: mq.copyWith(
+              padding: mq.padding.copyWith(
+                bottom: GlassNavBar.occupiedHeight(ctx),
+              ),
+            ),
+            child: child,
+          ),
           GlassNavBar(
             currentIndex: selectedIndex,
             onTap: onDestinationSelected,
