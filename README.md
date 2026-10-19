@@ -305,8 +305,8 @@ Every push to `master` deploys, and other branches get preview URLs.
 
 The App Store Connect record is **Bedug: Jadwal Salat** (bundle ID `com.ardeman.bedug`, SKU `bedug`, primary language Indonesian), signed by team `B36A8H9S8E` with automatic signing. To ship a build to TestFlight:
 
-1. `flutter build ipa --build-number=<n>`, where `<n>` is higher than the last uploaded build (build 1 is uploaded). This leaves `version:` in `pubspec.yaml` alone.
-2. `open build/ios/archive/Runner.xcarchive`, then in Xcode's Organizer choose **Distribute App → App Store Connect → Distribute**. Pick App Store Connect rather than "TestFlight Internal Only", whose builds can never reach external testers or the store. Transporter with `build/ios/ipa/*.ipa` works too.
+1. `flutter build ipa --build-number=<n>`, where `<n>` is higher than the last uploaded build (Xcode's Organizer lists uploaded archives under **Archives**, and App Store Connect lists every build under **TestFlight**). This leaves `version:` in `pubspec.yaml` alone.
+2. `open build/ios/archive/Runner.xcarchive`, then in Xcode's Organizer choose **Distribute App → App Store Connect → Distribute**. Pick App Store Connect rather than "TestFlight Internal Only", whose builds can never reach external testers or the store. Transporter with `build/ios/ipa/*.ipa` works too. `xcrun altool --upload-app` needs an App Store Connect API key, which isn't set up, so uploads go through Xcode or Transporter.
 3. Wait for processing (10–30 minutes; Apple sends an email). `ITSAppUsesNonExemptEncryption` is `false` in `Info.plist`, so App Store Connect doesn't ask about export compliance.
 4. With automatic distribution on in the internal testing group, each new build reaches testers without a click; otherwise add the build to the group. Testers install it with the TestFlight app on the Apple ID they were invited with. Add people under **TestFlight → Internal Testing** (they must be users in Users and Access); external testers need a group under **External Testing** and a Beta App Review.
 
