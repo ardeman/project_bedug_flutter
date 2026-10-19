@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../generated/l10n/app_localizations.dart';
 import 'package:liquid_glass_easy/liquid_glass_easy.dart';
 import '../constants/app_colors.dart';
+import '../design/liquid_glass.dart';
 import '../theme/app_tokens.dart';
 import '../providers/locale_provider.dart';
 import '../services/kemenag_method.dart';
@@ -47,6 +48,32 @@ Future<void> showCalculationMethodPicker(
         title: l10n.calculationMethod,
         current: current,
       ),
+      transitionsBuilder: (_, __, ___, child) => child,
+    ),
+  );
+}
+
+/// On Apple platforms, a Liquid Glass pop-up menu that grows from [anchor]
+/// (the global rect of the button that opened it), like the system's pull-down
+/// menus. Elsewhere, the same picker as [showCalculationMethodPicker].
+Future<void> showCalculationMethodMenu(
+  BuildContext ctx,
+  WidgetRef ref, {
+  required AppCalculationMethod current,
+  required Rect anchor,
+}) {
+  if (!_isApple) {
+    return showCalculationMethodPicker(ctx, ref, current: current);
+  }
+  return Navigator.of(ctx).push(
+    PageRouteBuilder<void>(
+      opaque: false,
+      barrierDismissible: true,
+      barrierColor: Colors.transparent,
+      transitionDuration: const Duration(milliseconds: 280),
+      reverseTransitionDuration: const Duration(milliseconds: 180),
+      pageBuilder: (_, animation, __) =>
+          _MethodMenu(animation: animation, anchor: anchor),
       transitionsBuilder: (_, __, ___, child) => child,
     ),
   );
@@ -439,6 +466,172 @@ class _CalculationMethodPickerSheetState
           ),
         );
       },
+    );
+  }
+}
+
+class _MethodMenu extends ConsumerWidget {
+  final Animation<double> animation;
+  final Rect anchor;
+
+  const _MethodMenu({required this.animation, required this.anchor});
+
+  static const _maxWidth = 320.0;
+  static const _minHeight = 160.0;
+
+  @override
+  Widget build(BuildContext ctx, WidgetRef ref) {
+    final l10n = AppLocalizations.of(ctx);
+    final theme = Theme.of(ctx);
+    final mq = MediaQuery.of(ctx);
+    final selected = ref.watch(settingsProvider).method;
+    final divider = theme.colorScheme.onSurface.withValues(alpha: 0.12);
+
+    final width = (mq.size.width - AppSpacing.md * 2).clamp(0.0, _maxWidth);
+    final top = anchor.bottom + AppSpacing.xs;
+    // Keep the menu's right edge under the button, but on screen.
+    final right = (mq.size.width - anchor.right)
+        .clamp(AppSpacing.md, mq.size.width - width - AppSpacing.md);
+    final maxHeight = mq.size.height -
+        top -
+        mq.padding.bottom -
+        GlassNavBar.occupiedHeight(ctx);
+    // A short landscape screen still shows a few rows; the list scrolls.
+    final menuMaxHeight = maxHeight.clamp(_minHeight, double.infinity);
+
+    final scale = CurvedAnimation(
+      parent: animation,
+      curve: Curves.easeOutBack,
+      reverseCurve: Curves.easeInCubic,
+    );
+    final fade = CurvedAnimation(parent: animation, curve: Curves.easeOut);
+
+    return Stack(
+      children: [
+        // Tapping anywhere else closes the menu, like a system menu.
+        Positioned.fill(
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () => Navigator.pop(ctx),
+          ),
+        ),
+        Positioned(
+          top: top,
+          right: right,
+          width: width,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxHeight: menuMaxHeight),
+            child: FadeTransition(
+              opacity: fade,
+              child: ScaleTransition(
+                scale: Tween(begin: 0.6, end: 1.0).animate(scale),
+                // Grow out of the button, which sits above the right edge.
+                alignment: Alignment.topRight,
+                child: Material(
+                  color: Colors.transparent,
+                  child: LiquidGlassLens(
+                    style: LiquidGlassStyle(
+                      shape: const LiquidGlassShape.continuousRoundedRectangle(
+                          cornerRadius: AppRadii.lg),
+                      color: glassTintOf(ctx),
+                      blur: 18,
+                    ),
+                    child: ListView(
+                      shrinkWrap: true,
+                      padding:
+                          const EdgeInsets.symmetric(vertical: AppSpacing.xs),
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(AppSpacing.md,
+                              AppSpacing.xxs, AppSpacing.md, AppSpacing.xs),
+                          child: Text(
+                            l10n.calculationMethod,
+                            style: theme.textTheme.labelMedium?.copyWith(
+                              color: theme.colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ),
+                        for (final method in AppCalculationMethod.values) ...[
+                          Divider(height: 1, color: divider),
+                          _MethodMenuItem(
+                            method: method,
+                            isSelected: method == selected,
+                            onTap: () {
+                              ref
+                                  .read(settingsProvider.notifier)
+                                  .setMethod(method);
+                              Navigator.pop(ctx);
+                            },
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _MethodMenuItem extends StatelessWidget {
+  final AppCalculationMethod method;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const _MethodMenuItem({
+    required this.method,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext ctx) {
+    final theme = Theme.of(ctx);
+    final accent = AppColors.accentOf(ctx);
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.md, vertical: AppSpacing.sm),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    calculationMethodLabel(ctx, method),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: theme.textTheme.bodyLarge?.copyWith(
+                      color: theme.colorScheme.onSurface,
+                      fontWeight:
+                          isSelected ? FontWeight.w600 : FontWeight.w400,
+                    ),
+                  ),
+                  if (method == AppCalculationMethod.kemenag)
+                    Text(
+                      AppLocalizations.of(ctx).recommended,
+                      style: theme.textTheme.bodySmall?.copyWith(color: accent),
+                    ),
+                ],
+              ),
+            ),
+            const SizedBox(width: AppSpacing.sm),
+            // Fixed width, so labels line up whether or not a row is checked.
+            SizedBox(
+              width: 20,
+              child: isSelected
+                  ? Icon(Icons.check, size: 20, color: accent)
+                  : null,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

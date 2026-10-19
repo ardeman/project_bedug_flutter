@@ -83,7 +83,7 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                     isIosPortrait: isIosPortrait,
                     topInset: topInset,
                     isDark: isDark,
-                    onTune: () => _showMethodPicker(ctx),
+                    onTune: (anchor) => _showMethodMenu(ctx, anchor),
                     onRefresh: () => ref.read(prayerProvider.notifier).load(),
                   ),
                 )
@@ -238,6 +238,21 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
         .toList();
   }
 
+  Future<void> _showMethodMenu(BuildContext ctx, Rect anchor) async {
+    if (_isMethodPickerOpen) return;
+    _isMethodPickerOpen = true;
+    try {
+      await showCalculationMethodMenu(
+        ctx,
+        ref,
+        current: ref.read(settingsProvider).method,
+        anchor: anchor,
+      );
+    } finally {
+      _isMethodPickerOpen = false;
+    }
+  }
+
   Future<void> _showMethodPicker(BuildContext ctx) async {
     if (_isMethodPickerOpen) return;
     _isMethodPickerOpen = true;
@@ -265,7 +280,9 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
   final bool isIosPortrait;
   final double topInset;
   final bool isDark;
-  final VoidCallback onTune;
+
+  /// Called with the tune button's global rect, to anchor the menu.
+  final ValueChanged<Rect> onTune;
   final VoidCallback onRefresh;
 
   const _LiquidGlassAppBar({
@@ -503,10 +520,16 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
                 child: SizedBox(
                   height: kToolbarHeight,
                   child: Row(children: [
-                    _GlassIconButton(
-                      icon: Icons.tune,
-                      onTap: onTune,
-                      color: actionColor,
+                    Builder(
+                      builder: (buttonCtx) => _GlassIconButton(
+                        icon: Icons.tune,
+                        onTap: () {
+                          final box =
+                              buttonCtx.findRenderObject()! as RenderBox;
+                          onTune(box.localToGlobal(Offset.zero) & box.size);
+                        },
+                        color: actionColor,
+                      ),
                     ),
                     const SizedBox(width: AppSpacing.xs),
                     _GlassIconButton(
