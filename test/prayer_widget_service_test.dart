@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:adhan/adhan.dart';
 import 'package:bedug/core/services/prayer_widget_service.dart';
+import 'package:bedug/core/services/widget_appearance.dart';
 import 'package:bedug/core/services/prayer_service.dart';
 import 'package:bedug/core/providers/locale_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -67,6 +68,15 @@ void main() {
       expect(service.updates.last['locale'], 'ar');
       await container.read(settingsProvider.notifier).setThemeMode(2);
       expect(service.updates.last['themeMode'], 2);
+      await container
+          .read(widgetAppearanceProvider.notifier)
+          .setShowAnalog(false);
+      expect(service.updates.last['showAnalog'], isFalse);
+      expect(service.updates.last['showSchedule'], isTrue);
+      await container
+          .read(widgetAppearanceProvider.notifier)
+          .setShowSchedule(false);
+      expect(service.updates.last['showSchedule'], isFalse);
       notifier.replace(
         PrayerState(times: times, locationLabel: 'Jakarta', loading: true),
       );

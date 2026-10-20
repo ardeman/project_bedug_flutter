@@ -1217,6 +1217,84 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Buka Bedug untuk memperbarui jadwal salat'**
   String get widgetRefresh;
+
+  /// No description provided for @widgetAnalogCountdown.
+  ///
+  /// In id, this message translates to:
+  /// **'Hitung mundur analog'**
+  String get widgetAnalogCountdown;
+
+  /// No description provided for @widgetAnalogDescription.
+  ///
+  /// In id, this message translates to:
+  /// **'Tampilkan penghitung waktu melingkar di samping hitung mundur digital.'**
+  String get widgetAnalogDescription;
+
+  /// No description provided for @widgetSchedule.
+  ///
+  /// In id, this message translates to:
+  /// **'Waktu salat berikutnya'**
+  String get widgetSchedule;
+
+  /// No description provided for @widgetScheduleDescription.
+  ///
+  /// In id, this message translates to:
+  /// **'Tampilkan lima salat berikutnya pada widget iPhone sedang dan besar serta widget Android lebar.'**
+  String get widgetScheduleDescription;
+
+  /// No description provided for @widgetAppearanceHelp.
+  ///
+  /// In id, this message translates to:
+  /// **'Berlaku untuk widget layar utama iPhone dan Android. Pilih atau ubah ukuran widget di layar utama.'**
+  String get widgetAppearanceHelp;
+
+  /// No description provided for @widgetPreview.
+  ///
+  /// In id, this message translates to:
+  /// **'Pratinjau'**
+  String get widgetPreview;
+
+  /// No description provided for @widgetPreviewHelp.
+  ///
+  /// In id, this message translates to:
+  /// **'Waktu contoh menunjukkan tata letak. Tampilan widget asli mungkin sedikit berbeda. Perubahan disimpan otomatis.'**
+  String get widgetPreviewHelp;
+
+  /// No description provided for @widgetSmall.
+  ///
+  /// In id, this message translates to:
+  /// **'Kecil'**
+  String get widgetSmall;
+
+  /// No description provided for @widgetMedium.
+  ///
+  /// In id, this message translates to:
+  /// **'Sedang / lebar'**
+  String get widgetMedium;
+
+  /// No description provided for @widgetLarge.
+  ///
+  /// In id, this message translates to:
+  /// **'Besar'**
+  String get widgetLarge;
+
+  /// No description provided for @widgetAnalogAndDigital.
+  ///
+  /// In id, this message translates to:
+  /// **'Analog + digital'**
+  String get widgetAnalogAndDigital;
+
+  /// No description provided for @widgetDigitalOnly.
+  ///
+  /// In id, this message translates to:
+  /// **'Digital saja'**
+  String get widgetDigitalOnly;
+
+  /// No description provided for @widgetPreviewCountdown.
+  ///
+  /// In id, this message translates to:
+  /// **'01:30:00'**
+  String get widgetPreviewCountdown;
 }
 
 class _AppLocalizationsDelegate

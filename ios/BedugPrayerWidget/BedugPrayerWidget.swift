@@ -10,6 +10,8 @@ struct Prayer: Decodable {
 struct PrayerWidgetData: Decodable {
     let prayers: [Prayer]
     let intervalStart: Double?
+    let showAnalog: Bool?
+    let showSchedule: Bool?
     let location: String
     let locale: String
     let title: String
@@ -104,26 +106,47 @@ struct PrayerWidgetView: View {
                     Text(entry.data?.location ?? "")
                 }
             }
-            .font(.caption).lineLimit(1)
+            .font(.caption).lineLimit(1).minimumScaleFactor(0.7)
             if let prayer = entry.prayer {
-                HStack(spacing: 16) {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(prayer.name).font(.title2.bold())
-                            .foregroundStyle(accent).widgetAccentable()
-                        Text(prayer.date, style: .time).font(.callout)
-                        Text(timerInterval: entry.date...prayer.date, countsDown: true)
-                            .font(.title2.monospacedDigit())
+                if family == .systemSmall {
+                    HStack(spacing: 8) {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(prayer.name).font(.headline)
+                                .foregroundStyle(accent).widgetAccentable()
+                            Text(prayer.date, style: .time).font(.caption)
+                        }
+                        .lineLimit(1).minimumScaleFactor(0.65)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        if entry.data?.showAnalog != false {
+                            countdownDial(until: prayer.date, diameter: 48)
+                        }
                     }
-                    .lineLimit(1).minimumScaleFactor(0.65)
-                    if family != .systemSmall {
+                    Text(timerInterval: entry.date...prayer.date, countsDown: true)
+                        .font(.title2.monospacedDigit())
+                        .lineLimit(1).minimumScaleFactor(0.7)
+                } else {
+                    HStack(spacing: 16) {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(prayer.name).font(family == .systemLarge ? .title.bold() : .title2.bold())
+                                .foregroundStyle(accent).widgetAccentable()
+                            Text(prayer.date, style: .time).font(.callout)
+                            Text(timerInterval: entry.date...prayer.date, countsDown: true)
+                                .font(.title2.monospacedDigit())
+                        }
+                        .lineLimit(1).minimumScaleFactor(0.65)
                         Spacer(minLength: 0)
-                        countdownDial(until: prayer.date)
+                        if entry.data?.showAnalog != false {
+                            countdownDial(until: prayer.date, diameter: family == .systemLarge ? 96 : 70)
+                        }
                     }
+                    .frame(maxHeight: family == .systemLarge && entry.data?.showSchedule == false
+                           ? .infinity : nil)
                 }
                 if family == .systemSmall {
                     Text(entry.data?.location ?? "").font(.caption).lineLimit(1)
-                } else if family == .systemLarge {
-                    VStack(spacing: 10) {
+                } else if family == .systemLarge && entry.data?.showSchedule != false {
+                    // Distribute the schedule across the remaining widget height.
+                    VStack(spacing: 0) {
                         ForEach(Array(entry.upcoming.enumerated()), id: \.offset) { index, item in
                             HStack {
                                 Text(item.name)
@@ -133,9 +156,14 @@ struct PrayerWidgetView: View {
                             .font(.subheadline.weight(index == 0 ? .bold : .regular))
                             .foregroundStyle(index == 0 ? accent : .primary)
                             .lineLimit(1).minimumScaleFactor(0.7)
+                            .padding(.horizontal, 10)
+                            .frame(maxHeight: .infinity)
+                            .background(accent.opacity(index == 0 ? 0.12 : 0),
+                                        in: RoundedRectangle(cornerRadius: 12))
                         }
                     }
-                } else {
+                    .frame(maxHeight: .infinity)
+                } else if entry.data?.showSchedule != false {
                     HStack(spacing: 4) {
                         ForEach(Array(entry.upcoming.enumerated()), id: \.offset) { index, item in
                             VStack(spacing: 2) {
@@ -152,7 +180,8 @@ struct PrayerWidgetView: View {
                 Text(data.refresh).font(.callout).minimumScaleFactor(0.8)
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+        .frame(maxWidth: .infinity, maxHeight: .infinity,
+               alignment: family == .systemLarge ? .topLeading : .leading)
         .foregroundStyle(renderingMode == .fullColor
             ? color(dark ? entry.data?.darkText : entry.data?.lightText) : .primary)
         .containerBackground(for: .widget) {
@@ -166,7 +195,7 @@ struct PrayerWidgetView: View {
         .environment(\.layoutDirection, entry.data?.locale == "ar" ? .rightToLeft : .leftToRight)
     }
 
-    private func countdownDial(until end: Date) -> some View {
+    private func countdownDial(until end: Date, diameter: CGFloat = 70) -> some View {
         ZStack {
             // WidgetKit advances the native timer without timeline polling.
             ProgressView(timerInterval: min(entry.countdownStart, entry.date)...end,
@@ -180,11 +209,11 @@ struct PrayerWidgetView: View {
             ForEach(0..<12) { tick in
                 Capsule().fill(accent.opacity(0.4))
                     .frame(width: 2, height: tick % 3 == 0 ? 5 : 3)
-                    .offset(y: -31)
+                    .offset(y: -(diameter / 2 - 4))
                     .rotationEffect(.degrees(Double(tick) * 30))
             }
         }
-        .frame(width: 70, height: 70)
+        .frame(width: diameter, height: diameter)
         .accessibilityLabel(Text(timerInterval: entry.date...end, countsDown: true))
     }
 }

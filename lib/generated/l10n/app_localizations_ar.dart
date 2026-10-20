@@ -598,4 +598,47 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get widgetRefresh => 'افتح Bedug لتحديث أوقات الصلاة';
+
+  @override
+  String get widgetAnalogCountdown => 'العد التنازلي التناظري';
+
+  @override
+  String get widgetAnalogDescription =>
+      'عرض مؤقت دائري بجانب العد التنازلي الرقمي.';
+
+  @override
+  String get widgetSchedule => 'أوقات الصلوات القادمة';
+
+  @override
+  String get widgetScheduleDescription =>
+      'عرض الصلوات الخمس القادمة في أدوات iPhone المتوسطة والكبيرة وأدوات Android العريضة.';
+
+  @override
+  String get widgetAppearanceHelp =>
+      'ينطبق على أدوات الشاشة الرئيسية في iPhone وAndroid. اختر الأداة أو غيّر حجمها من الشاشة الرئيسية.';
+
+  @override
+  String get widgetPreview => 'معاينة';
+
+  @override
+  String get widgetPreviewHelp =>
+      'أوقات توضيحية لعرض التخطيط. قد يختلف مظهر الأدوات الأصلية قليلًا. تُحفظ التغييرات تلقائيًا.';
+
+  @override
+  String get widgetSmall => 'صغيرة';
+
+  @override
+  String get widgetMedium => 'متوسطة / عريضة';
+
+  @override
+  String get widgetLarge => 'كبيرة';
+
+  @override
+  String get widgetAnalogAndDigital => 'تناظري ورقمي';
+
+  @override
+  String get widgetDigitalOnly => 'رقمي فقط';
+
+  @override
+  String get widgetPreviewCountdown => '٠١:٣٠:٠٠';
 }

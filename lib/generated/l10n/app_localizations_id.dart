@@ -603,4 +603,47 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get widgetRefresh => 'Buka Bedug untuk memperbarui jadwal salat';
+
+  @override
+  String get widgetAnalogCountdown => 'Hitung mundur analog';
+
+  @override
+  String get widgetAnalogDescription =>
+      'Tampilkan penghitung waktu melingkar di samping hitung mundur digital.';
+
+  @override
+  String get widgetSchedule => 'Waktu salat berikutnya';
+
+  @override
+  String get widgetScheduleDescription =>
+      'Tampilkan lima salat berikutnya pada widget iPhone sedang dan besar serta widget Android lebar.';
+
+  @override
+  String get widgetAppearanceHelp =>
+      'Berlaku untuk widget layar utama iPhone dan Android. Pilih atau ubah ukuran widget di layar utama.';
+
+  @override
+  String get widgetPreview => 'Pratinjau';
+
+  @override
+  String get widgetPreviewHelp =>
+      'Waktu contoh menunjukkan tata letak. Tampilan widget asli mungkin sedikit berbeda. Perubahan disimpan otomatis.';
+
+  @override
+  String get widgetSmall => 'Kecil';
+
+  @override
+  String get widgetMedium => 'Sedang / lebar';
+
+  @override
+  String get widgetLarge => 'Besar';
+
+  @override
+  String get widgetAnalogAndDigital => 'Analog + digital';
+
+  @override
+  String get widgetDigitalOnly => 'Digital saja';
+
+  @override
+  String get widgetPreviewCountdown => '01:30:00';
 }

@@ -6,6 +6,7 @@ import 'package:bedug/core/services/notification_preferences.dart';
 import 'package:bedug/core/services/prayer_service.dart';
 import 'package:bedug/core/widgets/calculation_method_picker.dart';
 import 'package:bedug/features/settings/settings_screen.dart';
+import 'package:bedug/core/services/widget_appearance.dart';
 import 'package:bedug/generated/l10n/app_localizations.dart';
 import 'package:bedug/core/theme/app_theme.dart';
 import 'package:bedug/core/theme/app_theme_scope.dart';
@@ -24,6 +25,7 @@ Future<ProviderContainer> _pumpSettings(
   Locale locale = const Locale('en'),
   double textScale = 1,
   Brightness brightness = Brightness.light,
+  Widget home = const SettingsScreen(),
 }) async {
   SharedPreferences.setMockInitialValues({'use_auto_location': false});
   final prefs = await SharedPreferences.getInstance();
@@ -50,7 +52,7 @@ Future<ProviderContainer> _pumpSettings(
           ...AppLocalizations.localizationsDelegates,
         ],
         supportedLocales: AppLocalizations.supportedLocales,
-        home: const SettingsScreen(),
+        home: home,
         builder: (context, child) => AppThemeScope(
           child: MediaQuery(
             data: MediaQuery.of(context)
@@ -66,6 +68,61 @@ Future<ProviderContainer> _pumpSettings(
 }
 
 void main() {
+  testWidgets(
+    'widget appearance opens and saves both display options',
+    (tester) async {
+      final container = await _pumpSettings(tester);
+      await tester.ensureVisible(find.text('Widget Style'));
+      await tester.tap(find.text('Widget Style'));
+      await tester.pumpAndSettle();
+      expect(find.byType(WidgetAppearanceScreen), findsOneWidget);
+      expect(
+        tester.getTopLeft(find.text('Analog countdown')).dy,
+        greaterThanOrEqualTo(tester.getBottomLeft(find.byType(GlassTopBar)).dy),
+      );
+      await tester.tap(find.byKey(const ValueKey('widget_analog_switch')));
+      await tester.pumpAndSettle();
+      expect(container.read(widgetAppearanceProvider).showAnalog, isFalse);
+      expect(container.read(widgetAppearanceProvider).showSchedule, isTrue);
+      await tester.tap(find.byKey(const ValueKey('widget_schedule_switch')));
+      await tester.pumpAndSettle();
+      expect(container.read(widgetAppearanceProvider).showSchedule, isFalse);
+      expect(find.text('Asr'), findsNothing);
+      expect(find.text('01:30:00'), findsNWidgets(3));
+      expect(tester.takeException(), isNull);
+    },
+    variant: TargetPlatformVariant({
+      TargetPlatform.iOS,
+      TargetPlatform.android,
+      TargetPlatform.windows,
+    }),
+  );
+
+  testWidgets(
+    'widget appearance supports narrow Arabic and large text',
+    (tester) async {
+      await _pumpSettings(
+        tester,
+        home: const WidgetAppearanceScreen(),
+        locale: const Locale('ar'),
+        size: const Size(320, 1000),
+        textScale: 1.5,
+        brightness: Brightness.dark,
+      );
+      expect(tester.takeException(), isNull);
+      await tester.drag(find.byType(ListView).first, const Offset(0, -700));
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
+      await tester.drag(find.byType(ListView).first, const Offset(0, -700));
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
+    },
+    variant: TargetPlatformVariant({
+      TargetPlatform.iOS,
+      TargetPlatform.android,
+    }),
+  );
+
   testWidgets('uses glass switches and menus on Apple platforms', (
     tester,
   ) async {

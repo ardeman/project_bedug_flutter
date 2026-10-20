@@ -5,12 +5,21 @@
       "date": null,
       "changes": [
         {
+          "type": "new",
+          "text": {
+            "en": "Customize home screen widgets in Settings with layout previews, an analog countdown option, and a choice to show upcoming prayer times.",
+            "id": "Sesuaikan widget layar utama di Pengaturan dengan pratinjau tata letak, pilihan hitung mundur analog, dan pilihan untuk menampilkan waktu salat berikutnya.",
+            "ms": "Sesuaikan widget skrin utama dalam Tetapan dengan pratonton susun atur, pilihan kira detik analog dan pilihan untuk memaparkan waktu solat seterusnya.",
+            "ar": "خصّص أدوات الشاشة الرئيسية من الإعدادات مع معاينات للتخطيط وخيار العد التنازلي التناظري وخيار عرض أوقات الصلوات القادمة."
+          }
+        },
+        {
           "type": "improved",
           "text": {
-            "id": "Widget layar utama kini menampilkan hitung mundur melingkar pada ukuran sedang dan lima waktu salat berikutnya pada tata letak lebar. Widget besar juga tersedia di iOS.",
-            "en": "Home screen widgets now show a circular countdown at medium sizes and the next five prayer times in wide layouts. A large iOS widget is also available.",
-            "ar": "تعرض أدوات الشاشة الرئيسية الآن عدًّا تنازليًا دائريًا بالحجم المتوسط وأوقات الصلوات الخمس القادمة في التخطيطات العريضة. تتوفر أيضًا أداة كبيرة على iOS.",
-            "ms": "Widget skrin utama kini memaparkan kira detik berbentuk bulatan pada saiz sederhana dan lima waktu solat seterusnya pada susun atur lebar. Widget besar juga tersedia pada iOS."
+            "id": "Widget layar utama kini menampilkan hitung mundur melingkar pada semua ukuran dan lima waktu salat berikutnya pada tata letak lebar. Widget besar iOS menampilkan hitung mundur lebih besar dan baris jadwal salat yang memenuhi ruang widget.",
+            "en": "Home screen widgets now show a circular countdown at all sizes and the next five prayer times in wide layouts. Large iOS widgets use a bigger countdown dial and prayer rows spaced to fill the widget.",
+            "ar": "تعرض أدوات الشاشة الرئيسية الآن عدًّا تنازليًا دائريًا بجميع الأحجام وأوقات الصلوات الخمس القادمة في التخطيطات العريضة. تستخدم أدوات iOS الكبيرة قرص عد تنازلي أكبر وصفوف صلاة موزعة لملء مساحة الأداة.",
+            "ms": "Widget skrin utama kini memaparkan kira detik berbentuk bulatan pada semua saiz dan lima waktu solat seterusnya pada susun atur lebar. Widget besar iOS menggunakan kira detik lebih besar dan baris waktu solat yang disusun untuk memenuhi ruang widget."
           }
         },
         {

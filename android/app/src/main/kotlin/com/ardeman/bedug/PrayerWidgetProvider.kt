@@ -62,53 +62,58 @@ class PrayerWidgetProvider : HomeWidgetProvider() {
             Configuration.UI_MODE_NIGHT_YES)
         val prefix = if (dark) "dark" else "light"
         val locale = Locale.forLanguageTag(data.optString("locale", "id"))
-        val views = RemoteViews(context.packageName, R.layout.prayer_widget)
-        views.setInt(R.id.widget_root, "setLayoutDirection",
-            if (locale.language == "ar") View.LAYOUT_DIRECTION_RTL else View.LAYOUT_DIRECTION_LTR)
-        // Colors are supplied by AppColors in Flutter, including dark variants.
-        if (data.has(prefix + "Background")) {
-            views.setInt(R.id.widget_background, "setColorFilter", data.getLong(prefix + "Background").toInt())
-            for (id in intArrayOf(R.id.widget_title, R.id.widget_prayer,
-                    R.id.widget_countdown, R.id.widget_location)) {
-                views.setTextColor(id, data.getLong(prefix + "Text").toInt())
-            }
-            views.setTextColor(R.id.widget_prayer, data.getLong(prefix + "Accent").toInt())
-        }
-        views.setTextViewText(R.id.widget_title, data.optString("title", "Bedug"))
-        views.setTextViewText(R.id.widget_location, data.optString("location"))
-        views.setViewVisibility(R.id.widget_countdown, if (next == null) View.GONE else View.VISIBLE)
-        if (next != null) {
-            val time = next.getLong("time")
-            val formatted = DateFormat.getTimeInstance(DateFormat.SHORT, locale).format(Date(time))
-            views.setTextViewText(R.id.widget_prayer, "${next.getString("name")} · $formatted")
-            views.setChronometer(R.id.widget_countdown,
-                SystemClock.elapsedRealtime() + time - now, null, true)
-            views.setChronometerCountDown(R.id.widget_countdown, true)
-        } else {
-            views.setTextViewText(R.id.widget_prayer, data.optString("refresh", "Bedug"))
-        }
-        val launch = Intent(context, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-        }
-        views.setOnClickPendingIntent(R.id.widget_root, PendingIntent.getActivity(
-            context, 0, launch, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
         ids.forEach { id ->
-            val sizedViews = RemoteViews(views)
             val options = manager.getAppWidgetOptions(id)
             // Use the minimum width so the layout also fits after rotation.
             val width = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH, 180)
             val height = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT, 140)
-            val showDial = next != null && width >= 280
-            val showSchedule = next != null && width >= 350 && height >= 180
-            sizedViews.setViewVisibility(R.id.widget_dial, if (showDial) View.VISIBLE else View.GONE)
-            sizedViews.setViewVisibility(R.id.widget_schedule, if (showSchedule) View.VISIBLE else View.GONE)
-            sizedViews.removeAllViews(R.id.widget_schedule)
+            val compact = width < 280
+            val views = RemoteViews(context.packageName,
+                if (compact) R.layout.prayer_widget_compact else R.layout.prayer_widget)
+            views.setInt(R.id.widget_root, "setLayoutDirection",
+                if (locale.language == "ar") View.LAYOUT_DIRECTION_RTL else View.LAYOUT_DIRECTION_LTR)
+            // Colors are supplied by AppColors in Flutter, including dark variants.
+            if (data.has(prefix + "Background")) {
+                views.setInt(R.id.widget_background, "setColorFilter", data.getLong(prefix + "Background").toInt())
+                for (id in intArrayOf(R.id.widget_title, R.id.widget_prayer,
+                        R.id.widget_countdown, R.id.widget_location, R.id.widget_time)) {
+                    views.setTextColor(id, data.getLong(prefix + "Text").toInt())
+                }
+                views.setTextColor(R.id.widget_prayer, data.getLong(prefix + "Accent").toInt())
+            }
+            views.setTextViewText(R.id.widget_title, data.optString("title", "Bedug"))
+            views.setTextViewText(R.id.widget_location, data.optString("location"))
+            views.setViewVisibility(R.id.widget_countdown, if (next == null) View.GONE else View.VISIBLE)
+            views.setViewVisibility(R.id.widget_time, if (compact && next != null) View.VISIBLE else View.GONE)
+            if (next != null) {
+                val time = next.getLong("time")
+                val formatted = DateFormat.getTimeInstance(DateFormat.SHORT, locale).format(Date(time))
+                views.setTextViewText(R.id.widget_prayer,
+                    if (compact) next.getString("name") else "${next.getString("name")} · $formatted")
+                views.setTextViewText(R.id.widget_time, formatted)
+                views.setChronometer(R.id.widget_countdown,
+                    SystemClock.elapsedRealtime() + time - now, null, true)
+                views.setChronometerCountDown(R.id.widget_countdown, true)
+            } else {
+                views.setTextViewText(R.id.widget_prayer, data.optString("refresh", "Bedug"))
+            }
+            val launch = Intent(context, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            }
+            views.setOnClickPendingIntent(R.id.widget_root, PendingIntent.getActivity(
+                context, 0, launch, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
+            val showDial = next != null && data.optBoolean("showAnalog", true)
+            val showSchedule = next != null && data.optBoolean("showSchedule", true) &&
+                width >= 350 && height >= 180
+            views.setViewVisibility(R.id.widget_dial, if (showDial) View.VISIBLE else View.GONE)
+            views.setViewVisibility(R.id.widget_schedule, if (showSchedule) View.VISIBLE else View.GONE)
+            views.removeAllViews(R.id.widget_schedule)
             if (showDial) {
                 val start = schedule.lastOrNull { it.optLong("time") <= now }?.optLong("time")
                     ?: data.optLong("intervalStart", now)
                 val end = next.getLong("time")
                 val remaining = if (end > start) (end - now).toFloat() / (end - start) else 1f
-                sizedViews.setImageViewBitmap(R.id.widget_dial,
+                views.setImageViewBitmap(R.id.widget_dial,
                     countdownDial(context, remaining.coerceIn(0f, 1f),
                         data.optLong(prefix + "Accent").toInt()))
             }
@@ -122,10 +127,10 @@ class PrayerWidgetProvider : HomeWidgetProvider() {
                     val ink = data.optLong(prefix + if (index == 0) "Accent" else "Text").toInt()
                     slot.setTextColor(R.id.slot_name, ink)
                     slot.setTextColor(R.id.slot_time, ink)
-                    sizedViews.addView(R.id.widget_schedule, slot)
+                    views.addView(R.id.widget_schedule, slot)
                 }
             }
-            manager.updateAppWidget(id, sizedViews)
+            manager.updateAppWidget(id, views)
         }
         val alarms = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val pending = refreshIntent(context)

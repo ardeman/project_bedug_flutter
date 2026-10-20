@@ -201,5 +201,18 @@
   "notificationSystemSettings": "إعدادات إشعارات النظام",
   "precisePrayerAlerts": "السماح بالتنبيهات الدقيقة",
   "precisePrayerAlertsDescription": "قد يؤخر Android التنبيهات دون إذن المنبهات الدقيقة.",
-  "widgetRefresh": "افتح Bedug لتحديث أوقات الصلاة"
+  "widgetRefresh": "افتح Bedug لتحديث أوقات الصلاة",
+  "widgetAnalogCountdown": "العد التنازلي التناظري",
+  "widgetAnalogDescription": "عرض مؤقت دائري بجانب العد التنازلي الرقمي.",
+  "widgetSchedule": "أوقات الصلوات القادمة",
+  "widgetScheduleDescription": "عرض الصلوات الخمس القادمة في أدوات iPhone المتوسطة والكبيرة وأدوات Android العريضة.",
+  "widgetAppearanceHelp": "ينطبق على أدوات الشاشة الرئيسية في iPhone وAndroid. اختر الأداة أو غيّر حجمها من الشاشة الرئيسية.",
+  "widgetPreview": "معاينة",
+  "widgetPreviewHelp": "أوقات توضيحية لعرض التخطيط. قد يختلف مظهر الأدوات الأصلية قليلًا. تُحفظ التغييرات تلقائيًا.",
+  "widgetSmall": "صغيرة",
+  "widgetMedium": "متوسطة / عريضة",
+  "widgetLarge": "كبيرة",
+  "widgetAnalogAndDigital": "تناظري ورقمي",
+  "widgetDigitalOnly": "رقمي فقط",
+  "widgetPreviewCountdown": "٠١:٣٠:٠٠"
 }

@@ -362,5 +362,18 @@
   "notificationSystemSettings": "Pengaturan notifikasi sistem",
   "precisePrayerAlerts": "Izinkan pengingat tepat waktu",
   "precisePrayerAlertsDescription": "Tanpa izin alarm tepat waktu, Android dapat menunda pengingat.",
-  "widgetRefresh": "Buka Bedug untuk memperbarui jadwal salat"
+  "widgetRefresh": "Buka Bedug untuk memperbarui jadwal salat",
+  "widgetAnalogCountdown": "Hitung mundur analog",
+  "widgetAnalogDescription": "Tampilkan penghitung waktu melingkar di samping hitung mundur digital.",
+  "widgetSchedule": "Waktu salat berikutnya",
+  "widgetScheduleDescription": "Tampilkan lima salat berikutnya pada widget iPhone sedang dan besar serta widget Android lebar.",
+  "widgetAppearanceHelp": "Berlaku untuk widget layar utama iPhone dan Android. Pilih atau ubah ukuran widget di layar utama.",
+  "widgetPreview": "Pratinjau",
+  "widgetPreviewHelp": "Waktu contoh menunjukkan tata letak. Tampilan widget asli mungkin sedikit berbeda. Perubahan disimpan otomatis.",
+  "widgetSmall": "Kecil",
+  "widgetMedium": "Sedang / lebar",
+  "widgetLarge": "Besar",
+  "widgetAnalogAndDigital": "Analog + digital",
+  "widgetDigitalOnly": "Digital saja",
+  "widgetPreviewCountdown": "01:30:00"
 }

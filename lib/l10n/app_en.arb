@@ -201,5 +201,18 @@
   "notificationSystemSettings": "System notification settings",
   "precisePrayerAlerts": "Allow precise alerts",
   "precisePrayerAlertsDescription": "Android may delay alerts without exact alarm permission.",
-  "widgetRefresh": "Open Bedug to refresh prayer times"
+  "widgetRefresh": "Open Bedug to refresh prayer times",
+  "widgetAnalogCountdown": "Analog countdown",
+  "widgetAnalogDescription": "Show a circular timer alongside the digital countdown.",
+  "widgetSchedule": "Upcoming prayer times",
+  "widgetScheduleDescription": "Show the next five prayers on medium and large iPhone widgets and wide Android widgets.",
+  "widgetAppearanceHelp": "Applies to home screen widgets on iPhone and Android. Choose or resize the widget on your home screen.",
+  "widgetPreview": "Preview",
+  "widgetPreviewHelp": "Sample times illustrate the layout. Native widgets may look slightly different. Changes are saved automatically.",
+  "widgetSmall": "Small",
+  "widgetMedium": "Medium / wide",
+  "widgetLarge": "Large",
+  "widgetAnalogAndDigital": "Analog + digital",
+  "widgetDigitalOnly": "Digital only",
+  "widgetPreviewCountdown": "01:30:00"
 }

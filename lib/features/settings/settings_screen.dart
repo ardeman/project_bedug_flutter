@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter/foundation.dart';
 import 'package:material_3_expressive/material_3_expressive.dart';
@@ -15,6 +17,7 @@ import '../../core/providers/locale_provider.dart';
 import '../../core/services/notification_preferences.dart';
 import '../../core/services/notification_service.dart';
 import '../../core/services/prayer_service.dart';
+import '../../core/services/widget_appearance.dart';
 import '../../core/theme/app_tokens.dart';
 import '../../core/widgets/calculation_method_picker.dart';
 import '../../core/widgets/city_picker.dart';
@@ -198,9 +201,17 @@ class SettingsScreen extends ConsumerWidget {
               color: AppColors.accentOf(ctx),
             ),
             title: Text(l10n.widgetStyle),
-            subtitle: Text(l10n.widgetCompact),
+            subtitle: Text(
+              ref.watch(widgetAppearanceProvider).showAnalog
+                  ? l10n.widgetAnalogAndDigital
+                  : l10n.widgetDigitalOnly,
+            ),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () {},
+            onTap: () => Navigator.of(ctx).push(
+              MaterialPageRoute<void>(
+                builder: (_) => const WidgetAppearanceScreen(),
+              ),
+            ),
           ),
           PlatformListTile(
             leading: Icon(Icons.info_outline, color: AppColors.accentOf(ctx)),
@@ -644,4 +655,228 @@ class _ChoiceTileState<T> extends State<_ChoiceTile<T>> {
       ),
     );
   }
+}
+
+class WidgetAppearanceScreen extends ConsumerWidget {
+  const WidgetAppearanceScreen({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final appearance = ref.watch(widgetAppearanceProvider);
+    final notifier = ref.read(widgetAppearanceProvider.notifier);
+    return Scaffold(
+      extendBodyBehindAppBar: PlatformCapabilities.isApple,
+      appBar: GlassTopBar(title: l10n.widgetStyle),
+      body: ListView(
+        padding: EdgeInsets.only(
+          top: PlatformCapabilities.isApple
+              ? kToolbarHeight + MediaQuery.paddingOf(context).top
+              : 0,
+          bottom: MediaQuery.paddingOf(context).bottom + AppSpacing.lg,
+        ),
+        children: [
+          _Section(
+            title: l10n.widgetStyle,
+            children: [
+              PlatformListTile(
+                title: Text(l10n.widgetAnalogCountdown),
+                subtitle: Text(l10n.widgetAnalogDescription),
+                trailing: _AdaptiveSwitch(
+                  key: const ValueKey('widget_analog_switch'),
+                  value: appearance.showAnalog,
+                  onChanged: notifier.setShowAnalog,
+                ),
+              ),
+              PlatformListTile(
+                title: Text(l10n.widgetSchedule),
+                subtitle: Text(l10n.widgetScheduleDescription),
+                trailing: _AdaptiveSwitch(
+                  key: const ValueKey('widget_schedule_switch'),
+                  value: appearance.showSchedule,
+                  onChanged: notifier.setShowSchedule,
+                ),
+              ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.all(AppSpacing.md),
+            child: Text(
+              l10n.widgetAppearanceHelp,
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+            child: Text(
+              l10n.widgetPreview,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(AppSpacing.md),
+            child: Text(
+              l10n.widgetPreviewHelp,
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          ),
+          for (var size = 0; size < 3; size++)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.md,
+                0,
+                AppSpacing.md,
+                AppSpacing.md,
+              ),
+              child: _WidgetLayoutPreview(size: size, appearance: appearance),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class _WidgetLayoutPreview extends StatelessWidget {
+  final int size;
+  final WidgetAppearance appearance;
+
+  const _WidgetLayoutPreview({required this.size, required this.appearance});
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final text = Theme.of(context).textTheme;
+    final accent = AppColors.accentOf(context);
+    final names = [l10n.dhuhr, l10n.asr, l10n.maghrib, l10n.isha, l10n.fajr];
+    final hours = [12, 15, 18, 19, 4];
+    String time(int index) => MaterialLocalizations.of(context).formatTimeOfDay(
+      TimeOfDay(hour: hours[index], minute: 0),
+      alwaysUse24HourFormat: MediaQuery.alwaysUse24HourFormatOf(context),
+    );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          [l10n.widgetSmall, l10n.widgetMedium, l10n.widgetLarge][size],
+          style: text.labelLarge,
+        ),
+        const SizedBox(height: AppSpacing.xs),
+        Align(
+          alignment: AlignmentDirectional.centerStart,
+          child: ConstrainedBox(
+            // Keep previews readable on phones and bounded on desktop windows.
+            constraints: BoxConstraints(maxWidth: size == 0 ? 200 : 400),
+            child: GlassCard(
+              margin: EdgeInsets.zero,
+              child: Padding(
+                padding: const EdgeInsets.all(AppSpacing.md),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(l10n.nextPrayer, style: text.labelSmall),
+                    const SizedBox(height: AppSpacing.xs),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                names.first,
+                                style: text.titleLarge?.copyWith(color: accent),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              Text(time(0), style: text.bodyMedium),
+                            ],
+                          ),
+                        ),
+                        if (appearance.showAnalog) ...[
+                          const SizedBox(width: AppSpacing.xs),
+                          ExcludeSemantics(
+                            child: SizedBox.square(
+                              key: ValueKey('widget_preview_analog_$size'),
+                              dimension: size == 2
+                                  ? AppSpacing.xxl + AppSpacing.md
+                                  : AppSpacing.xxl,
+                              child: CustomPaint(
+                                painter: _WidgetDialPainter(accent),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                    const SizedBox(height: AppSpacing.xs),
+                    Text(l10n.widgetPreviewCountdown, style: text.titleLarge),
+                    if (appearance.showSchedule && size > 0) ...[
+                      const SizedBox(height: AppSpacing.md),
+                      if (size == 2)
+                        for (var index = 0; index < names.length; index++)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: AppSpacing.xs,
+                            ),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    names[index],
+                                    style: text.bodyMedium,
+                                  ),
+                                ),
+                                Text(time(index), style: text.bodyMedium),
+                              ],
+                            ),
+                          )
+                      else
+                        Wrap(
+                          spacing: AppSpacing.md,
+                          runSpacing: AppSpacing.xs,
+                          children: [
+                            for (var index = 0; index < names.length; index++)
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(names[index], style: text.labelSmall),
+                                  Text(time(index), style: text.bodySmall),
+                                ],
+                              ),
+                          ],
+                        ),
+                    ],
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _WidgetDialPainter extends CustomPainter {
+  final Color accent;
+  const _WidgetDialPainter(this.accent);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = size.center(Offset.zero);
+    final radius = size.shortestSide / 2 - AppSpacing.xxs;
+    final paint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = AppSpacing.xxs
+      ..strokeCap = StrokeCap.round
+      ..color = accent.withValues(alpha: 0.15);
+    final ring = Rect.fromCircle(center: center, radius: radius);
+    canvas.drawOval(ring, paint);
+    paint.color = accent;
+    canvas.drawArc(ring, -math.pi / 2, math.pi * 1.5, false, paint);
+    canvas.drawLine(center, center.translate(radius * 0.5, 0), paint);
+  }
+
+  @override
+  bool shouldRepaint(_WidgetDialPainter oldDelegate) =>
+      oldDelegate.accent != accent;
 }

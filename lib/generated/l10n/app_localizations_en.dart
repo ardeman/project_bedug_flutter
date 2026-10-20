@@ -602,4 +602,47 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get widgetRefresh => 'Open Bedug to refresh prayer times';
+
+  @override
+  String get widgetAnalogCountdown => 'Analog countdown';
+
+  @override
+  String get widgetAnalogDescription =>
+      'Show a circular timer alongside the digital countdown.';
+
+  @override
+  String get widgetSchedule => 'Upcoming prayer times';
+
+  @override
+  String get widgetScheduleDescription =>
+      'Show the next five prayers on medium and large iPhone widgets and wide Android widgets.';
+
+  @override
+  String get widgetAppearanceHelp =>
+      'Applies to home screen widgets on iPhone and Android. Choose or resize the widget on your home screen.';
+
+  @override
+  String get widgetPreview => 'Preview';
+
+  @override
+  String get widgetPreviewHelp =>
+      'Sample times illustrate the layout. Native widgets may look slightly different. Changes are saved automatically.';
+
+  @override
+  String get widgetSmall => 'Small';
+
+  @override
+  String get widgetMedium => 'Medium / wide';
+
+  @override
+  String get widgetLarge => 'Large';
+
+  @override
+  String get widgetAnalogAndDigital => 'Analog + digital';
+
+  @override
+  String get widgetDigitalOnly => 'Digital only';
+
+  @override
+  String get widgetPreviewCountdown => '01:30:00';
 }

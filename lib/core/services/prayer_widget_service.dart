@@ -12,6 +12,7 @@ import '../constants/app_colors.dart';
 import '../providers/locale_provider.dart';
 import 'notification_preferences.dart';
 import 'prayer_service.dart';
+import 'widget_appearance.dart';
 
 /// Absolute instants let native widgets advance without running Flutter.
 /// No coordinates are persisted outside the app; only its displayed city.
@@ -21,6 +22,7 @@ Map<String, Object> buildPrayerWidgetData({
   required AppLocalizations l10n,
   required DateTime now,
   required int themeMode,
+  WidgetAppearance appearance = const WidgetAppearance(),
 }) {
   final prayers = <Map<String, Object>>[];
   var intervalStart = now;
@@ -65,6 +67,8 @@ Map<String, Object> buildPrayerWidgetData({
     'title': l10n.nextPrayer,
     'refresh': l10n.widgetRefresh,
     'themeMode': themeMode,
+    'showAnalog': appearance.showAnalog,
+    'showSchedule': appearance.showSchedule,
     // Native views share the app's palette instead of duplicating hex values.
     'lightBackground': AppColors.lightBg.toARGB32(),
     'darkBackground': AppColors.darkBg.toARGB32(),
@@ -124,6 +128,7 @@ final prayerWidgetSyncProvider = Provider<void>((ref) {
               l10n: lookupAppLocalizations(ref.read(localeProvider)),
               now: clock.now(),
               themeMode: ref.read(settingsProvider).themeMode,
+              appearance: ref.read(widgetAppearanceProvider),
             ),
           ),
     );
@@ -138,6 +143,7 @@ final prayerWidgetSyncProvider = Provider<void>((ref) {
     }
   });
   ref.listen(localeProvider, (_, _) => sync());
+  ref.listen(widgetAppearanceProvider, (_, _) => sync());
   ref.listen(settingsProvider.select((s) => s.themeMode), (_, _) => sync());
   sync();
 });

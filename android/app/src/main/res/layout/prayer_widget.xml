@@ -22,6 +22,8 @@
                     android:maxLines="1" android:ellipsize="end"
                     android:autoSizeTextType="uniform" android:autoSizeMinTextSize="14sp"
                     android:autoSizeMaxTextSize="24sp" android:autoSizeStepGranularity="1sp" />
+                <TextView android:id="@+id/widget_time" android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:visibility="gone" />
                 <Chronometer android:id="@+id/widget_countdown" android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:countDown="true"
                     android:textAppearance="@android:style/TextAppearance.Material.Large"
