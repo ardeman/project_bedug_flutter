@@ -23,38 +23,73 @@ class _FakePrayerNotifier extends PrayerNotifier {
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  test(
-    'a failed auto detect turns auto detect off and loads the city',
-    () async {
-      final messenger =
-          TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
-      // Location services off, so auto detect fails at its first check.
-      messenger.setMockMethodCallHandler(_geolocatorChannel, (call) async {
-        if (call.method == 'isLocationServiceEnabled') return false;
-        return null;
-      });
-      addTearDown(
-        () => messenger.setMockMethodCallHandler(_geolocatorChannel, null),
-      );
+  for (final servicesEnabled in [false, true]) {
+    test(
+      'failed auto detect preserves preference and can retry, services: $servicesEnabled',
+      () async {
+        final messenger =
+            TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
+        var attempts = 0;
+        messenger.setMockMethodCallHandler(_geolocatorChannel, (call) async {
+          if (call.method == 'isLocationServiceEnabled') {
+            attempts++;
+            return servicesEnabled;
+          }
+          if (call.method == 'checkPermission') return 3;
+          if (call.method == 'getCurrentPosition') {
+            throw PlatformException(code: 'LOCATION_UPDATE_FAILURE');
+          }
+          return null;
+        });
+        addTearDown(
+          () => messenger.setMockMethodCallHandler(_geolocatorChannel, null),
+        );
 
-      SharedPreferences.setMockInitialValues({'selected_city_id': 'jakarta'});
-      final prefs = await SharedPreferences.getInstance();
-      final container = ProviderContainer(
-        overrides: [sharedPreferencesProvider.overrideWithValue(prefs)],
-      );
-      addTearDown(container.dispose);
-      container.listen(prayerProvider, (_, _) {});
+        SharedPreferences.setMockInitialValues({
+          'use_auto_location': true,
+          'selected_city_id': 'jakarta',
+        });
+        final prefs = await SharedPreferences.getInstance();
+        final container = ProviderContainer(
+          overrides: [sharedPreferencesProvider.overrideWithValue(prefs)],
+        );
+        addTearDown(container.dispose);
+        container.listen(prayerProvider, (_, _) {});
 
-      await pumpEventQueue();
+        await pumpEventQueue();
 
-      expect(container.read(settingsProvider).useAutoLocation, isFalse);
-      expect(prefs.getBool('use_auto_location'), isFalse);
-      final state = container.read(prayerProvider);
-      expect(state.error, isNull);
-      expect(state.times, isNotNull);
-      expect(state.locationLabel, container.read(manualCityProvider).name);
-    },
-  );
+        expect(container.read(settingsProvider).useAutoLocation, isTrue);
+        expect(prefs.getBool('use_auto_location'), isTrue);
+        final state = container.read(prayerProvider);
+        expect(state.loading, isFalse);
+        expect(state.error, isNotEmpty);
+        expect(state.showLocationGuide, isTrue);
+        expect(state.times, isNull);
+        expect(state.locationLabel, isNull);
+        expect(attempts, 1);
+
+        await container.read(prayerProvider.notifier).load();
+        expect(attempts, 2);
+        expect(container.read(settingsProvider).useAutoLocation, isTrue);
+        expect(prefs.getBool('use_auto_location'), isTrue);
+        expect(container.read(prayerProvider).loading, isFalse);
+        expect(container.read(prayerProvider).error, isNotEmpty);
+
+        // Manual-city fallback happens only when the user chooses it.
+        await container
+            .read(settingsProvider.notifier)
+            .setUseAutoLocation(false);
+        await pumpEventQueue();
+        final manualState = container.read(prayerProvider);
+        expect(manualState.error, isNull);
+        expect(manualState.times, isNotNull);
+        expect(
+          manualState.locationLabel,
+          container.read(manualCityProvider).name,
+        );
+      },
+    );
+  }
 
   test('the next prayer moves on once its time arrives', () {
     final times = PrayerTimes(

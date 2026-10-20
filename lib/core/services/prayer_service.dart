@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+
 import '../../generated/l10n/app_localizations.dart';
 import '../constants/city_catalog.dart';
 import '../providers/locale_provider.dart';
@@ -45,14 +46,13 @@ class PrayerState {
     bool? loading,
     String? error,
     bool? showLocationGuide,
-  }) =>
-      PrayerState(
-        times: times ?? this.times,
-        locationLabel: locationLabel ?? this.locationLabel,
-        loading: loading ?? this.loading,
-        error: error, // Always replaced, so omitting it clears the error.
-        showLocationGuide: showLocationGuide ?? this.showLocationGuide,
-      );
+  }) => PrayerState(
+    times: times ?? this.times,
+    locationLabel: locationLabel ?? this.locationLabel,
+    loading: loading ?? this.loading,
+    error: error, // Always replaced, so omitting it clears the error.
+    showLocationGuide: showLocationGuide ?? this.showLocationGuide,
+  );
 }
 
 // ── Notifier ──────────────────────────────────────────────────────────────────
@@ -85,8 +85,11 @@ class PrayerNotifier extends Notifier<PrayerState> {
 
   Future<void> load() async {
     final loadId = ++_loadId;
-    state =
-        state.copyWith(loading: true, error: null, showLocationGuide: false);
+    state = state.copyWith(
+      loading: true,
+      error: null,
+      showLocationGuide: false,
+    );
     try {
       final settings = ref.read(settingsProvider);
       final Coordinates coords;
@@ -107,8 +110,10 @@ class PrayerNotifier extends Notifier<PrayerState> {
       final times = PrayerTimes.today(coords, params);
 
       if (loadId != _loadId) return;
-      NotificationService.schedulePrayerNotifications(times, _l10n)
-          .catchError((_) {});
+      NotificationService.schedulePrayerNotifications(
+        times,
+        _l10n,
+      ).catchError((_) {});
       state = state.copyWith(
         times: times,
         locationLabel: locationLabel,
@@ -116,12 +121,8 @@ class PrayerNotifier extends Notifier<PrayerState> {
       );
     } catch (e) {
       if (loadId != _loadId) return;
-      if (ref.read(settingsProvider).useAutoLocation) {
-        // Auto detect can't work right now, so switch it off. The settings
-        // listener then reloads with the manual city instead.
-        ref.read(settingsProvider.notifier).setUseAutoLocation(false);
-        return;
-      }
+      // Keep the user's location preference: a failed fix should surface an
+      // actionable error, not silently switch prayer times to a manual city.
       final error = e is PrayerLoadException
           ? e
           : PrayerLoadException(_l10n.locationError, showLocationGuide: true);
@@ -256,11 +257,11 @@ class PrayerNotifier extends Notifier<PrayerState> {
 /// Prayer times on [date]'s calendar day, for the same place and method as
 /// [reference]. Calculated on demand, so the schedule can reach any date.
 PrayerTimes prayerTimesOn(PrayerTimes reference, DateTime date) => PrayerTimes(
-      reference.coordinates,
-      // Date only, so the time of day and DST never shift the result.
-      DateComponents(date.year, date.month, date.day),
-      reference.calculationParameters,
-    );
+  reference.coordinates,
+  // Date only, so the time of day and DST never shift the result.
+  DateComponents(date.year, date.month, date.day),
+  reference.calculationParameters,
+);
 
 // ── Providers ─────────────────────────────────────────────────────────────────
 final prayerProvider = NotifierProvider<PrayerNotifier, PrayerState>(
@@ -281,7 +282,8 @@ final nextPrayerProvider = Provider<({String key, DateTime? time})>((ref) {
   };
 
   // After Isha, count down to the next day's Fajr so it never goes negative.
-  final next = schedule.entries
+  final next =
+      schedule.entries
           .where((e) => e.value.isAfter(now))
           .map((e) => (key: e.key, time: e.value))
           .firstOrNull ??

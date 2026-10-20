@@ -7,6 +7,15 @@
         {
           "type": "fixed",
           "text": {
+            "id": "Kegagalan mendeteksi lokasi tidak lagi mematikan deteksi otomatis atau diam-diam mengganti lokasi ke kota manual. Pesan kesalahan dan tombol coba lagi kini ditampilkan.",
+            "en": "Location failures no longer turn off auto-detect or silently switch to a manual city. An error and retry option are shown instead.",
+            "ar": "لم تعد أخطاء تحديد الموقع توقف الكشف التلقائي أو تحول الموقع بصمت إلى مدينة مختارة يدويًا. تظهر الآن رسالة خطأ وخيار لإعادة المحاولة.",
+            "ms": "Kegagalan mengesan lokasi tidak lagi mematikan pengesanan automatik atau menukar lokasi secara senyap kepada bandar manual. Mesej ralat dan pilihan cuba lagi kini dipaparkan."
+          }
+        },
+        {
+          "type": "fixed",
+          "text": {
             "id": "Deskripsi metode perhitungan kini tampil di bawah bilah judul Liquid Glass di perangkat Apple, bukan tertutup olehnya.",
             "en": "The calculation-method description now starts below the Liquid Glass toolbar on Apple devices so it remains visible.",
             "ar": "يظهر وصف طريقة الحساب الآن أسفل شريط أدوات Liquid Glass على أجهزة Apple ليبقى مرئيًا.",
