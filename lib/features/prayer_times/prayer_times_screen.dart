@@ -8,6 +8,7 @@ import 'package:liquid_glass_easy/liquid_glass_easy.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../generated/l10n/app_localizations.dart';
 import '../../core/constants/app_colors.dart';
+import '../../core/design/glass_controls.dart';
 import '../../core/design/liquid_glass.dart';
 import '../../core/theme/app_tokens.dart';
 import '../../core/services/prayer_service.dart';
@@ -157,8 +158,7 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
 
           // ── Body ─────────────────────────────────────────────────────
           if (state.loading)
-            const SliverFillRemaining(
-                child: Center(child: CircularProgressIndicator()))
+            const SliverFillRemaining(child: Center(child: AdaptiveSpinner()))
           else if (state.error != null)
             SliverFillRemaining(
               child: Center(
@@ -186,11 +186,23 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                         ),
                       ),
                     const SizedBox(height: AppSpacing.xxs),
-                    FilledButton.icon(
-                      icon: const Icon(Icons.refresh),
-                      label: Text(l10n.retry),
-                      onPressed: () => ref.read(prayerProvider.notifier).load(),
-                    ),
+                    if (_isApple)
+                      LiquidGlassButton(
+                        icon: Icons.refresh,
+                        label: l10n.retry,
+                        foregroundColor: AppColors.accentOf(ctx),
+                        style: LiquidGlassButton.defaultStyle
+                            .copyWith(color: glassTintOf(ctx)),
+                        onPressed: () =>
+                            ref.read(prayerProvider.notifier).load(),
+                      )
+                    else
+                      FilledButton.icon(
+                        icon: const Icon(Icons.refresh),
+                        label: Text(l10n.retry),
+                        onPressed: () =>
+                            ref.read(prayerProvider.notifier).load(),
+                      ),
                   ]),
                 ),
               ),
@@ -587,23 +599,12 @@ class _GlassIconButton extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext ctx) {
-    const size = _LiquidGlassAppBar._actionSize;
-    return LiquidGlassButton(
-      icon: icon,
-      onPressed: onTap,
-      width: size,
-      height: size,
-      padding: EdgeInsets.zero,
-      iconSize: 20,
-      foregroundColor: color,
-      style: LiquidGlassStyle(
-        shape: const LiquidGlassShape.continuousRoundedRectangle(
-            cornerRadius: size / 2),
-        color: glassTintOf(ctx),
-      ),
-    );
-  }
+  Widget build(BuildContext ctx) => GlassIconButton(
+        icon: icon,
+        onPressed: onTap,
+        color: color,
+        size: _LiquidGlassAppBar._actionSize,
+      );
 }
 
 // ── Liquid Glass Card (Apple) ─────────────────────────────────────────────────

@@ -10,6 +10,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/constants/app_colors.dart';
+import '../../../core/design/glass_controls.dart';
+import '../../../core/design/liquid_glass.dart';
 import '../../../core/services/prayer_service.dart';
 import '../../../core/utils/qibla_utils.dart';
 import '../../../generated/l10n/app_localizations.dart';
@@ -80,7 +82,7 @@ class _QiblaCardState extends ConsumerState<QiblaCard> {
       content = prayer.loading
           ? const Padding(
               padding: EdgeInsets.all(32),
-              child: Center(child: CircularProgressIndicator()),
+              child: Center(child: AdaptiveSpinner()),
             )
           : Padding(
               padding: const EdgeInsets.all(24),
@@ -90,11 +92,7 @@ class _QiblaCardState extends ConsumerState<QiblaCard> {
       content = _buildQibla(ctx, l10n, coords, prayer.locationLabel);
     }
 
-    return Card(
-      margin: const EdgeInsets.all(16),
-      clipBehavior: Clip.antiAlias,
-      child: content,
-    );
+    return GlassCard(child: content);
   }
 
   Widget _buildQibla(

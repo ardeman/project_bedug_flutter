@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import '../../core/design/liquid_glass.dart';
+import '../../core/design/glass_controls.dart';
 import '../../core/design/platform_capabilities.dart';
 import 'package:hijri/hijri_calendar.dart';
 import '../../generated/l10n/app_localizations.dart';
 import '../../core/constants/app_colors.dart';
+import '../../core/theme/app_tokens.dart';
 import '../../core/utils/hijri_utils.dart';
 
 class HijriCalendarScreen extends StatefulWidget {
@@ -72,6 +74,84 @@ class _HijriCalendarScreenState extends State<HijriCalendarScreen> {
     final firstGreg = _toGreg(_viewYear, _viewMonth, 1);
     final startWeekday = firstGreg.weekday % 7;
 
+    final isApple = PlatformCapabilities.isApple;
+    final todayLabel = Text(
+      '${l10n.today}: ${_fullHijriDate(l10n, _today)}',
+      textAlign: TextAlign.center,
+      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+    );
+    final weekdays = Column(children: [
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Row(
+          children: [
+            l10n.sun,
+            l10n.mon,
+            l10n.tue,
+            l10n.wed,
+            l10n.thu,
+            l10n.fri,
+            l10n.sat
+          ]
+              .map((d) => Expanded(
+                    child: Center(
+                      child: Text(d,
+                          style: TextStyle(
+                            color:
+                                d == l10n.fri ? AppColors.accentOf(ctx) : null,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 12,
+                          )),
+                    ),
+                  ))
+              .toList(),
+        ),
+      ),
+      if (isApple) const Hairline() else const Divider(height: 1),
+    ]);
+    final monthGrid = Expanded(
+      child: GridView.builder(
+        padding: const EdgeInsets.all(8),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 7,
+          childAspectRatio: 1,
+        ),
+        itemCount: startWeekday + days.length,
+        itemBuilder: (ctx, i) {
+          if (i < startWeekday) return const SizedBox();
+          final day = days[i - startWeekday];
+          final greg = _toGreg(day.hYear, day.hMonth, day.hDay);
+          final isToday = day.hDay == _today.hDay &&
+              day.hMonth == _today.hMonth &&
+              day.hYear == _today.hYear;
+
+          return Container(
+            margin: const EdgeInsets.all(2),
+            decoration: BoxDecoration(
+              color: isToday ? AppColors.accentOf(ctx) : null,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('${day.hDay}',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                      color: isToday ? Colors.white : null,
+                    )),
+                Text('${greg.day}',
+                    style: TextStyle(
+                      fontSize: 9,
+                      color: isToday ? Colors.white70 : Colors.grey,
+                    )),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+
     return Scaffold(
       extendBodyBehindAppBar: PlatformCapabilities.isApple,
       appBar: GlassTopBar(title: l10n.hijriCalendar),
@@ -79,96 +159,66 @@ class _HijriCalendarScreenState extends State<HijriCalendarScreen> {
       // and of the floating nav bar.
       body: SafeArea(
         child: Column(children: [
-          Container(
-            width: double.infinity,
-            color: AppColors.accentOf(ctx).withValues(alpha: .12),
-            padding: const EdgeInsets.symmetric(vertical: 12),
-            child: Text(
-              '${l10n.today}: ${_fullHijriDate(l10n, _today)}',
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-            ),
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            IconButton(icon: const Icon(Icons.chevron_left), onPressed: _prev),
-            Text(
-              '${_monthName(l10n, _viewMonth)} $_viewYear H',
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            IconButton(icon: const Icon(Icons.chevron_right), onPressed: _next),
-          ]),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Row(
-              children: [
-                l10n.sun,
-                l10n.mon,
-                l10n.tue,
-                l10n.wed,
-                l10n.thu,
-                l10n.fri,
-                l10n.sat
-              ]
-                  .map((d) => Expanded(
-                        child: Center(
-                          child: Text(d,
-                              style: TextStyle(
-                                color: d == l10n.fri
-                                    ? AppColors.accentOf(ctx)
-                                    : null,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 12,
-                              )),
-                        ),
-                      ))
-                  .toList(),
-            ),
-          ),
-          const Divider(height: 1),
-          Expanded(
-            child: GridView.builder(
-              padding: const EdgeInsets.all(8),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 7,
-                childAspectRatio: 1,
+          if (isApple)
+            GlassCard(
+              margin: const EdgeInsets.fromLTRB(
+                  AppSpacing.md, AppSpacing.xs, AppSpacing.md, 0),
+              child: SizedBox(
+                width: double.infinity,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+                  child: todayLabel,
+                ),
               ),
-              itemCount: startWeekday + days.length,
-              itemBuilder: (ctx, i) {
-                if (i < startWeekday) return const SizedBox();
-                final day = days[i - startWeekday];
-                final greg = _toGreg(day.hYear, day.hMonth, day.hDay);
-                final isToday = day.hDay == _today.hDay &&
-                    day.hMonth == _today.hMonth &&
-                    day.hYear == _today.hYear;
-
-                return Container(
-                  margin: const EdgeInsets.all(2),
-                  decoration: BoxDecoration(
-                    color: isToday ? AppColors.accentOf(ctx) : null,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('${day.hDay}',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 13,
-                            color: isToday ? Colors.white : null,
-                          )),
-                      Text('${greg.day}',
-                          style: TextStyle(
-                            fontSize: 9,
-                            color: isToday ? Colors.white70 : Colors.grey,
-                          )),
-                    ],
-                  ),
-                );
-              },
+            )
+          else
+            Container(
+              width: double.infinity,
+              color: AppColors.accentOf(ctx).withValues(alpha: .12),
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              child: todayLabel,
             ),
+          Padding(
+            padding: isApple
+                ? const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.md, vertical: AppSpacing.xs)
+                : EdgeInsets.zero,
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _monthButton(Icons.chevron_left, _prev),
+                  Text(
+                    '${_monthName(l10n, _viewMonth)} $_viewYear H',
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  _monthButton(Icons.chevron_right, _next),
+                ]),
           ),
+          if (isApple)
+            Expanded(
+              child: GlassCard(
+                margin: const EdgeInsets.fromLTRB(
+                    AppSpacing.md, 0, AppSpacing.md, AppSpacing.md),
+                child: Column(children: [
+                  const SizedBox(height: AppSpacing.xs),
+                  weekdays,
+                  monthGrid,
+                ]),
+              ),
+            )
+          else ...[
+            weekdays,
+            monthGrid,
+          ],
         ]),
       ),
     );
   }
+
+  /// Previous / next month: a round glass button on Apple.
+  Widget _monthButton(IconData icon, VoidCallback onPressed) =>
+      PlatformCapabilities.isApple
+          ? GlassIconButton(icon: icon, onPressed: onPressed)
+          : IconButton(icon: Icon(icon), onPressed: onPressed);
 }
