@@ -12,6 +12,13 @@
 
   "fajr": "Fajr",
   "sunrise": "Sunrise",
+  "imsak": "Imsak",
+  "dhuha": "Dhuha",
+  "lastThirdOfNight": "Last third of night",
+  "imsakDescription": "10-minute reminder before Fajr. Fasting begins at Fajr.",
+  "sunriseDescription": "End of Fajr time.",
+  "dhuhaDescription": "Estimated start: 20 minutes after sunrise.",
+  "lastThirdOfNightDescription": "For tahajud before this day’s Fajr, using the previous sunset.",
   "dhuhr": "Dhuhr",
   "asr": "Asr",
   "maghrib": "Maghrib",

@@ -40,6 +40,29 @@ class AppLocalizationsAr extends AppLocalizations {
   String get sunrise => 'الشروق';
 
   @override
+  String get imsak => 'الإمساك';
+
+  @override
+  String get dhuha => 'الضحى';
+
+  @override
+  String get lastThirdOfNight => 'الثلث الأخير من الليل';
+
+  @override
+  String get imsakDescription =>
+      'تذكير قبل الفجر بعشر دقائق. يبدأ الصيام عند الفجر.';
+
+  @override
+  String get sunriseDescription => 'نهاية وقت صلاة الفجر.';
+
+  @override
+  String get dhuhaDescription => 'بداية تقديرية: بعد الشروق بعشرين دقيقة.';
+
+  @override
+  String get lastThirdOfNightDescription =>
+      'للتهجد قبل فجر هذا اليوم، ويُحسب من غروب اليوم السابق.';
+
+  @override
   String get dhuhr => 'الظهر';
 
   @override

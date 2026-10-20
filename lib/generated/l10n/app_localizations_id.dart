@@ -41,6 +41,29 @@ class AppLocalizationsId extends AppLocalizations {
   String get sunrise => 'Terbit';
 
   @override
+  String get imsak => 'Imsak';
+
+  @override
+  String get dhuha => 'Duha';
+
+  @override
+  String get lastThirdOfNight => 'Sepertiga malam terakhir';
+
+  @override
+  String get imsakDescription =>
+      'Pengingat 10 menit sebelum Subuh. Puasa dimulai saat Subuh.';
+
+  @override
+  String get sunriseDescription => 'Akhir waktu Subuh.';
+
+  @override
+  String get dhuhaDescription => 'Perkiraan awal: 20 menit setelah terbit.';
+
+  @override
+  String get lastThirdOfNightDescription =>
+      'Untuk tahajud sebelum Subuh hari ini, dihitung dari Magrib sebelumnya.';
+
+  @override
   String get dhuhr => 'Dzuhur';
 
   @override

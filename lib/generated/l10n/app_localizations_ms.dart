@@ -40,6 +40,29 @@ class AppLocalizationsMs extends AppLocalizations {
   String get sunrise => 'Syuruk';
 
   @override
+  String get imsak => 'Imsak';
+
+  @override
+  String get dhuha => 'Duha';
+
+  @override
+  String get lastThirdOfNight => 'Sepertiga malam terakhir';
+
+  @override
+  String get imsakDescription =>
+      'Peringatan 10 minit sebelum Subuh. Puasa bermula pada Subuh.';
+
+  @override
+  String get sunriseDescription => 'Akhir waktu Subuh.';
+
+  @override
+  String get dhuhaDescription => 'Anggaran mula: 20 minit selepas syuruk.';
+
+  @override
+  String get lastThirdOfNightDescription =>
+      'Untuk tahajud sebelum Subuh hari ini, dikira dari Maghrib sebelumnya.';
+
+  @override
   String get dhuhr => 'Zohor';
 
   @override

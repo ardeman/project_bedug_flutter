@@ -12,6 +12,13 @@
 
   "fajr": "الفجر",
   "sunrise": "الشروق",
+  "imsak": "الإمساك",
+  "dhuha": "الضحى",
+  "lastThirdOfNight": "الثلث الأخير من الليل",
+  "imsakDescription": "تذكير قبل الفجر بعشر دقائق. يبدأ الصيام عند الفجر.",
+  "sunriseDescription": "نهاية وقت صلاة الفجر.",
+  "dhuhaDescription": "بداية تقديرية: بعد الشروق بعشرين دقيقة.",
+  "lastThirdOfNightDescription": "للتهجد قبل فجر هذا اليوم، ويُحسب من غروب اليوم السابق.",
   "dhuhr": "الظهر",
   "asr": "العصر",
   "maghrib": "المغرب",

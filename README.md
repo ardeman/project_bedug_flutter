@@ -169,8 +169,8 @@ Bedug grows from a prayer-times app into a companion for a Muslim's day, week an
 
 1. **Qibla direction (done):** compass card in the new Worship tab, using `adhan`'s `Qibla` bearing and the device heading from `flutter_compass` on iOS and Android. Desktop has no compass, so the dial stays north-up and shows the bearing, the distance and the Qibla's angle from the sun while it is up.
 2. **Notification control (done; device delivery checks pending):** master and per-prayer on/off, a reminder 5, 10, 15 or 30 minutes before prayer, and system sound or silent mode. No recorded azan. Android, iOS and macOS queue six days of alerts, refreshed on opening/resuming the app, at midnight while running, and when preferences change. Android falls back to inexact alarms without exact-alarm access; Settings links to system notification settings and exact-alarm permission. Scheduled alerts are not available on Windows or Linux yet.
-3. **Extra times (next):** imsak, sunrise (end of Subuh), dhuha, and the last third of the night for tahajud.
-4. **Home screen widgets:** next prayer and countdown on iOS and Android (add `home_widget` and the native widget targets).
+3. **Extra times (done):** imsak (10 minutes before Subuh; fasting starts at Subuh), sunrise (end of Subuh), estimated dhuha start (20 minutes after sunrise), and the last third of the night for tahajud. The night is measured from the previous day’s Maghrib to the selected day’s Subuh, so the displayed time belongs to that morning. Dhuha is a fixed-offset estimate, not an official Kemenag timetable.
+4. **Home screen widgets (next):** next prayer and countdown on iOS and Android (add `home_widget` and the native widget targets).
 
 Prayer tracking and prayer-progress features (completion logs, streaks and qada counts) are outside the product scope.
 

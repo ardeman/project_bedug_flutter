@@ -7,6 +7,15 @@
         {
           "type": "new",
           "text": {
+            "id": "Jadwal harian kini menampilkan imsak, perkiraan awal duha, dan sepertiga malam terakhir, serta penanda akhir waktu Subuh saat terbit.",
+            "en": "Daily schedules now show imsak, an estimated Dhuha start, and the last third of the night, with sunrise marking the end of Fajr.",
+            "ar": "يعرض الجدول اليومي الآن الإمساك وبداية تقديرية للضحى والثلث الأخير من الليل، مع توضيح أن الشروق نهاية وقت الفجر.",
+            "ms": "Jadual harian kini memaparkan imsak, anggaran mula Duha dan sepertiga malam terakhir, dengan syuruk menandakan akhir waktu Subuh."
+          }
+        },
+        {
+          "type": "new",
+          "text": {
             "id": "Atur notifikasi untuk setiap salat, pengingat sebelum azan, serta pilihan suara sistem atau senyap di Pengaturan.",
             "en": "Choose alerts for each prayer, reminders before prayer, and system sound or silent delivery in Settings.",
             "ar": "اختر تنبيهات كل صلاة والتذكيرات قبل الصلاة وصوت النظام أو الوضع الصامت من الإعدادات.",

@@ -30,6 +30,13 @@
   "@fajr": { "description": "Fajr prayer name in Indonesian" },
 
   "sunrise": "Terbit",
+  "imsak": "Imsak",
+  "dhuha": "Duha",
+  "lastThirdOfNight": "Sepertiga malam terakhir",
+  "imsakDescription": "Pengingat 10 menit sebelum Subuh. Puasa dimulai saat Subuh.",
+  "sunriseDescription": "Akhir waktu Subuh.",
+  "dhuhaDescription": "Perkiraan awal: 20 menit setelah terbit.",
+  "lastThirdOfNightDescription": "Untuk tahajud sebelum Subuh hari ini, dihitung dari Magrib sebelumnya.",
   "@sunrise": {},
 
   "dhuhr": "Dzuhur",

@@ -21,6 +21,7 @@ import '../../core/design/glass_controls.dart';
 import '../../core/design/liquid_glass.dart';
 import '../../core/theme/app_tokens.dart';
 import '../../core/services/prayer_service.dart';
+import '../../core/services/extra_prayer_times.dart';
 import '../../core/providers/locale_provider.dart';
 import '../../core/widgets/calculation_method_picker.dart';
 import 'widgets/prayer_day_picker.dart';
@@ -310,9 +311,37 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
     String? nextKey,
   ) {
     final l10n = AppLocalizations.of(ctx);
+    final extra = ExtraPrayerTimes(times);
     final prayers = [
+      _PrayerEntry(
+        'lastThirdOfNight',
+        l10n.lastThirdOfNight,
+        Icons.nightlight_outlined,
+        extra.lastThirdOfNight,
+        description: l10n.lastThirdOfNightDescription,
+      ),
+      _PrayerEntry(
+        'imsak',
+        l10n.imsak,
+        Icons.timer_outlined,
+        extra.imsak,
+        description: l10n.imsakDescription,
+      ),
       _PrayerEntry('fajr', l10n.fajr, Icons.bedtime_outlined, times.fajr),
-      _PrayerEntry('sunrise', l10n.sunrise, Icons.wb_twilight, times.sunrise),
+      _PrayerEntry(
+        'sunrise',
+        l10n.sunrise,
+        Icons.wb_twilight,
+        times.sunrise,
+        description: l10n.sunriseDescription,
+      ),
+      _PrayerEntry(
+        'dhuha',
+        l10n.dhuha,
+        Icons.wb_sunny_outlined,
+        extra.dhuha,
+        description: l10n.dhuhaDescription,
+      ),
       _PrayerEntry('dhuhr', l10n.dhuhr, Icons.wb_sunny_outlined, times.dhuhr),
       _PrayerEntry('asr', l10n.asr, Icons.wb_cloudy_outlined, times.asr),
       _PrayerEntry(
@@ -1293,9 +1322,17 @@ class _LiquidGlassCard extends StatelessWidget {
                           color: isNext ? Colors.white : onSurface,
                         ),
                       ),
+                      if (entry.description case final description?)
+                        Text(
+                          description,
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: theme.colorScheme.onSurfaceVariant,
+                          ),
+                        ),
                     ],
                   ),
                 ),
+                const SizedBox(width: AppSpacing.sm),
                 Text(
                   timeStr,
                   style: theme.textTheme.titleLarge?.copyWith(
@@ -1372,6 +1409,7 @@ class _MaterialCard extends StatelessWidget {
           ),
         ],
       ),
+      subtitle: entry.description == null ? null : Text(entry.description!),
       trailing: Text(
         timeStr,
         style: theme.textTheme.titleLarge?.copyWith(
@@ -1500,5 +1538,13 @@ class _PrayerEntry {
   final String label;
   final IconData icon;
   final DateTime? time;
-  _PrayerEntry(this.key, this.label, this.icon, this.time);
+  final String? description;
+
+  const _PrayerEntry(
+    this.key,
+    this.label,
+    this.icon,
+    this.time, {
+    this.description,
+  });
 }

@@ -41,6 +41,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sunrise => 'Sunrise';
 
   @override
+  String get imsak => 'Imsak';
+
+  @override
+  String get dhuha => 'Dhuha';
+
+  @override
+  String get lastThirdOfNight => 'Last third of night';
+
+  @override
+  String get imsakDescription =>
+      '10-minute reminder before Fajr. Fasting begins at Fajr.';
+
+  @override
+  String get sunriseDescription => 'End of Fajr time.';
+
+  @override
+  String get dhuhaDescription => 'Estimated start: 20 minutes after sunrise.';
+
+  @override
+  String get lastThirdOfNightDescription =>
+      'For tahajud before this day’s Fajr, using the previous sunset.';
+
+  @override
   String get dhuhr => 'Dhuhr';
 
   @override

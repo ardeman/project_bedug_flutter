@@ -12,6 +12,13 @@
 
   "fajr": "Subuh",
   "sunrise": "Syuruk",
+  "imsak": "Imsak",
+  "dhuha": "Duha",
+  "lastThirdOfNight": "Sepertiga malam terakhir",
+  "imsakDescription": "Peringatan 10 minit sebelum Subuh. Puasa bermula pada Subuh.",
+  "sunriseDescription": "Akhir waktu Subuh.",
+  "dhuhaDescription": "Anggaran mula: 20 minit selepas syuruk.",
+  "lastThirdOfNightDescription": "Untuk tahajud sebelum Subuh hari ini, dikira dari Maghrib sebelumnya.",
   "dhuhr": "Zohor",
   "asr": "Asar",
   "maghrib": "Maghrib",

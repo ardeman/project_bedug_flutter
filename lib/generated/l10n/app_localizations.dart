@@ -162,6 +162,48 @@ abstract class AppLocalizations {
   /// **'Terbit'**
   String get sunrise;
 
+  /// No description provided for @imsak.
+  ///
+  /// In id, this message translates to:
+  /// **'Imsak'**
+  String get imsak;
+
+  /// No description provided for @dhuha.
+  ///
+  /// In id, this message translates to:
+  /// **'Duha'**
+  String get dhuha;
+
+  /// No description provided for @lastThirdOfNight.
+  ///
+  /// In id, this message translates to:
+  /// **'Sepertiga malam terakhir'**
+  String get lastThirdOfNight;
+
+  /// No description provided for @imsakDescription.
+  ///
+  /// In id, this message translates to:
+  /// **'Pengingat 10 menit sebelum Subuh. Puasa dimulai saat Subuh.'**
+  String get imsakDescription;
+
+  /// No description provided for @sunriseDescription.
+  ///
+  /// In id, this message translates to:
+  /// **'Akhir waktu Subuh.'**
+  String get sunriseDescription;
+
+  /// No description provided for @dhuhaDescription.
+  ///
+  /// In id, this message translates to:
+  /// **'Perkiraan awal: 20 menit setelah terbit.'**
+  String get dhuhaDescription;
+
+  /// No description provided for @lastThirdOfNightDescription.
+  ///
+  /// In id, this message translates to:
+  /// **'Untuk tahajud sebelum Subuh hari ini, dihitung dari Magrib sebelumnya.'**
+  String get lastThirdOfNightDescription;
+
   /// No description provided for @dhuhr.
   ///
   /// In id, this message translates to:
