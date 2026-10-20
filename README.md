@@ -125,7 +125,7 @@ lib/
     widgets/         Shared widgets (calculation method picker)
   features/
     prayer_times/    Prayer times screen, day picker and Hijri month grid
-    worship/         Worship tab (hosts Qibla, later tasbih and duas)
+    worship/         Worship tab (hosts Qibla, later dzikir and duas)
     qibla/           Qibla compass card
     prayer/          Prayer card widget
     settings/        Settings screen
@@ -178,7 +178,7 @@ Bedug grows from a prayer-times app into a companion for a Muslim's day, week an
 
 **Principles for every phase**
 
-- **Offline first, private by default.** Everything works without a network or an account, and the user's worship data (tasbih counts, bookmarks) stays on the device. Any sync is opt-in and comes later.
+- **Offline first, private by default.** Everything works without a network or an account, and the user's worship data (bookmarks and reading history) stays on the device. Any sync is opt-in and comes later.
 - **Trusted, licensed content.** Quran text, translations, duas and dzikir come from named sources whose license allows bundling (for example Tanzil for Quran text, Kemenag RI for the Indonesian translation). Each source is credited in the app.
 - **Content is data, not UI strings.** Religious texts ship as per-locale JSON under `assets/content/<locale>/`. Only UI labels go through `AppLocalizations`.
 - **Every feature on every platform design** (Liquid Glass, Material 3 Expressive, Fluent), in all four languages, including right-to-left Arabic.
@@ -190,14 +190,13 @@ Bedug grows from a prayer-times app into a companion for a Muslim's day, week an
 3. **Extra times (done):** imsak (10 minutes before Subuh; fasting starts at Subuh), sunrise (end of Subuh), estimated dhuha start (20 minutes after sunrise), and the last third of the night for tahajud. The night is measured from the previous day’s Maghrib to the selected day’s Subuh, so the displayed time belongs to that morning. Dhuha is a fixed-offset estimate, not an official Kemenag timetable.
 4. **Home screen widgets (implemented; iPhone checks recorded under [Home screen widgets](#home-screen-widgets), remaining device checks pending):** next prayer and live countdown on iOS and Android. The app shares seven independently calculated days on load/resume, midnight, and calculation, city or language changes. iOS uses a WidgetKit timeline; Android uses a native chronometer and inexact transition alarms (updates may be delayed in Doze). After seven days, open Bedug to refresh.
 
-Prayer tracking and prayer-progress features (completion logs, streaks and qada counts) are outside the product scope.
+Prayer tracking and prayer-progress features (completion logs, streaks and qada counts), as well as a tasbih counter, are outside the product scope.
 
 **Phase 2: Dzikir and dua**
 
-1. **Tasbih counter:** large tap target with haptics, presets (33 × subhanallah, alhamdulillah, allahu akbar) and custom targets.
-2. **Morning and evening dzikir** (dzikir pagi/petang): Arabic, transliteration and translation, with a reminder after Subuh and Asar.
-3. **Daily duas** by situation (waking, eating, travel, entering the mosque) and the **Asmaul Husna**.
-4. **After-prayer dzikir** accessible directly from the Worship tab.
+1. **Morning and evening dzikir** (dzikir pagi/petang): Arabic, transliteration and translation, with a reminder after Subuh and Asar.
+2. **Daily duas** by situation (waking, eating, travel, entering the mosque) and the **Asmaul Husna**.
+3. **After-prayer dzikir** accessible directly from the Worship tab.
 
 **Phase 3: Quran**
 
@@ -219,7 +218,7 @@ Prayer tracking and prayer-progress features (completion logs, streaks and qada 
 2. **Nearby mosques:** needs a maps or places provider, so it waits on a cost and privacy review.
 3. **Optional backup and sync** of bookmarks and reading history across devices.
 
-**Navigation.** Three tabs can't hold this. Phase 1 adds a **Worship** tab (Qibla, and later tasbih and dua); Phase 3 adds a **Quran** tab, giving five: Prayer times, Worship, Quran, Calendar, Settings.
+**Navigation.** Three tabs can't hold this. Phase 1 adds a **Worship** tab (Qibla, and later dzikir and dua); Phase 3 adds a **Quran** tab, giving five: Prayer times, Worship, Quran, Calendar, Settings.
 
 **Open decisions**
 
