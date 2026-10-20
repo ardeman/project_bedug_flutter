@@ -29,7 +29,7 @@ A change is done only when the **Checks** command in `README.md` passes. If you 
 - Text styles come from `Theme.of(ctx).textTheme` (font: bundled Plus Jakarta Sans), spacing from `AppSpacing` and corner radii from `AppRadii` (`lib/core/theme/app_tokens.dart`). Override a text style with `copyWith` instead of building a new `TextStyle` with a raw `fontSize`.
 - Code comments are in English.
 - Release notes live in `assets/changelog/changelog.json`, newest release first, each change typed `new`, `improved` or `fixed` and written in all four languages. The app's What's New screen and the website's changelog page both read it, so it is the one place user-facing text skips the ARB files. When a commit changes what users see, add a line to the top release. The top release's version must match `version:` in `pubspec.yaml` (a test checks this); its `date` stays `null` until it ships.
-- Landing page text lives in `site/i18n/*.json`, with every key in all four languages; the site has no JavaScript (its CSP blocks scripts and inline styles). See "Website" in `README.md`.
+- Landing page text lives in `site/i18n/*.json`, with every key in all four languages; the site's only script is the home page's live phone mock (`site/static/live.js` with the vendored `adhan` library), and its CSP allows same-origin scripts only, with inline scripts and styles blocked. See "Website" in `README.md`.
 
 ## Platform design
 
@@ -115,4 +115,5 @@ Record architectural choices here as one line each: date, decision, reason.
 - 2026-10-20: The app ID is `com.ardeman.bedug` on every platform (was `com.bedug.app`), changed before the first store upload so it sits under the publisher's reverse domain.
 - 2026-10-20: Picker selection ticks go through `SelectionFeedback`: haptics on iPhone and Android, the system click on iPad, and a bundled tick (`assets/sounds/selection_tick.wav`, played with `audioplayers`) on macOS, Windows and Linux, because Flutter's haptics and system click do nothing on desktop.
 - 2026-10-20: Indonesian text uses the KBBI spelling "salat" in the app, the site and the store name ("Bedug: Jadwal Salat", since "Bedug" was taken), with "sholat" and other variants only in the store keywords, so the app reads correctly and is still found by every spelling.
+- 2026-10-20: The home page's phone mock is live: the Worker (`site/worker.js`) adds the visitor's approximate location from Cloudflare's IP geolocation, and a small same-origin script computes that place's times with the vendored `adhan` JS port (Kemenag, as in the app), so visitors see their own prayer times; this ends the site being script-free, and without scripts the static Jakarta mock remains.
 - 2026-10-20: The changelog is one JSON file with every language inline (`assets/changelog/changelog.json`), bundled into the app and read by `site/build.py`, so release notes are written once and the app and the site never drift.

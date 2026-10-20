@@ -26,11 +26,15 @@
   },
   "next_prayer": "Next prayer",
   "mock": {
-    "label": "Bedug showing today's prayer times in Jakarta, with Asr up next",
+    "label": "Bedug showing today's prayer times in {place}, with {next} up next",
     "place": "Jakarta",
     "hijri": "9 Jumada al-Ula 1448",
     "times": ["04:38", "11:52", "15:13", "17:52", "19:03"]
   },
+  "hijri_months": [
+    "Muharram", "Safar", "Rabi' al-Awwal", "Rabi' al-Thani", "Jumada al-Ula", "Jumada al-Akhirah",
+    "Rajab", "Sha'ban", "Ramadan", "Shawwal", "Dhu al-Qi'dah", "Dhu al-Hijjah"
+  ],
   "hero": {
     "eyebrow": "Free · No account · Works offline",
     "title": "Every prayer, right on time.",
@@ -177,7 +181,8 @@
       {
         "heading": "This website",
         "body": [
-          "bedug.ardeman.com uses no cookies, no analytics and no third-party scripts, and serves its fonts itself. It is hosted on Cloudflare, and Cloudflare processes your IP address and request details to deliver and protect the site; see the <a href=\"{cloudflare_privacy}\">Cloudflare privacy policy</a>."
+          "bedug.ardeman.com uses no cookies, no analytics and no third-party scripts, and serves its fonts itself. It is hosted on Cloudflare, and Cloudflare processes your IP address and request details to deliver and protect the site; see the <a href=\"{cloudflare_privacy}\">Cloudflare privacy policy</a>.",
+          "To preview prayer times on the home page, the site uses the approximate location (city, coordinates and time zone) that Cloudflare estimates from your IP address. Your browser calculates the times from it, and it is not stored or sent anywhere else."
         ]
       },
       {

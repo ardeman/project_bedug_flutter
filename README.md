@@ -65,7 +65,7 @@ iOS and macOS builds use CocoaPods only: Swift Package Manager is turned off in 
 | Edit the iOS and macOS icon (re-import any changed layer from `assets/branding/layers/`) | `open -a "Icon Composer" assets/branding/AppIcon.icon` |
 | Release build | `flutter build <apk\|appbundle\|ipa\|macos\|windows\|linux>` |
 | Build the landing page into `site/dist/` | `python3 site/build.py` |
-| Preview the landing page | `python3 site/build.py && python3 -m http.server -d site/dist` |
+| Preview the landing page (with the Worker, so the phone mock is live) | `python3 site/build.py && npx wrangler dev` |
 
 **Checks**: run both before every commit. They must pass with no errors or warnings:
 
@@ -281,16 +281,17 @@ The infaq method depends on where the build is distributed, not only on the plat
 
 ## Website
 
-The landing page at [bedug.ardeman.com](https://bedug.ardeman.com) is a static site with no scripts, built by `site/build.py` (Python standard library only) and served as static assets by a Cloudflare Worker (`wrangler.jsonc`). It has a home page, a changelog and a privacy policy in Indonesian (at `/`), English (`/en/`), Arabic (`/ar/`, right to left) and Malay (`/ms/`).
+The landing page at [bedug.ardeman.com](https://bedug.ardeman.com) is a static site built by `site/build.py` (Python standard library only) and served by a Cloudflare Worker (`wrangler.jsonc`). Its only script makes the home page's phone mock live: the Worker adds the visitor's approximate location from Cloudflare to the home pages, and `live.js` shows that place's prayer times, Hijri date and countdown. It has a home page, a changelog and a privacy policy in Indonesian (at `/`), English (`/en/`), Arabic (`/ar/`, right to left) and Malay (`/ms/`).
 
 | Path | Holds |
 | --- | --- |
 | `site/i18n/<locale>.json` | All page text, one file per language with the same keys |
 | `assets/changelog/changelog.json` | The changelog page's releases, shared with the app's What's New screen |
 | `site/config.json` | Site URL, locales, links, and the store and infaq URLs (`null` shows "coming soon") |
-| `site/static/` | Stylesheet, Cloudflare `_headers`, `robots.txt`, and a 512px copy of `assets/branding/icon.png` for social previews (refresh it with `sips -Z 512` when the icon changes) |
+| `site/static/` | Stylesheet, the phone mock's `live.js` with the vendored `adhan` JS library (`vendor/`, MIT), Cloudflare `_headers`, `robots.txt`, and a 512px copy of `assets/branding/icon.png` for social previews (refresh it with `sips -Z 512` when the icon changes) |
 | `site/dist/` | Build output, not committed |
 | `wrangler.jsonc` | Cloudflare Worker config that serves `site/dist/` |
+| `site/worker.js` | The Worker script: serves `site/dist/` and adds the visitor's location to the home pages |
 
 The build copies the font and `icon.svg` from `assets/`, so the brand has one source, and builds the changelog page from `assets/changelog/changelog.json`. When a store listing or the Trakteer and Ko-fi pages go live, put the URL in `site/config.json`. When the app gains or changes a feature that the home page or the privacy policy describes, update every `site/i18n/*.json`.
 

@@ -46,3 +46,6 @@ app.*.map.json
 
 # Landing page build output
 /site/dist/
+
+# Local `wrangler dev` state
+.wrangler/
