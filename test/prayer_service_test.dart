@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:adhan/adhan.dart';
 import 'package:bedug/core/providers/locale_provider.dart';
 import 'package:bedug/core/services/prayer_service.dart';
 import 'package:bedug/core/services/notification_preferences.dart';
 import 'package:fake_async/fake_async.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -23,6 +26,96 @@ class _FakePrayerNotifier extends PrayerNotifier {
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+
+  for (final outcome in [
+    'resolved',
+    'failed',
+    'superseded',
+    'disposed',
+    'timeout',
+  ]) {
+    test(
+      'GPS schedule does not wait for reverse geocoding: $outcome',
+      () async {
+        final messenger =
+            TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
+        messenger.setMockMethodCallHandler(_geolocatorChannel, (call) async {
+          return switch (call.method) {
+            'isLocationServiceEnabled' => true,
+            'checkPermission' => 3,
+            'getCurrentPosition' => {
+              'latitude': -6.2088,
+              'longitude': 106.8456,
+              'timestamp': DateTime.now().millisecondsSinceEpoch,
+              'accuracy': 10.0,
+              'altitude': 0.0,
+              'altitude_accuracy': 0.0,
+              'heading': 0.0,
+              'heading_accuracy': 0.0,
+              'speed': 0.0,
+              'speed_accuracy': 0.0,
+            },
+            _ => null,
+          };
+        });
+        addTearDown(
+          () => messenger.setMockMethodCallHandler(_geolocatorChannel, null),
+        );
+        SharedPreferences.setMockInitialValues({'use_auto_location': true});
+        final prefs = await SharedPreferences.getInstance();
+        final lookup = Completer<List<Placemark>>();
+        final container = ProviderContainer(
+          overrides: [
+            sharedPreferencesProvider.overrideWithValue(prefs),
+            reverseGeocoderProvider.overrideWithValue((_, _) => lookup.future),
+            notificationSchedulerProvider.overrideWithValue((_, _, _) async {}),
+          ],
+        );
+        if (outcome != 'disposed') addTearDown(container.dispose);
+        container.listen(prayerProvider, (_, _) {});
+        await pumpEventQueue();
+        final initial = container.read(prayerProvider);
+        expect(initial.loading, isFalse);
+        expect(initial.error, isNull);
+        expect(initial.times, isNotNull);
+        expect(initial.locationLabel, 'Jakarta');
+        expect(lookup.isCompleted, isFalse);
+        if (outcome == 'superseded') {
+          await container
+              .read(settingsProvider.notifier)
+              .setUseAutoLocation(false);
+          await pumpEventQueue();
+        }
+        if (outcome == 'disposed') container.dispose();
+        if (outcome == 'timeout') {
+          await Future<void>.delayed(const Duration(milliseconds: 3100));
+          expect(container.read(prayerProvider).locationLabel, 'Jakarta');
+        }
+        if (outcome == 'failed') {
+          lookup.completeError(PlatformException(code: 'offline'));
+        } else {
+          lookup.complete([Placemark(locality: 'Resolved address')]);
+        }
+        await pumpEventQueue();
+        if (outcome != 'disposed') {
+          final result = container.read(prayerProvider);
+          expect(result.loading, isFalse);
+          expect(result.error, isNull);
+          expect(
+            result.locationLabel,
+            outcome == 'resolved'
+                ? 'Resolved address'
+                : outcome == 'superseded'
+                ? container.read(manualCityProvider).name
+                : 'Jakarta',
+          );
+          if (outcome != 'superseded') {
+            expect(result.times, same(initial.times));
+          }
+        }
+      },
+    );
+  }
 
   for (final servicesEnabled in [false, true]) {
     test(

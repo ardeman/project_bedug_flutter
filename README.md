@@ -13,7 +13,7 @@ A cross-platform Muslim prayer times app with a Hijri calendar, in Indonesian, E
 - Location source:
   - Auto detect from device GPS, or
   - Manual city selection from Settings (required when auto detect is off).
-- When reverse geocoding fails, the header shows the nearest supported city, never raw coordinates.
+- GPS prayer times appear before reverse geocoding finishes. The header initially shows the nearest supported city, then updates the address in the background; after a three-second lookup timeout it keeps the city, never raw coordinates.
 - GPS timeouts are handled gracefully: high-accuracy settings on Android, a recent last-known position as fallback, and no raw exception text shown to users.
 - In-app theme switching (System / Light / Dark) updates every card, bar and glass overlay at once.
 - Calculation method picker: a native Cupertino sheet on iOS/macOS, an Expressive sheet on Material platforms, and a liquid-glass sheet on other desktop paths.

@@ -5,6 +5,15 @@
       "date": null,
       "changes": [
         {
+          "type": "improved",
+          "text": {
+            "en": "Prayer times now appear as soon as GPS resolves, with the nearest supported city shown while the address loads in the background.",
+            "id": "Jadwal salat kini langsung tampil setelah lokasi GPS ditemukan, dengan kota terdekat yang didukung ditampilkan saat alamat dimuat di latar belakang.",
+            "ar": "تظهر أوقات الصلاة فور تحديد الموقع عبر GPS، مع عرض أقرب مدينة مدعومة أثناء تحميل العنوان في الخلفية.",
+            "ms": "Waktu solat kini terus dipaparkan selepas lokasi GPS diperoleh, dengan bandar terdekat yang disokong dipaparkan semasa alamat dimuatkan di latar belakang."
+          }
+        },
+        {
           "type": "new",
           "text": {
             "en": "Add a home screen widget on iOS and Android for the next prayer and a live countdown. Open Bedug to refresh its seven-day schedule.",

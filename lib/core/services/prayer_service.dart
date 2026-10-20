@@ -24,6 +24,17 @@ final notificationSchedulerProvider =
       )
     >((ref) => NotificationService.schedulePrayerNotifications);
 
+/// Injectable because address lookup must never block the prayer schedule.
+final reverseGeocoderProvider =
+    Provider<Future<List<Placemark>> Function(Position, Locale)>(
+      (ref) =>
+          (position, locale) => Geocoding().placemarkFromCoordinates(
+            position.latitude,
+            position.longitude,
+            locale: locale,
+          ),
+    );
+
 class PrayerLoadException implements Exception {
   final String message;
   final bool showLocationGuide;
@@ -142,11 +153,13 @@ class PrayerNotifier extends Notifier<PrayerState> {
       final settings = ref.read(settingsProvider);
       final Coordinates coords;
       final String locationLabel;
+      Position? position;
 
       if (settings.useAutoLocation) {
         final pos = await _getPosition();
         coords = Coordinates(pos.latitude, pos.longitude);
-        locationLabel = await _resolveLocationLabel(pos);
+        position = pos;
+        locationLabel = _fallbackLocationLabel(pos);
       } else {
         final city = ref.read(manualCityProvider);
         coords = Coordinates(city.latitude, city.longitude);
@@ -164,6 +177,9 @@ class PrayerNotifier extends Notifier<PrayerState> {
         loading: false,
       );
       _scheduleNotifications();
+      if (position != null) {
+        unawaited(_refineLocationLabel(position, loadId));
+      }
     } catch (e) {
       if (!ref.mounted || loadId != _loadId) return;
       // Keep the user's location preference: a failed fix should surface an
@@ -294,13 +310,24 @@ class PrayerNotifier extends Notifier<PrayerState> {
     return lastKnown;
   }
 
+  String _fallbackLocationLabel(Position pos) =>
+      (_nearestCity(pos.latitude, pos.longitude) ??
+              defaultCityFor(ref.read(localeProvider).languageCode))
+          .name;
+
+  Future<void> _refineLocationLabel(Position pos, int loadId) async {
+    final label = await _resolveLocationLabel(pos);
+    if (!ref.mounted || loadId != _loadId) return;
+    state = state.copyWith(locationLabel: label, error: state.error);
+  }
+
   Future<String> _resolveLocationLabel(Position pos) async {
+    final fallback = _fallbackLocationLabel(pos);
     try {
-      final placemarks = await Geocoding().placemarkFromCoordinates(
-        pos.latitude,
-        pos.longitude,
-        locale: ref.read(localeProvider),
-      );
+      // A stalled/offline geocoder must not leave a pending lookup forever.
+      final placemarks = await ref
+          .read(reverseGeocoderProvider)(pos, ref.read(localeProvider))
+          .timeout(const Duration(seconds: 3));
       if (placemarks.isNotEmpty) {
         final p = placemarks.first;
         final parts = <String>[
@@ -317,9 +344,7 @@ class PrayerNotifier extends Notifier<PrayerState> {
       }
     } catch (_) {}
 
-    final nearest = _nearestCity(pos.latitude, pos.longitude);
-    return nearest?.name ??
-        '${pos.latitude.toStringAsFixed(4)}, ${pos.longitude.toStringAsFixed(4)}';
+    return fallback;
   }
 }
 
