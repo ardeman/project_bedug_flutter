@@ -3,13 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:liquid_glass_easy/liquid_glass_easy.dart';
 
 import '../../core/constants/app_colors.dart';
-import '../../core/constants/city_catalog.dart';
 import '../../core/design/liquid_glass.dart';
 import '../../core/design/glass_controls.dart';
 import '../../core/design/platform_capabilities.dart';
 import '../../core/providers/locale_provider.dart';
 import '../../core/theme/app_tokens.dart';
 import '../../core/widgets/calculation_method_picker.dart';
+import '../../core/widgets/city_picker.dart';
 import '../../core/widgets/glass_menu.dart';
 import '../../generated/l10n/app_localizations.dart';
 import '../changelog/changelog_screen.dart';
@@ -22,6 +22,7 @@ class SettingsScreen extends ConsumerWidget {
     final l10n = AppLocalizations.of(ctx);
     final settings = ref.watch(settingsProvider);
     final locale = ref.watch(localeProvider);
+    final manualCity = ref.watch(manualCityProvider);
     final notifier = ref.read(settingsProvider.notifier);
     final isApple = PlatformCapabilities.isApple;
 
@@ -35,11 +36,7 @@ class SettingsScreen extends ConsumerWidget {
           title: Text(l10n.calculationMethod),
           subtitle: Text(calculationMethodLabel(ctx, settings.method)),
           trailing: const Icon(Icons.chevron_right),
-          onTap: () => showCalculationMethodPicker(
-            ctx,
-            ref,
-            current: settings.method,
-          ),
+          onTap: () => showCalculationMethodPage(ctx),
         ),
 
         // Mazhab
@@ -93,22 +90,19 @@ class SettingsScreen extends ConsumerWidget {
           ),
         ),
 
-        _ChoiceTile<String>(
-          icon: Icons.location_city_outlined,
-          title: l10n.city,
-          subtitle: !settings.useAutoLocation && settings.selectedCityId == null
-              ? Text(
-                  l10n.cityRequiredHint,
-                  style: TextStyle(color: Theme.of(ctx).colorScheme.error),
-                )
-              : null,
-          value: settings.selectedCityId,
-          hint: l10n.selectCity,
-          options: [
-            for (final city in supportedCities)
-              GlassMenuOption(value: city.id, label: city.name),
-          ],
-          onChanged: notifier.setSelectedCityId,
+        PlatformListTile(
+          enabled: !settings.useAutoLocation,
+          leading: Icon(Icons.location_city_outlined,
+              color: AppColors.accentOf(ctx)),
+          title: Text(l10n.city),
+          subtitle: Text(
+            settings.useAutoLocation
+                ? l10n.cityAutoDetectHint
+                : '${manualCity.name}, '
+                    '${countryLabel(l10n, manualCity.country)}',
+          ),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => showCityPicker(ctx),
         ),
       ]),
 
@@ -272,8 +266,6 @@ class _ChoiceTile<T> extends StatefulWidget {
   final Widget? subtitle;
   final T? value;
 
-  /// Shown when [value] matches no option.
-  final String? hint;
   final List<GlassMenuOption<T>> options;
   final ValueChanged<T> onChanged;
   final Widget? materialTrailing;
@@ -286,7 +278,6 @@ class _ChoiceTile<T> extends StatefulWidget {
     required this.options,
     required this.onChanged,
     this.subtitle,
-    this.hint,
     this.materialTrailing,
   });
 
@@ -336,7 +327,6 @@ class _ChoiceTileState<T> extends State<_ChoiceTile<T>> {
         trailing: widget.materialTrailing ??
             DropdownButton<T>(
               value: widget.value,
-              hint: widget.hint == null ? null : Text(widget.hint!),
               underline: const SizedBox(),
               borderRadius: BorderRadius.circular(12),
               items: [
@@ -368,7 +358,7 @@ class _ChoiceTileState<T> extends State<_ChoiceTile<T>> {
           ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: _maxValueWidth),
             child: Text(
-              current?.label ?? widget.hint ?? '',
+              current?.label ?? '',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: theme.textTheme.bodyMedium?.copyWith(color: muted),

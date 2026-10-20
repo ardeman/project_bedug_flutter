@@ -9,6 +9,9 @@ import '../constants/app_colors.dart';
 import '../theme/app_tokens.dart';
 import '../providers/locale_provider.dart';
 import '../services/kemenag_method.dart';
+import '../design/glass_controls.dart';
+import '../design/liquid_glass.dart';
+import '../design/platform_capabilities.dart';
 import 'glass_menu.dart';
 
 String calculationMethodLabel(BuildContext ctx, AppCalculationMethod method) {
@@ -471,6 +474,73 @@ class _CalculationMethodPickerSheetState
           ),
         );
       },
+    );
+  }
+}
+
+/// Opens the calculation method picker as a full page, so it slides in like
+/// the other settings pages and closes with the edge swipe back.
+Future<void> showCalculationMethodPage(BuildContext ctx) =>
+    Navigator.of(ctx).push(
+      MaterialPageRoute<void>(builder: (_) => const CalculationMethodScreen()),
+    );
+
+class CalculationMethodScreen extends ConsumerWidget {
+  const CalculationMethodScreen({super.key});
+
+  @override
+  Widget build(BuildContext ctx, WidgetRef ref) {
+    final l10n = AppLocalizations.of(ctx);
+    final theme = Theme.of(ctx);
+    final isApple = PlatformCapabilities.isApple;
+    final accent = AppColors.accentOf(ctx);
+    final selected = ref.watch(settingsProvider).method;
+
+    final rows = [
+      for (final method in AppCalculationMethod.values)
+        PlatformListTile(
+          title: Text(calculationMethodLabel(ctx, method)),
+          subtitle: method == AppCalculationMethod.kemenag
+              ? Text(l10n.recommended)
+              : null,
+          trailing:
+              method == selected ? Icon(Icons.check, color: accent) : null,
+          onTap: () {
+            ref.read(settingsProvider.notifier).setMethod(method);
+            Navigator.of(ctx).pop();
+          },
+        ),
+    ];
+
+    return Scaffold(
+      extendBodyBehindAppBar: isApple,
+      appBar: GlassTopBar(title: l10n.calculationMethod),
+      body: ListView(
+        padding: EdgeInsets.only(bottom: GlassNavBar.occupiedHeight(ctx)),
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(
+                AppSpacing.md, AppSpacing.xs, AppSpacing.md, AppSpacing.md),
+            child: Text(
+              l10n.calculationMethodDesc,
+              style: theme.textTheme.bodyMedium
+                  ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+            ),
+          ),
+          if (isApple)
+            GlassCard(
+              margin: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+              child: Column(children: [
+                for (final (i, row) in rows.indexed) ...[
+                  if (i > 0) const Hairline(indent: AppSpacing.md),
+                  row,
+                ],
+              ]),
+            )
+          else
+            ...rows,
+        ],
+      ),
     );
   }
 }

@@ -71,7 +71,10 @@ class _PrayerDayPickerState extends State<PrayerDayPicker>
   /// Where the grid is headed: open, or closed.
   bool _isCalendarOpen = false;
   bool _isDraggingCalendar = false;
-  final _gridKey = GlobalKey();
+  final _gridKey = GlobalKey<HijriMonthGridState>();
+
+  /// Whether the open grid shows a month other than the picked day's.
+  bool _isGridPagedAway = false;
 
   /// The grid's height before its first layout: the month header, weekday
   /// row and five weeks of day cells.
@@ -89,7 +92,11 @@ class _PrayerDayPickerState extends State<PrayerDayPicker>
   }
 
   void _setCalendarOpen(bool open) {
-    setState(() => _isCalendarOpen = open);
+    // A reopened grid starts on the picked day's month.
+    setState(() {
+      _isCalendarOpen = open;
+      _isGridPagedAway = false;
+    });
     // animateBack, so a closed grid ends dismissed (and is dropped).
     open
         ? _calendar.animateTo(1, curve: Curves.easeOutCubic)
@@ -132,9 +139,21 @@ class _PrayerDayPickerState extends State<PrayerDayPicker>
 
   void _pick(int offset) {
     if (offset == (_lastPicked ?? _selectedOffset)) return;
+    // A picked day brings its month into the grid.
+    _isGridPagedAway = false;
     _lastPicked = offset;
     SelectionFeedback.tick();
     widget.onSelected(addDays(widget.today, offset));
+  }
+
+  /// Picks today, or, with today already picked, pages the grid back to
+  /// its month.
+  void _goToToday() {
+    if (_selectedOffset == 0) {
+      _gridKey.currentState?.showSelectedMonth();
+    } else {
+      _pick(0);
+    }
   }
 
   bool _onScroll(ScrollNotification n) {
@@ -153,6 +172,9 @@ class _PrayerDayPickerState extends State<PrayerDayPicker>
   void didUpdateWidget(PrayerDayPicker old) {
     super.didUpdateWidget(old);
     _lastPicked = null;
+    if (daysBetween(old.selected, widget.selected) != 0) {
+      _isGridPagedAway = false;
+    }
     // Center the picked chip, whether it was tapped or picked from outside
     // (the "Today" button, a reload on a new day). While the user scrolls,
     // the strip snaps to it by itself.
@@ -184,6 +206,7 @@ class _PrayerDayPickerState extends State<PrayerDayPicker>
     final sideInsetRight = isLandscape ? mq.padding.right : 0.0;
     final locale = Localizations.localeOf(ctx).toLanguageTag();
     final offset = _selectedOffset;
+    final showToday = offset != 0 || (_isCalendarOpen && _isGridPagedAway);
     // Name the year only when it isn't this one.
     final dateFormat = widget.selected.year == widget.today.year
         ? DateFormat.MMMMEEEEd(locale)
@@ -217,6 +240,8 @@ class _PrayerDayPickerState extends State<PrayerDayPicker>
                     selected: widget.selected,
                     onSelected: (date) =>
                         _pick(daysBetween(widget.today, date)),
+                    onPagedAway: (away) =>
+                        setState(() => _isGridPagedAway = away),
                     morph: HijriGridMorph(
                       progress: _calendar,
                       stripDates: (width) => [
@@ -272,15 +297,15 @@ class _PrayerDayPickerState extends State<PrayerDayPicker>
                         ],
                       ),
                     ),
-                    if (offset != 0 && PlatformCapabilities.isApple)
+                    if (showToday && PlatformCapabilities.isApple)
                       GlassPillButton(
                         icon: Icons.today,
                         label: l10n.today,
-                        onPressed: () => _pick(0),
+                        onPressed: _goToToday,
                       )
-                    else if (offset != 0)
+                    else if (showToday)
                       TextButton.icon(
-                        onPressed: () => _pick(0),
+                        onPressed: _goToToday,
                         icon: const Icon(Icons.today, size: 18),
                         label: Text(l10n.today),
                         style: TextButton.styleFrom(

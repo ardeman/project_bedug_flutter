@@ -108,6 +108,16 @@ class GlassNavItem {
   });
 }
 
+/// Width of the macOS traffic lights, which sit in the window's top leading
+/// corner: a 14 inset, three 14 buttons and two 10 gaps (see
+/// `macos/Runner/MainFlutterWindow.swift`).
+const _macWindowControlsWidth = 14.0 + 3 * 14.0 + 2 * 10.0;
+
+/// Leading space that content on a top bar's row leaves for the window
+/// controls: the traffic-light width on macOS, zero elsewhere.
+double get windowControlsInset =>
+    PlatformCapabilities.isMacOS ? _macWindowControlsWidth : 0;
+
 /// The top bar of a tab or a pushed page. On iOS and macOS the title floats
 /// in a glass capsule over a scroll-edge band, so the page scrolls under it;
 /// give the [Scaffold] `extendBodyBehindAppBar: PlatformCapabilities.isApple`.
@@ -120,11 +130,6 @@ class GlassTopBar extends StatelessWidget implements PreferredSizeWidget {
 
   /// Height of the title capsule: one title line plus padding.
   static const _capsuleHeight = 40.0;
-
-  /// Width of the macOS traffic lights, which sit in the bar's leading
-  /// corner: a 14 inset, three 14 buttons and two 10 gaps (see
-  /// `macos/Runner/MainFlutterWindow.swift`).
-  static const _macWindowControlsWidth = 14.0 + 3 * 14.0 + 2 * 10.0;
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -191,10 +196,7 @@ class GlassTopBar extends StatelessWidget implements PreferredSizeWidget {
                 alignment: AlignmentDirectional.centerStart,
                 child: Padding(
                   padding: EdgeInsetsDirectional.only(
-                    start: AppSpacing.md +
-                        (PlatformCapabilities.isMacOS
-                            ? _macWindowControlsWidth
-                            : 0),
+                    start: AppSpacing.md + windowControlsInset,
                   ),
                   child: Semantics(
                     button: true,

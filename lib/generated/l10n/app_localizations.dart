@@ -390,23 +390,11 @@ abstract class AppLocalizations {
   /// **'Kota'**
   String get city;
 
-  /// No description provided for @cityRequiredHint.
-  ///
-  /// In id, this message translates to:
-  /// **'Wajib dipilih jika deteksi otomatis dimatikan'**
-  String get cityRequiredHint;
-
   /// No description provided for @selectCity.
   ///
   /// In id, this message translates to:
   /// **'Pilih kota'**
   String get selectCity;
-
-  /// No description provided for @cityRequiredError.
-  ///
-  /// In id, this message translates to:
-  /// **'Pilih kota terlebih dahulu di Pengaturan.'**
-  String get cityRequiredError;
 
   /// No description provided for @locationServiceDisabled.
   ///
@@ -827,6 +815,210 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Daftar perubahan tidak dapat dimuat.'**
   String get changelogLoadError;
+
+  /// No description provided for @countryIndonesia.
+  ///
+  /// In id, this message translates to:
+  /// **'Indonesia'**
+  String get countryIndonesia;
+
+  /// No description provided for @countryMalaysia.
+  ///
+  /// In id, this message translates to:
+  /// **'Malaysia'**
+  String get countryMalaysia;
+
+  /// No description provided for @countrySingapore.
+  ///
+  /// In id, this message translates to:
+  /// **'Singapura'**
+  String get countrySingapore;
+
+  /// No description provided for @countryBrunei.
+  ///
+  /// In id, this message translates to:
+  /// **'Brunei Darussalam'**
+  String get countryBrunei;
+
+  /// No description provided for @countryThailand.
+  ///
+  /// In id, this message translates to:
+  /// **'Thailand'**
+  String get countryThailand;
+
+  /// No description provided for @countryPhilippines.
+  ///
+  /// In id, this message translates to:
+  /// **'Filipina'**
+  String get countryPhilippines;
+
+  /// No description provided for @countrySaudiArabia.
+  ///
+  /// In id, this message translates to:
+  /// **'Arab Saudi'**
+  String get countrySaudiArabia;
+
+  /// No description provided for @countryUnitedArabEmirates.
+  ///
+  /// In id, this message translates to:
+  /// **'Uni Emirat Arab'**
+  String get countryUnitedArabEmirates;
+
+  /// No description provided for @countryQatar.
+  ///
+  /// In id, this message translates to:
+  /// **'Qatar'**
+  String get countryQatar;
+
+  /// No description provided for @countryKuwait.
+  ///
+  /// In id, this message translates to:
+  /// **'Kuwait'**
+  String get countryKuwait;
+
+  /// No description provided for @countryBahrain.
+  ///
+  /// In id, this message translates to:
+  /// **'Bahrain'**
+  String get countryBahrain;
+
+  /// No description provided for @countryOman.
+  ///
+  /// In id, this message translates to:
+  /// **'Oman'**
+  String get countryOman;
+
+  /// No description provided for @countryJordan.
+  ///
+  /// In id, this message translates to:
+  /// **'Yordania'**
+  String get countryJordan;
+
+  /// No description provided for @countryPalestine.
+  ///
+  /// In id, this message translates to:
+  /// **'Palestina'**
+  String get countryPalestine;
+
+  /// No description provided for @countryEgypt.
+  ///
+  /// In id, this message translates to:
+  /// **'Mesir'**
+  String get countryEgypt;
+
+  /// No description provided for @countryMorocco.
+  ///
+  /// In id, this message translates to:
+  /// **'Maroko'**
+  String get countryMorocco;
+
+  /// No description provided for @countryTurkey.
+  ///
+  /// In id, this message translates to:
+  /// **'Turki'**
+  String get countryTurkey;
+
+  /// No description provided for @countryPakistan.
+  ///
+  /// In id, this message translates to:
+  /// **'Pakistan'**
+  String get countryPakistan;
+
+  /// No description provided for @countryIndia.
+  ///
+  /// In id, this message translates to:
+  /// **'India'**
+  String get countryIndia;
+
+  /// No description provided for @countryBangladesh.
+  ///
+  /// In id, this message translates to:
+  /// **'Bangladesh'**
+  String get countryBangladesh;
+
+  /// No description provided for @countryUnitedKingdom.
+  ///
+  /// In id, this message translates to:
+  /// **'Britania Raya'**
+  String get countryUnitedKingdom;
+
+  /// No description provided for @countryFrance.
+  ///
+  /// In id, this message translates to:
+  /// **'Prancis'**
+  String get countryFrance;
+
+  /// No description provided for @countryGermany.
+  ///
+  /// In id, this message translates to:
+  /// **'Jerman'**
+  String get countryGermany;
+
+  /// No description provided for @countryNetherlands.
+  ///
+  /// In id, this message translates to:
+  /// **'Belanda'**
+  String get countryNetherlands;
+
+  /// No description provided for @countryUnitedStates.
+  ///
+  /// In id, this message translates to:
+  /// **'Amerika Serikat'**
+  String get countryUnitedStates;
+
+  /// No description provided for @countryCanada.
+  ///
+  /// In id, this message translates to:
+  /// **'Kanada'**
+  String get countryCanada;
+
+  /// No description provided for @countryAustralia.
+  ///
+  /// In id, this message translates to:
+  /// **'Australia'**
+  String get countryAustralia;
+
+  /// No description provided for @countryJapan.
+  ///
+  /// In id, this message translates to:
+  /// **'Jepang'**
+  String get countryJapan;
+
+  /// No description provided for @countrySouthKorea.
+  ///
+  /// In id, this message translates to:
+  /// **'Korea Selatan'**
+  String get countrySouthKorea;
+
+  /// No description provided for @countryNigeria.
+  ///
+  /// In id, this message translates to:
+  /// **'Nigeria'**
+  String get countryNigeria;
+
+  /// No description provided for @countrySouthAfrica.
+  ///
+  /// In id, this message translates to:
+  /// **'Afrika Selatan'**
+  String get countrySouthAfrica;
+
+  /// No description provided for @searchCity.
+  ///
+  /// In id, this message translates to:
+  /// **'Cari kota atau negara'**
+  String get searchCity;
+
+  /// No description provided for @noCityFound.
+  ///
+  /// In id, this message translates to:
+  /// **'Kota tidak ditemukan'**
+  String get noCityFound;
+
+  /// No description provided for @cityAutoDetectHint.
+  ///
+  /// In id, this message translates to:
+  /// **'Matikan deteksi otomatis untuk memilih kota'**
+  String get cityAutoDetectHint;
 }
 
 class _AppLocalizationsDelegate

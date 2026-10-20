@@ -26,11 +26,15 @@
   },
   "next_prayer": "Solat seterusnya",
   "mock": {
-    "label": "Bedug memaparkan waktu solat hari ini di Jakarta, dengan Asar sebagai solat seterusnya",
+    "label": "Bedug memaparkan waktu solat hari ini di {place}, dengan {next} sebagai solat seterusnya",
     "place": "Jakarta",
-    "hijri": "9 Jamadilawal 1448",
+    "hijri": "9 Jamadil Awal 1448",
     "times": ["04:38", "11:52", "15:13", "17:52", "19:03"]
   },
+  "hijri_months": [
+    "Muharram", "Safar", "Rabi'ul Awal", "Rabi'ul Akhir", "Jamadil Awal", "Jamadil Akhir",
+    "Rejab", "Syaaban", "Ramadan", "Syawal", "Zulkaedah", "Zulhijjah"
+  ],
   "hero": {
     "eyebrow": "Percuma · Tanpa akaun · Boleh luar talian",
     "title": "Setiap solat, tepat pada waktunya.",
@@ -177,7 +181,8 @@
       {
         "heading": "Laman web ini",
         "body": [
-          "bedug.ardeman.com tidak menggunakan kuki, analitik atau skrip pihak ketiga, dan menyajikan fonnya sendiri. Laman ini dihoskan di Cloudflare, dan Cloudflare memproses alamat IP serta butiran permintaan anda untuk menghantar dan melindungi laman; lihat <a href=\"{cloudflare_privacy}\">dasar privasi Cloudflare</a>."
+          "bedug.ardeman.com tidak menggunakan kuki, analitik atau skrip pihak ketiga, dan menyajikan fonnya sendiri. Laman ini dihoskan di Cloudflare, dan Cloudflare memproses alamat IP serta butiran permintaan anda untuk menghantar dan melindungi laman; lihat <a href=\"{cloudflare_privacy}\">dasar privasi Cloudflare</a>.",
+          "Untuk memaparkan pratonton waktu solat di halaman utama, laman ini menggunakan anggaran lokasi (bandar, koordinat dan zon waktu) yang dianggarkan oleh Cloudflare daripada alamat IP anda. Pelayar anda mengira waktu solat daripadanya, dan lokasi itu tidak disimpan atau dihantar ke mana-mana."
         ]
       },
       {

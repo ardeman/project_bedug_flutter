@@ -158,13 +158,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get city => 'المدينة';
 
   @override
-  String get cityRequiredHint => 'مطلوب اختيارها عند إيقاف الاكتشاف التلقائي';
-
-  @override
   String get selectCity => 'اختر المدينة';
-
-  @override
-  String get cityRequiredError => 'يرجى اختيار المدينة أولًا من الإعدادات.';
 
   @override
   String get locationServiceDisabled =>
@@ -392,4 +386,106 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get changelogLoadError => 'تعذّر تحميل سجل التغييرات.';
+
+  @override
+  String get countryIndonesia => 'إندونيسيا';
+
+  @override
+  String get countryMalaysia => 'ماليزيا';
+
+  @override
+  String get countrySingapore => 'سنغافورة';
+
+  @override
+  String get countryBrunei => 'بروناي';
+
+  @override
+  String get countryThailand => 'تايلاند';
+
+  @override
+  String get countryPhilippines => 'الفلبين';
+
+  @override
+  String get countrySaudiArabia => 'السعودية';
+
+  @override
+  String get countryUnitedArabEmirates => 'الإمارات';
+
+  @override
+  String get countryQatar => 'قطر';
+
+  @override
+  String get countryKuwait => 'الكويت';
+
+  @override
+  String get countryBahrain => 'البحرين';
+
+  @override
+  String get countryOman => 'عُمان';
+
+  @override
+  String get countryJordan => 'الأردن';
+
+  @override
+  String get countryPalestine => 'فلسطين';
+
+  @override
+  String get countryEgypt => 'مصر';
+
+  @override
+  String get countryMorocco => 'المغرب';
+
+  @override
+  String get countryTurkey => 'تركيا';
+
+  @override
+  String get countryPakistan => 'باكستان';
+
+  @override
+  String get countryIndia => 'الهند';
+
+  @override
+  String get countryBangladesh => 'بنغلاديش';
+
+  @override
+  String get countryUnitedKingdom => 'المملكة المتحدة';
+
+  @override
+  String get countryFrance => 'فرنسا';
+
+  @override
+  String get countryGermany => 'ألمانيا';
+
+  @override
+  String get countryNetherlands => 'هولندا';
+
+  @override
+  String get countryUnitedStates => 'الولايات المتحدة';
+
+  @override
+  String get countryCanada => 'كندا';
+
+  @override
+  String get countryAustralia => 'أستراليا';
+
+  @override
+  String get countryJapan => 'اليابان';
+
+  @override
+  String get countrySouthKorea => 'كوريا الجنوبية';
+
+  @override
+  String get countryNigeria => 'نيجيريا';
+
+  @override
+  String get countrySouthAfrica => 'جنوب أفريقيا';
+
+  @override
+  String get searchCity => 'ابحث عن مدينة أو دولة';
+
+  @override
+  String get noCityFound => 'لا توجد مدينة مطابقة';
+
+  @override
+  String get cityAutoDetectHint => 'أوقف التحديد التلقائي لاختيار مدينة';
 }

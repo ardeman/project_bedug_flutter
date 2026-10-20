@@ -2,7 +2,7 @@
 """Builds the Bedug landing page into site/dist.
 
 Content lives in site/i18n/<locale>.json, links in site/config.json and the
-styles in site/static/. The fonts, the icon and the changelog come from the
+styles and the home page's one script in site/static/. The fonts, the icon and the changelog come from the
 app's own assets so each has one source. Standard library only, so Cloudflare
 can run it as the build command: `python3 site/build.py`.
 """
@@ -91,7 +91,7 @@ class Site:
 
     # Shared chrome ------------------------------------------------------
 
-    def head(self, loc, page, title, description):
+    def head(self, loc, page, title, description, scripts=""):
         s = self.strings[loc]
         base = self.config["site_url"]
         alternates = "\n".join(
@@ -121,7 +121,7 @@ class Site:
 <link rel="apple-touch-icon" href="/assets/icon.png">
 <link rel="preload" href="/assets/fonts/PlusJakartaSans-ExtraBold.ttf" as="font" type="font/ttf" crossorigin>
 <link rel="stylesheet" href="/assets/{self.css_name}">
-</head>
+{scripts}</head>
 <body>
 <a class="skip" href="#main">{s['skip']}</a>"""
 
@@ -181,20 +181,26 @@ class Site:
 
     def mock(self, s):
         m = s["mock"]
-        # The mock shows Asr as the next prayer.
+        # The mock shows Jakarta with Asr as the next prayer. live.js replaces
+        # it with the visitor's place and time when the Worker knows them.
         rows = "".join(
             ('<li class="now">' if key == "asr" else "<li>")
             + f"<span>{s['prayers'][key]}</span><time>{m['times'][i]}</time></li>"
             for i, key in enumerate(PRAYERS)
         )
-        return f"""<div class="phone" role="img" aria-label="{attr(m['label'])}">
+        label = m["label"]
+        static_label = label.replace("{place}", m["place"]).replace(
+            "{next}", s["prayers"]["asr"]
+        )
+        months = json.dumps(s["hijri_months"], ensure_ascii=False)
+        return f"""<div class="phone" role="img" aria-label="{attr(static_label)}" data-label="{attr(label)}">
 <div class="phone-screen">
 <div class="phone-hero">
 <p class="phone-place">{icon('pin')}{m['place']}</p>
-<p class="phone-hijri">{m['hijri']}</p>
+<p class="phone-hijri" data-months="{attr(months)}">{m['hijri']}</p>
 <p class="phone-next">{s['next_prayer']}</p>
 <p class="phone-name">{s['prayers']['asr']}</p>
-<p class="phone-count" dir="ltr">−01:24:37</p>
+<p class="phone-count" dir="ltr">01:24:37</p>
 </div>
 <ul class="phone-list">{rows}</ul>
 </div>
@@ -243,7 +249,13 @@ class Site:
         )
         badges = "".join(f"<li>{b}</li>" for b in s["hero"]["badges"])
         return (
-            self.head(loc, "home", s["meta"]["title"], s["meta"]["description"])
+            self.head(
+                loc,
+                "home",
+                s["meta"]["title"],
+                s["meta"]["description"],
+                '<script type="module" src="/assets/live.js"></script>\n',
+            )
             + self.header(loc, "home")
             + f"""
 <main id="main">
@@ -443,6 +455,8 @@ class Site:
         shutil.copy(FONTS / "OFL.txt", assets / "fonts" / "OFL.txt")
         shutil.copy(BRANDING / "icon.svg", assets / "icon.svg")
         shutil.copy(SITE / "static" / "icon-512.png", assets / "icon.png")
+        shutil.copy(SITE / "static" / "live.js", assets / "live.js")
+        shutil.copytree(SITE / "static" / "vendor", assets / "vendor")
         for name in ("_headers", "robots.txt"):
             shutil.copy(SITE / "static" / name, DIST / name)
 

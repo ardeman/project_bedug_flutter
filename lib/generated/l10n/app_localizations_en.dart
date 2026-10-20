@@ -159,13 +159,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get city => 'City';
 
   @override
-  String get cityRequiredHint => 'Required when auto-detect is turned off';
-
-  @override
   String get selectCity => 'Select city';
-
-  @override
-  String get cityRequiredError => 'Please select a city first in Settings.';
 
   @override
   String get locationServiceDisabled =>
@@ -396,4 +390,106 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get changelogLoadError => 'The changelog couldn\'t be loaded.';
+
+  @override
+  String get countryIndonesia => 'Indonesia';
+
+  @override
+  String get countryMalaysia => 'Malaysia';
+
+  @override
+  String get countrySingapore => 'Singapore';
+
+  @override
+  String get countryBrunei => 'Brunei';
+
+  @override
+  String get countryThailand => 'Thailand';
+
+  @override
+  String get countryPhilippines => 'Philippines';
+
+  @override
+  String get countrySaudiArabia => 'Saudi Arabia';
+
+  @override
+  String get countryUnitedArabEmirates => 'United Arab Emirates';
+
+  @override
+  String get countryQatar => 'Qatar';
+
+  @override
+  String get countryKuwait => 'Kuwait';
+
+  @override
+  String get countryBahrain => 'Bahrain';
+
+  @override
+  String get countryOman => 'Oman';
+
+  @override
+  String get countryJordan => 'Jordan';
+
+  @override
+  String get countryPalestine => 'Palestine';
+
+  @override
+  String get countryEgypt => 'Egypt';
+
+  @override
+  String get countryMorocco => 'Morocco';
+
+  @override
+  String get countryTurkey => 'Türkiye';
+
+  @override
+  String get countryPakistan => 'Pakistan';
+
+  @override
+  String get countryIndia => 'India';
+
+  @override
+  String get countryBangladesh => 'Bangladesh';
+
+  @override
+  String get countryUnitedKingdom => 'United Kingdom';
+
+  @override
+  String get countryFrance => 'France';
+
+  @override
+  String get countryGermany => 'Germany';
+
+  @override
+  String get countryNetherlands => 'Netherlands';
+
+  @override
+  String get countryUnitedStates => 'United States';
+
+  @override
+  String get countryCanada => 'Canada';
+
+  @override
+  String get countryAustralia => 'Australia';
+
+  @override
+  String get countryJapan => 'Japan';
+
+  @override
+  String get countrySouthKorea => 'South Korea';
+
+  @override
+  String get countryNigeria => 'Nigeria';
+
+  @override
+  String get countrySouthAfrica => 'South Africa';
+
+  @override
+  String get searchCity => 'Search city or country';
+
+  @override
+  String get noCityFound => 'No matching city';
+
+  @override
+  String get cityAutoDetectHint => 'Turn off auto-detect to pick a city';
 }

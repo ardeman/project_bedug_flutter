@@ -24,16 +24,22 @@ class HijriMonthGrid extends StatefulWidget {
   final ValueChanged<DateTime> onSelected;
   final HijriGridMorph? morph;
 
+  /// Called with true when paging leaves the picked day's month, and with
+  /// false when [HijriMonthGridState.showSelectedMonth] brings it back. A
+  /// newly picked day brings its month back without a call.
+  final ValueChanged<bool>? onPagedAway;
+
   const HijriMonthGrid({
     super.key,
     required this.today,
     required this.selected,
     required this.onSelected,
     this.morph,
+    this.onPagedAway,
   });
 
   @override
-  State<HijriMonthGrid> createState() => _HijriMonthGridState();
+  State<HijriMonthGrid> createState() => HijriMonthGridState();
 }
 
 /// Where the date strip the grid grows out of shows its chips. The grid
@@ -93,27 +99,35 @@ String? hijriDateLabel(AppLocalizations l10n, DateTime date) {
   }
 }
 
-class _HijriMonthGridState extends State<HijriMonthGrid> {
+class HijriMonthGridState extends State<HijriMonthGrid> {
   late var _view = hijriMonthOf(widget.selected);
 
   bool get _hasPrev => _view.year > _firstYear || _view.month > 1;
   bool get _hasNext => _view.year < _lastYear || _view.month < 12;
 
-  void _prev() => setState(() => _view = _view.month == 1
+  void _prev() => _show(_view.month == 1
       ? (year: _view.year - 1, month: 12)
       : (year: _view.year, month: _view.month - 1));
 
-  void _next() => setState(() => _view = _view.month == 12
+  void _next() => _show(_view.month == 12
       ? (year: _view.year + 1, month: 1)
       : (year: _view.year, month: _view.month + 1));
 
+  /// Pages back to the picked day's month.
+  void showSelectedMonth() => _show(hijriMonthOf(widget.selected));
+
+  void _show(({int year, int month}) month) {
+    setState(() => _view = month);
+    widget.onPagedAway?.call(month != hijriMonthOf(widget.selected));
+  }
+
   @override
-  void didUpdateWidget(HijriMonthGrid old) {
-    super.didUpdateWidget(old);
+  void didUpdateWidget(HijriMonthGrid oldWidget) {
+    super.didUpdateWidget(oldWidget);
     // Any newly picked day (the grid, the strip, "Today") brings its month
     // into view.
     // Paging months alone leaves the picked day where it is.
-    if (!_sameDay(widget.selected, old.selected)) {
+    if (!_sameDay(widget.selected, oldWidget.selected)) {
       _view = hijriMonthOf(widget.selected);
     }
   }
@@ -445,7 +459,7 @@ class _DayCell extends StatelessWidget {
       label: label,
       excludeSemantics: true,
       child: Padding(
-        padding: const EdgeInsets.all(_HijriMonthGridState._cellInset),
+        padding: const EdgeInsets.all(HijriMonthGridState._cellInset),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           decoration: BoxDecoration(

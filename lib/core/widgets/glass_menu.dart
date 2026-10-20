@@ -1,3 +1,5 @@
+import 'dart:ui' show lerpDouble;
+
 import 'package:flutter/material.dart';
 import 'package:liquid_glass_easy/liquid_glass_easy.dart';
 
@@ -76,6 +78,11 @@ class _GlassMenu<T> extends StatelessWidget {
   static const _maxWidth = 320.0;
   static const _minHeight = 160.0;
 
+  /// The glass starts as a small pill at the anchor's corner, this share of
+  /// the open menu's width and height, and grows to full size.
+  static const _startWidthFactor = 0.3;
+  static const _startHeightFactor = 0.15;
+
   @override
   Widget build(BuildContext ctx) {
     final theme = Theme.of(ctx);
@@ -95,12 +102,51 @@ class _GlassMenu<T> extends StatelessWidget {
     // A short landscape screen still shows a few rows; the list scrolls.
     final menuMaxHeight = maxHeight.clamp(_minHeight, double.infinity);
 
-    final scale = CurvedAnimation(
+    // A lens refracts what is behind it on every frame, so it can't be
+    // faded or scaled like a picture: an Opacity or a transform around it
+    // makes the glass flash or sample the wrong spot while the menu opens.
+    // Instead the glass itself grows from the anchor's corner, by laying it
+    // out a little bigger each frame, and only the rows inside fade in.
+    final grow = CurvedAnimation(
       parent: animation,
-      curve: Curves.easeOutBack,
+      curve: Curves.easeOutCubic,
       reverseCurve: Curves.easeInCubic,
     );
-    final fade = CurvedAnimation(parent: animation, curve: Curves.easeOut);
+    final fade = CurvedAnimation(
+      parent: animation,
+      // The rows show once the glass has room for them.
+      curve: const Interval(0.35, 1, curve: Curves.easeOut),
+    );
+    final corner = opensUp ? Alignment.bottomRight : Alignment.topRight;
+
+    final menu = ListView(
+      shrinkWrap: true,
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
+      children: [
+        if (title != null)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(
+                AppSpacing.md, AppSpacing.xxs, AppSpacing.md, AppSpacing.xs),
+            child: Text(
+              title!,
+              style: theme.textTheme.labelMedium?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+            ),
+          ),
+        for (final (i, option) in options.indexed) ...[
+          if (title != null || i > 0) const Hairline(),
+          _GlassMenuItem(
+            option: option,
+            isSelected: option.value == selected,
+            onTap: () {
+              onSelected(option.value);
+              Navigator.pop(ctx);
+            },
+          ),
+        ],
+      ],
+    );
 
     return Stack(
       children: [
@@ -118,50 +164,37 @@ class _GlassMenu<T> extends StatelessWidget {
           width: width,
           child: ConstrainedBox(
             constraints: BoxConstraints(maxHeight: menuMaxHeight),
-            child: FadeTransition(
-              opacity: fade,
-              child: ScaleTransition(
-                scale: Tween(begin: 0.6, end: 1.0).animate(scale),
-                // Grow out of the anchor's right edge.
-                alignment: opensUp ? Alignment.bottomRight : Alignment.topRight,
-                child: Material(
-                  color: Colors.transparent,
-                  child: LiquidGlassLens(
-                    style: LiquidGlassStyle(
-                      shape: const LiquidGlassShape.continuousRoundedRectangle(
-                          cornerRadius: AppRadii.lg),
-                      color: glassTintOf(ctx),
-                      blur: 18,
-                    ),
-                    child: ListView(
-                      shrinkWrap: true,
-                      padding:
-                          const EdgeInsets.symmetric(vertical: AppSpacing.xs),
-                      children: [
-                        if (title != null)
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(AppSpacing.md,
-                                AppSpacing.xxs, AppSpacing.md, AppSpacing.xs),
-                            child: Text(
-                              title!,
-                              style: theme.textTheme.labelMedium?.copyWith(
-                                color: theme.colorScheme.onSurfaceVariant,
-                              ),
-                            ),
-                          ),
-                        for (final (i, option) in options.indexed) ...[
-                          if (title != null || i > 0) const Hairline(),
-                          _GlassMenuItem(
-                            option: option,
-                            isSelected: option.value == selected,
-                            onTap: () {
-                              onSelected(option.value);
-                              Navigator.pop(ctx);
-                            },
-                          ),
-                        ],
-                      ],
-                    ),
+            child: Align(
+              alignment: corner,
+              child: Material(
+                color: Colors.transparent,
+                child: AnimatedBuilder(
+                  animation: grow,
+                  builder: (ctx, child) {
+                    final t = grow.value;
+                    return LiquidGlassLens(
+                      style: LiquidGlassStyle(
+                        shape:
+                            const LiquidGlassShape.continuousRoundedRectangle(
+                                cornerRadius: AppRadii.lg),
+                        color: glassTintOf(ctx),
+                        blur: 18,
+                      ),
+                      // The lens takes the size of this clipped box, which
+                      // shows more of the menu as it opens.
+                      child: ClipRect(
+                        child: Align(
+                          alignment: corner,
+                          widthFactor: lerpDouble(_startWidthFactor, 1, t),
+                          heightFactor: lerpDouble(_startHeightFactor, 1, t),
+                          child: child,
+                        ),
+                      ),
+                    );
+                  },
+                  child: FadeTransition(
+                    opacity: fade,
+                    child: SizedBox(width: width, child: menu),
                   ),
                 ),
               ),

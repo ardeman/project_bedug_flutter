@@ -158,13 +158,7 @@ class AppLocalizationsMs extends AppLocalizations {
   String get city => 'Bandar';
 
   @override
-  String get cityRequiredHint => 'Wajib dipilih jika kesan automatik dimatikan';
-
-  @override
   String get selectCity => 'Pilih bandar';
-
-  @override
-  String get cityRequiredError => 'Sila pilih bandar dahulu di Tetapan.';
 
   @override
   String get locationServiceDisabled =>
@@ -395,4 +389,107 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get changelogLoadError => 'Log perubahan tidak dapat dimuatkan.';
+
+  @override
+  String get countryIndonesia => 'Indonesia';
+
+  @override
+  String get countryMalaysia => 'Malaysia';
+
+  @override
+  String get countrySingapore => 'Singapura';
+
+  @override
+  String get countryBrunei => 'Brunei';
+
+  @override
+  String get countryThailand => 'Thailand';
+
+  @override
+  String get countryPhilippines => 'Filipina';
+
+  @override
+  String get countrySaudiArabia => 'Arab Saudi';
+
+  @override
+  String get countryUnitedArabEmirates => 'Emiriah Arab Bersatu';
+
+  @override
+  String get countryQatar => 'Qatar';
+
+  @override
+  String get countryKuwait => 'Kuwait';
+
+  @override
+  String get countryBahrain => 'Bahrain';
+
+  @override
+  String get countryOman => 'Oman';
+
+  @override
+  String get countryJordan => 'Jordan';
+
+  @override
+  String get countryPalestine => 'Palestin';
+
+  @override
+  String get countryEgypt => 'Mesir';
+
+  @override
+  String get countryMorocco => 'Maghribi';
+
+  @override
+  String get countryTurkey => 'Turkiye';
+
+  @override
+  String get countryPakistan => 'Pakistan';
+
+  @override
+  String get countryIndia => 'India';
+
+  @override
+  String get countryBangladesh => 'Bangladesh';
+
+  @override
+  String get countryUnitedKingdom => 'United Kingdom';
+
+  @override
+  String get countryFrance => 'Perancis';
+
+  @override
+  String get countryGermany => 'Jerman';
+
+  @override
+  String get countryNetherlands => 'Belanda';
+
+  @override
+  String get countryUnitedStates => 'Amerika Syarikat';
+
+  @override
+  String get countryCanada => 'Kanada';
+
+  @override
+  String get countryAustralia => 'Australia';
+
+  @override
+  String get countryJapan => 'Jepun';
+
+  @override
+  String get countrySouthKorea => 'Korea Selatan';
+
+  @override
+  String get countryNigeria => 'Nigeria';
+
+  @override
+  String get countrySouthAfrica => 'Afrika Selatan';
+
+  @override
+  String get searchCity => 'Cari bandar atau negara';
+
+  @override
+  String get noCityFound => 'Tiada bandar yang sepadan';
+
+  @override
+  String get cityAutoDetectHint =>
+      'Matikan pengesanan automatik untuk memilih bandar';
 }

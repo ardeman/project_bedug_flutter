@@ -34,10 +34,10 @@
         {
           "type": "new",
           "text": {
-            "id": "Biarkan GPS menemukan lokasi Anda, atau matikan lokasi dan pilih kota Anda.",
-            "en": "Let GPS find you, or turn location off and pick your city.",
-            "ar": "دع نظام GPS يحدد موقعك، أو أوقف الموقع واختر مدينتك.",
-            "ms": "Biarkan GPS mengesan lokasi anda, atau matikan lokasi dan pilih bandar anda."
+            "id": "Biarkan GPS menemukan lokasi Anda, atau matikan dan cari kota Anda di antara lebih dari 100 kota di 31 negara. Jika lokasi tidak bisa didapat, Bedug beralih ke kota pilihan Anda.",
+            "en": "Let GPS find you, or turn it off and search for your city among more than 100 cities in 31 countries. If your location can't be found, Bedug switches to your chosen city.",
+            "ar": "دع نظام GPS يحدد موقعك، أو أوقفه وابحث عن مدينتك بين أكثر من 100 مدينة في 31 دولة. وإذا تعذّر تحديد موقعك، ينتقل بِدوغ إلى المدينة التي اخترتها.",
+            "ms": "Biarkan GPS mengesan lokasi anda, atau matikannya dan cari bandar anda antara lebih 100 bandar di 31 negara. Jika lokasi anda tidak dapat dikesan, Bedug beralih ke bandar pilihan anda."
           }
         },
         {

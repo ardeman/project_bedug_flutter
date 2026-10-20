@@ -26,11 +26,15 @@
   },
   "next_prayer": "Salat berikutnya",
   "mock": {
-    "label": "Bedug menampilkan jadwal salat hari ini di Jakarta, dengan Ashar sebagai salat berikutnya",
+    "label": "Bedug menampilkan jadwal salat hari ini di {place}, dengan {next} sebagai salat berikutnya",
     "place": "Jakarta",
     "hijri": "9 Jumadil Awal 1448",
     "times": ["04:38", "11:52", "15:13", "17:52", "19:03"]
   },
+  "hijri_months": [
+    "Muharram", "Safar", "Rabi'ul Awal", "Rabi'ul Akhir", "Jumadil Awal", "Jumadil Akhir",
+    "Rajab", "Sya'ban", "Ramadan", "Syawal", "Dzulqa'dah", "Dzulhijjah"
+  ],
   "hero": {
     "eyebrow": "Gratis · Tanpa akun · Bisa offline",
     "title": "Setiap salat, tepat waktu.",
@@ -177,7 +181,8 @@
       {
         "heading": "Situs web ini",
         "body": [
-          "bedug.ardeman.com tidak memakai cookie, analitik maupun skrip pihak ketiga, dan menyajikan font-nya sendiri. Situs ini di-hosting di Cloudflare, dan Cloudflare memproses alamat IP serta detail permintaanmu untuk mengirim dan melindungi situs; lihat <a href=\"{cloudflare_privacy}\">kebijakan privasi Cloudflare</a>."
+          "bedug.ardeman.com tidak memakai cookie, analitik maupun skrip pihak ketiga, dan menyajikan font-nya sendiri. Situs ini di-hosting di Cloudflare, dan Cloudflare memproses alamat IP serta detail permintaanmu untuk mengirim dan melindungi situs; lihat <a href=\"{cloudflare_privacy}\">kebijakan privasi Cloudflare</a>.",
+          "Untuk menampilkan pratinjau jadwal salat di beranda, situs ini memakai perkiraan lokasi (kota, koordinat, dan zona waktu) yang diperkirakan Cloudflare dari alamat IP Anda. Browser Anda menghitung jadwal dari lokasi itu, dan lokasi tersebut tidak disimpan atau dikirim ke mana pun."
         ]
       },
       {
