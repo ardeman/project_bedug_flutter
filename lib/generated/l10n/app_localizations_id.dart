@@ -215,6 +215,12 @@ class AppLocalizationsId extends AppLocalizations {
   String get today => 'Hari Ini';
 
   @override
+  String get previousMonth => 'Bulan sebelumnya';
+
+  @override
+  String get nextMonth => 'Bulan berikutnya';
+
+  @override
   String get hijriToday => 'Tanggal Hijriyah Hari Ini';
 
   @override

@@ -70,6 +70,8 @@
   "retry": "Cuba Semula",
   "loading": "Memuatkan...",
   "today": "Hari Ini",
+  "previousMonth": "Bulan sebelumnya",
+  "nextMonth": "Bulan seterusnya",
   "hijriToday": "Tarikh Hijrah Hari Ini",
   "gregorianDate": "Tarikh Masihi",
 

@@ -179,6 +179,12 @@
   "today": "Hari Ini",
   "@today": {},
 
+  "previousMonth": "Bulan sebelumnya",
+  "@previousMonth": {},
+
+  "nextMonth": "Bulan berikutnya",
+  "@nextMonth": {},
+
   "hijriToday": "Tanggal Hijriyah Hari Ini",
   "@hijriToday": {},
 

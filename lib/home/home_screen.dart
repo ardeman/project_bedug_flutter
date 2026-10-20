@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/design/adaptive_scaffold.dart';
 import '../core/design/platform_capabilities.dart';
-import '../features/hijri_calendar/hijri_calendar_screen.dart';
 import '../features/prayer_times/prayer_times_screen.dart';
 import '../features/settings/settings_screen.dart';
 import '../features/worship/worship_screen.dart';
@@ -22,7 +21,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   static const _screens = [
     PrayerTimesScreen(),
     WorshipScreen(),
-    HijriCalendarScreen(),
     SettingsScreen(),
   ];
 
@@ -45,15 +43,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         selectedIcon:
             PlatformCapabilities.isApple ? 'moon.stars.fill' : Icons.mosque,
         label: l10n.worship,
-      ),
-      AdaptiveNavigationDestination(
-        icon: PlatformCapabilities.isApple
-            ? 'calendar'
-            : Icons.calendar_month_outlined,
-        selectedIcon: PlatformCapabilities.isApple
-            ? 'calendar.circle.fill'
-            : Icons.calendar_month,
-        label: l10n.hijriCalendar,
       ),
       AdaptiveNavigationDestination(
         icon: PlatformCapabilities.isApple

@@ -212,6 +212,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get today => 'اليوم';
 
   @override
+  String get previousMonth => 'الشهر السابق';
+
+  @override
+  String get nextMonth => 'الشهر التالي';
+
+  @override
   String get hijriToday => 'التاريخ الهجري اليوم';
 
   @override

@@ -213,6 +213,12 @@ class AppLocalizationsMs extends AppLocalizations {
   String get today => 'Hari Ini';
 
   @override
+  String get previousMonth => 'Bulan sebelumnya';
+
+  @override
+  String get nextMonth => 'Bulan seterusnya';
+
+  @override
   String get hijriToday => 'Tarikh Hijrah Hari Ini';
 
   @override

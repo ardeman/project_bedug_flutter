@@ -70,6 +70,8 @@
   "retry": "Retry",
   "loading": "Loading...",
   "today": "Today",
+  "previousMonth": "Previous month",
+  "nextMonth": "Next month",
   "hijriToday": "Today's Hijri Date",
   "gregorianDate": "Gregorian Date",
 

@@ -93,7 +93,7 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                   ),
                 )
               : SliverAppBar(
-                  expandedHeight: 200,
+                  expandedHeight: _materialExpandedHeight,
                   pinned: true,
                   backgroundColor: AppColors.accentOf(ctx),
                   flexibleSpace: FlexibleSpaceBar(
@@ -207,7 +207,7 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                 ),
               ),
             )
-          else
+          else ...[
             SliverList(
               delegate: SliverChildListDelegate([
                 SizedBox(height: _isApple ? AppSpacing.xs : AppSpacing.md),
@@ -216,6 +216,12 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                 const SizedBox(height: 100),
               ]),
             ),
+            _CollapseRoom(
+              collapseRange: _isApple
+                  ? _LiquidGlassAppBar.expandedExtent - minCollapsedExtent
+                  : _materialExpandedHeight - (kToolbarHeight + topInset),
+            ),
+          ],
         ],
       ),
     );
@@ -310,6 +316,32 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
 // Expanded, an accent hero with a glass countdown lens. Collapsing fades the
 // hero out, so the list scrolls under a scroll-edge band, and the title moves
 // into a floating glass capsule. The action buttons are glass throughout.
+/// Height of the expanded Material app bar.
+const _materialExpandedHeight = 200.0;
+
+/// Empty space after the cards, just enough that the page can always scroll
+/// the header down to its compact bar. A short day doesn't fill the screen,
+/// and without this the header couldn't collapse at all. Longer content gets
+/// none.
+class _CollapseRoom extends StatelessWidget {
+  /// How far the header shrinks from expanded to compact.
+  final double collapseRange;
+
+  const _CollapseRoom({required this.collapseRange});
+
+  @override
+  Widget build(BuildContext ctx) => SliverLayoutBuilder(
+        builder: (ctx, c) {
+          final room = c.viewportMainAxisExtent +
+              collapseRange -
+              c.precedingScrollExtent;
+          return SliverToBoxAdapter(
+            child: SizedBox(height: room > 0 ? room : 0),
+          );
+        },
+      );
+}
+
 class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
   final String nextName;
   final String locationLabel;
@@ -344,7 +376,10 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
   @override
   double get minExtent => minCollapsedExtent;
   @override
-  double get maxExtent => 240;
+  double get maxExtent => expandedExtent;
+
+  /// Height of the expanded hero, before any scrolling.
+  static const expandedExtent = 240.0;
 
   @override
   bool shouldRebuild(_LiquidGlassAppBar old) =>

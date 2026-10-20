@@ -104,11 +104,10 @@ lib/
     utils/           Hijri helpers
     widgets/         Shared widgets (calculation method picker)
   features/
-    prayer_times/    Prayer times screen
+    prayer_times/    Prayer times screen, day picker and Hijri month grid
     worship/         Worship tab (hosts Qibla, later the tracker, tasbih, duas)
     qibla/           Qibla compass card
     prayer/          Prayer card widget
-    hijri_calendar/  Hijri calendar screen
     settings/        Settings screen
   l10n/              ARB files (app_id.arb is the template)
   generated/l10n/    Generated localizations (do not edit)

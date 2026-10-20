@@ -486,6 +486,18 @@ abstract class AppLocalizations {
   /// **'Hari Ini'**
   String get today;
 
+  /// No description provided for @previousMonth.
+  ///
+  /// In id, this message translates to:
+  /// **'Bulan sebelumnya'**
+  String get previousMonth;
+
+  /// No description provided for @nextMonth.
+  ///
+  /// In id, this message translates to:
+  /// **'Bulan berikutnya'**
+  String get nextMonth;
+
   /// No description provided for @hijriToday.
   ///
   /// In id, this message translates to:
