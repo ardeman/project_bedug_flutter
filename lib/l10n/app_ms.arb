@@ -109,8 +109,5 @@
   "dirS": "selatan",
   "dirSW": "barat daya",
   "dirW": "barat",
-  "dirNW": "barat laut",
-
-  "nextDaysSchedule": "{count} hari akan datang",
-  "@nextDaysSchedule": {}
+  "dirNW": "barat laut"
 }

@@ -23,8 +23,6 @@ class PrayerLoadException implements Exception {
 class PrayerState {
   final PrayerTimes? times;
 
-  /// Times for [scheduleDays] days, starting today.
-  final List<PrayerTimes> schedule;
   final String? locationLabel;
   final bool loading;
   final String? error;
@@ -32,7 +30,6 @@ class PrayerState {
 
   const PrayerState({
     this.times,
-    this.schedule = const [],
     this.locationLabel,
     this.loading = true,
     this.error,
@@ -41,7 +38,6 @@ class PrayerState {
 
   PrayerState copyWith({
     PrayerTimes? times,
-    List<PrayerTimes>? schedule,
     String? locationLabel,
     bool? loading,
     String? error,
@@ -49,7 +45,6 @@ class PrayerState {
   }) =>
       PrayerState(
         times: times ?? this.times,
-        schedule: schedule ?? this.schedule,
         locationLabel: locationLabel ?? this.locationLabel,
         loading: loading ?? this.loading,
         error: error, // Always replaced, so omitting it clears the error.
@@ -103,15 +98,13 @@ class PrayerNotifier extends Notifier<PrayerState> {
 
       final params = settings.method.getParameters();
       if (settings.isHanafi) params.madhab = Madhab.hanafi;
-      final schedule = buildPrayerSchedule(coords, params, DateTime.now());
-      final times = schedule.first;
+      final times = PrayerTimes.today(coords, params);
 
       if (loadId != _loadId) return;
       NotificationService.schedulePrayerNotifications(times, _l10n)
           .catchError((_) {});
       state = state.copyWith(
         times: times,
-        schedule: schedule,
         locationLabel: locationLabel,
         loading: false,
       );
@@ -253,22 +246,14 @@ class PrayerNotifier extends Notifier<PrayerState> {
   }
 }
 
-/// How many days the prayer-times tab lists, today included.
-const scheduleDays = 30;
-
-/// Prayer times for [days] consecutive days, starting on [start]'s date.
-List<PrayerTimes> buildPrayerSchedule(
-  Coordinates coords,
-  CalculationParameters params,
-  DateTime start, {
-  int days = scheduleDays,
-}) {
-  return List.generate(days, (i) {
-    // Calendar arithmetic, so a DST change can't skip or repeat a date.
-    final date = DateTime(start.year, start.month, start.day + i);
-    return PrayerTimes(coords, DateComponents.from(date), params);
-  });
-}
+/// Prayer times on [date]'s calendar day, for the same place and method as
+/// [reference]. Calculated on demand, so the schedule can reach any date.
+PrayerTimes prayerTimesOn(PrayerTimes reference, DateTime date) => PrayerTimes(
+      reference.coordinates,
+      // Date only, so the time of day and DST never shift the result.
+      DateComponents(date.year, date.month, date.day),
+      reference.calculationParameters,
+    );
 
 // ── Providers ─────────────────────────────────────────────────────────────────
 final prayerProvider = NotifierProvider<PrayerNotifier, PrayerState>(

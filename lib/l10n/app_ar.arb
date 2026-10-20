@@ -109,8 +109,5 @@
   "dirS": "الجنوب",
   "dirSW": "الجنوب الغربي",
   "dirW": "الغرب",
-  "dirNW": "الشمال الغربي",
-
-  "nextDaysSchedule": "الأيام الـ{count} القادمة",
-  "@nextDaysSchedule": {}
+  "dirNW": "الشمال الغربي"
 }

@@ -368,9 +368,4 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get dirNW => 'barat laut';
-
-  @override
-  String nextDaysSchedule(int count) {
-    return '$count hari akan datang';
-  }
 }
