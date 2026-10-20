@@ -749,9 +749,43 @@ class _WidgetLayoutPreview extends StatelessWidget {
     final accent = AppColors.accentOf(context);
     final names = [l10n.dhuhr, l10n.asr, l10n.maghrib, l10n.isha, l10n.fajr];
     final hours = [12, 15, 18, 19, 4];
+    final focus = size == 2 && !appearance.showSchedule;
     String time(int index) => MaterialLocalizations.of(context).formatTimeOfDay(
       TimeOfDay(hour: hours[index], minute: 0),
       alwaysUse24HourFormat: MediaQuery.alwaysUse24HourFormatOf(context),
+    );
+    Widget countdown({bool prominent = false}) => Text(
+      l10n.widgetPreviewCountdown,
+      style: prominent ? text.headlineLarge : text.titleLarge,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+    );
+    Widget dial(double diameter) => ExcludeSemantics(
+      child: SizedBox.square(
+        key: ValueKey('widget_preview_analog_$size'),
+        dimension: diameter,
+        child: CustomPaint(
+          painter: _WidgetDialPainter(
+            accent,
+            apple: PlatformCapabilities.isApple,
+          ),
+        ),
+      ),
+    );
+    Widget details() => Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          names.first,
+          style: (size == 2 ? text.headlineSmall : text.titleLarge)?.copyWith(
+            color: accent,
+          ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        Text(time(0), style: text.bodyMedium),
+        if (size != 0) countdown(),
+      ],
     );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -764,7 +798,6 @@ class _WidgetLayoutPreview extends StatelessWidget {
         Align(
           alignment: AlignmentDirectional.centerStart,
           child: ConstrainedBox(
-            // Keep previews readable on phones and bounded on desktop windows.
             constraints: BoxConstraints(maxWidth: size == 0 ? 200 : 400),
             child: GlassCard(
               margin: EdgeInsets.zero,
@@ -775,54 +808,70 @@ class _WidgetLayoutPreview extends StatelessWidget {
                   children: [
                     Text(l10n.nextPrayer, style: text.labelSmall),
                     const SizedBox(height: AppSpacing.xs),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                names.first,
-                                style: text.titleLarge?.copyWith(color: accent),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              Text(time(0), style: text.bodyMedium),
+                    if (focus)
+                      SizedBox(
+                        width: double.infinity,
+                        child: Column(
+                          children: [
+                            if (appearance.showAnalog) ...[
+                              dial(AppSpacing.xxl * 3),
+                              const SizedBox(height: AppSpacing.xs),
                             ],
-                          ),
-                        ),
-                        if (appearance.showAnalog) ...[
-                          const SizedBox(width: AppSpacing.xs),
-                          ExcludeSemantics(
-                            child: SizedBox.square(
-                              key: ValueKey('widget_preview_analog_$size'),
-                              dimension: size == 2
-                                  ? AppSpacing.xxl + AppSpacing.md
-                                  : AppSpacing.xxl,
-                              child: CustomPaint(
-                                painter: _WidgetDialPainter(accent),
+                            Text(
+                              names.first,
+                              style: text.headlineSmall?.copyWith(
+                                color: accent,
                               ),
                             ),
-                          ),
+                            Text(time(0), style: text.titleMedium),
+                            countdown(prominent: true),
+                          ],
+                        ),
+                      )
+                    else ...[
+                      Row(
+                        children: [
+                          Expanded(child: details()),
+                          if (appearance.showAnalog) ...[
+                            const SizedBox(width: AppSpacing.xs),
+                            dial(
+                              size == 2
+                                  ? AppSpacing.xxl * 2
+                                  : size == 0
+                                  ? AppSpacing.xxl
+                                  : AppSpacing.xxl + AppSpacing.lg,
+                            ),
+                          ],
                         ],
+                      ),
+                      if (size == 0) ...[
+                        const SizedBox(height: AppSpacing.xs),
+                        countdown(),
                       ],
-                    ),
-                    const SizedBox(height: AppSpacing.xs),
-                    Text(l10n.widgetPreviewCountdown, style: text.titleLarge),
+                    ],
                     if (appearance.showSchedule && size > 0) ...[
                       const SizedBox(height: AppSpacing.md),
                       if (size == 2)
                         for (var index = 0; index < names.length; index++)
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: AppSpacing.xs,
+                          Container(
+                            padding: const EdgeInsets.all(AppSpacing.sm),
+                            decoration: BoxDecoration(
+                              color: index == 0
+                                  ? accent.withValues(alpha: 0.12)
+                                  : null,
+                              borderRadius: BorderRadius.circular(AppRadii.sm),
                             ),
                             child: Row(
                               children: [
                                 Expanded(
                                   child: Text(
                                     names[index],
-                                    style: text.bodyMedium,
+                                    style: text.bodyMedium?.copyWith(
+                                      color: index == 0 ? accent : null,
+                                      fontWeight: index == 0
+                                          ? FontWeight.bold
+                                          : null,
+                                    ),
                                   ),
                                 ),
                                 Text(time(index), style: text.bodyMedium),
@@ -858,7 +907,8 @@ class _WidgetLayoutPreview extends StatelessWidget {
 
 class _WidgetDialPainter extends CustomPainter {
   final Color accent;
-  const _WidgetDialPainter(this.accent);
+  final bool apple;
+  const _WidgetDialPainter(this.accent, {required this.apple});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -873,10 +923,29 @@ class _WidgetDialPainter extends CustomPainter {
     canvas.drawOval(ring, paint);
     paint.color = accent;
     canvas.drawArc(ring, -math.pi / 2, math.pi * 1.5, false, paint);
-    canvas.drawLine(center, center.translate(radius * 0.5, 0), paint);
+    if (apple) {
+      // Match WidgetKit's moon phase symbol rather than Android's timer hand.
+      final moon = Rect.fromCircle(center: center, radius: radius / 4);
+      paint.strokeWidth = 1;
+      canvas.drawOval(moon, paint);
+      paint.style = PaintingStyle.fill;
+      canvas.drawArc(moon, math.pi / 2, math.pi, true, paint);
+      paint.style = PaintingStyle.stroke;
+      paint.strokeWidth = 1;
+      for (var tick = 0; tick < 12; tick++) {
+        final angle = tick * math.pi / 6 - math.pi / 2;
+        final outer = Offset(math.cos(angle), math.sin(angle)) * radius;
+        final inner =
+            Offset(math.cos(angle), math.sin(angle)) *
+            (radius - AppSpacing.xxs);
+        canvas.drawLine(center + inner, center + outer, paint);
+      }
+    } else {
+      canvas.drawLine(center, center.translate(radius * 0.5, 0), paint);
+    }
   }
 
   @override
   bool shouldRepaint(_WidgetDialPainter oldDelegate) =>
-      oldDelegate.accent != accent;
+      oldDelegate.accent != accent || oldDelegate.apple != apple;
 }

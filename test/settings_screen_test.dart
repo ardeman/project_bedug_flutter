@@ -89,6 +89,15 @@ void main() {
       expect(container.read(widgetAppearanceProvider).showSchedule, isFalse);
       expect(find.text('Asr'), findsNothing);
       expect(find.text('01:30:00'), findsNWidgets(3));
+      // Re-enable the dial while keeping the schedule hidden, then inspect the
+      // large preview at the bottom of the page for layout overflow.
+      await tester.tap(find.byKey(const ValueKey('widget_analog_switch')));
+      await tester.pumpAndSettle();
+      await tester.ensureVisible(find.text('Large'));
+      await tester.pumpAndSettle();
+      expect(container.read(widgetAppearanceProvider).showAnalog, isTrue);
+      expect(container.read(widgetAppearanceProvider).showSchedule, isFalse);
+      expect(tester.takeException(), isNull);
       expect(tester.takeException(), isNull);
     },
     variant: TargetPlatformVariant({

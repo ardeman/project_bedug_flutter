@@ -5,6 +5,15 @@
       "date": null,
       "changes": [
         {
+          "type": "fixed",
+          "text": {
+            "en": "Large iPhone widgets now use a prominent centered countdown when the prayer schedule is hidden. Appearance previews better match the native widgets.",
+            "id": "Widget besar iPhone kini menampilkan hitung mundur besar di tengah saat jadwal salat disembunyikan. Pratinjau tampilan lebih menyerupai widget asli.",
+            "ms": "Widget besar iPhone kini memaparkan kira detik besar di tengah apabila jadual solat disembunyikan. Pratonton paparan lebih menyerupai widget sebenar.",
+            "ar": "تعرض أدوات iPhone الكبيرة الآن عدًّا تنازليًا بارزًا في الوسط عند إخفاء جدول الصلاة. أصبحت معاينات المظهر أقرب إلى الأدوات الأصلية."
+          }
+        },
+        {
           "type": "new",
           "text": {
             "en": "Customize home screen widgets in Settings with layout previews, an analog countdown option, and a choice to show upcoming prayer times.",

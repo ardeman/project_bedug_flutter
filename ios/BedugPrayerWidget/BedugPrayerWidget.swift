@@ -124,6 +124,19 @@ struct PrayerWidgetView: View {
                     Text(timerInterval: entry.date...prayer.date, countsDown: true)
                         .font(.title2.monospacedDigit())
                         .lineLimit(1).minimumScaleFactor(0.7)
+                } else if family == .systemLarge && entry.data?.showSchedule == false {
+                    VStack(spacing: 8) {
+                        if entry.data?.showAnalog != false {
+                            countdownDial(until: prayer.date, diameter: 144)
+                        }
+                        Text(prayer.name).font(.title.bold())
+                            .foregroundStyle(accent).widgetAccentable()
+                        Text(prayer.date, style: .time).font(.title3)
+                        Text(timerInterval: entry.date...prayer.date, countsDown: true)
+                            .font(.system(.largeTitle, design: .rounded).bold().monospacedDigit())
+                    }
+                    .lineLimit(1).minimumScaleFactor(0.65)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else {
                     HStack(spacing: 16) {
                         VStack(alignment: .leading, spacing: 4) {
@@ -139,8 +152,6 @@ struct PrayerWidgetView: View {
                             countdownDial(until: prayer.date, diameter: family == .systemLarge ? 96 : 70)
                         }
                     }
-                    .frame(maxHeight: family == .systemLarge && entry.data?.showSchedule == false
-                           ? .infinity : nil)
                 }
                 if family == .systemSmall {
                     Text(entry.data?.location ?? "").font(.caption).lineLimit(1)
