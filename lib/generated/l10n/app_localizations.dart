@@ -1205,6 +1205,12 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Tanpa izin alarm tepat waktu, Android dapat menunda pengingat.'**
   String get precisePrayerAlertsDescription;
+
+  /// No description provided for @widgetRefresh.
+  ///
+  /// In id, this message translates to:
+  /// **'Buka Bedug untuk memperbarui jadwal salat'**
+  String get widgetRefresh;
 }
 
 class _AppLocalizationsDelegate

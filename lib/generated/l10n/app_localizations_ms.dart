@@ -596,4 +596,7 @@ class AppLocalizationsMs extends AppLocalizations {
   @override
   String get precisePrayerAlertsDescription =>
       'Android mungkin melambatkan peringatan tanpa kebenaran penggera tepat.';
+
+  @override
+  String get widgetRefresh => 'Buka Bedug untuk mengemas kini waktu solat';
 }

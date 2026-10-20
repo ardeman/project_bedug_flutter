@@ -360,5 +360,6 @@
   "notificationSchedulingError": "Pengingat belum dapat dijadwalkan. Periksa pengaturan notifikasi sistem, lalu coba ubah pengaturan pengingat lagi.",
   "notificationSystemSettings": "Pengaturan notifikasi sistem",
   "precisePrayerAlerts": "Izinkan pengingat tepat waktu",
-  "precisePrayerAlertsDescription": "Tanpa izin alarm tepat waktu, Android dapat menunda pengingat."
+  "precisePrayerAlertsDescription": "Tanpa izin alarm tepat waktu, Android dapat menunda pengingat.",
+  "widgetRefresh": "Buka Bedug untuk memperbarui jadwal salat"
 }

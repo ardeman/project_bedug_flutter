@@ -199,5 +199,6 @@
   "notificationSchedulingError": "تعذرت جدولة التنبيهات. تحقق من إعدادات إشعارات النظام، ثم حاول تغيير إعدادات التذكير مجددًا.",
   "notificationSystemSettings": "إعدادات إشعارات النظام",
   "precisePrayerAlerts": "السماح بالتنبيهات الدقيقة",
-  "precisePrayerAlertsDescription": "قد يؤخر Android التنبيهات دون إذن المنبهات الدقيقة."
+  "precisePrayerAlertsDescription": "قد يؤخر Android التنبيهات دون إذن المنبهات الدقيقة.",
+  "widgetRefresh": "افتح Bedug لتحديث أوقات الصلاة"
 }

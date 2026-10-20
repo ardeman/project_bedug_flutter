@@ -592,4 +592,7 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get precisePrayerAlertsDescription =>
       'قد يؤخر Android التنبيهات دون إذن المنبهات الدقيقة.';
+
+  @override
+  String get widgetRefresh => 'افتح Bedug لتحديث أوقات الصلاة';
 }

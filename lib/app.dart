@@ -13,12 +13,14 @@ import 'core/providers/system_accent_provider.dart';
 import 'core/theme/app_theme.dart';
 import 'core/theme/app_theme_scope.dart';
 import 'home/home_screen.dart';
+import 'core/services/prayer_widget_service.dart';
 
 class BedugApp extends ConsumerWidget {
   const BedugApp({super.key});
 
   @override
   Widget build(BuildContext ctx, WidgetRef ref) {
+    ref.watch(prayerWidgetSyncProvider);
     final locale = ref.watch(localeProvider);
     final settings = ref.watch(settingsProvider);
     final accent = ref.watch(systemAccentProvider).value;

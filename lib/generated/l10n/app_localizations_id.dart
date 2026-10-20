@@ -597,4 +597,7 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get precisePrayerAlertsDescription =>
       'Tanpa izin alarm tepat waktu, Android dapat menunda pengingat.';
+
+  @override
+  String get widgetRefresh => 'Buka Bedug untuk memperbarui jadwal salat';
 }

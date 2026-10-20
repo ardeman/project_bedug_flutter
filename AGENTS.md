@@ -122,3 +122,5 @@ Record architectural choices here as one line each: date, decision, reason.
 - 2026-10-20: Material paths use Expressive theme styling with Flutter components (tonal surfaces, emphasized type and animated button corners); Apple, Windows and GNOME/KDE retain their platform styling.
 
 - 2026-10-20: Use `material_3_expressive` with the official `material_ui` / `cupertino_ui` libraries (Flutter 3.47+, Dart 3.13+) for Expressive components and spring motion; bridge the bundled theme for Liquid Glass and preserve native platform paths.
+
+- 2026-10-20: Home screen widgets use `home_widget` to share seven calculated days with native WidgetKit and Android RemoteViews, so countdowns and prayer transitions work without a running Flutter engine; cache expiry asks users to reopen Bedug.

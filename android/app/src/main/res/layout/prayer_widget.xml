@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView android:id="@+id/widget_background"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:src="@drawable/prayer_widget_background" android:scaleType="fitXY"
+        android:importantForAccessibility="no" />
+    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+        android:orientation="vertical" android:gravity="center_vertical" android:padding="16dp">
+    <TextView android:id="@+id/widget_title" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="Bedug"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"
+        android:maxLines="1" android:ellipsize="end" />
+    <TextView android:id="@+id/widget_prayer" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@android:style/TextAppearance.Material.Headline"
+        android:maxLines="1" android:ellipsize="end"
+        android:autoSizeTextType="uniform" android:autoSizeMinTextSize="14sp"
+        android:autoSizeMaxTextSize="24sp" android:autoSizeStepGranularity="1sp" />
+    <Chronometer android:id="@+id/widget_countdown" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:countDown="true"
+        android:textAppearance="@android:style/TextAppearance.Material.Large"
+        android:fontFamily="sans-serif-medium" />
+    <TextView android:id="@+id/widget_location" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"
+        android:maxLines="1" android:ellipsize="end" />
+    </LinearLayout>
+</FrameLayout>

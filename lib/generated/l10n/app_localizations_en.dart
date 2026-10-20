@@ -596,4 +596,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get precisePrayerAlertsDescription =>
       'Android may delay alerts without exact alarm permission.';
+
+  @override
+  String get widgetRefresh => 'Open Bedug to refresh prayer times';
 }

@@ -199,5 +199,6 @@
   "notificationSchedulingError": "Peringatan tidak dapat dijadualkan. Semak tetapan pemberitahuan sistem, kemudian cuba ubah tetapan peringatan sekali lagi.",
   "notificationSystemSettings": "Tetapan pemberitahuan sistem",
   "precisePrayerAlerts": "Benarkan peringatan tepat pada waktu",
-  "precisePrayerAlertsDescription": "Android mungkin melambatkan peringatan tanpa kebenaran penggera tepat."
+  "precisePrayerAlertsDescription": "Android mungkin melambatkan peringatan tanpa kebenaran penggera tepat.",
+  "widgetRefresh": "Buka Bedug untuk mengemas kini waktu solat"
 }

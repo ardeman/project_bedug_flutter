@@ -199,5 +199,6 @@
   "notificationSchedulingError": "Alerts could not be scheduled. Check system notification settings, then try changing the reminder settings again.",
   "notificationSystemSettings": "System notification settings",
   "precisePrayerAlerts": "Allow precise alerts",
-  "precisePrayerAlertsDescription": "Android may delay alerts without exact alarm permission."
+  "precisePrayerAlertsDescription": "Android may delay alerts without exact alarm permission.",
+  "widgetRefresh": "Open Bedug to refresh prayer times"
 }

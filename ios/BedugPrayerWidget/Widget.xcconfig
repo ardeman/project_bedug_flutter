@@ -1,0 +1,2 @@
+// Share the app version without linking Flutter or the app's CocoaPods.
+#include "../Flutter/Generated.xcconfig"

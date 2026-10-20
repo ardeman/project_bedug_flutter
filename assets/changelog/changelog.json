@@ -7,6 +7,15 @@
         {
           "type": "new",
           "text": {
+            "en": "Add a home screen widget on iOS and Android for the next prayer and a live countdown. Open Bedug to refresh its seven-day schedule.",
+            "id": "Tambahkan widget layar utama di iOS dan Android untuk salat berikutnya dan hitung mundur langsung. Buka Bedug untuk memperbarui jadwal tujuh harinya.",
+            "ar": "أضف أداة للشاشة الرئيسية على iOS وAndroid للصلاة التالية والعد التنازلي المباشر. افتح Bedug لتحديث جدولها لمدة سبعة أيام.",
+            "ms": "Tambahkan widget skrin utama pada iOS dan Android untuk solat seterusnya dan kira detik langsung. Buka Bedug untuk mengemas kini jadual tujuh harinya."
+          }
+        },
+        {
+          "type": "new",
+          "text": {
             "id": "Jadwal harian kini menampilkan imsak, perkiraan awal duha, dan sepertiga malam terakhir, serta penanda akhir waktu Subuh saat terbit.",
             "en": "Daily schedules now show imsak, an estimated Dhuha start, and the last third of the night, with sunrise marking the end of Fajr.",
             "ar": "يعرض الجدول اليومي الآن الإمساك وبداية تقديرية للضحى والثلث الأخير من الليل، مع توضيح أن الشروق نهاية وقت الفجر.",
