@@ -48,6 +48,8 @@ flutter run -d macos   # or: iphone, android, windows, linux
 
 iOS and macOS builds use CocoaPods only: Swift Package Manager is turned off in `pubspec.yaml`. It was turned off for `cupertino_native`, which has since been removed; turning SPM back on is a separate change. Warnings from plugin code are silenced in `ios/Podfile` and `macos/Podfile`. Flutter still prints a "plugins do not support Swift Package Manager" notice on every Apple build; it's expected and harmless.
 
+On the maintainer's Mac the build caches and the Android SDK live on an external drive, `/Volumes/ardeman.com/caches/`, with symlinks at their usual paths: `~/.gradle`, `~/.pub-cache`, `~/Library/Caches/ms-playwright`, `~/Library/Android/sdk` (→ `android/sdk`) and `~/.android/avd` (→ `android/avd`). If a build can't find the SDK or a cache, check that the drive is mounted first. Copy emulator images with `rsync -S` so they stay sparse, and don't move anything back to the internal disk.
+
 ## Commands
 
 | Task | Command |
