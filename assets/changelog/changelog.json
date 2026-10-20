@@ -7,6 +7,15 @@
         {
           "type": "improved",
           "text": {
+            "id": "Tampilan Material diperbarui dengan gaya Material 3 Expressive: kartu bernuansa warna, tipografi lebih tegas, dan tombol membulat yang berubah bentuk saat ditekan.",
+            "en": "Refreshed Material styling inspired by Material 3 Expressive, with tonal cards, stronger typography, and rounded buttons that change shape when pressed.",
+            "ar": "تحديث مظهر Material بأسلوب مستوحى من Material 3 Expressive، مع بطاقات بدرجات لونية وخطوط أكثر وضوحًا وأزرار مستديرة يتغير شكلها عند الضغط.",
+            "ms": "Gaya Material diperbaharui berinspirasikan Material 3 Expressive, dengan kad bernada warna, tipografi lebih jelas dan butang bulat yang berubah bentuk apabila ditekan."
+          }
+        },
+        {
+          "type": "improved",
+          "text": {
             "id": "Panduan kiblat kini menyatu dalam kartu kompas yang lebih ringkas, dengan ukuran kompas menyesuaikan tinggi layar.",
             "en": "Qibla guidance now sits inside a more compact compass card, with the dial sized to suit the screen height.",
             "ar": "أصبحت إرشادات القبلة ضمن بطاقة بوصلة أكثر إحكامًا، مع حجم بوصلة يتناسب مع ارتفاع الشاشة.",

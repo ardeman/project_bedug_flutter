@@ -1,8 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/app_colors.dart';
 import '../design/linux_desktop.dart';
 import 'app_tokens.dart';
+import 'material_expressive_theme.dart';
 
 /// Brand colors that screens read from the theme, so the accent can follow
 /// the desktop on Linux while every other platform keeps emerald and teal.
@@ -116,11 +118,20 @@ ThemeData buildAppTheme(
   Brightness brightness, {
   LinuxDesktop desktop = LinuxDesktop.other,
   Color? accent,
+  TargetPlatform? platform,
 }) {
   final isDark = brightness == Brightness.dark;
   final palette = _DesktopPalette.of(desktop, isDark);
 
-  if (palette == null) return _brandTheme(brightness);
+  if (palette == null) {
+    final base = _brandTheme(brightness);
+    final target = platform ?? defaultTargetPlatform;
+    return kIsWeb ||
+            target == TargetPlatform.android ||
+            target == TargetPlatform.linux
+        ? materialExpressiveTheme(base)
+        : base;
+  }
 
   final brand =
       accent == null ? BrandColors.brand : BrandColors.fromAccent(accent);

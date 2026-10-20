@@ -5,7 +5,7 @@ A cross-platform Muslim prayer times app with a Hijri calendar, in Indonesian, E
 - **Prayer times** from Kemenag RI by default, or one of several global calculation methods, with a live countdown to the next prayer and adhan notifications.
 - **Hijri calendar** view.
 - **Location** from GPS (auto detect) or a city picked in Settings.
-- **Adaptive design:** Liquid Glass on iOS and macOS, Material 3 on Android and Linux, a Fluent-style layout on Windows.
+- **Adaptive design:** Liquid Glass on iOS and macOS, Material 3 Expressive on Android and other Linux desktops (Adwaita/Breeze on GNOME/KDE), a Fluent-style layout on Windows.
 
 ## Features
 
@@ -23,15 +23,17 @@ A cross-platform Muslim prayer times app with a Hijri calendar, in Indonesian, E
   - macOS window with a hidden, transparent title bar, rounded corners and inset traffic-light buttons. Tabs can be selected by dragging across the nav bar.
   - A layered Icon Composer app icon, so iOS and macOS render it in Liquid Glass and in the Default, Dark, Clear and Tinted icon modes.
 
+The Material theme follows [Material 3 Expressive](https://m3.material.io/get-started) with emphasized typography, tonal cards, rounded buttons that change shape on press, and stronger navigation selection. It uses Flutter’s built-in components; Expressive’s full component and spring-motion catalog is not implemented.
+
 ## Supported platforms
 
 | Platform | Design system | Status |
 | --- | --- | --- |
 | iOS 26+ | Liquid Glass | ✅ |
 | macOS 26+ | Liquid Glass | ✅ |
-| Android | Material Design 3 | ✅ |
+| Android | Material 3 Expressive | ✅ |
 | Windows | Fluent Design | ✅ |
-| Linux | Material Design 3 today; following the desktop (Adwaita on GNOME, Breeze on KDE) is planned | ✅ (desktop theming 🚧) |
+| Linux | Adwaita on GNOME, Breeze on KDE; Material 3 Expressive elsewhere | ✅ |
 
 See the [roadmap](#roadmap) for the Linux plan.
 
@@ -161,7 +163,7 @@ Bedug grows from a prayer-times app into a companion for a Muslim's day, week an
 - **Offline first, private by default.** Everything works without a network or an account, and the user's worship data (tracker, tasbih counts, bookmarks) stays on the device. Any sync is opt-in and comes later.
 - **Trusted, licensed content.** Quran text, translations, duas and dzikir come from named sources whose license allows bundling (for example Tanzil for Quran text, Kemenag RI for the Indonesian translation). Each source is credited in the app.
 - **Content is data, not UI strings.** Religious texts ship as per-locale JSON under `assets/content/<locale>/`. Only UI labels go through `AppLocalizations`.
-- **Every feature on every platform design** (Liquid Glass, Material 3, Fluent), in all four languages, including right-to-left Arabic.
+- **Every feature on every platform design** (Liquid Glass, Material 3 Expressive, Fluent), in all four languages, including right-to-left Arabic.
 
 **Phase 1: Daily prayer (next)**
 
@@ -210,7 +212,7 @@ Bedug grows from a prayer-times app into a companion for a Muslim's day, week an
 
 Linux should look like the desktop it runs on instead of Android's Material 3.
 
-1. **Theme first (done; check on real GNOME and KDE machines):** detect the desktop from `XDG_CURRENT_DESKTOP` (fallback `DESKTOP_SESSION`); use Adwaita colors and fonts on GNOME-family desktops (GNOME, Budgie, Pantheon, Cinnamon) and Breeze on KDE; pick up the system accent color and dark/light preference, with the in-app theme override still winning. Other desktops keep Material 3. The layout stays as it is. Without a portal accent (GNOME before 47) the accent stays emerald.
+1. **Theme first (done; check on real GNOME and KDE machines):** detect the desktop from `XDG_CURRENT_DESKTOP` (fallback `DESKTOP_SESSION`); use Adwaita colors and fonts on GNOME-family desktops (GNOME, Budgie, Pantheon, Cinnamon) and Breeze on KDE; pick up the system accent color and dark/light preference, with the in-app theme override still winning. Other desktops use Material 3 Expressive styling. The layout stays as it is. Without a portal accent (GNOME before 47) the accent stays emerald.
 2. **Native chrome (later):** a libadwaita-style header bar with a view switcher on GNOME, and Breeze sidebar navigation and cards on KDE. This waits until step 1 has been checked on real GNOME and KDE machines.
 
 Flutter stays the framework: React Native has no maintained Linux target.

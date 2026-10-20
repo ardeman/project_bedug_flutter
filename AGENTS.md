@@ -38,7 +38,7 @@ Each platform gets its own design system. Check the platform before rendering an
 | Platform | Design system | Style |
 | --- | --- | --- |
 | iOS / macOS | Liquid Glass | `liquid_glass_easy` lenses (refraction) and lite glass |
-| Android / Linux | Material Design 3 | `NavigationBar`, `Card`, dynamic color; on GNOME and KDE, Adwaita or Breeze colors, fonts and the system accent (`lib/core/design/linux_desktop.dart`) |
+| Android / Linux | Material 3 Expressive | `NavigationBar`, `Card`, dynamic color; on GNOME and KDE, Adwaita or Breeze colors, fonts and the system accent (`lib/core/design/linux_desktop.dart`) |
 | Windows | Fluent Design | `NavigationRail`, acrylic-style containers |
 
 - Detect Apple with `PlatformDesign.isApple` / `PlatformCapabilities.isApple` (`lib/core/design/`), or a local getter that checks `kIsWeb` first: `!kIsWeb && (Platform.isIOS || Platform.isMacOS)`. `kIsWeb` needs `package:flutter/foundation.dart`.
@@ -117,3 +117,5 @@ Record architectural choices here as one line each: date, decision, reason.
 - 2026-10-20: Indonesian text uses the KBBI spelling "salat" in the app, the site and the store name ("Bedug: Jadwal Salat", since "Bedug" was taken), with "sholat" and other variants only in the store keywords, so the app reads correctly and is still found by every spelling.
 - 2026-10-20: The home page's phone mock is live: the Worker (`site/worker.js`) adds the visitor's approximate location from Cloudflare's IP geolocation, and a small same-origin script computes that place's times with the vendored `adhan` JS port (Kemenag, as in the app), so visitors see their own prayer times; this ends the site being script-free, and without scripts the static Jakarta mock remains.
 - 2026-10-20: The changelog is one JSON file with every language inline (`assets/changelog/changelog.json`), bundled into the app and read by `site/build.py`, so release notes are written once and the app and the site never drift.
+
+- 2026-10-20: Material paths use Expressive theme styling with Flutter components (tonal surfaces, emphasized type and animated button corners); Apple, Windows and GNOME/KDE retain their platform styling.
