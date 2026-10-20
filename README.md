@@ -58,13 +58,15 @@ Open `ios/Runner.xcworkspace` in Xcode and choose **Runner** for Debug builds wi
 
 ### Home screen widgets
 
-On iOS and Android, open Bedug once to load a location, then add **Bedug** from the system widget gallery. Widgets show the next obligatory prayer, time, city and a live countdown. They follow the app language and theme. The widget caches seven days locally; open Bedug again to refresh or update your location after travel. Loading or location errors clear the cached times. Notification preferences do not affect widgets.
+On iOS and Android, open Bedug once to load a location, then add **Bedug** from the system widget gallery. Widgets show the next obligatory prayer, time, city and a live countdown. Medium iOS widgets add a circular countdown and a strip of the next five prayers; large iOS widgets show the same schedule as rows. On Android, resize to at least 280 dp wide for the countdown dial, or 350 dp wide and 180 dp tall for the five-prayer strip. The iOS ring and digital countdown update live; Android’s digital countdown ticks live while its dial refreshes with the widget (normally every 30 minutes, and at prayer transitions; the OS may delay updates). They follow the app language and theme. The widget caches seven days locally; open Bedug again to refresh or update your location after travel. Loading or location errors clear the cached times. Notification preferences do not affect widgets.
 
 For iOS signing, register the App Group `group.com.ardeman.bedug` with your Apple developer team and enable it for both `com.ardeman.bedug` (Runner) and `com.ardeman.bedug.PrayerWidget` (BedugPrayerWidget). Entitlements and the embedded WidgetKit target are already configured. The widget version follows Flutter's build name and number. The extension needs no CocoaPods or Flutter engine.
 
 Device checks before shipping: add/remove and resize widgets; check prayer transitions and expiry while the app is closed; change city, calculation method, language and theme; test Arabic, light/dark and iOS tinted/clear modes. On Android also check reboot, clock changes and Doze; transition alarms are inexact and can be delayed by the OS.
 
-Validation on 2026-10-21: on the connected iPhone 17 (iOS 27.0.1), the shared App Group cache contained ordered future prayer times, location, language and theme data. The user confirmed small and medium layouts with a ticking countdown and no clipped text, Arabic and dark theme, tinted/clear rendering, city and calculation-method updates, and a prayer transition with Bedug closed. Widget removal/resizing and seven-day cache expiry remain unverified. Android device checks remain pending; no Android device was connected.
+The enhanced countdown and five-prayer layouts still need device visual checks in all languages and rendering modes.
+
+Validation of the original layouts on 2026-10-21: on the connected iPhone 17 (iOS 27.0.1), the shared App Group cache contained ordered future prayer times, location, language and theme data. The user confirmed small and medium layouts with a ticking countdown and no clipped text, Arabic and dark theme, tinted/clear rendering, city and calculation-method updates, and a prayer transition with Bedug closed. Widget removal/resizing and seven-day cache expiry remain unverified. Android device checks remain pending; no Android device was connected.
 
 ## Commands
 

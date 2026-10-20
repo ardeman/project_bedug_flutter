@@ -8,6 +8,11 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.RectF
+import android.os.Bundle
 import android.os.SystemClock
 import android.view.View
 import android.widget.RemoteViews
@@ -19,6 +24,12 @@ import java.util.Date
 import java.util.Locale
 
 class PrayerWidgetProvider : HomeWidgetProvider() {
+    override fun onAppWidgetOptionsChanged(context: Context, manager: AppWidgetManager,
+                                          id: Int, options: Bundle) {
+        super.onAppWidgetOptionsChanged(context, manager, id, options)
+        onUpdate(context, manager, intArrayOf(id), HomeWidgetPlugin.getData(context))
+    }
+
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
         if (intent.action in setOf(REFRESH, Intent.ACTION_BOOT_COMPLETED,
@@ -30,17 +41,21 @@ class PrayerWidgetProvider : HomeWidgetProvider() {
         }
     }
 
-    override fun onUpdate(context: Context, manager: AppWidgetManager,
-                          ids: IntArray, widgetData: SharedPreferences) {
+    override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager,
+                          appWidgetIds: IntArray, widgetData: SharedPreferences) {
+        val manager = appWidgetManager
+        val ids = appWidgetIds
         if (ids.isEmpty()) return
         val data = runCatching {
             JSONObject(widgetData.getString("prayer_widget", "{}") ?: "{}")
         }.getOrDefault(JSONObject())
         val now = System.currentTimeMillis()
         val prayers = data.optJSONArray("prayers")
-        val next = (0 until (prayers?.length() ?: 0)).asSequence()
+        val schedule = (0 until (prayers?.length() ?: 0)).asSequence()
             .mapNotNull { prayers?.optJSONObject(it) }
-            .firstOrNull { it.optLong("time") > now }
+            .toList()
+        val upcoming = schedule.filter { it.optLong("time") > now }.take(5)
+        val next = upcoming.firstOrNull()
         val mode = data.optInt("themeMode")
         val dark = mode == 2 || (mode == 0 &&
             context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
@@ -77,7 +92,41 @@ class PrayerWidgetProvider : HomeWidgetProvider() {
         }
         views.setOnClickPendingIntent(R.id.widget_root, PendingIntent.getActivity(
             context, 0, launch, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
-        ids.forEach { manager.updateAppWidget(it, views) }
+        ids.forEach { id ->
+            val sizedViews = RemoteViews(views)
+            val options = manager.getAppWidgetOptions(id)
+            // Use the minimum width so the layout also fits after rotation.
+            val width = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH, 180)
+            val height = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT, 140)
+            val showDial = next != null && width >= 280
+            val showSchedule = next != null && width >= 350 && height >= 180
+            sizedViews.setViewVisibility(R.id.widget_dial, if (showDial) View.VISIBLE else View.GONE)
+            sizedViews.setViewVisibility(R.id.widget_schedule, if (showSchedule) View.VISIBLE else View.GONE)
+            sizedViews.removeAllViews(R.id.widget_schedule)
+            if (showDial) {
+                val start = schedule.lastOrNull { it.optLong("time") <= now }?.optLong("time")
+                    ?: data.optLong("intervalStart", now)
+                val end = next.getLong("time")
+                val remaining = if (end > start) (end - now).toFloat() / (end - start) else 1f
+                sizedViews.setImageViewBitmap(R.id.widget_dial,
+                    countdownDial(context, remaining.coerceIn(0f, 1f),
+                        data.optLong(prefix + "Accent").toInt()))
+            }
+            if (showSchedule) {
+                upcoming.forEachIndexed { index, prayer ->
+                    val slot = RemoteViews(context.packageName, R.layout.prayer_widget_slot)
+                    slot.setTextViewText(R.id.slot_name, prayer.getString("name"))
+                    slot.setTextViewText(R.id.slot_time,
+                        DateFormat.getTimeInstance(DateFormat.SHORT, locale)
+                            .format(Date(prayer.getLong("time"))))
+                    val ink = data.optLong(prefix + if (index == 0) "Accent" else "Text").toInt()
+                    slot.setTextColor(R.id.slot_name, ink)
+                    slot.setTextColor(R.id.slot_time, ink)
+                    sizedViews.addView(R.id.widget_schedule, slot)
+                }
+            }
+            manager.updateAppWidget(id, sizedViews)
+        }
         val alarms = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val pending = refreshIntent(context)
         alarms.cancel(pending)
@@ -91,6 +140,43 @@ class PrayerWidgetProvider : HomeWidgetProvider() {
         (context.getSystemService(Context.ALARM_SERVICE) as AlarmManager)
             .cancel(refreshIntent(context))
         super.onDisabled(context)
+    }
+
+    private fun countdownDial(context: Context, remaining: Float, accent: Int): Bitmap {
+        val size = (76 * context.resources.displayMetrics.density).toInt().coerceAtLeast(76)
+        val bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        // Draw in density-independent coordinates, leaving space for the dial ticks.
+        canvas.scale(size / 76f, size / 76f)
+        val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = accent
+            style = Paint.Style.STROKE
+            strokeWidth = 5f
+            strokeCap = Paint.Cap.ROUND
+        }
+        val ring = RectF(10f, 10f, 66f, 66f)
+        paint.alpha = 35
+        canvas.drawOval(ring, paint)
+        paint.alpha = 255
+        canvas.drawArc(ring, -90f, remaining * 360, false, paint)
+        paint.strokeWidth = 1.5f
+        repeat(12) { tick ->
+            canvas.save()
+            canvas.rotate(tick * 30f, 38f, 38f)
+            paint.alpha = 120
+            canvas.drawLine(38f, 1f, 38f, if (tick % 3 == 0) 6f else 4f, paint)
+            canvas.restore()
+        }
+        paint.alpha = 255
+        paint.strokeWidth = 2f
+        // A timer hand shows the remaining fraction, with noon at the top.
+        canvas.save()
+        canvas.rotate(remaining * 360, 38f, 38f)
+        canvas.drawLine(38f, 38f, 38f, 19f, paint)
+        canvas.restore()
+        paint.style = Paint.Style.FILL
+        canvas.drawCircle(38f, 38f, 3f, paint)
+        return bitmap
     }
 
     private fun refreshIntent(context: Context) = PendingIntent.getBroadcast(context, 0,

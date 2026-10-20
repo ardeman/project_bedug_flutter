@@ -8,23 +8,35 @@
         android:importantForAccessibility="no" />
     <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
         android:orientation="vertical" android:gravity="center_vertical" android:padding="16dp">
-    <TextView android:id="@+id/widget_title" android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:text="Bedug"
-        android:textAppearance="@android:style/TextAppearance.Material.Small"
-        android:maxLines="1" android:ellipsize="end" />
-    <TextView android:id="@+id/widget_prayer" android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="@android:style/TextAppearance.Material.Headline"
-        android:maxLines="1" android:ellipsize="end"
-        android:autoSizeTextType="uniform" android:autoSizeMinTextSize="14sp"
-        android:autoSizeMaxTextSize="24sp" android:autoSizeStepGranularity="1sp" />
-    <Chronometer android:id="@+id/widget_countdown" android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:countDown="true"
-        android:textAppearance="@android:style/TextAppearance.Material.Large"
-        android:fontFamily="sans-serif-medium" />
-    <TextView android:id="@+id/widget_location" android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="@android:style/TextAppearance.Material.Small"
-        android:maxLines="1" android:ellipsize="end" />
+        <TextView android:id="@+id/widget_title" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:text="Bedug"
+            android:textAppearance="@android:style/TextAppearance.Material.Small"
+            android:maxLines="1" android:ellipsize="end" />
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical">
+            <LinearLayout android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="wrap_content" android:orientation="vertical">
+                <TextView android:id="@+id/widget_prayer" android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@android:style/TextAppearance.Material.Headline"
+                    android:maxLines="1" android:ellipsize="end"
+                    android:autoSizeTextType="uniform" android:autoSizeMinTextSize="14sp"
+                    android:autoSizeMaxTextSize="24sp" android:autoSizeStepGranularity="1sp" />
+                <Chronometer android:id="@+id/widget_countdown" android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:countDown="true"
+                    android:textAppearance="@android:style/TextAppearance.Material.Large"
+                    android:fontFamily="sans-serif-medium" />
+                <TextView android:id="@+id/widget_location" android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@android:style/TextAppearance.Material.Small"
+                    android:maxLines="1" android:ellipsize="end" />
+            </LinearLayout>
+            <ImageView android:id="@+id/widget_dial" android:layout_width="76dp"
+                android:layout_height="76dp" android:layout_marginStart="12dp"
+                android:visibility="gone" android:importantForAccessibility="no" />
+        </LinearLayout>
+        <LinearLayout android:id="@+id/widget_schedule" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="10dp"
+            android:orientation="horizontal" android:visibility="gone" />
     </LinearLayout>
 </FrameLayout>

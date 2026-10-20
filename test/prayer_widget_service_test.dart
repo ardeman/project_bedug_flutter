@@ -118,6 +118,49 @@ void main() {
   });
 
   test(
+    'countdown dial starts at the preceding prayer, including overnight',
+    () {
+      final yesterday = PrayerTimes(
+        times.coordinates,
+        DateComponents(2026, 10, 19),
+        times.calculationParameters,
+      );
+      expect(
+        build(schedule: times)['intervalStart'],
+        yesterday.isha.millisecondsSinceEpoch,
+      );
+      expect(
+        build(schedule: times, now: times.dhuhr)['intervalStart'],
+        times.dhuhr.millisecondsSinceEpoch,
+      );
+    },
+  );
+
+  test(
+    'wide schedule has five upcoming prayers across midnight in all locales',
+    () {
+      for (final locale in ['id', 'en', 'ar', 'ms']) {
+        final data = build(schedule: times, now: times.maghrib, locale: locale);
+        final upcoming = (data['prayers'] as List<Map<String, Object>>)
+            .take(5)
+            .toList();
+        final l10n = lookupAppLocalizations(Locale(locale));
+        expect(upcoming.map((prayer) => prayer['name']), [
+          l10n.isha,
+          l10n.fajr,
+          l10n.dhuhr,
+          l10n.asr,
+          l10n.maghrib,
+        ]);
+        expect(
+          upcoming.last['time'],
+          greaterThan(times.isha.millisecondsSinceEpoch),
+        );
+      }
+    },
+  );
+
+  test(
     'missing schedule clears times and all locales supply refresh guidance',
     () {
       for (final locale in ['id', 'en', 'ar', 'ms']) {

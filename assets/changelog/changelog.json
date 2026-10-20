@@ -7,6 +7,15 @@
         {
           "type": "improved",
           "text": {
+            "id": "Widget layar utama kini menampilkan hitung mundur melingkar pada ukuran sedang dan lima waktu salat berikutnya pada tata letak lebar. Widget besar juga tersedia di iOS.",
+            "en": "Home screen widgets now show a circular countdown at medium sizes and the next five prayer times in wide layouts. A large iOS widget is also available.",
+            "ar": "تعرض أدوات الشاشة الرئيسية الآن عدًّا تنازليًا دائريًا بالحجم المتوسط وأوقات الصلوات الخمس القادمة في التخطيطات العريضة. تتوفر أيضًا أداة كبيرة على iOS.",
+            "ms": "Widget skrin utama kini memaparkan kira detik berbentuk bulatan pada saiz sederhana dan lima waktu solat seterusnya pada susun atur lebar. Widget besar juga tersedia pada iOS."
+          }
+        },
+        {
+          "type": "improved",
+          "text": {
             "en": "Today’s Hijri date now advances at local Maghrib, with an explanatory label. Prayer schedules and browsed calendar dates keep their Gregorian-day mapping.",
             "id": "Tanggal Hijriah hari ini kini berganti saat Magrib setempat, disertai keterangan. Jadwal salat dan tanggal kalender yang ditelusuri tetap mengikuti hari Masehi.",
             "ms": "Tarikh Hijrah hari ini kini bertukar pada waktu Maghrib setempat, dengan label penerangan. Jadual solat dan tarikh kalendar yang dilayari kekal mengikut hari Masihi.",

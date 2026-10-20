@@ -23,8 +23,11 @@ Map<String, Object> buildPrayerWidgetData({
   required int themeMode,
 }) {
   final prayers = <Map<String, Object>>[];
+  var intervalStart = now;
+  DateTime? previousPrayer;
   if (times != null) {
-    for (var day = 0; day < 7; day++) {
+    // Include yesterday when finding the start of the overnight countdown.
+    for (var day = -1; day < 7; day++) {
       final daily = PrayerTimes(
         times.coordinates,
         DateComponents.from(DateTime(now.year, now.month, now.day + day)),
@@ -32,7 +35,14 @@ Map<String, Object> buildPrayerWidgetData({
       );
       for (final prayer in notificationPrayers) {
         final time = daily.timeForPrayer(prayer);
-        if (time == null || !time.isAfter(now)) continue;
+        if (time == null) continue;
+        if (!time.isAfter(now)) {
+          if (previousPrayer == null || time.isAfter(previousPrayer)) {
+            previousPrayer = time;
+          }
+          continue;
+        }
+        if (day < 0) continue;
         final name = switch (prayer) {
           Prayer.fajr => l10n.fajr,
           Prayer.dhuhr => l10n.dhuhr,
@@ -44,10 +54,12 @@ Map<String, Object> buildPrayerWidgetData({
         prayers.add({'name': name, 'time': time.millisecondsSinceEpoch});
       }
     }
+    intervalStart = previousPrayer ?? now;
   }
   prayers.sort((a, b) => (a['time'] as int).compareTo(b['time'] as int));
   return {
     'prayers': prayers,
+    'intervalStart': intervalStart.millisecondsSinceEpoch,
     'location': location ?? '',
     'locale': l10n.localeName,
     'title': l10n.nextPrayer,
