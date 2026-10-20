@@ -19,5 +19,12 @@ abstract final class AppRadii {
   static const double xl = 28;
 }
 
+/// Shared dimensions for compact toolbar and navigation controls.
+abstract final class AppControlSizes {
+  static const double toolbarButton = 40;
+  static const double toolbarIcon = 20;
+  static const double navigationIcon = 24;
+}
+
 /// The brand typeface, bundled in `assets/fonts/plus_jakarta_sans/`.
 const kBrandFont = 'PlusJakartaSans';

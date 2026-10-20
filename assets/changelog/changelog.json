@@ -7,6 +7,15 @@
         {
           "type": "improved",
           "text": {
+            "id": "Judul Liquid Glass yang panjang kini tetap terpisah dari tombol kembali dan kontrol jendela Mac, dengan tipografi label dan ukuran ikon navigasi yang lebih konsisten.",
+            "en": "Long Liquid Glass titles now stay clear of back buttons and Mac window controls, with more consistent label typography and navigation icon sizes.",
+            "ar": "تبقى عناوين Liquid Glass الطويلة الآن بعيدة عن أزرار الرجوع وعناصر التحكم بنافذة Mac، مع تنسيق أكثر اتساقًا للتسميات وأحجام أيقونات التنقل.",
+            "ms": "Tajuk Liquid Glass yang panjang kini tidak bertindih dengan butang kembali dan kawalan tetingkap Mac, dengan tipografi label dan saiz ikon navigasi yang lebih konsisten."
+          }
+        },
+        {
+          "type": "improved",
+          "text": {
             "id": "Tampilan Material kini menggunakan komponen Material 3 Expressive dengan gerakan pegas, indikator pemuatan yang berubah bentuk, pengaturan berkelompok, dan panel metode perhitungan baru.",
             "en": "Material screens now use Material 3 Expressive components with spring motion, a morphing loading indicator, grouped settings, and a new calculation-method sheet.",
             "ar": "تستخدم شاشات Material الآن مكونات Material 3 Expressive مع حركة نابضية ومؤشر تحميل متغير الشكل وإعدادات مجمعة ولوحة جديدة لطريقة الحساب.",

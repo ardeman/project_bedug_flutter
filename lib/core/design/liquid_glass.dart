@@ -2,13 +2,12 @@ import 'dart:math' as math;
 
 import 'package:material_ui/material_ui.dart';
 import 'package:liquid_glass_easy/liquid_glass_easy.dart';
+import 'package:material_3_expressive/material_3_expressive.dart';
 
 import '../constants/app_colors.dart';
 import '../theme/app_tokens.dart';
 import 'platform_capabilities.dart';
 import 'platform_design.dart';
-
-import 'package:material_3_expressive/material_3_expressive.dart';
 
 /// Glass tint for bars and controls that float over content: milky in
 /// light mode, smoked in dark mode, so their icons and text stay legible.
@@ -76,7 +75,9 @@ class GlassNavBar extends StatelessWidget {
               // Long translations would wrap and overflow the bar.
               labelBuilder: (_, l) => Text(
                 l.text ?? '',
-                style: l.textStyle,
+                style: theme.textTheme.labelSmall?.copyWith(
+                  color: l.textStyle.color,
+                ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -91,8 +92,8 @@ class GlassNavBar extends StatelessWidget {
         itemStyle: LiquidGlassTabItemStyle(
           selectedColor: AppColors.accentOf(ctx),
           unselectedColor: theme.colorScheme.onSurface.withValues(alpha: 0.62),
-          iconSize: 22,
-          labelFontSize: theme.textTheme.labelSmall?.fontSize ?? 11,
+          iconSize: AppControlSizes.navigationIcon,
+          labelFontSize: theme.textTheme.labelSmall!.fontSize!,
         ),
       ),
     );
@@ -132,7 +133,7 @@ class GlassTopBar extends StatelessWidget implements PreferredSizeWidget {
   const GlassTopBar({super.key, required this.title});
 
   /// Height of the title capsule: one title line plus padding.
-  static const _capsuleHeight = 40.0;
+  static const _capsuleHeight = AppControlSizes.toolbarButton;
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -162,6 +163,12 @@ class GlassTopBar extends StatelessWidget implements PreferredSizeWidget {
     }
 
     final canPop = ModalRoute.of(ctx)?.impliesAppBarDismissal ?? false;
+    // Reserve the same space on both sides to keep the title centered and
+    // clear of the back button and macOS traffic lights, including in RTL.
+    final titleInset =
+        AppSpacing.md +
+        windowControlsInset +
+        (canPop ? AppControlSizes.toolbarButton + AppSpacing.xs : 0);
     return SizedBox(
       height: kToolbarHeight + MediaQuery.of(ctx).padding.top,
       child: Stack(
@@ -176,29 +183,32 @@ class GlassTopBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           SafeArea(
             bottom: false,
-            child: Center(
-              child: SizedBox(
-                height: _capsuleHeight,
-                child: LiquidGlassLens(
-                  style: LiquidGlassStyle(
-                    shape: const LiquidGlassShape.continuousRoundedRectangle(
-                      cornerRadius: _capsuleHeight / 2,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: titleInset),
+              child: Center(
+                child: SizedBox(
+                  height: _capsuleHeight,
+                  child: LiquidGlassLens(
+                    style: LiquidGlassStyle(
+                      shape: const LiquidGlassShape.continuousRoundedRectangle(
+                        cornerRadius: _capsuleHeight / 2,
+                      ),
+                      color: glassTintOf(ctx),
+                      blur: 6,
                     ),
-                    color: glassTintOf(ctx),
-                    blur: 6,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.md,
-                    ),
-                    child: Center(
-                      widthFactor: 1,
-                      child: Text(
-                        title,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          color: theme.colorScheme.onSurface,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AppSpacing.md,
+                      ),
+                      child: Center(
+                        widthFactor: 1,
+                        child: Text(
+                          title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            color: theme.colorScheme.onSurface,
+                          ),
                         ),
                       ),
                     ),
@@ -300,7 +310,7 @@ class GlassIconButton extends StatelessWidget {
     required this.icon,
     required this.onPressed,
     this.color,
-    this.size = 40,
+    this.size = AppControlSizes.toolbarButton,
   });
 
   @override
@@ -311,7 +321,7 @@ class GlassIconButton extends StatelessWidget {
       width: size,
       height: size,
       padding: EdgeInsets.zero,
-      iconSize: 20,
+      iconSize: AppControlSizes.toolbarIcon,
       foregroundColor: color ?? Theme.of(ctx).colorScheme.onSurface,
       style: LiquidGlassStyle(
         shape: LiquidGlassShape.continuousRoundedRectangle(
