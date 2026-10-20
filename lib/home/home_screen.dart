@@ -18,12 +18,6 @@ class HomeScreen extends ConsumerStatefulWidget {
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   int _idx = 0;
 
-  static const _screens = [
-    PrayerTimesScreen(),
-    WorshipScreen(),
-    SettingsScreen(),
-  ];
-
   @override
   Widget build(BuildContext ctx) {
     final l10n = AppLocalizations.of(ctx);
@@ -60,7 +54,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       onDestinationSelected: (index) => setState(() => _idx = index),
       destinations: destinations,
       showAppBar: false,
-      child: IndexedStack(index: _idx, children: _screens),
+      child: IndexedStack(index: _idx, children: [
+        const PrayerTimesScreen(),
+        WorshipScreen(isActive: _idx == 1),
+        const SettingsScreen(),
+      ]),
     );
   }
 }

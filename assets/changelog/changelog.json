@@ -7,6 +7,24 @@
         {
           "type": "improved",
           "text": {
+            "id": "Panduan kiblat kini menyatu dalam kartu kompas yang lebih ringkas, dengan ukuran kompas menyesuaikan tinggi layar.",
+            "en": "Qibla guidance now sits inside a more compact compass card, with the dial sized to suit the screen height.",
+            "ar": "أصبحت إرشادات القبلة ضمن بطاقة بوصلة أكثر إحكامًا، مع حجم بوصلة يتناسب مع ارتفاع الشاشة.",
+            "ms": "Panduan kiblat kini digabungkan dalam kad kompas yang lebih padat, dengan saiz kompas mengikut ketinggian skrin."
+          }
+        },
+        {
+          "type": "improved",
+          "text": {
+            "id": "Kompas kiblat kini memberi getaran atau bunyi klik seperti pemilih tanggal saat perangkat menghadap kiblat.",
+            "en": "The Qibla compass now gives a haptic tap or a click sound like the date selector when your device aligns with the Qibla.",
+            "ar": "تُصدر بوصلة القبلة الآن اهتزازًا أو صوت نقرة مثل محدد التاريخ عند توجيه جهازك نحو القبلة.",
+            "ms": "Kompas kiblat kini memberi getaran atau bunyi klik seperti pemilih tarikh apabila peranti anda menghadap kiblat."
+          }
+        },
+        {
+          "type": "improved",
+          "text": {
             "id": "Tampilan pencari kiblat diperbarui dengan kompas berlapis, penanda Ka’bah pada panah arah, dan panel panduan Liquid Glass di perangkat Apple.",
             "en": "A refreshed Qibla finder with a layered compass, a Kaaba marker on the direction arrow, and Liquid Glass guidance panels on Apple devices.",
             "ar": "تصميم محدّث لمحدد القبلة مع بوصلة متعددة الطبقات وعلامة الكعبة على سهم الاتجاه ولوحات إرشاد بتصميم Liquid Glass على أجهزة Apple.",

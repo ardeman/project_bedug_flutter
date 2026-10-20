@@ -7,7 +7,9 @@ import '../qibla/widgets/qibla_card.dart';
 
 /// Worship tab: Qibla now, and later the prayer tracker, tasbih and duas.
 class WorshipScreen extends StatelessWidget {
-  const WorshipScreen({super.key});
+  const WorshipScreen({super.key, this.isActive = true});
+
+  final bool isActive;
 
   @override
   Widget build(BuildContext ctx) {
@@ -20,7 +22,7 @@ class WorshipScreen extends StatelessWidget {
         child: ConstrainedBox(
           // Keep the card readable on wide desktop windows.
           constraints: const BoxConstraints(maxWidth: 560),
-          child: ListView(children: const [QiblaCard()]),
+          child: ListView(children: [QiblaCard(feedbackEnabled: isActive)]),
         ),
       ),
     );

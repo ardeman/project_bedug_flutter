@@ -16,11 +16,23 @@ import '../../../core/design/liquid_glass.dart';
 import '../../../core/design/platform_capabilities.dart';
 import '../../../core/theme/app_tokens.dart';
 import '../../../core/services/prayer_service.dart';
+import '../../../core/services/selection_feedback.dart';
 import '../../../core/utils/qibla_utils.dart';
 import '../../../generated/l10n/app_localizations.dart';
 
 /// Within this many degrees of the Qibla the user counts as facing it.
 const double _facingToleranceDeg = 3;
+
+/// Move clearly outside the alignment zone before another tick is allowed.
+const double _feedbackResetToleranceDeg = 6;
+
+/// Desktop devices have no compass sensor; keep their dial north-up.
+final compassEventsProvider = Provider<Stream<CompassEvent>>((ref) {
+  if (kIsWeb || !(Platform.isIOS || Platform.isAndroid)) {
+    return const Stream.empty();
+  }
+  return FlutterCompass.events ?? const Stream.empty();
+});
 
 /// Within this many degrees of the sun (or of directly away from it) the hint
 /// says "toward" / "away" instead of a left/right angle.
@@ -32,7 +44,9 @@ const double _poorAccuracyDeg = 30;
 /// Qibla direction card: a compass dial that turns with the device heading on
 /// phones, and stays north-up with text guidance on desktops.
 class QiblaCard extends ConsumerStatefulWidget {
-  const QiblaCard({super.key});
+  const QiblaCard({super.key, this.feedbackEnabled = true});
+
+  final bool feedbackEnabled;
 
   @override
   ConsumerState<QiblaCard> createState() => _QiblaCardState();
@@ -44,27 +58,51 @@ class _QiblaCardState extends ConsumerState<QiblaCard> {
   double? _heading;
   double? _accuracy;
 
-  /// Only phones have a heading sensor plugin; desktops stay north-up.
-  static bool get _hasCompassPlugin =>
-      !kIsWeb && (Platform.isIOS || Platform.isAndroid);
+  bool _alignmentFeedbackSent = false;
 
   @override
   void initState() {
     super.initState();
-    if (_hasCompassPlugin) {
-      _compassSub = FlutterCompass.events?.listen(
-        (e) => setState(() {
-          _heading = e.heading;
-          _accuracy = e.accuracy;
-        }),
-        onError: (_) => setState(() => _heading = null),
-      );
-    }
+    _compassSub = ref.read(compassEventsProvider).listen(
+      _onCompassEvent,
+      onError: (_) {
+        _alignmentFeedbackSent = false;
+        setState(() => _heading = null);
+      },
+    );
     // The sun moves about 1° every 4 minutes; refresh the hint each minute.
     _sunTimer = Timer.periodic(
       const Duration(minutes: 1),
       (_) => setState(() {}),
     );
+  }
+
+  void _onCompassEvent(CompassEvent event) {
+    setState(() {
+      _heading = event.heading;
+      _accuracy = event.accuracy;
+    });
+
+    final coords = ref.read(prayerProvider).times?.coordinates;
+    final heading = event.heading;
+    final lifecycle = WidgetsBinding.instance.lifecycleState;
+    if (!widget.feedbackEnabled ||
+        (lifecycle != null && lifecycle != AppLifecycleState.resumed) ||
+        ModalRoute.of(context)?.isCurrent == false ||
+        coords == null ||
+        heading == null ||
+        !heading.isFinite) {
+      _alignmentFeedbackSent = false;
+      return;
+    }
+
+    final error = relativeAngle(heading, qiblaBearing(coords)).abs();
+    if (error > _feedbackResetToleranceDeg) {
+      _alignmentFeedbackSent = false;
+    } else if (error <= _facingToleranceDeg && !_alignmentFeedbackSent) {
+      _alignmentFeedbackSent = true;
+      SelectionFeedback.tick();
+    }
   }
 
   @override
@@ -114,120 +152,102 @@ class _QiblaCardState extends ConsumerState<QiblaCard> {
     final direction = _directionName(l10n, compassPointIndex(bearing));
     final km = NumberFormat.decimalPattern(localeName)
         .format(distanceToKaabaKm(coords).round());
-    final muted = theme.textTheme.bodyMedium?.copyWith(
+    // Short windows need smaller secondary text and tighter card spacing.
+    final compact = MediaQuery.sizeOf(ctx).height < 600;
+    final bodyStyle =
+        compact ? theme.textTheme.bodySmall : theme.textTheme.bodyMedium;
+    final muted = bodyStyle?.copyWith(
       color: theme.colorScheme.onSurfaceVariant,
     );
 
     final accent = AppColors.accentOf(ctx);
-    return Column(
-      children: [
-        GlassCard(
-          child: Padding(
-            padding: const EdgeInsets.all(AppSpacing.lg),
-            child: Column(
+    // Keep the dial proportional to short screens, leaving room for guidance
+    // and the floating navigation bar. Large text can still scroll naturally.
+    final dialSize = (MediaQuery.sizeOf(ctx).height * (compact ? 0.20 : 0.27))
+        .clamp(112.0, 240.0);
+    return GlassCard(
+      margin: EdgeInsets.all(compact ? AppSpacing.sm : AppSpacing.md),
+      child: Padding(
+        padding: EdgeInsets.all(compact ? AppSpacing.sm : AppSpacing.md),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Wrap(
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: AppSpacing.sm,
+              runSpacing: AppSpacing.xxs,
               children: [
                 Text(
                   l10n.qibla,
-                  style: theme.textTheme.titleLarge
+                  style: theme.textTheme.titleMedium
                       ?.copyWith(fontWeight: FontWeight.bold),
                 ),
-                if (locationLabel != null) ...[
-                  const SizedBox(height: AppSpacing.xs),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.location_on_outlined, size: 16, color: accent),
-                      const SizedBox(width: AppSpacing.xxs),
-                      Flexible(
-                        child: Text(locationLabel,
-                            style: muted, textAlign: TextAlign.center),
-                      ),
-                    ],
-                  ),
-                ],
-                const SizedBox(height: AppSpacing.lg),
-                ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 320),
-                  child: AspectRatio(
-                    aspectRatio: 1,
-                    child: _QiblaDial(
-                      bearing: bearing,
-                      heading: heading ?? 0,
-                      highlight: facing,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.lg),
-                Text(
-                  '${bearing.round()}°',
-                  style: theme.textTheme.displayMedium?.copyWith(
-                    color: accent,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.xxs),
-                Text(
-                  l10n.qiblaBearing(bearing.round().toString(), direction),
-                  style: theme.textTheme.bodyMedium,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: AppSpacing.md),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.public,
-                        size: 18, color: theme.colorScheme.onSurfaceVariant),
-                    const SizedBox(width: AppSpacing.xs),
-                    Flexible(
-                      child: Text(l10n.qiblaDistance(km),
-                          style: muted, textAlign: TextAlign.center),
-                    ),
-                  ],
-                ),
+                if (locationLabel != null)
+                  Text(locationLabel,
+                      style: muted, textAlign: TextAlign.center),
               ],
             ),
-          ),
-        ),
-        GlassCard(
-          margin: const EdgeInsets.fromLTRB(
-              AppSpacing.md, 0, AppSpacing.md, AppSpacing.md),
-          child: Padding(
-            padding: const EdgeInsets.all(AppSpacing.lg),
-            child: Column(
+            const SizedBox(height: AppSpacing.xs),
+            ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: dialSize),
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: _QiblaDial(
+                  bearing: bearing,
+                  heading: heading ?? 0,
+                  highlight: facing,
+                ),
+              ),
+            ),
+            const SizedBox(height: AppSpacing.xs),
+            Text(
+              l10n.qiblaBearing(bearing.round().toString(), direction),
+              style: theme.textTheme.titleSmall?.copyWith(color: accent),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: AppSpacing.xxs),
+            Text(l10n.qiblaDistance(km),
+                style: muted, textAlign: TextAlign.center),
+            const SizedBox(height: AppSpacing.sm),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
                   facing ? Icons.check_circle_outline : Icons.explore_outlined,
                   color: accent,
-                  size: 28,
+                  size: 20,
                 ),
-                const SizedBox(height: AppSpacing.sm),
-                Text(
-                  heading == null
-                      ? l10n.qiblaFaceNorthHint
-                      : facing
-                          ? l10n.qiblaFacing
-                          : l10n.qiblaRotateHint,
-                  textAlign: TextAlign.center,
-                  style: theme.textTheme.titleSmall?.copyWith(
-                    color: facing ? accent : theme.colorScheme.onSurface,
-                    fontWeight: FontWeight.w600,
+                const SizedBox(width: AppSpacing.xs),
+                Flexible(
+                  child: Text(
+                    heading == null
+                        ? l10n.qiblaFaceNorthHint
+                        : facing
+                            ? l10n.qiblaFacing
+                            : l10n.qiblaRotateHint,
+                    textAlign: TextAlign.center,
+                    style: bodyStyle?.copyWith(
+                      color: facing ? accent : theme.colorScheme.onSurface,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
-                if (heading == null) ...[
-                  const SizedBox(height: AppSpacing.xs),
-                  Text(l10n.qiblaFindNorthHint,
-                      style: muted, textAlign: TextAlign.center),
-                  ..._buildSunHint(l10n, theme, coords, bearing),
-                ] else if ((_accuracy ?? 0) > _poorAccuracyDeg) ...[
-                  const SizedBox(height: AppSpacing.xs),
-                  Text(l10n.qiblaCalibrate,
-                      style: muted, textAlign: TextAlign.center),
-                ],
               ],
             ),
-          ),
+            if (heading == null) ...[
+              const SizedBox(height: AppSpacing.xxs),
+              Text(l10n.qiblaFindNorthHint,
+                  style: muted, textAlign: TextAlign.center),
+              ..._buildSunHint(l10n, theme, coords, bearing, compact: compact),
+            ] else if ((_accuracy ?? 0) > _poorAccuracyDeg) ...[
+              const SizedBox(height: AppSpacing.xxs),
+              Text(l10n.qiblaCalibrate,
+                  style: muted, textAlign: TextAlign.center),
+            ],
+          ],
         ),
-      ],
+      ),
     );
   }
 
@@ -236,8 +256,9 @@ class _QiblaCardState extends ConsumerState<QiblaCard> {
     AppLocalizations l10n,
     ThemeData theme,
     Coordinates coords,
-    double bearing,
-  ) {
+    double bearing, {
+    bool compact = false,
+  }) {
     final sun = sunPosition(DateTime.now(), coords);
     if (!sun.isUsable) return const [];
 
@@ -255,13 +276,18 @@ class _QiblaCardState extends ConsumerState<QiblaCard> {
     }
 
     return [
-      const SizedBox(height: AppSpacing.md),
+      const SizedBox(height: AppSpacing.xs),
       Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(Icons.wb_sunny_outlined, color: theme.colorScheme.tertiary),
           const SizedBox(width: AppSpacing.xs),
-          Flexible(child: Text(text, style: theme.textTheme.bodyMedium)),
+          Flexible(
+            child: Text(text,
+                style: compact
+                    ? theme.textTheme.bodySmall
+                    : theme.textTheme.bodyMedium),
+          ),
         ],
       ),
     ];
