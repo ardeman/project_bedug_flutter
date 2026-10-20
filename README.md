@@ -37,7 +37,7 @@ See the [roadmap](#roadmap) for the Linux plan.
 
 ## Getting started
 
-Prerequisites: the [Flutter SDK](https://docs.flutter.dev/get-started/install) (3.31+) on the stable channel, plus the toolchain for the platform you target: Xcode 26+ for iOS/macOS (deployment targets are 26.0), Android Studio for Android. Run `flutter doctor` to check.
+Prerequisites: the [Flutter SDK](https://docs.flutter.dev/get-started/install) (3.31+) on the stable channel, plus the toolchain for the platform you target: Xcode 26+ for iOS/macOS (deployment targets are 26.0), Android Studio for Android, and on Linux the GStreamer development packages that `audioplayers` builds against (`sudo apt install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev`). Run `flutter doctor` to check.
 
 ```sh
 flutter pub get
