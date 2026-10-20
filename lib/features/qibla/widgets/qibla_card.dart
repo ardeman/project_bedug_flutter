@@ -8,10 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_compass/flutter_compass.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:liquid_glass_easy/liquid_glass_easy.dart';
 
 import '../../../core/constants/app_colors.dart';
 import '../../../core/design/glass_controls.dart';
 import '../../../core/design/liquid_glass.dart';
+import '../../../core/design/platform_capabilities.dart';
+import '../../../core/theme/app_tokens.dart';
 import '../../../core/services/prayer_service.dart';
 import '../../../core/utils/qibla_utils.dart';
 import '../../../generated/l10n/app_localizations.dart';
@@ -81,15 +84,15 @@ class _QiblaCardState extends ConsumerState<QiblaCard> {
     if (coords == null) {
       content = prayer.loading
           ? const Padding(
-              padding: EdgeInsets.all(32),
+              padding: EdgeInsets.all(AppSpacing.xl),
               child: Center(child: AdaptiveSpinner()),
             )
           : Padding(
-              padding: const EdgeInsets.all(24),
+              padding: const EdgeInsets.all(AppSpacing.lg),
               child: Text(l10n.qiblaNoLocation, textAlign: TextAlign.center),
             );
     } else {
-      content = _buildQibla(ctx, l10n, coords, prayer.locationLabel);
+      return _buildQibla(ctx, l10n, coords, prayer.locationLabel);
     }
 
     return GlassCard(child: content);
@@ -115,69 +118,116 @@ class _QiblaCardState extends ConsumerState<QiblaCard> {
       color: theme.colorScheme.onSurfaceVariant,
     );
 
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
-      child: Column(
-        children: [
-          Text(
-            l10n.qibla,
-            style: theme.textTheme.titleLarge
-                ?.copyWith(fontWeight: FontWeight.bold),
-          ),
-          if (locationLabel != null) ...[
-            const SizedBox(height: 4),
-            Text(locationLabel, style: muted, textAlign: TextAlign.center),
-          ],
-          const SizedBox(height: 20),
-          ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 280),
-            child: AspectRatio(
-              aspectRatio: 1,
-              child: _QiblaDial(
-                bearing: bearing,
-                heading: heading ?? 0,
-                highlight: facing,
-              ),
+    final accent = AppColors.accentOf(ctx);
+    return Column(
+      children: [
+        GlassCard(
+          child: Padding(
+            padding: const EdgeInsets.all(AppSpacing.lg),
+            child: Column(
+              children: [
+                Text(
+                  l10n.qibla,
+                  style: theme.textTheme.titleLarge
+                      ?.copyWith(fontWeight: FontWeight.bold),
+                ),
+                if (locationLabel != null) ...[
+                  const SizedBox(height: AppSpacing.xs),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.location_on_outlined, size: 16, color: accent),
+                      const SizedBox(width: AppSpacing.xxs),
+                      Flexible(
+                        child: Text(locationLabel,
+                            style: muted, textAlign: TextAlign.center),
+                      ),
+                    ],
+                  ),
+                ],
+                const SizedBox(height: AppSpacing.lg),
+                ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 320),
+                  child: AspectRatio(
+                    aspectRatio: 1,
+                    child: _QiblaDial(
+                      bearing: bearing,
+                      heading: heading ?? 0,
+                      highlight: facing,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.lg),
+                Text(
+                  '${bearing.round()}°',
+                  style: theme.textTheme.displayMedium?.copyWith(
+                    color: accent,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.xxs),
+                Text(
+                  l10n.qiblaBearing(bearing.round().toString(), direction),
+                  style: theme.textTheme.bodyMedium,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: AppSpacing.md),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.public,
+                        size: 18, color: theme.colorScheme.onSurfaceVariant),
+                    const SizedBox(width: AppSpacing.xs),
+                    Flexible(
+                      child: Text(l10n.qiblaDistance(km),
+                          style: muted, textAlign: TextAlign.center),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
-          const SizedBox(height: 20),
-          Text(
-            l10n.qiblaBearing(bearing.round().toString(), direction),
-            style: theme.textTheme.titleMedium
-                ?.copyWith(fontWeight: FontWeight.w600),
-            textAlign: TextAlign.center,
+        ),
+        GlassCard(
+          margin: const EdgeInsets.fromLTRB(
+              AppSpacing.md, 0, AppSpacing.md, AppSpacing.md),
+          child: Padding(
+            padding: const EdgeInsets.all(AppSpacing.lg),
+            child: Column(
+              children: [
+                Icon(
+                  facing ? Icons.check_circle_outline : Icons.explore_outlined,
+                  color: accent,
+                  size: 28,
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                Text(
+                  heading == null
+                      ? l10n.qiblaFaceNorthHint
+                      : facing
+                          ? l10n.qiblaFacing
+                          : l10n.qiblaRotateHint,
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    color: facing ? accent : theme.colorScheme.onSurface,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                if (heading == null) ...[
+                  const SizedBox(height: AppSpacing.xs),
+                  Text(l10n.qiblaFindNorthHint,
+                      style: muted, textAlign: TextAlign.center),
+                  ..._buildSunHint(l10n, theme, coords, bearing),
+                ] else if ((_accuracy ?? 0) > _poorAccuracyDeg) ...[
+                  const SizedBox(height: AppSpacing.xs),
+                  Text(l10n.qiblaCalibrate,
+                      style: muted, textAlign: TextAlign.center),
+                ],
+              ],
+            ),
           ),
-          const SizedBox(height: 4),
-          Text(l10n.qiblaDistance(km), style: muted),
-          const SizedBox(height: 16),
-          if (heading != null) ...[
-            Text(
-              facing ? l10n.qiblaFacing : l10n.qiblaRotateHint,
-              textAlign: TextAlign.center,
-              style: facing
-                  ? theme.textTheme.titleMedium?.copyWith(
-                      color: AppColors.accentOf(ctx),
-                      fontWeight: FontWeight.bold,
-                    )
-                  : null,
-            ),
-            if ((_accuracy ?? 0) > _poorAccuracyDeg) ...[
-              const SizedBox(height: 8),
-              Text(l10n.qiblaCalibrate,
-                  style: muted, textAlign: TextAlign.center),
-            ],
-          ] else ...[
-            Text(l10n.qiblaFaceNorthHint, textAlign: TextAlign.center),
-            const SizedBox(height: 4),
-            Text(
-              l10n.qiblaFindNorthHint,
-              style: muted,
-              textAlign: TextAlign.center,
-            ),
-            ..._buildSunHint(l10n, theme, coords, bearing),
-          ],
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -205,12 +255,12 @@ class _QiblaCardState extends ConsumerState<QiblaCard> {
     }
 
     return [
-      const SizedBox(height: 16),
+      const SizedBox(height: AppSpacing.md),
       Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(Icons.wb_sunny_outlined, color: theme.colorScheme.tertiary),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.xs),
           Flexible(child: Text(text, style: theme.textTheme.bodyMedium)),
         ],
       ),
@@ -245,29 +295,103 @@ class _QiblaDial extends StatelessWidget {
   @override
   Widget build(BuildContext ctx) {
     final scheme = Theme.of(ctx).colorScheme;
-    return Transform.rotate(
-      angle: -heading * math.pi / 180,
-      child: CustomPaint(
-        painter: _DialPainter(
-          bearing: bearing,
-          tickColor: scheme.onSurfaceVariant,
-          ringColor:
-              highlight ? AppColors.accentOf(ctx) : scheme.outlineVariant,
-          northColor: scheme.error,
-          arrowColor: AppColors.accentOf(ctx),
+    final accent = AppColors.accentOf(ctx);
+    final center = Center(
+      child: Icon(Icons.my_location,
+          key: const ValueKey('qibla-device-marker'),
+          size: 28,
+          color: highlight ? accent : scheme.onSurface),
+    );
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        gradient: RadialGradient(
+          colors: [
+            accent.withValues(alpha: highlight ? 0.20 : 0.10),
+            AppColors.secondaryOf(ctx).withValues(alpha: 0.04),
+            accent.withValues(alpha: 0.08),
+          ],
+          stops: const [0, 0.72, 1],
         ),
-        child: Center(
-          child: Transform.rotate(
-            // Keep the centre icon upright while the dial turns.
-            angle: heading * math.pi / 180,
-            child: Icon(
-              Icons.mosque,
-              size: 36,
-              color:
-                  highlight ? AppColors.accentOf(ctx) : scheme.onSurfaceVariant,
+      ),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Positioned.fill(
+            child: Transform.rotate(
+              angle: -heading * math.pi / 180,
+              child: CustomPaint(
+                painter: _DialPainter(
+                  bearing: bearing,
+                  tickColor: scheme.onSurfaceVariant,
+                  ringColor: highlight ? accent : scheme.outlineVariant,
+                  northColor: scheme.error,
+                  arrowColor: accent,
+                ),
+              ),
             ),
           ),
-        ),
+          Positioned.fill(
+            child: LayoutBuilder(builder: (context, constraints) {
+              final diameter = constraints.maxWidth;
+              final angle = (bearing - heading) * math.pi / 180;
+              // Keep the destination on the arrow shaft, clear of its tip
+              // and the device marker. The Kaaba stays upright as you turn.
+              final markerSize = diameter * 0.18;
+              final offset = Offset(math.sin(angle), -math.cos(angle)) *
+                  (diameter / 2 * 0.56);
+              return Stack(
+                children: [
+                  Positioned(
+                    left: diameter / 2 + offset.dx - markerSize / 2,
+                    top: diameter / 2 + offset.dy - markerSize / 2,
+                    width: markerSize,
+                    height: markerSize,
+                    child: Semantics(
+                      label: AppLocalizations.of(ctx).qibla,
+                      image: true,
+                      child: DecoratedBox(
+                        key: const ValueKey('qibla-kaaba-marker'),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: scheme.surface,
+                          border: Border.all(color: accent),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(AppSpacing.xxs),
+                          child: CustomPaint(
+                            painter: _KaabaPainter(
+                              gold: Theme.of(ctx).colorScheme.tertiary,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            }),
+          ),
+          FractionallySizedBox(
+            widthFactor: 0.27,
+            heightFactor: 0.27,
+            child: PlatformCapabilities.isApple
+                ? LiquidGlassLite(
+                    shape: const LiquidGlassShape.continuousRoundedRectangle(
+                        cornerRadius: AppRadii.lg),
+                    color: glassTintOf(ctx),
+                    child: center,
+                  )
+                : DecoratedBox(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: scheme.surfaceContainerHighest,
+                      border: Border.all(color: scheme.outlineVariant),
+                    ),
+                    child: center,
+                  ),
+          ),
+        ],
       ),
     );
   }
@@ -298,20 +422,37 @@ class _DialPainter extends CustomPainter {
       radius - 2,
       Paint()
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 3
+        ..strokeWidth = 1
         ..color = ringColor,
     );
 
-    // A tick every 15°, longer and thicker on the cardinal points.
+    // Fine five-degree graduations, with longer marks every thirty degrees.
     final tick = Paint()..color = tickColor;
-    for (var deg = 0; deg < 360; deg += 15) {
+    for (var deg = 0; deg < 360; deg += 5) {
       final cardinal = deg % 90 == 0;
-      tick.strokeWidth = cardinal ? 3 : 1.5;
+      final major = deg % 30 == 0;
+      tick
+        ..strokeWidth = cardinal ? 2.5 : 1
+        ..color = tickColor.withValues(alpha: major ? 0.8 : 0.3);
       final dir = _unit(deg.toDouble());
-      final outer = radius - 8;
-      final inner = outer - (cardinal ? 16 : 8);
+      final outer = radius - 12;
+      final inner = outer -
+          (cardinal
+              ? 20
+              : major
+                  ? 12
+                  : 6);
       canvas.drawLine(center + dir * inner, center + dir * outer, tick);
     }
+
+    canvas.drawCircle(
+      center,
+      radius * 0.67,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1
+        ..color = ringColor.withValues(alpha: 0.45),
+    );
 
     // North marker: a triangle at the top of the rose.
     final north = Path()
@@ -354,4 +495,61 @@ class _DialPainter extends CustomPainter {
       old.ringColor != ringColor ||
       old.northColor != northColor ||
       old.arrowColor != arrowColor;
+}
+
+/// A small vector Kaaba, with the gold kiswa band and a visible door.
+/// Normalized coordinates keep it sharp at every compass size.
+class _KaabaPainter extends CustomPainter {
+  const _KaabaPainter({required this.gold});
+
+  final Color gold;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    canvas.save();
+    canvas.scale(size.width / 40, size.height / 40);
+    final body = Paint()..color = AppColors.darkBg;
+    final trim = Paint()..color = gold;
+    final roof = Path()
+      ..moveTo(5, 10)
+      ..lineTo(15, 7)
+      ..lineTo(35, 11)
+      ..lineTo(25, 14)
+      ..close();
+    canvas.drawPath(roof, Paint()..color = AppColors.darkSurface);
+    final front = Path()
+      ..moveTo(5, 10)
+      ..lineTo(25, 14)
+      ..lineTo(25, 35)
+      ..lineTo(5, 31)
+      ..close();
+    final side = Path()
+      ..moveTo(25, 14)
+      ..lineTo(35, 11)
+      ..lineTo(35, 31)
+      ..lineTo(25, 35)
+      ..close();
+    canvas.drawPath(front, body);
+    canvas.drawPath(side, Paint()..color = AppColors.darkSurface);
+    final band = Path()
+      ..moveTo(5, 15)
+      ..lineTo(25, 19)
+      ..lineTo(35, 16)
+      ..lineTo(35, 20)
+      ..lineTo(25, 23)
+      ..lineTo(5, 19)
+      ..close();
+    canvas.drawPath(band, trim);
+    final door = Path()
+      ..moveTo(18, 24)
+      ..lineTo(23, 25)
+      ..lineTo(23, 34)
+      ..lineTo(18, 33)
+      ..close();
+    canvas.drawPath(door, trim);
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(_KaabaPainter oldDelegate) => oldDelegate.gold != gold;
 }

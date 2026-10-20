@@ -5,6 +5,15 @@
       "date": null,
       "changes": [
         {
+          "type": "improved",
+          "text": {
+            "id": "Tampilan pencari kiblat diperbarui dengan kompas berlapis, penanda Ka’bah pada panah arah, dan panel panduan Liquid Glass di perangkat Apple.",
+            "en": "A refreshed Qibla finder with a layered compass, a Kaaba marker on the direction arrow, and Liquid Glass guidance panels on Apple devices.",
+            "ar": "تصميم محدّث لمحدد القبلة مع بوصلة متعددة الطبقات وعلامة الكعبة على سهم الاتجاه ولوحات إرشاد بتصميم Liquid Glass على أجهزة Apple.",
+            "ms": "Paparan pencari kiblat diperbaharui dengan kompas berlapis, penanda Kaabah pada anak panah arah dan panel panduan Liquid Glass pada peranti Apple."
+          }
+        },
+        {
           "type": "new",
           "text": {
             "id": "Jadwal salat sesuai lokasi Anda, dengan hitung mundur langsung ke salat berikutnya. Kemenag RI sebagai bawaan, atau salah satu dari sembilan metode lain, dengan Asar mazhab Syafi'i atau Hanafi.",

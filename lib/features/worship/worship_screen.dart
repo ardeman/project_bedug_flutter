@@ -13,6 +13,7 @@ class WorshipScreen extends StatelessWidget {
   Widget build(BuildContext ctx) {
     final l10n = AppLocalizations.of(ctx);
     return Scaffold(
+      extendBody: true,
       extendBodyBehindAppBar: PlatformCapabilities.isApple,
       appBar: GlassTopBar(title: l10n.worship),
       body: Center(
