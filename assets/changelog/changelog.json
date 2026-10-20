@@ -5,6 +5,15 @@
       "date": null,
       "changes": [
         {
+          "type": "new",
+          "text": {
+            "id": "Atur notifikasi untuk setiap salat, pengingat sebelum azan, serta pilihan suara sistem atau senyap di Pengaturan.",
+            "en": "Choose alerts for each prayer, reminders before prayer, and system sound or silent delivery in Settings.",
+            "ar": "اختر تنبيهات كل صلاة والتذكيرات قبل الصلاة وصوت النظام أو الوضع الصامت من الإعدادات.",
+            "ms": "Tetapkan pemberitahuan bagi setiap solat, peringatan sebelum azan serta bunyi sistem atau mod senyap dalam Tetapan."
+          }
+        },
+        {
           "type": "fixed",
           "text": {
             "id": "Kegagalan mendeteksi lokasi tidak lagi mematikan deteksi otomatis atau diam-diam mengganti lokasi ke kota manual. Pesan kesalahan dan tombol coba lagi kini ditampilkan.",

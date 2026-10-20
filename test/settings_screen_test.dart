@@ -1,6 +1,9 @@
 import 'package:bedug/core/providers/locale_provider.dart';
 import 'package:bedug/core/design/liquid_glass.dart';
+import 'package:bedug/core/design/platform_capabilities.dart';
 import 'package:bedug/core/services/kemenag_method.dart';
+import 'package:bedug/core/services/notification_preferences.dart';
+import 'package:bedug/core/services/prayer_service.dart';
 import 'package:bedug/core/widgets/calculation_method_picker.dart';
 import 'package:bedug/features/settings/settings_screen.dart';
 import 'package:bedug/generated/l10n/app_localizations.dart';
@@ -22,10 +25,13 @@ Future<ProviderContainer> _pumpSettings(
   double textScale = 1,
   Brightness brightness = Brightness.light,
 }) async {
-  SharedPreferences.setMockInitialValues({});
+  SharedPreferences.setMockInitialValues({'use_auto_location': false});
   final prefs = await SharedPreferences.getInstance();
   final container = ProviderContainer(
-    overrides: [sharedPreferencesProvider.overrideWithValue(prefs)],
+    overrides: [
+      sharedPreferencesProvider.overrideWithValue(prefs),
+      notificationSchedulerProvider.overrideWithValue((_, _, _) async {}),
+    ],
   );
   addTearDown(container.dispose);
   // Tall enough that every row is built.
@@ -65,7 +71,7 @@ void main() {
   ) async {
     final container = await _pumpSettings(tester);
 
-    expect(find.byType(LiquidGlassSwitch), findsNWidgets(2));
+    expect(find.byType(LiquidGlassSwitch), findsOneWidget);
     expect(find.byType(Switch), findsNothing);
     expect(find.byType(DropdownButton<int>), findsNothing);
     expect(find.byType(ToggleButtons), findsNothing);
@@ -81,7 +87,7 @@ void main() {
   testWidgets('Expressive controls save settings', (tester) async {
     final container = await _pumpSettings(tester);
 
-    expect(find.byType(M3ESwitch), findsNWidgets(2));
+    expect(find.byType(M3ESwitch), findsOneWidget);
     expect(find.byType(M3ESegmentedButton<bool>), findsOneWidget);
     expect(find.byType(M3EDropdownMenu<int>), findsOneWidget);
     expect(find.byType(LiquidGlassSwitch), findsNothing);
@@ -99,6 +105,54 @@ void main() {
     expect(container.read(settingsProvider).themeMode, 2);
   });
 
+  testWidgets(
+    'notification controls save per-prayer, reminder and sound choices',
+    (tester) async {
+      final container = await _pumpSettings(tester);
+      await tester.tap(find.text('Azan Notifications'));
+      await tester.pumpAndSettle();
+      expect(find.byType(NotificationSettingsScreen), findsOneWidget);
+      await tester.tap(find.byKey(const ValueKey('notification-fajr')));
+      await tester.pumpAndSettle();
+      expect(
+        container.read(settingsProvider).notifications.disabledPrayers,
+        hasLength(1),
+      );
+
+      if (PlatformCapabilities.isApple) {
+        await tester.tap(find.text('Off'));
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('10 minutes before').last);
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('System sound'));
+      } else {
+        await tester.tap(find.byType(M3EDropdownMenu<int>).last);
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('10 minutes before').last);
+        await tester.pumpAndSettle();
+        await tester.tap(find.byType(M3EDropdownMenu<PrayerNotificationSound>));
+      }
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Silent').last);
+      await tester.pumpAndSettle();
+      final notifications = container.read(settingsProvider).notifications;
+      expect(notifications.reminderMinutes, 10);
+      expect(notifications.sound, PrayerNotificationSound.silent);
+      await tester.tap(find.byKey(const ValueKey('notifications-enabled')));
+      await tester.pumpAndSettle();
+      expect(container.read(settingsProvider).notifications.enabled, isFalse);
+      expect(find.byKey(const ValueKey('notification-fajr')), findsNothing);
+      expect(tester.takeException(), isNull);
+      await tester.pumpWidget(const SizedBox.shrink());
+      container.invalidate(prayerProvider);
+    },
+    variant: TargetPlatformVariant({
+      TargetPlatform.android,
+      TargetPlatform.iOS,
+      TargetPlatform.macOS,
+    }),
+  );
+
   for (final brightness in Brightness.values) {
     testWidgets('narrow Arabic settings support large text in $brightness', (
       tester,
@@ -115,6 +169,41 @@ void main() {
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);
     });
+  }
+
+  for (final brightness in Brightness.values) {
+    testWidgets(
+      'narrow Arabic notification settings support large text in $brightness',
+      (tester) async {
+        final container = await _pumpSettings(
+          tester,
+          size: const Size(320, 932),
+          locale: const Locale('ar'),
+          textScale: 1.6,
+          brightness: brightness,
+        );
+        final context = tester.element(find.byType(SettingsScreen));
+        Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (_) => const NotificationSettingsScreen(),
+          ),
+        );
+        await tester.pumpAndSettle();
+        expect(tester.takeException(), isNull);
+        for (var i = 0; i < 4; i++) {
+          await tester.drag(find.byType(ListView).last, const Offset(0, -550));
+          await tester.pumpAndSettle();
+          expect(tester.takeException(), isNull);
+        }
+        await tester.pumpWidget(const SizedBox.shrink());
+        container.invalidate(prayerProvider);
+      },
+      variant: TargetPlatformVariant({
+        TargetPlatform.android,
+        TargetPlatform.iOS,
+        TargetPlatform.macOS,
+      }),
+    );
   }
 
   testWidgets(

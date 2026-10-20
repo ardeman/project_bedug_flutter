@@ -320,5 +320,38 @@
   "sheetPreview": "Pratinjau",
   "sheetCollapsed": "Diciutkan",
   "sheetExpanded": "Diperluas",
-  "sheetFullScreen": "Layar penuh"
+  "sheetFullScreen": "Layar penuh",
+  "notificationPreferences": "Pengaturan pengingat dan suara",
+  "notificationsOff": "Notifikasi nonaktif",
+  "beforePrayerReminder": "Pengingat sebelum azan",
+  "reminderOff": "Nonaktif",
+  "minutesBeforePrayer": "{minutes} menit sebelumnya",
+  "@minutesBeforePrayer": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "notificationSound": "Suara notifikasi",
+  "systemNotificationSound": "Suara sistem",
+  "silentNotificationSound": "Senyap",
+  "prayerReminderBody": "{prayer} dalam {minutes} menit",
+  "@prayerReminderBody": {
+    "placeholders": {
+      "prayer": {
+        "type": "String"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "silentPrayerChannel": "Waktu Salat (senyap)",
+  "notificationDeliveryInfo": "Pengingat dijadwalkan untuk enam hari ke depan dan diperbarui saat aplikasi dibuka. Pengiriman dan suara mengikuti izin serta pengaturan sistem. Mode senyap juga menonaktifkan getaran.",
+  "notificationPlatformUnavailable": "Notifikasi terjadwal tersedia di Android, iOS, dan macOS. Preferensi Anda tetap tersimpan di perangkat ini.",
+  "notificationSchedulingError": "Pengingat belum dapat dijadwalkan. Periksa pengaturan notifikasi sistem, lalu coba ubah pengaturan pengingat lagi.",
+  "notificationSystemSettings": "Pengaturan notifikasi sistem",
+  "precisePrayerAlerts": "Izinkan pengingat tepat waktu",
+  "precisePrayerAlertsDescription": "Tanpa izin alarm tepat waktu, Android dapat menunda pengingat."
 }

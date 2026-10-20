@@ -1,9 +1,15 @@
 import 'dart:ui';
 
+import 'package:clock/clock.dart';
+import 'package:flutter/foundation.dart';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:adhan/adhan.dart';
+
 import '../../generated/l10n/app_localizations.dart';
+import 'notification_preferences.dart';
+import 'notification_schedule.dart';
 
 class NotificationService {
   static final _plugin = FlutterLocalNotificationsPlugin();
@@ -32,8 +38,9 @@ class NotificationService {
       requestBadgePermission: true,
       requestSoundPermission: true,
     );
-    final linux =
-        LinuxInitializationSettings(defaultActionName: l10n.openAction);
+    final linux = LinuxInitializationSettings(
+      defaultActionName: l10n.openAction,
+    );
 
     await _plugin.initialize(
       settings: InitializationSettings(
@@ -46,52 +53,125 @@ class NotificationService {
 
     await _plugin
         .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
+          AndroidFlutterLocalNotificationsPlugin
+        >()
         ?.requestNotificationsPermission();
   }
 
-  /// Replaces the scheduled adhan notifications with today's remaining
-  /// prayers, in the app's language [l10n].
+  static bool get supportsScheduling =>
+      !kIsWeb &&
+      (defaultTargetPlatform == TargetPlatform.android ||
+          defaultTargetPlatform == TargetPlatform.iOS ||
+          defaultTargetPlatform == TargetPlatform.macOS);
+
+  static Future<void> _queue = Future.value();
+
+  /// Serializes replacements so rapid setting changes cannot leave old alerts.
   static Future<void> schedulePrayerNotifications(
-    PrayerTimes times,
+    PrayerTimes? times,
     AppLocalizations l10n,
+    NotificationPreferences preferences,
+  ) {
+    final result = _queue.then((_) => _replace(times, l10n, preferences));
+    _queue = result.catchError((Object _) {});
+    return result;
+  }
+
+  static Future<void> _replace(
+    PrayerTimes? times,
+    AppLocalizations l10n,
+    NotificationPreferences preferences,
   ) async {
-    if (!await init()) return;
+    if (!supportsScheduling) return;
+    if (!await init()) throw StateError(l10n.notificationSchedulingError);
     await _plugin.cancelAll();
-
-    final prayers = <int, (String, String, DateTime?)>{
-      0: ('🌙 ${l10n.fajr}', l10n.notifSubuh, times.fajr),
-      1: ('☀️ ${l10n.dhuhr}', l10n.notifDzuhur, times.dhuhr),
-      2: ('🌤 ${l10n.asr}', l10n.notifAshar, times.asr),
-      3: ('🌅 ${l10n.maghrib}', l10n.notifMaghrib, times.maghrib),
-      4: ('🌙 ${l10n.isha}', l10n.notifIsya, times.isha),
-    };
-
-    for (final e in prayers.entries) {
-      final (title, body, dt) = e.value;
-      if (dt == null || dt.isBefore(DateTime.now())) continue;
-
-      // v20+: zonedSchedule takes named params; title and body are optional.
+    if (times == null) return;
+    final schedule = buildNotificationSchedule(times, preferences, clock.now());
+    if (schedule.isEmpty) return;
+    final android = _plugin
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >();
+    final exact = await android?.canScheduleExactNotifications() ?? false;
+    final playSound = preferences.sound == PrayerNotificationSound.system;
+    for (final alert in schedule) {
+      final name = switch (alert.prayer) {
+        Prayer.fajr => l10n.fajr,
+        Prayer.dhuhr => l10n.dhuhr,
+        Prayer.asr => l10n.asr,
+        Prayer.maghrib => l10n.maghrib,
+        _ => l10n.isha,
+      };
+      final body = alert.isReminder
+          ? l10n.prayerReminderBody(name, preferences.reminderMinutes)
+          : switch (alert.prayer) {
+              Prayer.fajr => l10n.notifSubuh,
+              Prayer.dhuhr => l10n.notifDzuhur,
+              Prayer.asr => l10n.notifAshar,
+              Prayer.maghrib => l10n.notifMaghrib,
+              _ => l10n.notifIsya,
+            };
       await _plugin.zonedSchedule(
-        id: e.key,
-        scheduledDate: tz.TZDateTime.from(dt, tz.local),
-        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-        title: title,
+        id: alert.id,
+        scheduledDate: tz.TZDateTime.from(alert.time, tz.local),
+        androidScheduleMode: exact
+            ? AndroidScheduleMode.exactAllowWhileIdle
+            : AndroidScheduleMode.inexactAllowWhileIdle,
+        title: name,
         body: body,
         notificationDetails: NotificationDetails(
           android: AndroidNotificationDetails(
-            'bedug_channel',
-            l10n.notificationChannelName,
+            // Android channel sound is immutable after creation.
+            'bedug_prayer_v2_${preferences.sound.name}',
+            playSound ? l10n.notificationChannelName : l10n.silentPrayerChannel,
             channelDescription: l10n.notificationChannelDescription,
             importance: Importance.high,
             priority: Priority.high,
+            playSound: playSound,
+            silent: !playSound,
+            enableVibration: playSound,
           ),
-          iOS: DarwinNotificationDetails(),
-          macOS: DarwinNotificationDetails(),
-          linux: LinuxNotificationDetails(),
+          iOS: DarwinNotificationDetails(
+            presentSound: playSound,
+            presentBanner: true,
+            presentList: true,
+          ),
+          macOS: DarwinNotificationDetails(presentSound: playSound),
         ),
       );
     }
+  }
+
+  static Future<void> openSystemSettings() async {
+    if (!await init()) return;
+    final android = _plugin
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >();
+    if (android != null) {
+      await android.openAppNotificationSettings();
+    } else if (defaultTargetPlatform == TargetPlatform.iOS) {
+      await _plugin
+          .resolvePlatformSpecificImplementation<
+            IOSFlutterLocalNotificationsPlugin
+          >()
+          ?.openAppNotificationSettings();
+    } else if (defaultTargetPlatform == TargetPlatform.macOS) {
+      await _plugin
+          .resolvePlatformSpecificImplementation<
+            MacOSFlutterLocalNotificationsPlugin
+          >()
+          ?.openAppNotificationSettings();
+    }
+  }
+
+  static Future<void> requestPreciseAlarms() async {
+    if (!await init()) return;
+    await _plugin
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >()
+        ?.requestExactAlarmsPermission();
   }
 
   static AppLocalizations _resolveL10n() {

@@ -159,5 +159,38 @@
   "sheetPreview": "معاينة",
   "sheetCollapsed": "مطوية",
   "sheetExpanded": "موسعة",
-  "sheetFullScreen": "ملء الشاشة"
+  "sheetFullScreen": "ملء الشاشة",
+  "notificationPreferences": "التذكيرات والصوت",
+  "notificationsOff": "الإشعارات متوقفة",
+  "beforePrayerReminder": "تذكير قبل الصلاة",
+  "reminderOff": "متوقف",
+  "minutesBeforePrayer": "قبل {minutes} دقيقة",
+  "@minutesBeforePrayer": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "notificationSound": "صوت الإشعار",
+  "systemNotificationSound": "صوت النظام",
+  "silentNotificationSound": "صامت",
+  "prayerReminderBody": "صلاة {prayer} بعد {minutes} دقيقة",
+  "@prayerReminderBody": {
+    "placeholders": {
+      "prayer": {
+        "type": "String"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "silentPrayerChannel": "أوقات الصلاة (صامت)",
+  "notificationDeliveryInfo": "تُجدول التنبيهات للأيام الستة القادمة وتُحدث عند فتح التطبيق. يخضع إرسالها وصوتها لأذونات النظام وإعداداته. يوقف الوضع الصامت الاهتزاز أيضًا.",
+  "notificationPlatformUnavailable": "الإشعارات المجدولة متاحة على Android وiOS وmacOS. تبقى تفضيلاتك محفوظة على هذا الجهاز.",
+  "notificationSchedulingError": "تعذرت جدولة التنبيهات. تحقق من إعدادات إشعارات النظام، ثم حاول تغيير إعدادات التذكير مجددًا.",
+  "notificationSystemSettings": "إعدادات إشعارات النظام",
+  "precisePrayerAlerts": "السماح بالتنبيهات الدقيقة",
+  "precisePrayerAlertsDescription": "قد يؤخر Android التنبيهات دون إذن المنبهات الدقيقة."
 }

@@ -159,5 +159,38 @@
   "sheetPreview": "Pratonton",
   "sheetCollapsed": "Dikecilkan",
   "sheetExpanded": "Dikembangkan",
-  "sheetFullScreen": "Skrin penuh"
+  "sheetFullScreen": "Skrin penuh",
+  "notificationPreferences": "Tetapan peringatan dan bunyi",
+  "notificationsOff": "Pemberitahuan dimatikan",
+  "beforePrayerReminder": "Peringatan sebelum azan",
+  "reminderOff": "Dimatikan",
+  "minutesBeforePrayer": "{minutes} minit sebelumnya",
+  "@minutesBeforePrayer": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "notificationSound": "Bunyi pemberitahuan",
+  "systemNotificationSound": "Bunyi sistem",
+  "silentNotificationSound": "Senyap",
+  "prayerReminderBody": "{prayer} dalam {minutes} minit",
+  "@prayerReminderBody": {
+    "placeholders": {
+      "prayer": {
+        "type": "String"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "silentPrayerChannel": "Waktu Solat (senyap)",
+  "notificationDeliveryInfo": "Peringatan dijadualkan untuk enam hari akan datang dan dikemas kini apabila aplikasi dibuka. Penghantaran dan bunyi mengikut kebenaran serta tetapan sistem. Mod senyap turut mematikan getaran.",
+  "notificationPlatformUnavailable": "Pemberitahuan berjadual tersedia pada Android, iOS dan macOS. Pilihan anda tetap disimpan pada peranti ini.",
+  "notificationSchedulingError": "Peringatan tidak dapat dijadualkan. Semak tetapan pemberitahuan sistem, kemudian cuba ubah tetapan peringatan sekali lagi.",
+  "notificationSystemSettings": "Tetapan pemberitahuan sistem",
+  "precisePrayerAlerts": "Benarkan peringatan tepat pada waktu",
+  "precisePrayerAlertsDescription": "Android mungkin melambatkan peringatan tanpa kebenaran penggera tepat."
 }

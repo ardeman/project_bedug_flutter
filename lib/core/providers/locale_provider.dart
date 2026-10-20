@@ -1,8 +1,11 @@
 import 'dart:ui';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../constants/city_catalog.dart';
 import '../services/kemenag_method.dart';
+import '../services/notification_preferences.dart';
 
 // ─── Preferences ──────────────────────────────────────────────────────────────
 
@@ -61,6 +64,7 @@ class AppSettings {
   final int themeMode;
   final bool useAutoLocation;
   final String? selectedCityId;
+  final NotificationPreferences notifications;
 
   const AppSettings({
     this.method = AppCalculationMethod.kemenag,
@@ -68,6 +72,7 @@ class AppSettings {
     this.themeMode = 0,
     this.useAutoLocation = true,
     this.selectedCityId,
+    this.notifications = const NotificationPreferences(),
   });
 
   AppSettings copyWith({
@@ -77,15 +82,17 @@ class AppSettings {
     bool? useAutoLocation,
     String? selectedCityId,
     bool clearSelectedCity = false,
-  }) =>
-      AppSettings(
-        method: method ?? this.method,
-        isHanafi: isHanafi ?? this.isHanafi,
-        themeMode: themeMode ?? this.themeMode,
-        useAutoLocation: useAutoLocation ?? this.useAutoLocation,
-        selectedCityId:
-            clearSelectedCity ? null : (selectedCityId ?? this.selectedCityId),
-      );
+    NotificationPreferences? notifications,
+  }) => AppSettings(
+    notifications: notifications ?? this.notifications,
+    method: method ?? this.method,
+    isHanafi: isHanafi ?? this.isHanafi,
+    themeMode: themeMode ?? this.themeMode,
+    useAutoLocation: useAutoLocation ?? this.useAutoLocation,
+    selectedCityId: clearSelectedCity
+        ? null
+        : (selectedCityId ?? this.selectedCityId),
+  );
 }
 
 class SettingsNotifier extends Notifier<AppSettings> {
@@ -104,7 +111,37 @@ class SettingsNotifier extends Notifier<AppSettings> {
       themeMode: p.getInt(_kTheme) ?? 0,
       useAutoLocation: p.getBool(_kUseAutoLocation) ?? true,
       selectedCityId: p.getString(_kSelectedCityId),
+      notifications: NotificationPreferences(
+        enabled: p.getBool('notifications_enabled') ?? true,
+        disabledPrayers: Set.unmodifiable(
+          notificationPrayers.where(
+            (prayer) => (p.getStringList('notifications_disabled') ?? [])
+                .contains(prayer.name),
+          ),
+        ),
+        reminderMinutes:
+            reminderMinuteOptions.contains(
+              p.getInt('notification_reminder_minutes'),
+            )
+            ? p.getInt('notification_reminder_minutes')!
+            : 0,
+        sound: PrayerNotificationSound.values.firstWhere(
+          (sound) => sound.name == p.getString('notification_sound'),
+          orElse: () => PrayerNotificationSound.system,
+        ),
+      ),
     );
+  }
+
+  Future<void> setNotifications(NotificationPreferences value) async {
+    state = state.copyWith(notifications: value);
+    await _prefs.setBool('notifications_enabled', value.enabled);
+    await _prefs.setStringList(
+      'notifications_disabled',
+      value.disabledPrayers.map((prayer) => prayer.name).toList(),
+    );
+    await _prefs.setInt('notification_reminder_minutes', value.reminderMinutes);
+    await _prefs.setString('notification_sound', value.sound.name);
   }
 
   Future<void> setMethod(AppCalculationMethod m) async {

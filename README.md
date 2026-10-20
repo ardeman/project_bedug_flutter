@@ -107,7 +107,7 @@ lib/
     widgets/         Shared widgets (calculation method picker)
   features/
     prayer_times/    Prayer times screen, day picker and Hijri month grid
-    worship/         Worship tab (hosts Qibla, later the tracker, tasbih, duas)
+    worship/         Worship tab (hosts Qibla, later tasbih and duas)
     qibla/           Qibla compass card
     prayer/          Prayer card widget
     settings/        Settings screen
@@ -160,7 +160,7 @@ Bedug grows from a prayer-times app into a companion for a Muslim's day, week an
 
 **Principles for every phase**
 
-- **Offline first, private by default.** Everything works without a network or an account, and the user's worship data (tracker, tasbih counts, bookmarks) stays on the device. Any sync is opt-in and comes later.
+- **Offline first, private by default.** Everything works without a network or an account, and the user's worship data (tasbih counts, bookmarks) stays on the device. Any sync is opt-in and comes later.
 - **Trusted, licensed content.** Quran text, translations, duas and dzikir come from named sources whose license allows bundling (for example Tanzil for Quran text, Kemenag RI for the Indonesian translation). Each source is credited in the app.
 - **Content is data, not UI strings.** Religious texts ship as per-locale JSON under `assets/content/<locale>/`. Only UI labels go through `AppLocalizations`.
 - **Every feature on every platform design** (Liquid Glass, Material 3 Expressive, Fluent), in all four languages, including right-to-left Arabic.
@@ -168,17 +168,18 @@ Bedug grows from a prayer-times app into a companion for a Muslim's day, week an
 **Phase 1: Daily prayer (next)**
 
 1. **Qibla direction (done):** compass card in the new Worship tab, using `adhan`'s `Qibla` bearing and the device heading from `flutter_compass` on iOS and Android. Desktop has no compass, so the dial stays north-up and shows the bearing, the distance and the Qibla's angle from the sun while it is up.
-2. **Prayer tracker:** mark each of the five prayers as done (on time, late, missed), with a daily and weekly view, streaks and a qada (make-up) count.
-3. **Notification control:** per-prayer on/off, a reminder N minutes before adhan, and a choice of adhan sound.
-4. **Extra times:** imsak, sunrise (end of Subuh), dhuha, and the last third of the night for tahajud.
-5. **Home screen widgets:** next prayer and countdown on iOS and Android (add `home_widget` and the native widget targets).
+2. **Notification control (done; device delivery checks pending):** master and per-prayer on/off, a reminder 5, 10, 15 or 30 minutes before prayer, and system sound or silent mode. No recorded azan. Android, iOS and macOS queue six days of alerts, refreshed on opening/resuming the app, at midnight while running, and when preferences change. Android falls back to inexact alarms without exact-alarm access; Settings links to system notification settings and exact-alarm permission. Scheduled alerts are not available on Windows or Linux yet.
+3. **Extra times (next):** imsak, sunrise (end of Subuh), dhuha, and the last third of the night for tahajud.
+4. **Home screen widgets:** next prayer and countdown on iOS and Android (add `home_widget` and the native widget targets).
+
+Prayer tracking and prayer-progress features (completion logs, streaks and qada counts) are outside the product scope.
 
 **Phase 2: Dzikir and dua**
 
 1. **Tasbih counter:** large tap target with haptics, presets (33 × subhanallah, alhamdulillah, allahu akbar) and custom targets.
 2. **Morning and evening dzikir** (dzikir pagi/petang): Arabic, transliteration and translation, with a reminder after Subuh and Asar.
 3. **Daily duas** by situation (waking, eating, travel, entering the mosque) and the **Asmaul Husna**.
-4. **After-prayer dzikir** offered from the prayer tracker once a prayer is marked done.
+4. **After-prayer dzikir** accessible directly from the Worship tab.
 
 **Phase 3: Quran**
 
@@ -191,20 +192,20 @@ Bedug grows from a prayer-times app into a companion for a Muslim's day, week an
 
 1. **Events on the Hijri calendar:** Ramadan, Eid al-Fitr, Eid al-Adha, Arafah, Ashura, Isra Mi'raj, Mawlid, Ayyamul Bidh, with optional reminders.
 2. **Hijri date adjustment** of ±1 or 2 days, because local announcements (such as Indonesia's sidang isbat) can differ from the calculated date.
-3. **Ramadan mode:** sahur and iftar countdown, fasting log, and tarawih in the prayer tracker.
+3. **Ramadan mode:** sahur and iftar countdown and a fasting log.
 4. **Sunnah fasting reminders:** Monday and Thursday, Ayyamul Bidh, Arafah, Ashura.
 
 **Phase 5: Beyond the device (later)**
 
 1. **Zakat calculator:** zakat maal and fitrah, with the nisab entered manually first and a gold-price source added later.
 2. **Nearby mosques:** needs a maps or places provider, so it waits on a cost and privacy review.
-3. **Optional backup and sync** of tracker data across devices.
+3. **Optional backup and sync** of bookmarks and reading history across devices.
 
-**Navigation.** Three tabs can't hold this. Phase 1 adds a **Worship** tab (Qibla, tracker, and later tasbih and dua); Phase 3 adds a **Quran** tab, giving five: Prayer times, Worship, Quran, Calendar, Settings.
+**Navigation.** Three tabs can't hold this. Phase 1 adds a **Worship** tab (Qibla, and later tasbih and dua); Phase 3 adds a **Quran** tab, giving five: Prayer times, Worship, Quran, Calendar, Settings.
 
 **Open decisions**
 
-- Storage for tracker and reading history: `shared_preferences` won't scale past Phase 1; choose a local database (for example `drift`) before Phase 1 step 2.
+- Choose storage for Quran bookmarks and reading history before Phase 3.
 - Content sources and licenses for each language's Quran translation, duas and dzikir.
 - Whether Phase 1 ships as one release or feature by feature.
 

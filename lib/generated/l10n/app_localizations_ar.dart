@@ -513,4 +513,60 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get sheetFullScreen => 'ملء الشاشة';
+
+  @override
+  String get notificationPreferences => 'التذكيرات والصوت';
+
+  @override
+  String get notificationsOff => 'الإشعارات متوقفة';
+
+  @override
+  String get beforePrayerReminder => 'تذكير قبل الصلاة';
+
+  @override
+  String get reminderOff => 'متوقف';
+
+  @override
+  String minutesBeforePrayer(int minutes) {
+    return 'قبل $minutes دقيقة';
+  }
+
+  @override
+  String get notificationSound => 'صوت الإشعار';
+
+  @override
+  String get systemNotificationSound => 'صوت النظام';
+
+  @override
+  String get silentNotificationSound => 'صامت';
+
+  @override
+  String prayerReminderBody(String prayer, int minutes) {
+    return 'صلاة $prayer بعد $minutes دقيقة';
+  }
+
+  @override
+  String get silentPrayerChannel => 'أوقات الصلاة (صامت)';
+
+  @override
+  String get notificationDeliveryInfo =>
+      'تُجدول التنبيهات للأيام الستة القادمة وتُحدث عند فتح التطبيق. يخضع إرسالها وصوتها لأذونات النظام وإعداداته. يوقف الوضع الصامت الاهتزاز أيضًا.';
+
+  @override
+  String get notificationPlatformUnavailable =>
+      'الإشعارات المجدولة متاحة على Android وiOS وmacOS. تبقى تفضيلاتك محفوظة على هذا الجهاز.';
+
+  @override
+  String get notificationSchedulingError =>
+      'تعذرت جدولة التنبيهات. تحقق من إعدادات إشعارات النظام، ثم حاول تغيير إعدادات التذكير مجددًا.';
+
+  @override
+  String get notificationSystemSettings => 'إعدادات إشعارات النظام';
+
+  @override
+  String get precisePrayerAlerts => 'السماح بالتنبيهات الدقيقة';
+
+  @override
+  String get precisePrayerAlertsDescription =>
+      'قد يؤخر Android التنبيهات دون إذن المنبهات الدقيقة.';
 }

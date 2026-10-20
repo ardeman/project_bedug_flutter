@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:adhan/adhan.dart';
 import 'package:clock/clock.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -12,6 +13,16 @@ import '../constants/city_catalog.dart';
 import '../providers/locale_provider.dart';
 import 'kemenag_method.dart';
 import 'notification_service.dart';
+import 'notification_preferences.dart';
+
+final notificationSchedulerProvider =
+    Provider<
+      Future<void> Function(
+        PrayerTimes?,
+        AppLocalizations,
+        NotificationPreferences,
+      )
+    >((ref) => NotificationService.schedulePrayerNotifications);
 
 class PrayerLoadException implements Exception {
   final String message;
@@ -31,6 +42,7 @@ class PrayerState {
   final bool loading;
   final String? error;
   final bool showLocationGuide;
+  final bool notificationError;
 
   const PrayerState({
     this.times,
@@ -38,6 +50,7 @@ class PrayerState {
     this.loading = true,
     this.error,
     this.showLocationGuide = false,
+    this.notificationError = false,
   });
 
   PrayerState copyWith({
@@ -46,13 +59,26 @@ class PrayerState {
     bool? loading,
     String? error,
     bool? showLocationGuide,
+    bool? notificationError,
   }) => PrayerState(
+    notificationError: notificationError ?? this.notificationError,
     times: times ?? this.times,
     locationLabel: locationLabel ?? this.locationLabel,
     loading: loading ?? this.loading,
     error: error, // Always replaced, so omitting it clears the error.
     showLocationGuide: showLocationGuide ?? this.showLocationGuide,
   );
+}
+
+class _PrayerLifecycleObserver extends WidgetsBindingObserver {
+  final VoidCallback onResume;
+
+  _PrayerLifecycleObserver(this.onResume);
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) onResume();
+  }
 }
 
 // ── Notifier ──────────────────────────────────────────────────────────────────
@@ -63,12 +89,33 @@ class PrayerNotifier extends Notifier<PrayerState> {
 
   @override
   PrayerState build() {
+    final observer = _PrayerLifecycleObserver(() => load());
+    WidgetsBinding.instance.addObserver(observer);
+    Timer? midnight;
+    void refreshAtMidnight() {
+      final now = clock.now();
+      midnight = Timer(
+        DateTime(now.year, now.month, now.day + 1).difference(now),
+        () {
+          load();
+          refreshAtMidnight();
+        },
+      );
+    }
+
+    refreshAtMidnight();
+    ref.onDispose(() {
+      WidgetsBinding.instance.removeObserver(observer);
+      midnight?.cancel();
+    });
     // Reload when a setting that affects the times changes.
     ref.listen(settingsProvider, (prev, next) {
       if (prev?.method != next.method ||
           prev?.isHanafi != next.isHanafi ||
           prev?.useAutoLocation != next.useAutoLocation) {
         load();
+      } else if (prev?.notifications != next.notifications) {
+        _scheduleNotifications();
       }
     });
     // A new city, picked or following a language change, only matters
@@ -78,6 +125,7 @@ class PrayerNotifier extends Notifier<PrayerState> {
         load();
       }
     });
+    ref.listen(localeProvider, (_, _) => _scheduleNotifications());
     // Load after build returns, since state can't be set during build.
     Future.microtask(load);
     return const PrayerState(loading: true);
@@ -109,18 +157,15 @@ class PrayerNotifier extends Notifier<PrayerState> {
       if (settings.isHanafi) params.madhab = Madhab.hanafi;
       final times = PrayerTimes.today(coords, params);
 
-      if (loadId != _loadId) return;
-      NotificationService.schedulePrayerNotifications(
-        times,
-        _l10n,
-      ).catchError((_) {});
+      if (!ref.mounted || loadId != _loadId) return;
       state = state.copyWith(
         times: times,
         locationLabel: locationLabel,
         loading: false,
       );
+      _scheduleNotifications();
     } catch (e) {
-      if (loadId != _loadId) return;
+      if (!ref.mounted || loadId != _loadId) return;
       // Keep the user's location preference: a failed fix should surface an
       // actionable error, not silently switch prayer times to a manual city.
       final error = e is PrayerLoadException
@@ -131,6 +176,30 @@ class PrayerNotifier extends Notifier<PrayerState> {
         error: error.message,
         showLocationGuide: error.showLocationGuide,
       );
+    }
+  }
+
+  /// Refreshes alerts after returning from system notification settings.
+  Future<void> refreshNotifications() => _scheduleNotifications();
+
+  int _notificationRequest = 0;
+
+  Future<void> _scheduleNotifications() async {
+    final times = state.times;
+    final request = ++_notificationRequest;
+    try {
+      await ref.read(notificationSchedulerProvider)(
+        times,
+        _l10n,
+        ref.read(settingsProvider).notifications,
+      );
+      if (ref.mounted && request == _notificationRequest) {
+        state = state.copyWith(notificationError: false, error: state.error);
+      }
+    } catch (_) {
+      if (ref.mounted && request == _notificationRequest) {
+        state = state.copyWith(notificationError: true, error: state.error);
+      }
     }
   }
 

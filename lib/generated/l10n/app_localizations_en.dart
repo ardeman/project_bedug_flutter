@@ -517,4 +517,60 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sheetFullScreen => 'Full screen';
+
+  @override
+  String get notificationPreferences => 'Reminders and sound';
+
+  @override
+  String get notificationsOff => 'Notifications off';
+
+  @override
+  String get beforePrayerReminder => 'Reminder before prayer';
+
+  @override
+  String get reminderOff => 'Off';
+
+  @override
+  String minutesBeforePrayer(int minutes) {
+    return '$minutes minutes before';
+  }
+
+  @override
+  String get notificationSound => 'Notification sound';
+
+  @override
+  String get systemNotificationSound => 'System sound';
+
+  @override
+  String get silentNotificationSound => 'Silent';
+
+  @override
+  String prayerReminderBody(String prayer, int minutes) {
+    return '$prayer in $minutes minutes';
+  }
+
+  @override
+  String get silentPrayerChannel => 'Prayer Times (silent)';
+
+  @override
+  String get notificationDeliveryInfo =>
+      'Alerts are scheduled for the next six days and refreshed when you open the app. Delivery and sound follow system permissions and settings. Silent mode also disables vibration.';
+
+  @override
+  String get notificationPlatformUnavailable =>
+      'Scheduled notifications are available on Android, iOS and macOS. Your preferences are still saved on this device.';
+
+  @override
+  String get notificationSchedulingError =>
+      'Alerts could not be scheduled. Check system notification settings, then try changing the reminder settings again.';
+
+  @override
+  String get notificationSystemSettings => 'System notification settings';
+
+  @override
+  String get precisePrayerAlerts => 'Allow precise alerts';
+
+  @override
+  String get precisePrayerAlertsDescription =>
+      'Android may delay alerts without exact alarm permission.';
 }

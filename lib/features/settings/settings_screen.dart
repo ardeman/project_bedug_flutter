@@ -1,4 +1,5 @@
 import 'package:material_ui/material_ui.dart';
+import 'package:flutter/foundation.dart';
 import 'package:material_3_expressive/material_3_expressive.dart';
 
 import '../../core/design/platform_design.dart';
@@ -11,6 +12,9 @@ import '../../core/design/liquid_glass.dart';
 import '../../core/design/glass_controls.dart';
 import '../../core/design/platform_capabilities.dart';
 import '../../core/providers/locale_provider.dart';
+import '../../core/services/notification_preferences.dart';
+import '../../core/services/notification_service.dart';
+import '../../core/services/prayer_service.dart';
 import '../../core/theme/app_tokens.dart';
 import '../../core/widgets/calculation_method_picker.dart';
 import '../../core/widgets/city_picker.dart';
@@ -83,8 +87,17 @@ class SettingsScreen extends ConsumerWidget {
               color: AppColors.accentOf(ctx),
             ),
             title: Text(l10n.azanNotifications),
-            subtitle: Text(l10n.allPrayers),
-            trailing: _AdaptiveSwitch(value: true, onChanged: (_) {}),
+            subtitle: Text(
+              settings.notifications.enabled
+                  ? l10n.notificationPreferences
+                  : l10n.notificationsOff,
+            ),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => Navigator.of(ctx).push(
+              MaterialPageRoute<void>(
+                builder: (_) => const NotificationSettingsScreen(),
+              ),
+            ),
           ),
 
           PlatformListTile(
@@ -217,6 +230,147 @@ class SettingsScreen extends ConsumerWidget {
   }
 }
 
+/// Prayer alerts use the platform sound or silent delivery, never a recording.
+class NotificationSettingsScreen extends ConsumerWidget {
+  const NotificationSettingsScreen({super.key});
+
+  @override
+  Widget build(BuildContext ctx, WidgetRef ref) {
+    final l10n = AppLocalizations.of(ctx);
+    final preferences = ref.watch(settingsProvider).notifications;
+    final notifier = ref.read(settingsProvider.notifier);
+    final failed = ref.watch(prayerProvider.select((s) => s.notificationError));
+    final names = [l10n.fajr, l10n.dhuhr, l10n.asr, l10n.maghrib, l10n.isha];
+    return Scaffold(
+      extendBodyBehindAppBar: PlatformCapabilities.isApple,
+      appBar: GlassTopBar(title: l10n.azanNotifications),
+      body: ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(AppSpacing.md),
+            child: Text(
+              NotificationService.supportsScheduling
+                  ? l10n.notificationDeliveryInfo
+                  : l10n.notificationPlatformUnavailable,
+            ),
+          ),
+          if (failed)
+            Padding(
+              padding: const EdgeInsets.all(AppSpacing.md),
+              child: Text(l10n.notificationSchedulingError),
+            ),
+          _Section(
+            title: l10n.azanNotifications,
+            children: [
+              PlatformListTile(
+                title: Text(l10n.azanNotifications),
+                trailing: _AdaptiveSwitch(
+                  key: const ValueKey('notifications-enabled'),
+                  value: preferences.enabled,
+                  onChanged: (value) => notifier.setNotifications(
+                    preferences.copyWith(enabled: value),
+                  ),
+                ),
+              ),
+              if (preferences.enabled) ...[
+                for (final (index, prayer) in notificationPrayers.indexed)
+                  PlatformListTile(
+                    title: Text(names[index]),
+                    trailing: _AdaptiveSwitch(
+                      key: ValueKey('notification-${prayer.name}'),
+                      value: preferences.includes(prayer),
+                      onChanged: (value) {
+                        final disabled = {...preferences.disabledPrayers};
+                        value ? disabled.remove(prayer) : disabled.add(prayer);
+                        notifier.setNotifications(
+                          preferences.copyWith(disabledPrayers: disabled),
+                        );
+                      },
+                    ),
+                  ),
+              ],
+            ],
+          ),
+          if (preferences.enabled)
+            _Section(
+              title: l10n.notificationPreferences,
+              children: [
+                _ChoiceTile<int>(
+                  icon: Icons.alarm_outlined,
+                  title: l10n.beforePrayerReminder,
+                  value: preferences.reminderMinutes,
+                  options: [
+                    for (final minutes in reminderMinuteOptions)
+                      GlassMenuOption(
+                        value: minutes,
+                        label: minutes == 0
+                            ? l10n.reminderOff
+                            : l10n.minutesBeforePrayer(minutes),
+                      ),
+                  ],
+                  onChanged: (minutes) => notifier.setNotifications(
+                    preferences.copyWith(reminderMinutes: minutes),
+                  ),
+                ),
+                _ChoiceTile<PrayerNotificationSound>(
+                  icon: Icons.volume_up_outlined,
+                  title: l10n.notificationSound,
+                  value: preferences.sound,
+                  options: [
+                    GlassMenuOption(
+                      value: PrayerNotificationSound.system,
+                      label: l10n.systemNotificationSound,
+                    ),
+                    GlassMenuOption(
+                      value: PrayerNotificationSound.silent,
+                      label: l10n.silentNotificationSound,
+                    ),
+                  ],
+                  onChanged: (sound) => notifier.setNotifications(
+                    preferences.copyWith(sound: sound),
+                  ),
+                ),
+              ],
+            ),
+          if (NotificationService.supportsScheduling)
+            _Section(
+              title: l10n.notificationSystemSettings,
+              children: [
+                PlatformListTile(
+                  title: Text(l10n.notificationSystemSettings),
+                  trailing: const Icon(Icons.open_in_new),
+                  onTap: () async {
+                    await NotificationService.openSystemSettings();
+                    if (ctx.mounted) {
+                      await ref
+                          .read(prayerProvider.notifier)
+                          .refreshNotifications();
+                    }
+                  },
+                ),
+                if (defaultTargetPlatform == TargetPlatform.android)
+                  PlatformListTile(
+                    title: Text(l10n.precisePrayerAlerts),
+                    subtitle: Text(l10n.precisePrayerAlertsDescription),
+                    trailing: const Icon(Icons.open_in_new),
+                    onTap: () async {
+                      await NotificationService.requestPreciseAlarms();
+                      if (ctx.mounted) {
+                        await ref
+                            .read(prayerProvider.notifier)
+                            .refreshNotifications();
+                      }
+                    },
+                  ),
+              ],
+            ),
+          const SizedBox(height: AppSpacing.xl),
+        ],
+      ),
+    );
+  }
+}
+
 // ─── Section ──────────────────────────────────────────────────────────────────
 /// A titled group of rows: an inset glass card on iOS and macOS, like the
 /// system Settings app, and a flat list elsewhere.
@@ -296,7 +450,11 @@ class _AdaptiveSwitch extends StatelessWidget {
   final bool value;
   final ValueChanged<bool> onChanged;
 
-  const _AdaptiveSwitch({required this.value, required this.onChanged});
+  const _AdaptiveSwitch({
+    super.key,
+    required this.value,
+    required this.onChanged,
+  });
 
   @override
   Widget build(BuildContext ctx) {

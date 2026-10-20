@@ -5,7 +5,7 @@ import '../../core/design/platform_capabilities.dart';
 import '../../generated/l10n/app_localizations.dart';
 import '../qibla/widgets/qibla_card.dart';
 
-/// Worship tab: Qibla now, and later the prayer tracker, tasbih and duas.
+/// Worship tab: Qibla now, and later tasbih and duas.
 class WorshipScreen extends StatelessWidget {
   const WorshipScreen({super.key, this.isActive = true});
 

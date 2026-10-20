@@ -1,6 +1,8 @@
 import 'package:bedug/core/constants/city_catalog.dart';
 import 'package:bedug/core/providers/locale_provider.dart';
 import 'package:bedug/core/services/kemenag_method.dart';
+import 'package:bedug/core/services/notification_preferences.dart';
+import 'package:adhan/adhan.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -39,7 +41,9 @@ void main() {
   test('falls back to Kemenag for an unknown stored method index', () async {
     final container = await _container({'calc_method': 999});
     expect(
-        container.read(settingsProvider).method, AppCalculationMethod.kemenag);
+      container.read(settingsProvider).method,
+      AppCalculationMethod.kemenag,
+    );
   });
 
   test('clearing the selected city clears state and storage', () async {
@@ -67,12 +71,51 @@ void main() {
   });
 
   test('a picked city wins over the language default', () async {
-    final container =
-        await _container({'app_locale': 'en', 'selected_city_id': 'medan'});
+    final container = await _container({
+      'app_locale': 'en',
+      'selected_city_id': 'medan',
+    });
     expect(container.read(manualCityProvider).id, 'medan');
 
     await container.read(settingsProvider.notifier).setSelectedCityId(null);
     expect(container.read(manualCityProvider).id, 'silicon_valley');
+  });
+
+  test('notification preferences persist across provider recreation', () async {
+    final container = await _container({});
+    final notifier = container.read(settingsProvider.notifier);
+    expect(
+      container.read(settingsProvider).notifications.sound,
+      PrayerNotificationSound.system,
+    );
+    await notifier.setNotifications(
+      const NotificationPreferences(
+        enabled: false,
+        disabledPrayers: {Prayer.fajr, Prayer.isha},
+        reminderMinutes: 15,
+        sound: PrayerNotificationSound.silent,
+      ),
+    );
+    container.invalidate(settingsProvider);
+    final preferences = container.read(settingsProvider).notifications;
+    expect(preferences.enabled, isFalse);
+    expect(preferences.disabledPrayers, {Prayer.fajr, Prayer.isha});
+    expect(preferences.reminderMinutes, 15);
+    expect(preferences.sound, PrayerNotificationSound.silent);
+    await notifier.setThemeMode(2);
+    expect(container.read(settingsProvider).notifications.reminderMinutes, 15);
+  });
+
+  test('unknown stored notification options fall back safely', () async {
+    final container = await _container({
+      'notification_reminder_minutes': -1,
+      'notification_sound': 'removed_sound',
+      'notifications_disabled': ['fajr', 'unknown'],
+    });
+    final preferences = container.read(settingsProvider).notifications;
+    expect(preferences.reminderMinutes, 0);
+    expect(preferences.sound, PrayerNotificationSound.system);
+    expect(preferences.disabledPrayers, {Prayer.fajr});
   });
 
   test('city ids are unique', () {

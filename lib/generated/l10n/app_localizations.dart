@@ -1067,6 +1067,102 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Layar penuh'**
   String get sheetFullScreen;
+
+  /// No description provided for @notificationPreferences.
+  ///
+  /// In id, this message translates to:
+  /// **'Pengaturan pengingat dan suara'**
+  String get notificationPreferences;
+
+  /// No description provided for @notificationsOff.
+  ///
+  /// In id, this message translates to:
+  /// **'Notifikasi nonaktif'**
+  String get notificationsOff;
+
+  /// No description provided for @beforePrayerReminder.
+  ///
+  /// In id, this message translates to:
+  /// **'Pengingat sebelum azan'**
+  String get beforePrayerReminder;
+
+  /// No description provided for @reminderOff.
+  ///
+  /// In id, this message translates to:
+  /// **'Nonaktif'**
+  String get reminderOff;
+
+  /// No description provided for @minutesBeforePrayer.
+  ///
+  /// In id, this message translates to:
+  /// **'{minutes} menit sebelumnya'**
+  String minutesBeforePrayer(int minutes);
+
+  /// No description provided for @notificationSound.
+  ///
+  /// In id, this message translates to:
+  /// **'Suara notifikasi'**
+  String get notificationSound;
+
+  /// No description provided for @systemNotificationSound.
+  ///
+  /// In id, this message translates to:
+  /// **'Suara sistem'**
+  String get systemNotificationSound;
+
+  /// No description provided for @silentNotificationSound.
+  ///
+  /// In id, this message translates to:
+  /// **'Senyap'**
+  String get silentNotificationSound;
+
+  /// No description provided for @prayerReminderBody.
+  ///
+  /// In id, this message translates to:
+  /// **'{prayer} dalam {minutes} menit'**
+  String prayerReminderBody(String prayer, int minutes);
+
+  /// No description provided for @silentPrayerChannel.
+  ///
+  /// In id, this message translates to:
+  /// **'Waktu Salat (senyap)'**
+  String get silentPrayerChannel;
+
+  /// No description provided for @notificationDeliveryInfo.
+  ///
+  /// In id, this message translates to:
+  /// **'Pengingat dijadwalkan untuk enam hari ke depan dan diperbarui saat aplikasi dibuka. Pengiriman dan suara mengikuti izin serta pengaturan sistem. Mode senyap juga menonaktifkan getaran.'**
+  String get notificationDeliveryInfo;
+
+  /// No description provided for @notificationPlatformUnavailable.
+  ///
+  /// In id, this message translates to:
+  /// **'Notifikasi terjadwal tersedia di Android, iOS, dan macOS. Preferensi Anda tetap tersimpan di perangkat ini.'**
+  String get notificationPlatformUnavailable;
+
+  /// No description provided for @notificationSchedulingError.
+  ///
+  /// In id, this message translates to:
+  /// **'Pengingat belum dapat dijadwalkan. Periksa pengaturan notifikasi sistem, lalu coba ubah pengaturan pengingat lagi.'**
+  String get notificationSchedulingError;
+
+  /// No description provided for @notificationSystemSettings.
+  ///
+  /// In id, this message translates to:
+  /// **'Pengaturan notifikasi sistem'**
+  String get notificationSystemSettings;
+
+  /// No description provided for @precisePrayerAlerts.
+  ///
+  /// In id, this message translates to:
+  /// **'Izinkan pengingat tepat waktu'**
+  String get precisePrayerAlerts;
+
+  /// No description provided for @precisePrayerAlertsDescription.
+  ///
+  /// In id, this message translates to:
+  /// **'Tanpa izin alarm tepat waktu, Android dapat menunda pengingat.'**
+  String get precisePrayerAlertsDescription;
 }
 
 class _AppLocalizationsDelegate

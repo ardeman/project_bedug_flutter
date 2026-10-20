@@ -518,4 +518,60 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get sheetFullScreen => 'Layar penuh';
+
+  @override
+  String get notificationPreferences => 'Pengaturan pengingat dan suara';
+
+  @override
+  String get notificationsOff => 'Notifikasi nonaktif';
+
+  @override
+  String get beforePrayerReminder => 'Pengingat sebelum azan';
+
+  @override
+  String get reminderOff => 'Nonaktif';
+
+  @override
+  String minutesBeforePrayer(int minutes) {
+    return '$minutes menit sebelumnya';
+  }
+
+  @override
+  String get notificationSound => 'Suara notifikasi';
+
+  @override
+  String get systemNotificationSound => 'Suara sistem';
+
+  @override
+  String get silentNotificationSound => 'Senyap';
+
+  @override
+  String prayerReminderBody(String prayer, int minutes) {
+    return '$prayer dalam $minutes menit';
+  }
+
+  @override
+  String get silentPrayerChannel => 'Waktu Salat (senyap)';
+
+  @override
+  String get notificationDeliveryInfo =>
+      'Pengingat dijadwalkan untuk enam hari ke depan dan diperbarui saat aplikasi dibuka. Pengiriman dan suara mengikuti izin serta pengaturan sistem. Mode senyap juga menonaktifkan getaran.';
+
+  @override
+  String get notificationPlatformUnavailable =>
+      'Notifikasi terjadwal tersedia di Android, iOS, dan macOS. Preferensi Anda tetap tersimpan di perangkat ini.';
+
+  @override
+  String get notificationSchedulingError =>
+      'Pengingat belum dapat dijadwalkan. Periksa pengaturan notifikasi sistem, lalu coba ubah pengaturan pengingat lagi.';
+
+  @override
+  String get notificationSystemSettings => 'Pengaturan notifikasi sistem';
+
+  @override
+  String get precisePrayerAlerts => 'Izinkan pengingat tepat waktu';
+
+  @override
+  String get precisePrayerAlertsDescription =>
+      'Tanpa izin alarm tepat waktu, Android dapat menunda pengingat.';
 }

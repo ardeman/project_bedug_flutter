@@ -1,6 +1,7 @@
 import 'package:adhan/adhan.dart';
 import 'package:bedug/core/providers/locale_provider.dart';
 import 'package:bedug/core/services/prayer_service.dart';
+import 'package:bedug/core/services/notification_preferences.dart';
 import 'package:fake_async/fake_async.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -90,6 +91,51 @@ void main() {
       },
     );
   }
+
+  test(
+    'notification changes reschedule without reloading prayer times',
+    () async {
+      SharedPreferences.setMockInitialValues({'use_auto_location': false});
+      final prefs = await SharedPreferences.getInstance();
+      final scheduled = <NotificationPreferences>[];
+      var fail = false;
+      final container = ProviderContainer(
+        overrides: [
+          sharedPreferencesProvider.overrideWithValue(prefs),
+          notificationSchedulerProvider.overrideWithValue((
+            times,
+            l10n,
+            preferences,
+          ) async {
+            scheduled.add(preferences);
+            if (fail) throw Exception();
+          }),
+        ],
+      );
+      addTearDown(container.dispose);
+      container.listen(prayerProvider, (_, _) {});
+      await pumpEventQueue();
+      final times = container.read(prayerProvider).times;
+      expect(times, isNotNull);
+      expect(scheduled, hasLength(1));
+      await container
+          .read(settingsProvider.notifier)
+          .setNotifications(const NotificationPreferences(reminderMinutes: 10));
+      await pumpEventQueue();
+      expect(scheduled.last.reminderMinutes, 10);
+      expect(container.read(prayerProvider).times, same(times));
+      expect(container.read(prayerProvider).loading, isFalse);
+      fail = true;
+      await container
+          .read(settingsProvider.notifier)
+          .setNotifications(const NotificationPreferences(enabled: false));
+      await pumpEventQueue();
+      expect(container.read(prayerProvider).notificationError, isTrue);
+      fail = false;
+      await container.read(prayerProvider.notifier).refreshNotifications();
+      expect(container.read(prayerProvider).notificationError, isFalse);
+    },
+  );
 
   test('the next prayer moves on once its time arrives', () {
     final times = PrayerTimes(

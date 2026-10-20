@@ -159,5 +159,38 @@
   "sheetPreview": "Preview",
   "sheetCollapsed": "Collapsed",
   "sheetExpanded": "Expanded",
-  "sheetFullScreen": "Full screen"
+  "sheetFullScreen": "Full screen",
+  "notificationPreferences": "Reminders and sound",
+  "notificationsOff": "Notifications off",
+  "beforePrayerReminder": "Reminder before prayer",
+  "reminderOff": "Off",
+  "minutesBeforePrayer": "{minutes} minutes before",
+  "@minutesBeforePrayer": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "notificationSound": "Notification sound",
+  "systemNotificationSound": "System sound",
+  "silentNotificationSound": "Silent",
+  "prayerReminderBody": "{prayer} in {minutes} minutes",
+  "@prayerReminderBody": {
+    "placeholders": {
+      "prayer": {
+        "type": "String"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "silentPrayerChannel": "Prayer Times (silent)",
+  "notificationDeliveryInfo": "Alerts are scheduled for the next six days and refreshed when you open the app. Delivery and sound follow system permissions and settings. Silent mode also disables vibration.",
+  "notificationPlatformUnavailable": "Scheduled notifications are available on Android, iOS and macOS. Your preferences are still saved on this device.",
+  "notificationSchedulingError": "Alerts could not be scheduled. Check system notification settings, then try changing the reminder settings again.",
+  "notificationSystemSettings": "System notification settings",
+  "precisePrayerAlerts": "Allow precise alerts",
+  "precisePrayerAlertsDescription": "Android may delay alerts without exact alarm permission."
 }
