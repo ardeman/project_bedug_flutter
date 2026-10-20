@@ -5,6 +5,15 @@
       "date": null,
       "changes": [
         {
+          "type": "fixed",
+          "text": {
+            "id": "Deskripsi metode perhitungan kini tampil di bawah bilah judul Liquid Glass di perangkat Apple, bukan tertutup olehnya.",
+            "en": "The calculation-method description now starts below the Liquid Glass toolbar on Apple devices so it remains visible.",
+            "ar": "يظهر وصف طريقة الحساب الآن أسفل شريط أدوات Liquid Glass على أجهزة Apple ليبقى مرئيًا.",
+            "ms": "Penerangan kaedah pengiraan kini bermula di bawah bar alat Liquid Glass pada peranti Apple supaya kekal kelihatan."
+          }
+        },
+        {
           "type": "improved",
           "text": {
             "id": "Judul Liquid Glass yang panjang kini tetap terpisah dari tombol kembali dan kontrol jendela Mac, dengan tipografi label dan ukuran ikon navigasi yang lebih konsisten.",

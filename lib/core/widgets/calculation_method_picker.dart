@@ -602,7 +602,13 @@ class CalculationMethodScreen extends ConsumerWidget {
       extendBodyBehindAppBar: isApple,
       appBar: GlassTopBar(title: l10n.calculationMethod),
       body: ListView(
-        padding: EdgeInsets.only(bottom: GlassNavBar.occupiedHeight(ctx)),
+        // Explicit list padding disables ListView's automatic safe-area
+        // padding. Start below the floating toolbar; scrolling can still
+        // carry the content behind the glass.
+        padding: EdgeInsets.only(
+          top: isApple ? kToolbarHeight + MediaQuery.of(ctx).padding.top : 0,
+          bottom: GlassNavBar.occupiedHeight(ctx),
+        ),
         children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(
