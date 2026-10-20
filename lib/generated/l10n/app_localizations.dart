@@ -132,6 +132,12 @@ abstract class AppLocalizations {
   /// **'Pengaturan'**
   String get settings;
 
+  /// No description provided for @hijriAfterMaghrib.
+  ///
+  /// In id, this message translates to:
+  /// **'Setelah Magrib'**
+  String get hijriAfterMaghrib;
+
   /// No description provided for @nextPrayer.
   ///
   /// In id, this message translates to:

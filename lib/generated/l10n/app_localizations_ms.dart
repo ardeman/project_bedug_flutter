@@ -25,6 +25,9 @@ class AppLocalizationsMs extends AppLocalizations {
   String get settings => 'Tetapan';
 
   @override
+  String get hijriAfterMaghrib => 'Selepas Maghrib';
+
+  @override
   String get nextPrayer => 'Solat Seterusnya';
 
   @override

@@ -1,10 +1,14 @@
 import 'package:cupertino_ui/cupertino_ui.dart'
     show GlobalCupertinoLocalizations;
 import 'package:adhan/adhan.dart';
+import 'package:clock/clock.dart';
+import 'package:intl/intl.dart' show DateFormat;
 import 'package:bedug/core/design/platform_capabilities.dart';
 import 'package:bedug/core/providers/locale_provider.dart';
 import 'package:bedug/core/services/prayer_service.dart';
 import 'package:bedug/features/prayer_times/prayer_times_screen.dart';
+import 'package:bedug/features/prayer_times/widgets/prayer_day_picker.dart';
+import 'package:bedug/features/prayer_times/widgets/hijri_month_grid.dart';
 import 'package:bedug/generated/l10n/app_localizations.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter/rendering.dart';
@@ -22,6 +26,88 @@ class _FakePrayerNotifier extends PrayerNotifier {
 }
 
 void main() {
+  for (final locale in AppLocalizations.supportedLocales) {
+    testWidgets(
+      'after-Isha header identifies the upcoming date in $locale',
+      (tester) async {
+        final times = PrayerTimes(
+          Coordinates(-6.2088, 106.8456),
+          DateComponents(2026, 10, 20),
+          CalculationMethod.singapore.getParameters(),
+        );
+        final now = times.isha.add(const Duration(minutes: 1));
+        await withClock(Clock.fixed(now), () async {
+          SharedPreferences.setMockInitialValues({});
+          final prefs = await SharedPreferences.getInstance();
+          tester.view.physicalSize = const Size(375, 932);
+          tester.view.devicePixelRatio = 1;
+          addTearDown(tester.view.reset);
+          await tester.pumpWidget(
+            ProviderScope(
+              overrides: [
+                sharedPreferencesProvider.overrideWithValue(prefs),
+                prayerProvider.overrideWith(
+                  () => _FakePrayerNotifier(
+                    PrayerState(times: times, loading: false),
+                  ),
+                ),
+              ],
+              child: MaterialApp(
+                locale: locale,
+                localizationsDelegates: const [
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                  ...AppLocalizations.localizationsDelegates,
+                ],
+                supportedLocales: AppLocalizations.supportedLocales,
+                home: const PrayerTimesScreen(),
+              ),
+            ),
+          );
+          await tester.pump();
+          final tomorrow = DateTime(2026, 10, 21);
+          final date = DateFormat.MMMd(locale.languageCode).format(tomorrow);
+          expect(find.textContaining(date), findsOneWidget);
+          final header = tester.widget<Text>(find.textContaining(date)).data;
+          final l10n = AppLocalizations.of(
+            tester.element(find.byType(PrayerTimesScreen)),
+          );
+          expect(find.text(hijriDateLabel(l10n, tomorrow)!), findsOneWidget);
+          expect(find.text(l10n.hijriAfterMaghrib), findsOneWidget);
+          expect(
+            tester
+                .widget<PrayerDayPicker>(find.byType(PrayerDayPicker))
+                .selected,
+            DateTime(2026, 10, 20),
+          );
+          tester
+              .widget<PrayerDayPicker>(find.byType(PrayerDayPicker))
+              .onSelected(tomorrow);
+          await tester.pump();
+          expect(find.text(header!), findsOneWidget);
+          expect(find.text(hijriDateLabel(l10n, tomorrow)!), findsOneWidget);
+          expect(find.text(l10n.hijriAfterMaghrib), findsNothing);
+          await tester.scrollUntilVisible(
+            find.text(l10n.upNext),
+            150,
+            scrollable: find.byWidgetPredicate(
+              (widget) =>
+                  widget is Scrollable &&
+                  widget.axisDirection == AxisDirection.down,
+            ),
+          );
+          expect(find.text(l10n.upNext), findsOneWidget);
+          expect(tester.takeException(), isNull);
+          await tester.pumpWidget(const SizedBox.shrink());
+        });
+      },
+      variant: TargetPlatformVariant({
+        TargetPlatform.iOS,
+        TargetPlatform.android,
+      }),
+    );
+  }
+
   testWidgets('a short day still scrolls the header to its compact bar', (
     tester,
   ) async {

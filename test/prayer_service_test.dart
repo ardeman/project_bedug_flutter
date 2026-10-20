@@ -230,6 +230,40 @@ void main() {
     },
   );
 
+  test('after Isha uses tomorrow’s calculation and advances past Fajr', () {
+    final times = PrayerTimes(
+      Coordinates(-6.2088, 106.8456),
+      DateComponents(2026, 10, 20),
+      CalculationMethod.singapore.getParameters(),
+    );
+    final tomorrow = prayerTimesOn(times, DateTime(2026, 10, 21));
+    expect(tomorrow.fajr, isNot(times.fajr.add(const Duration(days: 1))));
+    final now = times.isha.add(const Duration(minutes: 1));
+    FakeAsync(initialTime: now).run((async) {
+      final container = ProviderContainer(
+        overrides: [
+          prayerProvider.overrideWith(
+            () =>
+                _FakePrayerNotifier(PrayerState(times: times, loading: false)),
+          ),
+        ],
+      );
+      container.listen(nextPrayerProvider, (_, _) {});
+      expect(container.read(nextPrayerProvider), (
+        key: 'fajr',
+        time: tomorrow.fajr,
+      ));
+      // Even if the reference schedule has not refreshed after midnight,
+      // the next boundary must use the new day's actual schedule.
+      async.elapse(tomorrow.fajr.difference(now));
+      expect(container.read(nextPrayerProvider), (
+        key: 'dhuhr',
+        time: tomorrow.dhuhr,
+      ));
+      container.dispose();
+    });
+  });
+
   test('the next prayer moves on once its time arrives', () {
     final times = PrayerTimes(
       Coordinates(-6.2088, 106.8456),

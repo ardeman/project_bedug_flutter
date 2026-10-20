@@ -34,12 +34,17 @@ class PrayerDayPicker extends StatefulWidget {
 
   /// The picked date (time of day ignored).
   final DateTime selected;
+
+  /// Date to convert for today's live Hijri label, including sunset rollover.
+  /// Other selected dates keep their static calendar conversion.
+  final DateTime? liveHijriDate;
   final ValueChanged<DateTime> onSelected;
 
   const PrayerDayPicker({
     super.key,
     required this.today,
     required this.selected,
+    this.liveHijriDate,
     required this.onSelected,
   });
 
@@ -215,7 +220,10 @@ class _PrayerDayPickerState extends State<PrayerDayPicker>
     final dateFormat = widget.selected.year == widget.today.year
         ? DateFormat.MMMMEEEEd(locale)
         : DateFormat.yMMMMEEEEd(locale);
-    final hijriDate = hijriDateLabel(l10n, widget.selected);
+    final liveDate = offset == 0 ? widget.liveHijriDate : null;
+    final afterMaghrib =
+        liveDate != null && daysBetween(widget.selected, liveDate) > 0;
+    final hijriDate = hijriDateLabel(l10n, liveDate ?? widget.selected);
 
     final content = Padding(
       padding: const EdgeInsets.only(top: AppSpacing.sm),
@@ -306,6 +314,13 @@ class _PrayerDayPickerState extends State<PrayerDayPicker>
                                 color: theme.colorScheme.onSurfaceVariant,
                               ),
                               overflow: TextOverflow.ellipsis,
+                            ),
+                          if (hijriDate != null && afterMaghrib)
+                            Text(
+                              l10n.hijriAfterMaghrib,
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                color: theme.colorScheme.onSurfaceVariant,
+                              ),
                             ),
                         ],
                       ),

@@ -26,6 +26,9 @@ class AppLocalizationsId extends AppLocalizations {
   String get settings => 'Pengaturan';
 
   @override
+  String get hijriAfterMaghrib => 'Setelah Magrib';
+
+  @override
   String get nextPrayer => 'Salat Berikutnya';
 
   @override

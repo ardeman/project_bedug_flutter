@@ -50,6 +50,8 @@ flutter run -d macos   # or: iphone, android, windows, linux
 
 iOS and macOS builds use CocoaPods only: Swift Package Manager is turned off in `pubspec.yaml`. It was turned off for `cupertino_native`, which has since been removed; turning SPM back on is a separate change. Warnings from plugin code are silenced in `ios/Podfile` and `macos/Podfile`. Flutter still prints a "plugins do not support Swift Package Manager" notice on every Apple build; it's expected and harmless.
 
+Today's live Hijri label advances at Maghrib calculated for the prayer location and shows an "After Maghrib" note until midnight. At midnight the Gregorian date catches up without advancing the Hijri label again. Prayer schedules and browsed calendar dates retain their Gregorian-day mapping. Without a prayer location/schedule, the label falls back to the standard calendar conversion; local moon-sighting adjustments are not applied.
+
 ### iOS launch testing
 
 Open `ios/Runner.xcworkspace` in Xcode and choose **Runner** for Debug builds with breakpoints. Choose **Bedug Profile** to test launch speed and widgets on a physical iPhone: its Run action uses Profile with the debugger detached. The schemes share the same app and widget targets; Archive uses Release in both.
@@ -61,6 +63,8 @@ On iOS and Android, open Bedug once to load a location, then add **Bedug** from 
 For iOS signing, register the App Group `group.com.ardeman.bedug` with your Apple developer team and enable it for both `com.ardeman.bedug` (Runner) and `com.ardeman.bedug.PrayerWidget` (BedugPrayerWidget). Entitlements and the embedded WidgetKit target are already configured. The widget version follows Flutter's build name and number. The extension needs no CocoaPods or Flutter engine.
 
 Device checks before shipping: add/remove and resize widgets; check prayer transitions and expiry while the app is closed; change city, calculation method, language and theme; test Arabic, light/dark and iOS tinted/clear modes. On Android also check reboot, clock changes and Doze; transition alarms are inexact and can be delayed by the OS.
+
+Validation on 2026-10-21: on the connected iPhone 17 (iOS 27.0.1), the shared App Group cache contained ordered future prayer times, location, language and theme data. The user confirmed small and medium layouts with a ticking countdown and no clipped text, Arabic and dark theme, tinted/clear rendering, city and calculation-method updates, and a prayer transition with Bedug closed. Widget removal/resizing and seven-day cache expiry remain unverified. Android device checks remain pending; no Android device was connected.
 
 ## Commands
 
@@ -182,7 +186,7 @@ Bedug grows from a prayer-times app into a companion for a Muslim's day, week an
 1. **Qibla direction (done):** compass card in the new Worship tab, using `adhan`'s `Qibla` bearing and the device heading from `flutter_compass` on iOS and Android. Desktop has no compass, so the dial stays north-up and shows the bearing, the distance and the Qibla's angle from the sun while it is up.
 2. **Notification control (done; device delivery checks pending):** master and per-prayer on/off, a reminder 5, 10, 15 or 30 minutes before prayer, and system sound or silent mode. No recorded azan. Android, iOS and macOS queue six days of alerts, refreshed on opening/resuming the app, at midnight while running, and when preferences change. Android falls back to inexact alarms without exact-alarm access; Settings links to system notification settings and exact-alarm permission. Scheduled alerts are not available on Windows or Linux yet.
 3. **Extra times (done):** imsak (10 minutes before Subuh; fasting starts at Subuh), sunrise (end of Subuh), estimated dhuha start (20 minutes after sunrise), and the last third of the night for tahajud. The night is measured from the previous day’s Maghrib to the selected day’s Subuh, so the displayed time belongs to that morning. Dhuha is a fixed-offset estimate, not an official Kemenag timetable.
-4. **Home screen widgets (implemented; launcher/device checks pending):** next prayer and live countdown on iOS and Android. The app shares seven independently calculated days on load/resume, midnight, and calculation, city or language changes. iOS uses a WidgetKit timeline; Android uses a native chronometer and inexact transition alarms (updates may be delayed in Doze). After seven days, open Bedug to refresh.
+4. **Home screen widgets (implemented; iPhone checks recorded under [Home screen widgets](#home-screen-widgets), remaining device checks pending):** next prayer and live countdown on iOS and Android. The app shares seven independently calculated days on load/resume, midnight, and calculation, city or language changes. iOS uses a WidgetKit timeline; Android uses a native chronometer and inexact transition alarms (updates may be delayed in Doze). After seven days, open Bedug to refresh.
 
 Prayer tracking and prayer-progress features (completion logs, streaks and qada counts) are outside the product scope.
 
@@ -239,7 +243,7 @@ The current look needs a redesign on every platform. Screens read the accent fro
    2. **Screen migration (next):** move each screen's inline styles (sizes, colors, radii, paddings) onto the text theme and tokens, one screen per commit: prayer times (done), liquid glass (done; device visual checks pending), method picker, calendar, settings, worship. Check each on Apple, Android, Windows and Linux in light and dark.
 2. **Liquid glass package (done; check on iOS and macOS devices):** replace our `BackdropFilter` glass (nav bar, cards, sheets) on iOS and macOS with [`liquid_glass_easy`](https://pub.dev/packages/liquid_glass_easy), a shader lens with real refraction. Keep the `IgnorePointer`, double-open and safe-area rules from `AGENTS.md`.
 3. **Apple app icon (done):** a layered Icon Composer icon (`assets/branding/AppIcon.icon`) gives iOS and macOS a Liquid Glass icon with Default, Dark, Clear and Tinted modes; Android and Windows keep the flat icon.
-4. **Home screen widget (implemented; device visual checks pending):** a native WidgetKit extension with next prayer and countdown, shared Flutter data, and system rendering for full-color, tinted and clear modes.
+4. **Home screen widget (implemented; iPhone visual checks passed, see [validation status](#home-screen-widgets)):** a native WidgetKit extension with next prayer and countdown, shared Flutter data, and system rendering for full-color, tinted and clear modes.
 
 ### Revenue: ads and infaq
 

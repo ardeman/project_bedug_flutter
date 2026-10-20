@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:flutter/foundation.dart' show ValueListenable;
 import 'package:adhan/adhan.dart';
 import 'package:clock/clock.dart';
+import 'package:intl/intl.dart' show DateFormat;
 import 'package:material_ui/material_ui.dart';
 import 'package:material_3_expressive/material_3_expressive.dart';
 
@@ -23,6 +24,7 @@ import '../../core/theme/app_tokens.dart';
 import '../../core/services/prayer_service.dart';
 import '../../core/services/extra_prayer_times.dart';
 import '../../core/providers/locale_provider.dart';
+import '../../core/providers/live_hijri_date_provider.dart';
 import '../../core/widgets/calculation_method_picker.dart';
 import 'widgets/prayer_day_picker.dart';
 
@@ -71,6 +73,12 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
     final state = ref.watch(prayerProvider);
     final next = ref.watch(nextPrayerProvider);
     final nextName = _prayerLabel(l10n, next.key);
+    final nextTime = next.time;
+    final nextTimeLabel = nextTime == null
+        ? null
+        : daysBetween(clock.now(), nextTime) == 0
+        ? _formatClock(nextTime)
+        : '${DateFormat.MMMd(l10n.localeName).format(nextTime)} · ${_formatClock(nextTime)}';
     final locationLabel = state.locationLabel ?? '--';
     final theme = Theme.of(ctx);
     final isDark = theme.brightness == Brightness.dark;
@@ -101,9 +109,7 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                   delegate: _LiquidGlassAppBar(
                     nextLabel: l10n.nextPrayer,
                     nextName: nextName,
-                    nextTime: next.time == null
-                        ? null
-                        : _formatClock(next.time!),
+                    nextTime: nextTimeLabel,
                     locationLabel: locationLabel,
                     remaining: _remaining,
                     minCollapsedExtent: minCollapsedExtent,
@@ -163,6 +169,13 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                               ),
                             ),
                             const SizedBox(height: AppSpacing.xs),
+                            if (nextTimeLabel != null)
+                              Text(
+                                '${l10n.nextPrayer} · $nextTimeLabel',
+                                style: theme.textTheme.labelMedium?.copyWith(
+                                  color: onAccent,
+                                ),
+                              ),
                             _CountdownBadge(remaining: _remaining),
                           ],
                         ),
@@ -284,9 +297,10 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
     ({String key, DateTime? time}) next,
   ) {
     final d = todayTimes.dateComponents;
-    final today = DateTime(d.year, d.month, d.day);
+    final now = clock.now();
+    final today = DateTime(now.year, now.month, now.day);
     final day = _pickedDay ?? today;
-    final times = daysBetween(today, day) == 0
+    final times = daysBetween(DateTime(d.year, d.month, d.day), day) == 0
         ? todayTimes
         : prayerTimesOn(todayTimes, day);
     final nextTime = next.time;
@@ -297,6 +311,7 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
       PrayerDayPicker(
         today: today,
         selected: day,
+        liveHijriDate: ref.watch(liveHijriDateProvider),
         onSelected: (picked) => setState(
           () => _pickedDay = daysBetween(today, picked) == 0 ? null : picked,
         ),

@@ -26,6 +26,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settings => 'Settings';
 
   @override
+  String get hijriAfterMaghrib => 'After Maghrib';
+
+  @override
   String get nextPrayer => 'Next Prayer';
 
   @override

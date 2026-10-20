@@ -7,6 +7,24 @@
         {
           "type": "improved",
           "text": {
+            "en": "Today’s Hijri date now advances at local Maghrib, with an explanatory label. Prayer schedules and browsed calendar dates keep their Gregorian-day mapping.",
+            "id": "Tanggal Hijriah hari ini kini berganti saat Magrib setempat, disertai keterangan. Jadwal salat dan tanggal kalender yang ditelusuri tetap mengikuti hari Masehi.",
+            "ms": "Tarikh Hijrah hari ini kini bertukar pada waktu Maghrib setempat, dengan label penerangan. Jadual solat dan tarikh kalendar yang dilayari kekal mengikut hari Masihi.",
+            "ar": "يتغير التاريخ الهجري لليوم الآن عند المغرب المحلي، مع عبارة توضيحية. تبقى جداول الصلاة وتواريخ التقويم المتصفحة مرتبطة بأيامها الميلادية."
+          }
+        },
+        {
+          "type": "fixed",
+          "text": {
+            "en": "After Isha, the next-prayer header now uses the following day’s calculated Fajr time and shows its date, matching the daily schedule.",
+            "id": "Setelah Isya, bagian salat berikutnya kini menggunakan waktu Subuh hasil perhitungan hari berikutnya dan menampilkan tanggalnya, sesuai jadwal harian.",
+            "ar": "بعد العشاء، يستخدم عنوان الصلاة القادمة الآن وقت الفجر المحسوب لليوم التالي ويعرض تاريخه، بما يطابق الجدول اليومي.",
+            "ms": "Selepas Isyak, paparan solat seterusnya kini menggunakan waktu Subuh yang dikira untuk hari berikutnya dan memaparkan tarikhnya, sepadan dengan jadual harian."
+          }
+        },
+        {
+          "type": "improved",
+          "text": {
             "en": "Prayer times now appear as soon as GPS resolves, with the nearest supported city shown while the address loads in the background.",
             "id": "Jadwal salat kini langsung tampil setelah lokasi GPS ditemukan, dengan kota terdekat yang didukung ditampilkan saat alamat dimuat di latar belakang.",
             "ar": "تظهر أوقات الصلاة فور تحديد الموقع عبر GPS، مع عرض أقرب مدينة مدعومة أثناء تحميل العنوان في الخلفية.",

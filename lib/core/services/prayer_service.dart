@@ -367,12 +367,13 @@ final nextPrayerProvider = Provider<({String key, DateTime? time})>((ref) {
   if (times == null) return (key: '--', time: null);
 
   final now = clock.now();
+  final currentTimes = prayerTimesOn(times, now);
   final schedule = {
-    'fajr': times.fajr,
-    'dhuhr': times.dhuhr,
-    'asr': times.asr,
-    'maghrib': times.maghrib,
-    'isha': times.isha,
+    'fajr': currentTimes.fajr,
+    'dhuhr': currentTimes.dhuhr,
+    'asr': currentTimes.asr,
+    'maghrib': currentTimes.maghrib,
+    'isha': currentTimes.isha,
   };
 
   // After Isha, count down to the next day's Fajr so it never goes negative.
@@ -381,7 +382,13 @@ final nextPrayerProvider = Provider<({String key, DateTime? time})>((ref) {
           .where((e) => e.value.isAfter(now))
           .map((e) => (key: e.key, time: e.value))
           .firstOrNull ??
-      (key: 'fajr', time: times.fajr.add(const Duration(days: 1)));
+      (
+        key: 'fajr',
+        time: prayerTimesOn(
+          times,
+          DateTime(now.year, now.month, now.day + 1),
+        ).fajr,
+      );
 
   // Move on to the following prayer once this one's time arrives.
   final timer = Timer(next.time.difference(now), ref.invalidateSelf);
