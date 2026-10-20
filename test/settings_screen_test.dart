@@ -1,5 +1,7 @@
 import 'package:bedug/core/design/platform_capabilities.dart';
 import 'package:bedug/core/providers/locale_provider.dart';
+import 'package:bedug/core/services/kemenag_method.dart';
+import 'package:bedug/core/widgets/calculation_method_picker.dart';
 import 'package:bedug/features/settings/settings_screen.dart';
 import 'package:bedug/generated/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -61,4 +63,20 @@ void main() {
     expect(find.byType(ToggleButtons), findsOneWidget);
     expect(find.byType(LiquidGlassSwitch), findsNothing);
   }, skip: isApple);
+
+  testWidgets('the calculation method opens as a page that saves the pick',
+      (tester) async {
+    final container = await _pumpSettings(tester);
+
+    await tester.tap(find.text('Calculation Method'));
+    await tester.pumpAndSettle();
+    // A pushed page, not a sheet, so the edge swipe takes it back.
+    expect(find.byType(CalculationMethodScreen), findsOneWidget);
+
+    await tester.tap(find.text('Umm Al-Qura (Saudi Arabia)'));
+    await tester.pumpAndSettle();
+    expect(find.byType(CalculationMethodScreen), findsNothing);
+    expect(container.read(settingsProvider).method,
+        AppCalculationMethod.ummAlQura);
+  });
 }

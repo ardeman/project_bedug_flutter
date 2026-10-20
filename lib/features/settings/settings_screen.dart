@@ -35,11 +35,7 @@ class SettingsScreen extends ConsumerWidget {
           title: Text(l10n.calculationMethod),
           subtitle: Text(calculationMethodLabel(ctx, settings.method)),
           trailing: const Icon(Icons.chevron_right),
-          onTap: () => showCalculationMethodPicker(
-            ctx,
-            ref,
-            current: settings.method,
-          ),
+          onTap: () => showCalculationMethodPage(ctx),
         ),
 
         // Mazhab
