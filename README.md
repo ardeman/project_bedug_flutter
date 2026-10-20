@@ -50,6 +50,10 @@ flutter run -d macos   # or: iphone, android, windows, linux
 
 iOS and macOS builds use CocoaPods only: Swift Package Manager is turned off in `pubspec.yaml`. It was turned off for `cupertino_native`, which has since been removed; turning SPM back on is a separate change. Warnings from plugin code are silenced in `ios/Podfile` and `macos/Podfile`. Flutter still prints a "plugins do not support Swift Package Manager" notice on every Apple build; it's expected and harmless.
 
+### iOS launch testing
+
+Open `ios/Runner.xcworkspace` in Xcode and choose **Runner** for Debug builds with breakpoints. Choose **Bedug Profile** to test launch speed and widgets on a physical iPhone: its Run action uses Profile with the debugger detached. The schemes share the same app and widget targets; Archive uses Release in both.
+
 ### Home screen widgets
 
 On iOS and Android, open Bedug once to load a location, then add **Bedug** from the system widget gallery. Widgets show the next obligatory prayer, time, city and a live countdown. They follow the app language and theme. The widget caches seven days locally; open Bedug again to refresh or update your location after travel. Loading or location errors clear the cached times. Notification preferences do not affect widgets.
