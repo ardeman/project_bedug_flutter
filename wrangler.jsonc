@@ -7,6 +7,9 @@
   // but keep a preview URL for each branch.
   "workers_dev": false,
   "preview_urls": true,
+  // Branch builds deploy with `npx wrangler preview`, which needs this block
+  // even when empty; previews then inherit the settings above.
+  "previews": {},
   "assets": {
     "directory": "./site/dist",
     "not_found_handling": "404-page"
