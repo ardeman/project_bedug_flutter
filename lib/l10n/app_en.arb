@@ -151,5 +151,13 @@
   "countrySouthAfrica": "South Africa",
   "searchCity": "Search city or country",
   "noCityFound": "No matching city",
-  "cityAutoDetectHint": "Turn off auto-detect to pick a city"
+  "cityAutoDetectHint": "Turn off auto-detect to pick a city",
+  "sheetHandle": "Sheet handle",
+  "sheetExpand": "Expand sheet",
+  "sheetCollapse": "Collapse sheet",
+  "sheetDismiss": "Dismiss sheet",
+  "sheetPreview": "Preview",
+  "sheetCollapsed": "Collapsed",
+  "sheetExpanded": "Expanded",
+  "sheetFullScreen": "Full screen"
 }

@@ -151,5 +151,13 @@
   "countrySouthAfrica": "جنوب أفريقيا",
   "searchCity": "ابحث عن مدينة أو دولة",
   "noCityFound": "لا توجد مدينة مطابقة",
-  "cityAutoDetectHint": "أوقف التحديد التلقائي لاختيار مدينة"
+  "cityAutoDetectHint": "أوقف التحديد التلقائي لاختيار مدينة",
+  "sheetHandle": "مقبض اللوحة",
+  "sheetExpand": "توسيع اللوحة",
+  "sheetCollapse": "طي اللوحة",
+  "sheetDismiss": "إغلاق اللوحة",
+  "sheetPreview": "معاينة",
+  "sheetCollapsed": "مطوية",
+  "sheetExpanded": "موسعة",
+  "sheetFullScreen": "ملء الشاشة"
 }

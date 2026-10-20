@@ -1,3 +1,6 @@
+import 'package:cupertino_ui/cupertino_ui.dart'
+    show GlobalCupertinoLocalizations;
+
 import 'dart:async';
 
 import 'package:adhan/adhan.dart';
@@ -10,7 +13,7 @@ import 'package:bedug/core/utils/qibla_utils.dart';
 import 'package:bedug/features/qibla/widgets/qibla_card.dart';
 import 'package:bedug/generated/l10n/app_localizations.dart';
 import 'package:bedug/features/worship/worship_screen.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_compass/flutter_compass.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -34,46 +37,51 @@ Widget _app(
   bool feedbackEnabled = true,
   bool worshipScreen = false,
   EdgeInsets safeInsets = EdgeInsets.zero,
-}) =>
-    ProviderScope(
-      overrides: [
-        if (compassEvents != null)
-          compassEventsProvider.overrideWithValue(compassEvents),
-        prayerProvider.overrideWith(() => _FakePrayerNotifier(state)),
-      ],
-      child: MaterialApp(
-        locale: locale,
-        theme: buildAppTheme(brightness),
-        builder: (context, child) => MediaQuery(
-          data: MediaQuery.of(context).copyWith(
-            textScaler: TextScaler.linear(textScale),
-            padding: safeInsets,
+}) => ProviderScope(
+  overrides: [
+    if (compassEvents != null)
+      compassEventsProvider.overrideWithValue(compassEvents),
+    prayerProvider.overrideWith(() => _FakePrayerNotifier(state)),
+  ],
+  child: MaterialApp(
+    locale: locale,
+    theme: buildAppTheme(brightness),
+    builder: (context, child) => MediaQuery(
+      data: MediaQuery.of(
+        context,
+      ).copyWith(textScaler: TextScaler.linear(textScale), padding: safeInsets),
+      child: child!,
+    ),
+    localizationsDelegates: [
+      GlobalMaterialLocalizations.delegate,
+      GlobalCupertinoLocalizations.delegate,
+      ...AppLocalizations.localizationsDelegates,
+    ],
+    supportedLocales: AppLocalizations.supportedLocales,
+    home: worshipScreen
+        ? const WorshipScreen(isActive: false)
+        : Scaffold(
+            body: SingleChildScrollView(
+              child: QiblaCard(feedbackEnabled: feedbackEnabled),
+            ),
           ),
-          child: child!,
-        ),
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: worshipScreen
-            ? const WorshipScreen(isActive: false)
-            : Scaffold(
-                body: SingleChildScrollView(
-                  child: QiblaCard(feedbackEnabled: feedbackEnabled),
-                ),
-              ),
-      ),
-    );
+  ),
+);
 
 void main() {
   setUpAll(() async {
     // Measure wrapping with the bundled typeface instead of the test font.
     final loader = FontLoader(kBrandFont)
-      ..addFont(rootBundle.load(
-        'assets/fonts/plus_jakarta_sans/PlusJakartaSans-Regular.ttf',
-      ));
+      ..addFont(
+        rootBundle.load(
+          'assets/fonts/plus_jakarta_sans/PlusJakartaSans-Regular.ttf',
+        ),
+      );
     await loader.load();
   });
-  testWidgets('ticks on alignment, stays quiet through jitter, and rearms',
-      (tester) async {
+  testWidgets('ticks on alignment, stays quiet through jitter, and rearms', (
+    tester,
+  ) async {
     final events = StreamController<CompassEvent>();
     addTearDown(events.close);
     var ticks = 0;
@@ -81,16 +89,18 @@ void main() {
     addTearDown(() => SelectionFeedback.debugOverride = null);
     final coords = Coordinates(-6.2088, 106.8456);
     final bearing = qiblaBearing(coords);
-    await tester.pumpWidget(_app(
-      PrayerState(
-        times: PrayerTimes.today(
-          coords,
-          CalculationMethod.singapore.getParameters(),
+    await tester.pumpWidget(
+      _app(
+        PrayerState(
+          times: PrayerTimes.today(
+            coords,
+            CalculationMethod.singapore.getParameters(),
+          ),
+          loading: false,
         ),
-        loading: false,
+        compassEvents: events.stream,
       ),
-      compassEvents: events.stream,
-    ));
+    );
 
     Future<void> heading(double offset) async {
       events.add(CompassEvent.fromList([bearing + offset, 0, 1]));
@@ -118,17 +128,17 @@ void main() {
     expect(ticks, 3);
   });
 
-  testWidgets('does not tick without a location or on an inactive tab',
-      (tester) async {
+  testWidgets('does not tick without a location or on an inactive tab', (
+    tester,
+  ) async {
     final events = StreamController<CompassEvent>.broadcast();
     addTearDown(events.close);
     var ticks = 0;
     SelectionFeedback.debugOverride = () => ticks++;
     addTearDown(() => SelectionFeedback.debugOverride = null);
-    await tester.pumpWidget(_app(
-      const PrayerState(loading: false),
-      compassEvents: events.stream,
-    ));
+    await tester.pumpWidget(
+      _app(const PrayerState(loading: false), compassEvents: events.stream),
+    );
     events.add(CompassEvent.fromList([0, 0, 1]));
     await tester.pump();
     expect(ticks, 0);
@@ -136,33 +146,34 @@ void main() {
     final coords = Coordinates(-6.2088, 106.8456);
     // Recreate the provider scope with a resolved location.
     await tester.pumpWidget(const SizedBox());
-    await tester.pumpWidget(_app(
-      PrayerState(
-        times: PrayerTimes.today(
-          coords,
-          CalculationMethod.singapore.getParameters(),
+    await tester.pumpWidget(
+      _app(
+        PrayerState(
+          times: PrayerTimes.today(
+            coords,
+            CalculationMethod.singapore.getParameters(),
+          ),
+          loading: false,
         ),
-        loading: false,
+        compassEvents: events.stream,
+        feedbackEnabled: false,
       ),
-      compassEvents: events.stream,
-      feedbackEnabled: false,
-    ));
+    );
     events.add(CompassEvent.fromList([qiblaBearing(coords), 0, 1]));
     await tester.pump();
     expect(ticks, 0);
   });
 
-  testWidgets('shows the bearing and north-up guidance without a compass',
-      (tester) async {
+  testWidgets('shows the bearing and north-up guidance without a compass', (
+    tester,
+  ) async {
     final times = PrayerTimes.today(
       Coordinates(-6.2088, 106.8456),
       CalculationMethod.singapore.getParameters(),
     );
-    await tester.pumpWidget(_app(PrayerState(
-      times: times,
-      locationLabel: 'Jakarta',
-      loading: false,
-    )));
+    await tester.pumpWidget(
+      _app(PrayerState(times: times, locationLabel: 'Jakarta', loading: false)),
+    );
 
     expect(find.text('Jakarta'), findsOneWidget);
     // Jakarta's destination is northwest of the device. The marker must
@@ -181,63 +192,75 @@ void main() {
   for (final size in [const Size(320, 568), const Size(375, 667)]) {
     for (final withSensor in [false, true]) {
       testWidgets(
-          'compact card fits above navigation at $size, sensor: $withSensor',
-          (tester) async {
-        tester.view.devicePixelRatio = 1;
-        tester.view.physicalSize = size;
-        addTearDown(tester.view.resetPhysicalSize);
-        addTearDown(tester.view.resetDevicePixelRatio);
-        final events = StreamController<CompassEvent>();
-        addTearDown(events.close);
-        await tester.pumpWidget(_app(
-          PrayerState(
-            times: PrayerTimes.today(
-              Coordinates(-6.2088, 106.8456),
-              CalculationMethod.singapore.getParameters(),
+        'compact card fits above navigation at $size, sensor: $withSensor',
+        (tester) async {
+          tester.view.devicePixelRatio = 1;
+          tester.view.physicalSize = size;
+          tester.view.viewPadding = const FakeViewPadding(top: 44, bottom: 90);
+          tester.view.padding = const FakeViewPadding(top: 44, bottom: 90);
+          addTearDown(tester.view.reset);
+          final events = StreamController<CompassEvent>();
+          addTearDown(events.close);
+          await tester.pumpWidget(
+            _app(
+              PrayerState(
+                times: PrayerTimes.today(
+                  Coordinates(-6.2088, 106.8456),
+                  CalculationMethod.singapore.getParameters(),
+                ),
+                locationLabel: 'Jakarta',
+                loading: false,
+              ),
+              compassEvents: events.stream,
+              worshipScreen: true,
+              // Model the status area and space occupied by the floating tab bar.
+              safeInsets: const EdgeInsets.only(top: 44, bottom: 90),
             ),
-            locationLabel: 'Jakarta',
-            loading: false,
-          ),
-          compassEvents: events.stream,
-          worshipScreen: true,
-          // Model the status area and space occupied by the floating tab bar.
-          safeInsets: const EdgeInsets.only(top: 44, bottom: 90),
-        ));
-        if (withSensor) {
-          events.add(CompassEvent.fromList([0, 0, 1]));
-          await tester.pump();
-        }
-        expect(find.byType(GlassCard), findsOneWidget);
-        final card = tester.getRect(find.byType(GlassCard));
-        expect(card.top, greaterThanOrEqualTo(44 + kToolbarHeight));
-        expect(card.bottom, lessThanOrEqualTo(size.height - 90));
-        final scrollable =
-            tester.state<ScrollableState>(find.byType(Scrollable));
-        expect(scrollable.position.maxScrollExtent, 0);
-        expect(tester.takeException(), isNull);
-      });
+          );
+          if (withSensor) {
+            events.add(CompassEvent.fromList([0, 0, 1]));
+            await tester.pump();
+          }
+          expect(find.byType(GlassCard), findsOneWidget);
+          final card = tester.getRect(find.byType(GlassCard));
+          expect(card.top, greaterThanOrEqualTo(44 + kToolbarHeight));
+          expect(card.bottom, lessThanOrEqualTo(size.height - 90));
+          final scrollable = tester.state<ScrollableState>(
+            find.byType(Scrollable),
+          );
+          expect(scrollable.position.maxScrollExtent, 0);
+          expect(tester.takeException(), isNull);
+        },
+        variant: TargetPlatformVariant({
+          TargetPlatform.android,
+          TargetPlatform.macOS,
+        }),
+      );
     }
   }
 
   for (final brightness in Brightness.values) {
-    testWidgets('fits a narrow RTL layout with large text in $brightness',
-        (tester) async {
+    testWidgets('fits a narrow RTL layout with large text in $brightness', (
+      tester,
+    ) async {
       await tester.binding.setSurfaceSize(const Size(320, 640));
       addTearDown(() => tester.binding.setSurfaceSize(null));
       final times = PrayerTimes.today(
         Coordinates(-6.2088, 106.8456),
         CalculationMethod.singapore.getParameters(),
       );
-      await tester.pumpWidget(_app(
-        PrayerState(
-          times: times,
-          locationLabel: 'Jakarta · Daerah Khusus Ibukota Jakarta',
-          loading: false,
+      await tester.pumpWidget(
+        _app(
+          PrayerState(
+            times: times,
+            locationLabel: 'Jakarta · Daerah Khusus Ibukota Jakarta',
+            loading: false,
+          ),
+          locale: const Locale('ar'),
+          brightness: brightness,
+          textScale: 2,
         ),
-        locale: const Locale('ar'),
-        brightness: brightness,
-        textScale: 2,
-      ));
+      );
 
       final context = tester.element(find.byType(QiblaCard));
       final l10n = AppLocalizations.of(context);

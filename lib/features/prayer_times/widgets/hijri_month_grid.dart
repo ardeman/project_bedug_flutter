@@ -1,6 +1,9 @@
 import 'dart:ui' show lerpDouble;
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
+
+import '../../../core/design/material_controls.dart';
+
 import 'package:hijri/hijri_calendar.dart';
 import 'package:intl/intl.dart';
 
@@ -105,13 +108,17 @@ class HijriMonthGridState extends State<HijriMonthGrid> {
   bool get _hasPrev => _view.year > _firstYear || _view.month > 1;
   bool get _hasNext => _view.year < _lastYear || _view.month < 12;
 
-  void _prev() => _show(_view.month == 1
-      ? (year: _view.year - 1, month: 12)
-      : (year: _view.year, month: _view.month - 1));
+  void _prev() => _show(
+    _view.month == 1
+        ? (year: _view.year - 1, month: 12)
+        : (year: _view.year, month: _view.month - 1),
+  );
 
-  void _next() => _show(_view.month == 12
-      ? (year: _view.year + 1, month: 1)
-      : (year: _view.year, month: _view.month + 1));
+  void _next() => _show(
+    _view.month == 12
+        ? (year: _view.year + 1, month: 1)
+        : (year: _view.year, month: _view.month + 1),
+  );
 
   /// Pages back to the picked day's month.
   void showSelectedMonth() => _show(hijriMonthOf(widget.selected));
@@ -162,7 +169,13 @@ class HijriMonthGridState extends State<HijriMonthGrid> {
               ),
               Positioned.fill(
                 child: _morphingDays(
-                    ctx, morph, t, constraints.maxWidth, days, dates),
+                  ctx,
+                  morph,
+                  t,
+                  constraints.maxWidth,
+                  days,
+                  dates,
+                ),
               ),
             ],
           ),
@@ -204,7 +217,8 @@ class HijriMonthGridState extends State<HijriMonthGrid> {
 
     // Weeks unfold from the row the strip's picked chip lands on.
     final pickedRect = morph.stripRectOf(widget.selected, width);
-    final unfold = pickedRect.center.dy -
+    final unfold =
+        pickedRect.center.dy -
         (_daysTop + (rowOf(widget.selected) + 0.5) * _DayCell.height);
 
     final hijriDayOf = <int, int>{
@@ -223,8 +237,9 @@ class HijriMonthGridState extends State<HijriMonthGrid> {
       final hijriDay = hijriDayOf[key];
       final inGrid = hijriDay != null;
       final end = cellRect(date);
-      final start =
-          inStrip ? morph.stripRectOf(date, width) : end.translate(0, unfold);
+      final start = inStrip
+          ? morph.stripRectOf(date, width)
+          : end.translate(0, unfold);
       final isSelected = _sameDay(date, widget.selected);
       final isToday = _sameDay(date, widget.today);
       final radius = lerpDouble(morph.stripRadius, AppRadii.sm, t)!;
@@ -232,58 +247,63 @@ class HijriMonthGridState extends State<HijriMonthGrid> {
       // A day in both keeps its look at full strength and swaps its label
       // midway; one in only one side fades with it.
       final cellOpacity = inStrip && inGrid ? 1.0 : (inStrip ? 1 - t : t);
-      final stripLabelOpacity =
-          inGrid ? 1 - const Interval(0, 0.6).transform(t) : 1.0;
-      final gridLabelOpacity =
-          inStrip ? const Interval(0.4, 1).transform(t) : 1.0;
+      final stripLabelOpacity = inGrid
+          ? 1 - const Interval(0, 0.6).transform(t)
+          : 1.0;
+      final gridLabelOpacity = inStrip
+          ? const Interval(0.4, 1).transform(t)
+          : 1.0;
 
-      cells.add(Positioned.fromRect(
-        rect: Rect.lerp(start, end, t)!,
-        child: Opacity(
-          opacity: cellOpacity,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              color: isSelected ? accent : Colors.transparent,
-              borderRadius: BorderRadius.circular(radius),
-              border: Border.all(
-                color: isSelected || !isToday
-                    ? Colors.transparent
-                    : accent.withValues(alpha: 0.6),
+      cells.add(
+        Positioned.fromRect(
+          rect: Rect.lerp(start, end, t)!,
+          child: Opacity(
+            opacity: cellOpacity,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                color: isSelected ? accent : Colors.transparent,
+                borderRadius: BorderRadius.circular(radius),
+                border: Border.all(
+                  color: isSelected || !isToday
+                      ? Colors.transparent
+                      : accent.withValues(alpha: 0.6),
+                ),
               ),
-            ),
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                if (inStrip && stripLabelOpacity > 0)
-                  Opacity(
-                    opacity: stripLabelOpacity,
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.symmetric(vertical: AppSpacing.xs),
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  if (inStrip && stripLabelOpacity > 0)
+                    Opacity(
+                      opacity: stripLabelOpacity,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: AppSpacing.xs,
+                        ),
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: morph.stripLabelOf(date),
+                        ),
+                      ),
+                    ),
+                  if (inGrid && gridLabelOpacity > 0)
+                    Opacity(
+                      opacity: gridLabelOpacity,
                       child: FittedBox(
                         fit: BoxFit.scaleDown,
-                        child: morph.stripLabelOf(date),
+                        child: _DayCellLabel(
+                          hijriDay: hijriDay,
+                          date: date,
+                          isSelected: isSelected,
+                          isToday: isToday,
+                        ),
                       ),
                     ),
-                  ),
-                if (inGrid && gridLabelOpacity > 0)
-                  Opacity(
-                    opacity: gridLabelOpacity,
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: _DayCellLabel(
-                        hijriDay: hijriDay,
-                        date: date,
-                        isSelected: isSelected,
-                        isToday: isToday,
-                      ),
-                    ),
-                  ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
-      ));
+      );
     }
 
     // The strip's faded ends, fading away as the grid opens.
@@ -321,7 +341,11 @@ class HijriMonthGridState extends State<HijriMonthGrid> {
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(
-          AppSpacing.xs, 0, AppSpacing.xs, AppSpacing.sm),
+        AppSpacing.xs,
+        0,
+        AppSpacing.xs,
+        AppSpacing.sm,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -338,8 +362,9 @@ class HijriMonthGridState extends State<HijriMonthGrid> {
                   child: Text(
                     '${hijriMonthName(l10n, _view.month)} ${_view.year} H',
                     textAlign: TextAlign.center,
-                    style: theme.textTheme.titleSmall
-                        ?.copyWith(fontWeight: FontWeight.w700),
+                    style: theme.textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
                 _MonthButton(
@@ -379,23 +404,26 @@ class HijriMonthGridState extends State<HijriMonthGrid> {
             Row(
               children: [
                 for (var col = 0; col < 7; col++)
-                  Expanded(child: () {
-                    final i = week * 7 + col - lead;
-                    if (!showDays || i < 0 || i >= days.length) {
-                      return const SizedBox(height: _DayCell.height);
-                    }
-                    return _DayCell(
-                      hijriDay: days[i].hDay,
-                      date: dates[i],
-                      label: '${days[i].hDay} '
-                          '${hijriMonthName(l10n, _view.month)} '
-                          '${_view.year} H, '
-                          '${DateFormat.yMMMMEEEEd(locale).format(dates[i])}',
-                      isSelected: _sameDay(dates[i], widget.selected),
-                      isToday: _sameDay(dates[i], widget.today),
-                      onTap: () => widget.onSelected(dates[i]),
-                    );
-                  }()),
+                  Expanded(
+                    child: () {
+                      final i = week * 7 + col - lead;
+                      if (!showDays || i < 0 || i >= days.length) {
+                        return const SizedBox(height: _DayCell.height);
+                      }
+                      return _DayCell(
+                        hijriDay: days[i].hDay,
+                        date: dates[i],
+                        label:
+                            '${days[i].hDay} '
+                            '${hijriMonthName(l10n, _view.month)} '
+                            '${_view.year} H, '
+                            '${DateFormat.yMMMMEEEEd(locale).format(dates[i])}',
+                        isSelected: _sameDay(dates[i], widget.selected),
+                        isToday: _sameDay(dates[i], widget.today),
+                        onTap: () => widget.onSelected(dates[i]),
+                      );
+                    }(),
+                  ),
               ],
             ),
         ],
@@ -407,10 +435,11 @@ class HijriMonthGridState extends State<HijriMonthGrid> {
       a.year == b.year && a.month == b.month && a.day == b.day;
 
   /// Whole calendar days from [from] to [to], ignoring DST.
-  static int _daysBetween(DateTime from, DateTime to) =>
-      DateTime.utc(to.year, to.month, to.day)
-          .difference(DateTime.utc(from.year, from.month, from.day))
-          .inDays;
+  static int _daysBetween(DateTime from, DateTime to) => DateTime.utc(
+    to.year,
+    to.month,
+    to.day,
+  ).difference(DateTime.utc(from.year, from.month, from.day)).inDays;
 }
 
 class _DayCell extends StatelessWidget {
@@ -473,7 +502,10 @@ class _DayCell extends StatelessWidget {
           ),
           child: PlatformCapabilities.isApple
               ? GlassPressable(
-                  borderRadius: radius, onTap: onTap, child: content)
+                  borderRadius: radius,
+                  onTap: onTap,
+                  child: content,
+                )
               : InkWell(borderRadius: radius, onTap: onTap, child: content),
         ),
       ),
@@ -509,8 +541,8 @@ class _DayCellLabel extends StatelessWidget {
             color: isSelected
                 ? onAccent
                 : (isToday
-                    ? AppColors.accentOf(ctx)
-                    : theme.colorScheme.onSurface),
+                      ? AppColors.accentOf(ctx)
+                      : theme.colorScheme.onSurface),
           ),
         ),
         Text(
@@ -542,8 +574,11 @@ class _MonthButton extends StatelessWidget {
   @override
   Widget build(BuildContext ctx) {
     if (!PlatformCapabilities.isApple) {
-      return IconButton(
-          icon: Icon(icon), tooltip: tooltip, onPressed: onPressed);
+      return MaterialIconButton(
+        icon: Icon(icon),
+        tooltip: tooltip,
+        onPressed: onPressed,
+      );
     }
     final color = Theme.of(ctx).colorScheme.onSurface;
     return Semantics(
@@ -556,8 +591,10 @@ class _MonthButton extends StatelessWidget {
         onTap: onPressed,
         child: SizedBox.square(
           dimension: kMinInteractiveDimension,
-          child: Icon(icon,
-              color: onPressed == null ? color.withValues(alpha: 0.3) : color),
+          child: Icon(
+            icon,
+            color: onPressed == null ? color.withValues(alpha: 0.3) : color,
+          ),
         ),
       ),
     );

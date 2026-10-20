@@ -7,10 +7,10 @@
         {
           "type": "improved",
           "text": {
-            "id": "Tampilan Material diperbarui dengan gaya Material 3 Expressive: kartu bernuansa warna, tipografi lebih tegas, dan tombol membulat yang berubah bentuk saat ditekan.",
-            "en": "Refreshed Material styling inspired by Material 3 Expressive, with tonal cards, stronger typography, and rounded buttons that change shape when pressed.",
-            "ar": "تحديث مظهر Material بأسلوب مستوحى من Material 3 Expressive، مع بطاقات بدرجات لونية وخطوط أكثر وضوحًا وأزرار مستديرة يتغير شكلها عند الضغط.",
-            "ms": "Gaya Material diperbaharui berinspirasikan Material 3 Expressive, dengan kad bernada warna, tipografi lebih jelas dan butang bulat yang berubah bentuk apabila ditekan."
+            "id": "Tampilan Material kini menggunakan komponen Material 3 Expressive dengan gerakan pegas, indikator pemuatan yang berubah bentuk, pengaturan berkelompok, dan panel metode perhitungan baru.",
+            "en": "Material screens now use Material 3 Expressive components with spring motion, a morphing loading indicator, grouped settings, and a new calculation-method sheet.",
+            "ar": "تستخدم شاشات Material الآن مكونات Material 3 Expressive مع حركة نابضية ومؤشر تحميل متغير الشكل وإعدادات مجمعة ولوحة جديدة لطريقة الحساب.",
+            "ms": "Paparan Material kini menggunakan komponen Material 3 Expressive dengan gerakan pegas, penunjuk pemuatan yang berubah bentuk, tetapan berkumpulan dan panel kaedah pengiraan baharu."
           }
         },
         {

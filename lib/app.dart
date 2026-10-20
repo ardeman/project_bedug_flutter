@@ -1,7 +1,9 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
+import 'package:material_ui/material_ui.dart';
+import 'package:flutter_localizations/flutter_localizations.dart'
+    show GlobalWidgetsLocalizations;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 // Use the generated path directly, not flutter_gen.
 import 'generated/l10n/app_localizations.dart';
 import 'core/design/linux_desktop.dart';
@@ -9,6 +11,7 @@ import 'core/design/platform_capabilities.dart';
 import 'core/providers/locale_provider.dart';
 import 'core/providers/system_accent_provider.dart';
 import 'core/theme/app_theme.dart';
+import 'core/theme/app_theme_scope.dart';
 import 'home/home_screen.dart';
 
 class BedugApp extends ConsumerWidget {
@@ -38,14 +41,22 @@ class BedugApp extends ConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       themeMode: themeMode,
-      theme: buildAppTheme(Brightness.light,
-          desktop: currentLinuxDesktop, accent: accent),
-      darkTheme: buildAppTheme(Brightness.dark,
-          desktop: currentLinuxDesktop, accent: accent),
+      theme: buildAppTheme(
+        Brightness.light,
+        desktop: currentLinuxDesktop,
+        accent: accent,
+      ),
+      darkTheme: buildAppTheme(
+        Brightness.dark,
+        desktop: currentLinuxDesktop,
+        accent: accent,
+      ),
       // Cupertino scrollbars on iOS and macOS, not Material ones.
-      scrollBehavior:
-          PlatformCapabilities.isApple ? const CupertinoScrollBehavior() : null,
+      scrollBehavior: PlatformCapabilities.isApple
+          ? const CupertinoScrollBehavior()
+          : null,
       home: const HomeScreen(),
+      builder: (context, child) => AppThemeScope(child: child!),
     );
   }
 }

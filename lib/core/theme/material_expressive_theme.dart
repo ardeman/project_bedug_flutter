@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'app_tokens.dart';
 
@@ -24,7 +24,8 @@ ThemeData materialExpressiveTheme(ThemeData base) {
   // Matching border types let Flutter interpolate the corners on press.
   final buttonStyle = ButtonStyle(
     shape: WidgetStateProperty.resolveWith(
-        (states) => states.contains(WidgetState.pressed) ? pressed : round),
+      (states) => states.contains(WidgetState.pressed) ? pressed : round,
+    ),
     minimumSize: const WidgetStatePropertyAll(Size(0, 40)),
     padding: const WidgetStatePropertyAll(
       EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.sm),
@@ -59,24 +60,29 @@ ThemeData materialExpressiveTheme(ThemeData base) {
     outlinedButtonTheme: OutlinedButtonThemeData(style: buttonStyle),
     textButtonTheme: TextButtonThemeData(style: buttonStyle),
     iconButtonTheme: IconButtonThemeData(
-      style:
-          IconButton.styleFrom(shape: round, minimumSize: const Size(48, 48)),
+      style: IconButton.styleFrom(
+        shape: round,
+        minimumSize: const Size(48, 48),
+      ),
     ),
     navigationBarTheme: base.navigationBarTheme.copyWith(
       backgroundColor: scheme.surfaceContainer,
       indicatorColor: scheme.secondaryContainer,
       labelTextStyle: WidgetStateProperty.resolveWith(
-          (states) => text.labelMedium?.copyWith(
-                fontWeight: states.contains(WidgetState.selected)
-                    ? FontWeight.w700
-                    : FontWeight.w500,
-                color: scheme.onSurface,
-              )),
-      iconTheme: WidgetStateProperty.resolveWith((states) => IconThemeData(
-            color: states.contains(WidgetState.selected)
-                ? scheme.onSecondaryContainer
-                : scheme.onSurfaceVariant,
-          )),
+        (states) => text.labelMedium?.copyWith(
+          fontWeight: states.contains(WidgetState.selected)
+              ? FontWeight.w700
+              : FontWeight.w500,
+          color: scheme.onSurface,
+        ),
+      ),
+      iconTheme: WidgetStateProperty.resolveWith(
+        (states) => IconThemeData(
+          color: states.contains(WidgetState.selected)
+              ? scheme.onSecondaryContainer
+              : scheme.onSurfaceVariant,
+        ),
+      ),
     ),
     dialogTheme: base.dialogTheme.copyWith(
       backgroundColor: scheme.surfaceContainerHigh,

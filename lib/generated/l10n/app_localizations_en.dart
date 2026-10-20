@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -492,4 +493,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cityAutoDetectHint => 'Turn off auto-detect to pick a city';
+
+  @override
+  String get sheetHandle => 'Sheet handle';
+
+  @override
+  String get sheetExpand => 'Expand sheet';
+
+  @override
+  String get sheetCollapse => 'Collapse sheet';
+
+  @override
+  String get sheetDismiss => 'Dismiss sheet';
+
+  @override
+  String get sheetPreview => 'Preview';
+
+  @override
+  String get sheetCollapsed => 'Collapsed';
+
+  @override
+  String get sheetExpanded => 'Expanded';
+
+  @override
+  String get sheetFullScreen => 'Full screen';
 }

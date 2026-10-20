@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 
 class PlatformCapabilities {
@@ -7,16 +5,17 @@ class PlatformCapabilities {
 
   static bool get isIOS {
     if (kIsWeb) return false;
-    return Platform.isIOS;
+    return defaultTargetPlatform == TargetPlatform.iOS;
   }
 
   static bool get isMacOS {
     if (kIsWeb) return false;
-    return Platform.isMacOS;
+    return defaultTargetPlatform == TargetPlatform.macOS;
   }
 
   static bool get isApple {
     if (kIsWeb) return false;
-    return Platform.isIOS || Platform.isMacOS;
+    return defaultTargetPlatform == TargetPlatform.iOS ||
+        defaultTargetPlatform == TargetPlatform.macOS;
   }
 }

@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
+import 'package:material_3_expressive/material_3_expressive.dart';
 
 import 'liquid_glass.dart';
 import 'platform_design.dart';
@@ -66,8 +67,9 @@ class AdaptiveScaffold extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       extendBody: true,
-      backgroundColor:
-          isDark ? const Color(0xFF000000) : const Color(0xFFF2F2F7),
+      backgroundColor: isDark
+          ? const Color(0xFF000000)
+          : const Color(0xFFF2F2F7),
       // Tabs bring their own glass top bar; [appBarActions] and [leading]
       // are Material-only.
       appBar: showAppBar ? GlassTopBar(title: title) : null,
@@ -97,40 +99,56 @@ class AdaptiveScaffold extends StatelessWidget {
   Widget _buildMaterial(BuildContext ctx) {
     return Scaffold(
       appBar: showAppBar
-          ? AppBar(
-              title: Text(title),
-              actions: appBarActions,
-              leading: leading,
-            )
+          ? AppBar(title: Text(title), actions: appBarActions, leading: leading)
           : null,
       body: child,
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: selectedIndex,
-        onDestinationSelected: onDestinationSelected,
-        destinations: destinations
-            .map(
-              (d) => NavigationDestination(
-                icon: Icon(_materialIconFor(d.icon)),
-                selectedIcon: Icon(_materialIconFor(d.selectedIcon ?? d.icon)),
-                label: d.label,
-              ),
+      bottomNavigationBar: PlatformDesign.usesExpressive
+          ? M3ENavigationBar(
+              selectedIndex: selectedIndex,
+              onDestinationSelected: onDestinationSelected,
+              destinations: [
+                for (final d in destinations)
+                  M3ENavigationBarDestination(
+                    icon: Icon(_materialIconFor(d.icon)),
+                    selectedIcon: Icon(
+                      _materialIconFor(d.selectedIcon ?? d.icon),
+                    ),
+                    label: d.label,
+                  ),
+              ],
             )
-            .toList(growable: false),
-      ),
+          : NavigationBar(
+              selectedIndex: selectedIndex,
+              onDestinationSelected: onDestinationSelected,
+              destinations: destinations
+                  .map(
+                    (d) => NavigationDestination(
+                      icon: Icon(_materialIconFor(d.icon)),
+                      selectedIcon: Icon(
+                        _materialIconFor(d.selectedIcon ?? d.icon),
+                      ),
+                      label: d.label,
+                    ),
+                  )
+                  .toList(growable: false),
+            ),
     );
   }
 
   Widget _buildFluent(BuildContext ctx) {
     final isDark = Theme.of(ctx).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor:
-          isDark ? const Color(0xFF202020) : const Color(0xFFF3F3F3),
+      backgroundColor: isDark
+          ? const Color(0xFF202020)
+          : const Color(0xFFF3F3F3),
       appBar: showAppBar
           ? AppBar(
               title: Text(
                 title,
-                style:
-                    const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               elevation: 0,
               backgroundColor: isDark ? const Color(0xFF2C2C2C) : Colors.white,
@@ -149,8 +167,9 @@ class AdaptiveScaffold extends StatelessWidget {
                 .map(
                   (d) => NavigationRailDestination(
                     icon: Icon(_materialIconFor(d.icon)),
-                    selectedIcon:
-                        Icon(_materialIconFor(d.selectedIcon ?? d.icon)),
+                    selectedIcon: Icon(
+                      _materialIconFor(d.selectedIcon ?? d.icon),
+                    ),
                     label: Text(d.label),
                   ),
                 )

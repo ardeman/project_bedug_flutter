@@ -4,7 +4,7 @@ import 'dart:math' as math;
 
 import 'package:adhan/adhan.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_compass/flutter_compass.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -63,13 +63,15 @@ class _QiblaCardState extends ConsumerState<QiblaCard> {
   @override
   void initState() {
     super.initState();
-    _compassSub = ref.read(compassEventsProvider).listen(
-      _onCompassEvent,
-      onError: (_) {
-        _alignmentFeedbackSent = false;
-        setState(() => _heading = null);
-      },
-    );
+    _compassSub = ref
+        .read(compassEventsProvider)
+        .listen(
+          _onCompassEvent,
+          onError: (_) {
+            _alignmentFeedbackSent = false;
+            setState(() => _heading = null);
+          },
+        );
     // The sun moves about 1° every 4 minutes; refresh the hint each minute.
     _sunTimer = Timer.periodic(
       const Duration(minutes: 1),
@@ -146,7 +148,8 @@ class _QiblaCardState extends ConsumerState<QiblaCard> {
     final localeName = Localizations.localeOf(ctx).toString();
     final bearing = qiblaBearing(coords);
     final heading = _heading;
-    final facing = heading != null &&
+    final facing =
+        heading != null &&
         relativeAngle(heading, bearing).abs() <= _facingToleranceDeg;
 
     final direction = _directionName(l10n, compassPointIndex(bearing));
@@ -154,8 +157,9 @@ class _QiblaCardState extends ConsumerState<QiblaCard> {
         .format(distanceToKaabaKm(coords).round());
     // Short windows need smaller secondary text and tighter card spacing.
     final compact = MediaQuery.sizeOf(ctx).height < 600;
-    final bodyStyle =
-        compact ? theme.textTheme.bodySmall : theme.textTheme.bodyMedium;
+    final bodyStyle = compact
+        ? theme.textTheme.bodySmall
+        : theme.textTheme.bodyMedium;
     final muted = bodyStyle?.copyWith(
       color: theme.colorScheme.onSurfaceVariant,
     );
@@ -180,12 +184,16 @@ class _QiblaCardState extends ConsumerState<QiblaCard> {
               children: [
                 Text(
                   l10n.qibla,
-                  style: theme.textTheme.titleMedium
-                      ?.copyWith(fontWeight: FontWeight.bold),
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 if (locationLabel != null)
-                  Text(locationLabel,
-                      style: muted, textAlign: TextAlign.center),
+                  Text(
+                    locationLabel,
+                    style: muted,
+                    textAlign: TextAlign.center,
+                  ),
               ],
             ),
             const SizedBox(height: AppSpacing.xs),
@@ -207,8 +215,11 @@ class _QiblaCardState extends ConsumerState<QiblaCard> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: AppSpacing.xxs),
-            Text(l10n.qiblaDistance(km),
-                style: muted, textAlign: TextAlign.center),
+            Text(
+              l10n.qiblaDistance(km),
+              style: muted,
+              textAlign: TextAlign.center,
+            ),
             const SizedBox(height: AppSpacing.sm),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -224,8 +235,8 @@ class _QiblaCardState extends ConsumerState<QiblaCard> {
                     heading == null
                         ? l10n.qiblaFaceNorthHint
                         : facing
-                            ? l10n.qiblaFacing
-                            : l10n.qiblaRotateHint,
+                        ? l10n.qiblaFacing
+                        : l10n.qiblaRotateHint,
                     textAlign: TextAlign.center,
                     style: bodyStyle?.copyWith(
                       color: facing ? accent : theme.colorScheme.onSurface,
@@ -237,13 +248,19 @@ class _QiblaCardState extends ConsumerState<QiblaCard> {
             ),
             if (heading == null) ...[
               const SizedBox(height: AppSpacing.xxs),
-              Text(l10n.qiblaFindNorthHint,
-                  style: muted, textAlign: TextAlign.center),
+              Text(
+                l10n.qiblaFindNorthHint,
+                style: muted,
+                textAlign: TextAlign.center,
+              ),
               ..._buildSunHint(l10n, theme, coords, bearing, compact: compact),
             ] else if ((_accuracy ?? 0) > _poorAccuracyDeg) ...[
               const SizedBox(height: AppSpacing.xxs),
-              Text(l10n.qiblaCalibrate,
-                  style: muted, textAlign: TextAlign.center),
+              Text(
+                l10n.qiblaCalibrate,
+                style: muted,
+                textAlign: TextAlign.center,
+              ),
             ],
           ],
         ),
@@ -283,10 +300,12 @@ class _QiblaCardState extends ConsumerState<QiblaCard> {
           Icon(Icons.wb_sunny_outlined, color: theme.colorScheme.tertiary),
           const SizedBox(width: AppSpacing.xs),
           Flexible(
-            child: Text(text,
-                style: compact
-                    ? theme.textTheme.bodySmall
-                    : theme.textTheme.bodyMedium),
+            child: Text(
+              text,
+              style: compact
+                  ? theme.textTheme.bodySmall
+                  : theme.textTheme.bodyMedium,
+            ),
           ),
         ],
       ),
@@ -294,15 +313,15 @@ class _QiblaCardState extends ConsumerState<QiblaCard> {
   }
 
   String _directionName(AppLocalizations l10n, int index) => switch (index) {
-        0 => l10n.dirN,
-        1 => l10n.dirNE,
-        2 => l10n.dirE,
-        3 => l10n.dirSE,
-        4 => l10n.dirS,
-        5 => l10n.dirSW,
-        6 => l10n.dirW,
-        _ => l10n.dirNW,
-      };
+    0 => l10n.dirN,
+    1 => l10n.dirNE,
+    2 => l10n.dirE,
+    3 => l10n.dirSE,
+    4 => l10n.dirS,
+    5 => l10n.dirSW,
+    6 => l10n.dirW,
+    _ => l10n.dirNW,
+  };
 }
 
 /// Compass rose turned by -[heading] so north tracks the real north, with an
@@ -323,10 +342,12 @@ class _QiblaDial extends StatelessWidget {
     final scheme = Theme.of(ctx).colorScheme;
     final accent = AppColors.accentOf(ctx);
     final center = Center(
-      child: Icon(Icons.my_location,
-          key: const ValueKey('qibla-device-marker'),
-          size: 28,
-          color: highlight ? accent : scheme.onSurface),
+      child: Icon(
+        Icons.my_location,
+        key: const ValueKey('qibla-device-marker'),
+        size: 28,
+        color: highlight ? accent : scheme.onSurface,
+      ),
     );
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -358,45 +379,48 @@ class _QiblaDial extends StatelessWidget {
             ),
           ),
           Positioned.fill(
-            child: LayoutBuilder(builder: (context, constraints) {
-              final diameter = constraints.maxWidth;
-              final angle = (bearing - heading) * math.pi / 180;
-              // Keep the destination on the arrow shaft, clear of its tip
-              // and the device marker. The Kaaba stays upright as you turn.
-              final markerSize = diameter * 0.18;
-              final offset = Offset(math.sin(angle), -math.cos(angle)) *
-                  (diameter / 2 * 0.56);
-              return Stack(
-                children: [
-                  Positioned(
-                    left: diameter / 2 + offset.dx - markerSize / 2,
-                    top: diameter / 2 + offset.dy - markerSize / 2,
-                    width: markerSize,
-                    height: markerSize,
-                    child: Semantics(
-                      label: AppLocalizations.of(ctx).qibla,
-                      image: true,
-                      child: DecoratedBox(
-                        key: const ValueKey('qibla-kaaba-marker'),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: scheme.surface,
-                          border: Border.all(color: accent),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(AppSpacing.xxs),
-                          child: CustomPaint(
-                            painter: _KaabaPainter(
-                              gold: Theme.of(ctx).colorScheme.tertiary,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final diameter = constraints.maxWidth;
+                final angle = (bearing - heading) * math.pi / 180;
+                // Keep the destination on the arrow shaft, clear of its tip
+                // and the device marker. The Kaaba stays upright as you turn.
+                final markerSize = diameter * 0.18;
+                final offset =
+                    Offset(math.sin(angle), -math.cos(angle)) *
+                    (diameter / 2 * 0.56);
+                return Stack(
+                  children: [
+                    Positioned(
+                      left: diameter / 2 + offset.dx - markerSize / 2,
+                      top: diameter / 2 + offset.dy - markerSize / 2,
+                      width: markerSize,
+                      height: markerSize,
+                      child: Semantics(
+                        label: AppLocalizations.of(ctx).qibla,
+                        image: true,
+                        child: DecoratedBox(
+                          key: const ValueKey('qibla-kaaba-marker'),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: scheme.surface,
+                            border: Border.all(color: accent),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(AppSpacing.xxs),
+                            child: CustomPaint(
+                              painter: _KaabaPainter(
+                                gold: Theme.of(ctx).colorScheme.tertiary,
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              );
-            }),
+                  ],
+                );
+              },
+            ),
           ),
           FractionallySizedBox(
             widthFactor: 0.27,
@@ -404,7 +428,8 @@ class _QiblaDial extends StatelessWidget {
             child: PlatformCapabilities.isApple
                 ? LiquidGlassLite(
                     shape: const LiquidGlassShape.continuousRoundedRectangle(
-                        cornerRadius: AppRadii.lg),
+                      cornerRadius: AppRadii.lg,
+                    ),
                     color: glassTintOf(ctx),
                     child: center,
                   )
@@ -462,12 +487,13 @@ class _DialPainter extends CustomPainter {
         ..color = tickColor.withValues(alpha: major ? 0.8 : 0.3);
       final dir = _unit(deg.toDouble());
       final outer = radius - 12;
-      final inner = outer -
+      final inner =
+          outer -
           (cardinal
               ? 20
               : major
-                  ? 12
-                  : 6);
+              ? 12
+              : 6);
       canvas.drawLine(center + dir * inner, center + dir * outer, tick);
     }
 
@@ -501,9 +527,13 @@ class _DialPainter extends CustomPainter {
     final head = Path()
       ..moveTo(tip.dx, tip.dy)
       ..lineTo(
-          (tip - dir * 22 + normal * 12).dx, (tip - dir * 22 + normal * 12).dy)
+        (tip - dir * 22 + normal * 12).dx,
+        (tip - dir * 22 + normal * 12).dy,
+      )
       ..lineTo(
-          (tip - dir * 22 - normal * 12).dx, (tip - dir * 22 - normal * 12).dy)
+        (tip - dir * 22 - normal * 12).dx,
+        (tip - dir * 22 - normal * 12).dy,
+      )
       ..close();
     canvas.drawPath(head, Paint()..color = arrowColor);
   }

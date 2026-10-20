@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/design/adaptive_scaffold.dart';
@@ -24,26 +24,30 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     final destinations = [
       AdaptiveNavigationDestination(
-        icon:
-            PlatformCapabilities.isApple ? 'clock' : Icons.access_time_outlined,
+        icon: PlatformCapabilities.isApple
+            ? 'clock'
+            : Icons.access_time_outlined,
         selectedIcon: PlatformCapabilities.isApple
             ? 'clock.fill'
             : Icons.access_time_filled,
         label: l10n.prayerTimes,
       ),
       AdaptiveNavigationDestination(
-        icon:
-            PlatformCapabilities.isApple ? 'moon.stars' : Icons.mosque_outlined,
-        selectedIcon:
-            PlatformCapabilities.isApple ? 'moon.stars.fill' : Icons.mosque,
+        icon: PlatformCapabilities.isApple
+            ? 'moon.stars'
+            : Icons.mosque_outlined,
+        selectedIcon: PlatformCapabilities.isApple
+            ? 'moon.stars.fill'
+            : Icons.mosque,
         label: l10n.worship,
       ),
       AdaptiveNavigationDestination(
         icon: PlatformCapabilities.isApple
             ? 'gearshape'
             : Icons.settings_outlined,
-        selectedIcon:
-            PlatformCapabilities.isApple ? 'gearshape.fill' : Icons.settings,
+        selectedIcon: PlatformCapabilities.isApple
+            ? 'gearshape.fill'
+            : Icons.settings,
         label: l10n.settings,
       ),
     ];
@@ -54,11 +58,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       onDestinationSelected: (index) => setState(() => _idx = index),
       destinations: destinations,
       showAppBar: false,
-      child: IndexedStack(index: _idx, children: [
-        const PrayerTimesScreen(),
-        WorshipScreen(isActive: _idx == 1),
-        const SettingsScreen(),
-      ]),
+      child: IndexedStack(
+        index: _idx,
+        children: [
+          const PrayerTimesScreen(),
+          WorshipScreen(isActive: _idx == 1),
+          const SettingsScreen(),
+        ],
+      ),
     );
   }
 }

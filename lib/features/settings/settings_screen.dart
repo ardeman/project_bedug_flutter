@@ -1,4 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
+import 'package:material_3_expressive/material_3_expressive.dart';
+
+import '../../core/design/platform_design.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:liquid_glass_easy/liquid_glass_easy.dart';
 
@@ -28,156 +32,187 @@ class SettingsScreen extends ConsumerWidget {
 
     final sections = [
       // ── Section: Salat ─────────────────────────────────────────────────
-      _Section(title: l10n.prayerTimes, children: [
-        // Metode Hisab
-        PlatformListTile(
-          leading:
-              Icon(Icons.calculate_outlined, color: AppColors.accentOf(ctx)),
-          title: Text(l10n.calculationMethod),
-          subtitle: Text(calculationMethodLabel(ctx, settings.method)),
-          trailing: const Icon(Icons.chevron_right),
-          onTap: () => showCalculationMethodPage(ctx),
-        ),
+      _Section(
+        title: l10n.prayerTimes,
+        children: [
+          // Metode Hisab
+          PlatformListTile(
+            leading: Icon(
+              Icons.calculate_outlined,
+              color: AppColors.accentOf(ctx),
+            ),
+            title: Text(l10n.calculationMethod),
+            subtitle: Text(calculationMethodLabel(ctx, settings.method)),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => showCalculationMethodPage(ctx),
+          ),
 
-        // Mazhab
-        _ChoiceTile<bool>(
-          icon: Icons.school_outlined,
-          title: l10n.madhab,
-          value: settings.isHanafi,
-          options: [
-            GlassMenuOption(value: false, label: l10n.madhabShafi),
-            GlassMenuOption(value: true, label: l10n.madhabHanafi),
-          ],
-          onChanged: notifier.setMadhab,
-          materialTrailing: ToggleButtons(
-            isSelected: [!settings.isHanafi, settings.isHanafi],
-            onPressed: (i) => notifier.setMadhab(i == 1),
-            borderRadius: BorderRadius.circular(8),
-            selectedColor: Colors.white,
-            fillColor: AppColors.accentOf(ctx),
-            children: [
-              Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Text(l10n.madhabShafi)),
-              Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Text(l10n.madhabHanafi)),
+          // Mazhab
+          _ChoiceTile<bool>(
+            icon: Icons.school_outlined,
+            title: l10n.madhab,
+            value: settings.isHanafi,
+            options: [
+              GlassMenuOption(value: false, label: l10n.madhabShafi),
+              GlassMenuOption(value: true, label: l10n.madhabHanafi),
             ],
+            onChanged: notifier.setMadhab,
+            materialTrailing: ToggleButtons(
+              isSelected: [!settings.isHanafi, settings.isHanafi],
+              onPressed: (i) => notifier.setMadhab(i == 1),
+              borderRadius: BorderRadius.circular(8),
+              selectedColor: Colors.white,
+              fillColor: AppColors.accentOf(ctx),
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Text(l10n.madhabShafi),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Text(l10n.madhabHanafi),
+                ),
+              ],
+            ),
           ),
-        ),
 
-        // Notifikasi
-        PlatformListTile(
-          leading: Icon(Icons.notifications_outlined,
-              color: AppColors.accentOf(ctx)),
-          title: Text(l10n.azanNotifications),
-          subtitle: Text(l10n.allPrayers),
-          trailing: _AdaptiveSwitch(value: true, onChanged: (_) {}),
-        ),
+          // Notifikasi
+          PlatformListTile(
+            leading: Icon(
+              Icons.notifications_outlined,
+              color: AppColors.accentOf(ctx),
+            ),
+            title: Text(l10n.azanNotifications),
+            subtitle: Text(l10n.allPrayers),
+            trailing: _AdaptiveSwitch(value: true, onChanged: (_) {}),
+          ),
 
-        PlatformListTile(
-          leading:
-              Icon(Icons.my_location_outlined, color: AppColors.accentOf(ctx)),
-          title: Text(l10n.locationModeAuto),
-          subtitle: Text(
-            settings.useAutoLocation
-                ? l10n.locationModeAutoDescOn
-                : l10n.locationModeAutoDescOff,
+          PlatformListTile(
+            leading: Icon(
+              Icons.my_location_outlined,
+              color: AppColors.accentOf(ctx),
+            ),
+            title: Text(l10n.locationModeAuto),
+            subtitle: Text(
+              settings.useAutoLocation
+                  ? l10n.locationModeAutoDescOn
+                  : l10n.locationModeAutoDescOff,
+            ),
+            trailing: _AdaptiveSwitch(
+              value: settings.useAutoLocation,
+              onChanged: notifier.setUseAutoLocation,
+            ),
           ),
-          trailing: _AdaptiveSwitch(
-            value: settings.useAutoLocation,
-            onChanged: notifier.setUseAutoLocation,
-          ),
-        ),
 
-        PlatformListTile(
-          enabled: !settings.useAutoLocation,
-          leading: Icon(Icons.location_city_outlined,
-              color: AppColors.accentOf(ctx)),
-          title: Text(l10n.city),
-          subtitle: Text(
-            settings.useAutoLocation
-                ? l10n.cityAutoDetectHint
-                : '${manualCity.name}, '
-                    '${countryLabel(l10n, manualCity.country)}',
+          PlatformListTile(
+            enabled: !settings.useAutoLocation,
+            leading: Icon(
+              Icons.location_city_outlined,
+              color: AppColors.accentOf(ctx),
+            ),
+            title: Text(l10n.city),
+            subtitle: Text(
+              settings.useAutoLocation
+                  ? l10n.cityAutoDetectHint
+                  : '${manualCity.name}, '
+                        '${countryLabel(l10n, manualCity.country)}',
+            ),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => showCityPicker(ctx),
           ),
-          trailing: const Icon(Icons.chevron_right),
-          onTap: () => showCityPicker(ctx),
-        ),
-      ]),
+        ],
+      ),
 
       // ── Section: Tampilan ────────────────────────────────────────────────
-      _Section(title: l10n.theme, children: [
-        _ChoiceTile<int>(
-          icon: Icons.palette_outlined,
-          title: l10n.theme,
-          value: settings.themeMode,
-          options: [
-            GlassMenuOption(value: 0, label: l10n.themeSystem),
-            GlassMenuOption(value: 1, label: l10n.themeLight),
-            GlassMenuOption(value: 2, label: l10n.themeDark),
-          ],
-          onChanged: notifier.setThemeMode,
-        ),
-      ]),
+      _Section(
+        title: l10n.theme,
+        children: [
+          _ChoiceTile<int>(
+            icon: Icons.palette_outlined,
+            title: l10n.theme,
+            value: settings.themeMode,
+            options: [
+              GlassMenuOption(value: 0, label: l10n.themeSystem),
+              GlassMenuOption(value: 1, label: l10n.themeLight),
+              GlassMenuOption(value: 2, label: l10n.themeDark),
+            ],
+            onChanged: notifier.setThemeMode,
+          ),
+        ],
+      ),
 
       // ── Section: Bahasa ──────────────────────────────────────────────────
-      _Section(title: l10n.language, children: [
-        _ChoiceTile<String>(
-          icon: Icons.language_outlined,
-          title: l10n.language,
-          value: locale.languageCode,
-          options: [
-            for (final loc in supportedLocales)
-              GlassMenuOption(
-                value: loc.languageCode,
-                label: localeDisplayNames[loc.languageCode] ?? loc.languageCode,
-              ),
-          ],
-          onChanged: (code) =>
-              ref.read(localeProvider.notifier).setLocale(Locale(code)),
-        ),
-      ]),
+      _Section(
+        title: l10n.language,
+        children: [
+          _ChoiceTile<String>(
+            icon: Icons.language_outlined,
+            title: l10n.language,
+            value: locale.languageCode,
+            options: [
+              for (final loc in supportedLocales)
+                GlassMenuOption(
+                  value: loc.languageCode,
+                  label:
+                      localeDisplayNames[loc.languageCode] ?? loc.languageCode,
+                ),
+            ],
+            onChanged: (code) =>
+                ref.read(localeProvider.notifier).setLocale(Locale(code)),
+          ),
+        ],
+      ),
 
       // ── Section: Lainnya ─────────────────────────────────────────────────
-      _Section(title: l10n.about, children: [
-        PlatformListTile(
-          leading:
-              Icon(Icons.new_releases_outlined, color: AppColors.accentOf(ctx)),
-          title: Text(l10n.whatsNew),
-          subtitle: Text(l10n.whatsNewSubtitle),
-          trailing: const Icon(Icons.chevron_right),
-          onTap: () => Navigator.of(ctx).push(MaterialPageRoute<void>(
-            builder: (_) => const ChangelogScreen(),
-          )),
-        ),
-        PlatformListTile(
-          leading: Icon(Icons.widgets_outlined, color: AppColors.accentOf(ctx)),
-          title: Text(l10n.widgetStyle),
-          subtitle: Text(l10n.widgetCompact),
-          trailing: const Icon(Icons.chevron_right),
-          onTap: () {},
-        ),
-        PlatformListTile(
-          leading: Icon(Icons.info_outline, color: AppColors.accentOf(ctx)),
-          title: Text(l10n.about),
-          subtitle: Text(l10n.version('1.0.0')),
-          onTap: () {},
-        ),
-      ]),
+      _Section(
+        title: l10n.about,
+        children: [
+          PlatformListTile(
+            leading: Icon(
+              Icons.new_releases_outlined,
+              color: AppColors.accentOf(ctx),
+            ),
+            title: Text(l10n.whatsNew),
+            subtitle: Text(l10n.whatsNewSubtitle),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => Navigator.of(ctx).push(
+              MaterialPageRoute<void>(builder: (_) => const ChangelogScreen()),
+            ),
+          ),
+          PlatformListTile(
+            leading: Icon(
+              Icons.widgets_outlined,
+              color: AppColors.accentOf(ctx),
+            ),
+            title: Text(l10n.widgetStyle),
+            subtitle: Text(l10n.widgetCompact),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () {},
+          ),
+          PlatformListTile(
+            leading: Icon(Icons.info_outline, color: AppColors.accentOf(ctx)),
+            title: Text(l10n.about),
+            subtitle: Text(l10n.version('1.0.0')),
+            onTap: () {},
+          ),
+        ],
+      ),
     ];
 
     return Scaffold(
       extendBodyBehindAppBar: isApple,
       appBar: GlassTopBar(title: l10n.settings),
-      body: ListView(children: [
-        for (final (i, section) in sections.indexed) ...[
-          // Glass sections are separate cards; Material ones need a rule.
-          if (i > 0 && !isApple) const Divider(),
-          section,
+      body: ListView(
+        children: [
+          for (final (i, section) in sections.indexed) ...[
+            // Glass sections are separate cards; Material ones need a rule.
+            if (i > 0 && !isApple && !PlatformDesign.usesExpressive)
+              const Divider(),
+            section,
+          ],
+          const SizedBox(height: AppSpacing.xl),
         ],
-        const SizedBox(height: AppSpacing.xl),
-      ]),
+      ),
     );
   }
 }
@@ -205,12 +240,31 @@ class _Section extends StatelessWidget {
       child: Text(
         title.toUpperCase(),
         style: Theme.of(ctx).textTheme.labelSmall?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: AppColors.accentOf(ctx),
-              letterSpacing: 1.2,
-            ),
+          fontWeight: FontWeight.bold,
+          color: AppColors.accentOf(ctx),
+          letterSpacing: 1.2,
+        ),
       ),
     );
+    if (PlatformDesign.usesExpressive) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          header,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+            child: M3EList(
+              itemCount: children.length,
+              onTap: (index) {
+                final row = children[index];
+                if (row is PlatformListTile && row.enabled) row.onTap?.call();
+              },
+              itemBuilder: (context, index) => children[index],
+            ),
+          ),
+        ],
+      );
+    }
     if (!isApple) {
       return Column(children: [header, ...children]);
     }
@@ -221,13 +275,15 @@ class _Section extends StatelessWidget {
         header,
         GlassCard(
           margin: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-          child: Column(children: [
-            for (final (i, row) in children.indexed) ...[
-              // Inset past the leading icon, like grouped iOS lists.
-              if (i > 0) const Hairline(indent: PlatformListTile.textInset),
-              row,
+          child: Column(
+            children: [
+              for (final (i, row) in children.indexed) ...[
+                // Inset past the leading icon, like grouped iOS lists.
+                if (i > 0) const Hairline(indent: PlatformListTile.textInset),
+                row,
+              ],
             ],
-          ]),
+          ),
         ),
       ],
     );
@@ -251,6 +307,9 @@ class _AdaptiveSwitch extends StatelessWidget {
         onChanged: onChanged,
         activeColor: accent,
       );
+    }
+    if (PlatformDesign.usesExpressive) {
+      return M3ESwitch(value: value, onChanged: onChanged);
     }
     return Switch(value: value, activeThumbColor: accent, onChanged: onChanged);
   }
@@ -319,12 +378,68 @@ class _ChoiceTileState<T> extends State<_ChoiceTile<T>> {
     final leading = Icon(widget.icon, color: AppColors.accentOf(ctx));
     final title = Text(widget.title);
 
+    if (PlatformDesign.usesExpressive) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          PlatformListTile(
+            leading: leading,
+            title: title,
+            subtitle: widget.subtitle,
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.md,
+              0,
+              AppSpacing.md,
+              AppSpacing.sm,
+            ),
+            child: widget.materialTrailing != null
+                ? M3ESegmentedButton<T>(
+                    segments: [
+                      for (final option in widget.options)
+                        M3ESegment(value: option.value, label: option.label),
+                    ],
+                    selected: {if (widget.value != null) widget.value as T},
+                    onSelectionChanged: (values) =>
+                        widget.onChanged(values.single),
+                  )
+                : M3EDropdownMenu<T>(
+                    singleSelect: true,
+                    showChipAnimation: false,
+                    fieldStyle: const M3EDropdownFieldStyle(
+                      showClearIcon: false,
+                    ),
+                    selectedItemBuilder: (item) => Text(
+                      item.label,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    items: [
+                      for (final option in widget.options)
+                        M3EDropdownItem(
+                          value: option.value,
+                          label: option.label,
+                          selected: option.value == widget.value,
+                        ),
+                    ],
+                    onSelectionChanged: (items) {
+                      if (items.isNotEmpty) {
+                        widget.onChanged(items.single.value);
+                      }
+                    },
+                  ),
+          ),
+        ],
+      );
+    }
     if (!PlatformCapabilities.isApple) {
       return PlatformListTile(
         leading: leading,
         title: title,
         subtitle: widget.subtitle,
-        trailing: widget.materialTrailing ??
+        trailing:
+            widget.materialTrailing ??
             DropdownButton<T>(
               value: widget.value,
               underline: const SizedBox(),
@@ -343,8 +458,9 @@ class _ChoiceTileState<T> extends State<_ChoiceTile<T>> {
       );
     }
 
-    final current =
-        widget.options.where((o) => o.value == widget.value).firstOrNull;
+    final current = widget.options
+        .where((o) => o.value == widget.value)
+        .firstOrNull;
     final muted = theme.colorScheme.onSurfaceVariant;
     return PlatformListTile(
       leading: leading,

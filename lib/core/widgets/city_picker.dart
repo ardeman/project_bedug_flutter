@@ -1,5 +1,9 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
+import 'package:material_ui/material_ui.dart';
+import 'package:material_3_expressive/material_3_expressive.dart';
+
+import '../design/platform_design.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../generated/l10n/app_localizations.dart';
@@ -49,11 +53,14 @@ String countryLabel(AppLocalizations l10n, CityCountry country) =>
 /// The cities whose name or localized country contains [query], grouped by
 /// country in catalog order. An empty query matches every city.
 List<(CityCountry, List<CityOption>)> filterCities(
-    AppLocalizations l10n, String query) {
+  AppLocalizations l10n,
+  String query,
+) {
   final q = query.trim().toLowerCase();
   final groups = <CityCountry, List<CityOption>>{};
   for (final city in supportedCities) {
-    final matches = q.isEmpty ||
+    final matches =
+        q.isEmpty ||
         city.name.toLowerCase().contains(q) ||
         countryLabel(l10n, city.country).toLowerCase().contains(q);
     if (matches) (groups[city.country] ??= []).add(city);
@@ -63,9 +70,8 @@ List<(CityCountry, List<CityOption>)> filterCities(
 
 /// Opens the city picker: a full page with a search field, since the
 /// catalog is too long for a pop-up menu.
-Future<void> showCityPicker(BuildContext ctx) => Navigator.of(ctx).push(
-      MaterialPageRoute<void>(builder: (_) => const CityPickerScreen()),
-    );
+Future<void> showCityPicker(BuildContext ctx) => Navigator.of(ctx)
+    .push(MaterialPageRoute<void>(builder: (_) => const CityPickerScreen()));
 
 class CityPickerScreen extends ConsumerStatefulWidget {
   const CityPickerScreen({super.key});
@@ -124,18 +130,28 @@ class _SearchField extends StatelessWidget {
     final l10n = AppLocalizations.of(ctx);
     return Padding(
       padding: const EdgeInsets.fromLTRB(
-          AppSpacing.md, AppSpacing.xs, AppSpacing.md, AppSpacing.xxs),
+        AppSpacing.md,
+        AppSpacing.xs,
+        AppSpacing.md,
+        AppSpacing.xxs,
+      ),
       child: PlatformCapabilities.isApple
           ? CupertinoSearchTextField(
               placeholder: l10n.searchCity,
               onChanged: onChanged,
-              style: Theme.of(ctx)
-                  .textTheme
-                  .bodyLarge
+              style: Theme.of(ctx).textTheme.bodyLarge
                   ?.copyWith(color: Theme.of(ctx).colorScheme.onSurface),
               // CupertinoIcons render as boxes on macOS.
               prefixIcon: const Icon(Icons.search),
               suffixIcon: const Icon(Icons.cancel),
+            )
+          : PlatformDesign.usesExpressive
+          ? M3ESearchBar(
+              hintText: l10n.searchCity,
+              leading: const Icon(Icons.search),
+              onChanged: onChanged,
+              expandOnFocus: false,
+              margin: 0,
             )
           : SearchBar(
               hintText: l10n.searchCity,
@@ -160,8 +176,9 @@ class _EmptyNote extends StatelessWidget {
       child: Text(
         text,
         textAlign: TextAlign.center,
-        style: theme.textTheme.bodyMedium
-            ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+        style: theme.textTheme.bodyMedium?.copyWith(
+          color: theme.colorScheme.onSurfaceVariant,
+        ),
       ),
     );
   }
@@ -201,38 +218,51 @@ class _CountryGroup extends StatelessWidget {
       child: Text(
         title.toUpperCase(),
         style: Theme.of(ctx).textTheme.labelSmall?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: accent,
-              letterSpacing: 1.2,
-            ),
+          fontWeight: FontWeight.bold,
+          color: accent,
+          letterSpacing: 1.2,
+        ),
       ),
     );
     final rows = [
       for (final city in cities)
         PlatformListTile(
           title: Text(city.name),
-          trailing:
-              city.id == selectedId ? Icon(Icons.check, color: accent) : null,
+          trailing: city.id == selectedId
+              ? Icon(Icons.check, color: accent)
+              : null,
           onTap: () => onPick(city),
         ),
     ];
 
     return Padding(
-      padding:
-          EdgeInsets.only(bottom: isLast ? GlassNavBar.occupiedHeight(ctx) : 0),
+      padding: EdgeInsets.only(
+        bottom: isLast ? GlassNavBar.occupiedHeight(ctx) : 0,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           header,
-          if (isApple)
+          if (PlatformDesign.usesExpressive)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+              child: M3EList(
+                itemCount: rows.length,
+                onTap: (i) => rows[i].onTap?.call(),
+                itemBuilder: (ctx, i) => rows[i],
+              ),
+            )
+          else if (isApple)
             GlassCard(
               margin: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-              child: Column(children: [
-                for (final (i, row) in rows.indexed) ...[
-                  if (i > 0) const Hairline(indent: AppSpacing.md),
-                  row,
+              child: Column(
+                children: [
+                  for (final (i, row) in rows.indexed) ...[
+                    if (i > 0) const Hairline(indent: AppSpacing.md),
+                    row,
+                  ],
                 ],
-              ]),
+              ),
             )
           else
             ...rows,

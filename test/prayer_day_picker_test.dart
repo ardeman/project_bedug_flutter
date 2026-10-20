@@ -1,9 +1,11 @@
+import 'package:cupertino_ui/cupertino_ui.dart'
+    show GlobalCupertinoLocalizations;
 import 'package:bedug/core/services/selection_feedback.dart';
 import 'package:bedug/core/utils/hijri_utils.dart';
 import 'package:bedug/features/prayer_times/widgets/hijri_month_grid.dart';
 import 'package:bedug/features/prayer_times/widgets/prayer_day_picker.dart';
 import 'package:bedug/generated/l10n/app_localizations.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -13,7 +15,11 @@ void main() {
     var selected = today;
     return MaterialApp(
       locale: const Locale('en'),
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        ...AppLocalizations.localizationsDelegates,
+      ],
       supportedLocales: AppLocalizations.supportedLocales,
       home: Scaffold(
         body: StatefulBuilder(
@@ -27,8 +33,9 @@ void main() {
     );
   }
 
-  testWidgets('picks future and past days and jumps back to today',
-      (tester) async {
+  testWidgets('picks future and past days and jumps back to today', (
+    tester,
+  ) async {
     await tester.pumpWidget(app());
 
     expect(find.text('Tuesday, October 20'), findsOneWidget);
@@ -48,8 +55,9 @@ void main() {
     expect(find.text('Today'), findsNothing);
   });
 
-  testWidgets('picks the centered day while scrolling, with a tick for each',
-      (tester) async {
+  testWidgets('picks the centered day while scrolling, with a tick for each', (
+    tester,
+  ) async {
     var ticks = 0;
     SelectionFeedback.debugOverride = () => ticks++;
     addTearDown(() => SelectionFeedback.debugOverride = null);
@@ -57,8 +65,9 @@ void main() {
 
     // Drag three chips (64 px each) left past the touch slop, then hold
     // still before lifting so nothing flings.
-    final gesture = await tester
-        .startGesture(tester.getCenter(find.byType(CustomScrollView)));
+    final gesture = await tester.startGesture(
+      tester.getCenter(find.byType(CustomScrollView)),
+    );
     for (var i = 0; i < 14; i++) {
       await gesture.moveBy(const Offset(-15, 0));
       await tester.pump(const Duration(milliseconds: 16));
@@ -95,12 +104,15 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text(shownTitle), findsOneWidget);
     // The grid takes the strip's place.
-    expect(find.bySemanticsLabel('Wednesday, October 21, 2026').hitTestable(),
-        findsNothing);
+    expect(
+      find.bySemanticsLabel('Wednesday, October 21, 2026').hitTestable(),
+      findsNothing,
+    );
 
     // A day in the grid picks its Gregorian date, and the strip follows.
-    await tester
-        .tap(find.bySemanticsLabel(RegExp(r'H, Wednesday, October 28, 2026$')));
+    await tester.tap(
+      find.bySemanticsLabel(RegExp(r'H, Wednesday, October 28, 2026$')),
+    );
     await tester.pumpAndSettle();
     expect(find.text('Wednesday, October 28'), findsOneWidget);
 
@@ -131,8 +143,9 @@ void main() {
     expect(find.text(shownTitle), findsNothing);
   });
 
-  testWidgets('moves the picked chip into its grid cell while opening',
-      (tester) async {
+  testWidgets('moves the picked chip into its grid cell while opening', (
+    tester,
+  ) async {
     await tester.pumpWidget(app());
     // Only today's strip chip names its month.
     final start = tester.getCenter(find.text('Oct'));
@@ -140,8 +153,12 @@ void main() {
     await tester.tap(find.bySemanticsLabel('Hijri Calendar'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 60));
-    final moving = tester.getCenter(find.descendant(
-        of: find.byType(HijriMonthGrid), matching: find.text('Oct')));
+    final moving = tester.getCenter(
+      find.descendant(
+        of: find.byType(HijriMonthGrid),
+        matching: find.text('Oct'),
+      ),
+    );
     // Tuesday's column is left of the middle, and the weeks sit below the
     // month header.
     expect(moving.dx, lessThan(start.dx));
@@ -149,9 +166,12 @@ void main() {
 
     await tester.pumpAndSettle();
     expect(
-        find.descendant(
-            of: find.byType(HijriMonthGrid), matching: find.text('Oct')),
-        findsNothing);
+      find.descendant(
+        of: find.byType(HijriMonthGrid),
+        matching: find.text('Oct'),
+      ),
+      findsNothing,
+    );
   });
 
   testWidgets('shows the picked day as a Hijri date', (tester) async {
@@ -161,22 +181,29 @@ void main() {
 
     await tester.tap(find.bySemanticsLabel('Wednesday, October 21, 2026'));
     await tester.pumpAndSettle();
-    expect(find.text(hijriDateLabel(l10n, DateTime(2026, 10, 21))!),
-        findsOneWidget);
+    expect(
+      find.text(hijriDateLabel(l10n, DateTime(2026, 10, 21))!),
+      findsOneWidget,
+    );
   });
 
-  testWidgets('pulls the handle down to open the grid and up to close it',
-      (tester) async {
+  testWidgets('pulls the handle down to open the grid and up to close it', (
+    tester,
+  ) async {
     await tester.pumpWidget(app());
     final month = hijriMonthOf(today);
     final l10n = AppLocalizations.of(tester.element(find.byType(Scaffold)));
     final shownTitle = '${hijriMonthName(l10n, month.month)} ${month.year} H';
-    final handle = find
-        .byWidgetPredicate((w) => w.runtimeType.toString() == '_DragHandle');
+    final handle = find.byWidgetPredicate(
+      (w) => w.runtimeType.toString() == '_DragHandle',
+    );
 
     // A short, slow pull that stops before halfway springs back closed.
     await tester.timedDrag(
-        handle, const Offset(0, 60), const Duration(milliseconds: 600));
+      handle,
+      const Offset(0, 60),
+      const Duration(milliseconds: 600),
+    );
     await tester.pumpAndSettle();
     expect(find.text(shownTitle), findsNothing);
 
@@ -191,9 +218,12 @@ void main() {
 
   test('labels dates outside the Hijri table with nothing', () {
     expect(
-        hijriDateLabel(
-            lookupAppLocalizations(const Locale('en')), DateTime(1900)),
-        isNull);
+      hijriDateLabel(
+        lookupAppLocalizations(const Locale('en')),
+        DateTime(1900),
+      ),
+      isNull,
+    );
   });
 
   test('clamps Hijri months to the supported table', () {

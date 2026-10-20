@@ -9,6 +9,7 @@ A change is done only when the **Checks** command in `README.md` passes. If you 
 ## Conventions
 
 - Use Conventional Commit subjects; see `README.md` for the format and hook setup.
+- Import Material widgets from `package:material_ui/material_ui.dart` and Cupertino widgets from `package:cupertino_ui/cupertino_ui.dart`. Material screens use `material_3_expressive` components where available. Only `AppThemeScope` imports bundled Material to bridge `liquid_glass_easy` theming.
 - Follow [Effective Dart](https://dart.dev/effective-dart) and the lints in `analysis_options.yaml`. Use `const` wherever you can, prefix private widgets with `_`, and explain magic numbers (e.g. `kToolbarHeight + MediaQuery.of(ctx).padding.top`, not `64.5`).
 - State lives in Riverpod providers:
 
@@ -66,7 +67,7 @@ Each platform gets its own design system. Check the platform before rendering an
 
 ### Sheets
 
-- Native, non-blur Apple sheets are fine where native behavior is wanted: the calculation method picker (`lib/core/widgets/calculation_method_picker.dart`) uses `showCupertinoSheet` on iOS/macOS and a liquid-glass route elsewhere.
+- Native, non-blur Apple sheets are fine where native behavior is wanted: the calculation method picker (`lib/core/widgets/calculation_method_picker.dart`) uses `showCupertinoSheet` on iOS/macOS, `M3EBottomSheet` on Material paths and a liquid-glass route on other desktop paths.
 - Guard every sheet against opening twice; repeated taps while it opens stack a second sheet. Keep an open flag and reset it in `finally` (see `_showMethodPicker` in `prayer_times_screen.dart`).
 
 ## Location
@@ -103,7 +104,7 @@ Record architectural choices here as one line each: date, decision, reason.
 - Kemenag RI is the default calculation method; `adhan` provides the others.
 - Apple platforms target iOS 26+ / macOS 26+ so Liquid Glass can be the default without a capability gate.
 - Native Apple controls came from `cupertino_native` (SF Symbols, buttons), not `CupertinoIcons`, which don't render on macOS. Superseded below.
-- The calculation method picker uses a native Cupertino sheet on Apple platforms; blur overlays elsewhere use `PageRouteBuilder`.
+- The calculation method picker uses a native Cupertino sheet on Apple platforms, an Expressive sheet on Material paths and `PageRouteBuilder` for other blur overlays.
 - 2026-10-19: App icons are SVG sources in `assets/branding/` rendered by `scripts/render_brand_icons.swift` and generated with `flutter_launcher_icons`, so the brand art has one editable source.
 - 2026-10-19: Apple builds use CocoaPods only (Swift Package Manager off in `pubspec.yaml`) and the Podfiles silence plugin warnings, because `cupertino_native` had no SPM support and mixed builds let plugin warnings through.
 - 2026-10-19: Revenue comes from AdMob ads on Android and iOS plus an in-app "infaq" that removes them (external Trakteer/Ko-fi links on Windows and Linux), so the free app earns while supporters get it ad-free.
@@ -119,3 +120,5 @@ Record architectural choices here as one line each: date, decision, reason.
 - 2026-10-20: The changelog is one JSON file with every language inline (`assets/changelog/changelog.json`), bundled into the app and read by `site/build.py`, so release notes are written once and the app and the site never drift.
 
 - 2026-10-20: Material paths use Expressive theme styling with Flutter components (tonal surfaces, emphasized type and animated button corners); Apple, Windows and GNOME/KDE retain their platform styling.
+
+- 2026-10-20: Use `material_3_expressive` with the official `material_ui` / `cupertino_ui` libraries (Flutter 3.47+, Dart 3.13+) for Expressive components and spring motion; bridge the bundled theme for Liquid Glass and preserve native platform paths.

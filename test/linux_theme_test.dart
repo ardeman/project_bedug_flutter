@@ -3,7 +3,7 @@ import 'package:bedug/core/design/linux_desktop.dart';
 import 'package:bedug/core/providers/system_accent_provider.dart';
 import 'package:bedug/core/theme/app_theme.dart';
 import 'package:dbus/dbus.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -16,28 +16,37 @@ void main() {
         'Pantheon',
         'X-Cinnamon',
       ]) {
-        expect(linuxDesktopFrom({'XDG_CURRENT_DESKTOP': value}),
-            LinuxDesktop.gnome,
-            reason: value);
+        expect(
+          linuxDesktopFrom({'XDG_CURRENT_DESKTOP': value}),
+          LinuxDesktop.gnome,
+          reason: value,
+        );
       }
     });
 
     test('reads KDE', () {
       expect(
-          linuxDesktopFrom({'XDG_CURRENT_DESKTOP': 'KDE'}), LinuxDesktop.kde);
+        linuxDesktopFrom({'XDG_CURRENT_DESKTOP': 'KDE'}),
+        LinuxDesktop.kde,
+      );
     });
 
     test('falls back to DESKTOP_SESSION', () {
       expect(linuxDesktopFrom({'DESKTOP_SESSION': 'plasma'}), LinuxDesktop.kde);
       expect(
-          linuxDesktopFrom(
-              {'XDG_CURRENT_DESKTOP': '', 'DESKTOP_SESSION': 'gnome'}),
-          LinuxDesktop.gnome);
+        linuxDesktopFrom({
+          'XDG_CURRENT_DESKTOP': '',
+          'DESKTOP_SESSION': 'gnome',
+        }),
+        LinuxDesktop.gnome,
+      );
     });
 
     test('keeps Material 3 elsewhere', () {
-      expect(linuxDesktopFrom({'XDG_CURRENT_DESKTOP': 'XFCE'}),
-          LinuxDesktop.other);
+      expect(
+        linuxDesktopFrom({'XDG_CURRENT_DESKTOP': 'XFCE'}),
+        LinuxDesktop.other,
+      );
       expect(linuxDesktopFrom({}), LinuxDesktop.other);
     });
   });
@@ -47,8 +56,9 @@ void main() {
         DBusStruct([DBusDouble(r), DBusDouble(g), DBusDouble(b)]);
 
     test('parses an sRGB struct, also inside variants', () {
-      final color =
-          accentFromPortalValue(DBusVariant(DBusVariant(rgb(1, 0, 0.5))));
+      final color = accentFromPortalValue(
+        DBusVariant(DBusVariant(rgb(1, 0, 0.5))),
+      );
       expect(color, isNotNull);
       expect(color!.r, 1);
       expect(color.g, 0);
@@ -71,8 +81,11 @@ void main() {
     });
 
     test('uses Adwaita surfaces and the desktop accent on GNOME', () {
-      final theme = buildAppTheme(Brightness.dark,
-          desktop: LinuxDesktop.gnome, accent: blue);
+      final theme = buildAppTheme(
+        Brightness.dark,
+        desktop: LinuxDesktop.gnome,
+        accent: blue,
+      );
       expect(theme.scaffoldBackgroundColor, AppColors.adwaitaDarkWindow);
       expect(theme.colorScheme.primary, blue);
       expect(theme.extension<BrandColors>()!.accent, blue);

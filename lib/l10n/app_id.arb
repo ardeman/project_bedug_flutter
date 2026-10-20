@@ -312,5 +312,13 @@
   "countrySouthAfrica": "Afrika Selatan",
   "searchCity": "Cari kota atau negara",
   "noCityFound": "Kota tidak ditemukan",
-  "cityAutoDetectHint": "Matikan deteksi otomatis untuk memilih kota"
+  "cityAutoDetectHint": "Matikan deteksi otomatis untuk memilih kota",
+  "sheetHandle": "Pegangan panel",
+  "sheetExpand": "Perluas panel",
+  "sheetCollapse": "Ciutkan panel",
+  "sheetDismiss": "Tutup panel",
+  "sheetPreview": "Pratinjau",
+  "sheetCollapsed": "Diciutkan",
+  "sheetExpanded": "Diperluas",
+  "sheetFullScreen": "Layar penuh"
 }

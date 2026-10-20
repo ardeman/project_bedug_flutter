@@ -1,13 +1,20 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:math' as math;
 import 'dart:ui';
+
+import 'package:flutter/foundation.dart' show ValueListenable;
 import 'package:adhan/adhan.dart';
 import 'package:clock/clock.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
+import 'package:material_3_expressive/material_3_expressive.dart';
+
+import '../../core/design/platform_design.dart';
+import '../../core/design/platform_capabilities.dart';
+import '../../core/design/material_controls.dart';
+
 import 'package:liquid_glass_easy/liquid_glass_easy.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../generated/l10n/app_localizations.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/design/glass_controls.dart';
@@ -18,7 +25,7 @@ import '../../core/providers/locale_provider.dart';
 import '../../core/widgets/calculation_method_picker.dart';
 import 'widgets/prayer_day_picker.dart';
 
-bool get _isApple => !kIsWeb && (Platform.isIOS || Platform.isMacOS);
+bool get _isApple => PlatformCapabilities.isApple;
 
 class PrayerTimesScreen extends ConsumerStatefulWidget {
   const PrayerTimesScreen({super.key});
@@ -70,16 +77,17 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
     final mq = MediaQuery.of(ctx);
     final isPortrait = mq.orientation == Orientation.portrait;
     final topInset = mq.padding.top;
-    final isIosPortrait = !kIsWeb && Platform.isIOS && isPortrait;
+    final isIosPortrait = PlatformCapabilities.isIOS && isPortrait;
     // On macOS the collapsed bar is one toolbar row, so its capsule and
     // buttons center on the traffic lights (see MainFlutterWindow.swift).
-    final isMacOS = !kIsWeb && Platform.isMacOS;
-    final minCollapsedExtent = kToolbarHeight +
+    final isMacOS = PlatformCapabilities.isMacOS;
+    final minCollapsedExtent =
+        kToolbarHeight +
         (isIosPortrait
             ? (topInset + 8).clamp(44.0, 62.0)
             : isMacOS
-                ? 0.0
-                : 44.0);
+            ? 0.0
+            : 44.0);
 
     return Scaffold(
       extendBodyBehindAppBar: _isApple,
@@ -92,8 +100,9 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                   delegate: _LiquidGlassAppBar(
                     nextLabel: l10n.nextPrayer,
                     nextName: nextName,
-                    nextTime:
-                        next.time == null ? null : _formatClock(next.time!),
+                    nextTime: next.time == null
+                        ? null
+                        : _formatClock(next.time!),
                     locationLabel: locationLabel,
                     remaining: _remaining,
                     minCollapsedExtent: minCollapsedExtent,
@@ -116,7 +125,7 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                           end: Alignment.bottomRight,
                           colors: [
                             AppColors.accentOf(ctx),
-                            AppColors.secondaryOf(ctx)
+                            AppColors.secondaryOf(ctx),
                           ],
                         ),
                       ),
@@ -146,9 +155,12 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                               ],
                             ),
                             const SizedBox(height: AppSpacing.xxs),
-                            Text(nextName,
-                                style: theme.textTheme.headlineMedium
-                                    ?.copyWith(color: onAccent)),
+                            Text(
+                              nextName,
+                              style: theme.textTheme.headlineMedium?.copyWith(
+                                color: onAccent,
+                              ),
+                            ),
                             const SizedBox(height: AppSpacing.xs),
                             _CountdownBadge(remaining: _remaining),
                           ],
@@ -157,11 +169,11 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                     ),
                   ),
                   actions: [
-                    IconButton(
+                    MaterialIconButton(
                       icon: Icon(Icons.tune, color: onAccent),
                       onPressed: () => _showMethodPicker(ctx),
                     ),
-                    IconButton(
+                    MaterialIconButton(
                       icon: Icon(Icons.refresh, color: onAccent),
                       onPressed: () => ref.read(prayerProvider.notifier).load(),
                     ),
@@ -176,46 +188,58 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
               child: Center(
                 child: Padding(
                   padding: const EdgeInsets.all(AppSpacing.lg),
-                  child: Column(mainAxisSize: MainAxisSize.min, children: [
-                    Icon(Icons.location_off,
-                        size: 48, color: theme.colorScheme.onSurfaceVariant),
-                    const SizedBox(height: AppSpacing.sm),
-                    Text(state.error!,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.location_off,
+                        size: 48,
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
+                      const SizedBox(height: AppSpacing.sm),
+                      Text(
+                        state.error!,
                         textAlign: TextAlign.center,
                         style: theme.textTheme.bodyMedium?.copyWith(
-                            color: theme.colorScheme.onSurfaceVariant)),
-                    const SizedBox(height: AppSpacing.xs),
-                    if (state.showLocationGuide)
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: AppSpacing.xs),
-                        child: Text(
-                          _isApple
-                              ? l10n.locationGuideApple
-                              : l10n.locationGuideAndroid,
-                          textAlign: TextAlign.center,
-                          style: theme.textTheme.bodySmall?.copyWith(
-                              color: theme.colorScheme.onSurfaceVariant),
+                          color: theme.colorScheme.onSurfaceVariant,
                         ),
                       ),
-                    const SizedBox(height: AppSpacing.xxs),
-                    if (_isApple)
-                      LiquidGlassButton(
-                        icon: Icons.refresh,
-                        label: l10n.retry,
-                        foregroundColor: AppColors.accentOf(ctx),
-                        style: LiquidGlassButton.defaultStyle
-                            .copyWith(color: glassTintOf(ctx)),
-                        onPressed: () =>
-                            ref.read(prayerProvider.notifier).load(),
-                      )
-                    else
-                      FilledButton.icon(
-                        icon: const Icon(Icons.refresh),
-                        label: Text(l10n.retry),
-                        onPressed: () =>
-                            ref.read(prayerProvider.notifier).load(),
-                      ),
-                  ]),
+                      const SizedBox(height: AppSpacing.xs),
+                      if (state.showLocationGuide)
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+                          child: Text(
+                            _isApple
+                                ? l10n.locationGuideApple
+                                : l10n.locationGuideAndroid,
+                            textAlign: TextAlign.center,
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: theme.colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ),
+                      const SizedBox(height: AppSpacing.xxs),
+                      if (_isApple)
+                        LiquidGlassButton(
+                          icon: Icons.refresh,
+                          label: l10n.retry,
+                          foregroundColor: AppColors.accentOf(ctx),
+                          style: LiquidGlassButton.defaultStyle.copyWith(
+                            color: glassTintOf(ctx),
+                          ),
+                          onPressed: () =>
+                              ref.read(prayerProvider.notifier).load(),
+                        )
+                      else
+                        MaterialLabelButton(
+                          filled: true,
+                          icon: const Icon(Icons.refresh),
+                          label: Text(l10n.retry),
+                          onPressed: () =>
+                              ref.read(prayerProvider.notifier).load(),
+                        ),
+                    ],
+                  ),
                 ),
               ),
             )
@@ -253,8 +277,11 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
 
   /// The day picker and the picked day's cards. Only today's (or, after
   /// Isha, tomorrow's) next prayer is highlighted.
-  List<Widget> _buildDay(BuildContext ctx, PrayerTimes todayTimes,
-      ({String key, DateTime? time}) next) {
+  List<Widget> _buildDay(
+    BuildContext ctx,
+    PrayerTimes todayTimes,
+    ({String key, DateTime? time}) next,
+  ) {
     final d = todayTimes.dateComponents;
     final today = DateTime(d.year, d.month, d.day);
     final day = _pickedDay ?? today;
@@ -262,21 +289,26 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
         ? todayTimes
         : prayerTimesOn(todayTimes, day);
     final nextTime = next.time;
-    final nextKey =
-        nextTime != null && daysBetween(day, nextTime) == 0 ? next.key : null;
+    final nextKey = nextTime != null && daysBetween(day, nextTime) == 0
+        ? next.key
+        : null;
     return [
       PrayerDayPicker(
         today: today,
         selected: day,
         onSelected: (picked) => setState(
-            () => _pickedDay = daysBetween(today, picked) == 0 ? null : picked),
+          () => _pickedDay = daysBetween(today, picked) == 0 ? null : picked,
+        ),
       ),
       ..._buildPrayerCards(ctx, times, nextKey),
     ];
   }
 
   List<Widget> _buildPrayerCards(
-      BuildContext ctx, PrayerTimes times, String? nextKey) {
+    BuildContext ctx,
+    PrayerTimes times,
+    String? nextKey,
+  ) {
     final l10n = AppLocalizations.of(ctx);
     final prayers = [
       _PrayerEntry('fajr', l10n.fajr, Icons.bedtime_outlined, times.fajr),
@@ -284,13 +316,19 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
       _PrayerEntry('dhuhr', l10n.dhuhr, Icons.wb_sunny_outlined, times.dhuhr),
       _PrayerEntry('asr', l10n.asr, Icons.wb_cloudy_outlined, times.asr),
       _PrayerEntry(
-          'maghrib', l10n.maghrib, Icons.nights_stay_outlined, times.maghrib),
+        'maghrib',
+        l10n.maghrib,
+        Icons.nights_stay_outlined,
+        times.maghrib,
+      ),
       _PrayerEntry('isha', l10n.isha, Icons.dark_mode_outlined, times.isha),
     ];
     return prayers
-        .map((p) => _isApple
-            ? _LiquidGlassCard(entry: p, isNext: p.key == nextKey, l10n: l10n)
-            : _MaterialCard(entry: p, isNext: p.key == nextKey, l10n: l10n))
+        .map(
+          (p) => _isApple
+              ? _LiquidGlassCard(entry: p, isNext: p.key == nextKey, l10n: l10n)
+              : _MaterialCard(entry: p, isNext: p.key == nextKey, l10n: l10n),
+        )
         .toList();
   }
 
@@ -343,15 +381,12 @@ class _CollapseRoom extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctx) => SliverLayoutBuilder(
-        builder: (ctx, c) {
-          final room = c.viewportMainAxisExtent +
-              collapseRange -
-              c.precedingScrollExtent;
-          return SliverToBoxAdapter(
-            child: SizedBox(height: room > 0 ? room : 0),
-          );
-        },
-      );
+    builder: (ctx, c) {
+      final room =
+          c.viewportMainAxisExtent + collapseRange - c.precedingScrollExtent;
+      return SliverToBoxAdapter(child: SizedBox(height: room > 0 ? room : 0));
+    },
+  );
 }
 
 class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
@@ -429,8 +464,9 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
     final collapsedActionTop = isIosPortrait
         ? (isLargeInsetIosPortrait ? 0.0 : 2.0)
         : ((minExtent - kToolbarHeight) / 2).clamp(0.0, 22.0);
-    final iosPortraitLift =
-        isLargeInsetIosPortrait ? ((topInset - 54) / 2).clamp(0.0, 3.0) : 0.0;
+    final iosPortraitLift = isLargeInsetIosPortrait
+        ? ((topInset - 54) / 2).clamp(0.0, 3.0)
+        : 0.0;
     final collapsedRowTop = collapsedActionTop - iosPortraitLift;
     final actionTop = lerpDouble(0, collapsedActionTop, collapsedProgress)!;
     // Decided at full height, not as the header shrinks, so the hero's type
@@ -454,7 +490,8 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
             opacity: 1 - progress,
             child: ClipRRect(
               borderRadius: const BorderRadius.vertical(
-                  bottom: Radius.circular(AppRadii.xl)),
+                bottom: Radius.circular(AppRadii.xl),
+              ),
               child: Stack(
                 fit: StackFit.expand,
                 children: [
@@ -530,31 +567,37 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
                           height: kToolbarHeight,
                           child: Padding(
                             padding: EdgeInsetsDirectional.only(
-                                start: AppSpacing.md + windowControlsInset,
-                                end: actionAreaWidth),
-                            child: Row(children: [
-                              Opacity(
-                                opacity: expandedFade,
-                                child: Icon(
-                                  Icons.location_on,
-                                  size: _locationIconSize,
-                                  color: Colors.white.withValues(alpha: 0.85),
-                                ),
-                              ),
-                              const SizedBox(width: AppSpacing.xxs),
-                              Flexible(
-                                child: Visibility.maintain(
-                                  visible: false,
-                                  child: Text(
-                                    locationLabel,
-                                    key: const ValueKey('location-hero'),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: _locationStyle(ctx, expanded: true),
+                              start: AppSpacing.md + windowControlsInset,
+                              end: actionAreaWidth,
+                            ),
+                            child: Row(
+                              children: [
+                                Opacity(
+                                  opacity: expandedFade,
+                                  child: Icon(
+                                    Icons.location_on,
+                                    size: _locationIconSize,
+                                    color: Colors.white.withValues(alpha: 0.85),
                                   ),
                                 ),
-                              ),
-                            ]),
+                                const SizedBox(width: AppSpacing.xxs),
+                                Flexible(
+                                  child: Visibility.maintain(
+                                    visible: false,
+                                    child: Text(
+                                      locationLabel,
+                                      key: const ValueKey('location-hero'),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: _locationStyle(
+                                        ctx,
+                                        expanded: true,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -566,8 +609,11 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
                             alignment: AlignmentDirectional.bottomStart,
                             minHeight: 0,
                             maxHeight: double.infinity,
-                            child: _heroBody(ctx,
-                                compact: heroCompact, fade: expandedFade),
+                            child: _heroBody(
+                              ctx,
+                              compact: heroCompact,
+                              fade: expandedFade,
+                            ),
                           ),
                         ),
                       ),
@@ -589,14 +635,16 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
                         alignment: Alignment.centerLeft,
                         child: Padding(
                           padding: EdgeInsets.only(
-                              left: AppSpacing.md + windowControlsInset,
-                              right: actionAreaWidth),
+                            left: AppSpacing.md + windowControlsInset,
+                            right: actionAreaWidth,
+                          ),
                           child: SizedBox(
                             key: const ValueKey('pill-capsule'),
                             height: _capsuleHeight,
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: AppSpacing.md),
+                                horizontal: AppSpacing.md,
+                              ),
                               child: Row(
                                 children: [
                                   Expanded(
@@ -609,19 +657,24 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
                                         Text(
                                           locationLabel,
                                           key: const ValueKey(
-                                              'location-capsule'),
+                                            'location-capsule',
+                                          ),
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
-                                          style: _locationStyle(ctx,
-                                              expanded: false),
+                                          style: _locationStyle(
+                                            ctx,
+                                            expanded: false,
+                                          ),
                                         ),
                                         Text(
                                           nextName,
                                           key: const ValueKey('name-capsule'),
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
-                                          style:
-                                              _nameStyle(ctx, expanded: false),
+                                          style: _nameStyle(
+                                            ctx,
+                                            expanded: false,
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -629,14 +682,16 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
                                   const SizedBox(width: AppSpacing.xs),
                                   ValueListenableBuilder<Duration>(
                                     valueListenable: remaining,
-                                    builder: (_, value, __) => value.isNegative
+                                    builder: (_, value, _) => value.isNegative
                                         ? const SizedBox()
                                         : Text(
                                             _formatCountdown(value),
                                             key: const ValueKey(
-                                                'countdown-capsule'),
-                                            style:
-                                                _collapsedCountdownStyle(ctx),
+                                              'countdown-capsule',
+                                            ),
+                                            style: _collapsedCountdownStyle(
+                                              ctx,
+                                            ),
                                           ),
                                   ),
                                 ],
@@ -667,25 +722,27 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
                   right: AppSpacing.sm,
                   child: SizedBox(
                     height: kToolbarHeight,
-                    child: Row(children: [
-                      Builder(
-                        builder: (buttonCtx) => _GlassIconButton(
-                          icon: Icons.tune,
-                          onTap: () {
-                            final box =
-                                buttonCtx.findRenderObject()! as RenderBox;
-                            onTune(box.localToGlobal(Offset.zero) & box.size);
-                          },
+                    child: Row(
+                      children: [
+                        Builder(
+                          builder: (buttonCtx) => _GlassIconButton(
+                            icon: Icons.tune,
+                            onTap: () {
+                              final box =
+                                  buttonCtx.findRenderObject()! as RenderBox;
+                              onTune(box.localToGlobal(Offset.zero) & box.size);
+                            },
+                            color: actionColor,
+                          ),
+                        ),
+                        const SizedBox(width: AppSpacing.xs),
+                        _GlassIconButton(
+                          icon: Icons.refresh,
+                          onTap: onRefresh,
                           color: actionColor,
                         ),
-                      ),
-                      const SizedBox(width: AppSpacing.xs),
-                      _GlassIconButton(
-                        icon: Icons.refresh,
-                        onTap: onRefresh,
-                        color: actionColor,
-                      ),
-                    ]),
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -704,20 +761,26 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
   static TextStyle _locationStyle(BuildContext ctx, {required bool expanded}) {
     final textTheme = Theme.of(ctx).textTheme;
     return expanded
-        ? (textTheme.labelLarge ?? const TextStyle())
-            .copyWith(color: Colors.white.withValues(alpha: 0.85))
+        ? (textTheme.labelLarge ?? const TextStyle()).copyWith(
+            color: Colors.white.withValues(alpha: 0.85),
+          )
         : (textTheme.bodySmall ?? const TextStyle()).copyWith(
-            color: Theme.of(ctx).colorScheme.onSurface.withValues(alpha: 0.7));
+            color: Theme.of(ctx).colorScheme.onSurface.withValues(alpha: 0.7),
+          );
   }
 
   /// The next prayer's name: large and white in the hero when [expanded],
   /// the capsule's second line otherwise.
-  static TextStyle _nameStyle(BuildContext ctx,
-      {required bool expanded, bool compact = false}) {
+  static TextStyle _nameStyle(
+    BuildContext ctx, {
+    required bool expanded,
+    bool compact = false,
+  }) {
     final textTheme = Theme.of(ctx).textTheme;
     if (!expanded) {
-      return (textTheme.titleMedium ?? const TextStyle())
-          .copyWith(color: Theme.of(ctx).colorScheme.onSurface);
+      return (textTheme.titleMedium ?? const TextStyle()).copyWith(
+        color: Theme.of(ctx).colorScheme.onSurface,
+      );
     }
     return ((compact ? textTheme.headlineMedium : textTheme.displaySmall) ??
             const TextStyle())
@@ -766,9 +829,16 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
     // start edge. A label is laid out in the room it has ([startRoom] to
     // [endRoom]) rather than its measured width, which sub-pixel rounding
     // would ellipsize.
-    Widget moving(String text, Key key, Rect start, Rect end,
-        TextStyle startStyle, TextStyle endStyle,
-        {double? startRoom, double? endRoom}) {
+    Widget moving(
+      String text,
+      Key key,
+      Rect start,
+      Rect end,
+      TextStyle startStyle,
+      TextStyle endStyle, {
+      double? startRoom,
+      double? endRoom,
+    }) {
       final label = Text(
         text,
         key: key,
@@ -780,22 +850,29 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
       final top = lerpDouble(start.top, end.top, t);
       if (startRoom == null || endRoom == null) {
         return Positioned(
-            left: lerpDouble(start.left, end.left, t), top: top, child: label);
+          left: lerpDouble(start.left, end.left, t),
+          top: top,
+          child: label,
+        );
       }
       final room = math.max(0.0, lerpDouble(startRoom, endRoom, t)!);
-      final aligned =
-          Align(alignment: AlignmentDirectional.centerStart, child: label);
+      final aligned = Align(
+        alignment: AlignmentDirectional.centerStart,
+        child: label,
+      );
       return isRtl
           ? Positioned(
               right: area.width - lerpDouble(start.right, end.right, t)!,
               top: top,
               width: room,
-              child: aligned)
+              child: aligned,
+            )
           : Positioned(
               left: lerpDouble(start.left, end.left, t),
               top: top,
               width: room,
-              child: aligned);
+              child: aligned,
+            );
     }
 
     final locationStart = _locationStyle(ctx, expanded: true);
@@ -813,23 +890,31 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
     final capsuleRight = area.width - actionAreaWidth;
     final capsuleTop = collapsedRowTop + (kToolbarHeight - _capsuleHeight) / 2;
     final capsule = Rect.fromLTRB(
-        capsuleLeft, capsuleTop, capsuleRight, capsuleTop + _capsuleHeight);
+      capsuleLeft,
+      capsuleTop,
+      capsuleRight,
+      capsuleTop + _capsuleHeight,
+    );
     double capsuleTextLeft(double width) => isRtl
         ? capsuleRight - AppSpacing.md - width
         : capsuleLeft + AppSpacing.md;
 
     // The location, after the pin on the buttons' row.
-    final locationInset = AppSpacing.md +
+    final locationInset =
+        AppSpacing.md +
         windowControlsInset +
         _locationIconSize +
         AppSpacing.xxs;
     final locationStartRoom = area.width - locationInset - actionAreaWidth;
-    final locationStartSize =
-        measure(locationLabel, locationStart, locationStartRoom);
+    final locationStartSize = measure(
+      locationLabel,
+      locationStart,
+      locationStartRoom,
+    );
 
     return ValueListenableBuilder<Duration>(
       valueListenable: remaining,
-      builder: (_, value, __) {
+      builder: (_, value, _) {
         final hasCountdown = !value.isNegative;
         final digits = hasCountdown ? _formatCountdown(value) : '';
         final digitsStartSize = measure(digits, digitsStart, double.infinity);
@@ -841,23 +926,33 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
         final badgeWidth =
             hPad * 2 + iconSize + AppSpacing.xs + digitsStartSize.width;
         final badgeTop = area.height - AppSpacing.lg - badgeHeight;
-        final badge = Rect.fromLTWH(fromStart(AppSpacing.md, badgeWidth),
-            badgeTop, badgeWidth, badgeHeight);
+        final badge = Rect.fromLTWH(
+          fromStart(AppSpacing.md, badgeWidth),
+          badgeTop,
+          badgeWidth,
+          badgeHeight,
+        );
         final nameStartRoom = area.width - AppSpacing.md * 2;
         final nameStartSize = measure(nextName, nameStart, nameStartRoom);
-        final nameStartTop = badgeTop -
+        final nameStartTop =
+            badgeTop -
             (compact ? AppSpacing.xxs : AppSpacing.xs) -
             nameStartSize.height;
 
         // The capsule's text column, centered in it, beside the countdown.
-        final capsuleTextWidth = capsule.width -
+        final capsuleTextWidth =
+            capsule.width -
             AppSpacing.md * 2 -
             AppSpacing.xs -
             (hasCountdown ? digitsEndSize.width : 0);
-        final locationEndSize =
-            measure(locationLabel, locationEnd, capsuleTextWidth);
+        final locationEndSize = measure(
+          locationLabel,
+          locationEnd,
+          capsuleTextWidth,
+        );
         final nameEndSize = measure(nextName, nameEnd, capsuleTextWidth);
-        final locationEndTop = capsuleTop +
+        final locationEndTop =
+            capsuleTop +
             (_capsuleHeight - locationEndSize.height - nameEndSize.height) / 2;
 
         // The pill grows into the capsule. Without a countdown there is no
@@ -865,7 +960,10 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
         final pill = hasCountdown ? Rect.lerp(badge, capsule, t)! : capsule;
         final pillTint = hasCountdown
             ? Color.lerp(
-                Colors.white.withValues(alpha: 0.14), glassTintOf(ctx), t)!
+                Colors.white.withValues(alpha: 0.14),
+                glassTintOf(ctx),
+                t,
+              )!
             : _fadeColor(glassTintOf(ctx), collapsedProgress);
         final pillVisible = hasCountdown || collapsedProgress > 0;
 
@@ -882,7 +980,8 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
                     visibility: pillVisible,
                     style: LiquidGlassStyle(
                       shape: LiquidGlassShape.continuousRoundedRectangle(
-                          cornerRadius: pill.height / 2),
+                        cornerRadius: pill.height / 2,
+                      ),
                       color: pillTint,
                       blur: 6 * (hasCountdown ? t : collapsedProgress),
                     ),
@@ -894,10 +993,11 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
                               padding: EdgeInsetsDirectional.only(start: hPad),
                               child: Opacity(
                                 opacity: expandedFade,
-                                child: Icon(Icons.timer_outlined,
-                                    size: iconSize,
-                                    color:
-                                        Colors.white.withValues(alpha: 0.85)),
+                                child: Icon(
+                                  Icons.timer_outlined,
+                                  size: iconSize,
+                                  color: Colors.white.withValues(alpha: 0.85),
+                                ),
                               ),
                             ),
                           )
@@ -909,16 +1009,18 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
                 locationLabel,
                 const ValueKey('location-moving'),
                 Rect.fromLTWH(
-                    fromStart(locationInset, locationStartSize.width),
-                    (kToolbarHeight - locationStartSize.height) / 2 -
-                        iosPortraitLift,
-                    locationStartSize.width,
-                    locationStartSize.height),
+                  fromStart(locationInset, locationStartSize.width),
+                  (kToolbarHeight - locationStartSize.height) / 2 -
+                      iosPortraitLift,
+                  locationStartSize.width,
+                  locationStartSize.height,
+                ),
                 Rect.fromLTWH(
-                    capsuleTextLeft(locationEndSize.width),
-                    locationEndTop,
-                    locationEndSize.width,
-                    locationEndSize.height),
+                  capsuleTextLeft(locationEndSize.width),
+                  locationEndTop,
+                  locationEndSize.width,
+                  locationEndSize.height,
+                ),
                 locationStart,
                 locationEnd,
                 startRoom: locationStartRoom,
@@ -927,13 +1029,18 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
               moving(
                 nextName,
                 const ValueKey('name-moving'),
-                Rect.fromLTWH(fromStart(AppSpacing.md, nameStartSize.width),
-                    nameStartTop, nameStartSize.width, nameStartSize.height),
                 Rect.fromLTWH(
-                    capsuleTextLeft(nameEndSize.width),
-                    locationEndTop + locationEndSize.height,
-                    nameEndSize.width,
-                    nameEndSize.height),
+                  fromStart(AppSpacing.md, nameStartSize.width),
+                  nameStartTop,
+                  nameStartSize.width,
+                  nameStartSize.height,
+                ),
+                Rect.fromLTWH(
+                  capsuleTextLeft(nameEndSize.width),
+                  locationEndTop + locationEndSize.height,
+                  nameEndSize.width,
+                  nameEndSize.height,
+                ),
                 nameStart,
                 nameEnd,
                 startRoom: nameStartRoom,
@@ -944,19 +1051,23 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
                   digits,
                   const ValueKey('countdown-moving'),
                   Rect.fromLTWH(
-                      fromStart(hPad + AppSpacing.md + iconSize + AppSpacing.xs,
-                          digitsStartSize.width),
-                      badgeTop + vPad + (badgeRow - digitsStartSize.height) / 2,
+                    fromStart(
+                      hPad + AppSpacing.md + iconSize + AppSpacing.xs,
                       digitsStartSize.width,
-                      digitsStartSize.height),
+                    ),
+                    badgeTop + vPad + (badgeRow - digitsStartSize.height) / 2,
+                    digitsStartSize.width,
+                    digitsStartSize.height,
+                  ),
                   Rect.fromLTWH(
-                      isRtl
-                          ? capsuleLeft + AppSpacing.md
-                          : capsuleRight - AppSpacing.md - digitsEndSize.width,
-                      collapsedRowTop +
-                          (kToolbarHeight - digitsEndSize.height) / 2,
-                      digitsEndSize.width,
-                      digitsEndSize.height),
+                    isRtl
+                        ? capsuleLeft + AppSpacing.md
+                        : capsuleRight - AppSpacing.md - digitsEndSize.width,
+                    collapsedRowTop +
+                        (kToolbarHeight - digitsEndSize.height) / 2,
+                    digitsEndSize.width,
+                    digitsEndSize.height,
+                  ),
                   digitsStart,
                   digitsEnd,
                 ),
@@ -969,14 +1080,21 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
 
   /// The next prayer: a small label with its time, then hidden copies of
   /// the name and the countdown pill holding their places.
-  Widget _heroBody(BuildContext ctx,
-      {required bool compact, required double fade}) {
+  Widget _heroBody(
+    BuildContext ctx, {
+    required bool compact,
+    required double fade,
+  }) {
     final textTheme = Theme.of(ctx).textTheme;
     final muted = Colors.white.withValues(alpha: 0.75);
     final time = nextTime;
     return Padding(
       padding: const EdgeInsets.fromLTRB(
-          AppSpacing.md, 0, AppSpacing.md, AppSpacing.lg),
+        AppSpacing.md,
+        0,
+        AppSpacing.md,
+        AppSpacing.lg,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -1008,26 +1126,35 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
           SizedBox(height: compact ? AppSpacing.xxs : AppSpacing.xs),
           ValueListenableBuilder<Duration>(
             valueListenable: remaining,
-            builder: (_, value, __) => value.isNegative
+            builder: (_, value, _) => value.isNegative
                 ? const SizedBox()
                 : Visibility.maintain(
                     visible: false,
                     child: Padding(
                       key: const ValueKey('pill-hero'),
                       padding: EdgeInsets.symmetric(
-                          horizontal:
-                              _HeroBadge.horizontalPadding(compact: compact),
-                          vertical:
-                              _HeroBadge.verticalPadding(compact: compact)),
-                      child: Row(mainAxisSize: MainAxisSize.min, children: [
-                        SizedBox.square(
-                            dimension: _HeroBadge.iconSize(compact: compact)),
-                        const SizedBox(width: AppSpacing.xs),
-                        Text(_formatCountdown(value),
+                        horizontal: _HeroBadge.horizontalPadding(
+                          compact: compact,
+                        ),
+                        vertical: _HeroBadge.verticalPadding(compact: compact),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox.square(
+                            dimension: _HeroBadge.iconSize(compact: compact),
+                          ),
+                          const SizedBox(width: AppSpacing.xs),
+                          Text(
+                            _formatCountdown(value),
                             key: const ValueKey('countdown-badge'),
-                            style:
-                                _HeroBadge.textStyleOf(ctx, compact: compact)),
-                      ]),
+                            style: _HeroBadge.textStyleOf(
+                              ctx,
+                              compact: compact,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
           ),
@@ -1051,11 +1178,11 @@ class _GlassIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctx) => GlassIconButton(
-        icon: icon,
-        onPressed: onTap,
-        color: color,
-        size: _LiquidGlassAppBar._actionSize,
-      );
+    icon: icon,
+    onPressed: onTap,
+    color: color,
+    size: _LiquidGlassAppBar._actionSize,
+  );
 }
 
 // ── Liquid Glass Card (Apple) ─────────────────────────────────────────────────
@@ -1096,22 +1223,26 @@ class _LiquidGlassCard extends StatelessWidget {
         // lenses inside a scrolling list fight the package's design.
         child: LiquidGlassLite(
           shape: const LiquidGlassShape.continuousRoundedRectangle(
-              cornerRadius: AppRadii.lg),
+            cornerRadius: AppRadii.lg,
+          ),
           blur: isNext ? 14 : 10,
           color: isNext
               ? Colors.transparent
               : (isDark
-                  ? Colors.white.withValues(alpha: 0.07)
-                  : Colors.white.withValues(alpha: 0.62)),
+                    ? Colors.white.withValues(alpha: 0.07)
+                    : Colors.white.withValues(alpha: 0.62)),
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 300),
             padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.md, vertical: AppSpacing.sm),
+              horizontal: AppSpacing.md,
+              vertical: AppSpacing.sm,
+            ),
             // Same continuous corners as the glass, which doesn't clip
             // its child on every renderer.
             decoration: ShapeDecoration(
               shape: RoundedSuperellipseBorder(
-                  borderRadius: BorderRadius.circular(AppRadii.lg)),
+                borderRadius: BorderRadius.circular(AppRadii.lg),
+              ),
               gradient: isNext
                   ? LinearGradient(
                       begin: Alignment.topLeft,
@@ -1136,9 +1267,11 @@ class _LiquidGlassCard extends StatelessWidget {
                         ? Colors.white.withValues(alpha: 0.2)
                         : AppColors.accentOf(ctx).withValues(alpha: 0.12),
                   ),
-                  child: Icon(entry.icon,
-                      size: 20,
-                      color: isNext ? Colors.white : AppColors.accentOf(ctx)),
+                  child: Icon(
+                    entry.icon,
+                    size: 20,
+                    color: isNext ? Colors.white : AppColors.accentOf(ctx),
+                  ),
                 ),
                 const SizedBox(width: AppSpacing.md),
                 Expanded(
@@ -1148,24 +1281,30 @@ class _LiquidGlassCard extends StatelessWidget {
                       // The "up next" label leads, so it reads as a heading
                       // for the prayer name below it.
                       if (isNext)
-                        Text(l10n.upNext,
-                            style: theme.textTheme.bodySmall?.copyWith(
-                              color: Colors.white.withValues(alpha: 0.75),
-                            )),
-                      Text(entry.label,
-                          style: theme.textTheme.titleMedium?.copyWith(
-                            color: isNext ? Colors.white : onSurface,
-                          )),
+                        Text(
+                          l10n.upNext,
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: Colors.white.withValues(alpha: 0.75),
+                          ),
+                        ),
+                      Text(
+                        entry.label,
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          color: isNext ? Colors.white : onSurface,
+                        ),
+                      ),
                     ],
                   ),
                 ),
-                Text(timeStr,
-                    style: theme.textTheme.titleLarge?.copyWith(
-                      fontFeatures: const [FontFeature.tabularFigures()],
-                      color: isNext
-                          ? Colors.white
-                          : (isDark ? onSurface : AppColors.accentOf(ctx)),
-                    )),
+                Text(
+                  timeStr,
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    fontFeatures: const [FontFeature.tabularFigures()],
+                    color: isNext
+                        ? Colors.white
+                        : (isDark ? onSurface : AppColors.accentOf(ctx)),
+                  ),
+                ),
               ],
             ),
           ),
@@ -1197,46 +1336,74 @@ class _MaterialCard extends StatelessWidget {
     final onAccent = theme.colorScheme.onPrimary;
     // Follow the theme's flat card (hairline, large radius; Adwaita/Breeze
     // cards on Linux) and fill it with the accent for the next prayer.
-    final cardShape = theme.cardTheme.shape ??
+    final cardShape =
+        theme.cardTheme.shape ??
         RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppRadii.lg));
+          borderRadius: BorderRadius.circular(AppRadii.lg),
+        );
 
+    final row = ListTile(
+      contentPadding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.xs,
+      ),
+      leading: Icon(
+        entry.icon,
+        color: isNext ? onAccent : AppColors.accentOf(ctx),
+        size: 28,
+      ),
+      // The "up next" label leads, so it reads as a heading for the name.
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (isNext)
+            Text(
+              l10n.upNext,
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: onAccent.withValues(alpha: 0.7),
+              ),
+            ),
+          Text(
+            entry.label,
+            style: theme.textTheme.titleMedium?.copyWith(
+              color: isNext ? onAccent : null,
+            ),
+          ),
+        ],
+      ),
+      trailing: Text(
+        timeStr,
+        style: theme.textTheme.titleLarge?.copyWith(
+          fontFeatures: const [FontFeature.tabularFigures()],
+          color: isNext ? onAccent : AppColors.accentOf(ctx),
+        ),
+      ),
+    );
+    final color = isNext
+        ? AppColors.accentOf(ctx)
+        : (theme.cardTheme.color ?? theme.cardColor);
+    const margin = EdgeInsets.symmetric(
+      horizontal: AppSpacing.md,
+      vertical: AppSpacing.xxs,
+    );
+    if (PlatformDesign.usesExpressive) {
+      return Padding(
+        padding: margin,
+        child: M3ECard(
+          variant: M3ECardVariant.filled,
+          color: color,
+          padding: EdgeInsets.zero,
+          expanded: true,
+          child: Material(color: Colors.transparent, child: row),
+        ),
+      );
+    }
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
-      margin: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.md, vertical: AppSpacing.xxs),
-      decoration: ShapeDecoration(
-        color: isNext
-            ? AppColors.accentOf(ctx)
-            : (theme.cardTheme.color ?? theme.cardColor),
-        shape: cardShape,
-      ),
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.md, vertical: AppSpacing.xs),
-        leading: Icon(entry.icon,
-            color: isNext ? onAccent : AppColors.accentOf(ctx), size: 28),
-        // The "up next" label leads, so it reads as a heading for the name.
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (isNext)
-              Text(l10n.upNext,
-                  style: theme.textTheme.bodySmall
-                      ?.copyWith(color: onAccent.withValues(alpha: 0.7))),
-            Text(entry.label,
-                style: theme.textTheme.titleMedium?.copyWith(
-                  color: isNext ? onAccent : null,
-                )),
-          ],
-        ),
-        trailing: Text(timeStr,
-            style: theme.textTheme.titleLarge?.copyWith(
-              fontFeatures: const [FontFeature.tabularFigures()],
-              color: isNext ? onAccent : AppColors.accentOf(ctx),
-            )),
-      ),
+      margin: margin,
+      decoration: ShapeDecoration(color: color, shape: cardShape),
+      child: row,
     );
   }
 }
@@ -1291,7 +1458,7 @@ class _CountdownBadge extends StatelessWidget {
   Widget build(BuildContext ctx) {
     return ValueListenableBuilder<Duration>(
       valueListenable: remaining,
-      builder: (_, value, __) => _buildBadge(ctx, value),
+      builder: (_, value, _) => _buildBadge(ctx, value),
     );
   }
 
@@ -1301,16 +1468,20 @@ class _CountdownBadge extends StatelessWidget {
     final onAccent = theme.colorScheme.onPrimary;
     return Container(
       padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.lg, vertical: AppSpacing.xs),
+        horizontal: AppSpacing.lg,
+        vertical: AppSpacing.xs,
+      ),
       decoration: ShapeDecoration(
         color: onAccent.withValues(alpha: 0.24),
         shape: const StadiumBorder(),
       ),
-      child: Text(_formatCountdown(value),
-          style: theme.textTheme.titleLarge?.copyWith(
-            color: onAccent,
-            fontFeatures: const [FontFeature.tabularFigures()],
-          )),
+      child: Text(
+        _formatCountdown(value),
+        style: theme.textTheme.titleLarge?.copyWith(
+          color: onAccent,
+          fontFeatures: const [FontFeature.tabularFigures()],
+        ),
+      ),
     );
   }
 }

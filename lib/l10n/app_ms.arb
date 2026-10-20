@@ -151,5 +151,13 @@
   "countrySouthAfrica": "Afrika Selatan",
   "searchCity": "Cari bandar atau negara",
   "noCityFound": "Tiada bandar yang sepadan",
-  "cityAutoDetectHint": "Matikan pengesanan automatik untuk memilih bandar"
+  "cityAutoDetectHint": "Matikan pengesanan automatik untuk memilih bandar",
+  "sheetHandle": "Pemegang panel",
+  "sheetExpand": "Kembangkan panel",
+  "sheetCollapse": "Kecilkan panel",
+  "sheetDismiss": "Tutup panel",
+  "sheetPreview": "Pratonton",
+  "sheetCollapsed": "Dikecilkan",
+  "sheetExpanded": "Dikembangkan",
+  "sheetFullScreen": "Skrin penuh"
 }

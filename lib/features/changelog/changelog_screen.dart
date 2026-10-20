@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
@@ -25,16 +25,18 @@ class ChangelogScreen extends ConsumerWidget {
       appBar: GlassTopBar(title: l10n.whatsNew),
       body: changelog.when(
         loading: () => const Center(child: AdaptiveSpinner()),
-        error: (_, __) => Center(
+        error: (_, _) => Center(
           child: Padding(
             padding: const EdgeInsets.all(AppSpacing.lg),
             child: Text(l10n.changelogLoadError, textAlign: TextAlign.center),
           ),
         ),
-        data: (releases) => ListView(children: [
-          for (final release in releases) _ReleaseCard(release: release),
-          const SizedBox(height: AppSpacing.xl),
-        ]),
+        data: (releases) => ListView(
+          children: [
+            for (final release in releases) _ReleaseCard(release: release),
+            const SizedBox(height: AppSpacing.xl),
+          ],
+        ),
       ),
     );
   }
@@ -54,7 +56,11 @@ class _ReleaseCard extends StatelessWidget {
 
     return GlassCard(
       margin: const EdgeInsets.fromLTRB(
-          AppSpacing.md, AppSpacing.xs, AppSpacing.md, AppSpacing.xs),
+        AppSpacing.md,
+        AppSpacing.xs,
+        AppSpacing.md,
+        AppSpacing.xs,
+      ),
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.md),
         child: Column(
@@ -67,16 +73,18 @@ class _ReleaseCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     l10n.version(release.version),
-                    style: theme.textTheme.titleMedium
-                        ?.copyWith(fontWeight: FontWeight.bold),
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 Text(
                   date == null
                       ? l10n.changelogUnreleased
                       : DateFormat.yMMMMd(locale).format(date),
-                  style: theme.textTheme.bodySmall
-                      ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
                 ),
               ],
             ),
@@ -104,20 +112,20 @@ class _ChangeRow extends StatelessWidget {
     final theme = Theme.of(ctx);
     final (icon, label, color) = switch (change.type) {
       ChangeType.added => (
-          Icons.auto_awesome_outlined,
-          l10n.changelogNew,
-          AppColors.accentOf(ctx),
-        ),
+        Icons.auto_awesome_outlined,
+        l10n.changelogNew,
+        AppColors.accentOf(ctx),
+      ),
       ChangeType.improved => (
-          Icons.trending_up,
-          l10n.changelogImproved,
-          AppColors.secondaryOf(ctx),
-        ),
+        Icons.trending_up,
+        l10n.changelogImproved,
+        AppColors.secondaryOf(ctx),
+      ),
       ChangeType.fixed => (
-          Icons.build_outlined,
-          l10n.changelogFixed,
-          theme.colorScheme.tertiary,
-        ),
+        Icons.build_outlined,
+        l10n.changelogFixed,
+        theme.colorScheme.tertiary,
+      ),
     };
 
     return Row(
@@ -138,8 +146,10 @@ class _ChangeRow extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: AppSpacing.xxs),
-              Text(change.textFor(languageCode),
-                  style: theme.textTheme.bodyMedium),
+              Text(
+                change.textFor(languageCode),
+                style: theme.textTheme.bodyMedium,
+              ),
             ],
           ),
         ),

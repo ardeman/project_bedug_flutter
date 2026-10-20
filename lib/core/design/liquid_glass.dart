@@ -1,18 +1,21 @@
 import 'dart:math' as math;
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:liquid_glass_easy/liquid_glass_easy.dart';
 
 import '../constants/app_colors.dart';
 import '../theme/app_tokens.dart';
 import 'platform_capabilities.dart';
+import 'platform_design.dart';
+
+import 'package:material_3_expressive/material_3_expressive.dart';
 
 /// Glass tint for bars and controls that float over content: milky in
 /// light mode, smoked in dark mode, so their icons and text stay legible.
 Color glassTintOf(BuildContext ctx) =>
     Theme.of(ctx).brightness == Brightness.dark
-        ? Colors.black.withValues(alpha: 0.28)
-        : Colors.white.withValues(alpha: 0.55);
+    ? Colors.black.withValues(alpha: 0.28)
+    : Colors.white.withValues(alpha: 0.55);
 
 /// The floating Liquid Glass tab bar on iOS and macOS: a refracting
 /// capsule whose selection pill can be tapped or dragged between tabs.
@@ -137,6 +140,18 @@ class GlassTopBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext ctx) {
     final theme = Theme.of(ctx);
+    if (PlatformDesign.usesExpressive) {
+      return M3EAppBar.top(
+        title: Text(
+          title,
+          style: theme.textTheme.titleLarge,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        automaticallyImplyLeading: true,
+        toolbarHeight: kToolbarHeight,
+      );
+    }
     if (!PlatformCapabilities.isApple) {
       return AppBar(
         title: Text(title),
@@ -167,21 +182,24 @@ class GlassTopBar extends StatelessWidget implements PreferredSizeWidget {
                 child: LiquidGlassLens(
                   style: LiquidGlassStyle(
                     shape: const LiquidGlassShape.continuousRoundedRectangle(
-                        cornerRadius: _capsuleHeight / 2),
+                      cornerRadius: _capsuleHeight / 2,
+                    ),
                     color: glassTintOf(ctx),
                     blur: 6,
                   ),
                   child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.md,
+                    ),
                     child: Center(
                       widthFactor: 1,
                       child: Text(
                         title,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: theme.textTheme.titleMedium
-                            ?.copyWith(color: theme.colorScheme.onSurface),
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          color: theme.colorScheme.onSurface,
+                        ),
                       ),
                     ),
                   ),
@@ -229,6 +247,17 @@ class GlassCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctx) {
+    if (PlatformDesign.usesExpressive) {
+      return Padding(
+        padding: margin,
+        child: M3ECard(
+          variant: M3ECardVariant.filled,
+          padding: EdgeInsets.zero,
+          expanded: true,
+          child: child,
+        ),
+      );
+    }
     if (!PlatformCapabilities.isApple) {
       return Card(margin: margin, clipBehavior: Clip.antiAlias, child: child);
     }
@@ -239,7 +268,8 @@ class GlassCard extends StatelessWidget {
         color: Colors.transparent,
         child: LiquidGlassLite(
           shape: const LiquidGlassShape.continuousRoundedRectangle(
-              cornerRadius: AppRadii.lg),
+            cornerRadius: AppRadii.lg,
+          ),
           blur: 10,
           color: Colors.white.withValues(alpha: isDark ? 0.07 : 0.62),
           // The glass doesn't clip its child on every renderer; keep ink
@@ -284,8 +314,9 @@ class GlassIconButton extends StatelessWidget {
       iconSize: 20,
       foregroundColor: color ?? Theme.of(ctx).colorScheme.onSurface,
       style: LiquidGlassStyle(
-        shape:
-            LiquidGlassShape.continuousRoundedRectangle(cornerRadius: size / 2),
+        shape: LiquidGlassShape.continuousRoundedRectangle(
+          cornerRadius: size / 2,
+        ),
         color: glassTintOf(ctx),
       ),
     );

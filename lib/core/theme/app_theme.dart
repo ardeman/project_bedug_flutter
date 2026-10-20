@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../constants/app_colors.dart';
 import '../design/linux_desktop.dart';
@@ -12,10 +12,14 @@ import 'material_expressive_theme.dart';
 class BrandColors extends ThemeExtension<BrandColors> {
   const BrandColors({required this.accent, required this.secondary});
 
-  static const brand =
-      BrandColors(accent: AppColors.emerald, secondary: AppColors.teal);
-  static const brandDark =
-      BrandColors(accent: AppColors.emeraldDark, secondary: AppColors.tealDark);
+  static const brand = BrandColors(
+    accent: AppColors.emerald,
+    secondary: AppColors.teal,
+  );
+  static const brandDark = BrandColors(
+    accent: AppColors.emeraldDark,
+    secondary: AppColors.tealDark,
+  );
 
   /// Builds the pair from a desktop accent. The secondary color sits 20°
   /// further round the hue wheel, as teal does from emerald.
@@ -35,9 +39,9 @@ class BrandColors extends ThemeExtension<BrandColors> {
 
   @override
   BrandColors copyWith({Color? accent, Color? secondary}) => BrandColors(
-        accent: accent ?? this.accent,
-        secondary: secondary ?? this.secondary,
-      );
+    accent: accent ?? this.accent,
+    secondary: secondary ?? this.secondary,
+  );
 
   @override
   BrandColors lerp(BrandColors? other, double t) {
@@ -70,37 +74,37 @@ class _DesktopPalette {
   static _DesktopPalette? of(LinuxDesktop desktop, bool isDark) =>
       switch ((desktop, isDark)) {
         (LinuxDesktop.gnome, false) => const _DesktopPalette(
-            window: AppColors.adwaitaLightWindow,
-            view: AppColors.adwaitaLightView,
-            card: AppColors.adwaitaLightCard,
-            text: AppColors.adwaitaLightText,
-            fontFamily: _adwaitaFont,
-            fontFallback: _adwaitaFallback,
-          ),
+          window: AppColors.adwaitaLightWindow,
+          view: AppColors.adwaitaLightView,
+          card: AppColors.adwaitaLightCard,
+          text: AppColors.adwaitaLightText,
+          fontFamily: _adwaitaFont,
+          fontFallback: _adwaitaFallback,
+        ),
         (LinuxDesktop.gnome, true) => const _DesktopPalette(
-            window: AppColors.adwaitaDarkWindow,
-            view: AppColors.adwaitaDarkView,
-            card: AppColors.adwaitaDarkCard,
-            text: AppColors.adwaitaDarkText,
-            fontFamily: _adwaitaFont,
-            fontFallback: _adwaitaFallback,
-          ),
+          window: AppColors.adwaitaDarkWindow,
+          view: AppColors.adwaitaDarkView,
+          card: AppColors.adwaitaDarkCard,
+          text: AppColors.adwaitaDarkText,
+          fontFamily: _adwaitaFont,
+          fontFallback: _adwaitaFallback,
+        ),
         (LinuxDesktop.kde, false) => const _DesktopPalette(
-            window: AppColors.breezeLightWindow,
-            view: AppColors.breezeLightView,
-            card: AppColors.breezeLightCard,
-            text: AppColors.breezeLightText,
-            fontFamily: _breezeFont,
-            fontFallback: _breezeFallback,
-          ),
+          window: AppColors.breezeLightWindow,
+          view: AppColors.breezeLightView,
+          card: AppColors.breezeLightCard,
+          text: AppColors.breezeLightText,
+          fontFamily: _breezeFont,
+          fontFallback: _breezeFallback,
+        ),
         (LinuxDesktop.kde, true) => const _DesktopPalette(
-            window: AppColors.breezeDarkWindow,
-            view: AppColors.breezeDarkView,
-            card: AppColors.breezeDarkCard,
-            text: AppColors.breezeDarkText,
-            fontFamily: _breezeFont,
-            fontFallback: _breezeFallback,
-          ),
+          window: AppColors.breezeDarkWindow,
+          view: AppColors.breezeDarkView,
+          card: AppColors.breezeDarkCard,
+          text: AppColors.breezeDarkText,
+          fontFamily: _breezeFont,
+          fontFallback: _breezeFallback,
+        ),
         (LinuxDesktop.other, _) => null,
       };
 
@@ -133,20 +137,22 @@ ThemeData buildAppTheme(
         : base;
   }
 
-  final brand =
-      accent == null ? BrandColors.brand : BrandColors.fromAccent(accent);
-  final scheme = ColorScheme.fromSeed(
-    seedColor: brand.accent,
-    brightness: brightness,
-  ).copyWith(
-    // Desktop accents are designed for white text on top.
-    primary: brand.accent,
-    onPrimary: Colors.white,
-    surface: palette.view,
-    onSurface: palette.text,
-    surfaceContainerLow: palette.card,
-    surfaceContainer: palette.card,
-  );
+  final brand = accent == null
+      ? BrandColors.brand
+      : BrandColors.fromAccent(accent);
+  final scheme =
+      ColorScheme.fromSeed(
+        seedColor: brand.accent,
+        brightness: brightness,
+      ).copyWith(
+        // Desktop accents are designed for white text on top.
+        primary: brand.accent,
+        onPrimary: Colors.white,
+        surface: palette.view,
+        onSurface: palette.text,
+        surfaceContainerLow: palette.card,
+        surfaceContainer: palette.card,
+      );
 
   return ThemeData(
     useMaterial3: true,
@@ -172,18 +178,19 @@ ThemeData _brandTheme(Brightness brightness) {
   final surface = isDark ? AppColors.darkSurface : AppColors.lightSurface;
   final text = isDark ? AppColors.darkText : AppColors.lightText;
 
-  final scheme = ColorScheme.fromSeed(
-    seedColor: AppColors.emerald,
-    brightness: brightness,
-  ).copyWith(
-    primary: brand.accent,
-    secondary: brand.secondary,
-    tertiary: isDark ? AppColors.goldDark : AppColors.gold,
-    surface: surface,
-    onSurface: text,
-    surfaceContainerLow: surface,
-    surfaceContainer: surface,
-  );
+  final scheme =
+      ColorScheme.fromSeed(
+        seedColor: AppColors.emerald,
+        brightness: brightness,
+      ).copyWith(
+        primary: brand.accent,
+        secondary: brand.secondary,
+        tertiary: isDark ? AppColors.goldDark : AppColors.gold,
+        surface: surface,
+        onSurface: text,
+        surfaceContainerLow: surface,
+        surfaceContainer: surface,
+      );
 
   final base = ThemeData(
     useMaterial3: true,
@@ -194,22 +201,35 @@ ThemeData _brandTheme(Brightness brightness) {
   // Large text is tightened slightly; geometric sans looks loose at size.
   final textTheme = base.textTheme
       .copyWith(
-        displayLarge: base.textTheme.displayLarge
-            ?.copyWith(fontWeight: FontWeight.w800, letterSpacing: -1.5),
-        displayMedium: base.textTheme.displayMedium
-            ?.copyWith(fontWeight: FontWeight.w800, letterSpacing: -1),
-        displaySmall: base.textTheme.displaySmall
-            ?.copyWith(fontWeight: FontWeight.w700, letterSpacing: -0.5),
-        headlineMedium: base.textTheme.headlineMedium
-            ?.copyWith(fontWeight: FontWeight.w700, letterSpacing: -0.5),
-        headlineSmall: base.textTheme.headlineSmall
-            ?.copyWith(fontWeight: FontWeight.w700, letterSpacing: -0.25),
-        titleLarge:
-            base.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
-        titleMedium:
-            base.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
-        labelLarge:
-            base.textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w600),
+        displayLarge: base.textTheme.displayLarge?.copyWith(
+          fontWeight: FontWeight.w800,
+          letterSpacing: -1.5,
+        ),
+        displayMedium: base.textTheme.displayMedium?.copyWith(
+          fontWeight: FontWeight.w800,
+          letterSpacing: -1,
+        ),
+        displaySmall: base.textTheme.displaySmall?.copyWith(
+          fontWeight: FontWeight.w700,
+          letterSpacing: -0.5,
+        ),
+        headlineMedium: base.textTheme.headlineMedium?.copyWith(
+          fontWeight: FontWeight.w700,
+          letterSpacing: -0.5,
+        ),
+        headlineSmall: base.textTheme.headlineSmall?.copyWith(
+          fontWeight: FontWeight.w700,
+          letterSpacing: -0.25,
+        ),
+        titleLarge: base.textTheme.titleLarge?.copyWith(
+          fontWeight: FontWeight.w700,
+        ),
+        titleMedium: base.textTheme.titleMedium?.copyWith(
+          fontWeight: FontWeight.w600,
+        ),
+        labelLarge: base.textTheme.labelLarge?.copyWith(
+          fontWeight: FontWeight.w600,
+        ),
       )
       .apply(bodyColor: text, displayColor: text);
 

@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -492,4 +493,28 @@ class AppLocalizationsMs extends AppLocalizations {
   @override
   String get cityAutoDetectHint =>
       'Matikan pengesanan automatik untuk memilih bandar';
+
+  @override
+  String get sheetHandle => 'Pemegang panel';
+
+  @override
+  String get sheetExpand => 'Kembangkan panel';
+
+  @override
+  String get sheetCollapse => 'Kecilkan panel';
+
+  @override
+  String get sheetDismiss => 'Tutup panel';
+
+  @override
+  String get sheetPreview => 'Pratonton';
+
+  @override
+  String get sheetCollapsed => 'Dikecilkan';
+
+  @override
+  String get sheetExpanded => 'Dikembangkan';
+
+  @override
+  String get sheetFullScreen => 'Skrin penuh';
 }

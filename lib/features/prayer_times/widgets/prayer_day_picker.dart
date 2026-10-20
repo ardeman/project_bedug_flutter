@@ -1,6 +1,9 @@
 import 'dart:ui' show lerpDouble;
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
+
+import '../../../core/design/material_controls.dart';
+
 import 'package:flutter/physics.dart';
 import 'package:intl/intl.dart';
 import 'package:liquid_glass_easy/liquid_glass_easy.dart';
@@ -117,20 +120,21 @@ class _PrayerDayPickerState extends State<PrayerDayPicker>
     final velocity = d.primaryVelocity ?? 0;
     setState(() => _isDraggingCalendar = false);
     _setCalendarOpen(
-        velocity.abs() > _flingVelocity ? velocity > 0 : _calendar.value > 0.5);
+      velocity.abs() > _flingVelocity ? velocity > 0 : _calendar.value > 0.5,
+    );
   }
 
   /// Lets [child] pull the grid open (down) and push it closed (up).
   /// The calendar button opens it for screen readers.
   Widget _calendarDragArea({required Widget child}) => GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        excludeFromSemantics: true,
-        onVerticalDragStart: _onCalendarDragStart,
-        onVerticalDragUpdate: _onCalendarDragUpdate,
-        onVerticalDragEnd: _onCalendarDragEnd,
-        onVerticalDragCancel: () => _onCalendarDragEnd(DragEndDetails()),
-        child: child,
-      );
+    behavior: HitTestBehavior.opaque,
+    excludeFromSemantics: true,
+    onVerticalDragStart: _onCalendarDragStart,
+    onVerticalDragUpdate: _onCalendarDragUpdate,
+    onVerticalDragEnd: _onCalendarDragEnd,
+    onVerticalDragCancel: () => _onCalendarDragEnd(DragEndDetails()),
+    child: child,
+  );
 
   /// The strip's scroll offset, or where it starts before its first layout.
   double get _stripPixels => _strip.hasClients
@@ -245,12 +249,17 @@ class _PrayerDayPickerState extends State<PrayerDayPicker>
                     morph: HijriGridMorph(
                       progress: _calendar,
                       stripDates: (width) => [
-                        for (final o
-                            in _DateStrip.offsetsOnScreen(width, _stripPixels))
+                        for (final o in _DateStrip.offsetsOnScreen(
+                          width,
+                          _stripPixels,
+                        ))
                           addDays(widget.today, o),
                       ],
                       stripRectOf: (date, width) => _DateStrip.chipRect(
-                          daysBetween(widget.today, date), width, _stripPixels),
+                        daysBetween(widget.today, date),
+                        width,
+                        _stripPixels,
+                      ),
                       stripLabelOf: (date) {
                         final o = daysBetween(widget.today, date);
                         return _DateChipLabel(
@@ -270,11 +279,14 @@ class _PrayerDayPickerState extends State<PrayerDayPicker>
             // At least a button tall, so the "Today" button appearing
             // doesn't resize the card.
             child: ConstrainedBox(
-              constraints:
-                  const BoxConstraints(minHeight: kMinInteractiveDimension),
+              constraints: const BoxConstraints(
+                minHeight: kMinInteractiveDimension,
+              ),
               child: Padding(
                 padding: const EdgeInsetsDirectional.only(
-                    start: AppSpacing.md, end: AppSpacing.xs),
+                  start: AppSpacing.md,
+                  end: AppSpacing.xs,
+                ),
                 child: Row(
                   children: [
                     Expanded(
@@ -291,7 +303,8 @@ class _PrayerDayPickerState extends State<PrayerDayPicker>
                             Text(
                               hijriDate,
                               style: theme.textTheme.bodySmall?.copyWith(
-                                  color: theme.colorScheme.onSurfaceVariant),
+                                color: theme.colorScheme.onSurfaceVariant,
+                              ),
                               overflow: TextOverflow.ellipsis,
                             ),
                         ],
@@ -304,12 +317,10 @@ class _PrayerDayPickerState extends State<PrayerDayPicker>
                         onPressed: _goToToday,
                       )
                     else if (showToday)
-                      TextButton.icon(
+                      MaterialLabelButton(
                         onPressed: _goToToday,
                         icon: const Icon(Icons.today, size: 18),
                         label: Text(l10n.today),
-                        style: TextButton.styleFrom(
-                            foregroundColor: AppColors.accentOf(ctx)),
                       ),
                     _CalendarToggle(
                       isOpen: _isCalendarOpen,
@@ -322,9 +333,7 @@ class _PrayerDayPickerState extends State<PrayerDayPicker>
             ),
           ),
           _calendarDragArea(
-            child: _DragHandle(
-              onTap: () => _setCalendarOpen(!_isCalendarOpen),
-            ),
+            child: _DragHandle(onTap: () => _setCalendarOpen(!_isCalendarOpen)),
           ),
         ],
       ),
@@ -335,7 +344,8 @@ class _PrayerDayPickerState extends State<PrayerDayPicker>
             color: Colors.transparent,
             child: LiquidGlassLite(
               shape: const LiquidGlassShape.continuousRoundedRectangle(
-                  cornerRadius: AppRadii.lg),
+                cornerRadius: AppRadii.lg,
+              ),
               blur: 10,
               color: isDark
                   ? Colors.white.withValues(alpha: 0.07)
@@ -346,9 +356,11 @@ class _PrayerDayPickerState extends State<PrayerDayPicker>
         : DecoratedBox(
             decoration: ShapeDecoration(
               color: theme.cardTheme.color ?? theme.cardColor,
-              shape: theme.cardTheme.shape ??
+              shape:
+                  theme.cardTheme.shape ??
                   RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(AppRadii.lg)),
+                    borderRadius: BorderRadius.circular(AppRadii.lg),
+                  ),
             ),
             child: Material(color: Colors.transparent, child: content),
           );
@@ -387,7 +399,7 @@ class _CalendarToggle extends StatelessWidget {
       color: color,
     );
     if (!PlatformCapabilities.isApple) {
-      return IconButton(
+      return MaterialIconButton(
         icon: icon,
         tooltip: label,
         isSelected: isOpen,
@@ -402,8 +414,10 @@ class _CalendarToggle extends StatelessWidget {
       child: GlassPressable(
         borderRadius: BorderRadius.circular(kMinInteractiveDimension / 2),
         onTap: onPressed,
-        child:
-            SizedBox.square(dimension: kMinInteractiveDimension, child: icon),
+        child: SizedBox.square(
+          dimension: kMinInteractiveDimension,
+          child: icon,
+        ),
       ),
     );
   }
@@ -429,48 +443,51 @@ class _StripToGrid extends StatelessWidget {
 
   /// Lays [child] out at its own height, whatever the slot's height.
   static Widget _natural(Widget child) => OverflowBox(
-        alignment: Alignment.topCenter,
-        minHeight: 0,
-        maxHeight: double.infinity,
-        child: child,
-      );
+    alignment: Alignment.topCenter,
+    minHeight: 0,
+    maxHeight: double.infinity,
+    child: child,
+  );
 
   @override
   Widget build(BuildContext ctx) => AnimatedBuilder(
-        animation: progress,
-        builder: (ctx, _) {
-          final t = progress.value;
-          final isGridShown = t >= 0.5;
-          final isMorphing = grid != null && t > 0;
-          return ClipRect(
-            child: SizedBox(
-              height: lerpDouble(_DateStrip._height, gridHeight(), t),
-              child: Stack(
-                children: [
-                  // Kept (hidden) while the grid is open, so its scroll
-                  // position survives.
-                  _natural(IgnorePointer(
-                    ignoring: isGridShown,
-                    child: ExcludeSemantics(
-                      excluding: isGridShown,
-                      child: Opacity(opacity: isMorphing ? 0 : 1, child: strip),
-                    ),
-                  )),
-                  if (grid case final grid?)
-                    _natural(IgnorePointer(
-                      ignoring: !isGridShown,
-                      child: ExcludeSemantics(
-                        excluding: !isGridShown,
-                        child:
-                            Opacity(opacity: isMorphing ? 1 : 0, child: grid),
-                      ),
-                    )),
-                ],
+    animation: progress,
+    builder: (ctx, _) {
+      final t = progress.value;
+      final isGridShown = t >= 0.5;
+      final isMorphing = grid != null && t > 0;
+      return ClipRect(
+        child: SizedBox(
+          height: lerpDouble(_DateStrip._height, gridHeight(), t),
+          child: Stack(
+            children: [
+              // Kept (hidden) while the grid is open, so its scroll
+              // position survives.
+              _natural(
+                IgnorePointer(
+                  ignoring: isGridShown,
+                  child: ExcludeSemantics(
+                    excluding: isGridShown,
+                    child: Opacity(opacity: isMorphing ? 0 : 1, child: strip),
+                  ),
+                ),
               ),
-            ),
-          );
-        },
+              if (grid case final grid?)
+                _natural(
+                  IgnorePointer(
+                    ignoring: !isGridShown,
+                    child: ExcludeSemantics(
+                      excluding: !isGridShown,
+                      child: Opacity(opacity: isMorphing ? 1 : 0, child: grid),
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ),
       );
+    },
+  );
 }
 
 /// The grab bar under the date: pulled down it opens the Hijri month grid,
@@ -486,36 +503,36 @@ class _DragHandle extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctx) => ExcludeSemantics(
-        child: GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: onTap,
-          child: Padding(
-            padding: const EdgeInsets.only(
-                top: AppSpacing.xxs, bottom: AppSpacing.xs),
-            child: Center(
-              child: Container(
-                width: _barWidth,
-                height: _barHeight,
-                decoration: BoxDecoration(
-                  color: Theme.of(ctx)
-                      .colorScheme
-                      .onSurfaceVariant
-                      .withValues(alpha: 0.4),
-                  borderRadius: BorderRadius.circular(_barHeight / 2),
-                ),
-              ),
+    child: GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.only(
+          top: AppSpacing.xxs,
+          bottom: AppSpacing.xs,
+        ),
+        child: Center(
+          child: Container(
+            width: _barWidth,
+            height: _barHeight,
+            decoration: BoxDecoration(
+              color: Theme.of(ctx).colorScheme.onSurfaceVariant
+                  .withValues(alpha: 0.4),
+              borderRadius: BorderRadius.circular(_barHeight / 2),
             ),
           ),
         ),
-      );
+      ),
+    ),
+  );
 }
 
 /// Whole calendar days from [from] to [to], ignoring the time of day and DST.
 int daysBetween(DateTime from, DateTime to) => DateTime.utc(
-      to.year,
-      to.month,
-      to.day,
-    ).difference(DateTime.utc(from.year, from.month, from.day)).inDays;
+  to.year,
+  to.month,
+  to.day,
+).difference(DateTime.utc(from.year, from.month, from.day)).inDays;
 
 /// [date]'s calendar day moved by [days], at midnight. Calendar arithmetic,
 /// so a DST change can't skip or repeat a date.
@@ -559,8 +576,12 @@ class _DateStrip extends StatelessWidget {
   /// Where the chip [offset] days from today sits in a strip [width] wide at
   /// scroll [pixels], on screen or not.
   static Rect chipRect(int offset, double width, double pixels) =>
-      Rect.fromLTWH(width / 2 + offset * _extent - pixels + _gap / 2, 0,
-          _chipWidth, _height);
+      Rect.fromLTWH(
+        width / 2 + offset * _extent - pixels + _gap / 2,
+        0,
+        _chipWidth,
+        _height,
+      );
 
   /// The day offsets with a chip at least partly on screen.
   static Iterable<int> offsetsOnScreen(double width, double pixels) sync* {
@@ -727,8 +748,8 @@ class _DateChipLabel extends StatelessWidget {
             color: isSelected
                 ? onAccent
                 : (isToday
-                    ? AppColors.accentOf(ctx)
-                    : theme.colorScheme.onSurface),
+                      ? AppColors.accentOf(ctx)
+                      : theme.colorScheme.onSurface),
           ),
         ),
         Text(
@@ -771,7 +792,9 @@ class _CenterChipSnapPhysics extends ScrollPhysics {
 
   @override
   Simulation? createBallisticSimulation(
-      ScrollMetrics position, double velocity) {
+    ScrollMetrics position,
+    double velocity,
+  ) {
     final tolerance = toleranceFor(position);
     // Where a plain fling would come to rest (0.135 is Flutter's own
     // scroll friction drag).
@@ -781,7 +804,12 @@ class _CenterChipSnapPhysics extends ScrollPhysics {
         velocity.abs() < tolerance.velocity) {
       return null;
     }
-    return ScrollSpringSimulation(spring, position.pixels, target, velocity,
-        tolerance: tolerance);
+    return ScrollSpringSimulation(
+      spring,
+      position.pixels,
+      target,
+      velocity,
+      tolerance: tolerance,
+    );
   }
 }

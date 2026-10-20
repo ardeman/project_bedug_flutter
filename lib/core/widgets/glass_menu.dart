@@ -1,6 +1,6 @@
 import 'dart:ui' show lerpDouble;
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:liquid_glass_easy/liquid_glass_easy.dart';
 
 import '../constants/app_colors.dart';
@@ -45,7 +45,7 @@ Future<void> showGlassMenu<T>(
       barrierColor: Colors.transparent,
       transitionDuration: const Duration(milliseconds: 280),
       reverseTransitionDuration: const Duration(milliseconds: 180),
-      pageBuilder: (_, animation, __) => _GlassMenu<T>(
+      pageBuilder: (_, animation, _) => _GlassMenu<T>(
         animation: animation,
         anchor: anchor,
         title: title,
@@ -53,7 +53,7 @@ Future<void> showGlassMenu<T>(
         selected: selected,
         onSelected: onSelected,
       ),
-      transitionsBuilder: (_, __, ___, child) => child,
+      transitionsBuilder: (_, _, _, child) => child,
     ),
   );
 }
@@ -90,12 +90,15 @@ class _GlassMenu<T> extends StatelessWidget {
 
     final width = (mq.size.width - AppSpacing.md * 2).clamp(0.0, _maxWidth);
     // Keep the menu's right edge under the anchor, but on screen.
-    final right = (mq.size.width - anchor.right)
-        .clamp(AppSpacing.md, mq.size.width - width - AppSpacing.md);
+    final right = (mq.size.width - anchor.right).clamp(
+      AppSpacing.md,
+      mq.size.width - width - AppSpacing.md,
+    );
     final opensUp = anchor.center.dy > mq.size.height / 2;
     final double? top = opensUp ? null : anchor.bottom + AppSpacing.xs;
-    final double? bottom =
-        opensUp ? mq.size.height - anchor.top + AppSpacing.xs : null;
+    final double? bottom = opensUp
+        ? mq.size.height - anchor.top + AppSpacing.xs
+        : null;
     final maxHeight = opensUp
         ? anchor.top - AppSpacing.xs - mq.padding.top - kToolbarHeight
         : mq.size.height - top! - GlassNavBar.occupiedHeight(ctx);
@@ -126,7 +129,11 @@ class _GlassMenu<T> extends StatelessWidget {
         if (title != null)
           Padding(
             padding: const EdgeInsets.fromLTRB(
-                AppSpacing.md, AppSpacing.xxs, AppSpacing.md, AppSpacing.xs),
+              AppSpacing.md,
+              AppSpacing.xxs,
+              AppSpacing.md,
+              AppSpacing.xs,
+            ),
             child: Text(
               title!,
               style: theme.textTheme.labelMedium?.copyWith(
@@ -176,7 +183,8 @@ class _GlassMenu<T> extends StatelessWidget {
                       style: LiquidGlassStyle(
                         shape:
                             const LiquidGlassShape.continuousRoundedRectangle(
-                                cornerRadius: AppRadii.lg),
+                              cornerRadius: AppRadii.lg,
+                            ),
                         color: glassTintOf(ctx),
                         blur: 18,
                       ),
@@ -226,7 +234,9 @@ class _GlassMenuItem<T> extends StatelessWidget {
       onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.md, vertical: AppSpacing.sm),
+          horizontal: AppSpacing.md,
+          vertical: AppSpacing.sm,
+        ),
         child: Row(
           children: [
             Expanded(
@@ -239,8 +249,9 @@ class _GlassMenuItem<T> extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: theme.textTheme.bodyLarge?.copyWith(
                       color: theme.colorScheme.onSurface,
-                      fontWeight:
-                          isSelected ? FontWeight.w600 : FontWeight.w400,
+                      fontWeight: isSelected
+                          ? FontWeight.w600
+                          : FontWeight.w400,
                     ),
                   ),
                   if (note != null)

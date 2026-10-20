@@ -1,10 +1,16 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
+import 'package:material_3_expressive/material_3_expressive.dart';
+
+import '../design/platform_design.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../generated/l10n/app_localizations.dart';
+
 import 'package:liquid_glass_easy/liquid_glass_easy.dart';
+
 import '../constants/app_colors.dart';
 import '../theme/app_tokens.dart';
 import '../providers/locale_provider.dart';
@@ -40,18 +46,68 @@ Future<void> showCalculationMethodPicker(
   }
 
   final l10n = AppLocalizations.of(ctx);
+  if (PlatformDesign.usesExpressive) {
+    return M3EBottomSheet.show<void>(
+      ctx,
+      labels: M3EBottomSheetLabels(
+        dragHandle: l10n.sheetHandle,
+        expand: l10n.sheetExpand,
+        collapse: l10n.sheetCollapse,
+        dismiss: l10n.sheetDismiss,
+        close: l10n.sheetDismiss,
+        scrim: l10n.sheetDismiss,
+        preview: l10n.sheetPreview,
+        collapsed: l10n.sheetCollapsed,
+        expanded: l10n.sheetExpanded,
+        fullScreen: l10n.sheetFullScreen,
+      ),
+      builder: (context) => Consumer(
+        builder: (context, ref, _) {
+          final selected = ref.watch(settingsProvider).method;
+          return ListView(
+            padding: const EdgeInsets.all(AppSpacing.md),
+            children: [
+              Text(
+                l10n.calculationMethod,
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              const SizedBox(height: AppSpacing.xs),
+              Text(
+                l10n.calculationMethodDesc,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              const SizedBox(height: AppSpacing.md),
+              for (final method in AppCalculationMethod.values)
+                M3EListItem(
+                  headline: calculationMethodLabel(context, method),
+                  supportingText: method == AppCalculationMethod.kemenag
+                      ? l10n.recommended
+                      : null,
+                  selected: selected == method,
+                  trailing: selected == method ? const Icon(Icons.check) : null,
+                  onTap: () {
+                    ref.read(settingsProvider.notifier).setMethod(method);
+                    Navigator.of(context).pop();
+                  },
+                ),
+            ],
+          );
+        },
+      ),
+    );
+  }
   return Navigator.of(ctx).push(
     PageRouteBuilder<void>(
       opaque: false,
       barrierDismissible: true,
       transitionDuration: const Duration(milliseconds: 320),
       reverseTransitionDuration: const Duration(milliseconds: 260),
-      pageBuilder: (_, animation, ___) => _CalculationMethodPickerSheet(
+      pageBuilder: (_, animation, _) => _CalculationMethodPickerSheet(
         animation: animation,
         title: l10n.calculationMethod,
         current: current,
       ),
-      transitionsBuilder: (_, __, ___, child) => child,
+      transitionsBuilder: (_, _, _, child) => child,
     ),
   );
 }
@@ -78,8 +134,9 @@ Future<void> showCalculationMethodMenu(
         GlassMenuOption(
           value: method,
           label: calculationMethodLabel(ctx, method),
-          note:
-              method == AppCalculationMethod.kemenag ? l10n.recommended : null,
+          note: method == AppCalculationMethod.kemenag
+              ? l10n.recommended
+              : null,
         ),
     ],
     selected: current,
@@ -103,10 +160,8 @@ Future<void> _showNativeAppleMethodPicker(
     topGap: 0.08,
     // Sharing the controller lets a downward drag at the top of the list
     // dismiss the sheet, like native iOS sheets.
-    scrollableBuilder: (sheetCtx, controller) => _NativeAppleMethodSheet(
-      current: current,
-      controller: controller,
-    ),
+    scrollableBuilder: (sheetCtx, controller) =>
+        _NativeAppleMethodSheet(current: current, controller: controller),
   );
 }
 
@@ -164,7 +219,9 @@ class _NativeAppleMethodSheet extends ConsumerWidget {
                   final isKemenag = method == AppCalculationMethod.kemenag;
                   return CupertinoButton(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 12),
+                      horizontal: 16,
+                      vertical: 12,
+                    ),
                     onPressed: () {
                       ref.read(settingsProvider.notifier).setMethod(method);
                       Navigator.of(ctx, rootNavigator: true).pop();
@@ -188,8 +245,8 @@ class _NativeAppleMethodSheet extends ConsumerWidget {
                               color: isSelected
                                   ? AppColors.accentOf(ctx)
                                   : (isDark
-                                      ? Colors.white
-                                      : const Color(0xFF1C1C1E)),
+                                        ? Colors.white
+                                        : const Color(0xFF1C1C1E)),
                               fontSize: 20,
                               fontWeight: isSelected
                                   ? FontWeight.w600
@@ -200,7 +257,9 @@ class _NativeAppleMethodSheet extends ConsumerWidget {
                         if (isKemenag)
                           Container(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 4),
+                              horizontal: 8,
+                              vertical: 4,
+                            ),
                             decoration: BoxDecoration(
                               color: AppColors.accentOf(ctx)
                                   .withValues(alpha: .15),
@@ -280,15 +339,17 @@ class _CalculationMethodPickerSheetState
                         child: LiquidGlassLite(
                           shape:
                               const LiquidGlassShape.continuousRoundedRectangle(
-                                  cornerRadius: AppRadii.xl),
+                                cornerRadius: AppRadii.xl,
+                              ),
                           blur: 28,
                           color: isDark
                               ? Colors.black.withValues(alpha: .55)
                               : Colors.white.withValues(alpha: .78),
                           child: Container(
                             height: h * 0.6 + AppRadii.xl,
-                            padding:
-                                EdgeInsets.only(bottom: bottom + AppRadii.xl),
+                            padding: EdgeInsets.only(
+                              bottom: bottom + AppRadii.xl,
+                            ),
                             child: Column(
                               children: [
                                 GestureDetector(
@@ -302,7 +363,8 @@ class _CalculationMethodPickerSheetState
                                     });
                                   },
                                   onVerticalDragEnd: (details) {
-                                    final shouldClose = _dragOffset > 72 ||
+                                    final shouldClose =
+                                        _dragOffset > 72 ||
                                         (details.primaryVelocity ?? 0) > 700;
                                     if (shouldClose) {
                                       Navigator.pop(ctx);
@@ -312,7 +374,9 @@ class _CalculationMethodPickerSheetState
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.only(
-                                        top: 8, bottom: 10),
+                                      top: 8,
+                                      bottom: 10,
+                                    ),
                                     child: Container(
                                       width: 36,
                                       height: 4,
@@ -337,8 +401,9 @@ class _CalculationMethodPickerSheetState
                                 ),
                                 Divider(
                                   height: 1,
-                                  color:
-                                      isDark ? Colors.white12 : Colors.black12,
+                                  color: isDark
+                                      ? Colors.white12
+                                      : Colors.black12,
                                 ),
                                 Expanded(
                                   child: MediaQuery.removePadding(
@@ -346,41 +411,49 @@ class _CalculationMethodPickerSheetState
                                     removeTop: true,
                                     child: ListView(
                                       padding: const EdgeInsets.only(top: 4),
-                                      children: AppCalculationMethod
-                                          .values.indexed
-                                          .map((entry) {
+                                      children: AppCalculationMethod.values.indexed.map((
+                                        entry,
+                                      ) {
                                         final i = entry.$1;
                                         final method = entry.$2;
-                                        final isSelected = ref
+                                        final isSelected =
+                                            ref
                                                 .watch(settingsProvider)
                                                 .method ==
                                             method;
-                                        final isKemenag = method ==
+                                        final isKemenag =
+                                            method ==
                                             AppCalculationMethod.kemenag;
                                         return TweenAnimationBuilder<double>(
                                           tween: Tween(begin: 0, end: 1),
                                           duration: Duration(
-                                              milliseconds: 220 + (i * 45)),
+                                            milliseconds: 220 + (i * 45),
+                                          ),
                                           curve: Curves.easeOutCubic,
                                           builder: (context, value, child) =>
                                               Opacity(
-                                            opacity: value,
-                                            child: Transform.translate(
-                                              offset:
-                                                  Offset(0, (1 - value) * 16),
-                                              child: child,
-                                            ),
-                                          ),
+                                                opacity: value,
+                                                child: Transform.translate(
+                                                  offset: Offset(
+                                                    0,
+                                                    (1 - value) * 16,
+                                                  ),
+                                                  child: child,
+                                                ),
+                                              ),
                                           child: AnimatedContainer(
                                             duration: const Duration(
-                                                milliseconds: 220),
+                                              milliseconds: 220,
+                                            ),
                                             curve: Curves.easeOut,
                                             margin: const EdgeInsets.symmetric(
-                                                horizontal: 12, vertical: 2),
+                                              horizontal: 12,
+                                              vertical: 2,
+                                            ),
                                             decoration: BoxDecoration(
                                               color: isSelected
                                                   ? AppColors.accentOf(ctx)
-                                                      .withValues(alpha: .08)
+                                                        .withValues(alpha: .08)
                                                   : Colors.transparent,
                                               borderRadius:
                                                   BorderRadius.circular(12),
@@ -388,27 +461,33 @@ class _CalculationMethodPickerSheetState
                                             child: ListTile(
                                               leading: AnimatedSwitcher(
                                                 duration: const Duration(
-                                                    milliseconds: 180),
+                                                  milliseconds: 180,
+                                                ),
                                                 child: isSelected
                                                     ? Icon(
                                                         Icons.check_circle,
                                                         key: ValueKey(
-                                                            'selected'),
+                                                          'selected',
+                                                        ),
                                                         color:
                                                             AppColors.accentOf(
-                                                                ctx),
+                                                              ctx,
+                                                            ),
                                                       )
                                                     : const Icon(
                                                         Icons
                                                             .radio_button_unchecked,
                                                         key: ValueKey(
-                                                            'unselected'),
+                                                          'unselected',
+                                                        ),
                                                         color: Colors.grey,
                                                       ),
                                               ),
                                               title: Text(
                                                 calculationMethodLabel(
-                                                    ctx, method),
+                                                  ctx,
+                                                  method,
+                                                ),
                                                 style: TextStyle(
                                                   fontWeight: isSelected
                                                       ? FontWeight.w600
@@ -420,26 +499,31 @@ class _CalculationMethodPickerSheetState
                                               ),
                                               trailing: isKemenag
                                                   ? Container(
-                                                      padding: const EdgeInsets
-                                                          .symmetric(
-                                                          horizontal: 8,
-                                                          vertical: 3),
+                                                      padding:
+                                                          const EdgeInsets.symmetric(
+                                                            horizontal: 8,
+                                                            vertical: 3,
+                                                          ),
                                                       decoration: BoxDecoration(
                                                         color:
                                                             AppColors.accentOf(
-                                                                    ctx)
-                                                                .withValues(
-                                                                    alpha: .15),
+                                                              ctx,
+                                                            ).withValues(
+                                                              alpha: .15,
+                                                            ),
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
+                                                            BorderRadius.circular(
+                                                              8,
+                                                            ),
                                                       ),
                                                       child: Text(
                                                         AppLocalizations.of(ctx)
                                                             .recommended,
                                                         style: TextStyle(
-                                                          color: AppColors
-                                                              .accentOf(ctx),
+                                                          color:
+                                                              AppColors.accentOf(
+                                                                ctx,
+                                                              ),
                                                           fontSize: 11,
                                                           fontWeight:
                                                               FontWeight.bold,
@@ -449,8 +533,9 @@ class _CalculationMethodPickerSheetState
                                                   : null,
                                               onTap: () {
                                                 ref
-                                                    .read(settingsProvider
-                                                        .notifier)
+                                                    .read(
+                                                      settingsProvider.notifier,
+                                                    )
                                                     .setMethod(method);
                                                 Navigator.pop(ctx);
                                               },
@@ -480,8 +565,8 @@ class _CalculationMethodPickerSheetState
 
 /// Opens the calculation method picker as a full page, so it slides in like
 /// the other settings pages and closes with the edge swipe back.
-Future<void> showCalculationMethodPage(BuildContext ctx) =>
-    Navigator.of(ctx).push(
+Future<void> showCalculationMethodPage(BuildContext ctx) => Navigator.of(ctx)
+    .push(
       MaterialPageRoute<void>(builder: (_) => const CalculationMethodScreen()),
     );
 
@@ -503,8 +588,9 @@ class CalculationMethodScreen extends ConsumerWidget {
           subtitle: method == AppCalculationMethod.kemenag
               ? Text(l10n.recommended)
               : null,
-          trailing:
-              method == selected ? Icon(Icons.check, color: accent) : null,
+          trailing: method == selected
+              ? Icon(Icons.check, color: accent)
+              : null,
           onTap: () {
             ref.read(settingsProvider.notifier).setMethod(method);
             Navigator.of(ctx).pop();
@@ -520,22 +606,38 @@ class CalculationMethodScreen extends ConsumerWidget {
         children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(
-                AppSpacing.md, AppSpacing.xs, AppSpacing.md, AppSpacing.md),
+              AppSpacing.md,
+              AppSpacing.xs,
+              AppSpacing.md,
+              AppSpacing.md,
+            ),
             child: Text(
               l10n.calculationMethodDesc,
-              style: theme.textTheme.bodyMedium
-                  ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
             ),
           ),
-          if (isApple)
+          if (PlatformDesign.usesExpressive)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+              child: M3EList(
+                itemCount: rows.length,
+                onTap: (i) => rows[i].onTap?.call(),
+                itemBuilder: (ctx, i) => rows[i],
+              ),
+            )
+          else if (isApple)
             GlassCard(
               margin: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-              child: Column(children: [
-                for (final (i, row) in rows.indexed) ...[
-                  if (i > 0) const Hairline(indent: AppSpacing.md),
-                  row,
+              child: Column(
+                children: [
+                  for (final (i, row) in rows.indexed) ...[
+                    if (i > 0) const Hairline(indent: AppSpacing.md),
+                    row,
+                  ],
                 ],
-              ]),
+              ),
             )
           else
             ...rows,

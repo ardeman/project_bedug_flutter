@@ -65,7 +65,7 @@ import 'app_localizations_ms.dart';
 /// property.
 abstract class AppLocalizations {
   AppLocalizations(String locale)
-      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -88,18 +88,18 @@ abstract class AppLocalizations {
   /// of delegates is preferred or required.
   static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
       <LocalizationsDelegate<dynamic>>[
-    delegate,
-    GlobalMaterialLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-  ];
+        delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ];
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('ar'),
     Locale('en'),
     Locale('id'),
-    Locale('ms')
+    Locale('ms'),
   ];
 
   /// Application name
@@ -1019,6 +1019,54 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Matikan deteksi otomatis untuk memilih kota'**
   String get cityAutoDetectHint;
+
+  /// No description provided for @sheetHandle.
+  ///
+  /// In id, this message translates to:
+  /// **'Pegangan panel'**
+  String get sheetHandle;
+
+  /// No description provided for @sheetExpand.
+  ///
+  /// In id, this message translates to:
+  /// **'Perluas panel'**
+  String get sheetExpand;
+
+  /// No description provided for @sheetCollapse.
+  ///
+  /// In id, this message translates to:
+  /// **'Ciutkan panel'**
+  String get sheetCollapse;
+
+  /// No description provided for @sheetDismiss.
+  ///
+  /// In id, this message translates to:
+  /// **'Tutup panel'**
+  String get sheetDismiss;
+
+  /// No description provided for @sheetPreview.
+  ///
+  /// In id, this message translates to:
+  /// **'Pratinjau'**
+  String get sheetPreview;
+
+  /// No description provided for @sheetCollapsed.
+  ///
+  /// In id, this message translates to:
+  /// **'Diciutkan'**
+  String get sheetCollapsed;
+
+  /// No description provided for @sheetExpanded.
+  ///
+  /// In id, this message translates to:
+  /// **'Diperluas'**
+  String get sheetExpanded;
+
+  /// No description provided for @sheetFullScreen.
+  ///
+  /// In id, this message translates to:
+  /// **'Layar penuh'**
+  String get sheetFullScreen;
 }
 
 class _AppLocalizationsDelegate
@@ -1052,8 +1100,9 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   }
 
   throw FlutterError(
-      'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-      'an issue with the localizations generation tool. Please file an issue '
-      'on GitHub with a reproducible sample app and the gen-l10n configuration '
-      'that was used.');
+    'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.',
+  );
 }

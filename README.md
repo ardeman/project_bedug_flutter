@@ -16,14 +16,14 @@ A cross-platform Muslim prayer times app with a Hijri calendar, in Indonesian, E
 - When reverse geocoding fails, the header shows the nearest supported city, never raw coordinates.
 - GPS timeouts are handled gracefully: high-accuracy settings on Android, a recent last-known position as fallback, and no raw exception text shown to users.
 - In-app theme switching (System / Light / Dark) updates every card, bar and glass overlay at once.
-- Calculation method picker: a native Cupertino sheet on iOS/macOS, a liquid-glass sheet elsewhere.
+- Calculation method picker: a native Cupertino sheet on iOS/macOS, an Expressive sheet on Material platforms, and a liquid-glass sheet on other desktop paths.
 - Apple-specific polish:
   - Liquid Glass from `liquid_glass_easy`: a refracting tab bar with a draggable pill, glass app bar buttons and countdown, and lite glass prayer cards.
   - Prayer header that collapses into a compact bar, keeps the countdown visible and adapts to the Dynamic Island in portrait and to camera cutouts in landscape.
   - macOS window with a hidden, transparent title bar, rounded corners and inset traffic-light buttons. Tabs can be selected by dragging across the nav bar.
   - A layered Icon Composer app icon, so iOS and macOS render it in Liquid Glass and in the Default, Dark, Clear and Tinted icon modes.
 
-The Material theme follows [Material 3 Expressive](https://m3.material.io/get-started) with emphasized typography, tonal cards, rounded buttons that change shape on press, and stronger navigation selection. It uses Flutter’s built-in components; Expressive’s full component and spring-motion catalog is not implemented.
+The Material screens use [Material 3 Expressive](https://m3.material.io/get-started) components from `material_3_expressive`: spring-driven buttons, icon buttons, switches and navigation, morphing loading indicators, tonal cards, grouped lists, segmented choices, dropdowns, search and calculation-method sheets. `material_ui` and `cupertino_ui` provide the underlying Flutter design libraries. Apple keeps Liquid Glass and native Cupertino sheets; GNOME/KDE keep their desktop palettes and Windows keeps its Fluent layout.
 
 ## Supported platforms
 
@@ -39,7 +39,7 @@ See the [roadmap](#roadmap) for the Linux plan.
 
 ## Getting started
 
-Prerequisites: the [Flutter SDK](https://docs.flutter.dev/get-started/install) (3.31+) on the stable channel, plus the toolchain for the platform you target: Xcode 26+ for iOS/macOS (deployment targets are 26.0), Android Studio for Android, and on Linux the GStreamer development packages that `audioplayers` builds against (`sudo apt install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev`). Run `flutter doctor` to check.
+Prerequisites: the [Flutter SDK](https://docs.flutter.dev/get-started/install) (3.47+) on the stable channel, plus the toolchain for the platform you target: Xcode 26+ for iOS/macOS (deployment targets are 26.0), Android Studio for Android, and on Linux the GStreamer development packages that `audioplayers` builds against (`sudo apt install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev`). Run `flutter doctor` to check.
 
 ```sh
 flutter pub get

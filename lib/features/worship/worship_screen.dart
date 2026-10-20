@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../core/design/liquid_glass.dart';
 import '../../core/design/platform_capabilities.dart';
