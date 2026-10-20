@@ -66,6 +66,9 @@ class PlatformListTile extends StatelessWidget {
   final Widget? trailing;
   final VoidCallback? onTap;
 
+  /// False dims the row and ignores taps, like a disabled [ListTile].
+  final bool enabled;
+
   const PlatformListTile({
     super.key,
     this.leading,
@@ -73,7 +76,11 @@ class PlatformListTile extends StatelessWidget {
     this.subtitle,
     this.trailing,
     this.onTap,
+    this.enabled = true,
   });
+
+  /// How visible a disabled row stays, close to UIKit's dimmed cells.
+  static const _disabledOpacity = 0.4;
 
   /// Where the text starts: the row padding, a 24pt icon and a gap. Inset
   /// row separators by this, like grouped iOS lists.
@@ -91,13 +98,14 @@ class PlatformListTile extends StatelessWidget {
         subtitle: subtitle,
         trailing: trailing,
         onTap: onTap,
+        enabled: enabled,
       );
     }
 
     final theme = Theme.of(ctx);
     final muted = theme.colorScheme.onSurfaceVariant;
-    return GlassPressable(
-      onTap: onTap,
+    final row = GlassPressable(
+      onTap: enabled ? onTap : null,
       child: ConstrainedBox(
         constraints: const BoxConstraints(minHeight: _minHeight),
         child: Padding(
@@ -137,6 +145,7 @@ class PlatformListTile extends StatelessWidget {
         ),
       ),
     );
+    return enabled ? row : Opacity(opacity: _disabledOpacity, child: row);
   }
 }
 

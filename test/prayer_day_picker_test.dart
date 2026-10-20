@@ -115,6 +115,17 @@ void main() {
     expect(find.text(shownTitle), findsOneWidget);
     expect(find.text('Tuesday, October 20'), findsOneWidget);
 
+    // With today already picked, "Today" shows only once the grid pages
+    // away, and brings its month back.
+    expect(find.text('Today'), findsNothing);
+    await tester.tap(find.bySemanticsLabel('Previous month'));
+    await tester.pumpAndSettle();
+    expect(find.text(shownTitle), findsNothing);
+    await tester.tap(find.text('Today'));
+    await tester.pumpAndSettle();
+    expect(find.text(shownTitle), findsOneWidget);
+    expect(find.text('Today'), findsNothing);
+
     await tester.tap(find.bySemanticsLabel('Hijri Calendar'));
     await tester.pumpAndSettle();
     expect(find.text(shownTitle), findsNothing);

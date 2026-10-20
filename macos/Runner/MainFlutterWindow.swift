@@ -10,6 +10,9 @@ class MainFlutterWindow: NSWindow, NSWindowDelegate {
     configureWindowAppearance(flutterViewController)
     delegate = self
     updateTrafficLightButtons()
+    // The unified toolbar lays the buttons out again once the window shows,
+    // so place them after that pass too.
+    DispatchQueue.main.async { [weak self] in self?.updateTrafficLightButtons() }
 
     RegisterGeneratedPlugins(registry: flutterViewController)
 
@@ -22,6 +25,12 @@ class MainFlutterWindow: NSWindow, NSWindowDelegate {
     titlebarAppearsTransparent = true
     styleMask.insert(.fullSizeContentView)
     isMovableByWindowBackground = true
+    // An empty unified toolbar makes the titlebar tall enough to center the
+    // traffic lights on the app's toolbar row (see updateTrafficLightButtons).
+    let toolbar = NSToolbar()
+    toolbar.showsBaselineSeparator = false
+    self.toolbar = toolbar
+    toolbarStyle = .unified
 
     // Allow the Flutter surface to render rounded, glass-like window edges.
     isOpaque = false
@@ -43,7 +52,10 @@ class MainFlutterWindow: NSWindow, NSWindowDelegate {
       let container = close.superview
     else { return }
 
-    let topInset: CGFloat = 12
+    // Center the buttons on Flutter's toolbar row (kToolbarHeight, 56pt), the
+    // line the location label, title capsules and action buttons sit on.
+    let toolbarHeight: CGFloat = 56
+    let topInset = (toolbarHeight - close.frame.height) / 2
     let leftInset: CGFloat = 14
     let spacing: CGFloat = 10
     let buttonY = container.frame.height - close.frame.height - topInset
