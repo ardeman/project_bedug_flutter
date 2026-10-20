@@ -42,6 +42,8 @@ flutter:
     - assets/fonts/plus_jakarta_sans/OFL.txt
     # Selection tick for devices without a haptic engine.
     - assets/sounds/selection_tick.wav
+    # Release notes, shared with the website (site/build.py).
+    - assets/changelog/changelog.json
   # Brand typeface, bundled so the app stays offline first (SIL OFL 1.1,
   # license in assets/fonts/plus_jakarta_sans/OFL.txt).
   fonts:

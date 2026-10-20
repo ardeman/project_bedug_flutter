@@ -375,4 +375,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dirNW => 'northwest';
+
+  @override
+  String get whatsNew => 'What\'s New';
+
+  @override
+  String get whatsNewSubtitle => 'Changes in each version';
+
+  @override
+  String get changelogUnreleased => 'Not released yet';
+
+  @override
+  String get changelogNew => 'New';
+
+  @override
+  String get changelogImproved => 'Improved';
+
+  @override
+  String get changelogFixed => 'Fixed';
+
+  @override
+  String get changelogLoadError => 'The changelog couldn\'t be loaded.';
 }

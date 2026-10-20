@@ -10,7 +10,8 @@
     "download": "Unduh",
     "infaq": "Infak",
     "roadmap": "Rencana",
-    "privacy": "Privasi"
+    "privacy": "Privasi",
+    "changelog": "Catatan rilis"
   },
   "meta": {
     "title": "Bedug · Jadwal salat, kiblat dan kalender Hijriyah",
@@ -203,6 +204,20 @@
           "Ada pertanyaan tentang kebijakan ini? Buka issue di <a href=\"{issues}\">GitHub</a>."
         ]
       }
+    ]
+  },
+  "changelog": {
+    "meta_title": "Catatan rilis · Bedug",
+    "meta_description": "Yang baru dan yang berubah di setiap versi Bedug.",
+    "title": "Catatan rilis",
+    "lead": "Yang baru dan yang berubah di setiap versi Bedug. Daftar yang sama ada di aplikasi, di Pengaturan → Yang Baru.",
+    "version": "Versi {version}",
+    "unreleased": "Belum dirilis",
+    "date_format": "{day} {month} {year}",
+    "types": { "new": "Baru", "improved": "Ditingkatkan", "fixed": "Diperbaiki" },
+    "months": [
+      "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+      "Juli", "Agustus", "September", "Oktober", "November", "Desember"
     ]
   }
 }

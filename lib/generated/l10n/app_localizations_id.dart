@@ -376,4 +376,25 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get dirNW => 'barat laut';
+
+  @override
+  String get whatsNew => 'Yang Baru';
+
+  @override
+  String get whatsNewSubtitle => 'Perubahan di setiap versi';
+
+  @override
+  String get changelogUnreleased => 'Belum dirilis';
+
+  @override
+  String get changelogNew => 'Baru';
+
+  @override
+  String get changelogImproved => 'Ditingkatkan';
+
+  @override
+  String get changelogFixed => 'Diperbaiki';
+
+  @override
+  String get changelogLoadError => 'Daftar perubahan tidak dapat dimuat.';
 }

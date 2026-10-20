@@ -10,7 +10,8 @@
     "download": "Muat turun",
     "infaq": "Infak",
     "roadmap": "Pelan",
-    "privacy": "Privasi"
+    "privacy": "Privasi",
+    "changelog": "Log perubahan"
   },
   "meta": {
     "title": "Bedug · Waktu solat, kiblat dan kalendar Hijrah",
@@ -203,6 +204,20 @@
           "Ada soalan tentang dasar ini? Buka isu di <a href=\"{issues}\">GitHub</a>."
         ]
       }
+    ]
+  },
+  "changelog": {
+    "meta_title": "Log perubahan · Bedug",
+    "meta_description": "Apa yang baharu dan apa yang berubah dalam setiap versi Bedug.",
+    "title": "Log perubahan",
+    "lead": "Apa yang baharu dan apa yang berubah dalam setiap versi Bedug. Aplikasi menunjukkan senarai yang sama dalam Tetapan → Apa yang Baharu.",
+    "version": "Versi {version}",
+    "unreleased": "Belum dikeluarkan",
+    "date_format": "{day} {month} {year}",
+    "types": { "new": "Baharu", "improved": "Ditambah baik", "fixed": "Dibaiki" },
+    "months": [
+      "Januari", "Februari", "Mac", "April", "Mei", "Jun",
+      "Julai", "Ogos", "September", "Oktober", "November", "Disember"
     ]
   }
 }

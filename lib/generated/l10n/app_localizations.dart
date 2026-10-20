@@ -785,6 +785,48 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'barat laut'**
   String get dirNW;
+
+  /// No description provided for @whatsNew.
+  ///
+  /// In id, this message translates to:
+  /// **'Yang Baru'**
+  String get whatsNew;
+
+  /// No description provided for @whatsNewSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Perubahan di setiap versi'**
+  String get whatsNewSubtitle;
+
+  /// No description provided for @changelogUnreleased.
+  ///
+  /// In id, this message translates to:
+  /// **'Belum dirilis'**
+  String get changelogUnreleased;
+
+  /// No description provided for @changelogNew.
+  ///
+  /// In id, this message translates to:
+  /// **'Baru'**
+  String get changelogNew;
+
+  /// No description provided for @changelogImproved.
+  ///
+  /// In id, this message translates to:
+  /// **'Ditingkatkan'**
+  String get changelogImproved;
+
+  /// No description provided for @changelogFixed.
+  ///
+  /// In id, this message translates to:
+  /// **'Diperbaiki'**
+  String get changelogFixed;
+
+  /// No description provided for @changelogLoadError.
+  ///
+  /// In id, this message translates to:
+  /// **'Daftar perubahan tidak dapat dimuat.'**
+  String get changelogLoadError;
 }
 
 class _AppLocalizationsDelegate

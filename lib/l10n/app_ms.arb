@@ -111,5 +111,12 @@
   "dirS": "selatan",
   "dirSW": "barat daya",
   "dirW": "barat",
-  "dirNW": "barat laut"
+  "dirNW": "barat laut",
+  "whatsNew": "Apa yang Baharu",
+  "whatsNewSubtitle": "Perubahan dalam setiap versi",
+  "changelogUnreleased": "Belum dikeluarkan",
+  "changelogNew": "Baharu",
+  "changelogImproved": "Ditambah baik",
+  "changelogFixed": "Dibaiki",
+  "changelogLoadError": "Log perubahan tidak dapat dimuatkan."
 }

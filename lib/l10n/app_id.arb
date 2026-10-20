@@ -273,5 +273,12 @@
   "dirW": "barat",
   "@dirW": {},
   "dirNW": "barat laut",
-  "@dirNW": {}
+  "@dirNW": {},
+  "whatsNew": "Yang Baru",
+  "whatsNewSubtitle": "Perubahan di setiap versi",
+  "changelogUnreleased": "Belum dirilis",
+  "changelogNew": "Baru",
+  "changelogImproved": "Ditingkatkan",
+  "changelogFixed": "Diperbaiki",
+  "changelogLoadError": "Daftar perubahan tidak dapat dimuat."
 }

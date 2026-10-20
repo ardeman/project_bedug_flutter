@@ -10,6 +10,11 @@ class PlatformCapabilities {
     return Platform.isIOS;
   }
 
+  static bool get isMacOS {
+    if (kIsWeb) return false;
+    return Platform.isMacOS;
+  }
+
   static bool get isApple {
     if (kIsWeb) return false;
     return Platform.isIOS || Platform.isMacOS;

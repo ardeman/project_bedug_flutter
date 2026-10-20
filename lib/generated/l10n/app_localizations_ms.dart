@@ -374,4 +374,25 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get dirNW => 'barat laut';
+
+  @override
+  String get whatsNew => 'Apa yang Baharu';
+
+  @override
+  String get whatsNewSubtitle => 'Perubahan dalam setiap versi';
+
+  @override
+  String get changelogUnreleased => 'Belum dikeluarkan';
+
+  @override
+  String get changelogNew => 'Baharu';
+
+  @override
+  String get changelogImproved => 'Ditambah baik';
+
+  @override
+  String get changelogFixed => 'Dibaiki';
+
+  @override
+  String get changelogLoadError => 'Log perubahan tidak dapat dimuatkan.';
 }

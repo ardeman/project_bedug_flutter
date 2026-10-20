@@ -111,5 +111,12 @@
   "dirS": "الجنوب",
   "dirSW": "الجنوب الغربي",
   "dirW": "الغرب",
-  "dirNW": "الشمال الغربي"
+  "dirNW": "الشمال الغربي",
+  "whatsNew": "ما الجديد",
+  "whatsNewSubtitle": "التغييرات في كل إصدار",
+  "changelogUnreleased": "لم يصدر بعد",
+  "changelogNew": "جديد",
+  "changelogImproved": "تحسين",
+  "changelogFixed": "إصلاح",
+  "changelogLoadError": "تعذّر تحميل سجل التغييرات."
 }

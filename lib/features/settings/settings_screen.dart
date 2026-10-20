@@ -12,6 +12,7 @@ import '../../core/theme/app_tokens.dart';
 import '../../core/widgets/calculation_method_picker.dart';
 import '../../core/widgets/glass_menu.dart';
 import '../../generated/l10n/app_localizations.dart';
+import '../changelog/changelog_screen.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -146,6 +147,16 @@ class SettingsScreen extends ConsumerWidget {
 
       // ── Section: Lainnya ─────────────────────────────────────────────────
       _Section(title: l10n.about, children: [
+        PlatformListTile(
+          leading:
+              Icon(Icons.new_releases_outlined, color: AppColors.accentOf(ctx)),
+          title: Text(l10n.whatsNew),
+          subtitle: Text(l10n.whatsNewSubtitle),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => Navigator.of(ctx).push(MaterialPageRoute<void>(
+            builder: (_) => const ChangelogScreen(),
+          )),
+        ),
         PlatformListTile(
           leading: Icon(Icons.widgets_outlined, color: AppColors.accentOf(ctx)),
           title: Text(l10n.widgetStyle),

@@ -111,5 +111,12 @@
   "dirS": "south",
   "dirSW": "southwest",
   "dirW": "west",
-  "dirNW": "northwest"
+  "dirNW": "northwest",
+  "whatsNew": "What's New",
+  "whatsNewSubtitle": "Changes in each version",
+  "changelogUnreleased": "Not released yet",
+  "changelogNew": "New",
+  "changelogImproved": "Improved",
+  "changelogFixed": "Fixed",
+  "changelogLoadError": "The changelog couldn't be loaded."
 }

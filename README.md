@@ -109,6 +109,7 @@ lib/
     qibla/           Qibla compass card
     prayer/          Prayer card widget
     settings/        Settings screen
+    changelog/       What's New screen and the changelog model
   l10n/              ARB files (app_id.arb is the template)
   generated/l10n/    Generated localizations (do not edit)
 bin/                 Command-line helper scripts
@@ -116,6 +117,7 @@ assets/branding/     App icon sources (SVG) and their 1024px renders
   AppIcon.icon/      Icon Composer icon for iOS and macOS
   layers/            Flat Icon Composer layers for the Apple icon
 assets/fonts/        Bundled brand font (Plus Jakarta Sans, OFL)
+assets/changelog/    Release notes in every language, shared by the app and the site
 site/                Landing page (bedug.ardeman.com), see "Website" below
 scripts/             Git hook scripts, icon renderer
 .githooks/           Versioned Git hooks
@@ -279,23 +281,24 @@ The infaq method depends on where the build is distributed, not only on the plat
 
 ## Website
 
-The landing page at [bedug.ardeman.com](https://bedug.ardeman.com) is a static site with no scripts, built by `site/build.py` (Python standard library only) and served as static assets by a Cloudflare Worker (`wrangler.jsonc`). It has a home page and a privacy policy in Indonesian (at `/`), English (`/en/`), Arabic (`/ar/`, right to left) and Malay (`/ms/`).
+The landing page at [bedug.ardeman.com](https://bedug.ardeman.com) is a static site with no scripts, built by `site/build.py` (Python standard library only) and served as static assets by a Cloudflare Worker (`wrangler.jsonc`). It has a home page, a changelog and a privacy policy in Indonesian (at `/`), English (`/en/`), Arabic (`/ar/`, right to left) and Malay (`/ms/`).
 
 | Path | Holds |
 | --- | --- |
 | `site/i18n/<locale>.json` | All page text, one file per language with the same keys |
+| `assets/changelog/changelog.json` | The changelog page's releases, shared with the app's What's New screen |
 | `site/config.json` | Site URL, locales, links, and the store and infaq URLs (`null` shows "coming soon") |
 | `site/static/` | Stylesheet, Cloudflare `_headers`, `robots.txt`, and a 512px copy of `assets/branding/icon.png` for social previews (refresh it with `sips -Z 512` when the icon changes) |
 | `site/dist/` | Build output, not committed |
 | `wrangler.jsonc` | Cloudflare Worker config that serves `site/dist/` |
 
-The build copies the font and `icon.svg` from `assets/`, so the brand has one source. When a store listing or the Trakteer and Ko-fi pages go live, put the URL in `site/config.json`. When the app gains or changes a feature that the home page or the privacy policy describes, update every `site/i18n/*.json`.
+The build copies the font and `icon.svg` from `assets/`, so the brand has one source, and builds the changelog page from `assets/changelog/changelog.json`. When a store listing or the Trakteer and Ko-fi pages go live, put the URL in `site/config.json`. When the app gains or changes a feature that the home page or the privacy policy describes, update every `site/i18n/*.json`.
 
 **Cloudflare setup (once):**
 
 1. In the Cloudflare dashboard, go to **Workers & Pages → Create → Import a repository** and pick this repository.
 2. Project name `bedug` (it must match `name` in `wrangler.jsonc`), build command `python3 site/build.py`, deploy command `npx wrangler deploy` (the default), path `/`.
-3. Under the Worker's **Settings → Build → Build watch paths**, include `site/**`, `assets/fonts/**`, `assets/branding/**` and `wrangler.jsonc` (and remove the default `*`), so app-only commits don't redeploy the site.
+3. Under the Worker's **Settings → Build → Build watch paths**, include `site/**`, `assets/fonts/**`, `assets/branding/**`, `assets/changelog/**` and `wrangler.jsonc` (and remove the default `*`), so app-only commits don't redeploy the site.
 4. Under **Settings → Domains & Routes**, add the custom domain `bedug.ardeman.com`. This needs `ardeman.com` as a zone in the same Cloudflare account.
 
 Every push to `master` deploys, and other branches get preview URLs.
@@ -352,6 +355,7 @@ Each topic has one home. Update that file instead of copying its content somewhe
 | `CLAUDE.md`, `GEMINI.md` | Claude Code, Gemini CLI | Only an import of `AGENTS.md` |
 | `CONTRIBUTING.md` | Human contributors | Branches, bug reports, feature requests, pull requests |
 | `site/i18n/*.json` | Website visitors | Landing page copy and the privacy policy |
+| `assets/changelog/changelog.json` | App users and website visitors | What changed in each release |
 
 Codex, Cursor, GitHub Copilot, Windsurf, Jules, Aider, Zed and other agents that follow the [AGENTS.md](https://agents.md) convention read `AGENTS.md` directly.
 

@@ -371,4 +371,25 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get dirNW => 'الشمال الغربي';
+
+  @override
+  String get whatsNew => 'ما الجديد';
+
+  @override
+  String get whatsNewSubtitle => 'التغييرات في كل إصدار';
+
+  @override
+  String get changelogUnreleased => 'لم يصدر بعد';
+
+  @override
+  String get changelogNew => 'جديد';
+
+  @override
+  String get changelogImproved => 'تحسين';
+
+  @override
+  String get changelogFixed => 'إصلاح';
+
+  @override
+  String get changelogLoadError => 'تعذّر تحميل سجل التغييرات.';
 }
