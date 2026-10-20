@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../constants/city_catalog.dart';
 import '../services/kemenag_method.dart';
 
 // ─── Preferences ──────────────────────────────────────────────────────────────
@@ -140,3 +141,10 @@ class SettingsNotifier extends Notifier<AppSettings> {
 final settingsProvider = NotifierProvider<SettingsNotifier, AppSettings>(
   SettingsNotifier.new,
 );
+
+/// The city prayer times use when auto detect is off: the picked one, or the
+/// default for the app language until one is picked.
+final manualCityProvider = Provider<CityOption>((ref) {
+  final id = ref.watch(settingsProvider.select((s) => s.selectedCityId));
+  return cityById(id) ?? defaultCityFor(ref.watch(localeProvider).languageCode);
+});

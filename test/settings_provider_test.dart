@@ -1,3 +1,4 @@
+import 'package:bedug/core/constants/city_catalog.dart';
 import 'package:bedug/core/providers/locale_provider.dart';
 import 'package:bedug/core/services/kemenag_method.dart';
 import 'package:flutter/widgets.dart';
@@ -50,5 +51,32 @@ void main() {
     expect(container.read(settingsProvider).selectedCityId, isNull);
     final prefs = container.read(sharedPreferencesProvider);
     expect(prefs.getString('selected_city_id'), isNull);
+  });
+
+  test('without a picked city, the manual city follows the language', () async {
+    const expected = {
+      'id': 'jakarta',
+      'ms': 'kuala_lumpur',
+      'ar': 'makkah',
+      'en': 'silicon_valley',
+    };
+    for (final MapEntry(key: lang, value: cityId) in expected.entries) {
+      final container = await _container({'app_locale': lang});
+      expect(container.read(manualCityProvider).id, cityId, reason: lang);
+    }
+  });
+
+  test('a picked city wins over the language default', () async {
+    final container =
+        await _container({'app_locale': 'en', 'selected_city_id': 'medan'});
+    expect(container.read(manualCityProvider).id, 'medan');
+
+    await container.read(settingsProvider.notifier).setSelectedCityId(null);
+    expect(container.read(manualCityProvider).id, 'silicon_valley');
+  });
+
+  test('city ids are unique', () {
+    final ids = supportedCities.map((c) => c.id).toList();
+    expect(ids.toSet().length, ids.length);
   });
 }

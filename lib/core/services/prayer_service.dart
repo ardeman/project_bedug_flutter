@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:adhan/adhan.dart';
+import 'package:clock/clock.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geocoding/geocoding.dart';
@@ -64,8 +67,14 @@ class PrayerNotifier extends Notifier<PrayerState> {
     ref.listen(settingsProvider, (prev, next) {
       if (prev?.method != next.method ||
           prev?.isHanafi != next.isHanafi ||
-          prev?.useAutoLocation != next.useAutoLocation ||
-          prev?.selectedCityId != next.selectedCityId) {
+          prev?.useAutoLocation != next.useAutoLocation) {
+        load();
+      }
+    });
+    // A new city, picked or following a language change, only matters
+    // while auto detect is off.
+    ref.listen(manualCityProvider, (prev, next) {
+      if (prev?.id != next.id && !ref.read(settingsProvider).useAutoLocation) {
         load();
       }
     });
@@ -88,10 +97,7 @@ class PrayerNotifier extends Notifier<PrayerState> {
         coords = Coordinates(pos.latitude, pos.longitude);
         locationLabel = await _resolveLocationLabel(pos);
       } else {
-        final city = _findCityById(settings.selectedCityId);
-        if (city == null) {
-          throw PrayerLoadException(_l10n.cityRequiredError);
-        }
+        final city = ref.read(manualCityProvider);
         coords = Coordinates(city.latitude, city.longitude);
         locationLabel = city.name;
       }
@@ -110,6 +116,12 @@ class PrayerNotifier extends Notifier<PrayerState> {
       );
     } catch (e) {
       if (loadId != _loadId) return;
+      if (ref.read(settingsProvider).useAutoLocation) {
+        // Auto detect can't work right now, so switch it off. The settings
+        // listener then reloads with the manual city instead.
+        ref.read(settingsProvider.notifier).setUseAutoLocation(false);
+        return;
+      }
       final error = e is PrayerLoadException
           ? e
           : PrayerLoadException(_l10n.locationError, showLocationGuide: true);
@@ -119,11 +131,6 @@ class PrayerNotifier extends Notifier<PrayerState> {
         showLocationGuide: error.showLocationGuide,
       );
     }
-  }
-
-  CityOption? _findCityById(String? cityId) {
-    if (cityId == null || cityId.isEmpty) return null;
-    return supportedCities.where((c) => c.id == cityId).firstOrNull;
   }
 
   CityOption? _nearestCity(double latitude, double longitude) {
@@ -264,7 +271,7 @@ final nextPrayerProvider = Provider<({String key, DateTime? time})>((ref) {
   final times = ref.watch(prayerProvider).times;
   if (times == null) return (key: '--', time: null);
 
-  final now = DateTime.now();
+  final now = clock.now();
   final schedule = {
     'fajr': times.fajr,
     'dhuhr': times.dhuhr,
@@ -273,12 +280,15 @@ final nextPrayerProvider = Provider<({String key, DateTime? time})>((ref) {
     'isha': times.isha,
   };
 
-  for (final e in schedule.entries) {
-    if (e.value.isAfter(now)) {
-      return (key: e.key, time: e.value);
-    }
-  }
   // After Isha, count down to the next day's Fajr so it never goes negative.
-  final nextFajr = times.fajr.add(const Duration(days: 1));
-  return (key: 'fajr', time: nextFajr);
+  final next = schedule.entries
+          .where((e) => e.value.isAfter(now))
+          .map((e) => (key: e.key, time: e.value))
+          .firstOrNull ??
+      (key: 'fajr', time: times.fajr.add(const Duration(days: 1)));
+
+  // Move on to the following prayer once this one's time arrives.
+  final timer = Timer(next.time.difference(now), ref.invalidateSelf);
+  ref.onDispose(timer.cancel);
+  return next;
 });
