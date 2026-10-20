@@ -68,13 +68,9 @@ class AdaptiveScaffold extends StatelessWidget {
       extendBody: true,
       backgroundColor:
           isDark ? const Color(0xFF000000) : const Color(0xFFF2F2F7),
-      appBar: showAppBar
-          ? AppBar(
-              title: Text(title),
-              actions: appBarActions,
-              leading: leading,
-            )
-          : null,
+      // Tabs bring their own glass top bar; [appBarActions] and [leading]
+      // are Material-only.
+      appBar: showAppBar ? GlassTopBar(title: title) : null,
       // The glass bar floats over the page so content refracts through it.
       body: Stack(
         fit: StackFit.expand,

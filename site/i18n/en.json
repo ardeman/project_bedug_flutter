@@ -10,7 +10,8 @@
     "download": "Download",
     "infaq": "Infaq",
     "roadmap": "Roadmap",
-    "privacy": "Privacy"
+    "privacy": "Privacy",
+    "changelog": "Changelog"
   },
   "meta": {
     "title": "Bedug · Prayer times, Qibla and Hijri calendar",
@@ -203,6 +204,20 @@
           "Questions about this policy? Open an issue on <a href=\"{issues}\">GitHub</a>."
         ]
       }
+    ]
+  },
+  "changelog": {
+    "meta_title": "Changelog · Bedug",
+    "meta_description": "What's new and what changed in each version of Bedug.",
+    "title": "Changelog",
+    "lead": "What's new and what changed in each version of Bedug. The app shows the same list in Settings → What's New.",
+    "version": "Version {version}",
+    "unreleased": "Not released yet",
+    "date_format": "{month} {day}, {year}",
+    "types": { "new": "New", "improved": "Improved", "fixed": "Fixed" },
+    "months": [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
     ]
   }
 }

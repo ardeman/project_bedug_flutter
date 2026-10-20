@@ -212,6 +212,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get today => 'اليوم';
 
   @override
+  String get previousMonth => 'الشهر السابق';
+
+  @override
+  String get nextMonth => 'الشهر التالي';
+
+  @override
   String get hijriToday => 'التاريخ الهجري اليوم';
 
   @override
@@ -367,7 +373,23 @@ class AppLocalizationsAr extends AppLocalizations {
   String get dirNW => 'الشمال الغربي';
 
   @override
-  String nextDaysSchedule(int count) {
-    return 'الأيام الـ$count القادمة';
-  }
+  String get whatsNew => 'ما الجديد';
+
+  @override
+  String get whatsNewSubtitle => 'التغييرات في كل إصدار';
+
+  @override
+  String get changelogUnreleased => 'لم يصدر بعد';
+
+  @override
+  String get changelogNew => 'جديد';
+
+  @override
+  String get changelogImproved => 'تحسين';
+
+  @override
+  String get changelogFixed => 'إصلاح';
+
+  @override
+  String get changelogLoadError => 'تعذّر تحميل سجل التغييرات.';
 }

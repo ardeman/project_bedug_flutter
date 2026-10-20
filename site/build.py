@@ -2,8 +2,8 @@
 """Builds the Bedug landing page into site/dist.
 
 Content lives in site/i18n/<locale>.json, links in site/config.json and the
-styles in site/static/. The fonts and the icon are copied from the app's own
-assets so the brand has one source. Standard library only, so Cloudflare
+styles in site/static/. The fonts, the icon and the changelog come from the
+app's own assets so each has one source. Standard library only, so Cloudflare
 can run it as the build command: `python3 site/build.py`.
 """
 
@@ -18,6 +18,7 @@ ROOT = SITE.parent
 DIST = SITE / "dist"
 FONTS = ROOT / "assets" / "fonts" / "plus_jakarta_sans"
 BRANDING = ROOT / "assets" / "branding"
+CHANGELOG = ROOT / "assets" / "changelog" / "changelog.json"
 
 # Only the weights the stylesheet uses.
 FONT_FILES = (
@@ -46,6 +47,8 @@ ICONS = {
 
 PRAYERS = ("fajr", "dhuhr", "asr", "maghrib", "isha")
 
+PAGES = ("home", "privacy", "changelog")
+
 
 def icon(name, cls="icon"):
     return (
@@ -68,6 +71,7 @@ class Site:
             loc: json.loads((SITE / "i18n" / f"{loc}.json").read_text())
             for loc in self.locales
         }
+        self.releases = json.loads(CHANGELOG.read_text())["releases"]
         self.css_name = None
 
     # Paths --------------------------------------------------------------
@@ -77,7 +81,7 @@ class Site:
         return "/" if loc == self.default else f"/{loc}/"
 
     def url(self, loc, page):
-        return self.prefix(loc) + ("privacy/" if page == "privacy" else "")
+        return self.prefix(loc) + ("" if page == "home" else f"{page}/")
 
     def fill(self, text):
         """Replaces {link} placeholders in content with configured URLs."""
@@ -137,7 +141,7 @@ class Site:
     def header(self, loc, page):
         s = self.strings[loc]
         home = self.prefix(loc)
-        # On the privacy page the section links point back to the home page.
+        # On other pages the section links point back to the home page.
         anchor = "" if page == "home" else home
         nav = "".join(
             f'<a href="{anchor}#{key}">{s["nav"][key]}</a>'
@@ -161,6 +165,7 @@ class Site:
 <p>{s['footer_tagline']}</p>
 </div>
 <nav class="foot-links" aria-label="{attr(s['footer_label'])}">
+<a href="{self.url(loc, 'changelog')}">{s['nav']['changelog']}</a>
 <a href="{self.url(loc, 'privacy')}">{s['nav']['privacy']}</a>
 <a href="{links['repo']}">{icon('github')}GitHub</a>
 <a href="{links['issues']}">{s['footer_contact']}</a>
@@ -332,6 +337,50 @@ class Site:
             + self.footer(loc, "privacy")
         )
 
+    # Changelog ----------------------------------------------------------
+
+    def release_date(self, loc, iso):
+        c = self.strings[loc]["changelog"]
+        if iso is None:
+            return f'<p class="release-date">{c["unreleased"]}</p>'
+        year, month, day = (int(part) for part in iso.split("-"))
+        text = c["date_format"].format(
+            day=day, month=c["months"][month - 1], year=year
+        )
+        return f'<p class="release-date"><time datetime="{iso}">{text}</time></p>'
+
+    def changelog(self, loc):
+        s = self.strings[loc]
+        c = s["changelog"]
+        releases = "".join(
+            f'<li class="release" id="v{attr(r["version"])}">'
+            f'<div class="release-head"><h2>{c["version"].format(version=r["version"])}</h2>'
+            + self.release_date(loc, r["date"])
+            + "</div><ul class=\"changes\">"
+            + "".join(
+                f'<li><span class="change-type change-{ch["type"]}">{c["types"][ch["type"]]}</span>'
+                # Changelog text is plain, unlike the i18n files.
+                f'<p>{html.escape(ch["text"].get(loc, ch["text"]["en"]), quote=False)}</p></li>'
+                for ch in r["changes"]
+            )
+            + "</ul></li>"
+            for r in self.releases
+        )
+        return (
+            self.head(loc, "changelog", c["meta_title"], c["meta_description"])
+            + self.header(loc, "changelog")
+            + f"""
+<main id="main" class="section">
+<article class="wrap prose">
+<h1>{c['title']}</h1>
+<p class="lead">{c['lead']}</p>
+<ol class="releases">{releases}</ol>
+</article>
+</main>
+"""
+            + self.footer(loc, "changelog")
+        )
+
     # 404 ----------------------------------------------------------------
 
     def not_found(self):
@@ -356,7 +405,7 @@ class Site:
     def sitemap(self):
         base = self.config["site_url"]
         entries = []
-        for page in ("home", "privacy"):
+        for page in PAGES:
             alternates = "".join(
                 f'<xhtml:link rel="alternate" hreflang="{other}" href="{base}{self.url(other, page)}"/>'
                 for other in self.locales
@@ -401,6 +450,7 @@ class Site:
             base = "" if loc == self.default else f"{loc}/"
             self.write(f"{base}index.html", self.home(loc))
             self.write(f"{base}privacy/index.html", self.privacy(loc))
+            self.write(f"{base}changelog/index.html", self.changelog(loc))
         self.write("404.html", self.not_found())
         self.write("sitemap.xml", self.sitemap())
         print(f"Built {len(self.locales)} locales into {DIST.relative_to(ROOT)}")

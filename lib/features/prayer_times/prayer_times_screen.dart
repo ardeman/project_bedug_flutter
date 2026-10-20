@@ -6,14 +6,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:liquid_glass_easy/liquid_glass_easy.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import '../../generated/l10n/app_localizations.dart';
 import '../../core/constants/app_colors.dart';
+import '../../core/design/glass_controls.dart';
 import '../../core/design/liquid_glass.dart';
 import '../../core/theme/app_tokens.dart';
 import '../../core/services/prayer_service.dart';
 import '../../core/providers/locale_provider.dart';
 import '../../core/widgets/calculation_method_picker.dart';
+import 'widgets/prayer_day_picker.dart';
 
 bool get _isApple => !kIsWeb && (Platform.isIOS || Platform.isMacOS);
 
@@ -28,6 +29,10 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
   // Only the countdown badges listen, so a tick doesn't rebuild the screen.
   final _remaining = ValueNotifier<Duration>(Duration.zero);
   bool _isMethodPickerOpen = false;
+
+  /// The day the cards show, or null for today. A date rather than an offset,
+  /// so a reload after midnight doesn't shift it.
+  DateTime? _pickedDay;
 
   @override
   void initState() {
@@ -88,7 +93,7 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                   ),
                 )
               : SliverAppBar(
-                  expandedHeight: 200,
+                  expandedHeight: _materialExpandedHeight,
                   pinned: true,
                   backgroundColor: AppColors.accentOf(ctx),
                   flexibleSpace: FlexibleSpaceBar(
@@ -153,8 +158,7 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
 
           // ── Body ─────────────────────────────────────────────────────
           if (state.loading)
-            const SliverFillRemaining(
-                child: Center(child: CircularProgressIndicator()))
+            const SliverFillRemaining(child: Center(child: AdaptiveSpinner()))
           else if (state.error != null)
             SliverFillRemaining(
               child: Center(
@@ -182,26 +186,42 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                         ),
                       ),
                     const SizedBox(height: AppSpacing.xxs),
-                    FilledButton.icon(
-                      icon: const Icon(Icons.refresh),
-                      label: Text(l10n.retry),
-                      onPressed: () => ref.read(prayerProvider.notifier).load(),
-                    ),
+                    if (_isApple)
+                      LiquidGlassButton(
+                        icon: Icons.refresh,
+                        label: l10n.retry,
+                        foregroundColor: AppColors.accentOf(ctx),
+                        style: LiquidGlassButton.defaultStyle
+                            .copyWith(color: glassTintOf(ctx)),
+                        onPressed: () =>
+                            ref.read(prayerProvider.notifier).load(),
+                      )
+                    else
+                      FilledButton.icon(
+                        icon: const Icon(Icons.refresh),
+                        label: Text(l10n.retry),
+                        onPressed: () =>
+                            ref.read(prayerProvider.notifier).load(),
+                      ),
                   ]),
                 ),
               ),
             )
-          else
+          else ...[
             SliverList(
               delegate: SliverChildListDelegate([
                 SizedBox(height: _isApple ? AppSpacing.xs : AppSpacing.md),
-                ..._buildPrayerCards(ctx, state.times!, next.key),
-                if (state.schedule.isNotEmpty)
-                  _ScheduleSection(schedule: state.schedule, l10n: l10n),
+                ..._buildDay(ctx, state.times!, next),
                 // Room to scroll the last card clear of the floating nav bar.
                 const SizedBox(height: 100),
               ]),
             ),
+            _CollapseRoom(
+              collapseRange: _isApple
+                  ? _LiquidGlassAppBar.expandedExtent - minCollapsedExtent
+                  : _materialExpandedHeight - (kToolbarHeight + topInset),
+            ),
+          ],
         ],
       ),
     );
@@ -219,8 +239,32 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
     };
   }
 
+  /// The day picker and the picked day's cards. Only today's (or, after
+  /// Isha, tomorrow's) next prayer is highlighted.
+  List<Widget> _buildDay(BuildContext ctx, PrayerTimes todayTimes,
+      ({String key, DateTime? time}) next) {
+    final d = todayTimes.dateComponents;
+    final today = DateTime(d.year, d.month, d.day);
+    final day = _pickedDay ?? today;
+    final times = daysBetween(today, day) == 0
+        ? todayTimes
+        : prayerTimesOn(todayTimes, day);
+    final nextTime = next.time;
+    final nextKey =
+        nextTime != null && daysBetween(day, nextTime) == 0 ? next.key : null;
+    return [
+      PrayerDayPicker(
+        today: today,
+        selected: day,
+        onSelected: (picked) => setState(
+            () => _pickedDay = daysBetween(today, picked) == 0 ? null : picked),
+      ),
+      ..._buildPrayerCards(ctx, times, nextKey),
+    ];
+  }
+
   List<Widget> _buildPrayerCards(
-      BuildContext ctx, dynamic times, String nextKey) {
+      BuildContext ctx, PrayerTimes times, String? nextKey) {
     final l10n = AppLocalizations.of(ctx);
     final prayers = [
       _PrayerEntry('fajr', l10n.fajr, Icons.bedtime_outlined, times.fajr),
@@ -272,6 +316,32 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
 // Expanded, an accent hero with a glass countdown lens. Collapsing fades the
 // hero out, so the list scrolls under a scroll-edge band, and the title moves
 // into a floating glass capsule. The action buttons are glass throughout.
+/// Height of the expanded Material app bar.
+const _materialExpandedHeight = 200.0;
+
+/// Empty space after the cards, just enough that the page can always scroll
+/// the header down to its compact bar. A short day doesn't fill the screen,
+/// and without this the header couldn't collapse at all. Longer content gets
+/// none.
+class _CollapseRoom extends StatelessWidget {
+  /// How far the header shrinks from expanded to compact.
+  final double collapseRange;
+
+  const _CollapseRoom({required this.collapseRange});
+
+  @override
+  Widget build(BuildContext ctx) => SliverLayoutBuilder(
+        builder: (ctx, c) {
+          final room = c.viewportMainAxisExtent +
+              collapseRange -
+              c.precedingScrollExtent;
+          return SliverToBoxAdapter(
+            child: SizedBox(height: room > 0 ? room : 0),
+          );
+        },
+      );
+}
+
 class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
   final String nextName;
   final String locationLabel;
@@ -306,7 +376,10 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
   @override
   double get minExtent => minCollapsedExtent;
   @override
-  double get maxExtent => 240;
+  double get maxExtent => expandedExtent;
+
+  /// Height of the expanded hero, before any scrolling.
+  static const expandedExtent = 240.0;
 
   @override
   bool shouldRebuild(_LiquidGlassAppBar old) =>
@@ -561,23 +634,12 @@ class _GlassIconButton extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext ctx) {
-    const size = _LiquidGlassAppBar._actionSize;
-    return LiquidGlassButton(
-      icon: icon,
-      onPressed: onTap,
-      width: size,
-      height: size,
-      padding: EdgeInsets.zero,
-      iconSize: 20,
-      foregroundColor: color,
-      style: LiquidGlassStyle(
-        shape: const LiquidGlassShape.continuousRoundedRectangle(
-            cornerRadius: size / 2),
-        color: glassTintOf(ctx),
-      ),
-    );
-  }
+  Widget build(BuildContext ctx) => GlassIconButton(
+        icon: icon,
+        onPressed: onTap,
+        color: color,
+        size: _LiquidGlassAppBar._actionSize,
+      );
 }
 
 // ── Liquid Glass Card (Apple) ─────────────────────────────────────────────────
@@ -665,15 +727,17 @@ class _LiquidGlassCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(entry.label,
-                          style: theme.textTheme.titleMedium?.copyWith(
-                            color: isNext ? Colors.white : onSurface,
-                          )),
+                      // The "up next" label leads, so it reads as a heading
+                      // for the prayer name below it.
                       if (isNext)
                         Text(l10n.upNext,
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: Colors.white.withValues(alpha: 0.75),
                             )),
+                      Text(entry.label,
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            color: isNext ? Colors.white : onSurface,
+                          )),
                     ],
                   ),
                 ),
@@ -734,20 +798,26 @@ class _MaterialCard extends StatelessWidget {
             horizontal: AppSpacing.md, vertical: AppSpacing.xs),
         leading: Icon(entry.icon,
             color: isNext ? onAccent : AppColors.accentOf(ctx), size: 28),
-        title: Text(entry.label,
-            style: theme.textTheme.titleMedium?.copyWith(
-              color: isNext ? onAccent : null,
-            )),
+        // The "up next" label leads, so it reads as a heading for the name.
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (isNext)
+              Text(l10n.upNext,
+                  style: theme.textTheme.bodySmall
+                      ?.copyWith(color: onAccent.withValues(alpha: 0.7))),
+            Text(entry.label,
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: isNext ? onAccent : null,
+                )),
+          ],
+        ),
         trailing: Text(timeStr,
             style: theme.textTheme.titleLarge?.copyWith(
               fontFeatures: const [FontFeature.tabularFigures()],
               color: isNext ? onAccent : AppColors.accentOf(ctx),
             )),
-        subtitle: isNext
-            ? Text(l10n.upNext,
-                style: theme.textTheme.bodySmall
-                    ?.copyWith(color: onAccent.withValues(alpha: 0.7)))
-            : null,
       ),
     );
   }
@@ -844,160 +914,6 @@ String _formatCountdown(Duration d) {
 }
 
 // ── Prayer Entry model ────────────────────────────────────────────────────────
-// ── 30-day schedule ───────────────────────────────────────────────────────────
-// A compact table, one row per day, below today's cards. Lite glass on Apple
-// (it scrolls with the list), the theme's flat card elsewhere.
-class _ScheduleSection extends StatelessWidget {
-  final List<PrayerTimes> schedule;
-  final AppLocalizations l10n;
-  const _ScheduleSection({required this.schedule, required this.l10n});
-
-  @override
-  Widget build(BuildContext ctx) {
-    final theme = Theme.of(ctx);
-    final isDark = theme.brightness == Brightness.dark;
-    final mq = MediaQuery.of(ctx);
-    final isLandscape = mq.orientation == Orientation.landscape;
-    final sideInsetLeft = isLandscape ? mq.padding.left : 0.0;
-    final sideInsetRight = isLandscape ? mq.padding.right : 0.0;
-    final dateFormat =
-        DateFormat.MMMEd(Localizations.localeOf(ctx).toLanguageTag());
-    final headerStyle = theme.textTheme.labelSmall?.copyWith(
-      color: theme.colorScheme.onSurfaceVariant,
-    );
-    final timeStyle = theme.textTheme.bodySmall?.copyWith(
-      fontFeatures: const [FontFeature.tabularFigures()],
-    );
-    final todayStyle = timeStyle?.copyWith(
-      color: AppColors.accentOf(ctx),
-      fontWeight: FontWeight.w700,
-    );
-
-    final table = Padding(
-      padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
-      child: Column(
-        children: [
-          _ScheduleRow(
-            date: const SizedBox.shrink(),
-            cells: [
-              for (final name in [
-                l10n.fajr,
-                l10n.sunrise,
-                l10n.dhuhr,
-                l10n.asr,
-                l10n.maghrib,
-                l10n.isha,
-              ])
-                Text(name, style: headerStyle),
-            ],
-          ),
-          for (final (i, day) in schedule.indexed) ...[
-            Divider(
-                height: 1, color: theme.dividerColor.withValues(alpha: 0.4)),
-            _ScheduleRow(
-              date: Text(
-                dateFormat.format(_dateOf(day)),
-                style: i == 0 ? todayStyle : timeStyle,
-              ),
-              cells: [
-                for (final t in [
-                  day.fajr,
-                  day.sunrise,
-                  day.dhuhr,
-                  day.asr,
-                  day.maghrib,
-                  day.isha,
-                ])
-                  Text(_hhmm(t), style: i == 0 ? todayStyle : timeStyle),
-              ],
-            ),
-          ],
-        ],
-      ),
-    );
-
-    final card = _isApple
-        ? Material(
-            color: Colors.transparent,
-            child: LiquidGlassLite(
-              shape: const LiquidGlassShape.continuousRoundedRectangle(
-                  cornerRadius: AppRadii.lg),
-              blur: 10,
-              color: isDark
-                  ? Colors.white.withValues(alpha: 0.07)
-                  : Colors.white.withValues(alpha: 0.62),
-              child: table,
-            ),
-          )
-        : DecoratedBox(
-            decoration: ShapeDecoration(
-              color: theme.cardTheme.color ?? theme.cardColor,
-              shape: theme.cardTheme.shape ??
-                  RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(AppRadii.lg)),
-            ),
-            child: table,
-          );
-
-    return Padding(
-      padding: EdgeInsets.fromLTRB(
-        AppSpacing.md + sideInsetLeft,
-        AppSpacing.lg,
-        AppSpacing.md + sideInsetRight,
-        AppSpacing.xxs,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(
-                left: AppSpacing.xxs, bottom: AppSpacing.xs),
-            child: Text(l10n.nextDaysSchedule(schedule.length),
-                style: theme.textTheme.titleMedium),
-          ),
-          card,
-        ],
-      ),
-    );
-  }
-
-  static DateTime _dateOf(PrayerTimes day) {
-    final d = day.dateComponents;
-    return DateTime(d.year, d.month, d.day);
-  }
-
-  static String _hhmm(DateTime t) =>
-      '${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}';
-}
-
-class _ScheduleRow extends StatelessWidget {
-  final Widget date;
-  final List<Widget> cells;
-  const _ScheduleRow({required this.date, required this.cells});
-
-  @override
-  Widget build(BuildContext ctx) {
-    // Scale down rather than clip, so long names and dates fit narrow phones.
-    Widget fit(Widget child, AlignmentGeometry alignment) => FittedBox(
-          fit: BoxFit.scaleDown,
-          alignment: alignment,
-          child: child,
-        );
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
-      child: Row(
-        children: [
-          // The date column is wider than a time column.
-          Expanded(flex: 3, child: fit(date, AlignmentDirectional.centerStart)),
-          for (final c in cells)
-            Expanded(flex: 2, child: fit(c, Alignment.center)),
-        ],
-      ),
-    );
-  }
-}
-
 class _PrayerEntry {
   final String key;
   final String label;

@@ -214,6 +214,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get today => 'Today';
 
   @override
+  String get previousMonth => 'Previous month';
+
+  @override
+  String get nextMonth => 'Next month';
+
+  @override
   String get hijriToday => 'Today\'s Hijri Date';
 
   @override
@@ -371,7 +377,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dirNW => 'northwest';
 
   @override
-  String nextDaysSchedule(int count) {
-    return 'Next $count days';
-  }
+  String get whatsNew => 'What\'s New';
+
+  @override
+  String get whatsNewSubtitle => 'Changes in each version';
+
+  @override
+  String get changelogUnreleased => 'Not released yet';
+
+  @override
+  String get changelogNew => 'New';
+
+  @override
+  String get changelogImproved => 'Improved';
+
+  @override
+  String get changelogFixed => 'Fixed';
+
+  @override
+  String get changelogLoadError => 'The changelog couldn\'t be loaded.';
 }

@@ -486,6 +486,18 @@ abstract class AppLocalizations {
   /// **'Hari Ini'**
   String get today;
 
+  /// No description provided for @previousMonth.
+  ///
+  /// In id, this message translates to:
+  /// **'Bulan sebelumnya'**
+  String get previousMonth;
+
+  /// No description provided for @nextMonth.
+  ///
+  /// In id, this message translates to:
+  /// **'Bulan berikutnya'**
+  String get nextMonth;
+
   /// No description provided for @hijriToday.
   ///
   /// In id, this message translates to:
@@ -774,11 +786,47 @@ abstract class AppLocalizations {
   /// **'barat laut'**
   String get dirNW;
 
-  /// Title of the multi-day prayer times table
+  /// No description provided for @whatsNew.
   ///
   /// In id, this message translates to:
-  /// **'{count} hari ke depan'**
-  String nextDaysSchedule(int count);
+  /// **'Yang Baru'**
+  String get whatsNew;
+
+  /// No description provided for @whatsNewSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Perubahan di setiap versi'**
+  String get whatsNewSubtitle;
+
+  /// No description provided for @changelogUnreleased.
+  ///
+  /// In id, this message translates to:
+  /// **'Belum dirilis'**
+  String get changelogUnreleased;
+
+  /// No description provided for @changelogNew.
+  ///
+  /// In id, this message translates to:
+  /// **'Baru'**
+  String get changelogNew;
+
+  /// No description provided for @changelogImproved.
+  ///
+  /// In id, this message translates to:
+  /// **'Ditingkatkan'**
+  String get changelogImproved;
+
+  /// No description provided for @changelogFixed.
+  ///
+  /// In id, this message translates to:
+  /// **'Diperbaiki'**
+  String get changelogFixed;
+
+  /// No description provided for @changelogLoadError.
+  ///
+  /// In id, this message translates to:
+  /// **'Daftar perubahan tidak dapat dimuat.'**
+  String get changelogLoadError;
 }
 
 class _AppLocalizationsDelegate

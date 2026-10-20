@@ -11,9 +11,9 @@ class KemenagMethod {
   static CalculationParameters getParameters() {
     // adhan v2: use CalculationMethod.other as base
     final params = CalculationMethod.other.getParameters();
-    params.fajrAngle  = 20.0;
-    params.ishaAngle  = 18.0;
-    params.madhab     = Madhab.shafi;
+    params.fajrAngle = 20.0;
+    params.ishaAngle = 18.0;
+    params.madhab = Madhab.shafi;
     // Note: 'rounding' was removed in adhan v2, no longer needed
     return params;
   }

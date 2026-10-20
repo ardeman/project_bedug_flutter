@@ -70,6 +70,8 @@
   "retry": "Retry",
   "loading": "Loading...",
   "today": "Today",
+  "previousMonth": "Previous month",
+  "nextMonth": "Next month",
   "hijriToday": "Today's Hijri Date",
   "gregorianDate": "Gregorian Date",
 
@@ -110,7 +112,11 @@
   "dirSW": "southwest",
   "dirW": "west",
   "dirNW": "northwest",
-
-  "nextDaysSchedule": "Next {count} days",
-  "@nextDaysSchedule": {}
+  "whatsNew": "What's New",
+  "whatsNewSubtitle": "Changes in each version",
+  "changelogUnreleased": "Not released yet",
+  "changelogNew": "New",
+  "changelogImproved": "Improved",
+  "changelogFixed": "Fixed",
+  "changelogLoadError": "The changelog couldn't be loaded."
 }

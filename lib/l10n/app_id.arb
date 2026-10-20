@@ -179,6 +179,12 @@
   "today": "Hari Ini",
   "@today": {},
 
+  "previousMonth": "Bulan sebelumnya",
+  "@previousMonth": {},
+
+  "nextMonth": "Bulan berikutnya",
+  "@nextMonth": {},
+
   "hijriToday": "Tanggal Hijriyah Hari Ini",
   "@hijriToday": {},
 
@@ -268,10 +274,11 @@
   "@dirW": {},
   "dirNW": "barat laut",
   "@dirNW": {},
-
-  "nextDaysSchedule": "{count} hari ke depan",
-  "@nextDaysSchedule": {
-    "description": "Title of the multi-day prayer times table",
-    "placeholders": { "count": { "type": "int" } }
-  }
+  "whatsNew": "Yang Baru",
+  "whatsNewSubtitle": "Perubahan di setiap versi",
+  "changelogUnreleased": "Belum dirilis",
+  "changelogNew": "Baru",
+  "changelogImproved": "Ditingkatkan",
+  "changelogFixed": "Diperbaiki",
+  "changelogLoadError": "Daftar perubahan tidak dapat dimuat."
 }

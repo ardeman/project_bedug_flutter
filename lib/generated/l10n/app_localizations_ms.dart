@@ -213,6 +213,12 @@ class AppLocalizationsMs extends AppLocalizations {
   String get today => 'Hari Ini';
 
   @override
+  String get previousMonth => 'Bulan sebelumnya';
+
+  @override
+  String get nextMonth => 'Bulan seterusnya';
+
+  @override
   String get hijriToday => 'Tarikh Hijrah Hari Ini';
 
   @override
@@ -370,7 +376,23 @@ class AppLocalizationsMs extends AppLocalizations {
   String get dirNW => 'barat laut';
 
   @override
-  String nextDaysSchedule(int count) {
-    return '$count hari akan datang';
-  }
+  String get whatsNew => 'Apa yang Baharu';
+
+  @override
+  String get whatsNewSubtitle => 'Perubahan dalam setiap versi';
+
+  @override
+  String get changelogUnreleased => 'Belum dikeluarkan';
+
+  @override
+  String get changelogNew => 'Baharu';
+
+  @override
+  String get changelogImproved => 'Ditambah baik';
+
+  @override
+  String get changelogFixed => 'Dibaiki';
+
+  @override
+  String get changelogLoadError => 'Log perubahan tidak dapat dimuatkan.';
 }

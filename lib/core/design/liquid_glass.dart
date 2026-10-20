@@ -108,10 +108,11 @@ class GlassNavItem {
   });
 }
 
-/// The top bar of a tab. On iOS and macOS the title floats in a glass
-/// capsule over a scroll-edge band, so the page scrolls under it; give the
-/// [Scaffold] `extendBodyBehindAppBar: PlatformCapabilities.isApple`.
-/// Elsewhere it is the accent [AppBar].
+/// The top bar of a tab or a pushed page. On iOS and macOS the title floats
+/// in a glass capsule over a scroll-edge band, so the page scrolls under it;
+/// give the [Scaffold] `extendBodyBehindAppBar: PlatformCapabilities.isApple`.
+/// A pushed page also gets a round glass back button. Elsewhere it is the
+/// accent [AppBar], which adds its own back button.
 class GlassTopBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
 
@@ -119,6 +120,11 @@ class GlassTopBar extends StatelessWidget implements PreferredSizeWidget {
 
   /// Height of the title capsule: one title line plus padding.
   static const _capsuleHeight = 40.0;
+
+  /// Width of the macOS traffic lights, which sit in the bar's leading
+  /// corner: a 14 inset, three 14 buttons and two 10 gaps (see
+  /// `macos/Runner/MainFlutterWindow.swift`).
+  static const _macWindowControlsWidth = 14.0 + 3 * 14.0 + 2 * 10.0;
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -135,6 +141,7 @@ class GlassTopBar extends StatelessWidget implements PreferredSizeWidget {
       );
     }
 
+    final canPop = ModalRoute.of(ctx)?.impliesAppBarDismissal ?? false;
     return SizedBox(
       height: kToolbarHeight + MediaQuery.of(ctx).padding.top,
       child: Stack(
@@ -177,7 +184,107 @@ class GlassTopBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
           ),
+          if (canPop)
+            SafeArea(
+              bottom: false,
+              child: Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: Padding(
+                  padding: EdgeInsetsDirectional.only(
+                    start: AppSpacing.md +
+                        (PlatformCapabilities.isMacOS
+                            ? _macWindowControlsWidth
+                            : 0),
+                  ),
+                  child: Semantics(
+                    button: true,
+                    label: MaterialLocalizations.of(ctx).backButtonTooltip,
+                    child: GlassIconButton(
+                      icon: Icons.arrow_back_ios_new,
+                      onPressed: () => Navigator.of(ctx).maybePop(),
+                    ),
+                  ),
+                ),
+              ),
+            ),
         ],
+      ),
+    );
+  }
+}
+
+/// A content card: lite Liquid Glass on iOS and macOS, a Material [Card]
+/// elsewhere. Lite glass, not a lens, because cards scroll with their list.
+class GlassCard extends StatelessWidget {
+  final Widget child;
+  final EdgeInsetsGeometry margin;
+
+  const GlassCard({
+    super.key,
+    required this.child,
+    this.margin = const EdgeInsets.all(AppSpacing.md),
+  });
+
+  @override
+  Widget build(BuildContext ctx) {
+    if (!PlatformCapabilities.isApple) {
+      return Card(margin: margin, clipBehavior: Clip.antiAlias, child: child);
+    }
+    final isDark = Theme.of(ctx).brightness == Brightness.dark;
+    return Padding(
+      padding: margin,
+      child: Material(
+        color: Colors.transparent,
+        child: LiquidGlassLite(
+          shape: const LiquidGlassShape.continuousRoundedRectangle(
+              cornerRadius: AppRadii.lg),
+          blur: 10,
+          color: Colors.white.withValues(alpha: isDark ? 0.07 : 0.62),
+          // The glass doesn't clip its child on every renderer; keep ink
+          // splashes inside the continuous corners.
+          child: ClipRSuperellipse(
+            borderRadius: BorderRadius.circular(AppRadii.lg),
+            child: child,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// A round, refracting Liquid Glass icon button for iOS and macOS.
+class GlassIconButton extends StatelessWidget {
+  final IconData icon;
+  final VoidCallback onPressed;
+
+  /// Icon color; defaults to `onSurface`.
+  final Color? color;
+
+  /// Diameter: a standard toolbar control.
+  final double size;
+
+  const GlassIconButton({
+    super.key,
+    required this.icon,
+    required this.onPressed,
+    this.color,
+    this.size = 40,
+  });
+
+  @override
+  Widget build(BuildContext ctx) {
+    return LiquidGlassButton(
+      icon: icon,
+      onPressed: onPressed,
+      width: size,
+      height: size,
+      padding: EdgeInsets.zero,
+      iconSize: 20,
+      foregroundColor: color ?? Theme.of(ctx).colorScheme.onSurface,
+      style: LiquidGlassStyle(
+        shape:
+            LiquidGlassShape.continuousRoundedRectangle(cornerRadius: size / 2),
+        color: glassTintOf(ctx),
       ),
     );
   }

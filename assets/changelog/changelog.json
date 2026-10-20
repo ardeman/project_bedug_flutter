@@ -1,0 +1,64 @@
+{
+  "releases": [
+    {
+      "version": "1.0.0",
+      "date": null,
+      "changes": [
+        {
+          "type": "new",
+          "text": {
+            "id": "Jadwal salat sesuai lokasi Anda, dengan hitung mundur langsung ke salat berikutnya. Kemenag RI sebagai bawaan, atau salah satu dari sembilan metode lain, dengan Asar mazhab Syafi'i atau Hanafi.",
+            "en": "Prayer times for wherever you are, with a live countdown to the next prayer. Kemenag RI by default, or one of nine other methods, with the Shafi'i or Hanafi Asr.",
+            "ar": "مواقيت الصلاة حسب موقعك، مع عدّ تنازلي مباشر للصلاة القادمة. طريقة وزارة الشؤون الدينية الإندونيسية افتراضيًا، أو إحدى تسع طرق أخرى، مع العصر على المذهب الشافعي أو الحنفي.",
+            "ms": "Waktu solat mengikut lokasi anda, dengan kiraan detik langsung ke solat seterusnya. Kemenag RI secara lalai, atau salah satu daripada sembilan kaedah lain, dengan Asar mazhab Syafie atau Hanafi."
+          }
+        },
+        {
+          "type": "new",
+          "text": {
+            "id": "Pilih hari mana pun dari strip tanggal, lihat 30 hari ke depan sekaligus, atau buka kalender bulan Hijriah.",
+            "en": "Pick any day from the date strip, see the next 30 days at once, or open a Hijri month calendar.",
+            "ar": "اختر أي يوم من شريط التاريخ، أو اعرض الأيام الثلاثين القادمة دفعة واحدة، أو افتح تقويم الشهر الهجري.",
+            "ms": "Pilih mana-mana hari daripada jalur tarikh, lihat 30 hari akan datang sekali gus, atau buka kalendar bulan Hijrah."
+          }
+        },
+        {
+          "type": "new",
+          "text": {
+            "id": "Kompas kiblat di tab Ibadah. Di komputer, Bedug menunjukkan arah dan jarak ke Makkah.",
+            "en": "A Qibla compass in the Worship tab. On a computer, Bedug shows the bearing and the distance to Makkah.",
+            "ar": "بوصلة القبلة في تبويب العبادة. على الحاسوب، يعرض بِدوغ الاتجاه والمسافة إلى مكة المكرمة.",
+            "ms": "Kompas kiblat dalam tab Ibadah. Pada komputer, Bedug menunjukkan arah dan jarak ke Makkah."
+          }
+        },
+        {
+          "type": "new",
+          "text": {
+            "id": "Biarkan GPS menemukan lokasi Anda, atau matikan lokasi dan pilih kota Anda.",
+            "en": "Let GPS find you, or turn location off and pick your city.",
+            "ar": "دع نظام GPS يحدد موقعك، أو أوقف الموقع واختر مدينتك.",
+            "ms": "Biarkan GPS mengesan lokasi anda, atau matikan lokasi dan pilih bandar anda."
+          }
+        },
+        {
+          "type": "new",
+          "text": {
+            "id": "Bahasa Indonesia, Inggris, Arab, dan Melayu, dengan tata letak kanan ke kiri dalam bahasa Arab, serta tema terang, gelap, atau mengikuti sistem.",
+            "en": "Indonesian, English, Arabic and Malay, with a right-to-left layout in Arabic, and a light, dark or system theme.",
+            "ar": "الإندونيسية والإنجليزية والعربية والملايوية، مع تخطيط من اليمين إلى اليسار بالعربية، وسمة فاتحة أو داكنة أو حسب النظام.",
+            "ms": "Bahasa Indonesia, Inggeris, Arab dan Melayu, dengan susun atur kanan ke kiri dalam bahasa Arab, serta tema cerah, gelap atau ikut sistem."
+          }
+        },
+        {
+          "type": "new",
+          "text": {
+            "id": "Tampilan asli di setiap perangkat: Liquid Glass di iPhone, iPad, dan Mac, Material You di Android, Fluent di Windows, serta tampilan Adwaita atau Breeze di Linux.",
+            "en": "A native look on every device: Liquid Glass on iPhone, iPad and Mac, Material You on Android, Fluent on Windows, and the Adwaita or Breeze look on Linux.",
+            "ar": "مظهر أصيل على كل جهاز: Liquid Glass على iPhone وiPad وMac، وMaterial You على Android، وFluent على Windows، ومظهر Adwaita أو Breeze على Linux.",
+            "ms": "Rupa asli pada setiap peranti: Liquid Glass pada iPhone, iPad dan Mac, Material You pada Android, Fluent pada Windows, dan rupa Adwaita atau Breeze pada Linux."
+          }
+        }
+      ]
+    }
+  ]
+}

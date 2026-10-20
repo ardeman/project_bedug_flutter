@@ -70,6 +70,8 @@
   "retry": "إعادة المحاولة",
   "loading": "جارٍ التحميل...",
   "today": "اليوم",
+  "previousMonth": "الشهر السابق",
+  "nextMonth": "الشهر التالي",
   "hijriToday": "التاريخ الهجري اليوم",
   "gregorianDate": "التاريخ الميلادي",
 
@@ -110,7 +112,11 @@
   "dirSW": "الجنوب الغربي",
   "dirW": "الغرب",
   "dirNW": "الشمال الغربي",
-
-  "nextDaysSchedule": "الأيام الـ{count} القادمة",
-  "@nextDaysSchedule": {}
+  "whatsNew": "ما الجديد",
+  "whatsNewSubtitle": "التغييرات في كل إصدار",
+  "changelogUnreleased": "لم يصدر بعد",
+  "changelogNew": "جديد",
+  "changelogImproved": "تحسين",
+  "changelogFixed": "إصلاح",
+  "changelogLoadError": "تعذّر تحميل سجل التغييرات."
 }

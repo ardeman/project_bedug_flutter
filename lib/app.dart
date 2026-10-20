@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Use the generated path directly, not flutter_gen.
 import 'generated/l10n/app_localizations.dart';
 import 'core/design/linux_desktop.dart';
+import 'core/design/platform_capabilities.dart';
 import 'core/providers/locale_provider.dart';
 import 'core/providers/system_accent_provider.dart';
 import 'core/theme/app_theme.dart';
@@ -40,6 +42,9 @@ class BedugApp extends ConsumerWidget {
           desktop: currentLinuxDesktop, accent: accent),
       darkTheme: buildAppTheme(Brightness.dark,
           desktop: currentLinuxDesktop, accent: accent),
+      // Cupertino scrollbars on iOS and macOS, not Material ones.
+      scrollBehavior:
+          PlatformCapabilities.isApple ? const CupertinoScrollBehavior() : null,
       home: const HomeScreen(),
     );
   }
