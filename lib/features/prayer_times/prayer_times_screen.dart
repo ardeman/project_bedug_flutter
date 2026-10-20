@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:math' as math;
 import 'dart:ui';
 import 'package:adhan/adhan.dart';
+import 'package:clock/clock.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:liquid_glass_easy/liquid_glass_easy.dart';
@@ -44,7 +46,7 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
   void _update() {
     final next = ref.read(nextPrayerProvider);
     if (next.time != null && mounted) {
-      _remaining.value = next.time!.difference(DateTime.now());
+      _remaining.value = next.time!.difference(clock.now());
     }
   }
 
@@ -69,8 +71,15 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
     final isPortrait = mq.orientation == Orientation.portrait;
     final topInset = mq.padding.top;
     final isIosPortrait = !kIsWeb && Platform.isIOS && isPortrait;
+    // On macOS the collapsed bar is one toolbar row, so its capsule and
+    // buttons center on the traffic lights (see MainFlutterWindow.swift).
+    final isMacOS = !kIsWeb && Platform.isMacOS;
     final minCollapsedExtent = kToolbarHeight +
-        (isIosPortrait ? (topInset + 8).clamp(44.0, 62.0) : 44.0);
+        (isIosPortrait
+            ? (topInset + 8).clamp(44.0, 62.0)
+            : isMacOS
+                ? 0.0
+                : 44.0);
 
     return Scaffold(
       extendBodyBehindAppBar: _isApple,
@@ -81,7 +90,10 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
               ? SliverPersistentHeader(
                   pinned: true,
                   delegate: _LiquidGlassAppBar(
+                    nextLabel: l10n.nextPrayer,
                     nextName: nextName,
+                    nextTime:
+                        next.time == null ? null : _formatClock(next.time!),
                     locationLabel: locationLabel,
                     remaining: _remaining,
                     minCollapsedExtent: minCollapsedExtent,
@@ -343,7 +355,11 @@ class _CollapseRoom extends StatelessWidget {
 }
 
 class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
+  final String nextLabel;
   final String nextName;
+
+  /// The next prayer's clock time, e.g. "12:01".
+  final String? nextTime;
   final String locationLabel;
   final ValueListenable<Duration> remaining;
   final double minCollapsedExtent;
@@ -356,7 +372,9 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
   final VoidCallback onRefresh;
 
   const _LiquidGlassAppBar({
+    required this.nextLabel,
     required this.nextName,
+    required this.nextTime,
     required this.locationLabel,
     required this.remaining,
     required this.minCollapsedExtent,
@@ -379,11 +397,20 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
   double get maxExtent => expandedExtent;
 
   /// Height of the expanded hero, before any scrolling.
-  static const expandedExtent = 240.0;
+  static const expandedExtent = 260.0;
+
+  /// Below this height the hero drops the label line and uses smaller type,
+  /// so a landscape phone's short header never overflows.
+  static const _compactHeroHeight = 130.0;
+
+  /// The faint mosque behind the hero text: big enough to read as texture.
+  static const _watermarkSize = 168.0;
 
   @override
   bool shouldRebuild(_LiquidGlassAppBar old) =>
+      old.nextLabel != nextLabel ||
       old.nextName != nextName ||
+      old.nextTime != nextTime ||
       old.locationLabel != locationLabel ||
       old.remaining != remaining ||
       old.minCollapsedExtent != minCollapsedExtent ||
@@ -394,17 +421,22 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
   @override
   Widget build(BuildContext ctx, double shrinkOffset, bool overlapsContent) {
     final theme = Theme.of(ctx);
-    final textTheme = theme.textTheme;
     final onSurface = theme.colorScheme.onSurface;
     final progress = (shrinkOffset / (maxExtent - minExtent)).clamp(0.0, 1.0);
     final collapsedProgress = (progress * 2 - 1).clamp(0.0, 1.0);
+    final expandedFade = (1 - progress * 2).clamp(0.0, 1.0);
     final isLargeInsetIosPortrait = isIosPortrait && topInset >= 54;
     final collapsedActionTop = isIosPortrait
         ? (isLargeInsetIosPortrait ? 0.0 : 2.0)
         : ((minExtent - kToolbarHeight) / 2).clamp(0.0, 22.0);
     final iosPortraitLift =
         isLargeInsetIosPortrait ? ((topInset - 54) / 2).clamp(0.0, 3.0) : 0.0;
+    final collapsedRowTop = collapsedActionTop - iosPortraitLift;
     final actionTop = lerpDouble(0, collapsedActionTop, collapsedProgress)!;
+    // Decided at full height, not as the header shrinks, so the hero's type
+    // doesn't jump mid-collapse; the shrinking hero slides under its clip.
+    final heroCompact =
+        maxExtent - topInset - kToolbarHeight < _compactHeroHeight;
     // Two buttons, the gap between them, the right inset and the gap to
     // the title capsule.
     const actionAreaWidth =
@@ -415,21 +447,54 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
     return Stack(
       fit: StackFit.expand,
       children: [
-        // Hero background, fading out as the bar collapses.
+        // Hero background, fading out as the bar collapses. Rounded at the
+        // bottom, so it reads as a card the list scrolls up under.
         IgnorePointer(
           child: Opacity(
             opacity: 1 - progress,
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    AppColors.accentOf(ctx).withValues(alpha: isDark ? 0.9 : 1),
-                    AppColors.secondaryOf(ctx)
-                        .withValues(alpha: isDark ? 0.9 : 1),
-                  ],
-                ),
+            child: ClipRRect(
+              borderRadius: const BorderRadius.vertical(
+                  bottom: Radius.circular(AppRadii.xl)),
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  DecoratedBox(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          AppColors.accentOf(ctx)
+                              .withValues(alpha: isDark ? 0.9 : 1),
+                          AppColors.secondaryOf(ctx)
+                              .withValues(alpha: isDark ? 0.9 : 1),
+                        ],
+                      ),
+                    ),
+                  ),
+                  // A soft light from the top right, for depth.
+                  DecoratedBox(
+                    decoration: BoxDecoration(
+                      gradient: RadialGradient(
+                        center: Alignment.topRight,
+                        radius: 1.2,
+                        colors: [
+                          Colors.white.withValues(alpha: 0.16),
+                          Colors.white.withValues(alpha: 0),
+                        ],
+                      ),
+                    ),
+                  ),
+                  PositionedDirectional(
+                    end: -AppSpacing.lg,
+                    bottom: -AppSpacing.lg,
+                    child: Icon(
+                      Icons.mosque_outlined,
+                      size: _watermarkSize,
+                      color: Colors.white.withValues(alpha: 0.08),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -446,138 +511,136 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
         ),
         SafeArea(
           bottom: false,
-          child: Stack(
-            children: [
-              // Expanded content
-              IgnorePointer(
-                child: Opacity(
-                  opacity: (1 - progress * 2).clamp(0.0, 1.0),
-                  child: Center(
-                    child: LayoutBuilder(
-                      builder: (context, constraints) {
-                        final compact = constraints.maxHeight < 150;
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                                height: compact
-                                    ? AppSpacing.xs
-                                    : kToolbarHeight * 0.3),
-                            if (!compact)
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.location_on_outlined,
-                                    size: 14,
-                                    color: Colors.white.withValues(alpha: 0.75),
+          child: LayoutBuilder(
+            builder: (_, area) => Stack(
+              children: [
+                // Expanded layout: the location on the buttons' row, then the
+                // next prayer, left aligned under it. The location, the name
+                // and the countdown pill are hidden copies that hold their
+                // places; the moving layer below draws them.
+                IgnorePointer(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      // Lifted with the action buttons so the location stays
+                      // centered on their row.
+                      Transform.translate(
+                        offset: Offset(0, -iosPortraitLift),
+                        child: SizedBox(
+                          height: kToolbarHeight,
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.only(
+                                start: AppSpacing.md + windowControlsInset,
+                                end: actionAreaWidth),
+                            child: Row(children: [
+                              Opacity(
+                                opacity: expandedFade,
+                                child: Icon(
+                                  Icons.location_on,
+                                  size: _locationIconSize,
+                                  color: Colors.white.withValues(alpha: 0.85),
+                                ),
+                              ),
+                              const SizedBox(width: AppSpacing.xxs),
+                              Flexible(
+                                child: Visibility.maintain(
+                                  visible: false,
+                                  child: Text(
+                                    locationLabel,
+                                    key: const ValueKey('location-hero'),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: _locationStyle(ctx, expanded: true),
                                   ),
-                                  const SizedBox(width: AppSpacing.xxs),
-                                  Flexible(
-                                    child: Text(
-                                      locationLabel,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: textTheme.bodySmall?.copyWith(
-                                        color: Colors.white
-                                            .withValues(alpha: 0.75),
-                                      ),
+                                ),
+                              ),
+                            ]),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        // Collapsing slides the block up under the location
+                        // row instead of squeezing it.
+                        child: ClipRect(
+                          child: OverflowBox(
+                            alignment: AlignmentDirectional.bottomStart,
+                            minHeight: 0,
+                            maxHeight: double.infinity,
+                            child: _heroBody(ctx,
+                                compact: heroCompact, fade: expandedFade),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                // Collapsed layout: the title capsule on the same row as the
+                // collapsed action buttons, so their centers line up. Also
+                // hidden copies; the moving layer lands on them.
+                Positioned(
+                  top: collapsedRowTop,
+                  left: 0,
+                  right: 0,
+                  height: kToolbarHeight,
+                  child: IgnorePointer(
+                    child: Visibility.maintain(
+                      visible: false,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              left: AppSpacing.md + windowControlsInset,
+                              right: actionAreaWidth),
+                          child: SizedBox(
+                            key: const ValueKey('pill-capsule'),
+                            height: _capsuleHeight,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: AppSpacing.md),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          locationLabel,
+                                          key: const ValueKey(
+                                              'location-capsule'),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: _locationStyle(ctx,
+                                              expanded: false),
+                                        ),
+                                        Text(
+                                          nextName,
+                                          key: const ValueKey('name-capsule'),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style:
+                                              _nameStyle(ctx, expanded: false),
+                                        ),
+                                      ],
                                     ),
+                                  ),
+                                  const SizedBox(width: AppSpacing.xs),
+                                  ValueListenableBuilder<Duration>(
+                                    valueListenable: remaining,
+                                    builder: (_, value, __) => value.isNegative
+                                        ? const SizedBox()
+                                        : Text(
+                                            _formatCountdown(value),
+                                            key: const ValueKey(
+                                                'countdown-capsule'),
+                                            style:
+                                                _collapsedCountdownStyle(ctx),
+                                          ),
                                   ),
                                 ],
                               ),
-                            if (!compact)
-                              const SizedBox(height: AppSpacing.xxs),
-                            Text(
-                              nextName,
-                              style: (compact
-                                      ? textTheme.headlineSmall
-                                      : textTheme.headlineMedium)
-                                  ?.copyWith(color: Colors.white),
-                            ),
-                            SizedBox(
-                                height:
-                                    compact ? AppSpacing.xs : AppSpacing.sm),
-                            _LiquidCountdownBadge(
-                              remaining: remaining,
-                              compact: compact,
-                              visible: progress < 0.5,
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ),
-              // Collapsed title, in a floating glass capsule
-              IgnorePointer(
-                child: Opacity(
-                  opacity: collapsedProgress,
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          left: AppSpacing.md, right: actionAreaWidth),
-                      child: SizedBox(
-                        height: _capsuleHeight,
-                        child: LiquidGlassLens(
-                          visibility: collapsedProgress > 0,
-                          style: LiquidGlassStyle(
-                            shape: const LiquidGlassShape
-                                .continuousRoundedRectangle(
-                                cornerRadius: _capsuleHeight / 2),
-                            color: glassTintOf(ctx),
-                            blur: 6,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: AppSpacing.md),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        locationLabel,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: textTheme.bodySmall?.copyWith(
-                                          color:
-                                              onSurface.withValues(alpha: 0.7),
-                                        ),
-                                      ),
-                                      Text(
-                                        nextName,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: textTheme.titleMedium
-                                            ?.copyWith(color: onSurface),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(width: AppSpacing.xs),
-                                ValueListenableBuilder<Duration>(
-                                  valueListenable: remaining,
-                                  builder: (_, value, __) => value.isNegative
-                                      ? const SizedBox()
-                                      : Text(
-                                          _formatCountdown(value),
-                                          style:
-                                              textTheme.titleMedium?.copyWith(
-                                            fontWeight: FontWeight.w700,
-                                            color: AppColors.accentOf(ctx),
-                                            fontFeatures: const [
-                                              FontFeature.tabularFigures()
-                                            ],
-                                          ),
-                                        ),
-                                ),
-                              ],
                             ),
                           ),
                         ),
@@ -585,38 +648,391 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
                     ),
                   ),
                 ),
-              ),
-              // Actions, last so they stay on top and tappable
-              Positioned(
-                top: actionTop - iosPortraitLift,
-                right: AppSpacing.sm,
-                child: SizedBox(
-                  height: kToolbarHeight,
-                  child: Row(children: [
-                    Builder(
-                      builder: (buttonCtx) => _GlassIconButton(
-                        icon: Icons.tune,
-                        onTap: () {
-                          final box =
-                              buttonCtx.findRenderObject()! as RenderBox;
-                          onTune(box.localToGlobal(Offset.zero) & box.size);
-                        },
+                Positioned.fill(
+                  child: _movingLayer(
+                    ctx,
+                    area.biggest,
+                    progress: progress,
+                    collapsedProgress: collapsedProgress,
+                    expandedFade: expandedFade,
+                    compact: heroCompact,
+                    collapsedRowTop: collapsedRowTop,
+                    iosPortraitLift: iosPortraitLift,
+                    actionAreaWidth: actionAreaWidth,
+                  ),
+                ),
+                // Actions, last so they stay on top and tappable
+                Positioned(
+                  top: actionTop - iosPortraitLift,
+                  right: AppSpacing.sm,
+                  child: SizedBox(
+                    height: kToolbarHeight,
+                    child: Row(children: [
+                      Builder(
+                        builder: (buttonCtx) => _GlassIconButton(
+                          icon: Icons.tune,
+                          onTap: () {
+                            final box =
+                                buttonCtx.findRenderObject()! as RenderBox;
+                            onTune(box.localToGlobal(Offset.zero) & box.size);
+                          },
+                          color: actionColor,
+                        ),
+                      ),
+                      const SizedBox(width: AppSpacing.xs),
+                      _GlassIconButton(
+                        icon: Icons.refresh,
+                        onTap: onRefresh,
                         color: actionColor,
                       ),
-                    ),
-                    const SizedBox(width: AppSpacing.xs),
-                    _GlassIconButton(
-                      icon: Icons.refresh,
-                      onTap: onRefresh,
-                      color: actionColor,
-                    ),
-                  ]),
+                    ]),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ],
+    );
+  }
+
+  /// Size of the location pin before the expanded location.
+  static const _locationIconSize = 16.0;
+
+  /// The location's style: white over the accent hero when [expanded],
+  /// the capsule's muted first line otherwise.
+  static TextStyle _locationStyle(BuildContext ctx, {required bool expanded}) {
+    final textTheme = Theme.of(ctx).textTheme;
+    return expanded
+        ? (textTheme.labelLarge ?? const TextStyle())
+            .copyWith(color: Colors.white.withValues(alpha: 0.85))
+        : (textTheme.bodySmall ?? const TextStyle()).copyWith(
+            color: Theme.of(ctx).colorScheme.onSurface.withValues(alpha: 0.7));
+  }
+
+  /// The next prayer's name: large and white in the hero when [expanded],
+  /// the capsule's second line otherwise.
+  static TextStyle _nameStyle(BuildContext ctx,
+      {required bool expanded, bool compact = false}) {
+    final textTheme = Theme.of(ctx).textTheme;
+    if (!expanded) {
+      return (textTheme.titleMedium ?? const TextStyle())
+          .copyWith(color: Theme.of(ctx).colorScheme.onSurface);
+    }
+    return ((compact ? textTheme.headlineMedium : textTheme.displaySmall) ??
+            const TextStyle())
+        .copyWith(color: Colors.white, fontWeight: FontWeight.w700);
+  }
+
+  /// The location, the next prayer's name, the countdown and its glass pill,
+  /// each moving from its place in the hero to its place in the collapsed
+  /// capsule as the bar collapses, so the pill grows into the capsule and
+  /// the text travels instead of two copies crossfading. The positions here
+  /// mirror the hidden layouts in [build], in [area] (the header below the
+  /// top safe area).
+  Widget _movingLayer(
+    BuildContext ctx,
+    Size area, {
+    required double progress,
+    required double collapsedProgress,
+    required double expandedFade,
+    required bool compact,
+    required double collapsedRowTop,
+    required double iosPortraitLift,
+    required double actionAreaWidth,
+  }) {
+    final isRtl = Directionality.of(ctx) == TextDirection.rtl;
+    final textScaler = MediaQuery.textScalerOf(ctx);
+    final t = Curves.easeInOut.transform(progress);
+
+    Size measure(String text, TextStyle style, double maxWidth) {
+      final painter = TextPainter(
+        text: TextSpan(text: text, style: style),
+        textDirection: TextDirection.ltr,
+        textScaler: textScaler,
+        maxLines: 1,
+        ellipsis: '…',
+      )..layout(maxWidth: math.max(0, maxWidth));
+      final size = painter.size;
+      painter.dispose();
+      return size;
+    }
+
+    // A box [inset] in from the start edge, as a physical left.
+    double fromStart(double inset, double width) =>
+        isRtl ? area.width - inset - width : inset;
+
+    // Text moving from [start] to [end], growing or shrinking from its
+    // start edge. A label is laid out in the room it has ([startRoom] to
+    // [endRoom]) rather than its measured width, which sub-pixel rounding
+    // would ellipsize.
+    Widget moving(String text, Key key, Rect start, Rect end,
+        TextStyle startStyle, TextStyle endStyle,
+        {double? startRoom, double? endRoom}) {
+      final label = Text(
+        text,
+        key: key,
+        maxLines: 1,
+        softWrap: false,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle.lerp(startStyle, endStyle, t),
+      );
+      final top = lerpDouble(start.top, end.top, t);
+      if (startRoom == null || endRoom == null) {
+        return Positioned(
+            left: lerpDouble(start.left, end.left, t), top: top, child: label);
+      }
+      final room = math.max(0.0, lerpDouble(startRoom, endRoom, t)!);
+      final aligned =
+          Align(alignment: AlignmentDirectional.centerStart, child: label);
+      return isRtl
+          ? Positioned(
+              right: area.width - lerpDouble(start.right, end.right, t)!,
+              top: top,
+              width: room,
+              child: aligned)
+          : Positioned(
+              left: lerpDouble(start.left, end.left, t),
+              top: top,
+              width: room,
+              child: aligned);
+    }
+
+    final locationStart = _locationStyle(ctx, expanded: true);
+    final locationEnd = _locationStyle(ctx, expanded: false);
+    final nameStart = _nameStyle(ctx, expanded: true, compact: compact);
+    final nameEnd = _nameStyle(ctx, expanded: false);
+    final digitsStart = _HeroBadge.textStyleOf(ctx, compact: compact);
+    final digitsEnd = _collapsedCountdownStyle(ctx);
+    final hPad = _HeroBadge.horizontalPadding(compact: compact);
+    final vPad = _HeroBadge.verticalPadding(compact: compact);
+    final iconSize = _HeroBadge.iconSize(compact: compact);
+
+    // The capsule, inside its padding: the text column, then the countdown.
+    final capsuleLeft = AppSpacing.md + windowControlsInset;
+    final capsuleRight = area.width - actionAreaWidth;
+    final capsuleTop = collapsedRowTop + (kToolbarHeight - _capsuleHeight) / 2;
+    final capsule = Rect.fromLTRB(
+        capsuleLeft, capsuleTop, capsuleRight, capsuleTop + _capsuleHeight);
+    double capsuleTextLeft(double width) => isRtl
+        ? capsuleRight - AppSpacing.md - width
+        : capsuleLeft + AppSpacing.md;
+
+    // The location, after the pin on the buttons' row.
+    final locationInset = AppSpacing.md +
+        windowControlsInset +
+        _locationIconSize +
+        AppSpacing.xxs;
+    final locationStartRoom = area.width - locationInset - actionAreaWidth;
+    final locationStartSize =
+        measure(locationLabel, locationStart, locationStartRoom);
+
+    return ValueListenableBuilder<Duration>(
+      valueListenable: remaining,
+      builder: (_, value, __) {
+        final hasCountdown = !value.isNegative;
+        final digits = hasCountdown ? _formatCountdown(value) : '';
+        final digitsStartSize = measure(digits, digitsStart, double.infinity);
+        final digitsEndSize = measure(digits, digitsEnd, double.infinity);
+
+        // The hero, bottom up: its padding, the pill, the gap, the name.
+        final badgeRow = math.max(iconSize, digitsStartSize.height);
+        final badgeHeight = hasCountdown ? badgeRow + vPad * 2 : 0.0;
+        final badgeWidth =
+            hPad * 2 + iconSize + AppSpacing.xs + digitsStartSize.width;
+        final badgeTop = area.height - AppSpacing.lg - badgeHeight;
+        final badge = Rect.fromLTWH(fromStart(AppSpacing.md, badgeWidth),
+            badgeTop, badgeWidth, badgeHeight);
+        final nameStartRoom = area.width - AppSpacing.md * 2;
+        final nameStartSize = measure(nextName, nameStart, nameStartRoom);
+        final nameStartTop = badgeTop -
+            (compact ? AppSpacing.xxs : AppSpacing.xs) -
+            nameStartSize.height;
+
+        // The capsule's text column, centered in it, beside the countdown.
+        final capsuleTextWidth = capsule.width -
+            AppSpacing.md * 2 -
+            AppSpacing.xs -
+            (hasCountdown ? digitsEndSize.width : 0);
+        final locationEndSize =
+            measure(locationLabel, locationEnd, capsuleTextWidth);
+        final nameEndSize = measure(nextName, nameEnd, capsuleTextWidth);
+        final locationEndTop = capsuleTop +
+            (_capsuleHeight - locationEndSize.height - nameEndSize.height) / 2;
+
+        // The pill grows into the capsule. Without a countdown there is no
+        // pill, so the capsule fades in where it lands.
+        final pill = hasCountdown ? Rect.lerp(badge, capsule, t)! : capsule;
+        final pillTint = hasCountdown
+            ? Color.lerp(
+                Colors.white.withValues(alpha: 0.14), glassTintOf(ctx), t)!
+            : _fadeColor(glassTintOf(ctx), collapsedProgress);
+        final pillVisible = hasCountdown || collapsedProgress > 0;
+
+        return IgnorePointer(
+          child: Stack(
+            children: [
+              Positioned.fromRect(
+                rect: pill,
+                child: Transform.scale(
+                  scale: hasCountdown ? 1 : _glassScale(collapsedProgress),
+                  alignment: Alignment.centerLeft,
+                  child: LiquidGlassLens(
+                    key: const ValueKey('pill-moving'),
+                    visibility: pillVisible,
+                    style: LiquidGlassStyle(
+                      shape: LiquidGlassShape.continuousRoundedRectangle(
+                          cornerRadius: pill.height / 2),
+                      color: pillTint,
+                      blur: 6 * (hasCountdown ? t : collapsedProgress),
+                    ),
+                    // The timer icon stays at the pill's start, fading out.
+                    child: hasCountdown
+                        ? Align(
+                            alignment: AlignmentDirectional.centerStart,
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.only(start: hPad),
+                              child: Opacity(
+                                opacity: expandedFade,
+                                child: Icon(Icons.timer_outlined,
+                                    size: iconSize,
+                                    color:
+                                        Colors.white.withValues(alpha: 0.85)),
+                              ),
+                            ),
+                          )
+                        : const SizedBox.expand(),
+                  ),
+                ),
+              ),
+              moving(
+                locationLabel,
+                const ValueKey('location-moving'),
+                Rect.fromLTWH(
+                    fromStart(locationInset, locationStartSize.width),
+                    (kToolbarHeight - locationStartSize.height) / 2 -
+                        iosPortraitLift,
+                    locationStartSize.width,
+                    locationStartSize.height),
+                Rect.fromLTWH(
+                    capsuleTextLeft(locationEndSize.width),
+                    locationEndTop,
+                    locationEndSize.width,
+                    locationEndSize.height),
+                locationStart,
+                locationEnd,
+                startRoom: locationStartRoom,
+                endRoom: capsuleTextWidth,
+              ),
+              moving(
+                nextName,
+                const ValueKey('name-moving'),
+                Rect.fromLTWH(fromStart(AppSpacing.md, nameStartSize.width),
+                    nameStartTop, nameStartSize.width, nameStartSize.height),
+                Rect.fromLTWH(
+                    capsuleTextLeft(nameEndSize.width),
+                    locationEndTop + locationEndSize.height,
+                    nameEndSize.width,
+                    nameEndSize.height),
+                nameStart,
+                nameEnd,
+                startRoom: nameStartRoom,
+                endRoom: capsuleTextWidth,
+              ),
+              if (hasCountdown)
+                moving(
+                  digits,
+                  const ValueKey('countdown-moving'),
+                  Rect.fromLTWH(
+                      fromStart(hPad + AppSpacing.md + iconSize + AppSpacing.xs,
+                          digitsStartSize.width),
+                      badgeTop + vPad + (badgeRow - digitsStartSize.height) / 2,
+                      digitsStartSize.width,
+                      digitsStartSize.height),
+                  Rect.fromLTWH(
+                      isRtl
+                          ? capsuleLeft + AppSpacing.md
+                          : capsuleRight - AppSpacing.md - digitsEndSize.width,
+                      collapsedRowTop +
+                          (kToolbarHeight - digitsEndSize.height) / 2,
+                      digitsEndSize.width,
+                      digitsEndSize.height),
+                  digitsStart,
+                  digitsEnd,
+                ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  /// The next prayer: a small label with its time, then hidden copies of
+  /// the name and the countdown pill holding their places.
+  Widget _heroBody(BuildContext ctx,
+      {required bool compact, required double fade}) {
+    final textTheme = Theme.of(ctx).textTheme;
+    final muted = Colors.white.withValues(alpha: 0.75);
+    final time = nextTime;
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+          AppSpacing.md, 0, AppSpacing.md, AppSpacing.lg),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (!compact)
+            Opacity(
+              opacity: fade,
+              child: Text(
+                time == null
+                    ? nextLabel.toUpperCase()
+                    : '${nextLabel.toUpperCase()}  ·  $time',
+                style: textTheme.labelMedium?.copyWith(
+                  color: muted,
+                  letterSpacing: 1.2,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          Visibility.maintain(
+            visible: false,
+            child: Text(
+              nextName,
+              key: const ValueKey('name-hero'),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: _nameStyle(ctx, expanded: true, compact: compact),
+            ),
+          ),
+          SizedBox(height: compact ? AppSpacing.xxs : AppSpacing.xs),
+          ValueListenableBuilder<Duration>(
+            valueListenable: remaining,
+            builder: (_, value, __) => value.isNegative
+                ? const SizedBox()
+                : Visibility.maintain(
+                    visible: false,
+                    child: Padding(
+                      key: const ValueKey('pill-hero'),
+                      padding: EdgeInsets.symmetric(
+                          horizontal:
+                              _HeroBadge.horizontalPadding(compact: compact),
+                          vertical:
+                              _HeroBadge.verticalPadding(compact: compact)),
+                      child: Row(mainAxisSize: MainAxisSize.min, children: [
+                        SizedBox.square(
+                            dimension: _HeroBadge.iconSize(compact: compact)),
+                        const SizedBox(width: AppSpacing.xs),
+                        Text(_formatCountdown(value),
+                            key: const ValueKey('countdown-badge'),
+                            style:
+                                _HeroBadge.textStyleOf(ctx, compact: compact)),
+                      ]),
+                    ),
+                  ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -700,9 +1116,11 @@ class _LiquidGlassCard extends StatelessWidget {
                   ? LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
+                      // Nearly opaque, so the white text keeps its contrast
+                      // over a light background; a little glass shows through.
                       colors: [
-                        AppColors.accentOf(ctx).withValues(alpha: 0.55),
-                        AppColors.secondaryOf(ctx).withValues(alpha: 0.45),
+                        AppColors.accentOf(ctx).withValues(alpha: 0.92),
+                        AppColors.secondaryOf(ctx).withValues(alpha: 0.85),
                       ],
                     )
                   : null,
@@ -823,57 +1241,46 @@ class _MaterialCard extends StatelessWidget {
   }
 }
 
-// ── Liquid Countdown Badge ────────────────────────────────────────────────────
-// A glass capsule that refracts the accent hero behind it.
-class _LiquidCountdownBadge extends StatelessWidget {
-  final ValueListenable<Duration> remaining;
-  final bool compact;
+// ── Hero Countdown Pill ───────────────────────────────────────────────────────
+// The metrics of the glass pill around the hero's countdown, shared by its
+// hidden layout and the header's moving layer.
+abstract final class _HeroBadge {
+  static double horizontalPadding({required bool compact}) =>
+      compact ? AppSpacing.sm : AppSpacing.md;
+  static double verticalPadding({required bool compact}) =>
+      compact ? AppSpacing.xxs : AppSpacing.xs;
+  static double iconSize({required bool compact}) => compact ? 16 : 20;
 
-  /// False once the hero has faded, so the lens stops reading the backdrop.
-  final bool visible;
-  const _LiquidCountdownBadge({
-    required this.remaining,
-    this.compact = false,
-    this.visible = true,
-  });
-
-  @override
-  Widget build(BuildContext ctx) {
-    return ValueListenableBuilder<Duration>(
-      valueListenable: remaining,
-      builder: (_, value, __) => _buildBadge(ctx, value),
-    );
-  }
-
-  Widget _buildBadge(BuildContext ctx, Duration value) {
-    if (value.isNegative) return const SizedBox();
+  /// The digits' style, white over the accent hero.
+  static TextStyle textStyleOf(BuildContext ctx, {required bool compact}) {
     final textTheme = Theme.of(ctx).textTheme;
-    final style = compact
+    final base = compact
         ? textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700)
         : textTheme.titleLarge;
-    final horizontal = compact ? AppSpacing.sm : AppSpacing.lg;
-    final vertical = compact ? AppSpacing.xxs : AppSpacing.xs;
-
-    return LiquidGlassLens(
-      visibility: visible,
-      style: LiquidGlassStyle(
-        // Taller than the badge, so the corners form a pill.
-        shape: const LiquidGlassShape.continuousRoundedRectangle(
-            cornerRadius: AppRadii.xl),
-        color: Colors.white.withValues(alpha: 0.14),
-      ),
-      child: Padding(
-        padding:
-            EdgeInsets.symmetric(horizontal: horizontal, vertical: vertical),
-        child: Text(_formatCountdown(value),
-            style: style?.copyWith(
-              color: Colors.white,
-              fontFeatures: const [FontFeature.tabularFigures()],
-            )),
-      ),
+    return (base ?? const TextStyle()).copyWith(
+      color: Colors.white,
+      fontFeatures: const [FontFeature.tabularFigures()],
     );
   }
 }
+
+/// Glass that fades in or out grows from, or shrinks to, this share of its
+/// size, since a lens under an Opacity layer loses its backdrop.
+const _glassMinScale = 0.85;
+
+double _glassScale(double fade) => lerpDouble(_glassMinScale, 1, fade)!;
+
+/// The countdown's style in the collapsed capsule.
+TextStyle _collapsedCountdownStyle(BuildContext ctx) =>
+    (Theme.of(ctx).textTheme.titleMedium ?? const TextStyle()).copyWith(
+      fontWeight: FontWeight.w700,
+      color: AppColors.accentOf(ctx),
+      fontFeatures: const [FontFeature.tabularFigures()],
+    );
+
+/// [color] with its alpha scaled by [fade].
+Color _fadeColor(Color color, double fade) =>
+    color.withValues(alpha: color.a * fade);
 
 // ── Material Countdown Badge (non-Apple) ──────────────────────────────────────
 class _CountdownBadge extends StatelessWidget {
@@ -907,6 +1314,9 @@ class _CountdownBadge extends StatelessWidget {
     );
   }
 }
+
+String _formatClock(DateTime t) =>
+    '${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}';
 
 String _formatCountdown(Duration d) {
   String two(int n) => n.toString().padLeft(2, '0');
