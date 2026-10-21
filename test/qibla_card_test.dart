@@ -6,6 +6,7 @@ import 'dart:async';
 import 'package:adhan/adhan.dart';
 import 'package:bedug/core/design/liquid_glass.dart';
 import 'package:bedug/core/theme/app_theme.dart';
+import 'package:bedug/core/theme/app_theme_scope.dart';
 import 'package:bedug/core/theme/app_tokens.dart';
 import 'package:bedug/core/services/prayer_service.dart';
 import 'package:bedug/core/services/selection_feedback.dart';
@@ -46,11 +47,14 @@ Widget _app(
   child: MaterialApp(
     locale: locale,
     theme: buildAppTheme(brightness),
-    builder: (context, child) => MediaQuery(
-      data: MediaQuery.of(
-        context,
-      ).copyWith(textScaler: TextScaler.linear(textScale), padding: safeInsets),
-      child: child!,
+    builder: (context, child) => AppThemeScope(
+      child: MediaQuery(
+        data: MediaQuery.of(context).copyWith(
+          textScaler: TextScaler.linear(textScale),
+          padding: safeInsets,
+        ),
+        child: child!,
+      ),
     ),
     localizationsDelegates: [
       GlobalMaterialLocalizations.delegate,
@@ -259,6 +263,8 @@ void main() {
           locale: const Locale('ar'),
           brightness: brightness,
           textScale: 2,
+          worshipScreen: true,
+          safeInsets: const EdgeInsets.only(top: 44, bottom: 90),
         ),
       );
 
@@ -274,7 +280,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text(l10n.qiblaFindNorthHint).hitTestable(), findsOneWidget);
       expect(tester.takeException(), isNull);
-    });
+    }, variant: TargetPlatformVariant.all());
   }
 
   testWidgets('asks for a location when none is available', (tester) async {

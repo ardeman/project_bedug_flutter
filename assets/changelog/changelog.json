@@ -7,6 +7,15 @@
         {
           "type": "improved",
           "text": {
+            "en": "The Worship tab uses consistent Qibla icon sizing and themed location guidance.",
+            "id": "Tab Ibadah menggunakan ukuran ikon kiblat yang seragam dan panduan lokasi yang mengikuti tema.",
+            "ms": "Tab Ibadah menggunakan saiz ikon kiblat yang seragam dan panduan lokasi yang mengikut tema.",
+            "ar": "تستخدم علامة تبويب العبادات أحجامًا متناسقة لأيقونات القبلة وإرشادات الموقع المتوافقة مع السمة."
+          }
+        },
+        {
+          "type": "improved",
+          "text": {
             "en": "Settings controls use consistent spacing, rounded corners and theme colors across platforms.",
             "id": "Kontrol pengaturan menggunakan jarak, sudut membulat, dan warna tema yang seragam di semua platform.",
             "ms": "Kawalan tetapan menggunakan jarak, bucu bulat dan warna tema yang seragam pada semua platform.",

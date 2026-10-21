@@ -129,7 +129,11 @@ class _QiblaCardState extends ConsumerState<QiblaCard> {
             )
           : Padding(
               padding: const EdgeInsets.all(AppSpacing.lg),
-              child: Text(l10n.qiblaNoLocation, textAlign: TextAlign.center),
+              child: Text(
+                l10n.qiblaNoLocation,
+                style: Theme.of(ctx).textTheme.bodyMedium,
+                textAlign: TextAlign.center,
+              ),
             );
     } else {
       return _buildQibla(ctx, l10n, coords, prayer.locationLabel);
@@ -227,7 +231,7 @@ class _QiblaCardState extends ConsumerState<QiblaCard> {
                 Icon(
                   facing ? Icons.check_circle_outline : Icons.explore_outlined,
                   color: accent,
-                  size: 20,
+                  size: AppControlSizes.toolbarIcon,
                 ),
                 const SizedBox(width: AppSpacing.xs),
                 Flexible(
@@ -345,7 +349,7 @@ class _QiblaDial extends StatelessWidget {
       child: Icon(
         Icons.my_location,
         key: const ValueKey('qibla-device-marker'),
-        size: 28,
+        size: AppControlSizes.navigationIcon,
         color: highlight ? accent : scheme.onSurface,
       ),
     );
