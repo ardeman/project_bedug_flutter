@@ -7,6 +7,15 @@
         {
           "type": "improved",
           "text": {
+            "en": "The prayer calendar uses shared platform card styling and keeps long month headings within narrow layouts at larger text sizes.",
+            "id": "Kalender salat menggunakan gaya kartu platform yang seragam dan menjaga judul bulan panjang tetap muat pada tata letak sempit dengan ukuran teks lebih besar.",
+            "ms": "Kalendar solat menggunakan gaya kad platform yang seragam dan memastikan tajuk bulan panjang muat dalam susun atur sempit pada saiz teks lebih besar.",
+            "ar": "يستخدم تقويم الصلاة نمط البطاقات المشترك لكل منصة، ويحافظ على احتواء عناوين الأشهر الطويلة في التخطيطات الضيقة عند تكبير النص."
+          }
+        },
+        {
+          "type": "improved",
+          "text": {
             "en": "The calculation method picker follows the app theme with consistent typography and spacing, and gives long labels more room on Apple devices.",
             "id": "Pemilih metode perhitungan mengikuti tema aplikasi dengan tipografi dan jarak yang seragam, serta memberi lebih banyak ruang untuk label panjang di perangkat Apple.",
             "ms": "Pemilih kaedah pengiraan mengikut tema aplikasi dengan tipografi dan jarak yang seragam, serta memberi lebih ruang untuk label panjang pada peranti Apple.",

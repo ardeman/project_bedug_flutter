@@ -1,3 +1,6 @@
+import 'package:bedug/core/design/liquid_glass.dart';
+import 'package:bedug/core/theme/app_theme.dart';
+import 'package:bedug/core/theme/app_theme_scope.dart';
 import 'package:cupertino_ui/cupertino_ui.dart'
     show GlobalCupertinoLocalizations;
 import 'package:bedug/core/services/selection_feedback.dart';
@@ -31,6 +34,59 @@ void main() {
         ),
       ),
     );
+  }
+
+  for (final brightness in Brightness.values) {
+    for (final locale in ['en', 'ar']) {
+      testWidgets(
+        'calendar fits narrow layouts with large text in $brightness $locale',
+        (tester) async {
+          tester.view.physicalSize = const Size(320, 900);
+          tester.view.devicePixelRatio = 1;
+          addTearDown(tester.view.reset);
+          await tester.pumpWidget(
+            MaterialApp(
+              theme: buildAppTheme(brightness),
+              locale: Locale(locale),
+              localizationsDelegates: [
+                GlobalMaterialLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+                ...AppLocalizations.localizationsDelegates,
+              ],
+              supportedLocales: AppLocalizations.supportedLocales,
+              builder: (context, child) => AppThemeScope(
+                child: MediaQuery(
+                  data: MediaQuery.of(context)
+                      .copyWith(textScaler: TextScaler.linear(2)),
+                  child: child!,
+                ),
+              ),
+              home: Scaffold(
+                body: SingleChildScrollView(
+                  child: PrayerDayPicker(
+                    today: today,
+                    selected: today.subtract(const Duration(days: 1)),
+                    onSelected: (_) {},
+                  ),
+                ),
+              ),
+            ),
+          );
+          expect(find.byType(GlassCard), findsOneWidget);
+          await tester.tap(find.byIcon(Icons.calendar_month_outlined));
+          await tester.pumpAndSettle();
+          expect(find.byType(HijriMonthGrid), findsOneWidget);
+          expect(tester.takeException(), isNull);
+        },
+        variant: TargetPlatformVariant({
+          TargetPlatform.iOS,
+          TargetPlatform.macOS,
+          TargetPlatform.android,
+          TargetPlatform.windows,
+          TargetPlatform.linux,
+        }),
+      );
+    }
   }
 
   testWidgets('picks future and past days and jumps back to today', (

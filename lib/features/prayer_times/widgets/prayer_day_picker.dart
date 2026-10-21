@@ -6,10 +6,10 @@ import '../../../core/design/material_controls.dart';
 
 import 'package:flutter/physics.dart';
 import 'package:intl/intl.dart';
-import 'package:liquid_glass_easy/liquid_glass_easy.dart';
 
 import '../../../core/constants/app_colors.dart';
 import '../../../core/design/glass_controls.dart';
+import '../../../core/design/liquid_glass.dart';
 import '../../../core/design/platform_capabilities.dart';
 import '../../../core/services/selection_feedback.dart';
 import '../../../core/theme/app_tokens.dart';
@@ -208,7 +208,6 @@ class _PrayerDayPickerState extends State<PrayerDayPicker>
   Widget build(BuildContext ctx) {
     final l10n = AppLocalizations.of(ctx);
     final theme = Theme.of(ctx);
-    final isDark = theme.brightness == Brightness.dark;
     final mq = MediaQuery.of(ctx);
     final isLandscape = mq.orientation == Orientation.landscape;
     final sideInsetLeft = isLandscape ? mq.padding.left : 0.0;
@@ -334,7 +333,10 @@ class _PrayerDayPickerState extends State<PrayerDayPicker>
                     else if (showToday)
                       MaterialLabelButton(
                         onPressed: _goToToday,
-                        icon: const Icon(Icons.today, size: 18),
+                        icon: const Icon(
+                          Icons.today,
+                          size: AppControlSizes.toolbarIcon,
+                        ),
                         label: Text(l10n.today),
                       ),
                     _CalendarToggle(
@@ -354,40 +356,18 @@ class _PrayerDayPickerState extends State<PrayerDayPicker>
       ),
     );
 
-    final card = PlatformCapabilities.isApple
-        ? Material(
-            color: Colors.transparent,
-            child: LiquidGlassLite(
-              shape: const LiquidGlassShape.continuousRoundedRectangle(
-                cornerRadius: AppRadii.lg,
-              ),
-              blur: 10,
-              color: isDark
-                  ? Colors.white.withValues(alpha: 0.07)
-                  : Colors.white.withValues(alpha: 0.62),
-              child: content,
-            ),
-          )
-        : DecoratedBox(
-            decoration: ShapeDecoration(
-              color: theme.cardTheme.color ?? theme.cardColor,
-              shape:
-                  theme.cardTheme.shape ??
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(AppRadii.lg),
-                  ),
-            ),
-            child: Material(color: Colors.transparent, child: content),
-          );
-
-    return Padding(
-      padding: EdgeInsets.fromLTRB(
+    return GlassCard(
+      margin: EdgeInsets.fromLTRB(
         AppSpacing.md + sideInsetLeft,
         0,
         AppSpacing.md + sideInsetRight,
         AppSpacing.xs,
       ),
-      child: card,
+      child: Semantics(
+        container: true,
+        explicitChildNodes: true,
+        child: content,
+      ),
     );
   }
 }

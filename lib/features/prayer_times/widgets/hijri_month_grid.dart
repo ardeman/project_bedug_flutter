@@ -359,11 +359,14 @@ class HijriMonthGridState extends State<HijriMonthGrid> {
                   onPressed: _hasPrev ? _prev : null,
                 ),
                 Expanded(
-                  child: Text(
-                    '${hijriMonthName(l10n, _view.month)} ${_view.year} H',
-                    textAlign: TextAlign.center,
-                    style: theme.textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.w700,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      '${hijriMonthName(l10n, _view.month)} ${_view.year} H',
+                      textAlign: TextAlign.center,
+                      style: theme.textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
                 ),
