@@ -9,7 +9,7 @@
     <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
         android:orientation="vertical" android:gravity="center_vertical" android:padding="16dp">
         <TextView android:id="@+id/widget_title" android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:text="Bedug"
+            android:layout_height="wrap_content" android:text="Bedug" android:textColor="@color/widget_text"
             android:textAppearance="@android:style/TextAppearance.Material.Small"
             android:maxLines="1" android:ellipsize="end" />
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -19,6 +19,7 @@
                 <TextView android:id="@+id/widget_prayer" android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="@android:style/TextAppearance.Material.Headline"
+                    android:textColor="@color/widget_accent"
                     android:maxLines="1" android:ellipsize="end"
                     android:autoSizeTextType="uniform" android:autoSizeMinTextSize="14sp"
                     android:autoSizeMaxTextSize="24sp" android:autoSizeStepGranularity="1sp" />
@@ -27,11 +28,12 @@
                 <Chronometer android:id="@+id/widget_countdown" android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:countDown="true"
                     android:textAppearance="@android:style/TextAppearance.Material.Large"
+                    android:textColor="@color/widget_text"
                     android:fontFamily="sans-serif-medium" />
                 <TextView android:id="@+id/widget_location" android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="@android:style/TextAppearance.Material.Small"
-                    android:maxLines="1" android:ellipsize="end" />
+                    android:textColor="@color/widget_text" android:maxLines="1" android:ellipsize="end" />
             </LinearLayout>
             <ImageView android:id="@+id/widget_dial" android:layout_width="76dp"
                 android:layout_height="76dp" android:layout_marginStart="12dp"

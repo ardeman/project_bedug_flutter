@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Mirrors AppColors (lightBg, lightText, emerald) for the widget preview and first frame;
+     live widgets are recolored from the palette Flutter sends. -->
+<resources>
+    <color name="widget_background">#FFF7F4EE</color>
+    <color name="widget_text">#FF16201B</color>
+    <color name="widget_accent">#FF1F7A5A</color>
+</resources>

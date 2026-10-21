@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Widget picker text; keep in sync with nextPrayer and the prayer names in lib/l10n/. -->
+<resources>
+    <string name="widget_description">Countdown to the next prayer and today\'s schedule</string>
+    <string name="widget_preview_title">Next Prayer</string>
+    <string name="widget_preview_fajr">Fajr</string>
+    <string name="widget_preview_dhuhr">Dhuhr</string>
+    <string name="widget_preview_asr">Asr</string>
+    <string name="widget_preview_maghrib">Maghrib</string>
+    <string name="widget_preview_isha">Isha</string>
+</resources>

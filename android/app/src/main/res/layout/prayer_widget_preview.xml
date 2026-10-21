@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Static sample shown in the widget picker; mirrors prayer_widget with a schedule. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@drawable/prayer_widget_background">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+        android:orientation="vertical" android:gravity="center_vertical" android:padding="16dp">
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="@string/widget_preview_title" android:textColor="@color/widget_text"
+            android:textAppearance="@android:style/TextAppearance.Material.Small"
+            android:maxLines="1" android:ellipsize="end" />
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical">
+            <LinearLayout android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="wrap_content" android:orientation="vertical">
+                <LinearLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:orientation="horizontal">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/widget_preview_asr" android:maxLines="1"
+                        android:textAppearance="@android:style/TextAppearance.Material.Headline"
+                        android:textColor="@color/widget_accent" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text=" · 15:12" android:maxLines="1"
+                        android:textAppearance="@android:style/TextAppearance.Material.Headline"
+                        android:textColor="@color/widget_accent" />
+                </LinearLayout>
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:text="1:24:36" android:fontFamily="sans-serif-medium"
+                    android:textAppearance="@android:style/TextAppearance.Material.Large"
+                    android:textColor="@color/widget_text" />
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:text="Jakarta" android:textColor="@color/widget_text"
+                    android:textAppearance="@android:style/TextAppearance.Material.Small" />
+            </LinearLayout>
+            <ImageView android:layout_width="76dp" android:layout_height="76dp"
+                android:layout_marginStart="12dp" android:src="@drawable/prayer_widget_preview_dial"
+                android:importantForAccessibility="no" />
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" android:orientation="horizontal">
+            <LinearLayout android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="wrap_content" android:orientation="vertical">
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:gravity="center" android:textSize="12sp" android:maxLines="1"
+                    android:ellipsize="end" android:textColor="@color/widget_accent"
+                    android:text="@string/widget_preview_asr" />
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:gravity="center" android:textSize="12sp" android:maxLines="1"
+                    android:textColor="@color/widget_accent" android:text="15:12" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="wrap_content" android:orientation="vertical">
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:gravity="center" android:textSize="12sp" android:maxLines="1"
+                    android:ellipsize="end" android:textColor="@color/widget_text"
+                    android:text="@string/widget_preview_maghrib" />
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:gravity="center" android:textSize="12sp" android:maxLines="1"
+                    android:textColor="@color/widget_text" android:text="17:58" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="wrap_content" android:orientation="vertical">
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:gravity="center" android:textSize="12sp" android:maxLines="1"
+                    android:ellipsize="end" android:textColor="@color/widget_text"
+                    android:text="@string/widget_preview_isha" />
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:gravity="center" android:textSize="12sp" android:maxLines="1"
+                    android:textColor="@color/widget_text" android:text="19:09" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="wrap_content" android:orientation="vertical">
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:gravity="center" android:textSize="12sp" android:maxLines="1"
+                    android:ellipsize="end" android:textColor="@color/widget_text"
+                    android:text="@string/widget_preview_fajr" />
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:gravity="center" android:textSize="12sp" android:maxLines="1"
+                    android:textColor="@color/widget_text" android:text="04:31" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="wrap_content" android:orientation="vertical">
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:gravity="center" android:textSize="12sp" android:maxLines="1"
+                    android:ellipsize="end" android:textColor="@color/widget_text"
+                    android:text="@string/widget_preview_dhuhr" />
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:gravity="center" android:textSize="12sp" android:maxLines="1"
+                    android:textColor="@color/widget_text" android:text="11:54" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

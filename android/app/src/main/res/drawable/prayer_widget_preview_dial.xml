@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The countdown dial drawn by PrayerWidgetProvider, frozen at 70% remaining for the picker. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="76dp" android:height="76dp"
+    android:viewportWidth="76" android:viewportHeight="76">
+    <path android:pathData="M38,10 A28,28 0 1,1 38,66 A28,28 0 1,1 38,10"
+        android:strokeColor="@color/widget_accent" android:strokeAlpha="0.14"
+        android:strokeWidth="5" />
+    <path android:pathData="M38,10 A28,28 0 1,1 11.37,46.65"
+        android:strokeColor="@color/widget_accent" android:strokeWidth="5"
+        android:strokeLineCap="round" />
+    <path android:pathData="M38.00,1.00 L38.00,6.00 M56.50,5.96 L55.00,8.56 M70.04,19.50 L67.44,21.00 M75.00,38.00 L70.00,38.00 M70.04,56.50 L67.44,55.00 M56.50,70.04 L55.00,67.44 M38.00,75.00 L38.00,70.00 M19.50,70.04 L21.00,67.44 M5.96,56.50 L8.56,55.00 M1.00,38.00 L6.00,38.00 M5.96,19.50 L8.56,21.00 M19.50,5.96 L21.00,8.56"
+        android:strokeColor="@color/widget_accent" android:strokeAlpha="0.47"
+        android:strokeWidth="1.5" android:strokeLineCap="round" />
+    <path android:pathData="M38,38 L19.93,43.87"
+        android:strokeColor="@color/widget_accent" android:strokeWidth="2"
+        android:strokeLineCap="round" />
+    <path android:pathData="M38,35 A3,3 0 1,1 38,41 A3,3 0 1,1 38,35"
+        android:fillColor="@color/widget_accent" />
+</vector>

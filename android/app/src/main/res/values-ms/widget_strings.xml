@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Widget picker text; keep in sync with nextPrayer and the prayer names in lib/l10n/. -->
+<resources>
+    <string name="widget_description">Kira detik ke solat seterusnya dan jadual hari ini</string>
+    <string name="widget_preview_title">Solat Seterusnya</string>
+    <string name="widget_preview_fajr">Subuh</string>
+    <string name="widget_preview_dhuhr">Zohor</string>
+    <string name="widget_preview_asr">Asar</string>
+    <string name="widget_preview_maghrib">Maghrib</string>
+    <string name="widget_preview_isha">Isyak</string>
+</resources>

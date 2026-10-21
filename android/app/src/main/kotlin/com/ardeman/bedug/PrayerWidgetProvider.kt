@@ -12,8 +12,10 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
+import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
+import android.util.SizeF
 import android.view.View
 import android.widget.RemoteViews
 import es.antonborri.home_widget.HomeWidgetPlugin
@@ -63,72 +65,19 @@ class PrayerWidgetProvider : HomeWidgetProvider() {
         val prefix = if (dark) "dark" else "light"
         val locale = Locale.forLanguageTag(data.optString("locale", "id"))
         ids.forEach { id ->
-            val options = manager.getAppWidgetOptions(id)
-            // Use the minimum width so the layout also fits after rotation.
-            val width = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH, 180)
-            val height = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT, 140)
-            val compact = width < 280
-            val views = RemoteViews(context.packageName,
-                if (compact) R.layout.prayer_widget_compact else R.layout.prayer_widget)
-            views.setInt(R.id.widget_root, "setLayoutDirection",
-                if (locale.language == "ar") View.LAYOUT_DIRECTION_RTL else View.LAYOUT_DIRECTION_LTR)
-            // Colors are supplied by AppColors in Flutter, including dark variants.
-            if (data.has(prefix + "Background")) {
-                views.setInt(R.id.widget_background, "setColorFilter", data.getLong(prefix + "Background").toInt())
-                for (id in intArrayOf(R.id.widget_title, R.id.widget_prayer,
-                        R.id.widget_countdown, R.id.widget_location, R.id.widget_time)) {
-                    views.setTextColor(id, data.getLong(prefix + "Text").toInt())
-                }
-                views.setTextColor(R.id.widget_prayer, data.getLong(prefix + "Accent").toInt())
-            }
-            views.setTextViewText(R.id.widget_title, data.optString("title", "Bedug"))
-            views.setTextViewText(R.id.widget_location, data.optString("location"))
-            views.setViewVisibility(R.id.widget_countdown, if (next == null) View.GONE else View.VISIBLE)
-            views.setViewVisibility(R.id.widget_time, if (compact && next != null) View.VISIBLE else View.GONE)
-            if (next != null) {
-                val time = next.getLong("time")
-                val formatted = DateFormat.getTimeInstance(DateFormat.SHORT, locale).format(Date(time))
-                views.setTextViewText(R.id.widget_prayer,
-                    if (compact) next.getString("name") else "${next.getString("name")} · $formatted")
-                views.setTextViewText(R.id.widget_time, formatted)
-                views.setChronometer(R.id.widget_countdown,
-                    SystemClock.elapsedRealtime() + time - now, null, true)
-                views.setChronometerCountDown(R.id.widget_countdown, true)
+            val views = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                // The launcher picks the largest layout that fits the widget's current size.
+                RemoteViews(WidgetSize.entries.associate { size ->
+                    SizeF(size.width, size.height) to
+                        render(context, size, data, schedule, upcoming, now, prefix, locale)
+                })
             } else {
-                views.setTextViewText(R.id.widget_prayer, data.optString("refresh", "Bedug"))
-            }
-            val launch = Intent(context, MainActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-            }
-            views.setOnClickPendingIntent(R.id.widget_root, PendingIntent.getActivity(
-                context, 0, launch, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
-            val showDial = next != null && data.optBoolean("showAnalog", true)
-            val showSchedule = next != null && data.optBoolean("showSchedule", true) &&
-                width >= 350 && height >= 180
-            views.setViewVisibility(R.id.widget_dial, if (showDial) View.VISIBLE else View.GONE)
-            views.setViewVisibility(R.id.widget_schedule, if (showSchedule) View.VISIBLE else View.GONE)
-            views.removeAllViews(R.id.widget_schedule)
-            if (showDial) {
-                val start = schedule.lastOrNull { it.optLong("time") <= now }?.optLong("time")
-                    ?: data.optLong("intervalStart", now)
-                val end = next.getLong("time")
-                val remaining = if (end > start) (end - now).toFloat() / (end - start) else 1f
-                views.setImageViewBitmap(R.id.widget_dial,
-                    countdownDial(context, remaining.coerceIn(0f, 1f),
-                        data.optLong(prefix + "Accent").toInt()))
-            }
-            if (showSchedule) {
-                upcoming.forEachIndexed { index, prayer ->
-                    val slot = RemoteViews(context.packageName, R.layout.prayer_widget_slot)
-                    slot.setTextViewText(R.id.slot_name, prayer.getString("name"))
-                    slot.setTextViewText(R.id.slot_time,
-                        DateFormat.getTimeInstance(DateFormat.SHORT, locale)
-                            .format(Date(prayer.getLong("time"))))
-                    val ink = data.optLong(prefix + if (index == 0) "Accent" else "Text").toInt()
-                    slot.setTextColor(R.id.slot_name, ink)
-                    slot.setTextColor(R.id.slot_time, ink)
-                    views.addView(R.id.widget_schedule, slot)
-                }
+                val options = manager.getAppWidgetOptions(id)
+                // Use the minimum size so the layout also fits after rotation.
+                render(context, WidgetSize.forSize(
+                    options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH, 180),
+                    options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT, 140)),
+                    data, schedule, upcoming, now, prefix, locale)
             }
             manager.updateAppWidget(id, views)
         }
@@ -147,8 +96,100 @@ class PrayerWidgetProvider : HomeWidgetProvider() {
         super.onDisabled(context)
     }
 
-    private fun countdownDial(context: Context, remaining: Float, accent: Int): Bitmap {
-        val size = (76 * context.resources.displayMetrics.density).toInt().coerceAtLeast(76)
+    private fun render(context: Context, size: WidgetSize, data: JSONObject,
+                       schedule: List<JSONObject>, upcoming: List<JSONObject>, now: Long,
+                       prefix: String, locale: Locale): RemoteViews {
+        val next = upcoming.firstOrNull()
+        val views = RemoteViews(context.packageName, size.layout)
+        val text = data.optLong(prefix + "Text").toInt()
+        val accent = data.optLong(prefix + "Accent").toInt()
+        val colored = data.has(prefix + "Background")
+        val timeFormat = DateFormat.getTimeInstance(DateFormat.SHORT, locale)
+        views.setInt(R.id.widget_root, "setLayoutDirection",
+            if (locale.language == "ar") View.LAYOUT_DIRECTION_RTL else View.LAYOUT_DIRECTION_LTR)
+        // Colors are supplied by AppColors in Flutter, including dark variants.
+        if (colored) {
+            views.setInt(R.id.widget_background, "setColorFilter", data.getLong(prefix + "Background").toInt())
+            for (id in intArrayOf(R.id.widget_title, R.id.widget_prayer,
+                    R.id.widget_countdown, R.id.widget_location, R.id.widget_time)) {
+                views.setTextColor(id, text)
+            }
+            views.setTextColor(R.id.widget_prayer, accent)
+        }
+        views.setTextViewText(R.id.widget_title, data.optString("title", "Bedug"))
+        views.setTextViewText(R.id.widget_location, data.optString("location"))
+        views.setViewVisibility(R.id.widget_countdown, if (next == null) View.GONE else View.VISIBLE)
+        views.setViewVisibility(R.id.widget_time,
+            if (size.compact && next != null) View.VISIBLE else View.GONE)
+        if (next != null) {
+            val time = next.getLong("time")
+            val formatted = timeFormat.format(Date(time))
+            views.setTextViewText(R.id.widget_prayer,
+                if (size.compact) next.getString("name") else "${next.getString("name")} · $formatted")
+            views.setTextViewText(R.id.widget_time, formatted)
+            views.setChronometer(R.id.widget_countdown,
+                SystemClock.elapsedRealtime() + time - now, null, true)
+            views.setChronometerCountDown(R.id.widget_countdown, true)
+        } else {
+            views.setTextViewText(R.id.widget_prayer, data.optString("refresh", "Bedug"))
+        }
+        val launch = Intent(context, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+        }
+        views.setOnClickPendingIntent(R.id.widget_root, PendingIntent.getActivity(
+            context, 0, launch, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
+        val showDial = next != null && size.dialDp > 0 && data.optBoolean("showAnalog", true)
+        val showSchedule = next != null && data.optBoolean("showSchedule", true)
+        views.setViewVisibility(R.id.widget_dial, if (showDial) View.VISIBLE else View.GONE)
+        if (showDial) {
+            val start = schedule.lastOrNull { it.optLong("time") <= now }?.optLong("time")
+                ?: data.optLong("intervalStart", now)
+            val end = next!!.getLong("time")
+            val remaining = if (end > start) (end - now).toFloat() / (end - start) else 1f
+            views.setImageViewBitmap(R.id.widget_dial,
+                countdownDial(context, remaining.coerceIn(0f, 1f), accent, size.dialDp))
+        }
+        when (size.schedule) {
+            ScheduleStyle.ROW -> {
+                views.setViewVisibility(R.id.widget_schedule, if (showSchedule) View.VISIBLE else View.GONE)
+                views.removeAllViews(R.id.widget_schedule)
+                if (showSchedule) upcoming.forEachIndexed { index, prayer ->
+                    val slot = RemoteViews(context.packageName, R.layout.prayer_widget_slot)
+                    slot.setTextViewText(R.id.slot_name, prayer.getString("name"))
+                    slot.setTextViewText(R.id.slot_time, timeFormat.format(Date(prayer.getLong("time"))))
+                    val ink = if (index == 0) accent else text
+                    slot.setTextColor(R.id.slot_name, ink)
+                    slot.setTextColor(R.id.slot_time, ink)
+                    views.addView(R.id.widget_schedule, slot)
+                }
+            }
+            ScheduleStyle.LIST -> {
+                views.setViewVisibility(R.id.widget_list, if (showSchedule) View.VISIBLE else View.GONE)
+                views.removeAllViews(R.id.widget_list)
+                if (showSchedule) upcoming.forEachIndexed { index, prayer ->
+                    val row = RemoteViews(context.packageName, R.layout.prayer_widget_row)
+                    row.setTextViewText(R.id.row_name, prayer.getString("name"))
+                    row.setTextViewText(R.id.row_time, timeFormat.format(Date(prayer.getLong("time"))))
+                    if (index == 0) {
+                        row.setViewVisibility(R.id.row_highlight, View.VISIBLE)
+                        row.setInt(R.id.row_highlight, "setColorFilter", accent)
+                        row.setInt(R.id.row_highlight, "setImageAlpha", HIGHLIGHT_ALPHA)
+                    }
+                    if (colored) {
+                        val ink = if (index == 0) accent else text
+                        row.setTextColor(R.id.row_name, ink)
+                        row.setTextColor(R.id.row_time, ink)
+                    }
+                    views.addView(R.id.widget_list, row)
+                }
+            }
+            ScheduleStyle.NONE -> Unit
+        }
+        return views
+    }
+
+    private fun countdownDial(context: Context, remaining: Float, accent: Int, sizeDp: Int): Bitmap {
+        val size = (sizeDp * context.resources.displayMetrics.density).toInt().coerceAtLeast(sizeDp)
         val bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         // Draw in density-independent coordinates, leaving space for the dial ticks.
@@ -190,5 +231,32 @@ class PrayerWidgetProvider : HomeWidgetProvider() {
 
     companion object {
         private const val REFRESH = "com.ardeman.bedug.WIDGET_REFRESH"
+        // About 16% of the accent behind the next prayer's row.
+        private const val HIGHLIGHT_ALPHA = 40
+    }
+}
+
+private enum class ScheduleStyle { NONE, ROW, LIST }
+
+/**
+ * Size breakpoints in dp, smallest first; a dial of 0 hides it. Every size that fits both a
+ * tall narrow and a short wide breakpoint also fits a larger one, so the launcher's pick is
+ * unambiguous. TINY covers one landscape row, where Pixel rows are only about 60dp tall.
+ */
+private enum class WidgetSize(val width: Float, val height: Float, val layout: Int,
+                              val compact: Boolean, val schedule: ScheduleStyle, val dialDp: Int) {
+    TINY(110f, 40f, R.layout.prayer_widget_tiny, true, ScheduleStyle.NONE, 0),
+    SMALL(110f, 90f, R.layout.prayer_widget_small, true, ScheduleStyle.NONE, 0),
+    SMALL_WIDE(200f, 90f, R.layout.prayer_widget_small, true, ScheduleStyle.NONE, 56),
+    COMPACT(180f, 140f, R.layout.prayer_widget_compact, true, ScheduleStyle.NONE, 48),
+    COMPACT_TALL(180f, 250f, R.layout.prayer_widget_compact, true, ScheduleStyle.LIST, 48),
+    WIDE(280f, 140f, R.layout.prayer_widget, false, ScheduleStyle.NONE, 76),
+    WIDE_SCHEDULE(280f, 180f, R.layout.prayer_widget, false, ScheduleStyle.ROW, 76),
+    LARGE(280f, 320f, R.layout.prayer_widget_large, false, ScheduleStyle.LIST, 104);
+
+    companion object {
+        fun forSize(width: Int, height: Int): WidgetSize =
+            entries.filter { width >= it.width && height >= it.height }
+                .maxByOrNull { it.width * it.height } ?: TINY
     }
 }

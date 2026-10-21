@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Mirrors AppColors (darkBg, darkText, emeraldDark). -->
+<resources>
+    <color name="widget_background">#FF0E1512</color>
+    <color name="widget_text">#FFE8EFEB</color>
+    <color name="widget_accent">#FF4FBF8F</color>
+</resources>

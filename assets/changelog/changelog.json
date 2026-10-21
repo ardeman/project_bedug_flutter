@@ -5,6 +5,15 @@
       "date": null,
       "changes": [
         {
+          "type": "improved",
+          "text": {
+            "en": "Android widgets resize down to a single row, fill tall sizes with a larger countdown and the upcoming prayers, pick their layout from the widget's real size, and show a proper preview in the widget picker.",
+            "id": "Widget Android kini bisa diperkecil hingga satu baris, mengisi ukuran tinggi dengan hitung mundur lebih besar dan daftar salat berikutnya, memilih tata letak sesuai ukuran sebenarnya, dan menampilkan pratinjau yang layak di pemilih widget.",
+            "ms": "Widget Android kini boleh dikecilkan hingga satu baris, memenuhi saiz tinggi dengan kira detik lebih besar dan senarai solat seterusnya, memilih susun atur mengikut saiz sebenar, dan memaparkan pratonton yang sesuai dalam pemilih widget.",
+            "ar": "يمكن الآن تصغير أدوات Android حتى صف واحد، وتملأ الأحجام الطويلة بعدّ تنازلي أكبر وقائمة الصلوات القادمة، وتختار تخطيطها حسب حجمها الفعلي، وتعرض معاينة مناسبة في منتقي الأدوات."
+          }
+        },
+        {
           "type": "fixed",
           "text": {
             "en": "Large iPhone widgets now use a prominent centered countdown when the prayer schedule is hidden. Appearance previews better match the native widgets.",
