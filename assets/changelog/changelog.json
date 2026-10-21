@@ -7,6 +7,15 @@
         {
           "type": "improved",
           "text": {
+            "en": "The calculation method picker follows the app theme with consistent typography and spacing, and gives long labels more room on Apple devices.",
+            "id": "Pemilih metode perhitungan mengikuti tema aplikasi dengan tipografi dan jarak yang seragam, serta memberi lebih banyak ruang untuk label panjang di perangkat Apple.",
+            "ms": "Pemilih kaedah pengiraan mengikut tema aplikasi dengan tipografi dan jarak yang seragam, serta memberi lebih ruang untuk label panjang pada peranti Apple.",
+            "ar": "يتبع منتقي طريقة الحساب سمة التطبيق بخطوط ومسافات متناسقة، ويوفر مساحة أكبر للتسميات الطويلة على أجهزة Apple."
+          }
+        },
+        {
+          "type": "improved",
+          "text": {
             "en": "The analog countdown on home screen widgets shows the sky of the coming prayer: sunrise for Fajr, sun for Dhuhr and Asr, sunset for Maghrib and moon and stars for Isha.",
             "id": "Hitung mundur analog di widget layar utama kini menampilkan langit salat berikutnya: matahari terbit untuk Subuh, matahari untuk Dzuhur dan Ashar, matahari terbenam untuk Maghrib, serta bulan dan bintang untuk Isya.",
             "ms": "Kira detik analog pada widget skrin utama kini memaparkan langit solat seterusnya: matahari terbit untuk Subuh, matahari untuk Zohor dan Asar, matahari terbenam untuk Maghrib, serta bulan dan bintang untuk Isyak.",

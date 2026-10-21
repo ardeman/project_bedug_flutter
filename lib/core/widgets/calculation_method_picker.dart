@@ -178,18 +178,17 @@ class _NativeAppleMethodSheet extends ConsumerWidget {
   Widget build(BuildContext ctx, WidgetRef ref) {
     final l10n = AppLocalizations.of(ctx);
     final selectedMethod = ref.watch(settingsProvider).method;
-    final isDark = Theme.of(ctx).brightness == Brightness.dark;
-    final navBg = isDark
-        ? const Color(0xFF1C1C1E).withValues(alpha: 0.96)
-        : const Color(0xFFF8F8FA).withValues(alpha: 0.96);
+    final theme = Theme.of(ctx);
+    final colors = theme.colorScheme;
+    final accent = AppColors.accentOf(ctx);
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        backgroundColor: navBg,
+        backgroundColor: colors.surface.withValues(alpha: 0.96),
         automaticBackgroundVisibility: false,
         middle: Text(
           l10n.calculationMethod,
-          style: TextStyle(
-            color: isDark ? Colors.white : const Color(0xFF1C1C1E),
+          style: theme.textTheme.titleMedium?.copyWith(
+            color: colors.onSurface,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -199,13 +198,12 @@ class _NativeAppleMethodSheet extends ConsumerWidget {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
               child: Text(
                 l10n.calculationMethodDesc,
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 13,
-                  color: isDark ? Colors.white70 : Colors.black54,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: colors.onSurfaceVariant,
                 ),
               ),
             ),
@@ -219,8 +217,8 @@ class _NativeAppleMethodSheet extends ConsumerWidget {
                   final isKemenag = method == AppCalculationMethod.kemenag;
                   return CupertinoButton(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 12,
+                      horizontal: AppSpacing.md,
+                      vertical: AppSpacing.sm,
                     ),
                     onPressed: () {
                       ref.read(settingsProvider.notifier).setMethod(method);
@@ -232,48 +230,48 @@ class _NativeAppleMethodSheet extends ConsumerWidget {
                           isSelected
                               ? Icons.check_circle
                               : Icons.radio_button_unchecked,
-                          size: 20,
-                          color: isSelected
-                              ? AppColors.accentOf(ctx)
-                              : Colors.grey,
+                          size: AppControlSizes.toolbarIcon,
+                          color: isSelected ? accent : colors.onSurfaceVariant,
                         ),
-                        const SizedBox(width: 10),
+                        const SizedBox(width: AppSpacing.sm),
                         Expanded(
-                          child: Text(
-                            calculationMethodLabel(ctx, method),
-                            style: TextStyle(
-                              color: isSelected
-                                  ? AppColors.accentOf(ctx)
-                                  : (isDark
-                                        ? Colors.white
-                                        : const Color(0xFF1C1C1E)),
-                              fontSize: 20,
-                              fontWeight: isSelected
-                                  ? FontWeight.w600
-                                  : FontWeight.w400,
-                            ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                calculationMethodLabel(ctx, method),
+                                style: theme.textTheme.titleMedium?.copyWith(
+                                  color: isSelected ? accent : colors.onSurface,
+                                  fontWeight: isSelected
+                                      ? FontWeight.w600
+                                      : FontWeight.w400,
+                                ),
+                              ),
+                              if (isKemenag) ...[
+                                const SizedBox(height: AppSpacing.xxs),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: AppSpacing.xs,
+                                    vertical: AppSpacing.xxs,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: accent.withValues(alpha: .15),
+                                    borderRadius: BorderRadius.circular(
+                                      AppRadii.sm,
+                                    ),
+                                  ),
+                                  child: Text(
+                                    l10n.recommended,
+                                    style: theme.textTheme.labelSmall?.copyWith(
+                                      color: accent,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ],
                           ),
                         ),
-                        if (isKemenag)
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 4,
-                            ),
-                            decoration: BoxDecoration(
-                              color: AppColors.accentOf(ctx)
-                                  .withValues(alpha: .15),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Text(
-                              l10n.recommended,
-                              style: TextStyle(
-                                color: AppColors.accentOf(ctx),
-                                fontSize: 11,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ),
                       ],
                     ),
                   );
@@ -309,7 +307,9 @@ class _CalculationMethodPickerSheetState
 
   @override
   Widget build(BuildContext ctx) {
-    final isDark = Theme.of(ctx).brightness == Brightness.dark;
+    final theme = Theme.of(ctx);
+    final colors = theme.colorScheme;
+    final isDark = theme.brightness == Brightness.dark;
     final bottom = MediaQuery.of(ctx).padding.bottom;
     final h = MediaQuery.of(ctx).size.height;
 
@@ -317,7 +317,7 @@ class _CalculationMethodPickerSheetState
       animation: widget.animation,
       builder: (context, child) {
         final curved = Curves.easeOutCubic.transform(widget.animation.value);
-        final routeOffset = (1 - curved) * (h * 0.6 + 48);
+        final routeOffset = (1 - curved) * (h * 0.6 + AppSpacing.xxl);
 
         return GestureDetector(
           onTap: () => Navigator.pop(ctx),
@@ -374,43 +374,42 @@ class _CalculationMethodPickerSheetState
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.only(
-                                      top: 8,
-                                      bottom: 10,
+                                      top: AppSpacing.xs,
+                                      bottom: AppSpacing.sm,
                                     ),
                                     child: Container(
                                       width: 36,
                                       height: 4,
                                       decoration: BoxDecoration(
-                                        color: isDark
-                                            ? Colors.white24
-                                            : Colors.black12,
+                                        color: colors.onSurfaceVariant
+                                            .withValues(alpha: .3),
                                         borderRadius: BorderRadius.circular(2),
                                       ),
                                     ),
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(bottom: 14),
+                                  padding: const EdgeInsets.only(
+                                    bottom: AppSpacing.md,
+                                  ),
                                   child: Text(
                                     widget.title,
-                                    style: const TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                                    style: theme.textTheme.titleMedium
+                                        ?.copyWith(fontWeight: FontWeight.w600),
                                   ),
                                 ),
                                 Divider(
                                   height: 1,
-                                  color: isDark
-                                      ? Colors.white12
-                                      : Colors.black12,
+                                  color: colors.outlineVariant,
                                 ),
                                 Expanded(
                                   child: MediaQuery.removePadding(
                                     context: ctx,
                                     removeTop: true,
                                     child: ListView(
-                                      padding: const EdgeInsets.only(top: 4),
+                                      padding: const EdgeInsets.only(
+                                        top: AppSpacing.xxs,
+                                      ),
                                       children: AppCalculationMethod.values.indexed.map((
                                         entry,
                                       ) {
@@ -436,109 +435,122 @@ class _CalculationMethodPickerSheetState
                                                 child: Transform.translate(
                                                   offset: Offset(
                                                     0,
-                                                    (1 - value) * 16,
+                                                    (1 - value) * AppSpacing.md,
                                                   ),
                                                   child: child,
                                                 ),
                                               ),
-                                          child: AnimatedContainer(
-                                            duration: const Duration(
-                                              milliseconds: 220,
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: AppSpacing.sm,
+                                              vertical: AppSpacing.xxs,
                                             ),
-                                            curve: Curves.easeOut,
-                                            margin: const EdgeInsets.symmetric(
-                                              horizontal: 12,
-                                              vertical: 2,
-                                            ),
-                                            decoration: BoxDecoration(
+                                            child: Material(
                                               color: isSelected
                                                   ? AppColors.accentOf(ctx)
                                                         .withValues(alpha: .08)
                                                   : Colors.transparent,
                                               borderRadius:
-                                                  BorderRadius.circular(12),
-                                            ),
-                                            child: ListTile(
-                                              leading: AnimatedSwitcher(
-                                                duration: const Duration(
-                                                  milliseconds: 180,
-                                                ),
-                                                child: isSelected
-                                                    ? Icon(
-                                                        Icons.check_circle,
-                                                        key: ValueKey(
-                                                          'selected',
-                                                        ),
-                                                        color:
-                                                            AppColors.accentOf(
-                                                              ctx,
-                                                            ),
-                                                      )
-                                                    : const Icon(
-                                                        Icons
-                                                            .radio_button_unchecked,
-                                                        key: ValueKey(
-                                                          'unselected',
-                                                        ),
-                                                        color: Colors.grey,
-                                                      ),
-                                              ),
-                                              title: Text(
-                                                calculationMethodLabel(
-                                                  ctx,
-                                                  method,
-                                                ),
-                                                style: TextStyle(
-                                                  fontWeight: isSelected
-                                                      ? FontWeight.w600
-                                                      : FontWeight.normal,
-                                                  color: isSelected
-                                                      ? AppColors.accentOf(ctx)
-                                                      : null,
-                                                ),
-                                              ),
-                                              trailing: isKemenag
-                                                  ? Container(
-                                                      padding:
-                                                          const EdgeInsets.symmetric(
-                                                            horizontal: 8,
-                                                            vertical: 3,
+                                                  BorderRadius.circular(
+                                                    AppRadii.sm,
+                                                  ),
+                                              clipBehavior: Clip.antiAlias,
+                                              child: ListTile(
+                                                leading: AnimatedSwitcher(
+                                                  duration: const Duration(
+                                                    milliseconds: 180,
+                                                  ),
+                                                  child: isSelected
+                                                      ? Icon(
+                                                          Icons.check_circle,
+                                                          key: ValueKey(
+                                                            'selected',
                                                           ),
-                                                      decoration: BoxDecoration(
-                                                        color:
-                                                            AppColors.accentOf(
-                                                              ctx,
-                                                            ).withValues(
-                                                              alpha: .15,
-                                                            ),
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                              8,
-                                                            ),
-                                                      ),
-                                                      child: Text(
-                                                        AppLocalizations.of(ctx)
-                                                            .recommended,
-                                                        style: TextStyle(
                                                           color:
                                                               AppColors.accentOf(
                                                                 ctx,
                                                               ),
-                                                          fontSize: 11,
-                                                          fontWeight:
-                                                              FontWeight.bold,
+                                                        )
+                                                      : Icon(
+                                                          Icons
+                                                              .radio_button_unchecked,
+                                                          key: ValueKey(
+                                                            'unselected',
+                                                          ),
+                                                          color: colors
+                                                              .onSurfaceVariant,
                                                         ),
+                                                ),
+                                                title: Text(
+                                                  calculationMethodLabel(
+                                                    ctx,
+                                                    method,
+                                                  ),
+                                                  style: theme
+                                                      .textTheme
+                                                      .bodyLarge
+                                                      ?.copyWith(
+                                                        fontWeight: isSelected
+                                                            ? FontWeight.w600
+                                                            : FontWeight.normal,
+                                                        color: isSelected
+                                                            ? AppColors.accentOf(
+                                                                ctx,
+                                                              )
+                                                            : null,
                                                       ),
-                                                    )
-                                                  : null,
-                                              onTap: () {
-                                                ref
-                                                    .read(
-                                                      settingsProvider.notifier,
-                                                    )
-                                                    .setMethod(method);
-                                                Navigator.pop(ctx);
-                                              },
+                                                ),
+                                                trailing: isKemenag
+                                                    ? Container(
+                                                        padding:
+                                                            const EdgeInsets.symmetric(
+                                                              horizontal:
+                                                                  AppSpacing.xs,
+                                                              vertical:
+                                                                  AppSpacing
+                                                                      .xxs,
+                                                            ),
+                                                        decoration: BoxDecoration(
+                                                          color:
+                                                              AppColors.accentOf(
+                                                                ctx,
+                                                              ).withValues(
+                                                                alpha: .15,
+                                                              ),
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                AppRadii.sm,
+                                                              ),
+                                                        ),
+                                                        child: Text(
+                                                          AppLocalizations.of(
+                                                            ctx,
+                                                          ).recommended,
+                                                          style: theme
+                                                              .textTheme
+                                                              .labelSmall
+                                                              ?.copyWith(
+                                                                color:
+                                                                    AppColors.accentOf(
+                                                                      ctx,
+                                                                    ),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                        ),
+                                                      )
+                                                    : null,
+                                                onTap: () {
+                                                  ref
+                                                      .read(
+                                                        settingsProvider
+                                                            .notifier,
+                                                      )
+                                                      .setMethod(method);
+                                                  Navigator.pop(ctx);
+                                                },
+                                              ),
                                             ),
                                           ),
                                         );

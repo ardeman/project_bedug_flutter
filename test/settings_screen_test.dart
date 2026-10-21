@@ -68,6 +68,67 @@ Future<ProviderContainer> _pumpSettings(
 }
 
 void main() {
+  for (final platform in [
+    TargetPlatform.iOS,
+    TargetPlatform.macOS,
+    TargetPlatform.android,
+    TargetPlatform.windows,
+    TargetPlatform.linux,
+  ]) {
+    for (final brightness in Brightness.values) {
+      testWidgets(
+        'method picker fits large text and saves on $platform $brightness',
+        (tester) async {
+          final locale = brightness == Brightness.dark
+              ? const Locale('ar')
+              : const Locale('en');
+          final container = await _pumpSettings(
+            tester,
+            size: const Size(390, 844),
+            locale: locale,
+            textScale: 1.5,
+            brightness: brightness,
+            home: Consumer(
+              builder: (context, ref, _) => Scaffold(
+                body: Center(
+                  child: GestureDetector(
+                    onTap: () => showCalculationMethodPicker(
+                      context,
+                      ref,
+                      current: ref.read(settingsProvider).method,
+                    ),
+                    child: const Text('Open methods'),
+                  ),
+                ),
+              ),
+            ),
+          );
+          await tester.tap(find.text('Open methods'));
+          await tester.pumpAndSettle();
+          final l10n = AppLocalizations.of(
+            tester.element(find.text('Open methods')),
+          );
+          expect(find.text(l10n.recommended), findsOneWidget);
+          expect(tester.takeException(), isNull);
+          await tester.scrollUntilVisible(
+            find.text(l10n.methodMWL),
+            150,
+            scrollable: find.byType(Scrollable).last,
+          );
+          await tester.tap(find.text(l10n.methodMWL));
+          await tester.pumpAndSettle();
+          expect(
+            container.read(settingsProvider).method,
+            AppCalculationMethod.muslimWorldLeague,
+          );
+          expect(find.text(l10n.methodMWL), findsNothing);
+          expect(tester.takeException(), isNull);
+        },
+        variant: TargetPlatformVariant.only(platform),
+      );
+    }
+  }
+
   testWidgets(
     'widget appearance opens and saves both display options',
     (tester) async {
