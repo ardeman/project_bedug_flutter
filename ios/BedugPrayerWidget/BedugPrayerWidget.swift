@@ -2,9 +2,22 @@ import SwiftUI
 import WidgetKit
 
 struct Prayer: Decodable {
+    let key: String?
     let name: String
     let time: Double
     var date: Date { Date(timeIntervalSince1970: time / 1000) }
+
+    // The sky at this prayer's time, shown in the countdown dial.
+    var symbol: String {
+        switch key {
+        case "fajr": "sunrise.fill"
+        case "dhuhr": "sun.max.fill"
+        case "asr": "sun.min.fill"
+        case "maghrib": "sunset.fill"
+        case "isha": "moon.stars.fill"
+        default: "clock.fill"
+        }
+    }
 }
 
 struct PrayerWidgetData: Decodable {
@@ -118,7 +131,7 @@ struct PrayerWidgetView: View {
                         .lineLimit(1).minimumScaleFactor(0.65)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         if entry.data?.showAnalog != false {
-                            countdownDial(until: prayer.date, diameter: 48)
+                            countdownDial(for: prayer, diameter: 48)
                         }
                     }
                     Text(timerInterval: entry.date...prayer.date, countsDown: true)
@@ -127,7 +140,7 @@ struct PrayerWidgetView: View {
                 } else if family == .systemLarge && entry.data?.showSchedule == false {
                     VStack(spacing: 8) {
                         if entry.data?.showAnalog != false {
-                            countdownDial(until: prayer.date, diameter: 144)
+                            countdownDial(for: prayer, diameter: 144)
                         }
                         Text(prayer.name).font(.title.bold())
                             .foregroundStyle(accent).widgetAccentable()
@@ -149,7 +162,7 @@ struct PrayerWidgetView: View {
                         .lineLimit(1).minimumScaleFactor(0.65)
                         Spacer(minLength: 0)
                         if entry.data?.showAnalog != false {
-                            countdownDial(until: prayer.date, diameter: family == .systemLarge ? 96 : 70)
+                            countdownDial(for: prayer, diameter: family == .systemLarge ? 96 : 70)
                         }
                     }
                 }
@@ -206,14 +219,15 @@ struct PrayerWidgetView: View {
         .environment(\.layoutDirection, entry.data?.locale == "ar" ? .rightToLeft : .leftToRight)
     }
 
-    private func countdownDial(until end: Date, diameter: CGFloat = 70) -> some View {
-        ZStack {
+    private func countdownDial(for prayer: Prayer, diameter: CGFloat = 70) -> some View {
+        let end = prayer.date
+        return ZStack {
             // WidgetKit advances the native timer without timeline polling.
             ProgressView(timerInterval: min(entry.countdownStart, entry.date)...end,
                          countsDown: true) {
                 EmptyView()
             } currentValueLabel: {
-                Image(systemName: "moonphase.waning.crescent")
+                Image(systemName: prayer.symbol)
                     .font(.title3).foregroundStyle(accent)
             }
             .progressViewStyle(.circular).tint(accent).widgetAccentable()

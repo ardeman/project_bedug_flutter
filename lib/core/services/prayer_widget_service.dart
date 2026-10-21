@@ -53,7 +53,11 @@ Map<String, Object> buildPrayerWidgetData({
           Prayer.isha => l10n.isha,
           _ => '',
         };
-        prayers.add({'name': name, 'time': time.millisecondsSinceEpoch});
+        prayers.add({
+          'key': prayer.name,
+          'name': name,
+          'time': time.millisecondsSinceEpoch,
+        });
       }
     }
     intervalStart = previousPrayer ?? now;

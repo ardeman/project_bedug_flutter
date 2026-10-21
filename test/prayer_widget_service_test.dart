@@ -105,6 +105,12 @@ void main() {
       DateComponents(2026, 10, 21),
       times.calculationParameters,
     );
+    // Native widgets pick the dial's sky symbol from the adhan key.
+    expect(
+      prayers.first['key'],
+      isIn(['fajr', 'dhuhr', 'asr', 'maghrib', 'isha']),
+    );
+    expect(prayers[5]['key'], 'fajr');
     expect(prayers[5]['time'], tomorrow.fajr.millisecondsSinceEpoch);
     expect(data['themeMode'], 2);
     expect(jsonEncode(data), isNot(contains('latitude')));

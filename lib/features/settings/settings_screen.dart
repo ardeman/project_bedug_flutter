@@ -783,6 +783,10 @@ class _WidgetLayoutPreview extends StatelessWidget {
             accent,
             apple: PlatformCapabilities.isApple,
           ),
+          // WidgetKit shows the next prayer's sky; the preview's is Dzuhur.
+          child: PlatformCapabilities.isApple
+              ? Icon(Icons.light_mode, size: diameter / 4, color: accent)
+              : null,
         ),
       ),
     );
@@ -1112,6 +1116,21 @@ class _AndroidWidgetCard extends StatelessWidget {
 }
 
 /// The dial `PrayerWidgetProvider.countdownDial` draws, in its 76-unit grid.
+/// Dzuhur's sun as the Android widget draws it in `PrayerWidgetProvider.kt`,
+/// in units of its 76-unit dial.
+void _paintSun(Canvas canvas, Offset center, double unit, Paint paint) {
+  canvas.drawCircle(center, 5.5 * unit, paint..style = PaintingStyle.fill);
+  paint.style = PaintingStyle.stroke;
+  for (var ray = 0; ray < 8; ray++) {
+    final direction = Offset.fromDirection(ray * math.pi / 4);
+    canvas.drawLine(
+      center + direction * 8.5 * unit,
+      center + direction * 11.5 * unit,
+      paint,
+    );
+  }
+}
+
 class _AndroidDialPainter extends CustomPainter {
   final Color accent;
   const _AndroidDialPainter(this.accent);
@@ -1151,14 +1170,8 @@ class _AndroidDialPainter extends CustomPainter {
     paint
       ..strokeWidth = 2
       ..color = accent;
-    // A timer hand shows the remaining fraction, with noon at the top.
-    final angle = _remaining * 2 * math.pi - math.pi / 2;
-    canvas.drawLine(
-      _center,
-      _center + Offset(math.cos(angle), math.sin(angle)) * 19,
-      paint,
-    );
-    canvas.drawCircle(_center, 3, paint..style = PaintingStyle.fill);
+    // The widget shows the coming prayer's sky; the preview's is Dzuhur.
+    _paintSun(canvas, _center, 1, paint);
   }
 
   @override
@@ -1185,12 +1198,6 @@ class _WidgetDialPainter extends CustomPainter {
     paint.color = accent;
     canvas.drawArc(ring, -math.pi / 2, math.pi * 1.5, false, paint);
     if (apple) {
-      // Match WidgetKit's moon phase symbol rather than Android's timer hand.
-      final moon = Rect.fromCircle(center: center, radius: radius / 4);
-      paint.strokeWidth = 1;
-      canvas.drawOval(moon, paint);
-      paint.style = PaintingStyle.fill;
-      canvas.drawArc(moon, math.pi / 2, math.pi, true, paint);
       // WidgetKit's ticks: 2 pt capsules at 40% accent, longer every quarter.
       paint
         ..style = PaintingStyle.stroke
@@ -1208,7 +1215,8 @@ class _WidgetDialPainter extends CustomPainter {
         );
       }
     } else {
-      canvas.drawLine(center, center.translate(radius * 0.5, 0), paint);
+      // Scale the Android widget's 76-unit dial to this preview.
+      _paintSun(canvas, center, size.shortestSide / 76, paint..strokeWidth = 2);
     }
   }
 

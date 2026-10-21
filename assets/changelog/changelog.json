@@ -7,6 +7,15 @@
         {
           "type": "improved",
           "text": {
+            "en": "The analog countdown on home screen widgets shows the sky of the coming prayer: sunrise for Fajr, sun for Dhuhr and Asr, sunset for Maghrib and moon and stars for Isha.",
+            "id": "Hitung mundur analog di widget layar utama kini menampilkan langit salat berikutnya: matahari terbit untuk Subuh, matahari untuk Dzuhur dan Ashar, matahari terbenam untuk Maghrib, serta bulan dan bintang untuk Isya.",
+            "ms": "Kira detik analog pada widget skrin utama kini memaparkan langit solat seterusnya: matahari terbit untuk Subuh, matahari untuk Zohor dan Asar, matahari terbenam untuk Maghrib, serta bulan dan bintang untuk Isyak.",
+            "ar": "يعرض العدّ التنازلي التناظري في أدوات الشاشة الرئيسية الآن سماء الصلاة القادمة: الشروق للفجر، والشمس للظهر والعصر، والغروب للمغرب، والقمر والنجوم للعشاء."
+          }
+        },
+        {
+          "type": "improved",
+          "text": {
             "en": "Android widgets resize down to a single row, fill tall sizes with a larger countdown and the upcoming prayers, pick their layout from the widget's real size, and show a proper preview in the widget picker.",
             "id": "Widget Android kini bisa diperkecil hingga satu baris, mengisi ukuran tinggi dengan hitung mundur lebih besar dan daftar salat berikutnya, memilih tata letak sesuai ukuran sebenarnya, dan menampilkan pratinjau yang layak di pemilih widget.",
             "ms": "Widget Android kini boleh dikecilkan hingga satu baris, memenuhi saiz tinggi dengan kira detik lebih besar dan senarai solat seterusnya, memilih susun atur mengikut saiz sebenar, dan memaparkan pratonton yang sesuai dalam pemilih widget.",

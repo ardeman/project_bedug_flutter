@@ -11,6 +11,7 @@ import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.Path
 import android.graphics.RectF
 import android.os.Build
 import android.os.Bundle
@@ -147,7 +148,8 @@ class PrayerWidgetProvider : HomeWidgetProvider() {
             val end = next!!.getLong("time")
             val remaining = if (end > start) (end - now).toFloat() / (end - start) else 1f
             views.setImageViewBitmap(R.id.widget_dial,
-                countdownDial(context, remaining.coerceIn(0f, 1f), accent, size.dialDp))
+                countdownDial(context, remaining.coerceIn(0f, 1f), accent, size.dialDp,
+                    next.optString("key")))
         }
         when (size.schedule) {
             ScheduleStyle.ROW -> {
@@ -188,7 +190,8 @@ class PrayerWidgetProvider : HomeWidgetProvider() {
         return views
     }
 
-    private fun countdownDial(context: Context, remaining: Float, accent: Int, sizeDp: Int): Bitmap {
+    private fun countdownDial(context: Context, remaining: Float, accent: Int, sizeDp: Int,
+                              key: String): Bitmap {
         val size = (sizeDp * context.resources.displayMetrics.density).toInt().coerceAtLeast(sizeDp)
         val bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
@@ -215,14 +218,60 @@ class PrayerWidgetProvider : HomeWidgetProvider() {
         }
         paint.alpha = 255
         paint.strokeWidth = 2f
-        // A timer hand shows the remaining fraction, with noon at the top.
-        canvas.save()
-        canvas.rotate(remaining * 360, 38f, 38f)
-        canvas.drawLine(38f, 38f, 38f, 19f, paint)
-        canvas.restore()
-        paint.style = Paint.Style.FILL
-        canvas.drawCircle(38f, 38f, 3f, paint)
+        drawSky(canvas, key, paint)
         return bitmap
+    }
+
+    /** The sky at the coming prayer, as on iOS: sun, low sun, sunrise, sunset or moon. */
+    private fun drawSky(canvas: Canvas, key: String, paint: Paint) {
+        when (key) {
+            "dhuhr" -> drawSun(canvas, paint, core = 5.5f, rays = 8.5f..11.5f)
+            "asr" -> drawSun(canvas, paint, core = 4f, rays = 6.5f..8.5f)
+            "fajr", "maghrib" -> {
+                // Half a sun on the horizon, with a chevron for rising or setting.
+                val horizon = 41f
+                paint.style = Paint.Style.FILL
+                canvas.drawArc(RectF(32f, horizon - 6f, 44f, horizon + 6f), 180f, 180f, true, paint)
+                paint.style = Paint.Style.STROKE
+                repeat(5) { ray ->
+                    canvas.save()
+                    canvas.rotate(-90f + (ray - 2) * 40f, 38f, horizon)
+                    canvas.drawLine(46.5f, horizon, 49.5f, horizon, paint)
+                    canvas.restore()
+                }
+                canvas.drawLine(27f, horizon, 49f, horizon, paint)
+                val tip = if (key == "fajr") 45f else 49f
+                val base = if (key == "fajr") 49f else 45f
+                canvas.drawLine(34.5f, base, 38f, tip, paint)
+                canvas.drawLine(41.5f, base, 38f, tip, paint)
+            }
+            "isha" -> {
+                // A crescent carved by a second disc, with a small star beside it.
+                val crescent = Path().apply { addCircle(36f, 39f, 9f, Path.Direction.CW) }
+                crescent.op(Path().apply { addCircle(41f, 35f, 7.5f, Path.Direction.CW) },
+                    Path.Op.DIFFERENCE)
+                paint.style = Paint.Style.FILL
+                canvas.drawPath(crescent, paint)
+                canvas.drawCircle(46f, 31f, 1.8f, paint)
+            }
+            else -> {
+                paint.style = Paint.Style.FILL
+                canvas.drawCircle(38f, 38f, 3f, paint)
+            }
+        }
+    }
+
+    private fun drawSun(canvas: Canvas, paint: Paint, core: Float,
+                        rays: ClosedFloatingPointRange<Float>) {
+        paint.style = Paint.Style.FILL
+        canvas.drawCircle(38f, 38f, core, paint)
+        paint.style = Paint.Style.STROKE
+        repeat(8) { ray ->
+            canvas.save()
+            canvas.rotate(ray * 45f, 38f, 38f)
+            canvas.drawLine(38f, 38f - rays.start, 38f, 38f - rays.endInclusive, paint)
+            canvas.restore()
+        }
     }
 
     private fun refreshIntent(context: Context) = PendingIntent.getBroadcast(context, 0,
