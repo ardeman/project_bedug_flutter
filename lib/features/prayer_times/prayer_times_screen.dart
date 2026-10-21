@@ -82,7 +82,6 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
     final locationLabel = state.locationLabel ?? '--';
     final theme = Theme.of(ctx);
     final isDark = theme.brightness == Brightness.dark;
-    final onAccent = theme.colorScheme.onPrimary;
     final mq = MediaQuery.of(ctx);
     final isPortrait = mq.orientation == Orientation.portrait;
     final topInset = mq.padding.top;
@@ -120,78 +119,18 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                     onRefresh: () => ref.read(prayerProvider.notifier).load(),
                   ),
                 )
-              : SliverAppBar(
-                  expandedHeight: _materialExpandedHeight,
+              : SliverPersistentHeader(
                   pinned: true,
-                  backgroundColor: AppColors.accentOf(ctx),
-                  flexibleSpace: FlexibleSpaceBar(
-                    background: Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            AppColors.accentOf(ctx),
-                            AppColors.secondaryOf(ctx),
-                          ],
-                        ),
-                      ),
-                      child: SafeArea(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.location_on_outlined,
-                                  size: 14,
-                                  color: onAccent.withValues(alpha: 0.7),
-                                ),
-                                const SizedBox(width: AppSpacing.xxs),
-                                Flexible(
-                                  child: Text(
-                                    locationLabel,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: theme.textTheme.bodySmall?.copyWith(
-                                      color: onAccent.withValues(alpha: 0.7),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: AppSpacing.xxs),
-                            Text(
-                              nextName,
-                              style: theme.textTheme.headlineMedium?.copyWith(
-                                color: onAccent,
-                              ),
-                            ),
-                            const SizedBox(height: AppSpacing.xs),
-                            if (nextTimeLabel != null)
-                              Text(
-                                '${l10n.nextPrayer} · $nextTimeLabel',
-                                style: theme.textTheme.labelMedium?.copyWith(
-                                  color: onAccent,
-                                ),
-                              ),
-                            _CountdownBadge(remaining: _remaining),
-                          ],
-                        ),
-                      ),
-                    ),
+                  delegate: _MaterialHeroAppBar(
+                    nextLabel: l10n.nextPrayer,
+                    nextName: nextName,
+                    nextTime: nextTimeLabel,
+                    locationLabel: locationLabel,
+                    remaining: _remaining,
+                    topInset: topInset,
+                    onTune: () => _showMethodPicker(ctx),
+                    onRefresh: () => ref.read(prayerProvider.notifier).load(),
                   ),
-                  actions: [
-                    MaterialIconButton(
-                      icon: Icon(Icons.tune, color: onAccent),
-                      onPressed: () => _showMethodPicker(ctx),
-                    ),
-                    MaterialIconButton(
-                      icon: Icon(Icons.refresh, color: onAccent),
-                      onPressed: () => ref.read(prayerProvider.notifier).load(),
-                    ),
-                  ],
                 ),
 
           // ── Body ─────────────────────────────────────────────────────
@@ -269,7 +208,7 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
             _CollapseRoom(
               collapseRange: _isApple
                   ? _LiquidGlassAppBar.expandedExtent - minCollapsedExtent
-                  : _materialExpandedHeight - (kToolbarHeight + topInset),
+                  : _materialExpandedHeight - kToolbarHeight,
             ),
           ],
         ],
@@ -410,8 +349,409 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
 // Expanded, an accent hero with a glass countdown lens. Collapsing fades the
 // hero out, so the list scrolls under a scroll-edge band, and the title moves
 // into a floating glass capsule. The action buttons are glass throughout.
-/// Height of the expanded Material app bar.
+/// The faint Bedug drum behind both heroes, from the monochrome app icon.
+class _BedugWatermark extends StatelessWidget {
+  const _BedugWatermark();
+
+  /// The icon's art fills about 60% of its square, so this draws the drum
+  /// about 170 dp wide: big enough to read as texture behind the text.
+  static const size = 280.0;
+
+  @override
+  Widget build(BuildContext ctx) => IgnorePointer(
+    child: ExcludeSemantics(
+      child: Image.asset(
+        'assets/branding/icon_monochrome.png',
+        width: size,
+        height: size,
+        cacheWidth: (size * MediaQuery.devicePixelRatioOf(ctx)).round(),
+        color: Colors.white.withValues(alpha: 0.1),
+        colorBlendMode: BlendMode.srcIn,
+      ),
+    ),
+  );
+}
+
+/// Height of the expanded Material app bar, below the status bar.
 const _materialExpandedHeight = 200.0;
+
+/// The Material prayer-times header: a centered hero over the accent
+/// gradient whose place, prayer name and countdown travel into the collapsed
+/// toolbar as it shrinks, the way the Apple header moves them into its
+/// capsule. The label line, the pin and the badge's pill fade on the way.
+class _MaterialHeroAppBar extends SliverPersistentHeaderDelegate {
+  final String nextLabel;
+  final String nextName;
+
+  /// The next prayer's clock time, e.g. "12:01".
+  final String? nextTime;
+  final String locationLabel;
+  final ValueListenable<Duration> remaining;
+  final double topInset;
+  final VoidCallback onTune;
+  final VoidCallback onRefresh;
+
+  const _MaterialHeroAppBar({
+    required this.nextLabel,
+    required this.nextName,
+    required this.nextTime,
+    required this.locationLabel,
+    required this.remaining,
+    required this.topInset,
+    required this.onTune,
+    required this.onRefresh,
+  });
+
+  /// Two 48 dp icon buttons and the toolbar's end padding.
+  static const _actionsWidth = kMinInteractiveDimension * 2 + AppSpacing.xs;
+  static const _pinSize = 14.0;
+
+  @override
+  double get minExtent => topInset + kToolbarHeight;
+  @override
+  double get maxExtent => topInset + _materialExpandedHeight;
+
+  @override
+  bool shouldRebuild(_MaterialHeroAppBar old) =>
+      old.nextLabel != nextLabel ||
+      old.nextName != nextName ||
+      old.nextTime != nextTime ||
+      old.locationLabel != locationLabel ||
+      old.remaining != remaining ||
+      old.topInset != topInset;
+
+  @override
+  Widget build(BuildContext ctx, double shrinkOffset, bool overlapsContent) {
+    final theme = Theme.of(ctx);
+    final text = theme.textTheme;
+    final onAccent = theme.colorScheme.onPrimary;
+    final progress = (shrinkOffset / (maxExtent - minExtent)).clamp(0.0, 1.0);
+    final t = Curves.easeInOut.transform(progress);
+    // The parts that don't travel are gone by the halfway point.
+    final fade = (1 - progress * 2).clamp(0.0, 1.0);
+    return Material(
+      color: Colors.transparent,
+      elevation: overlapsContent || progress == 1 ? 2 : 0,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [AppColors.accentOf(ctx), AppColors.secondaryOf(ctx)],
+          ),
+        ),
+        child: ClipRect(
+          child: LayoutBuilder(
+            builder: (ctx, constraints) => Stack(
+              children: [
+                // Gone once collapsed, so it never sits behind the title.
+                PositionedDirectional(
+                  end: -_BedugWatermark.size * 0.2,
+                  bottom: -_BedugWatermark.size * 0.25,
+                  child: Opacity(
+                    opacity: 1 - progress,
+                    child: const _BedugWatermark(),
+                  ),
+                ),
+                Positioned.fill(
+                  child: _movingText(
+                    ctx,
+                    constraints.maxWidth,
+                    t: t,
+                    fade: fade,
+                    locationStyle: text.bodySmall!.copyWith(
+                      color: onAccent.withValues(alpha: 0.7),
+                    ),
+                    nameStart: text.headlineMedium!.copyWith(color: onAccent),
+                    nameEnd: text.titleMedium!.copyWith(color: onAccent),
+                    labelStyle: text.labelMedium!.copyWith(color: onAccent),
+                    digitsStart: text.titleLarge!.copyWith(
+                      color: onAccent,
+                      fontFeatures: const [FontFeature.tabularFigures()],
+                    ),
+                    digitsEnd: text.titleMedium!.copyWith(
+                      color: onAccent,
+                      fontFeatures: const [FontFeature.tabularFigures()],
+                    ),
+                  ),
+                ),
+                // Actions, last so they stay on top and tappable.
+                PositionedDirectional(
+                  top: topInset,
+                  end: AppSpacing.xxs,
+                  height: kToolbarHeight,
+                  child: Row(
+                    children: [
+                      MaterialIconButton(
+                        icon: Icon(Icons.tune, color: onAccent),
+                        onPressed: onTune,
+                      ),
+                      MaterialIconButton(
+                        icon: Icon(Icons.refresh, color: onAccent),
+                        onPressed: onRefresh,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Lays out the hero (centered below the toolbar) and the collapsed title
+  /// (two lines at the toolbar's start) and moves each text between them.
+  Widget _movingText(
+    BuildContext ctx,
+    double width, {
+    required double t,
+    required double fade,
+    required TextStyle locationStyle,
+    required TextStyle nameStart,
+    required TextStyle nameEnd,
+    required TextStyle labelStyle,
+    required TextStyle digitsStart,
+    required TextStyle digitsEnd,
+  }) {
+    final isRtl = Directionality.of(ctx) == TextDirection.rtl;
+    final textScaler = MediaQuery.textScalerOf(ctx);
+    final label = nextTime == null ? null : '$nextLabel · $nextTime';
+
+    Size measure(String value, TextStyle style, double maxWidth) {
+      final painter = TextPainter(
+        text: TextSpan(text: value, style: style),
+        textDirection: TextDirection.ltr,
+        textScaler: textScaler,
+        maxLines: 1,
+        ellipsis: '…',
+      )..layout(maxWidth: math.max(0, maxWidth));
+      // Rounded up so the label laid out in exactly this width never
+      // ellipsizes from sub-pixel differences.
+      final size = Size(painter.width.ceilToDouble(), painter.height);
+      painter.dispose();
+      return size;
+    }
+
+    // A box [inset] in from the start edge, as a physical left.
+    double fromStart(double inset, double boxWidth) =>
+        isRtl ? width - inset - boxWidth : inset;
+
+    // Text moving from [start] to [end] in the room each end gives it, so a
+    // long place ellipsizes instead of running under the actions.
+    Widget moving(
+      String value,
+      Key key,
+      Rect start,
+      Rect end,
+      TextStyle startStyle,
+      TextStyle endStyle,
+    ) {
+      final rect = Rect.lerp(start, end, t)!;
+      return Positioned(
+        left: rect.left,
+        top: rect.top,
+        width: math.max(0, rect.width),
+        child: Text(
+          value,
+          key: key,
+          maxLines: 1,
+          softWrap: false,
+          overflow: TextOverflow.ellipsis,
+          textAlign: isRtl ? TextAlign.right : TextAlign.left,
+          style: TextStyle.lerp(startStyle, endStyle, t),
+        ),
+      );
+    }
+
+    return ValueListenableBuilder<Duration>(
+      valueListenable: remaining,
+      builder: (_, value, _) {
+        final hasCountdown = !value.isNegative;
+        final digits = hasCountdown ? _formatCountdown(value) : '';
+        final heroRoom = width - AppSpacing.md * 2;
+
+        // The hero, top down, centered in the space below the toolbar.
+        final location = measure(
+          locationLabel,
+          locationStyle,
+          heroRoom - _pinSize - AppSpacing.xxs,
+        );
+        final name = measure(nextName, nameStart, heroRoom);
+        final labelSize = label == null
+            ? Size.zero
+            : measure(label, labelStyle, heroRoom);
+        final digitsSize = measure(digits, digitsStart, double.infinity);
+        final badge = hasCountdown
+            ? Size(
+                digitsSize.width + AppSpacing.lg * 2,
+                digitsSize.height + AppSpacing.xs * 2,
+              )
+            : Size.zero;
+        final locationRow = math.max(_pinSize, location.height);
+        final heroHeight =
+            locationRow +
+            AppSpacing.xxs +
+            name.height +
+            AppSpacing.xs +
+            labelSize.height +
+            badge.height;
+        final heroTop =
+            topInset +
+            kToolbarHeight +
+            math.max(
+              0.0,
+              (_materialExpandedHeight - kToolbarHeight - heroHeight) / 2,
+            );
+        final rowWidth = _pinSize + AppSpacing.xxs + location.width;
+        final rowLeft = (width - rowWidth) / 2;
+        final locationStart = Rect.fromLTWH(
+          isRtl ? rowLeft : rowLeft + _pinSize + AppSpacing.xxs,
+          heroTop + (locationRow - location.height) / 2,
+          location.width,
+          location.height,
+        );
+        final pin = Offset(
+          isRtl ? rowLeft + location.width + AppSpacing.xxs : rowLeft,
+          heroTop + (locationRow - _pinSize) / 2,
+        );
+        // "Next prayer · 11:38" sits above the name it introduces.
+        final labelTop = heroTop + locationRow + AppSpacing.xxs;
+        final nameTop = labelTop + labelSize.height;
+        final nameStartRect = Rect.fromLTWH(
+          (width - name.width) / 2,
+          nameTop,
+          name.width,
+          name.height,
+        );
+        final badgeRect = Rect.fromLTWH(
+          (width - badge.width) / 2,
+          nameTop + name.height + AppSpacing.xs,
+          badge.width,
+          badge.height,
+        );
+
+        // The collapsed title: the name and countdown, then the place.
+        final titleRoom = width - AppSpacing.md - _actionsWidth;
+        final digitsEndSize = measure(digits, digitsEnd, double.infinity);
+        final digitsGap = hasCountdown ? AppSpacing.xs : 0.0;
+        final nameEndSize = measure(
+          nextName,
+          nameEnd,
+          titleRoom - digitsEndSize.width - digitsGap,
+        );
+        final locationEndSize = measure(
+          locationLabel,
+          locationStyle,
+          titleRoom,
+        );
+        final titleTop =
+            topInset +
+            (kToolbarHeight - nameEndSize.height - locationEndSize.height) / 2;
+        final nameEndRect = Rect.fromLTWH(
+          fromStart(AppSpacing.md, nameEndSize.width),
+          titleTop,
+          nameEndSize.width,
+          nameEndSize.height,
+        );
+        final digitsEndRect = Rect.fromLTWH(
+          fromStart(
+            AppSpacing.md + nameEndSize.width + digitsGap,
+            digitsEndSize.width,
+          ),
+          titleTop + (nameEndSize.height - digitsEndSize.height) / 2,
+          digitsEndSize.width,
+          digitsEndSize.height,
+        );
+        final locationEndRect = Rect.fromLTWH(
+          fromStart(AppSpacing.md, locationEndSize.width),
+          titleTop + nameEndSize.height,
+          locationEndSize.width,
+          locationEndSize.height,
+        );
+        final digitsStartRect = Rect.fromLTWH(
+          badgeRect.left + AppSpacing.lg,
+          badgeRect.top + AppSpacing.xs,
+          digitsSize.width,
+          digitsSize.height,
+        );
+        final onAccent = locationStyle.color!.withValues(alpha: 1);
+
+        return IgnorePointer(
+          child: Stack(
+            children: [
+              if (hasCountdown)
+                // The badge's pill shrinks around the digits as it fades.
+                Positioned.fromRect(
+                  rect: Rect.lerp(badgeRect, digitsEndRect, t)!,
+                  child: DecoratedBox(
+                    decoration: ShapeDecoration(
+                      color: onAccent.withValues(alpha: 0.24 * fade),
+                      shape: const StadiumBorder(),
+                    ),
+                  ),
+                ),
+              Positioned(
+                left: pin.dx,
+                top: pin.dy,
+                child: Opacity(
+                  opacity: fade,
+                  child: Icon(
+                    Icons.location_on_outlined,
+                    size: _pinSize,
+                    color: locationStyle.color,
+                  ),
+                ),
+              ),
+              if (label != null)
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  top: labelTop,
+                  child: Opacity(
+                    opacity: fade,
+                    child: Text(
+                      label,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: labelStyle,
+                    ),
+                  ),
+                ),
+              moving(
+                locationLabel,
+                const ValueKey('material-location'),
+                locationStart,
+                locationEndRect,
+                locationStyle,
+                locationStyle,
+              ),
+              moving(
+                nextName,
+                const ValueKey('material-name'),
+                nameStartRect,
+                nameEndRect,
+                nameStart,
+                nameEnd,
+              ),
+              if (hasCountdown)
+                moving(
+                  digits,
+                  const ValueKey('material-countdown'),
+                  digitsStartRect,
+                  digitsEndRect,
+                  digitsStart,
+                  digitsEnd,
+                ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
 
 /// Empty space after the cards, just enough that the page can always scroll
 /// the header down to its compact bar. A short day doesn't fill the screen,
@@ -481,9 +821,6 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
   /// Below this height the hero drops the label line and uses smaller type,
   /// so a landscape phone's short header never overflows.
   static const _compactHeroHeight = 130.0;
-
-  /// The faint mosque behind the hero text: big enough to read as texture.
-  static const _watermarkSize = 168.0;
 
   @override
   bool shouldRebuild(_LiquidGlassAppBar old) =>
@@ -567,13 +904,9 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
                     ),
                   ),
                   PositionedDirectional(
-                    end: -AppSpacing.lg,
-                    bottom: -AppSpacing.lg,
-                    child: Icon(
-                      Icons.mosque_outlined,
-                      size: _watermarkSize,
-                      color: Colors.white.withValues(alpha: 0.08),
-                    ),
+                    end: -_BedugWatermark.size * 0.2,
+                    bottom: -_BedugWatermark.size * 0.25,
+                    child: const _BedugWatermark(),
                   ),
                 ],
               ),
@@ -1503,42 +1836,6 @@ Color _fadeColor(Color color, double fade) =>
     color.withValues(alpha: color.a * fade);
 
 // ── Material Countdown Badge (non-Apple) ──────────────────────────────────────
-class _CountdownBadge extends StatelessWidget {
-  final ValueListenable<Duration> remaining;
-  const _CountdownBadge({required this.remaining});
-
-  @override
-  Widget build(BuildContext ctx) {
-    return ValueListenableBuilder<Duration>(
-      valueListenable: remaining,
-      builder: (_, value, _) => _buildBadge(ctx, value),
-    );
-  }
-
-  Widget _buildBadge(BuildContext ctx, Duration value) {
-    if (value.isNegative) return const SizedBox();
-    final theme = Theme.of(ctx);
-    final onAccent = theme.colorScheme.onPrimary;
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.lg,
-        vertical: AppSpacing.xs,
-      ),
-      decoration: ShapeDecoration(
-        color: onAccent.withValues(alpha: 0.24),
-        shape: const StadiumBorder(),
-      ),
-      child: Text(
-        _formatCountdown(value),
-        style: theme.textTheme.titleLarge?.copyWith(
-          color: onAccent,
-          fontFeatures: const [FontFeature.tabularFigures()],
-        ),
-      ),
-    );
-  }
-}
-
 String _formatClock(DateTime t) =>
     '${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}';
 
