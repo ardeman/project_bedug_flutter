@@ -169,73 +169,110 @@ void main() {
     await tester.pumpAndSettle();
     expect(position.pixels, moreOrLessEquals(collapseRange));
   }, variant: TargetPlatformVariant.only(TargetPlatform.macOS));
-  testWidgets('the Material hero text travels into the collapsed toolbar', (
-    tester,
-  ) async {
-    SharedPreferences.setMockInitialValues({});
-    final prefs = await SharedPreferences.getInstance();
-    tester.view.physicalSize = const Size(393, 851);
-    tester.view.devicePixelRatio = 1;
-    addTearDown(tester.view.reset);
+  for (final config in [
+    (locale: 'en', size: const Size(393, 851), scale: 1.0),
+    (locale: 'ar', size: const Size(393, 851), scale: 1.0),
+    (locale: 'en', size: const Size(851, 393), scale: 1.0),
+    (locale: 'ar', size: const Size(320, 700), scale: 1.3),
+  ]) {
+    testWidgets('Material header aligns and collapses in $config', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues({});
+      final prefs = await SharedPreferences.getInstance();
+      tester.view.physicalSize = config.size;
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
 
-    final times = PrayerTimes.today(
-      Coordinates(-6.2088, 106.8456),
-      CalculationMethod.singapore.getParameters(),
-    );
-    await tester.pumpWidget(
-      ProviderScope(
-        overrides: [
-          sharedPreferencesProvider.overrideWithValue(prefs),
-          prayerProvider.overrideWith(
-            () => _FakePrayerNotifier(
-              PrayerState(
-                times: times,
-                locationLabel:
-                    'Kecamatan Pagedangan, Kabupaten Tangerang, Banten',
-                loading: false,
+      final times = PrayerTimes.today(
+        Coordinates(-6.2088, 106.8456),
+        CalculationMethod.singapore.getParameters(),
+      );
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            sharedPreferencesProvider.overrideWithValue(prefs),
+            prayerProvider.overrideWith(
+              () => _FakePrayerNotifier(
+                PrayerState(
+                  times: times,
+                  locationLabel:
+                      'Kecamatan Pagedangan, Kabupaten Tangerang, Banten',
+                  loading: false,
+                ),
               ),
             ),
-          ),
-        ],
-        child: const MaterialApp(
-          locale: Locale('en'),
-          localizationsDelegates: [
-            GlobalMaterialLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-            ...AppLocalizations.localizationsDelegates,
           ],
-          supportedLocales: AppLocalizations.supportedLocales,
-          home: PrayerTimesScreen(),
+          child: MaterialApp(
+            locale: Locale(config.locale),
+            builder: (context, child) => MediaQuery(
+              data: MediaQuery.of(context)
+                  .copyWith(textScaler: TextScaler.linear(config.scale)),
+              child: child!,
+            ),
+            localizationsDelegates: [
+              GlobalMaterialLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+              ...AppLocalizations.localizationsDelegates,
+            ],
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: PrayerTimesScreen(),
+          ),
         ),
-      ),
-    );
-    await tester.pump();
+      );
+      await tester.pump();
 
-    const name = ValueKey('material-name');
-    const location = ValueKey('material-location');
-    final tune = find.byIcon(Icons.tune);
-    // Expanded, the place sits below the toolbar instead of beside the
-    // tune and refresh buttons.
-    expect(
-      tester.getRect(find.byKey(location)).top,
-      greaterThanOrEqualTo(tester.getRect(tune).bottom),
-    );
+      const name = ValueKey('material-name');
+      const location = ValueKey('material-location');
+      final tune = find.byIcon(Icons.tune);
+      // The location shares the actions' centerline and leaves them room.
+      final expandedLocation = tester.getRect(find.byKey(location));
+      final tuneRect = tester.getRect(tune);
+      expect(expandedLocation.center.dy, closeTo(tuneRect.center.dy, 1));
+      final isRtl = config.locale == 'ar';
+      final actions = tester
+          .getRect(tune)
+          .expandToInclude(tester.getRect(find.byIcon(Icons.refresh)));
+      expect(expandedLocation.overlaps(actions), isFalse);
+      final nameRectExpanded = tester.getRect(find.byKey(name));
+      final labelRect = tester.getRect(
+        find.byKey(const ValueKey('material-label')),
+      );
+      expect(
+        isRtl ? nameRectExpanded.right : nameRectExpanded.left,
+        closeTo(isRtl ? labelRect.right : labelRect.left, 1),
+      );
+      expect(nameRectExpanded.top, greaterThan(expandedLocation.bottom));
+      final nameLeft = nameRectExpanded.left;
+      expect(nameLeft, greaterThan(0));
 
-    await tester.drag(
-      find.byType(CustomScrollView).first,
-      const Offset(0, -400),
-    );
-    await tester.pump();
-    expect(tester.takeException(), isNull);
-    // Tests have no status bar, so the collapsed toolbar is the top row.
-    const toolbar = Rect.fromLTWH(0, 0, 393, kToolbarHeight);
-    final nameRect = tester.getRect(find.byKey(name));
-    final locationRect = tester.getRect(find.byKey(location));
-    expect(nameRect.top, greaterThanOrEqualTo(toolbar.top));
-    expect(locationRect.top, greaterThanOrEqualTo(nameRect.bottom - 1));
-    expect(locationRect.bottom, lessThanOrEqualTo(toolbar.bottom));
-    expect(locationRect.right, lessThanOrEqualTo(tester.getRect(tune).left));
-  }, variant: const TargetPlatformVariant({TargetPlatform.android}));
+      final badgeRect = tester.getRect(
+        find.byKey(const ValueKey('material-badge')),
+      );
+      expect(
+        isRtl ? badgeRect.right : badgeRect.left,
+        closeTo(isRtl ? nameRectExpanded.right : nameRectExpanded.left, 1),
+      );
+      expect(badgeRect.bottom, lessThanOrEqualTo(200));
+
+      // Scroll the page directly: at larger text sizes the center of the
+      // viewport can land on the day picker's own drag gesture.
+      tester
+          .state<ScrollableState>(find.byType(Scrollable).first)
+          .position
+          .jumpTo(400);
+      await tester.pump();
+      expect(tester.takeException(), isNull);
+      // Tests have no status bar, so the collapsed toolbar is the top row.
+      final toolbar = Rect.fromLTWH(0, 0, config.size.width, kToolbarHeight);
+      final nameRect = tester.getRect(find.byKey(name));
+      final locationRect = tester.getRect(find.byKey(location));
+      expect(nameRect.top, greaterThanOrEqualTo(toolbar.top));
+      expect(locationRect.top, greaterThanOrEqualTo(nameRect.bottom - 1));
+      expect(locationRect.bottom, lessThanOrEqualTo(toolbar.bottom));
+      expect(locationRect.overlaps(actions), isFalse);
+    }, variant: const TargetPlatformVariant({TargetPlatform.android}));
+  }
 
   testWidgets('the pill, place, name and countdown move into the capsule', (
     tester,

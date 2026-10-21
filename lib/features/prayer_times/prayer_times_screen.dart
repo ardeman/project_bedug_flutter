@@ -375,7 +375,7 @@ class _BedugWatermark extends StatelessWidget {
 /// Height of the expanded Material app bar, below the status bar.
 const _materialExpandedHeight = 200.0;
 
-/// The Material prayer-times header: a centered hero over the accent
+/// The Material prayer-times header: a start-aligned hero over the accent
 /// gradient whose place, prayer name and countdown travel into the collapsed
 /// toolbar as it shrinks, the way the Apple header moves them into its
 /// capsule. The label line, the pin and the badge's pill fade on the way.
@@ -501,7 +501,7 @@ class _MaterialHeroAppBar extends SliverPersistentHeaderDelegate {
     );
   }
 
-  /// Lays out the hero (centered below the toolbar) and the collapsed title
+  /// Lays out the hero below its location/actions row and the collapsed title
   /// (two lines at the toolbar's start) and moves each text between them.
   Widget _movingText(
     BuildContext ctx,
@@ -572,11 +572,12 @@ class _MaterialHeroAppBar extends SliverPersistentHeaderDelegate {
         final digits = hasCountdown ? _formatCountdown(value) : '';
         final heroRoom = width - AppSpacing.md * 2;
 
-        // The hero, top down, centered in the space below the toolbar.
+        // The location shares the toolbar row with the actions. The prayer
+        // label, name and countdown align to the content start below it.
         final location = measure(
           locationLabel,
           locationStyle,
-          heroRoom - _pinSize - AppSpacing.xxs,
+          width - AppSpacing.md - _actionsWidth - _pinSize - AppSpacing.xxs,
         );
         final name = measure(nextName, nameStart, heroRoom);
         final labelSize = label == null
@@ -591,12 +592,7 @@ class _MaterialHeroAppBar extends SliverPersistentHeaderDelegate {
             : Size.zero;
         final locationRow = math.max(_pinSize, location.height);
         final heroHeight =
-            locationRow +
-            AppSpacing.xxs +
-            name.height +
-            AppSpacing.xs +
-            labelSize.height +
-            badge.height;
+            name.height + AppSpacing.xs + labelSize.height + badge.height;
         final heroTop =
             topInset +
             kToolbarHeight +
@@ -604,29 +600,28 @@ class _MaterialHeroAppBar extends SliverPersistentHeaderDelegate {
               0.0,
               (_materialExpandedHeight - kToolbarHeight - heroHeight) / 2,
             );
-        final rowWidth = _pinSize + AppSpacing.xxs + location.width;
-        final rowLeft = (width - rowWidth) / 2;
+        final locationTop = topInset + (kToolbarHeight - locationRow) / 2;
         final locationStart = Rect.fromLTWH(
-          isRtl ? rowLeft : rowLeft + _pinSize + AppSpacing.xxs,
-          heroTop + (locationRow - location.height) / 2,
+          fromStart(AppSpacing.md + _pinSize + AppSpacing.xxs, location.width),
+          locationTop + (locationRow - location.height) / 2,
           location.width,
           location.height,
         );
         final pin = Offset(
-          isRtl ? rowLeft + location.width + AppSpacing.xxs : rowLeft,
-          heroTop + (locationRow - _pinSize) / 2,
+          fromStart(AppSpacing.md, _pinSize),
+          locationTop + (locationRow - _pinSize) / 2,
         );
         // "Next prayer · 11:38" sits above the name it introduces.
-        final labelTop = heroTop + locationRow + AppSpacing.xxs;
+        final labelTop = heroTop;
         final nameTop = labelTop + labelSize.height;
         final nameStartRect = Rect.fromLTWH(
-          (width - name.width) / 2,
+          fromStart(AppSpacing.md, name.width),
           nameTop,
           name.width,
           name.height,
         );
         final badgeRect = Rect.fromLTWH(
-          (width - badge.width) / 2,
+          fromStart(AppSpacing.md, badge.width),
           nameTop + name.height + AppSpacing.xs,
           badge.width,
           badge.height,
@@ -686,6 +681,7 @@ class _MaterialHeroAppBar extends SliverPersistentHeaderDelegate {
                 Positioned.fromRect(
                   rect: Rect.lerp(badgeRect, digitsEndRect, t)!,
                   child: DecoratedBox(
+                    key: const ValueKey('material-badge'),
                     decoration: ShapeDecoration(
                       color: onAccent.withValues(alpha: 0.24 * fade),
                       shape: const StadiumBorder(),
@@ -706,16 +702,17 @@ class _MaterialHeroAppBar extends SliverPersistentHeaderDelegate {
               ),
               if (label != null)
                 Positioned(
-                  left: 0,
-                  right: 0,
+                  left: AppSpacing.md,
+                  right: AppSpacing.md,
                   top: labelTop,
                   child: Opacity(
                     opacity: fade,
                     child: Text(
                       label,
+                      key: const ValueKey('material-label'),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center,
+                      textAlign: TextAlign.start,
                       style: labelStyle,
                     ),
                   ),

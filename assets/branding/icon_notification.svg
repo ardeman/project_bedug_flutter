@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <!-- Notification-only Bedug silhouette. White paths and transparent cutouts;
+       no launcher background or adaptive-icon safe-zone padding. -->
+  <path fill="#FFFFFF" fill-rule="evenodd" d="M4 5 Q9 3 15 5 Q12 10 15 15 Q9 17 4 15 C1 15 1 5 4 5 Z M9 6 A3 3 0 1 0 11 11 A2.7 2.7 0 0 1 9 6 Z"/>
+  <path fill="#FFFFFF" fill-rule="evenodd" d="M17 4 A3 6 0 1 1 17 16 A3 6 0 1 1 17 4 Z M17 6 A1.5 4 0 1 0 17 14 A1.5 4 0 1 0 17 6 Z"/>
+  <path fill="#FFFFFF" d="M4 15 L6 15 L13 21 L11 22 Z M12 16 L14 16 L6 22 L4 21 Z M5 18 H13 V19.5 H5 Z M20 10 L21.5 9.7 L23 18 L21.5 18.3 Z M21.2 7 A1.7 1.7 0 1 1 21.2 10.4 A1.7 1.7 0 1 1 21.2 7 Z"/>
+</svg>

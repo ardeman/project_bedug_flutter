@@ -32,7 +32,7 @@ class NotificationService {
 
   static Future<void> _initialize() async {
     final l10n = _resolveL10n();
-    const android = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const android = AndroidInitializationSettings('ic_stat_bedug');
     const darwin = DarwinInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
@@ -125,6 +125,7 @@ class NotificationService {
             'bedug_prayer_v2_${preferences.sound.name}',
             playSound ? l10n.notificationChannelName : l10n.silentPrayerChannel,
             channelDescription: l10n.notificationChannelDescription,
+            icon: 'ic_stat_bedug',
             importance: Importance.high,
             priority: Priority.high,
             playSound: playSound,

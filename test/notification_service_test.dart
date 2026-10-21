@@ -52,10 +52,15 @@ void main() {
         l10n,
         const NotificationPreferences(sound: PrayerNotificationSound.silent),
       );
+      final initialization = calls.firstWhere(
+        (call) => call.method == 'initialize',
+      );
+      expect((initialization.arguments as Map)['defaultIcon'], 'ic_stat_bedug');
       final scheduled = calls.where((call) => call.method == 'zonedSchedule');
       expect(scheduled, isNotEmpty);
       final details =
           (scheduled.first.arguments as Map)['platformSpecifics'] as Map;
+      expect(details['icon'], 'ic_stat_bedug');
       expect(details['channelId'], 'bedug_prayer_v2_silent');
       expect(details['playSound'], isFalse);
       expect(details['enableVibration'], isFalse);

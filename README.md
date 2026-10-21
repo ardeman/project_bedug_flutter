@@ -17,6 +17,7 @@ A cross-platform Muslim prayer times app with a Hijri calendar, in Indonesian, E
 - GPS timeouts are handled gracefully: high-accuracy settings on Android, a recent last-known position as fallback, and no raw exception text shown to users.
 - In-app theme switching (System / Light / Dark) updates every card, bar and glass overlay at once.
 - Calculation method picker: a native Cupertino sheet on iOS/macOS, an Expressive sheet on Material platforms, and a liquid-glass sheet on other desktop paths.
+- Android prayer header: the location shares a row with the calculation-method and refresh buttons; the prayer label, name and countdown align to the start edge below it, mirroring for Arabic.
 - Apple-specific polish:
   - Liquid Glass from `liquid_glass_easy`: a refracting tab bar with a draggable pill, glass app bar buttons and countdown, and lite glass prayer cards.
   - Prayer header that collapses into a compact bar, keeps the countdown visible and adapts to the Dynamic Island in portrait and to camera cutouts in landscape.
@@ -84,6 +85,7 @@ Validation of the original layouts on 2026-10-21: on the connected iPhone 17 (iO
 | Install Git hooks (once per clone) | `./scripts/install_git_hooks.sh` |
 | Check the adhan calculation from the command line | `dart run bin/check_adhan.dart` |
 | Regenerate the Android and Windows icons after editing `assets/branding/*.svg` (macOS) | `swift scripts/render_brand_icons.swift && dart run flutter_launcher_icons` |
+| Regenerate the Android notification icon after editing `assets/branding/icon_notification.svg` | `python3 scripts/generate_notification_icon.py` |
 | Edit the iOS and macOS icon (re-import any changed layer from `assets/branding/layers/`) | `open -a "Icon Composer" assets/branding/AppIcon.icon` |
 | Release build | `flutter build <apk\|appbundle\|ipa\|macos\|windows\|linux>` |
 | Build the landing page into `site/dist/` | `python3 site/build.py` |
@@ -192,6 +194,8 @@ Bedug grows from a prayer-times app into a companion for a Muslim's day, week an
 3. **Extra times (done):** imsak (10 minutes before Subuh; fasting starts at Subuh), sunrise (end of Subuh), estimated dhuha start (20 minutes after sunrise), and the last third of the night for tahajud. The night is measured from the previous day’s Maghrib to the selected day’s Subuh, so the displayed time belongs to that morning. Dhuha is a fixed-offset estimate, not an official Kemenag timetable.
 4. **Home screen widgets (implemented; iPhone checks recorded under [Home screen widgets](#home-screen-widgets), remaining device checks pending):** next prayer and live countdown on iOS and Android. The app shares seven independently calculated days on load/resume, midnight, and calculation, city or language changes. iOS uses a WidgetKit timeline; Android uses a native chronometer and inexact transition alarms (updates may be delayed in Doze). After seven days, open Bedug to refresh.
 
+Android notification icon validation on 2026-10-21: the release APK includes the dedicated Bedug drawable after resource shrinking and was installed on the Pixel 5 (Android 14). A temporary shell notification using a raster preview of the same SVG showed the drum silhouette clearly. Delivery of an actual scheduled prayer alert with the packaged vector still needs confirmation.
+
 Prayer tracking and prayer-progress features (completion logs, streaks and qada counts), as well as a tasbih counter, are outside the product scope.
 
 **Phase 2: Dzikir and dua**
@@ -250,6 +254,8 @@ The current look needs a redesign on every platform. Screens read the accent fro
 
 Visual validation on 2026-10-21: the Pixel 5 (Android 14, release APK, Indonesian) and macOS 27.0.1 (debug build, English, 800 × 650 window) rendered prayer times, the expanded calendar, Settings, Worship and calculation-method controls in light and dark themes. The Android calendar toggle originally blended into its selected background; inheriting the button foreground fixed it, confirmed in a rebuilt release APK in both themes. An iPhone 17 (wired, profile build, Indonesian, portrait) rendered the same screens and the native method sheet in both themes: the expanded and collapsed prayer bars clear the Dynamic Island, and the glass buttons, countdown, date strip and wrapped labels stay readable. Temporary appearance and location settings were restored. Windows/Linux, mobile landscape and device checks with Arabic and enlarged text remain pending. See the follow-up validation below for macOS.
 
+
+Android header validation on 2026-10-21: the Pixel 5 release build (Android 14, Indonesian, dark theme) shows the location on the calculation-method and refresh buttons’ centerline, with a long GPS address truncated clear of the actions. The prayer label, name and countdown align to the start edge below. Header tests also cover Arabic, landscape, larger text and collapse.
 
 Follow-up validation on 2026-10-21: at 800 × 650 on macOS, the expanded calendar scrolls clear of the floating navigation in English and Arabic. Arabic tab taps and dragging the glass pill now open the matching screen and keep the pill under the selected label; regression tests cover both text directions on the Apple paths. These visual checks used the light theme. The expanded Arabic prayer header still lets the location overlap the action buttons and needs a separate fix. Dark Arabic, enlarged text, mobile landscape and the remaining platform checks are still pending.
 

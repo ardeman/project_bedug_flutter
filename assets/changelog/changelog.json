@@ -5,6 +5,24 @@
       "date": null,
       "changes": [
         {
+          "type": "improved",
+          "text": {
+            "en": "The Android prayer header aligns the location with its action buttons and places the prayer name and countdown at the start edge.",
+            "id": "Header salat Android menyejajarkan lokasi dengan tombol tindakan serta menempatkan nama salat dan hitung mundur di sisi awal.",
+            "ms": "Pengepala solat Android menjajarkan lokasi dengan butang tindakan serta meletakkan nama solat dan kira detik di sisi permulaan.",
+            "ar": "يحاذي رأس أوقات الصلاة على Android الموقع مع أزرار الإجراءات ويضع اسم الصلاة والعد التنازلي عند حافة البداية."
+          }
+        },
+        {
+          "type": "fixed",
+          "text": {
+            "en": "Android prayer notifications show a Bedug silhouette instead of a circle.",
+            "id": "Notifikasi salat Android menampilkan siluet bedug, bukan lingkaran.",
+            "ms": "Pemberitahuan solat Android memaparkan siluet bedug dan bukannya bulatan.",
+            "ar": "تعرض إشعارات الصلاة على Android صورة ظلية لطبل بيدوغ بدلاً من دائرة."
+          }
+        },
+        {
           "type": "fixed",
           "text": {
             "en": "Arabic navigation on iOS and macOS opens the tab you tap and keeps the glass selection pill aligned.",
