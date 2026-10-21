@@ -7,6 +7,15 @@
         {
           "type": "fixed",
           "text": {
+            "en": "Arabic navigation on iOS and macOS opens the tab you tap and keeps the glass selection pill aligned.",
+            "id": "Navigasi bahasa Arab di iOS dan macOS membuka tab yang diketuk dan menjaga penanda pilihan kaca tetap sejajar.",
+            "ms": "Navigasi bahasa Arab pada iOS dan macOS membuka tab yang diketuk dan memastikan penunjuk pilihan kaca kekal sejajar.",
+            "ar": "يفتح شريط التنقل بالعربية على iOS وmacOS علامة التبويب التي تضغط عليها ويحافظ على محاذاة مؤشر التحديد الزجاجي."
+          }
+        },
+        {
+          "type": "fixed",
+          "text": {
             "en": "The calendar toggle stays visible when the month view is open on Material platforms.",
             "id": "Ikon tombol kalender tetap terlihat saat tampilan bulan terbuka di platform Material.",
             "ms": "Ikon butang kalendar kekal kelihatan apabila paparan bulan dibuka pada platform Material.",

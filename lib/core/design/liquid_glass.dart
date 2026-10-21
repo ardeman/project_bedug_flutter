@@ -60,40 +60,54 @@ class GlassNavBar extends StatelessWidget {
     final mq = MediaQuery.of(ctx);
     final width = math.min(mq.size.width - AppSpacing.md * 2, _maxWidth);
     final bottomGap = _bottomGapOf(ctx);
+    final direction = Directionality.of(ctx);
+    final isRtl = direction == TextDirection.rtl;
+    final visualItems = isRtl ? items.reversed : items;
+    int visualIndex(int index) => isRtl ? items.length - 1 - index : index;
     // The tab bar adds the bottom safe-area inset to its margin; drop the
     // inset so the gap is measured from the screen edge.
     return MediaQuery.removePadding(
       context: ctx,
       removeBottom: true,
-      child: LiquidGlassTabBar(
-        items: [
-          for (final item in items)
-            LiquidGlassTabBarItem(
-              icon: item.icon,
-              selectedIcon: item.activeIcon,
-              label: item.label,
-              // Long translations would wrap and overflow the bar.
-              labelBuilder: (_, l) => Text(
-                l.text ?? '',
-                style: theme.textTheme.labelSmall?.copyWith(
-                  color: l.textStyle.color,
+      // The package measures taps, drags and pill offsets from the left.
+      // Reverse the items explicitly so its geometry also matches RTL labels.
+      child: Directionality(
+        textDirection: TextDirection.ltr,
+        child: LiquidGlassTabBar(
+          items: [
+            for (final item in visualItems)
+              LiquidGlassTabBarItem(
+                icon: item.icon,
+                selectedIcon: item.activeIcon,
+                label: item.label,
+                // Long translations would wrap and overflow the bar.
+                labelBuilder: (_, l) => Text(
+                  l.text ?? '',
+                  textDirection: direction,
+                  style: theme.textTheme.labelSmall?.copyWith(
+                    color: l.textStyle.color,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
               ),
+          ],
+          selectedIndex: visualIndex(currentIndex),
+          onChanged: (index) => onTap(visualIndex(index)),
+          width: width,
+          height: height,
+          margin: EdgeInsets.only(bottom: bottomGap),
+          style: LiquidGlassTabBar.defaultStyle.copyWith(
+            color: glassTintOf(ctx),
+          ),
+          itemStyle: LiquidGlassTabItemStyle(
+            selectedColor: AppColors.accentOf(ctx),
+            unselectedColor: theme.colorScheme.onSurface.withValues(
+              alpha: 0.62,
             ),
-        ],
-        selectedIndex: currentIndex,
-        onChanged: onTap,
-        width: width,
-        height: height,
-        margin: EdgeInsets.only(bottom: bottomGap),
-        style: LiquidGlassTabBar.defaultStyle.copyWith(color: glassTintOf(ctx)),
-        itemStyle: LiquidGlassTabItemStyle(
-          selectedColor: AppColors.accentOf(ctx),
-          unselectedColor: theme.colorScheme.onSurface.withValues(alpha: 0.62),
-          iconSize: AppControlSizes.navigationIcon,
-          labelFontSize: theme.textTheme.labelSmall!.fontSize!,
+            iconSize: AppControlSizes.navigationIcon,
+            labelFontSize: theme.textTheme.labelSmall!.fontSize!,
+          ),
         ),
       ),
     );
