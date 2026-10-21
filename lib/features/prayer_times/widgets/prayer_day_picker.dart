@@ -391,7 +391,8 @@ class _CalendarToggle extends StatelessWidget {
         : Theme.of(ctx).colorScheme.onSurfaceVariant;
     final icon = Icon(
       isOpen ? Icons.calendar_month : Icons.calendar_month_outlined,
-      color: color,
+      // Material buttons supply a contrasting foreground for their selection.
+      color: PlatformCapabilities.isApple ? color : null,
     );
     if (!PlatformCapabilities.isApple) {
       return MaterialIconButton(

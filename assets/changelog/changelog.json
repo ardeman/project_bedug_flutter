@@ -5,6 +5,15 @@
       "date": null,
       "changes": [
         {
+          "type": "fixed",
+          "text": {
+            "en": "The calendar toggle stays visible when the month view is open on Material platforms.",
+            "id": "Ikon tombol kalender tetap terlihat saat tampilan bulan terbuka di platform Material.",
+            "ms": "Ikon butang kalendar kekal kelihatan apabila paparan bulan dibuka pada platform Material.",
+            "ar": "تظل أيقونة زر التقويم مرئية عند فتح عرض الشهر على منصات Material."
+          }
+        },
+        {
           "type": "improved",
           "text": {
             "en": "The Worship tab uses consistent Qibla icon sizing and themed location guidance.",

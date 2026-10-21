@@ -1,4 +1,5 @@
 import 'package:bedug/core/design/liquid_glass.dart';
+import 'package:bedug/core/design/platform_design.dart';
 import 'package:bedug/core/theme/app_theme.dart';
 import 'package:bedug/core/theme/app_theme_scope.dart';
 import 'package:cupertino_ui/cupertino_ui.dart'
@@ -76,6 +77,21 @@ void main() {
           await tester.tap(find.byIcon(Icons.calendar_month_outlined));
           await tester.pumpAndSettle();
           expect(find.byType(HijriMonthGrid), findsOneWidget);
+          if (PlatformDesign.usesExpressive) {
+            final icon = find.byIcon(Icons.calendar_month);
+            final glyph = tester.widget<RichText>(
+              find.descendant(of: icon, matching: find.byType(RichText)),
+            );
+            final foreground = glyph.text.style!.color!.computeLuminance();
+            final background = Theme.of(tester.element(icon))
+                .colorScheme
+                .primary
+                .computeLuminance();
+            final contrast = foreground > background
+                ? (foreground + 0.05) / (background + 0.05)
+                : (background + 0.05) / (foreground + 0.05);
+            expect(contrast, greaterThanOrEqualTo(3));
+          }
           expect(tester.takeException(), isNull);
         },
         variant: TargetPlatformVariant({
