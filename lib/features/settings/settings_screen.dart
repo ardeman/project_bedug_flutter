@@ -67,16 +67,20 @@ class SettingsScreen extends ConsumerWidget {
             materialTrailing: ToggleButtons(
               isSelected: [!settings.isHanafi, settings.isHanafi],
               onPressed: (i) => notifier.setMadhab(i == 1),
-              borderRadius: BorderRadius.circular(8),
-              selectedColor: Colors.white,
+              borderRadius: BorderRadius.circular(AppRadii.sm),
+              selectedColor: Theme.of(ctx).colorScheme.onPrimary,
               fillColor: AppColors.accentOf(ctx),
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.sm,
+                  ),
                   child: Text(l10n.madhabShafi),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.sm,
+                  ),
                   child: Text(l10n.madhabHanafi),
                 ),
               ],
@@ -612,7 +616,7 @@ class _ChoiceTileState<T> extends State<_ChoiceTile<T>> {
             DropdownButton<T>(
               value: widget.value,
               underline: const SizedBox(),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(AppRadii.sm),
               items: [
                 for (final option in widget.options)
                   DropdownMenuItem<T>(
@@ -650,7 +654,11 @@ class _ChoiceTileState<T> extends State<_ChoiceTile<T>> {
             ),
           ),
           const SizedBox(width: AppSpacing.xxs),
-          Icon(Icons.unfold_more, size: 18, color: muted),
+          Icon(
+            Icons.unfold_more,
+            size: AppControlSizes.toolbarIcon,
+            color: muted,
+          ),
         ],
       ),
     );

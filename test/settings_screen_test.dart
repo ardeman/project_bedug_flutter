@@ -211,6 +211,29 @@ void main() {
     expect(container.read(settingsProvider).themeMode, 2);
   }, variant: TargetPlatformVariant.only(TargetPlatform.macOS));
 
+  for (final brightness in Brightness.values) {
+    testWidgets('Windows madhab selection saves in $brightness', (
+      tester,
+    ) async {
+      final container = await _pumpSettings(tester, brightness: brightness);
+      expect(find.byType(ToggleButtons), findsOneWidget);
+      await tester.tap(find.text('Hanafi'));
+      await tester.pumpAndSettle();
+      expect(container.read(settingsProvider).isHanafi, isTrue);
+      await tester.tap(
+        find
+            .descendant(
+              of: find.byType(ToggleButtons),
+              matching: find.byType(Text),
+            )
+            .first,
+      );
+      await tester.pumpAndSettle();
+      expect(container.read(settingsProvider).isHanafi, isFalse);
+      expect(tester.takeException(), isNull);
+    }, variant: TargetPlatformVariant.only(TargetPlatform.windows));
+  }
+
   testWidgets('Expressive controls save settings', (tester) async {
     final container = await _pumpSettings(tester);
 
@@ -281,21 +304,27 @@ void main() {
   );
 
   for (final brightness in Brightness.values) {
-    testWidgets('narrow Arabic settings support large text in $brightness', (
-      tester,
-    ) async {
-      await _pumpSettings(
-        tester,
-        size: const Size(320, 932),
-        locale: const Locale('ar'),
-        textScale: 1.6,
-        brightness: brightness,
-      );
-      expect(tester.takeException(), isNull);
-      await tester.drag(find.byType(ListView).first, const Offset(0, -650));
-      await tester.pumpAndSettle();
-      expect(tester.takeException(), isNull);
-    });
+    testWidgets(
+      'narrow Arabic settings support large text in $brightness',
+      (tester) async {
+        await _pumpSettings(
+          tester,
+          size: const Size(320, 932),
+          locale: const Locale('ar'),
+          textScale: 1.6,
+          brightness: brightness,
+        );
+        expect(tester.takeException(), isNull);
+        await tester.drag(find.byType(ListView).first, const Offset(0, -650));
+        await tester.pumpAndSettle();
+        expect(tester.takeException(), isNull);
+      },
+      variant: TargetPlatformVariant({
+        TargetPlatform.android,
+        TargetPlatform.iOS,
+        TargetPlatform.macOS,
+      }),
+    );
   }
 
   for (final brightness in Brightness.values) {

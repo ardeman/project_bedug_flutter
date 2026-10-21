@@ -7,6 +7,15 @@
         {
           "type": "improved",
           "text": {
+            "en": "Settings controls use consistent spacing, rounded corners and theme colors across platforms.",
+            "id": "Kontrol pengaturan menggunakan jarak, sudut membulat, dan warna tema yang seragam di semua platform.",
+            "ms": "Kawalan tetapan menggunakan jarak, bucu bulat dan warna tema yang seragam pada semua platform.",
+            "ar": "تستخدم عناصر التحكم في الإعدادات مسافات وزوايا مستديرة وألوان سمة متناسقة عبر المنصات."
+          }
+        },
+        {
+          "type": "improved",
+          "text": {
             "en": "The prayer calendar uses shared platform card styling and keeps long month headings within narrow layouts at larger text sizes.",
             "id": "Kalender salat menggunakan gaya kartu platform yang seragam dan menjaga judul bulan panjang tetap muat pada tata letak sempit dengan ukuran teks lebih besar.",
             "ms": "Kalendar solat menggunakan gaya kad platform yang seragam dan memastikan tajuk bulan panjang muat dalam susun atur sempit pada saiz teks lebih besar.",
