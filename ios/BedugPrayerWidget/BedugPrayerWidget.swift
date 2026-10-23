@@ -407,6 +407,17 @@ private extension View {
     }
 }
 
+/// Gallery text in the app's language. WidgetKit would otherwise resolve these
+/// strings in the device's language, which can differ from the one in Bedug.
+enum AppLanguage {
+    static func string(_ key: String) -> String {
+        let code = PrayerWidgetData.load()?.locale ?? "id"
+        guard let path = Bundle.main.path(forResource: code, ofType: "lproj"),
+              let bundle = Bundle(path: path) else { return key }
+        return bundle.localizedString(forKey: key, value: key, table: nil)
+    }
+}
+
 struct BedugPrayerWidget: Widget {
     let kind = "BedugPrayerWidget"
 
@@ -414,8 +425,8 @@ struct BedugPrayerWidget: Widget {
         StaticConfiguration(kind: kind, provider: PrayerProvider()) { entry in
             PrayerWidgetFamilyView(entry: entry)
         }
-        .configurationDisplayName("Next prayer")
-        .description("Counts down to the next prayer, with its time and your city.")
+        .configurationDisplayName(AppLanguage.string("Next prayer"))
+        .description(AppLanguage.string("Counts down to the next prayer, with its time and your city."))
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge,
                             .accessoryCircular, .accessoryRectangular, .accessoryInline])
     }
@@ -442,8 +453,8 @@ struct BedugScheduleWidget: Widget {
         StaticConfiguration(kind: kind, provider: PrayerProvider()) { entry in
             LockScreenScheduleView(entry: entry)
         }
-        .configurationDisplayName("Today's prayers")
-        .description("The whole day at a glance. The next prayer's bar fills as it nears.")
+        .configurationDisplayName(AppLanguage.string("Today's prayers"))
+        .description(AppLanguage.string("The whole day at a glance. The next prayer's bar fills as it nears."))
         .supportedFamilies([.accessoryRectangular])
     }
 }

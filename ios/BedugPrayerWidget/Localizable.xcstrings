@@ -20,8 +20,15 @@
             "state": "translated",
             "value": "الصلاة التالية"
           }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next prayer"
+          }
         }
-      }
+      },
+      "extractionState": "manual"
     },
     "Counts down to the next prayer, with its time and your city.": {
       "localizations": {
@@ -42,8 +49,15 @@
             "state": "translated",
             "value": "عدّ تنازلي للصلاة التالية مع وقتها ومدينتك."
           }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Counts down to the next prayer, with its time and your city."
+          }
         }
-      }
+      },
+      "extractionState": "manual"
     },
     "Today's prayers": {
       "localizations": {
@@ -64,8 +78,15 @@
             "state": "translated",
             "value": "صلوات اليوم"
           }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today's prayers"
+          }
         }
-      }
+      },
+      "extractionState": "manual"
     },
     "The whole day at a glance. The next prayer's bar fills as it nears.": {
       "localizations": {
@@ -86,8 +107,15 @@
             "state": "translated",
             "value": "يومك كله في لمحة، ويمتلئ شريط الصلاة التالية كلما اقترب وقتها."
           }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The whole day at a glance. The next prayer's bar fills as it nears."
+          }
         }
-      }
+      },
+      "extractionState": "manual"
     }
   },
   "version": "1.0"
