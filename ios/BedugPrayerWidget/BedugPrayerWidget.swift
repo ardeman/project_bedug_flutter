@@ -421,6 +421,73 @@ struct LockScreenScheduleView: View {
     }
 }
 
+// The day as a strip: each prayer's sky over its time. The next prayer sits in
+// a pill whose hairline fills while it nears; passed prayers fade.
+struct LockScreenSkyStripView: View {
+    let entry: PrayerEntry
+
+    var body: some View {
+        Group {
+            if let next = entry.prayer {
+                HStack(spacing: 2) {
+                    ForEach(Array(entry.day.enumerated()), id: \.offset) { _, item in
+                        column(for: item, next: next)
+                    }
+                }
+            } else {
+                Text(entry.data?.refresh ?? "Bedug").font(.caption)
+                    .minimumScaleFactor(0.7)
+            }
+        }
+        .containerBackground(for: .widget) { Color.clear }
+        .lockScreenEnvironment(entry.data)
+    }
+
+    private func column(for item: Prayer, next: Prayer) -> some View {
+        let isNext = item.date == next.date
+        let passed = item.date <= entry.date
+        return VStack(spacing: 4) {
+            Image(systemName: item.symbol)
+                .font(.system(size: 15, weight: .medium))
+                .symbolRenderingMode(.hierarchical)
+                // The symbols differ in height; a shared box keeps the times level.
+                .frame(height: 18)
+            // One weight for every time, so the next one doesn't widen and clip.
+            Text(item.date, style: .time)
+                .font(.caption2.weight(.semibold).monospacedDigit())
+                .lineLimit(1).minimumScaleFactor(0.7)
+            Group {
+                if isNext {
+                    ProgressView(timerInterval: min(entry.countdownStart, entry.date)...item.date,
+                                 countsDown: false) {
+                        EmptyView()
+                    } currentValueLabel: {
+                        EmptyView()
+                    }
+                    .progressViewStyle(.linear)
+                } else {
+                    Color.clear
+                }
+            }
+            // A hairline inside the pill; the other columns keep the space so all align.
+            .frame(height: 2)
+            .padding(.horizontal, 5)
+        }
+        .padding(.vertical, 5)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background {
+            if isNext {
+                AccessoryWidgetBackground()
+                    .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+            }
+        }
+        .widgetAccentable(isNext)
+        .opacity(passed ? 0.4 : 1)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text("\(item.name) \(Text(item.date, style: .time))"))
+    }
+}
+
 private extension View {
     func lockScreenEnvironment(_ data: PrayerWidgetData?) -> some View {
         environment(\.locale, Locale(identifier: data?.locale ?? "id"))
@@ -480,10 +547,24 @@ struct BedugScheduleWidget: Widget {
     }
 }
 
+struct BedugSkyStripWidget: Widget {
+    let kind = "BedugSkyStripWidget"
+
+    var body: some WidgetConfiguration {
+        StaticConfiguration(kind: kind, provider: PrayerProvider()) { entry in
+            LockScreenSkyStripView(entry: entry)
+        }
+        .configurationDisplayName(AppLanguage.string("Prayer sky"))
+        .description(AppLanguage.string("Today's prayers as the sky at each time. The next prayer's bar fills as it nears."))
+        .supportedFamilies([.accessoryRectangular])
+    }
+}
+
 @main
 struct BedugWidgets: WidgetBundle {
     var body: some Widget {
         BedugPrayerWidget()
         BedugScheduleWidget()
+        BedugSkyStripWidget()
     }
 }

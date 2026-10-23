@@ -116,6 +116,64 @@
         }
       },
       "extractionState": "manual"
+    },
+    "Prayer sky": {
+      "localizations": {
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Langit salat"
+          }
+        },
+        "ms": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Langit solat"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "سماء الصلوات"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prayer sky"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "Today's prayers as the sky at each time. The next prayer's bar fills as it nears.": {
+      "localizations": {
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Salat hari ini sebagai langit di tiap waktunya. Bilah salat berikutnya terisi saat waktunya mendekat."
+          }
+        },
+        "ms": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solat hari ini sebagai langit pada setiap waktunya. Bar solat seterusnya terisi apabila waktunya hampir."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "صلوات اليوم كسماء كل وقت منها، ويمتلئ شريط الصلاة التالية كلما اقترب وقتها."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today's prayers as the sky at each time. The next prayer's bar fills as it nears."
+          }
+        }
+      },
+      "extractionState": "manual"
     }
   },
   "version": "1.0"
