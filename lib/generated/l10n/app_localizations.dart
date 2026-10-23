@@ -123,7 +123,7 @@ abstract class AppLocalizations {
   /// Hijri calendar screen title
   ///
   /// In id, this message translates to:
-  /// **'Kalender Hijriyah'**
+  /// **'Kalender Hijriah'**
   String get hijriCalendar;
 
   /// No description provided for @settings.
@@ -537,7 +537,7 @@ abstract class AppLocalizations {
   /// No description provided for @hijriToday.
   ///
   /// In id, this message translates to:
-  /// **'Tanggal Hijriyah Hari Ini'**
+  /// **'Tanggal Hijriah Hari Ini'**
   String get hijriToday;
 
   /// No description provided for @gregorianDate.
@@ -591,7 +591,7 @@ abstract class AppLocalizations {
   /// No description provided for @muharram.
   ///
   /// In id, this message translates to:
-  /// **'Muharram'**
+  /// **'Muharam'**
   String get muharram;
 
   /// No description provided for @safar.
@@ -603,25 +603,25 @@ abstract class AppLocalizations {
   /// No description provided for @rabiAlAwwal.
   ///
   /// In id, this message translates to:
-  /// **'Rabi\'ul Awal'**
+  /// **'Rabiulawal'**
   String get rabiAlAwwal;
 
   /// No description provided for @rabiAlThani.
   ///
   /// In id, this message translates to:
-  /// **'Rabi\'ul Akhir'**
+  /// **'Rabiulakhir'**
   String get rabiAlThani;
 
   /// No description provided for @jumadaAlUla.
   ///
   /// In id, this message translates to:
-  /// **'Jumadil Awal'**
+  /// **'Jumadilawal'**
   String get jumadaAlUla;
 
   /// No description provided for @jumadaAlAkhirah.
   ///
   /// In id, this message translates to:
-  /// **'Jumadil Akhir'**
+  /// **'Jumadilakhir'**
   String get jumadaAlAkhirah;
 
   /// No description provided for @rajab.
@@ -633,7 +633,7 @@ abstract class AppLocalizations {
   /// No description provided for @shaban.
   ///
   /// In id, this message translates to:
-  /// **'Sya\'ban'**
+  /// **'Syakban'**
   String get shaban;
 
   /// No description provided for @ramadan.
@@ -651,13 +651,13 @@ abstract class AppLocalizations {
   /// No description provided for @dhuAlQidah.
   ///
   /// In id, this message translates to:
-  /// **'Dzulqa\'dah'**
+  /// **'Zulkaidah'**
   String get dhuAlQidah;
 
   /// No description provided for @dhuAlHijjah.
   ///
   /// In id, this message translates to:
-  /// **'Dzulhijjah'**
+  /// **'Zulhijah'**
   String get dhuAlHijjah;
 
   /// No description provided for @notifSubuh.

@@ -11,7 +11,7 @@
   "prayerTimes": "Waktu Salat",
   "@prayerTimes": { "description": "Prayer times screen title" },
 
-  "hijriCalendar": "Kalender Hijriyah",
+  "hijriCalendar": "Kalender Hijriah",
   "@hijriCalendar": { "description": "Hijri calendar screen title" },
 
   "settings": "Pengaturan",
@@ -190,7 +190,7 @@
   "@nextMonth": {},
 
 
-  "hijriToday": "Tanggal Hijriyah Hari Ini",
+  "hijriToday": "Tanggal Hijriah Hari Ini",
   "@hijriToday": {},
 
   "gregorianDate": "Tanggal Masehi",
@@ -211,18 +211,18 @@
   "sat": "Sab",
   "@sat": {},
 
-  "muharram":    "Muharram",
+  "muharram":    "Muharam",
   "safar":       "Safar",
-  "rabiAlAwwal": "Rabi'ul Awal",
-  "rabiAlThani": "Rabi'ul Akhir",
-  "jumadaAlUla": "Jumadil Awal",
-  "jumadaAlAkhirah": "Jumadil Akhir",
+  "rabiAlAwwal": "Rabiulawal",
+  "rabiAlThani": "Rabiulakhir",
+  "jumadaAlUla": "Jumadilawal",
+  "jumadaAlAkhirah": "Jumadilakhir",
   "rajab":       "Rajab",
-  "shaban":      "Sya'ban",
+  "shaban":      "Syakban",
   "ramadan":     "Ramadan",
   "shawwal":     "Syawal",
-  "dhuAlQidah":  "Dzulqa'dah",
-  "dhuAlHijjah": "Dzulhijjah",
+  "dhuAlQidah":  "Zulkaidah",
+  "dhuAlHijjah": "Zulhijah",
 
   "notifSubuh": "Waktu Subuh telah tiba",
   "@notifSubuh": {},

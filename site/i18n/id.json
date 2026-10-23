@@ -14,8 +14,8 @@
     "changelog": "Catatan rilis"
   },
   "meta": {
-    "title": "Bedug · Jadwal salat, kiblat dan kalender Hijriyah",
-    "description": "Bedug adalah aplikasi jadwal salat gratis dengan hitung mundur, pengingat azan, kalender Hijriyah dan kompas kiblat. Privat, bisa offline, dan terasa pas di iOS, Android, macOS, Windows dan Linux."
+    "title": "Bedug · Jadwal salat, kiblat dan kalender Hijriah",
+    "description": "Bedug adalah aplikasi jadwal salat gratis dengan hitung mundur, pengingat azan, kalender Hijriah dan kompas kiblat. Privat, bisa offline, dan terasa pas di iOS, Android, macOS, Windows dan Linux."
   },
   "prayers": {
     "fajr": "Subuh",
@@ -28,17 +28,17 @@
   "mock": {
     "label": "Bedug menampilkan jadwal salat hari ini di {place}, dengan {next} sebagai salat berikutnya",
     "place": "Jakarta",
-    "hijri": "9 Jumadil Awal 1448",
+    "hijri": "9 Jumadilawal 1448",
     "times": ["04:38", "11:52", "15:13", "17:52", "19:03"]
   },
   "hijri_months": [
-    "Muharram", "Safar", "Rabi'ul Awal", "Rabi'ul Akhir", "Jumadil Awal", "Jumadil Akhir",
-    "Rajab", "Sya'ban", "Ramadan", "Syawal", "Dzulqa'dah", "Dzulhijjah"
+    "Muharam", "Safar", "Rabiulawal", "Rabiulakhir", "Jumadilawal", "Jumadilakhir",
+    "Rajab", "Syakban", "Ramadan", "Syawal", "Zulkaidah", "Zulhijah"
   ],
   "hero": {
     "eyebrow": "Gratis · Tanpa akun · Bisa offline",
     "title": "Setiap salat, tepat waktu.",
-    "lead": "Bedug memanggilmu salat, seperti bedug di masjid kampung halaman. Jadwal akurat di mana pun kamu berada, hitung mundur, pengingat azan, kalender Hijriyah dan kompas kiblat, di ponsel dan komputermu.",
+    "lead": "Bedug memanggilmu salat, seperti bedug di masjid kampung halaman. Jadwal akurat di mana pun kamu berada, hitung mundur, pengingat azan, kalender Hijriah dan kompas kiblat, di ponsel dan komputermu.",
     "cta_download": "Dapatkan Bedug",
     "cta_infaq": "Berinfak",
     "badges": ["iPhone & iPad", "Android", "Mac", "Windows", "Linux"]
@@ -59,8 +59,8 @@
       },
       {
         "icon": "calendar",
-        "title": "Kalender Hijriyah",
-        "body": "Tanggal Hijriyah hari ini selalu terlihat, dan kalender untuk menjelajahi bulan-bulan Hijriyah."
+        "title": "Kalender Hijriah",
+        "body": "Tanggal Hijriah hari ini selalu terlihat, dan kalender untuk menjelajahi bulan-bulan Hijriah."
       },
       {
         "icon": "compass",
@@ -125,10 +125,10 @@
     "items": [
       { "phase": "Berikutnya", "title": "Catatan salat", "body": "Tandai setiap salat tepat waktu, terlambat atau terlewat, lengkap dengan rangkaian hari dan hitungan qadha." },
       { "phase": "Berikutnya", "title": "Pengingat lebih cerdas", "body": "Azan aktif atau mati per waktu salat, pengingat sebelum azan, dan pilihan suara azan." },
-      { "phase": "Berikutnya", "title": "Waktu tambahan dan widget", "body": "Imsak, terbit, dhuha dan sepertiga malam terakhir, serta widget layar utama." },
-      { "phase": "Nanti", "title": "Dzikir dan doa", "body": "Penghitung tasbih, dzikir pagi dan petang, doa harian dan Asmaul Husna." },
+      { "phase": "Berikutnya", "title": "Waktu tambahan dan widget", "body": "Imsak, terbit, duha dan sepertiga malam terakhir, serta widget layar utama." },
+      { "phase": "Nanti", "title": "Zikir dan doa", "body": "Penghitung tasbih, zikir pagi dan petang, doa harian dan asmaulhusna." },
       { "phase": "Nanti", "title": "Al-Qur'an", "body": "Pembaca dengan terjemahan dan penanda, serta perencana khatam." },
-      { "phase": "Nanti", "title": "Tahun Hijriyah", "body": "Hari besar Islam, mode Ramadhan dengan hitung mundur sahur dan berbuka, dan pengingat puasa sunnah." }
+      { "phase": "Nanti", "title": "Tahun Hijriah", "body": "Hari besar Islam, mode Ramadan dengan hitung mundur sahur dan berbuka, dan pengingat puasa sunah." }
     ],
     "follow": "Ikuti perkembangannya di <a href=\"{repo}\">GitHub</a>."
   },

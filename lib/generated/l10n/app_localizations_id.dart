@@ -20,7 +20,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get prayerTimes => 'Waktu Salat';
 
   @override
-  String get hijriCalendar => 'Kalender Hijriyah';
+  String get hijriCalendar => 'Kalender Hijriah';
 
   @override
   String get settings => 'Pengaturan';
@@ -241,7 +241,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get nextMonth => 'Bulan berikutnya';
 
   @override
-  String get hijriToday => 'Tanggal Hijriyah Hari Ini';
+  String get hijriToday => 'Tanggal Hijriah Hari Ini';
 
   @override
   String get gregorianDate => 'Tanggal Masehi';
@@ -268,28 +268,28 @@ class AppLocalizationsId extends AppLocalizations {
   String get sat => 'Sab';
 
   @override
-  String get muharram => 'Muharram';
+  String get muharram => 'Muharam';
 
   @override
   String get safar => 'Safar';
 
   @override
-  String get rabiAlAwwal => 'Rabi\'ul Awal';
+  String get rabiAlAwwal => 'Rabiulawal';
 
   @override
-  String get rabiAlThani => 'Rabi\'ul Akhir';
+  String get rabiAlThani => 'Rabiulakhir';
 
   @override
-  String get jumadaAlUla => 'Jumadil Awal';
+  String get jumadaAlUla => 'Jumadilawal';
 
   @override
-  String get jumadaAlAkhirah => 'Jumadil Akhir';
+  String get jumadaAlAkhirah => 'Jumadilakhir';
 
   @override
   String get rajab => 'Rajab';
 
   @override
-  String get shaban => 'Sya\'ban';
+  String get shaban => 'Syakban';
 
   @override
   String get ramadan => 'Ramadan';
@@ -298,10 +298,10 @@ class AppLocalizationsId extends AppLocalizations {
   String get shawwal => 'Syawal';
 
   @override
-  String get dhuAlQidah => 'Dzulqa\'dah';
+  String get dhuAlQidah => 'Zulkaidah';
 
   @override
-  String get dhuAlHijjah => 'Dzulhijjah';
+  String get dhuAlHijjah => 'Zulhijah';
 
   @override
   String get notifSubuh => 'Waktu Subuh telah tiba';
