@@ -339,17 +339,31 @@ struct LockScreenPrayerView: View {
     }
 }
 
-// The day as a strip: each prayer's sky over its time, with a bar beneath that
-// is full once the prayer has passed and fills live while the next one nears.
+// The day as a grid read down the columns: each prayer's name beside its time,
+// and in the last cell a countdown whose bar fills while the next one nears.
 struct LockScreenScheduleView: View {
     let entry: PrayerEntry
+
+    // Three rows fit the accessory's height at caption size; five prayers fill
+    // two columns with one cell left for the countdown.
+    private let rows = 3
 
     var body: some View {
         Group {
             if let next = entry.prayer {
-                HStack(spacing: 2) {
-                    ForEach(Array(entry.day.enumerated()), id: \.offset) { _, item in
-                        column(for: item, next: next)
+                let day = entry.day
+                Grid(horizontalSpacing: 4, verticalSpacing: 0) {
+                    ForEach(0..<rows, id: \.self) { row in
+                        GridRow {
+                            if row < day.count { cell(for: day[row], next: next) }
+                            if row + rows < day.count {
+                                cell(for: day[row + rows], next: next)
+                            } else if row == rows - 1 {
+                                countdown(to: next)
+                            } else {
+                                Color.clear
+                            }
+                        }
                     }
                 }
             } else {
@@ -361,48 +375,49 @@ struct LockScreenScheduleView: View {
         .lockScreenEnvironment(entry.data)
     }
 
-    private func column(for item: Prayer, next: Prayer) -> some View {
+    private func cell(for item: Prayer, next: Prayer) -> some View {
         let isNext = item.date == next.date
         let passed = item.date <= entry.date
-        return VStack(spacing: 4) {
-            Image(systemName: item.symbol)
-                .font(.system(size: 15, weight: .medium))
-                .symbolRenderingMode(.hierarchical)
-                // The symbols differ in height; a shared box keeps the times level.
-                .frame(height: 18)
-            // One weight for every time, so the next one doesn't widen and clip.
-            Text(item.date, style: .time)
-                .font(.caption2.weight(.semibold).monospacedDigit())
-                .lineLimit(1).minimumScaleFactor(0.7)
-            Group {
-                if isNext {
-                    ProgressView(timerInterval: min(entry.countdownStart, entry.date)...item.date,
-                                 countsDown: false) {
-                        EmptyView()
-                    } currentValueLabel: {
-                        EmptyView()
-                    }
-                    .progressViewStyle(.linear)
-                } else {
-                    Color.clear
-                }
-            }
-            // A hairline inside the pill; the other columns keep the space so all align.
-            .frame(height: 2)
-            .padding(.horizontal, 5)
+        return HStack(spacing: 4) {
+            Text(item.name)
+            Spacer(minLength: 0)
+            Text(item.date, style: .time).monospacedDigit()
         }
-        .padding(.vertical, 5)
+        .font(.caption.weight(isNext ? .bold : .medium))
+        .lineLimit(1).minimumScaleFactor(0.8)
+        .padding(.horizontal, 6)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background {
             if isNext {
                 AccessoryWidgetBackground()
-                    .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                    .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
             }
         }
         .widgetAccentable(isNext)
-        .opacity(passed ? 0.4 : 1)
+        .opacity(passed ? 0.45 : 1)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text("\(item.name) \(Text(item.date, style: .time))"))
+    }
+
+    private func countdown(to next: Prayer) -> some View {
+        VStack(spacing: 2) {
+            Text(timerInterval: entry.date...next.date, countsDown: true)
+                .font(.caption.weight(.semibold).monospacedDigit())
+                .multilineTextAlignment(.trailing)
+                .lineLimit(1).minimumScaleFactor(0.8)
+            ProgressView(timerInterval: min(entry.countdownStart, entry.date)...next.date,
+                         countsDown: false) {
+                EmptyView()
+            } currentValueLabel: {
+                EmptyView()
+            }
+            .progressViewStyle(.linear)
+            // A hairline, so it reads as a track under the countdown.
+            .frame(height: 2)
+        }
+        .padding(.horizontal, 6)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .widgetAccentable()
     }
 }
 
