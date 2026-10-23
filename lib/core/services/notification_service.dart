@@ -8,6 +8,7 @@ import 'package:timezone/timezone.dart' as tz;
 import 'package:adhan/adhan.dart';
 
 import '../../generated/l10n/app_localizations.dart';
+import 'extra_prayer_times.dart';
 import 'notification_preferences.dart';
 import 'notification_schedule.dart';
 
@@ -95,21 +96,31 @@ class NotificationService {
     final exact = await android?.canScheduleExactNotifications() ?? false;
     final playSound = preferences.sound == PrayerNotificationSound.system;
     for (final alert in schedule) {
-      final name = switch (alert.prayer) {
-        Prayer.fajr => l10n.fajr,
-        Prayer.dhuhr => l10n.dhuhr,
-        Prayer.asr => l10n.asr,
-        Prayer.maghrib => l10n.maghrib,
-        _ => l10n.isha,
+      final name = switch (alert.alert) {
+        PrayerAlert.lastThirdOfNight => l10n.lastThirdOfNight,
+        PrayerAlert.imsak => l10n.imsak,
+        PrayerAlert.fajr => l10n.fajr,
+        PrayerAlert.sunrise => l10n.sunrise,
+        PrayerAlert.dhuha => l10n.dhuha,
+        PrayerAlert.dhuhr => l10n.dhuhr,
+        PrayerAlert.asr => l10n.asr,
+        PrayerAlert.maghrib => l10n.maghrib,
+        PrayerAlert.isha => l10n.isha,
       };
       final body = alert.isReminder
           ? l10n.prayerReminderBody(name, preferences.reminderMinutes)
-          : switch (alert.prayer) {
-              Prayer.fajr => l10n.notifSubuh,
-              Prayer.dhuhr => l10n.notifDzuhur,
-              Prayer.asr => l10n.notifAshar,
-              Prayer.maghrib => l10n.notifMaghrib,
-              _ => l10n.notifIsya,
+          : switch (alert.alert) {
+              PrayerAlert.lastThirdOfNight => l10n.notifLastThirdOfNight,
+              PrayerAlert.imsak => l10n.notifImsak(
+                ExtraPrayerTimes.imsakLead.inMinutes,
+              ),
+              PrayerAlert.fajr => l10n.notifSubuh,
+              PrayerAlert.sunrise => l10n.notifSunrise,
+              PrayerAlert.dhuha => l10n.notifDhuha,
+              PrayerAlert.dhuhr => l10n.notifDzuhur,
+              PrayerAlert.asr => l10n.notifAshar,
+              PrayerAlert.maghrib => l10n.notifMaghrib,
+              PrayerAlert.isha => l10n.notifIsya,
             };
       await _plugin.zonedSchedule(
         id: alert.id,

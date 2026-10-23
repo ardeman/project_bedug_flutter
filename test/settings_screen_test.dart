@@ -259,14 +259,14 @@ void main() {
     'notification controls save per-prayer, reminder and sound choices',
     (tester) async {
       final container = await _pumpSettings(tester);
-      await tester.tap(find.text('Azan Notifications'));
+      await tester.tap(find.text('Notifications'));
       await tester.pumpAndSettle();
       expect(find.byType(NotificationSettingsScreen), findsOneWidget);
       await tester.tap(find.byKey(const ValueKey('notification-fajr')));
       await tester.pumpAndSettle();
       expect(
-        container.read(settingsProvider).notifications.disabledPrayers,
-        hasLength(1),
+        container.read(settingsProvider).notifications.alerts,
+        isNot(contains(PrayerAlert.fajr)),
       );
 
       if (PlatformCapabilities.isApple) {

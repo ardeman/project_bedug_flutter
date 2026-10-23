@@ -7,6 +7,15 @@
         {
           "type": "new",
           "text": {
+            "en": "Notifications now cover every time on the prayer timeline: besides the five prayers, you can turn on alerts for the last third of the night, Imsak, sunrise and Dhuha. The settings page is now called Notifications.",
+            "id": "Notifikasi kini mencakup semua waktu di jadwal salat: selain lima salat wajib, kamu bisa menyalakan pengingat untuk sepertiga malam terakhir, imsak, terbit, dan duha. Halaman pengaturannya kini bernama Notifikasi.",
+            "ms": "Pemberitahuan kini meliputi setiap waktu dalam jadual solat: selain lima solat fardu, anda boleh menghidupkan peringatan untuk sepertiga malam terakhir, imsak, syuruk dan duha. Halaman tetapannya kini bernama Pemberitahuan.",
+            "ar": "تشمل الإشعارات الآن كل أوقات جدول الصلاة: إلى جانب الصلوات الخمس، يمكنك تفعيل التنبيه للثلث الأخير من الليل والإمساك والشروق والضحى. وأصبحت صفحة الإعدادات تحمل اسم الإشعارات."
+          }
+        },
+        {
+          "type": "new",
+          "text": {
             "en": "The next prayer widget on iPhone and iPad can show the current prayer instead: edit the widget and turn on Show current prayer, and it names the prayer whose time it is now above the next one's countdown. Subuh ends at sunrise, so until Zuhur the widget shows the next prayer.",
             "id": "Widget salat berikutnya di iPhone dan iPad kini bisa menampilkan salat saat ini: sunting widget dan nyalakan Tampilkan salat saat ini, maka widget menyebut salat yang waktunya sedang berlangsung di atas hitung mundur salat berikutnya. Waktu subuh berakhir saat matahari terbit, jadi hingga zuhur widget menampilkan salat berikutnya.",
             "ms": "Widget solat seterusnya pada iPhone dan iPad kini boleh memaparkan solat semasa: sunting widget dan hidupkan Tunjukkan solat semasa, lalu widget menamakan solat yang waktunya sedang berlangsung di atas kira detik solat seterusnya. Waktu subuh berakhir ketika matahari terbit, jadi sehingga zohor widget memaparkan solat seterusnya.",

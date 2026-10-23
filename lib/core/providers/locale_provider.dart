@@ -113,12 +113,7 @@ class SettingsNotifier extends Notifier<AppSettings> {
       selectedCityId: p.getString(_kSelectedCityId),
       notifications: NotificationPreferences(
         enabled: p.getBool('notifications_enabled') ?? true,
-        disabledPrayers: Set.unmodifiable(
-          notificationPrayers.where(
-            (prayer) => (p.getStringList('notifications_disabled') ?? [])
-                .contains(prayer.name),
-          ),
-        ),
+        alerts: Set.unmodifiable(_storedAlerts(p)),
         reminderMinutes:
             reminderMinuteOptions.contains(
               p.getInt('notification_reminder_minutes'),
@@ -133,12 +128,22 @@ class SettingsNotifier extends Notifier<AppSettings> {
     );
   }
 
+  /// Builds before this one saved only the disabled prayers out of five.
+  static Iterable<PrayerAlert> _storedAlerts(SharedPreferences p) {
+    final stored = p.getStringList('notification_alerts');
+    if (stored != null) {
+      return PrayerAlert.values.where((alert) => stored.contains(alert.name));
+    }
+    final disabled = p.getStringList('notifications_disabled') ?? const [];
+    return defaultPrayerAlerts.where((alert) => !disabled.contains(alert.name));
+  }
+
   Future<void> setNotifications(NotificationPreferences value) async {
     state = state.copyWith(notifications: value);
     await _prefs.setBool('notifications_enabled', value.enabled);
     await _prefs.setStringList(
-      'notifications_disabled',
-      value.disabledPrayers.map((prayer) => prayer.name).toList(),
+      'notification_alerts',
+      value.alerts.map((alert) => alert.name).toList(),
     );
     await _prefs.setInt('notification_reminder_minutes', value.reminderMinutes);
     await _prefs.setString('notification_sound', value.sound.name);

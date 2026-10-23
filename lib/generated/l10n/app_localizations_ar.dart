@@ -123,7 +123,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get madhabHanafi => 'الحنفي';
 
   @override
-  String get azanNotifications => 'إشعارات الأذان';
+  String get notifications => 'الإشعارات';
+
+  @override
+  String get allNotifications => 'كل الإشعارات';
+
+  @override
+  String get notificationTimes => 'الأوقات';
+
+  @override
+  String get notificationSystemSection => 'النظام';
 
   @override
   String get allPrayers => 'جميع الصلوات';
@@ -218,7 +227,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get notificationChannelName => 'أوقات الصلاة';
 
   @override
-  String get notificationChannelDescription => 'تذكيرات الأذان للصلوات اليومية';
+  String get notificationChannelDescription => 'تنبيهات أوقات الصلاة';
 
   @override
   String get openAction => 'فتح';
@@ -315,6 +324,20 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get notifIsya => 'حان وقت صلاة العشاء';
+
+  @override
+  String get notifLastThirdOfNight => 'حلّ الثلث الأخير من الليل، وقت التهجد';
+
+  @override
+  String notifImsak(int minutes) {
+    return 'الإمساك: الفجر بعد $minutes دقائق';
+  }
+
+  @override
+  String get notifSunrise => 'أشرقت الشمس وانتهى وقت الفجر';
+
+  @override
+  String get notifDhuha => 'حان وقت صلاة الضحى';
 
   @override
   String get worship => 'العبادة';
@@ -547,7 +570,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get notificationsOff => 'الإشعارات متوقفة';
 
   @override
-  String get beforePrayerReminder => 'تذكير قبل الصلاة';
+  String get beforePrayerReminder => 'تذكير مسبق';
 
   @override
   String get reminderOff => 'متوقف';
@@ -576,7 +599,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get notificationDeliveryInfo =>
-      'تُجدول التنبيهات للأيام الستة القادمة وتُحدث عند فتح التطبيق. يخضع إرسالها وصوتها لأذونات النظام وإعداداته. يوقف الوضع الصامت الاهتزاز أيضًا.';
+      'تُجدول التنبيهات حتى ستة أيام مقدمًا وتُحدث عند فتح التطبيق. يخضع إرسالها وصوتها لأذونات النظام وإعداداته. يوقف الوضع الصامت الاهتزاز أيضًا.';
 
   @override
   String get notificationPlatformUnavailable =>

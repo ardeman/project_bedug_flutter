@@ -93,7 +93,7 @@ class SettingsScreen extends ConsumerWidget {
               Icons.notifications_outlined,
               color: AppColors.accentOf(ctx),
             ),
-            title: Text(l10n.azanNotifications),
+            title: Text(l10n.notifications),
             subtitle: Text(
               settings.notifications.enabled
                   ? l10n.notificationPreferences
@@ -255,10 +255,20 @@ class NotificationSettingsScreen extends ConsumerWidget {
     final preferences = ref.watch(settingsProvider).notifications;
     final notifier = ref.read(settingsProvider.notifier);
     final failed = ref.watch(prayerProvider.select((s) => s.notificationError));
-    final names = [l10n.fajr, l10n.dhuhr, l10n.asr, l10n.maghrib, l10n.isha];
+    String nameOf(PrayerAlert alert) => switch (alert) {
+      PrayerAlert.lastThirdOfNight => l10n.lastThirdOfNight,
+      PrayerAlert.imsak => l10n.imsak,
+      PrayerAlert.fajr => l10n.fajr,
+      PrayerAlert.sunrise => l10n.sunrise,
+      PrayerAlert.dhuha => l10n.dhuha,
+      PrayerAlert.dhuhr => l10n.dhuhr,
+      PrayerAlert.asr => l10n.asr,
+      PrayerAlert.maghrib => l10n.maghrib,
+      PrayerAlert.isha => l10n.isha,
+    };
     return Scaffold(
       extendBodyBehindAppBar: PlatformCapabilities.isApple,
-      appBar: GlassTopBar(title: l10n.azanNotifications),
+      appBar: GlassTopBar(title: l10n.notifications),
       body: ListView(
         children: [
           Padding(
@@ -275,10 +285,10 @@ class NotificationSettingsScreen extends ConsumerWidget {
               child: Text(l10n.notificationSchedulingError),
             ),
           _Section(
-            title: l10n.azanNotifications,
+            title: l10n.notificationTimes,
             children: [
               PlatformListTile(
-                title: Text(l10n.azanNotifications),
+                title: Text(l10n.allNotifications),
                 trailing: _AdaptiveSwitch(
                   key: const ValueKey('notifications-enabled'),
                   value: preferences.enabled,
@@ -288,17 +298,17 @@ class NotificationSettingsScreen extends ConsumerWidget {
                 ),
               ),
               if (preferences.enabled) ...[
-                for (final (index, prayer) in notificationPrayers.indexed)
+                for (final alert in PrayerAlert.values)
                   PlatformListTile(
-                    title: Text(names[index]),
+                    title: Text(nameOf(alert)),
                     trailing: _AdaptiveSwitch(
-                      key: ValueKey('notification-${prayer.name}'),
-                      value: preferences.includes(prayer),
+                      key: ValueKey('notification-${alert.name}'),
+                      value: preferences.includes(alert),
                       onChanged: (value) {
-                        final disabled = {...preferences.disabledPrayers};
-                        value ? disabled.remove(prayer) : disabled.add(prayer);
+                        final alerts = {...preferences.alerts};
+                        value ? alerts.add(alert) : alerts.remove(alert);
                         notifier.setNotifications(
-                          preferences.copyWith(disabledPrayers: disabled),
+                          preferences.copyWith(alerts: alerts),
                         );
                       },
                     ),
@@ -349,7 +359,7 @@ class NotificationSettingsScreen extends ConsumerWidget {
             ),
           if (NotificationService.supportsScheduling)
             _Section(
-              title: l10n.notificationSystemSettings,
+              title: l10n.notificationSystemSection,
               children: [
                 PlatformListTile(
                   title: Text(l10n.notificationSystemSettings),

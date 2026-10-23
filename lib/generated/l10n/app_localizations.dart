@@ -324,11 +324,29 @@ abstract class AppLocalizations {
   /// **'Hanafi'**
   String get madhabHanafi;
 
-  /// No description provided for @azanNotifications.
+  /// No description provided for @notifications.
   ///
   /// In id, this message translates to:
-  /// **'Notifikasi Azan'**
-  String get azanNotifications;
+  /// **'Notifikasi'**
+  String get notifications;
+
+  /// No description provided for @allNotifications.
+  ///
+  /// In id, this message translates to:
+  /// **'Semua notifikasi'**
+  String get allNotifications;
+
+  /// No description provided for @notificationTimes.
+  ///
+  /// In id, this message translates to:
+  /// **'Waktu'**
+  String get notificationTimes;
+
+  /// No description provided for @notificationSystemSection.
+  ///
+  /// In id, this message translates to:
+  /// **'Sistem'**
+  String get notificationSystemSection;
 
   /// No description provided for @allPrayers.
   ///
@@ -495,7 +513,7 @@ abstract class AppLocalizations {
   /// No description provided for @notificationChannelDescription.
   ///
   /// In id, this message translates to:
-  /// **'Pengingat azan untuk salat harian'**
+  /// **'Pengingat waktu salat'**
   String get notificationChannelDescription;
 
   /// No description provided for @openAction.
@@ -689,6 +707,30 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Waktu Isya telah tiba'**
   String get notifIsya;
+
+  /// No description provided for @notifLastThirdOfNight.
+  ///
+  /// In id, this message translates to:
+  /// **'Sepertiga malam terakhir telah tiba, waktu untuk tahajud'**
+  String get notifLastThirdOfNight;
+
+  /// No description provided for @notifImsak.
+  ///
+  /// In id, this message translates to:
+  /// **'Imsak: Subuh {minutes} menit lagi'**
+  String notifImsak(int minutes);
+
+  /// No description provided for @notifSunrise.
+  ///
+  /// In id, this message translates to:
+  /// **'Matahari telah terbit. Waktu Subuh telah berakhir'**
+  String get notifSunrise;
+
+  /// No description provided for @notifDhuha.
+  ///
+  /// In id, this message translates to:
+  /// **'Waktu salat Duha telah tiba'**
+  String get notifDhuha;
 
   /// No description provided for @worship.
   ///
@@ -1131,7 +1173,7 @@ abstract class AppLocalizations {
   /// No description provided for @beforePrayerReminder.
   ///
   /// In id, this message translates to:
-  /// **'Pengingat sebelum azan'**
+  /// **'Pengingat lebih awal'**
   String get beforePrayerReminder;
 
   /// No description provided for @reminderOff.
@@ -1179,7 +1221,7 @@ abstract class AppLocalizations {
   /// No description provided for @notificationDeliveryInfo.
   ///
   /// In id, this message translates to:
-  /// **'Pengingat dijadwalkan untuk enam hari ke depan dan diperbarui saat aplikasi dibuka. Pengiriman dan suara mengikuti izin serta pengaturan sistem. Mode senyap juga menonaktifkan getaran.'**
+  /// **'Pengingat dijadwalkan hingga enam hari ke depan dan diperbarui saat aplikasi dibuka. Pengiriman dan suara mengikuti izin serta pengaturan sistem. Mode senyap juga menonaktifkan getaran.'**
   String get notificationDeliveryInfo;
 
   /// No description provided for @notificationPlatformUnavailable.

@@ -124,7 +124,16 @@ class AppLocalizationsId extends AppLocalizations {
   String get madhabHanafi => 'Hanafi';
 
   @override
-  String get azanNotifications => 'Notifikasi Azan';
+  String get notifications => 'Notifikasi';
+
+  @override
+  String get allNotifications => 'Semua notifikasi';
+
+  @override
+  String get notificationTimes => 'Waktu';
+
+  @override
+  String get notificationSystemSection => 'Sistem';
 
   @override
   String get allPrayers => 'Semua Salat';
@@ -219,8 +228,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get notificationChannelName => 'Waktu Salat';
 
   @override
-  String get notificationChannelDescription =>
-      'Pengingat azan untuk salat harian';
+  String get notificationChannelDescription => 'Pengingat waktu salat';
 
   @override
   String get openAction => 'Buka';
@@ -317,6 +325,22 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get notifIsya => 'Waktu Isya telah tiba';
+
+  @override
+  String get notifLastThirdOfNight =>
+      'Sepertiga malam terakhir telah tiba, waktu untuk tahajud';
+
+  @override
+  String notifImsak(int minutes) {
+    return 'Imsak: Subuh $minutes menit lagi';
+  }
+
+  @override
+  String get notifSunrise =>
+      'Matahari telah terbit. Waktu Subuh telah berakhir';
+
+  @override
+  String get notifDhuha => 'Waktu salat Duha telah tiba';
 
   @override
   String get worship => 'Ibadah';
@@ -552,7 +576,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get notificationsOff => 'Notifikasi nonaktif';
 
   @override
-  String get beforePrayerReminder => 'Pengingat sebelum azan';
+  String get beforePrayerReminder => 'Pengingat lebih awal';
 
   @override
   String get reminderOff => 'Nonaktif';
@@ -581,7 +605,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get notificationDeliveryInfo =>
-      'Pengingat dijadwalkan untuk enam hari ke depan dan diperbarui saat aplikasi dibuka. Pengiriman dan suara mengikuti izin serta pengaturan sistem. Mode senyap juga menonaktifkan getaran.';
+      'Pengingat dijadwalkan hingga enam hari ke depan dan diperbarui saat aplikasi dibuka. Pengiriman dan suara mengikuti izin serta pengaturan sistem. Mode senyap juga menonaktifkan getaran.';
 
   @override
   String get notificationPlatformUnavailable =>

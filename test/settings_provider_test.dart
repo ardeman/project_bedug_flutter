@@ -2,7 +2,6 @@ import 'package:bedug/core/constants/city_catalog.dart';
 import 'package:bedug/core/providers/locale_provider.dart';
 import 'package:bedug/core/services/kemenag_method.dart';
 import 'package:bedug/core/services/notification_preferences.dart';
-import 'package:adhan/adhan.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -91,7 +90,7 @@ void main() {
     await notifier.setNotifications(
       const NotificationPreferences(
         enabled: false,
-        disabledPrayers: {Prayer.fajr, Prayer.isha},
+        alerts: {PrayerAlert.imsak, PrayerAlert.dhuhr},
         reminderMinutes: 15,
         sound: PrayerNotificationSound.silent,
       ),
@@ -99,24 +98,32 @@ void main() {
     container.invalidate(settingsProvider);
     final preferences = container.read(settingsProvider).notifications;
     expect(preferences.enabled, isFalse);
-    expect(preferences.disabledPrayers, {Prayer.fajr, Prayer.isha});
+    expect(preferences.alerts, {PrayerAlert.imsak, PrayerAlert.dhuhr});
     expect(preferences.reminderMinutes, 15);
     expect(preferences.sound, PrayerNotificationSound.silent);
     await notifier.setThemeMode(2);
     expect(container.read(settingsProvider).notifications.reminderMinutes, 15);
   });
 
-  test('unknown stored notification options fall back safely', () async {
-    final container = await _container({
-      'notification_reminder_minutes': -1,
-      'notification_sound': 'removed_sound',
-      'notifications_disabled': ['fajr', 'unknown'],
-    });
-    final preferences = container.read(settingsProvider).notifications;
-    expect(preferences.reminderMinutes, 0);
-    expect(preferences.sound, PrayerNotificationSound.system);
-    expect(preferences.disabledPrayers, {Prayer.fajr});
-  });
+  test(
+    'unknown and legacy stored notification options fall back safely',
+    () async {
+      final container = await _container({
+        'notification_reminder_minutes': -1,
+        'notification_sound': 'removed_sound',
+        'notifications_disabled': ['fajr', 'unknown'],
+      });
+      final preferences = container.read(settingsProvider).notifications;
+      expect(preferences.reminderMinutes, 0);
+      expect(preferences.sound, PrayerNotificationSound.system);
+      expect(preferences.alerts, {
+        PrayerAlert.dhuhr,
+        PrayerAlert.asr,
+        PrayerAlert.maghrib,
+        PrayerAlert.isha,
+      });
+    },
+  );
 
   test('city ids are unique', () {
     final ids = supportedCities.map((c) => c.id).toList();

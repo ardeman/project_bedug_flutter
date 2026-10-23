@@ -124,7 +124,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get madhabHanafi => 'Hanafi';
 
   @override
-  String get azanNotifications => 'Azan Notifications';
+  String get notifications => 'Notifications';
+
+  @override
+  String get allNotifications => 'All notifications';
+
+  @override
+  String get notificationTimes => 'Times';
+
+  @override
+  String get notificationSystemSection => 'System';
 
   @override
   String get allPrayers => 'All Prayers';
@@ -219,8 +228,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notificationChannelName => 'Prayer Times';
 
   @override
-  String get notificationChannelDescription =>
-      'Azan reminders for daily prayers';
+  String get notificationChannelDescription => 'Alerts for prayer times';
 
   @override
   String get openAction => 'Open';
@@ -317,6 +325,21 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get notifIsya => 'Isha prayer time has arrived';
+
+  @override
+  String get notifLastThirdOfNight =>
+      'The last third of the night has begun, a time for tahajud';
+
+  @override
+  String notifImsak(int minutes) {
+    return 'Imsak: Fajr is in $minutes minutes';
+  }
+
+  @override
+  String get notifSunrise => 'The sun has risen. Fajr time has ended';
+
+  @override
+  String get notifDhuha => 'Dhuha prayer time has started';
 
   @override
   String get worship => 'Worship';
@@ -551,7 +574,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notificationsOff => 'Notifications off';
 
   @override
-  String get beforePrayerReminder => 'Reminder before prayer';
+  String get beforePrayerReminder => 'Early reminder';
 
   @override
   String get reminderOff => 'Off';
@@ -580,7 +603,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get notificationDeliveryInfo =>
-      'Alerts are scheduled for the next six days and refreshed when you open the app. Delivery and sound follow system permissions and settings. Silent mode also disables vibration.';
+      'Alerts are scheduled up to six days ahead and refreshed when you open the app. Delivery and sound follow system permissions and settings. Silent mode also disables vibration.';
 
   @override
   String get notificationPlatformUnavailable =>

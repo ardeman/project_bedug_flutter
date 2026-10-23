@@ -97,8 +97,11 @@
   "madhabHanafi": "Hanafi",
   "@madhabHanafi": {},
 
-  "azanNotifications": "Notifikasi Azan",
-  "@azanNotifications": {},
+  "notifications": "Notifikasi",
+  "allNotifications": "Semua notifikasi",
+  "notificationTimes": "Waktu",
+  "notificationSystemSection": "Sistem",
+  "@notifications": {},
 
   "allPrayers": "Semua Salat",
   "@allPrayers": {},
@@ -169,7 +172,7 @@
   "@locationPermissionDeniedForeverAndroid": {},
   "notificationChannelName": "Waktu Salat",
   "@notificationChannelName": {},
-  "notificationChannelDescription": "Pengingat azan untuk salat harian",
+  "notificationChannelDescription": "Pengingat waktu salat",
   "@notificationChannelDescription": {},
   "openAction": "Buka",
   "@openAction": {},
@@ -234,6 +237,17 @@
   "@notifMaghrib": {},
   "notifIsya": "Waktu Isya telah tiba",
   "@notifIsya": {},
+  "notifLastThirdOfNight": "Sepertiga malam terakhir telah tiba, waktu untuk tahajud",
+  "notifImsak": "Imsak: Subuh {minutes} menit lagi",
+  "@notifImsak": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "notifSunrise": "Matahari telah terbit. Waktu Subuh telah berakhir",
+  "notifDhuha": "Waktu salat Duha telah tiba",
 
   "worship": "Ibadah",
   "@worship": {},
@@ -331,7 +345,7 @@
   "sheetFullScreen": "Layar penuh",
   "notificationPreferences": "Pengaturan pengingat dan suara",
   "notificationsOff": "Notifikasi nonaktif",
-  "beforePrayerReminder": "Pengingat sebelum azan",
+  "beforePrayerReminder": "Pengingat lebih awal",
   "reminderOff": "Nonaktif",
   "minutesBeforePrayer": "{minutes} menit sebelumnya",
   "@minutesBeforePrayer": {
@@ -356,7 +370,7 @@
     }
   },
   "silentPrayerChannel": "Waktu Salat (senyap)",
-  "notificationDeliveryInfo": "Pengingat dijadwalkan untuk enam hari ke depan dan diperbarui saat aplikasi dibuka. Pengiriman dan suara mengikuti izin serta pengaturan sistem. Mode senyap juga menonaktifkan getaran.",
+  "notificationDeliveryInfo": "Pengingat dijadwalkan hingga enam hari ke depan dan diperbarui saat aplikasi dibuka. Pengiriman dan suara mengikuti izin serta pengaturan sistem. Mode senyap juga menonaktifkan getaran.",
   "notificationPlatformUnavailable": "Notifikasi terjadwal tersedia di Android, iOS, dan macOS. Preferensi Anda tetap tersimpan di perangkat ini.",
   "notificationSchedulingError": "Pengingat belum dapat dijadwalkan. Periksa pengaturan notifikasi sistem, lalu coba ubah pengaturan pengingat lagi.",
   "notificationSystemSettings": "Pengaturan notifikasi sistem",
