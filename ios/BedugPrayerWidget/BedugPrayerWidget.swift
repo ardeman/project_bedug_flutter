@@ -508,18 +508,28 @@ struct LockScreenScheduleView: View {
     }
 }
 
-// The day as a strip: each prayer's sky over its time. The next prayer sits in
-// a pill whose hairline fills while it nears; passed prayers fade.
+// The day as a strip: each prayer's sky over its time, with the countdown
+// beneath. The next prayer sits in a pill whose hairline fills while it nears;
+// passed prayers fade.
 struct LockScreenSkyStripView: View {
     let entry: PrayerEntry
 
     var body: some View {
         Group {
             if let next = entry.prayer {
-                HStack(spacing: 2) {
-                    ForEach(Array(entry.day.enumerated()), id: \.offset) { _, item in
-                        column(for: item, next: next)
+                VStack(spacing: 2) {
+                    HStack(spacing: 2) {
+                        ForEach(Array(entry.day.enumerated()), id: \.offset) { _, item in
+                            column(for: item, next: next)
+                        }
                     }
+                    // A column is too narrow for a multi-hour countdown, so it spans
+                    // the strip. Timer text claims the full width; center it.
+                    Text(timerInterval: entry.date...next.date, countsDown: true)
+                        .font(.caption.weight(.semibold).monospacedDigit())
+                        .multilineTextAlignment(.center)
+                        .lineLimit(1)
+                        .widgetAccentable()
                 }
             } else {
                 Text(entry.data?.refresh ?? "Bedug").font(.caption)
@@ -533,7 +543,7 @@ struct LockScreenSkyStripView: View {
     private func column(for item: Prayer, next: Prayer) -> some View {
         let isNext = item.date == next.date
         let passed = item.date <= entry.date
-        return VStack(spacing: 4) {
+        return VStack(spacing: 3) {
             Image(systemName: item.symbol)
                 .font(.system(size: 15, weight: .medium))
                 .symbolRenderingMode(.hierarchical)
@@ -560,7 +570,7 @@ struct LockScreenSkyStripView: View {
             .frame(height: 2)
             .padding(.horizontal, 5)
         }
-        .padding(.vertical, 5)
+        .padding(.vertical, 4)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background {
             if isNext {
