@@ -19,7 +19,8 @@ double distanceToKaabaKm(Coordinates from) {
   final lat2 = _rad(kaaba.latitude);
   final dLat = lat2 - lat1;
   final dLng = _rad(kaaba.longitude - from.longitude);
-  final a = math.pow(math.sin(dLat / 2), 2) +
+  final a =
+      math.pow(math.sin(dLat / 2), 2) +
       math.cos(lat1) * math.cos(lat2) * math.pow(math.sin(dLng / 2), 2);
   return 2 * _earthRadiusKm * math.asin(math.min(1, math.sqrt(a)));
 }
@@ -59,25 +60,30 @@ SunPosition sunPosition(DateTime time, Coordinates at) {
 
   final meanLongitude = _normalize360(280.460 + 0.9856474 * n);
   final meanAnomaly = _rad(_normalize360(357.528 + 0.9856003 * n));
-  final eclipticLongitude = _rad(meanLongitude +
-      1.915 * math.sin(meanAnomaly) +
-      0.020 * math.sin(2 * meanAnomaly));
+  final eclipticLongitude = _rad(
+    meanLongitude +
+        1.915 * math.sin(meanAnomaly) +
+        0.020 * math.sin(2 * meanAnomaly),
+  );
   final obliquity = _rad(23.439 - 0.0000004 * n);
 
   final rightAscension = math.atan2(
     math.cos(obliquity) * math.sin(eclipticLongitude),
     math.cos(eclipticLongitude),
   );
-  final declination =
-      math.asin(math.sin(obliquity) * math.sin(eclipticLongitude));
+  final declination = math.asin(
+    math.sin(obliquity) * math.sin(eclipticLongitude),
+  );
 
   // Greenwich mean sidereal time in degrees, then the local hour angle.
   final siderealDeg = _normalize360(280.46061837 + 360.98564736629 * n);
   final hourAngle = _rad(siderealDeg + at.longitude) - rightAscension;
 
   final lat = _rad(at.latitude);
-  final altitude = math.asin(math.sin(lat) * math.sin(declination) +
-      math.cos(lat) * math.cos(declination) * math.cos(hourAngle));
+  final altitude = math.asin(
+    math.sin(lat) * math.sin(declination) +
+        math.cos(lat) * math.cos(declination) * math.cos(hourAngle),
+  );
   final azimuth = math.atan2(
     -math.sin(hourAngle),
     math.tan(declination) * math.cos(lat) - math.sin(lat) * math.cos(hourAngle),

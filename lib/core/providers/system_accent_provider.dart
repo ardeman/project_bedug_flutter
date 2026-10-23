@@ -48,13 +48,21 @@ Stream<Color?> _watchPortalAccent() async* {
 Future<DBusValue> _readAccent(DBusRemoteObject portal) async {
   final args = [DBusString(_appearanceNamespace), DBusString(_accentKey)];
   try {
-    final result = await portal.callMethod(_portalInterface, 'ReadOne', args,
-        replySignature: DBusSignature('v'));
+    final result = await portal.callMethod(
+      _portalInterface,
+      'ReadOne',
+      args,
+      replySignature: DBusSignature('v'),
+    );
     return result.returnValues.first;
   } on DBusMethodResponseException {
     // Portals older than version 2 only have the deprecated Read.
-    final result = await portal.callMethod(_portalInterface, 'Read', args,
-        replySignature: DBusSignature('v'));
+    final result = await portal.callMethod(
+      _portalInterface,
+      'Read',
+      args,
+      replySignature: DBusSignature('v'),
+    );
     return result.returnValues.first;
   }
 }
@@ -75,5 +83,9 @@ Color? accentFromPortalValue(DBusValue value) {
     channels.add(child.value);
   }
   return Color.from(
-      alpha: 1, red: channels[0], green: channels[1], blue: channels[2]);
+    alpha: 1,
+    red: channels[0],
+    green: channels[1],
+    blue: channels[2],
+  );
 }
