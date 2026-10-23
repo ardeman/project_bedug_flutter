@@ -364,12 +364,16 @@ struct LockScreenScheduleView: View {
     private func column(for item: Prayer, next: Prayer) -> some View {
         let isNext = item.date == next.date
         let passed = item.date <= entry.date
-        return VStack(spacing: 3) {
-            Image(systemName: item.symbol).font(.footnote)
-                .frame(maxHeight: .infinity)
+        return VStack(spacing: 4) {
+            Image(systemName: item.symbol)
+                .font(.system(size: 15, weight: .medium))
+                .symbolRenderingMode(.hierarchical)
+                // The symbols differ in height; a shared box keeps the times level.
+                .frame(height: 18)
+            // One weight for every time, so the next one doesn't widen and clip.
             Text(item.date, style: .time)
-                .font(.caption2.weight(isNext ? .bold : .regular).monospacedDigit())
-                .lineLimit(1).minimumScaleFactor(0.6)
+                .font(.caption2.weight(.semibold).monospacedDigit())
+                .lineLimit(1).minimumScaleFactor(0.7)
             Group {
                 if isNext {
                     ProgressView(timerInterval: min(entry.countdownStart, entry.date)...item.date,
@@ -380,21 +384,23 @@ struct LockScreenScheduleView: View {
                     }
                     .progressViewStyle(.linear)
                 } else {
-                    Capsule().opacity(passed ? 1 : 0.25)
+                    Color.clear
                 }
             }
-            // Thin enough to read as a track under the time.
-            .frame(height: 3)
+            // A hairline inside the pill; the other columns keep the space so all align.
+            .frame(height: 2)
+            .padding(.horizontal, 5)
         }
-        .padding(.horizontal, 1).padding(.vertical, 4)
+        .padding(.vertical, 5)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .overlay {
+        .background {
             if isNext {
-                RoundedRectangle(cornerRadius: 8).strokeBorder(lineWidth: 1)
+                AccessoryWidgetBackground()
+                    .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
             }
         }
         .widgetAccentable(isNext)
-        .opacity(passed ? 0.55 : 1)
+        .opacity(passed ? 0.4 : 1)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text("\(item.name) \(Text(item.date, style: .time))"))
     }
