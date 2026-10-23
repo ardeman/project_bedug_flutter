@@ -7,10 +7,10 @@
         {
           "type": "new",
           "text": {
-            "en": "Lock screen widgets on iPhone and iPad: a countdown ring, the next prayer with its countdown, an inline time above the clock and the next three prayers.",
-            "id": "Widget layar kunci di iPhone dan iPad: cincin hitung mundur, salat berikutnya dengan hitung mundurnya, waktu sebaris di atas jam, dan tiga salat berikutnya.",
-            "ms": "Widget skrin kunci pada iPhone dan iPad: cincin kira detik, solat seterusnya dengan kira detiknya, waktu sebaris di atas jam dan tiga solat seterusnya.",
-            "ar": "أدوات شاشة القفل على iPhone وiPad: حلقة عد تنازلي، والصلاة التالية مع عدها التنازلي، ووقت مضمّن فوق الساعة، والصلوات الثلاث التالية."
+            "en": "Lock screen widgets on iPhone and iPad: a countdown ring, the next prayer with its time and countdown, an inline time above the clock, and today's prayers as a strip whose bar fills as the next prayer nears.",
+            "id": "Widget layar kunci di iPhone dan iPad: cincin hitung mundur, salat berikutnya dengan waktu dan hitung mundurnya, waktu sebaris di atas jam, serta salat hari ini dalam satu baris yang bilahnya terisi saat salat berikutnya mendekat.",
+            "ms": "Widget skrin kunci pada iPhone dan iPad: cincin kira detik, solat seterusnya dengan waktu dan kira detiknya, waktu sebaris di atas jam, serta solat hari ini dalam satu jalur yang barnya terisi apabila solat seterusnya hampir.",
+            "ar": "أدوات شاشة القفل على iPhone وiPad: حلقة عد تنازلي، والصلاة التالية مع وقتها وعدها التنازلي، ووقت مضمّن فوق الساعة، وصلوات اليوم في شريط يمتلئ كلما اقترب وقت الصلاة التالية."
           }
         },
         {

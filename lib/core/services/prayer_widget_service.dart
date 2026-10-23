@@ -25,6 +25,8 @@ Map<String, Object> buildPrayerWidgetData({
   WidgetAppearance appearance = const WidgetAppearance(),
 }) {
   final prayers = <Map<String, Object>>[];
+  // Today's passed prayers let the lock screen schedule show the whole day.
+  final earlier = <Map<String, Object>>[];
   var intervalStart = now;
   DateTime? previousPrayer;
   if (times != null) {
@@ -38,13 +40,6 @@ Map<String, Object> buildPrayerWidgetData({
       for (final prayer in notificationPrayers) {
         final time = daily.timeForPrayer(prayer);
         if (time == null) continue;
-        if (!time.isAfter(now)) {
-          if (previousPrayer == null || time.isAfter(previousPrayer)) {
-            previousPrayer = time;
-          }
-          continue;
-        }
-        if (day < 0) continue;
         final name = switch (prayer) {
           Prayer.fajr => l10n.fajr,
           Prayer.dhuhr => l10n.dhuhr,
@@ -53,11 +48,20 @@ Map<String, Object> buildPrayerWidgetData({
           Prayer.isha => l10n.isha,
           _ => '',
         };
-        prayers.add({
+        final entry = <String, Object>{
           'key': prayer.name,
           'name': name,
           'time': time.millisecondsSinceEpoch,
-        });
+        };
+        if (!time.isAfter(now)) {
+          if (previousPrayer == null || time.isAfter(previousPrayer)) {
+            previousPrayer = time;
+          }
+          if (day == 0) earlier.add(entry);
+          continue;
+        }
+        if (day < 0) continue;
+        prayers.add(entry);
       }
     }
     intervalStart = previousPrayer ?? now;
@@ -65,6 +69,7 @@ Map<String, Object> buildPrayerWidgetData({
   prayers.sort((a, b) => (a['time'] as int).compareTo(b['time'] as int));
   return {
     'prayers': prayers,
+    'earlier': earlier,
     'intervalStart': intervalStart.millisecondsSinceEpoch,
     'location': location ?? '',
     'locale': l10n.localeName,

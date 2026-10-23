@@ -1,0 +1,94 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "Next prayer": {
+      "localizations": {
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Salat berikutnya"
+          }
+        },
+        "ms": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solat seterusnya"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الصلاة التالية"
+          }
+        }
+      }
+    },
+    "Counts down to the next prayer, with its time and your city.": {
+      "localizations": {
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hitung mundur ke salat berikutnya, lengkap dengan waktu dan kotamu."
+          }
+        },
+        "ms": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kiraan detik ke solat seterusnya, berserta waktu dan bandar anda."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عدّ تنازلي للصلاة التالية مع وقتها ومدينتك."
+          }
+        }
+      }
+    },
+    "Today's prayers": {
+      "localizations": {
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Salat hari ini"
+          }
+        },
+        "ms": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solat hari ini"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "صلوات اليوم"
+          }
+        }
+      }
+    },
+    "The whole day at a glance. The next prayer's bar fills as it nears.": {
+      "localizations": {
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sepanjang hari sekali lihat. Bilah salat berikutnya terisi saat waktunya mendekat."
+          }
+        },
+        "ms": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sepanjang hari sekali pandang. Bar solat seterusnya terisi apabila waktunya hampir."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يومك كله في لمحة، ويمتلئ شريط الصلاة التالية كلما اقترب وقتها."
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

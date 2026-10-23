@@ -22,6 +22,7 @@ struct Prayer: Decodable {
 
 struct PrayerWidgetData: Decodable {
     let prayers: [Prayer]
+    let earlier: [Prayer]?
     let intervalStart: Double?
     let showAnalog: Bool?
     let showSchedule: Bool?
@@ -51,6 +52,23 @@ struct PrayerEntry: TimelineEntry {
 
     var upcoming: [Prayer] {
         Array((data?.prayers ?? []).filter { $0.date > date }.prefix(5))
+    }
+
+    /// Every prayer on the next prayer's day, including those already passed.
+    var day: [Prayer] {
+        guard let prayer else { return [] }
+        return ((data?.earlier ?? []) + (data?.prayers ?? []))
+            .filter { Calendar.current.isDate($0.date, inSameDayAs: prayer.date) }
+    }
+
+    /// The city without its administrative prefix, so it fits a lock screen line.
+    var shortLocation: String {
+        let location = data?.location ?? ""
+        for prefix in ["Kota Administrasi ", "Kabupaten ", "Kab. ", "Kota "]
+        where location.hasPrefix(prefix) {
+            return String(location.dropFirst(prefix.count))
+        }
+        return location
     }
 
     var countdownStart: Date {
@@ -283,12 +301,15 @@ struct LockScreenPrayerView: View {
                             .frame(width: 44, height: 44)
                         }
                         VStack(alignment: .leading, spacing: 0) {
-                            Text(prayer.name).font(.headline).widgetAccentable()
-                            // Timer text claims the full width; pin it to the leading edge.
+                            // Unlike a bare countdown, the first line also names the time.
+                            Text("\(prayer.name) · \(Text(prayer.date, style: .time))")
+                                .font(.headline).widgetAccentable()
+                            // Timer text doesn't shrink to fit, so it uses a size that fits
+                            // a multi-hour countdown. It claims the full width; pin it leading.
                             Text(timerInterval: entry.date...prayer.date, countsDown: true)
-                                .font(.title3.bold().monospacedDigit())
+                                .font(.body.weight(.semibold).monospacedDigit())
                                 .multilineTextAlignment(.leading)
-                            Text(entry.data?.location ?? "").font(.caption)
+                            Text(entry.shortLocation).font(.caption)
                                 .foregroundStyle(.secondary)
                         }
                         .lineLimit(1).minimumScaleFactor(0.7)
@@ -318,32 +339,17 @@ struct LockScreenPrayerView: View {
     }
 }
 
+// The day as a strip: each prayer's sky over its time, with a bar beneath that
+// is full once the prayer has passed and fills live while the next one nears.
 struct LockScreenScheduleView: View {
     let entry: PrayerEntry
 
     var body: some View {
         Group {
-            if entry.prayer != nil {
-                // Three rows fill the rectangular accessory's height.
-                VStack(spacing: 0) {
-                    ForEach(Array(entry.upcoming.prefix(3).enumerated()), id: \.offset) { index, item in
-                        HStack(spacing: 4) {
-                            Image(systemName: item.symbol).font(.caption2)
-                                .frame(width: 16)
-                            Text(item.name)
-                            Spacer(minLength: 4)
-                            Text(item.date, style: .time).monospacedDigit()
-                        }
-                        .font(.subheadline.weight(index == 0 ? .bold : .regular))
-                        .lineLimit(1).minimumScaleFactor(0.7)
-                        .padding(.horizontal, 6)
-                        .frame(maxHeight: .infinity)
-                        .overlay {
-                            if index == 0 {
-                                RoundedRectangle(cornerRadius: 6).strokeBorder(lineWidth: 1)
-                                    .widgetAccentable()
-                            }
-                        }
+            if let next = entry.prayer {
+                HStack(spacing: 2) {
+                    ForEach(Array(entry.day.enumerated()), id: \.offset) { _, item in
+                        column(for: item, next: next)
                     }
                 }
             } else {
@@ -353,6 +359,44 @@ struct LockScreenScheduleView: View {
         }
         .containerBackground(for: .widget) { Color.clear }
         .lockScreenEnvironment(entry.data)
+    }
+
+    private func column(for item: Prayer, next: Prayer) -> some View {
+        let isNext = item.date == next.date
+        let passed = item.date <= entry.date
+        return VStack(spacing: 3) {
+            Image(systemName: item.symbol).font(.footnote)
+                .frame(maxHeight: .infinity)
+            Text(item.date, style: .time)
+                .font(.caption2.weight(isNext ? .bold : .regular).monospacedDigit())
+                .lineLimit(1).minimumScaleFactor(0.6)
+            Group {
+                if isNext {
+                    ProgressView(timerInterval: min(entry.countdownStart, entry.date)...item.date,
+                                 countsDown: false) {
+                        EmptyView()
+                    } currentValueLabel: {
+                        EmptyView()
+                    }
+                    .progressViewStyle(.linear)
+                } else {
+                    Capsule().opacity(passed ? 1 : 0.25)
+                }
+            }
+            // Thin enough to read as a track under the time.
+            .frame(height: 3)
+        }
+        .padding(.horizontal, 1).padding(.vertical, 4)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .overlay {
+            if isNext {
+                RoundedRectangle(cornerRadius: 8).strokeBorder(lineWidth: 1)
+            }
+        }
+        .widgetAccentable(isNext)
+        .opacity(passed ? 0.55 : 1)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text("\(item.name) \(Text(item.date, style: .time))"))
     }
 }
 
@@ -370,7 +414,8 @@ struct BedugPrayerWidget: Widget {
         StaticConfiguration(kind: kind, provider: PrayerProvider()) { entry in
             PrayerWidgetFamilyView(entry: entry)
         }
-        .configurationDisplayName("Bedug")
+        .configurationDisplayName("Next prayer")
+        .description("Counts down to the next prayer, with its time and your city.")
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge,
                             .accessoryCircular, .accessoryRectangular, .accessoryInline])
     }
@@ -397,7 +442,8 @@ struct BedugScheduleWidget: Widget {
         StaticConfiguration(kind: kind, provider: PrayerProvider()) { entry in
             LockScreenScheduleView(entry: entry)
         }
-        .configurationDisplayName("Bedug")
+        .configurationDisplayName("Today's prayers")
+        .description("The whole day at a glance. The next prayer's bar fills as it nears.")
         .supportedFamilies([.accessoryRectangular])
     }
 }

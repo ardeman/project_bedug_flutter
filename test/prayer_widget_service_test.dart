@@ -116,6 +116,17 @@ void main() {
     expect(jsonEncode(data), isNot(contains('latitude')));
   });
 
+  test('earlier lists only today\'s passed prayers', () {
+    final data = build(schedule: times, now: times.asr);
+    final earlier = data['earlier'] as List<Map<String, Object>>;
+    expect(earlier.map((p) => p['key']), ['fajr', 'dhuhr', 'asr']);
+    expect(
+      (data['prayers'] as List<Map<String, Object>>).first['key'],
+      'maghrib',
+    );
+    expect(build(schedule: times, now: date)['earlier'], isEmpty);
+  });
+
   test('at a prayer boundary the next prayer is strictly in the future', () {
     final prayers =
         build(schedule: times, now: times.isha)['prayers']
