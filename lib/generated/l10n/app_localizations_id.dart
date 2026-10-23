@@ -570,7 +570,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get sheetFullScreen => 'Layar penuh';
 
   @override
-  String get notificationPreferences => 'Pengaturan pengingat dan suara';
+  String get notificationPreferences => 'Pengingat';
 
   @override
   String get notificationsOff => 'Notifikasi nonaktif';
@@ -587,13 +587,24 @@ class AppLocalizationsId extends AppLocalizations {
   }
 
   @override
-  String get notificationSound => 'Suara notifikasi';
+  String get notificationSound => 'Suara';
 
   @override
   String get systemNotificationSound => 'Suara sistem';
 
   @override
   String get silentNotificationSound => 'Senyap';
+
+  @override
+  String get bedugNotificationSound => 'Bedug';
+
+  @override
+  String get sirenNotificationSound => 'Sirene';
+
+  @override
+  String soundPrayerChannel(String sound) {
+    return 'Waktu Salat ($sound)';
+  }
 
   @override
   String prayerReminderBody(String prayer, int minutes) {

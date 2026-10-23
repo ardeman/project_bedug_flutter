@@ -120,12 +120,25 @@ class SettingsNotifier extends Notifier<AppSettings> {
             )
             ? p.getInt('notification_reminder_minutes')!
             : 0,
-        sound: PrayerNotificationSound.values.firstWhere(
-          (sound) => sound.name == p.getString('notification_sound'),
-          orElse: () => PrayerNotificationSound.system,
-        ),
+        sounds: Map.unmodifiable(_storedSounds(p)),
       ),
     );
+  }
+
+  static PrayerNotificationSound? _soundNamed(String? name) =>
+      PrayerNotificationSound.values.where((s) => s.name == name).firstOrNull;
+
+  /// Builds before this one saved one sound for every alert.
+  static Map<PrayerAlert, PrayerNotificationSound> _storedSounds(
+    SharedPreferences p,
+  ) {
+    final legacy = _soundNamed(p.getString('notification_sound'));
+    return {
+      for (final alert in PrayerAlert.values)
+        alert:
+            ?(_soundNamed(p.getString('notification_sound_${alert.name}')) ??
+            legacy),
+    };
   }
 
   /// Builds before this one saved only the disabled prayers out of five.
@@ -146,7 +159,13 @@ class SettingsNotifier extends Notifier<AppSettings> {
       value.alerts.map((alert) => alert.name).toList(),
     );
     await _prefs.setInt('notification_reminder_minutes', value.reminderMinutes);
-    await _prefs.setString('notification_sound', value.sound.name);
+    for (final alert in PrayerAlert.values) {
+      await _prefs.setString(
+        'notification_sound_${alert.name}',
+        value.soundOf(alert).name,
+      );
+    }
+    await _prefs.remove('notification_sound');
   }
 
   Future<void> setMethod(AppCalculationMethod m) async {

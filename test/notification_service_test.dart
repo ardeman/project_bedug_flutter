@@ -50,7 +50,7 @@ void main() {
       await NotificationService.schedulePrayerNotifications(
         times,
         l10n,
-        const NotificationPreferences(sound: PrayerNotificationSound.silent),
+        _allSounds(PrayerNotificationSound.silent),
       );
       final initialization = calls.firstWhere(
         (call) => call.method == 'initialize',
@@ -61,7 +61,7 @@ void main() {
       final details =
           (scheduled.first.arguments as Map)['platformSpecifics'] as Map;
       expect(details['icon'], 'ic_stat_bedug');
-      expect(details['channelId'], 'bedug_prayer_v2_silent');
+      expect(details['channelId'], 'bedug_prayer_v3_silent');
       expect(details['playSound'], isFalse);
       expect(details['enableVibration'], isFalse);
       expect(details['scheduleMode'], 'inexactAllowWhileIdle');
@@ -77,9 +77,34 @@ void main() {
     );
     final first = calls.firstWhere((call) => call.method == 'zonedSchedule');
     final details = (first.arguments as Map)['platformSpecifics'] as Map;
-    expect(details['channelId'], 'bedug_prayer_v2_system');
+    expect(details['channelId'], 'bedug_prayer_v3_system');
     expect(details['playSound'], isTrue);
     expect(details['scheduleMode'], 'exactAllowWhileIdle');
+  });
+
+  test('each alert uses its own sound and channel', () async {
+    await NotificationService.schedulePrayerNotifications(
+      times,
+      l10n,
+      const NotificationPreferences(
+        sounds: {
+          PrayerAlert.fajr: PrayerNotificationSound.bedug,
+          PrayerAlert.dhuhr: PrayerNotificationSound.siren,
+        },
+      ),
+    );
+    final channels = {
+      for (final call in calls.where((c) => c.method == 'zonedSchedule'))
+        (call.arguments as Map)['title']:
+            (call.arguments as Map)['platformSpecifics'] as Map,
+    };
+    expect(channels['Fajr']!['channelId'], 'bedug_prayer_v3_bedug');
+    expect(channels['Fajr']!['sound'], 'prayer_bedug');
+    expect(channels['Fajr']!['channelName'], 'Prayer Times (Bedug)');
+    expect(channels['Dhuhr']!['channelId'], 'bedug_prayer_v3_siren');
+    expect(channels['Dhuhr']!['sound'], 'prayer_siren');
+    expect(channels['Asr']!['channelId'], 'bedug_prayer_v3_system');
+    expect(channels['Asr']!['sound'], isNull);
   });
 
   test(
@@ -134,12 +159,33 @@ void main() {
       await NotificationService.schedulePrayerNotifications(
         times,
         l10n,
-        const NotificationPreferences(sound: PrayerNotificationSound.silent),
+        _allSounds(PrayerNotificationSound.silent),
       );
       final first = calls.firstWhere((call) => call.method == 'zonedSchedule');
       final details = (first.arguments as Map)['platformSpecifics'] as Map;
       expect(details['presentSound'], isFalse);
       expect(details['sound'], isNull);
     });
+
+    test('a bundled sound plays its .caf file on $platform', () async {
+      debugDefaultTargetPlatformOverride = platform;
+      addTearDown(
+        () => debugDefaultTargetPlatformOverride = TargetPlatform.android,
+      );
+      await NotificationService.schedulePrayerNotifications(
+        times,
+        l10n,
+        _allSounds(PrayerNotificationSound.bedug),
+      );
+      final first = calls.firstWhere((call) => call.method == 'zonedSchedule');
+      final details = (first.arguments as Map)['platformSpecifics'] as Map;
+      expect(details['presentSound'], isTrue);
+      expect(details['sound'], 'prayer_bedug.caf');
+    });
   }
 }
+
+NotificationPreferences _allSounds(PrayerNotificationSound sound) =>
+    NotificationPreferences(
+      sounds: {for (final alert in PrayerAlert.values) alert: sound},
+    );

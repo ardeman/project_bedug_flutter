@@ -49,6 +49,10 @@ flutter:
     - assets/fonts/plus_jakarta_sans/OFL.txt
     # Selection tick for devices without a haptic engine.
     - assets/sounds/selection_tick.wav
+    # Notification sound previews; the alerts play the native copies in
+    # android/app/src/main/res/raw and ios|macos/Runner/Sounds.
+    - assets/sounds/prayer_bedug.wav
+    - assets/sounds/prayer_siren.wav
     # Release notes, shared with the website (site/build.py).
     - assets/changelog/changelog.json
     # The hero's watermark, tinted in the app.

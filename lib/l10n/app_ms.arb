@@ -175,7 +175,7 @@
   "sheetCollapsed": "Dikecilkan",
   "sheetExpanded": "Dikembangkan",
   "sheetFullScreen": "Skrin penuh",
-  "notificationPreferences": "Tetapan peringatan dan bunyi",
+  "notificationPreferences": "Peringatan",
   "notificationsOff": "Pemberitahuan dimatikan",
   "beforePrayerReminder": "Peringatan awal",
   "reminderOff": "Dimatikan",
@@ -187,9 +187,19 @@
       }
     }
   },
-  "notificationSound": "Bunyi pemberitahuan",
+  "notificationSound": "Bunyi",
   "systemNotificationSound": "Bunyi sistem",
   "silentNotificationSound": "Senyap",
+  "bedugNotificationSound": "Bedug",
+  "sirenNotificationSound": "Siren",
+  "soundPrayerChannel": "Waktu Solat ({sound})",
+  "@soundPrayerChannel": {
+    "placeholders": {
+      "sound": {
+        "type": "String"
+      }
+    }
+  },
   "prayerReminderBody": "{prayer} dalam {minutes} minit",
   "@prayerReminderBody": {
     "placeholders": {

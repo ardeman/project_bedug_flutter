@@ -568,7 +568,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sheetFullScreen => 'Full screen';
 
   @override
-  String get notificationPreferences => 'Reminders and sound';
+  String get notificationPreferences => 'Reminder';
 
   @override
   String get notificationsOff => 'Notifications off';
@@ -585,13 +585,24 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get notificationSound => 'Notification sound';
+  String get notificationSound => 'Sounds';
 
   @override
   String get systemNotificationSound => 'System sound';
 
   @override
   String get silentNotificationSound => 'Silent';
+
+  @override
+  String get bedugNotificationSound => 'Bedug';
+
+  @override
+  String get sirenNotificationSound => 'Siren';
+
+  @override
+  String soundPrayerChannel(String sound) {
+    return 'Prayer Times ($sound)';
+  }
 
   @override
   String prayerReminderBody(String prayer, int minutes) {

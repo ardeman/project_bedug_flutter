@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- The notification plugin resolves this resource by name at runtime. -->
+<!-- The notification plugin resolves these resources by name at runtime. -->
 <resources xmlns:tools="http://schemas.android.com/tools"
-    tools:keep="@drawable/ic_stat_bedug" />
+    tools:keep="@drawable/ic_stat_bedug,@raw/prayer_bedug,@raw/prayer_siren" />

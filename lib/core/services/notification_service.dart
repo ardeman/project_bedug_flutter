@@ -33,7 +33,7 @@ class NotificationService {
 
   static Future<void> _initialize() async {
     final l10n = _resolveL10n();
-    const android = AndroidInitializationSettings('ic_stat_bedug');
+    const androidSettings = AndroidInitializationSettings('ic_stat_bedug');
     const darwin = DarwinInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
@@ -45,18 +45,24 @@ class NotificationService {
 
     await _plugin.initialize(
       settings: InitializationSettings(
-        android: android,
+        android: androidSettings,
         iOS: darwin,
         macOS: darwin,
         linux: linux,
       ),
     );
 
-    await _plugin
+    final android = _plugin
         .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin
-        >()
-        ?.requestNotificationsPermission();
+        >();
+    await android?.requestNotificationsPermission();
+    // Channels from builds with one sound for every alert.
+    for (final legacy in const ['system', 'silent']) {
+      await android?.deleteNotificationChannel(
+        channelId: 'bedug_prayer_v2_$legacy',
+      );
+    }
   }
 
   static bool get supportsScheduling =>
@@ -94,7 +100,6 @@ class NotificationService {
           AndroidFlutterLocalNotificationsPlugin
         >();
     final exact = await android?.canScheduleExactNotifications() ?? false;
-    final playSound = preferences.sound == PrayerNotificationSound.system;
     for (final alert in schedule) {
       final name = switch (alert.alert) {
         PrayerAlert.lastThirdOfNight => l10n.lastThirdOfNight,
@@ -122,6 +127,9 @@ class NotificationService {
               PrayerAlert.maghrib => l10n.notifMaghrib,
               PrayerAlert.isha => l10n.notifIsya,
             };
+      final sound = preferences.soundOf(alert.alert);
+      final playSound = sound != PrayerNotificationSound.silent;
+      final resource = sound.resource;
       await _plugin.zonedSchedule(
         id: alert.id,
         scheduledDate: tz.TZDateTime.from(alert.time, tz.local),
@@ -132,23 +140,40 @@ class NotificationService {
         body: body,
         notificationDetails: NotificationDetails(
           android: AndroidNotificationDetails(
-            // Android channel sound is immutable after creation.
-            'bedug_prayer_v2_${preferences.sound.name}',
-            playSound ? l10n.notificationChannelName : l10n.silentPrayerChannel,
+            // Android channel sound is immutable after creation, so each
+            // sound gets its own channel.
+            'bedug_prayer_v3_${sound.name}',
+            switch (sound) {
+              PrayerNotificationSound.system => l10n.notificationChannelName,
+              PrayerNotificationSound.silent => l10n.silentPrayerChannel,
+              PrayerNotificationSound.bedug => l10n.soundPrayerChannel(
+                l10n.bedugNotificationSound,
+              ),
+              PrayerNotificationSound.siren => l10n.soundPrayerChannel(
+                l10n.sirenNotificationSound,
+              ),
+            },
             channelDescription: l10n.notificationChannelDescription,
             icon: 'ic_stat_bedug',
             importance: Importance.high,
             priority: Priority.high,
             playSound: playSound,
+            sound: resource == null
+                ? null
+                : RawResourceAndroidNotificationSound(resource),
             silent: !playSound,
             enableVibration: playSound,
           ),
           iOS: DarwinNotificationDetails(
             presentSound: playSound,
+            sound: resource == null ? null : '$resource.caf',
             presentBanner: true,
             presentList: true,
           ),
-          macOS: DarwinNotificationDetails(presentSound: playSound),
+          macOS: DarwinNotificationDetails(
+            presentSound: playSound,
+            sound: resource == null ? null : '$resource.caf',
+          ),
         ),
       );
     }

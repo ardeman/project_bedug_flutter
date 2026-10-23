@@ -34,33 +34,52 @@ const defaultPrayerAlerts = {
 
 const reminderMinuteOptions = [0, 5, 10, 15, 30];
 
-enum PrayerNotificationSound { system, silent }
+/// What an alert plays. [bedug] and [siren] are bundled recordings: the
+/// native copies live in `android/app/src/main/res/raw` and
+/// `ios|macos/Runner/Sounds`, the previews in `assets/sounds`.
+enum PrayerNotificationSound {
+  system,
+  bedug,
+  siren,
+  silent;
+
+  /// The bundled file's name without its extension, or null for none.
+  String? get resource => switch (this) {
+    bedug || siren => 'prayer_$name',
+    system || silent => null,
+  };
+}
 
 /// Device-local preferences.
 class NotificationPreferences {
   final bool enabled;
   final Set<PrayerAlert> alerts;
   final int reminderMinutes;
-  final PrayerNotificationSound sound;
+
+  /// Each alert's sound; an alert missing here plays the system sound.
+  final Map<PrayerAlert, PrayerNotificationSound> sounds;
 
   const NotificationPreferences({
     this.enabled = true,
     this.alerts = defaultPrayerAlerts,
     this.reminderMinutes = 0,
-    this.sound = PrayerNotificationSound.system,
+    this.sounds = const {},
   });
 
   bool includes(PrayerAlert alert) => enabled && alerts.contains(alert);
+
+  PrayerNotificationSound soundOf(PrayerAlert alert) =>
+      sounds[alert] ?? PrayerNotificationSound.system;
 
   NotificationPreferences copyWith({
     bool? enabled,
     Set<PrayerAlert>? alerts,
     int? reminderMinutes,
-    PrayerNotificationSound? sound,
+    Map<PrayerAlert, PrayerNotificationSound>? sounds,
   }) => NotificationPreferences(
     enabled: enabled ?? this.enabled,
     alerts: Set.unmodifiable(alerts ?? this.alerts),
     reminderMinutes: reminderMinutes ?? this.reminderMinutes,
-    sound: sound ?? this.sound,
+    sounds: Map.unmodifiable(sounds ?? this.sounds),
   );
 }

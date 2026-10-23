@@ -175,7 +175,7 @@
   "sheetCollapsed": "مطوية",
   "sheetExpanded": "موسعة",
   "sheetFullScreen": "ملء الشاشة",
-  "notificationPreferences": "التذكيرات والصوت",
+  "notificationPreferences": "التذكير",
   "notificationsOff": "الإشعارات متوقفة",
   "beforePrayerReminder": "تذكير مسبق",
   "reminderOff": "متوقف",
@@ -187,9 +187,19 @@
       }
     }
   },
-  "notificationSound": "صوت الإشعار",
+  "notificationSound": "الأصوات",
   "systemNotificationSound": "صوت النظام",
   "silentNotificationSound": "صامت",
+  "bedugNotificationSound": "طبل البدوغ",
+  "sirenNotificationSound": "صفارة",
+  "soundPrayerChannel": "أوقات الصلاة ({sound})",
+  "@soundPrayerChannel": {
+    "placeholders": {
+      "sound": {
+        "type": "String"
+      }
+    }
+  },
   "prayerReminderBody": "صلاة {prayer} بعد {minutes} دقيقة",
   "@prayerReminderBody": {
     "placeholders": {

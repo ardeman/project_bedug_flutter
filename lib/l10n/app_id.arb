@@ -343,7 +343,7 @@
   "sheetCollapsed": "Diciutkan",
   "sheetExpanded": "Diperluas",
   "sheetFullScreen": "Layar penuh",
-  "notificationPreferences": "Pengaturan pengingat dan suara",
+  "notificationPreferences": "Pengingat",
   "notificationsOff": "Notifikasi nonaktif",
   "beforePrayerReminder": "Pengingat lebih awal",
   "reminderOff": "Nonaktif",
@@ -355,9 +355,19 @@
       }
     }
   },
-  "notificationSound": "Suara notifikasi",
+  "notificationSound": "Suara",
   "systemNotificationSound": "Suara sistem",
   "silentNotificationSound": "Senyap",
+  "bedugNotificationSound": "Bedug",
+  "sirenNotificationSound": "Sirene",
+  "soundPrayerChannel": "Waktu Salat ({sound})",
+  "@soundPrayerChannel": {
+    "placeholders": {
+      "sound": {
+        "type": "String"
+      }
+    }
+  },
   "prayerReminderBody": "{prayer} dalam {minutes} menit",
   "@prayerReminderBody": {
     "placeholders": {

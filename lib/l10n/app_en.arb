@@ -175,7 +175,7 @@
   "sheetCollapsed": "Collapsed",
   "sheetExpanded": "Expanded",
   "sheetFullScreen": "Full screen",
-  "notificationPreferences": "Reminders and sound",
+  "notificationPreferences": "Reminder",
   "notificationsOff": "Notifications off",
   "beforePrayerReminder": "Early reminder",
   "reminderOff": "Off",
@@ -187,9 +187,19 @@
       }
     }
   },
-  "notificationSound": "Notification sound",
+  "notificationSound": "Sounds",
   "systemNotificationSound": "System sound",
   "silentNotificationSound": "Silent",
+  "bedugNotificationSound": "Bedug",
+  "sirenNotificationSound": "Siren",
+  "soundPrayerChannel": "Prayer Times ({sound})",
+  "@soundPrayerChannel": {
+    "placeholders": {
+      "sound": {
+        "type": "String"
+      }
+    }
+  },
   "prayerReminderBody": "{prayer} in {minutes} minutes",
   "@prayerReminderBody": {
     "placeholders": {

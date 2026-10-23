@@ -7,6 +7,15 @@
         {
           "type": "new",
           "text": {
+            "en": "Each notification time can have its own sound: the system sound, a bedug drum, a siren or silence. Pick one under Notifications → Sounds and you hear it straight away.",
+            "id": "Setiap waktu notifikasi kini bisa punya suaranya sendiri: suara sistem, tabuhan bedug, sirene, atau senyap. Pilih di Notifikasi → Suara dan suaranya langsung terdengar.",
+            "ms": "Setiap waktu pemberitahuan kini boleh mempunyai bunyinya sendiri: bunyi sistem, paluan bedug, siren atau senyap. Pilih di Pemberitahuan → Bunyi dan bunyinya terus kedengaran.",
+            "ar": "يمكن الآن أن يكون لكل وقت إشعار صوته الخاص: صوت النظام، أو قرع طبل البدوغ، أو صفارة، أو الصمت. اختره من الإشعارات ← الأصوات وستسمعه فورًا."
+          }
+        },
+        {
+          "type": "new",
+          "text": {
             "en": "Notifications now cover every time on the prayer timeline: besides the five prayers, you can turn on alerts for the last third of the night, Imsak, sunrise and Dhuha. The settings page is now called Notifications.",
             "id": "Notifikasi kini mencakup semua waktu di jadwal salat: selain lima salat wajib, kamu bisa menyalakan pengingat untuk sepertiga malam terakhir, imsak, terbit, dan duha. Halaman pengaturannya kini bernama Notifikasi.",
             "ms": "Pemberitahuan kini meliputi setiap waktu dalam jadual solat: selain lima solat fardu, anda boleh menghidupkan peringatan untuk sepertiga malam terakhir, imsak, syuruk dan duha. Halaman tetapannya kini bernama Pemberitahuan.",

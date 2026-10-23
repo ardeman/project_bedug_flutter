@@ -1161,7 +1161,7 @@ abstract class AppLocalizations {
   /// No description provided for @notificationPreferences.
   ///
   /// In id, this message translates to:
-  /// **'Pengaturan pengingat dan suara'**
+  /// **'Pengingat'**
   String get notificationPreferences;
 
   /// No description provided for @notificationsOff.
@@ -1191,7 +1191,7 @@ abstract class AppLocalizations {
   /// No description provided for @notificationSound.
   ///
   /// In id, this message translates to:
-  /// **'Suara notifikasi'**
+  /// **'Suara'**
   String get notificationSound;
 
   /// No description provided for @systemNotificationSound.
@@ -1205,6 +1205,24 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Senyap'**
   String get silentNotificationSound;
+
+  /// No description provided for @bedugNotificationSound.
+  ///
+  /// In id, this message translates to:
+  /// **'Bedug'**
+  String get bedugNotificationSound;
+
+  /// No description provided for @sirenNotificationSound.
+  ///
+  /// In id, this message translates to:
+  /// **'Sirene'**
+  String get sirenNotificationSound;
+
+  /// No description provided for @soundPrayerChannel.
+  ///
+  /// In id, this message translates to:
+  /// **'Waktu Salat ({sound})'**
+  String soundPrayerChannel(String sound);
 
   /// No description provided for @prayerReminderBody.
   ///

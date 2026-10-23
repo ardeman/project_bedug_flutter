@@ -564,7 +564,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get sheetFullScreen => 'ملء الشاشة';
 
   @override
-  String get notificationPreferences => 'التذكيرات والصوت';
+  String get notificationPreferences => 'التذكير';
 
   @override
   String get notificationsOff => 'الإشعارات متوقفة';
@@ -581,13 +581,24 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get notificationSound => 'صوت الإشعار';
+  String get notificationSound => 'الأصوات';
 
   @override
   String get systemNotificationSound => 'صوت النظام';
 
   @override
   String get silentNotificationSound => 'صامت';
+
+  @override
+  String get bedugNotificationSound => 'طبل البدوغ';
+
+  @override
+  String get sirenNotificationSound => 'صفارة';
+
+  @override
+  String soundPrayerChannel(String sound) {
+    return 'أوقات الصلاة ($sound)';
+  }
 
   @override
   String prayerReminderBody(String prayer, int minutes) {

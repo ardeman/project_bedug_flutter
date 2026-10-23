@@ -3,6 +3,7 @@ import 'package:bedug/core/design/liquid_glass.dart';
 import 'package:bedug/core/design/platform_capabilities.dart';
 import 'package:bedug/core/services/kemenag_method.dart';
 import 'package:bedug/core/services/notification_preferences.dart';
+import 'package:bedug/core/services/notification_sound_preview.dart';
 import 'package:bedug/core/services/prayer_service.dart';
 import 'package:bedug/core/widgets/calculation_method_picker.dart';
 import 'package:bedug/features/settings/settings_screen.dart';
@@ -258,6 +259,9 @@ void main() {
   testWidgets(
     'notification controls save per-prayer, reminder and sound choices',
     (tester) async {
+      final previewed = <PrayerNotificationSound>[];
+      NotificationSoundPreview.debugOverride = previewed.add;
+      addTearDown(() => NotificationSoundPreview.debugOverride = null);
       final container = await _pumpSettings(tester);
       await tester.tap(find.text('Notifications'));
       await tester.pumpAndSettle();
@@ -274,20 +278,42 @@ void main() {
         await tester.pumpAndSettle();
         await tester.tap(find.text('10 minutes before').last);
         await tester.pumpAndSettle();
-        await tester.tap(find.text('System sound'));
+        await tester.tap(
+          find.descendant(
+            of: find.byKey(const ValueKey('notification-sound-dhuhr')),
+            matching: find.text('System sound'),
+          ),
+        );
       } else {
         await tester.tap(find.byType(M3EDropdownMenu<int>).last);
         await tester.pumpAndSettle();
         await tester.tap(find.text('10 minutes before').last);
         await tester.pumpAndSettle();
-        await tester.tap(find.byType(M3EDropdownMenu<PrayerNotificationSound>));
+        await tester.ensureVisible(
+          find.byKey(const ValueKey('notification-sound-dhuhr')),
+        );
+        await tester.pumpAndSettle();
+        await tester.tap(
+          find.descendant(
+            of: find.byKey(const ValueKey('notification-sound-dhuhr')),
+            matching: find.byType(M3EDropdownMenu<PrayerNotificationSound>),
+          ),
+        );
       }
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Silent').last);
+      await tester.tap(find.text('Bedug').last);
       await tester.pumpAndSettle();
       final notifications = container.read(settingsProvider).notifications;
       expect(notifications.reminderMinutes, 10);
-      expect(notifications.sound, PrayerNotificationSound.silent);
+      expect(
+        notifications.soundOf(PrayerAlert.dhuhr),
+        PrayerNotificationSound.bedug,
+      );
+      expect(previewed, [PrayerNotificationSound.bedug]);
+      expect(
+        find.byKey(const ValueKey('notification-sound-fajr')),
+        findsNothing,
+      );
       await tester.tap(find.byKey(const ValueKey('notifications-enabled')));
       await tester.pumpAndSettle();
       expect(container.read(settingsProvider).notifications.enabled, isFalse);

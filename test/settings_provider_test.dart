@@ -84,7 +84,7 @@ void main() {
     final container = await _container({});
     final notifier = container.read(settingsProvider.notifier);
     expect(
-      container.read(settingsProvider).notifications.sound,
+      container.read(settingsProvider).notifications.soundOf(PrayerAlert.fajr),
       PrayerNotificationSound.system,
     );
     await notifier.setNotifications(
@@ -92,7 +92,10 @@ void main() {
         enabled: false,
         alerts: {PrayerAlert.imsak, PrayerAlert.dhuhr},
         reminderMinutes: 15,
-        sound: PrayerNotificationSound.silent,
+        sounds: {
+          PrayerAlert.fajr: PrayerNotificationSound.bedug,
+          PrayerAlert.isha: PrayerNotificationSound.silent,
+        },
       ),
     );
     container.invalidate(settingsProvider);
@@ -100,9 +103,35 @@ void main() {
     expect(preferences.enabled, isFalse);
     expect(preferences.alerts, {PrayerAlert.imsak, PrayerAlert.dhuhr});
     expect(preferences.reminderMinutes, 15);
-    expect(preferences.sound, PrayerNotificationSound.silent);
+    expect(
+      preferences.soundOf(PrayerAlert.fajr),
+      PrayerNotificationSound.bedug,
+    );
+    expect(
+      preferences.soundOf(PrayerAlert.isha),
+      PrayerNotificationSound.silent,
+    );
+    expect(
+      preferences.soundOf(PrayerAlert.asr),
+      PrayerNotificationSound.system,
+    );
     await notifier.setThemeMode(2);
     expect(container.read(settingsProvider).notifications.reminderMinutes, 15);
+  });
+
+  test('a legacy silent setting silences every alert', () async {
+    final container = await _container({
+      'notification_sound': 'silent',
+      'notification_sound_fajr': 'siren',
+    });
+    final preferences = container.read(settingsProvider).notifications;
+    expect(
+      preferences.soundOf(PrayerAlert.fajr),
+      PrayerNotificationSound.siren,
+    );
+    for (final alert in PrayerAlert.values.skip(PrayerAlert.fajr.index + 1)) {
+      expect(preferences.soundOf(alert), PrayerNotificationSound.silent);
+    }
   });
 
   test(
@@ -115,7 +144,10 @@ void main() {
       });
       final preferences = container.read(settingsProvider).notifications;
       expect(preferences.reminderMinutes, 0);
-      expect(preferences.sound, PrayerNotificationSound.system);
+      expect(
+        preferences.soundOf(PrayerAlert.fajr),
+        PrayerNotificationSound.system,
+      );
       expect(preferences.alerts, {
         PrayerAlert.dhuhr,
         PrayerAlert.asr,

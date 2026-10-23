@@ -16,6 +16,7 @@ import '../../core/design/platform_capabilities.dart';
 import '../../core/providers/locale_provider.dart';
 import '../../core/services/notification_preferences.dart';
 import '../../core/services/notification_service.dart';
+import '../../core/services/notification_sound_preview.dart';
 import '../../core/services/prayer_service.dart';
 import '../../core/services/widget_appearance.dart';
 import '../../core/theme/app_tokens.dart';
@@ -245,7 +246,8 @@ class SettingsScreen extends ConsumerWidget {
   }
 }
 
-/// Prayer alerts use the platform sound or silent delivery, never a recording.
+/// Each prayer alert plays the system sound, a bundled bedug or siren, or
+/// nothing; never a recorded azan.
 class NotificationSettingsScreen extends ConsumerWidget {
   const NotificationSettingsScreen({super.key});
 
@@ -337,24 +339,48 @@ class NotificationSettingsScreen extends ConsumerWidget {
                     preferences.copyWith(reminderMinutes: minutes),
                   ),
                 ),
-                _ChoiceTile<PrayerNotificationSound>(
-                  icon: Icons.volume_up_outlined,
-                  title: l10n.notificationSound,
-                  value: preferences.sound,
-                  options: [
-                    GlassMenuOption(
-                      value: PrayerNotificationSound.system,
-                      label: l10n.systemNotificationSound,
+              ],
+            ),
+          if (preferences.enabled && preferences.alerts.isNotEmpty)
+            _Section(
+              title: l10n.notificationSound,
+              children: [
+                for (final alert in PrayerAlert.values)
+                  if (preferences.includes(alert))
+                    _ChoiceTile<PrayerNotificationSound>(
+                      key: ValueKey('notification-sound-${alert.name}'),
+                      icon:
+                          preferences.soundOf(alert) ==
+                              PrayerNotificationSound.silent
+                          ? Icons.volume_off_outlined
+                          : Icons.volume_up_outlined,
+                      title: nameOf(alert),
+                      value: preferences.soundOf(alert),
+                      options: [
+                        for (final sound in PrayerNotificationSound.values)
+                          GlassMenuOption(
+                            value: sound,
+                            label: switch (sound) {
+                              PrayerNotificationSound.system =>
+                                l10n.systemNotificationSound,
+                              PrayerNotificationSound.bedug =>
+                                l10n.bedugNotificationSound,
+                              PrayerNotificationSound.siren =>
+                                l10n.sirenNotificationSound,
+                              PrayerNotificationSound.silent =>
+                                l10n.silentNotificationSound,
+                            },
+                          ),
+                      ],
+                      onChanged: (sound) {
+                        NotificationSoundPreview.play(sound);
+                        notifier.setNotifications(
+                          preferences.copyWith(
+                            sounds: {...preferences.sounds, alert: sound},
+                          ),
+                        );
+                      },
                     ),
-                    GlassMenuOption(
-                      value: PrayerNotificationSound.silent,
-                      label: l10n.silentNotificationSound,
-                    ),
-                  ],
-                  onChanged: (sound) => notifier.setNotifications(
-                    preferences.copyWith(sound: sound),
-                  ),
-                ),
               ],
             ),
           if (NotificationService.supportsScheduling)
