@@ -5,6 +5,15 @@
       "date": null,
       "changes": [
         {
+          "type": "fixed",
+          "text": {
+            "en": "Indonesian prayer names follow KBBI spelling: Zuhur, Asar and Magrib.",
+            "id": "Nama salat dalam bahasa Indonesia kini mengikuti ejaan KBBI: Zuhur, Asar, dan Magrib.",
+            "ms": "Nama solat dalam bahasa Indonesia kini mengikut ejaan KBBI: Zuhur, Asar dan Magrib.",
+            "ar": "أسماء الصلوات بالإندونيسية تتبع الآن إملاء قاموس KBBI: Zuhur وAsar وMagrib."
+          }
+        },
+        {
           "type": "new",
           "text": {
             "en": "Lock screen widgets on iPhone and iPad: a countdown ring, the next prayer with its time and countdown, an inline time above the clock, and today's prayers either as a named grid with a countdown or as a strip of each time's sky whose bar fills as the next prayer nears.",
@@ -98,7 +107,7 @@
           "type": "improved",
           "text": {
             "en": "The analog countdown on home screen widgets shows the sky of the coming prayer: sunrise for Fajr, sun for Dhuhr and Asr, sunset for Maghrib and moon and stars for Isha.",
-            "id": "Hitung mundur analog di widget layar utama kini menampilkan langit salat berikutnya: matahari terbit untuk Subuh, matahari untuk Dzuhur dan Ashar, matahari terbenam untuk Maghrib, serta bulan dan bintang untuk Isya.",
+            "id": "Hitung mundur analog di widget layar utama kini menampilkan langit salat berikutnya: matahari terbit untuk Subuh, matahari untuk Zuhur dan Asar, matahari terbenam untuk Magrib, serta bulan dan bintang untuk Isya.",
             "ms": "Kira detik analog pada widget skrin utama kini memaparkan langit solat seterusnya: matahari terbit untuk Subuh, matahari untuk Zohor dan Asar, matahari terbenam untuk Maghrib, serta bulan dan bintang untuk Isyak.",
             "ar": "يعرض العدّ التنازلي التناظري في أدوات الشاشة الرئيسية الآن سماء الصلاة القادمة: الشروق للفجر، والشمس للظهر والعصر، والغروب للمغرب، والقمر والنجوم للعشاء."
           }

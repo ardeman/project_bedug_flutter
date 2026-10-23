@@ -791,7 +791,7 @@ class _WidgetLayoutPreview extends StatelessWidget {
             accent,
             apple: PlatformCapabilities.isApple,
           ),
-          // WidgetKit shows the next prayer's sky; the preview's is Dzuhur.
+          // WidgetKit shows the next prayer's sky; the preview's is Dhuhr.
           child: PlatformCapabilities.isApple
               ? Icon(Icons.light_mode, size: diameter / 4, color: accent)
               : null,
@@ -1124,7 +1124,7 @@ class _AndroidWidgetCard extends StatelessWidget {
 }
 
 /// The dial `PrayerWidgetProvider.countdownDial` draws, in its 76-unit grid.
-/// Dzuhur's sun as the Android widget draws it in `PrayerWidgetProvider.kt`,
+/// Dhuhr's sun as the Android widget draws it in `PrayerWidgetProvider.kt`,
 /// in units of its 76-unit dial.
 void _paintSun(Canvas canvas, Offset center, double unit, Paint paint) {
   canvas.drawCircle(center, 5.5 * unit, paint..style = PaintingStyle.fill);
@@ -1178,7 +1178,7 @@ class _AndroidDialPainter extends CustomPainter {
     paint
       ..strokeWidth = 2
       ..color = accent;
-    // The widget shows the coming prayer's sky; the preview's is Dzuhur.
+    // The widget shows the coming prayer's sky; the preview's is Dhuhr.
     _paintSun(canvas, _center, 1, paint);
   }
 

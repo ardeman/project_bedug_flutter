@@ -40,13 +40,13 @@
   "lastThirdOfNightDescription": "Untuk tahajud sebelum Subuh hari ini, dihitung dari Magrib sebelumnya.",
   "@sunrise": {},
 
-  "dhuhr": "Dzuhur",
+  "dhuhr": "Zuhur",
   "@dhuhr": {},
 
-  "asr": "Ashar",
+  "asr": "Asar",
   "@asr": {},
 
-  "maghrib": "Maghrib",
+  "maghrib": "Magrib",
   "@maghrib": {},
 
   "isha": "Isya",
@@ -226,11 +226,11 @@
 
   "notifSubuh": "Waktu Subuh telah tiba",
   "@notifSubuh": {},
-  "notifDzuhur": "Waktu Dzuhur telah tiba",
+  "notifDzuhur": "Waktu Zuhur telah tiba",
   "@notifDzuhur": {},
-  "notifAshar": "Waktu Ashar telah tiba",
+  "notifAshar": "Waktu Asar telah tiba",
   "@notifAshar": {},
-  "notifMaghrib": "Waktu Maghrib telah tiba",
+  "notifMaghrib": "Waktu Magrib telah tiba",
   "@notifMaghrib": {},
   "notifIsya": "Waktu Isya telah tiba",
   "@notifIsya": {},

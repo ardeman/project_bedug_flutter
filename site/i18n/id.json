@@ -19,9 +19,9 @@
   },
   "prayers": {
     "fajr": "Subuh",
-    "dhuhr": "Dzuhur",
-    "asr": "Ashar",
-    "maghrib": "Maghrib",
+    "dhuhr": "Zuhur",
+    "asr": "Asar",
+    "maghrib": "Magrib",
     "isha": "Isya"
   },
   "next_prayer": "Salat berikutnya",
@@ -50,7 +50,7 @@
       {
         "icon": "clock",
         "title": "Jadwal salat akurat",
-        "body": "Kemenag RI sebagai bawaan, atau salah satu dari sembilan metode internasional seperti Muslim World League, ISNA dan Umm al-Qura, dengan Ashar mazhab Syafi'i atau Hanafi. Dilengkapi imsak, terbit, perkiraan awal duha, dan sepertiga malam terakhir."
+        "body": "Kemenag RI sebagai bawaan, atau salah satu dari sembilan metode internasional seperti Muslim World League, ISNA dan Umm al-Qura, dengan Asar mazhab Syafi'i atau Hanafi. Dilengkapi imsak, terbit, perkiraan awal duha, dan sepertiga malam terakhir."
       },
       {
         "icon": "bell",

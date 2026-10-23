@@ -67,13 +67,13 @@ class AppLocalizationsId extends AppLocalizations {
       'Untuk tahajud sebelum Subuh hari ini, dihitung dari Magrib sebelumnya.';
 
   @override
-  String get dhuhr => 'Dzuhur';
+  String get dhuhr => 'Zuhur';
 
   @override
-  String get asr => 'Ashar';
+  String get asr => 'Asar';
 
   @override
-  String get maghrib => 'Maghrib';
+  String get maghrib => 'Magrib';
 
   @override
   String get isha => 'Isya';
@@ -307,13 +307,13 @@ class AppLocalizationsId extends AppLocalizations {
   String get notifSubuh => 'Waktu Subuh telah tiba';
 
   @override
-  String get notifDzuhur => 'Waktu Dzuhur telah tiba';
+  String get notifDzuhur => 'Waktu Zuhur telah tiba';
 
   @override
-  String get notifAshar => 'Waktu Ashar telah tiba';
+  String get notifAshar => 'Waktu Asar telah tiba';
 
   @override
-  String get notifMaghrib => 'Waktu Maghrib telah tiba';
+  String get notifMaghrib => 'Waktu Magrib telah tiba';
 
   @override
   String get notifIsya => 'Waktu Isya telah tiba';

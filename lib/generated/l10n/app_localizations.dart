@@ -213,19 +213,19 @@ abstract class AppLocalizations {
   /// No description provided for @dhuhr.
   ///
   /// In id, this message translates to:
-  /// **'Dzuhur'**
+  /// **'Zuhur'**
   String get dhuhr;
 
   /// No description provided for @asr.
   ///
   /// In id, this message translates to:
-  /// **'Ashar'**
+  /// **'Asar'**
   String get asr;
 
   /// No description provided for @maghrib.
   ///
   /// In id, this message translates to:
-  /// **'Maghrib'**
+  /// **'Magrib'**
   String get maghrib;
 
   /// No description provided for @isha.
@@ -669,19 +669,19 @@ abstract class AppLocalizations {
   /// No description provided for @notifDzuhur.
   ///
   /// In id, this message translates to:
-  /// **'Waktu Dzuhur telah tiba'**
+  /// **'Waktu Zuhur telah tiba'**
   String get notifDzuhur;
 
   /// No description provided for @notifAshar.
   ///
   /// In id, this message translates to:
-  /// **'Waktu Ashar telah tiba'**
+  /// **'Waktu Asar telah tiba'**
   String get notifAshar;
 
   /// No description provided for @notifMaghrib.
   ///
   /// In id, this message translates to:
-  /// **'Waktu Maghrib telah tiba'**
+  /// **'Waktu Magrib telah tiba'**
   String get notifMaghrib;
 
   /// No description provided for @notifIsya.
