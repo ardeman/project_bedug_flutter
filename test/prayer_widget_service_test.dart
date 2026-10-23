@@ -133,6 +133,14 @@ void main() {
     );
   });
 
+  test('Fajr ends at sunrise and other prayers carry no end', () {
+    final earlier = build(schedule: times, now: times.dhuhr)['earlier'] as List;
+    final fajr = earlier.first as Map<String, Object>;
+    expect(fajr['key'], 'fajr');
+    expect(fajr['end'], times.sunrise.millisecondsSinceEpoch);
+    expect((earlier[1] as Map).containsKey('end'), isFalse);
+  });
+
   test('at a prayer boundary the next prayer is strictly in the future', () {
     final prayers =
         build(schedule: times, now: times.isha)['prayers']

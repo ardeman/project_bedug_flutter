@@ -204,30 +204,30 @@
       },
       "extractionState": "manual"
     },
-    "Show next prayer": {
+    "Show current prayer": {
       "localizations": {
         "id": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tampilkan salat berikutnya"
+            "value": "Tampilkan salat saat ini"
           }
         },
         "ms": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tunjukkan solat seterusnya"
+            "value": "Tunjukkan solat semasa"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "عرض الصلاة التالية"
+            "value": "عرض الصلاة الحالية"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Show next prayer"
+            "value": "Show current prayer"
           }
         }
       },

@@ -7,10 +7,10 @@
         {
           "type": "new",
           "text": {
-            "en": "The next prayer widget on iPhone and iPad can show the current prayer instead: edit the widget and turn off Show next prayer, and it names the prayer whose time it is now above the next one's countdown.",
-            "id": "Widget salat berikutnya di iPhone dan iPad kini bisa menampilkan salat saat ini: sunting widget dan matikan Tampilkan salat berikutnya, maka widget menyebut salat yang waktunya sedang berlangsung di atas hitung mundur salat berikutnya.",
-            "ms": "Widget solat seterusnya pada iPhone dan iPad kini boleh memaparkan solat semasa: sunting widget dan matikan Tunjukkan solat seterusnya, lalu widget menamakan solat yang waktunya sedang berlangsung di atas kira detik solat seterusnya.",
-            "ar": "يمكن لأداة الصلاة التالية على iPhone وiPad أن تعرض الصلاة الحالية بدلًا منها: حرّر الأداة وأوقف عرض الصلاة التالية، فتُظهر الصلاة التي حان وقتها فوق العد التنازلي للصلاة التالية."
+            "en": "The next prayer widget on iPhone and iPad can show the current prayer instead: edit the widget and turn on Show current prayer, and it names the prayer whose time it is now above the next one's countdown. Subuh ends at sunrise, so until Zuhur the widget shows the next prayer.",
+            "id": "Widget salat berikutnya di iPhone dan iPad kini bisa menampilkan salat saat ini: sunting widget dan nyalakan Tampilkan salat saat ini, maka widget menyebut salat yang waktunya sedang berlangsung di atas hitung mundur salat berikutnya. Waktu subuh berakhir saat matahari terbit, jadi hingga zuhur widget menampilkan salat berikutnya.",
+            "ms": "Widget solat seterusnya pada iPhone dan iPad kini boleh memaparkan solat semasa: sunting widget dan hidupkan Tunjukkan solat semasa, lalu widget menamakan solat yang waktunya sedang berlangsung di atas kira detik solat seterusnya. Waktu subuh berakhir ketika matahari terbit, jadi sehingga zohor widget memaparkan solat seterusnya.",
+            "ar": "يمكن لأداة الصلاة التالية على iPhone وiPad أن تعرض الصلاة الحالية بدلًا منها: حرّر الأداة وفعّل عرض الصلاة الحالية، فتُظهر الصلاة التي حان وقتها فوق العد التنازلي للصلاة التالية. ينتهي وقت الفجر عند الشروق، فتعرض الأداة الصلاة التالية حتى الظهر."
           }
         },
         {

@@ -6,7 +6,10 @@ struct Prayer: Decodable {
     let key: String?
     let name: String
     let time: Double
+    /// When this prayer's time ends early (Fajr at sunrise); otherwise the next prayer.
+    let end: Double?
     var date: Date { Date(timeIntervalSince1970: time / 1000) }
+    var endDate: Date? { end.map { Date(timeIntervalSince1970: $0 / 1000) } }
 
     // The sky at this prayer's time, shown in the countdown dial.
     var symbol: String {
@@ -50,21 +53,25 @@ struct PrayerEntry: TimelineEntry {
     let date: Date
     let data: PrayerWidgetData?
     let prayer: Prayer?
-    /// Off shows the prayer whose time it is now, with the next one beneath.
-    var showNext = true
+    /// On shows the prayer whose time it is now, with the next one beneath.
+    var showCurrent = false
 
-    /// The prayer whose time has come, if the cache reaches back to it.
+    /// The prayer whose time has come, if the cache reaches back to it and its
+    /// time hasn't ended (none between sunrise and Dhuhr).
     var current: Prayer? {
-        ((data?.earlier ?? []) + (data?.prayers ?? [])).last(where: { $0.date <= date })
+        guard let latest = ((data?.earlier ?? []) + (data?.prayers ?? []))
+            .last(where: { $0.date <= date }) else { return nil }
+        if let end = latest.endDate, end <= date { return nil }
+        return latest
     }
 
     /// The prayer to headline: the next one, or the current one when chosen.
     var headline: Prayer? {
-        showNext ? prayer : current ?? prayer
+        showCurrent ? current ?? prayer : prayer
     }
 
     /// True when the headline is the current prayer rather than the next.
-    var showsCurrent: Bool { !showNext && current != nil }
+    var showsCurrent: Bool { showCurrent && current != nil }
 
     var upcoming: [Prayer] {
         Array((data?.prayers ?? []).filter { $0.date > date }.prefix(5))
@@ -108,21 +115,26 @@ struct PrayerProvider: TimelineProvider {
         completion(Self.timeline())
     }
 
-    static func timeline(showNext: Bool = true) -> Timeline<PrayerEntry> {
+    static func timeline(showCurrent: Bool = false) -> Timeline<PrayerEntry> {
         let now = Date.now
         let data = PrayerWidgetData.load()
-        var entries = [entry(at: now, data: data, showNext: showNext)]
+        var entries = [entry(at: now, data: data, showCurrent: showCurrent)]
         // At each boundary select the following prayer; the final entry expires
         // the schedule instead of repeating yesterday's times indefinitely.
-        for prayer in data?.prayers ?? [] where prayer.date > now {
-            entries.append(entry(at: prayer.date, data: data, showNext: showNext))
+        var boundaries = (data?.prayers ?? []).map(\.date)
+        // The current prayer can end before the next begins (Fajr at sunrise).
+        if showCurrent {
+            boundaries += ((data?.earlier ?? []) + (data?.prayers ?? [])).compactMap(\.endDate)
+        }
+        for date in Set(boundaries).sorted() where date > now {
+            entries.append(entry(at: date, data: data, showCurrent: showCurrent))
         }
         return Timeline(entries: entries, policy: .never)
     }
 
-    static func entry(at date: Date, data: PrayerWidgetData?, showNext: Bool = true) -> PrayerEntry {
+    static func entry(at date: Date, data: PrayerWidgetData?, showCurrent: Bool = false) -> PrayerEntry {
         PrayerEntry(date: date, data: data,
-                    prayer: data?.prayers.first(where: { $0.date > date }), showNext: showNext)
+                    prayer: data?.prayers.first(where: { $0.date > date }), showCurrent: showCurrent)
     }
 
     private func entry(at date: Date, data: PrayerWidgetData?) -> PrayerEntry {
@@ -135,8 +147,8 @@ struct PrayerWidgetIntent: WidgetConfigurationIntent {
     static let title: LocalizedStringResource = "Next prayer"
     static let description = IntentDescription("Counts down to the next prayer, with its time and your city.")
 
-    @Parameter(title: "Show next prayer", default: true)
-    var showNext: Bool
+    @Parameter(title: "Show current prayer", default: false)
+    var showCurrent: Bool
 }
 
 struct ConfigurablePrayerProvider: AppIntentTimelineProvider {
@@ -145,11 +157,11 @@ struct ConfigurablePrayerProvider: AppIntentTimelineProvider {
     }
 
     func snapshot(for configuration: PrayerWidgetIntent, in context: Context) async -> PrayerEntry {
-        PrayerProvider.entry(at: .now, data: PrayerWidgetData.load(), showNext: configuration.showNext)
+        PrayerProvider.entry(at: .now, data: PrayerWidgetData.load(), showCurrent: configuration.showCurrent)
     }
 
     func timeline(for configuration: PrayerWidgetIntent, in context: Context) async -> Timeline<PrayerEntry> {
-        PrayerProvider.timeline(showNext: configuration.showNext)
+        PrayerProvider.timeline(showCurrent: configuration.showCurrent)
     }
 }
 

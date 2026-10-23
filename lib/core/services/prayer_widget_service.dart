@@ -54,6 +54,9 @@ Map<String, Object> buildPrayerWidgetData({
           'key': prayer.name,
           'name': name,
           'time': time.millisecondsSinceEpoch,
+          // Fajr's time ends at sunrise, not at Dhuhr.
+          if (prayer == Prayer.fajr)
+            'end': daily.sunrise.millisecondsSinceEpoch,
         };
         if (!time.isAfter(now)) {
           if (previousPrayer == null || time.isAfter(previousPrayer)) {
