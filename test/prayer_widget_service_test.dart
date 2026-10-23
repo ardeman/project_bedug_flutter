@@ -116,7 +116,7 @@ void main() {
     expect(jsonEncode(data), isNot(contains('latitude')));
   });
 
-  test('earlier lists only today\'s passed prayers', () {
+  test('earlier lists today\'s passed prayers and the latest one', () {
     final data = build(schedule: times, now: times.asr);
     final earlier = data['earlier'] as List<Map<String, Object>>;
     expect(earlier.map((p) => p['key']), ['fajr', 'dhuhr', 'asr']);
@@ -124,7 +124,13 @@ void main() {
       (data['prayers'] as List<Map<String, Object>>).first['key'],
       'maghrib',
     );
-    expect(build(schedule: times, now: date)['earlier'], isEmpty);
+    // After midnight, yesterday's Isha is still the current prayer.
+    final overnight = build(schedule: times, now: date)['earlier'] as List;
+    expect(overnight.map((p) => p['key']), ['isha']);
+    expect(
+      (overnight.single as Map)['time'] as int,
+      lessThan(date.millisecondsSinceEpoch),
+    );
   });
 
   test('at a prayer boundary the next prayer is strictly in the future', () {

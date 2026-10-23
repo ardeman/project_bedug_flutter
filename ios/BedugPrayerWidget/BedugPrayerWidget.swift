@@ -1,3 +1,4 @@
+import AppIntents
 import SwiftUI
 import WidgetKit
 
@@ -49,6 +50,21 @@ struct PrayerEntry: TimelineEntry {
     let date: Date
     let data: PrayerWidgetData?
     let prayer: Prayer?
+    /// Off shows the prayer whose time it is now, with the next one beneath.
+    var showNext = true
+
+    /// The prayer whose time has come, if the cache reaches back to it.
+    var current: Prayer? {
+        ((data?.earlier ?? []) + (data?.prayers ?? [])).last(where: { $0.date <= date })
+    }
+
+    /// The prayer to headline: the next one, or the current one when chosen.
+    var headline: Prayer? {
+        showNext ? prayer : current ?? prayer
+    }
+
+    /// True when the headline is the current prayer rather than the next.
+    var showsCurrent: Bool { !showNext && current != nil }
 
     var upcoming: [Prayer] {
         Array((data?.prayers ?? []).filter { $0.date > date }.prefix(5))
@@ -89,20 +105,51 @@ struct PrayerProvider: TimelineProvider {
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<PrayerEntry>) -> Void) {
+        completion(Self.timeline())
+    }
+
+    static func timeline(showNext: Bool = true) -> Timeline<PrayerEntry> {
         let now = Date.now
         let data = PrayerWidgetData.load()
-        var entries = [entry(at: now, data: data)]
+        var entries = [entry(at: now, data: data, showNext: showNext)]
         // At each boundary select the following prayer; the final entry expires
         // the schedule instead of repeating yesterday's times indefinitely.
         for prayer in data?.prayers ?? [] where prayer.date > now {
-            entries.append(entry(at: prayer.date, data: data))
+            entries.append(entry(at: prayer.date, data: data, showNext: showNext))
         }
-        completion(Timeline(entries: entries, policy: .never))
+        return Timeline(entries: entries, policy: .never)
+    }
+
+    static func entry(at date: Date, data: PrayerWidgetData?, showNext: Bool = true) -> PrayerEntry {
+        PrayerEntry(date: date, data: data,
+                    prayer: data?.prayers.first(where: { $0.date > date }), showNext: showNext)
     }
 
     private func entry(at date: Date, data: PrayerWidgetData?) -> PrayerEntry {
-        PrayerEntry(date: date, data: data,
-                    prayer: data?.prayers.first(where: { $0.date > date }))
+        Self.entry(at: date, data: data)
+    }
+}
+
+/// The widget's Edit options: which prayer it headlines.
+struct PrayerWidgetIntent: WidgetConfigurationIntent {
+    static let title: LocalizedStringResource = "Next prayer"
+    static let description = IntentDescription("Counts down to the next prayer, with its time and your city.")
+
+    @Parameter(title: "Show next prayer", default: true)
+    var showNext: Bool
+}
+
+struct ConfigurablePrayerProvider: AppIntentTimelineProvider {
+    func placeholder(in context: Context) -> PrayerEntry {
+        PrayerEntry(date: .now, data: nil, prayer: nil)
+    }
+
+    func snapshot(for configuration: PrayerWidgetIntent, in context: Context) async -> PrayerEntry {
+        PrayerProvider.entry(at: .now, data: PrayerWidgetData.load(), showNext: configuration.showNext)
+    }
+
+    func timeline(for configuration: PrayerWidgetIntent, in context: Context) async -> Timeline<PrayerEntry> {
+        PrayerProvider.timeline(showNext: configuration.showNext)
     }
 }
 
@@ -131,7 +178,7 @@ struct PrayerWidgetView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: family == .systemLarge ? 14 : 6) {
             HStack {
-                Text(entry.data?.title ?? "Bedug")
+                Text(entry.showsCurrent ? AppLanguage.string("Now") : entry.data?.title ?? "Bedug")
                 if family != .systemSmall {
                     Spacer(minLength: 8)
                     Text(entry.data?.location ?? "")
@@ -142,9 +189,9 @@ struct PrayerWidgetView: View {
                 if family == .systemSmall {
                     HStack(spacing: 8) {
                         VStack(alignment: .leading, spacing: 4) {
-                            Text(prayer.name).font(.headline)
+                            Text(entry.headline?.name ?? prayer.name).font(.headline)
                                 .foregroundStyle(accent).widgetAccentable()
-                            Text(prayer.date, style: .time).font(.caption)
+                            timeLine(for: prayer).font(.caption)
                         }
                         .lineLimit(1).minimumScaleFactor(0.65)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -160,9 +207,9 @@ struct PrayerWidgetView: View {
                         if entry.data?.showAnalog != false {
                             countdownDial(for: prayer, diameter: 144)
                         }
-                        Text(prayer.name).font(.title.bold())
+                        Text(entry.headline?.name ?? prayer.name).font(.title.bold())
                             .foregroundStyle(accent).widgetAccentable()
-                        Text(prayer.date, style: .time).font(.title3)
+                        timeLine(for: prayer).font(.title3)
                         Text(timerInterval: entry.date...prayer.date, countsDown: true)
                             .font(.system(.largeTitle, design: .rounded).bold().monospacedDigit())
                     }
@@ -171,9 +218,10 @@ struct PrayerWidgetView: View {
                 } else {
                     HStack(spacing: 16) {
                         VStack(alignment: .leading, spacing: 4) {
-                            Text(prayer.name).font(family == .systemLarge ? .title.bold() : .title2.bold())
+                            Text(entry.headline?.name ?? prayer.name)
+                                .font(family == .systemLarge ? .title.bold() : .title2.bold())
                                 .foregroundStyle(accent).widgetAccentable()
-                            Text(prayer.date, style: .time).font(.callout)
+                            timeLine(for: prayer).font(.callout)
                             Text(timerInterval: entry.date...prayer.date, countsDown: true)
                                 .font(.title2.monospacedDigit())
                         }
@@ -235,6 +283,13 @@ struct PrayerWidgetView: View {
         }
         .environment(\.locale, Locale(identifier: entry.data?.locale ?? "id"))
         .environment(\.layoutDirection, entry.data?.locale == "ar" ? .rightToLeft : .leftToRight)
+    }
+
+    /// The next prayer's time, named when the headline is the current prayer.
+    private func timeLine(for prayer: Prayer) -> Text {
+        entry.showsCurrent
+            ? Text("\(prayer.name) · \(Text(prayer.date, style: .time))")
+            : Text(prayer.date, style: .time)
     }
 
     private func countdownDial(for prayer: Prayer, diameter: CGFloat = 70) -> some View {
@@ -302,15 +357,25 @@ struct LockScreenPrayerView: View {
                         }
                         VStack(alignment: .leading, spacing: 0) {
                             // Unlike a bare countdown, the first line also names the time.
-                            Text("\(prayer.name) · \(Text(prayer.date, style: .time))")
-                                .font(.headline).widgetAccentable()
+                            if let current = entry.current, entry.showsCurrent {
+                                Text(current.name).font(.headline).widgetAccentable()
+                            } else {
+                                Text("\(prayer.name) · \(Text(prayer.date, style: .time))")
+                                    .font(.headline).widgetAccentable()
+                            }
                             // Timer text doesn't shrink to fit, so it uses a size that fits
                             // a multi-hour countdown. It claims the full width; pin it leading.
                             Text(timerInterval: entry.date...prayer.date, countsDown: true)
                                 .font(.body.weight(.semibold).monospacedDigit())
                                 .multilineTextAlignment(.leading)
-                            Text(entry.shortLocation).font(.caption)
-                                .foregroundStyle(.secondary)
+                            Group {
+                                if entry.showsCurrent {
+                                    Text("\(prayer.name) · \(Text(prayer.date, style: .time))")
+                                } else {
+                                    Text(entry.shortLocation)
+                                }
+                            }
+                            .font(.caption).foregroundStyle(.secondary)
                         }
                         .lineLimit(1).minimumScaleFactor(0.7)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -510,7 +575,8 @@ struct BedugPrayerWidget: Widget {
     let kind = "BedugPrayerWidget"
 
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: PrayerProvider()) { entry in
+        AppIntentConfiguration(kind: kind, intent: PrayerWidgetIntent.self,
+                               provider: ConfigurablePrayerProvider()) { entry in
             PrayerWidgetFamilyView(entry: entry)
         }
         .configurationDisplayName(AppLanguage.string("Next prayer"))

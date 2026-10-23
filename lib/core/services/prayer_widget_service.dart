@@ -25,10 +25,12 @@ Map<String, Object> buildPrayerWidgetData({
   WidgetAppearance appearance = const WidgetAppearance(),
 }) {
   final prayers = <Map<String, Object>>[];
-  // Today's passed prayers let the lock screen schedule show the whole day.
+  // Today's passed prayers let the lock screen schedule show the whole day,
+  // and the latest passed one names the current prayer, even after midnight.
   final earlier = <Map<String, Object>>[];
   var intervalStart = now;
   DateTime? previousPrayer;
+  Map<String, Object>? previousEntry;
   if (times != null) {
     // Include yesterday when finding the start of the overnight countdown.
     for (var day = -1; day < 7; day++) {
@@ -56,6 +58,7 @@ Map<String, Object> buildPrayerWidgetData({
         if (!time.isAfter(now)) {
           if (previousPrayer == null || time.isAfter(previousPrayer)) {
             previousPrayer = time;
+            previousEntry = entry;
           }
           if (day == 0) earlier.add(entry);
           continue;
@@ -65,6 +68,9 @@ Map<String, Object> buildPrayerWidgetData({
       }
     }
     intervalStart = previousPrayer ?? now;
+    if (previousEntry != null && !earlier.contains(previousEntry)) {
+      earlier.insert(0, previousEntry);
+    }
   }
   prayers.sort((a, b) => (a['time'] as int).compareTo(b['time'] as int));
   return {
