@@ -455,14 +455,17 @@ struct LockScreenScheduleView: View {
     private func cell(for item: Prayer, next: Prayer) -> some View {
         let isNext = item.date == next.date
         let passed = item.date <= entry.date
-        return HStack(spacing: 4) {
+        return HStack(spacing: 2) {
             Text(item.name)
             Spacer(minLength: 0)
-            Text(item.date, style: .time).monospacedDigit()
+            // A formatted time, unlike a `.time` style, sizes to its text instead
+            // of reserving room, so the name and time fit a half-width cell.
+            Text(item.date, format: .dateTime.hour(.defaultDigits(amPM: .narrow)).minute())
+                .monospacedDigit()
         }
         .font(.caption.weight(isNext ? .bold : .medium))
-        .lineLimit(1).minimumScaleFactor(0.8)
-        .padding(.horizontal, 6)
+        .lineLimit(1).minimumScaleFactor(0.7)
+        .padding(.horizontal, 4)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background {
             if isNext {
