@@ -5,6 +5,15 @@
       "date": null,
       "changes": [
         {
+          "type": "new",
+          "text": {
+            "en": "Lock screen widgets on iPhone and iPad: a countdown ring, the next prayer with its countdown, an inline time above the clock and the next three prayers.",
+            "id": "Widget layar kunci di iPhone dan iPad: cincin hitung mundur, salat berikutnya dengan hitung mundurnya, waktu sebaris di atas jam, dan tiga salat berikutnya.",
+            "ms": "Widget skrin kunci pada iPhone dan iPad: cincin kira detik, solat seterusnya dengan kira detiknya, waktu sebaris di atas jam dan tiga solat seterusnya.",
+            "ar": "أدوات شاشة القفل على iPhone وiPad: حلقة عد تنازلي، والصلاة التالية مع عدها التنازلي، ووقت مضمّن فوق الساعة، والصلوات الثلاث التالية."
+          }
+        },
+        {
           "type": "fixed",
           "text": {
             "en": "The Qibla compass guide keeps long hints neatly aligned, with each icon beside the start of its text.",

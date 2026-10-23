@@ -63,6 +63,8 @@ On iOS and Android, open Bedug once to load a location, then add **Bedug** from 
 
 In **Settings → Widget Style**, preview small, medium/wide and large layouts, show or hide the analog dial, and show or hide the five-prayer schedule. Choices are saved automatically and refresh all home screen widgets. Large iPhone widgets switch to a centered countdown with a bigger dial when the prayer schedule is hidden. Previews use sample times; widget size is selected on the home screen.
 
+On iPhone and iPad lock screens, add **Bedug** while customizing the lock screen: a circular countdown ring with the next prayer's time, a rectangular next prayer with its live countdown and city (the ring follows the analog dial setting), an inline prayer and time above the clock, and a rectangular list of the next three prayers. They share the home screen widgets' data and render in the system's lock screen tint. Android phones have no lock screen widgets, and macOS has none either.
+
 For iOS signing, register the App Group `group.com.ardeman.bedug` with your Apple developer team and enable it for both `com.ardeman.bedug` (Runner) and `com.ardeman.bedug.PrayerWidget` (BedugPrayerWidget). Entitlements and the embedded WidgetKit target are already configured. The widget version follows Flutter's build name and number. The extension needs no CocoaPods or Flutter engine.
 
 Device checks before shipping: add/remove and resize widgets; check prayer transitions and expiry while the app is closed; change city, calculation method, language and theme; test Arabic, light/dark and iOS tinted/clear modes. On Android also check reboot, clock changes and Doze; transition alarms are inexact and can be delayed by the OS.

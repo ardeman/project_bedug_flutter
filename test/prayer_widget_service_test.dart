@@ -224,9 +224,12 @@ void main() {
         'setAppGroupId',
         'saveWidgetData',
         'updateWidget',
+        'updateWidget',
       ]);
       expect(calls[3].arguments['data'], jsonEncode({'location': 'new'}));
-      expect(calls.last.arguments['ios'], 'BedugPrayerWidget');
+      // Home screen and lock screen schedule widgets are separate kinds.
+      expect(calls[4].arguments['ios'], 'BedugPrayerWidget');
+      expect(calls.last.arguments['ios'], 'BedugScheduleWidget');
     },
   );
 }

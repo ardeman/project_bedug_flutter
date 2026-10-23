@@ -243,15 +243,169 @@ struct PrayerWidgetView: View {
     }
 }
 
-@main
+// Lock screen accessories render in the system's vibrant or accented style,
+// so they use `.primary` and rely on `widgetAccentable()` for emphasis.
+struct LockScreenPrayerView: View {
+    let entry: PrayerEntry
+    @Environment(\.widgetFamily) private var family
+
+    var body: some View {
+        Group {
+            if let prayer = entry.prayer {
+                switch family {
+                case .accessoryCircular:
+                    ZStack {
+                        countdownRing(for: prayer)
+                        VStack(spacing: 0) {
+                            Image(systemName: prayer.symbol).font(.caption)
+                                .widgetAccentable()
+                            Text(prayer.date, style: .time)
+                                .font(.caption2.monospacedDigit())
+                                .lineLimit(1).minimumScaleFactor(0.6)
+                        }
+                        // Keep the time inside the ring's stroke.
+                        .padding(8)
+                    }
+                case .accessoryInline:
+                    Label {
+                        Text("\(prayer.name) \(Text(prayer.date, style: .time))")
+                    } icon: {
+                        Image(systemName: prayer.symbol)
+                    }
+                default:
+                    HStack(spacing: 8) {
+                        if entry.data?.showAnalog != false {
+                            ZStack {
+                                countdownRing(for: prayer)
+                                Image(systemName: prayer.symbol).font(.body)
+                                    .widgetAccentable()
+                            }
+                            .frame(width: 44, height: 44)
+                        }
+                        VStack(alignment: .leading, spacing: 0) {
+                            Text(prayer.name).font(.headline).widgetAccentable()
+                            // Timer text claims the full width; pin it to the leading edge.
+                            Text(timerInterval: entry.date...prayer.date, countsDown: true)
+                                .font(.title3.bold().monospacedDigit())
+                                .multilineTextAlignment(.leading)
+                            Text(entry.data?.location ?? "").font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        .lineLimit(1).minimumScaleFactor(0.7)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                }
+            } else {
+                Text(entry.data?.refresh ?? "Bedug").font(.caption)
+                    .minimumScaleFactor(0.7)
+            }
+        }
+        .containerBackground(for: .widget) {
+            if family == .accessoryCircular { AccessoryWidgetBackground() } else { Color.clear }
+        }
+        .lockScreenEnvironment(entry.data)
+    }
+
+    private func countdownRing(for prayer: Prayer) -> some View {
+        ProgressView(timerInterval: min(entry.countdownStart, entry.date)...prayer.date,
+                     countsDown: true) {
+            EmptyView()
+        } currentValueLabel: {
+            EmptyView()
+        }
+        .progressViewStyle(.circular).widgetAccentable()
+        .accessibilityLabel(Text(timerInterval: entry.date...prayer.date, countsDown: true))
+    }
+}
+
+struct LockScreenScheduleView: View {
+    let entry: PrayerEntry
+
+    var body: some View {
+        Group {
+            if entry.prayer != nil {
+                // Three rows fill the rectangular accessory's height.
+                VStack(spacing: 0) {
+                    ForEach(Array(entry.upcoming.prefix(3).enumerated()), id: \.offset) { index, item in
+                        HStack(spacing: 4) {
+                            Image(systemName: item.symbol).font(.caption2)
+                                .frame(width: 16)
+                            Text(item.name)
+                            Spacer(minLength: 4)
+                            Text(item.date, style: .time).monospacedDigit()
+                        }
+                        .font(.subheadline.weight(index == 0 ? .bold : .regular))
+                        .lineLimit(1).minimumScaleFactor(0.7)
+                        .padding(.horizontal, 6)
+                        .frame(maxHeight: .infinity)
+                        .overlay {
+                            if index == 0 {
+                                RoundedRectangle(cornerRadius: 6).strokeBorder(lineWidth: 1)
+                                    .widgetAccentable()
+                            }
+                        }
+                    }
+                }
+            } else {
+                Text(entry.data?.refresh ?? "Bedug").font(.caption)
+                    .minimumScaleFactor(0.7)
+            }
+        }
+        .containerBackground(for: .widget) { Color.clear }
+        .lockScreenEnvironment(entry.data)
+    }
+}
+
+private extension View {
+    func lockScreenEnvironment(_ data: PrayerWidgetData?) -> some View {
+        environment(\.locale, Locale(identifier: data?.locale ?? "id"))
+            .environment(\.layoutDirection, data?.locale == "ar" ? .rightToLeft : .leftToRight)
+    }
+}
+
 struct BedugPrayerWidget: Widget {
     let kind = "BedugPrayerWidget"
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: PrayerProvider()) { entry in
-            PrayerWidgetView(entry: entry)
+            PrayerWidgetFamilyView(entry: entry)
         }
         .configurationDisplayName("Bedug")
-        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
+        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge,
+                            .accessoryCircular, .accessoryRectangular, .accessoryInline])
+    }
+}
+
+struct PrayerWidgetFamilyView: View {
+    let entry: PrayerEntry
+    @Environment(\.widgetFamily) private var family
+
+    var body: some View {
+        switch family {
+        case .accessoryCircular, .accessoryRectangular, .accessoryInline:
+            LockScreenPrayerView(entry: entry)
+        default:
+            PrayerWidgetView(entry: entry)
+        }
+    }
+}
+
+struct BedugScheduleWidget: Widget {
+    let kind = "BedugScheduleWidget"
+
+    var body: some WidgetConfiguration {
+        StaticConfiguration(kind: kind, provider: PrayerProvider()) { entry in
+            LockScreenScheduleView(entry: entry)
+        }
+        .configurationDisplayName("Bedug")
+        .supportedFamilies([.accessoryRectangular])
+    }
+}
+
+@main
+struct BedugWidgets: WidgetBundle {
+    var body: some Widget {
+        BedugPrayerWidget()
+        BedugScheduleWidget()
     }
 }

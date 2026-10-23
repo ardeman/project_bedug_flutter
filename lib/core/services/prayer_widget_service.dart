@@ -102,6 +102,10 @@ class PrayerWidgetService {
           androidName: 'PrayerWidgetProvider',
           iOSName: 'BedugPrayerWidget',
         );
+        if (defaultTargetPlatform == TargetPlatform.iOS) {
+          // The lock screen schedule is a separate WidgetKit kind.
+          await HomeWidget.updateWidget(iOSName: 'BedugScheduleWidget');
+        }
       } catch (error) {
         // A widget failure must not prevent prayer times from loading.
         debugPrint('Prayer widget update failed: $error');
