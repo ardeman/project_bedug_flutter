@@ -191,6 +191,19 @@ void main() {
       find.text('Point the top of the screen north, then follow the arrow.'),
       findsOneWidget,
     );
+
+    // Wrapped guide lines share one start edge, with each icon beside the
+    // first line of its text.
+    final faceNorth = find.text(
+      'Point the top of the screen north, then follow the arrow.',
+    );
+    final findNorth = find.text(
+      'Find north with a phone compass, a map app, or the sun.',
+    );
+    expect(tester.getTopLeft(faceNorth).dx, tester.getTopLeft(findNorth).dx);
+    final mapIcon = tester.getRect(find.byIcon(Icons.map_outlined));
+    final findNorthRect = tester.getRect(findNorth);
+    expect(mapIcon.top, lessThan(findNorthRect.top + mapIcon.height));
   });
 
   for (final size in [const Size(320, 568), const Size(375, 667)]) {

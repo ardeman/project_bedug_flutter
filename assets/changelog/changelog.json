@@ -5,6 +5,15 @@
       "date": null,
       "changes": [
         {
+          "type": "fixed",
+          "text": {
+            "en": "The Qibla compass guide keeps long hints neatly aligned, with each icon beside the start of its text.",
+            "id": "Panduan kompas kiblat menjaga petunjuk yang panjang tetap rapi, dengan setiap ikon di samping awal teksnya.",
+            "ms": "Panduan kompas kiblat memastikan petunjuk yang panjang kekal kemas, dengan setiap ikon di sebelah permulaan teksnya.",
+            "ar": "يحافظ دليل بوصلة القبلة على محاذاة التلميحات الطويلة بشكل مرتب، مع وضع كل أيقونة بجانب بداية نصها."
+          }
+        },
+        {
           "type": "improved",
           "text": {
             "en": "The Android prayer header aligns the location with its action buttons and places the prayer name and countdown at the start edge.",

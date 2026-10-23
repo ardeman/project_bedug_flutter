@@ -41,6 +41,9 @@ const double _sunAlignedToleranceDeg = 5;
 /// Heading error (degrees) above which the user is asked to calibrate.
 const double _poorAccuracyDeg = 30;
 
+/// Keeps guide lines to a comfortable reading length on wide windows.
+const double _guideMaxWidth = 360;
+
 /// Qibla direction card: a compass dial that turns with the device heading on
 /// phones, and stays north-up with text guidance on desktops.
 class QiblaCard extends ConsumerStatefulWidget {
@@ -225,47 +228,50 @@ class _QiblaCardState extends ConsumerState<QiblaCard> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: AppSpacing.sm),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  facing ? Icons.check_circle_outline : Icons.explore_outlined,
-                  color: accent,
-                  size: AppControlSizes.toolbarIcon,
-                ),
-                const SizedBox(width: AppSpacing.xs),
-                Flexible(
-                  child: Text(
-                    heading == null
+            // The guide lines share one start-aligned column so wrapped
+            // translations stay readable; the column itself stays centered.
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: _guideMaxWidth),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _GuideLine(
+                    icon: facing
+                        ? Icons.check_circle_outline
+                        : Icons.explore_outlined,
+                    iconColor: accent,
+                    text: heading == null
                         ? l10n.qiblaFaceNorthHint
                         : facing
                         ? l10n.qiblaFacing
                         : l10n.qiblaRotateHint,
-                    textAlign: TextAlign.center,
                     style: bodyStyle?.copyWith(
                       color: facing ? accent : theme.colorScheme.onSurface,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                ),
-              ],
+                  if (heading == null) ...[
+                    const SizedBox(height: AppSpacing.xs),
+                    _GuideLine(
+                      icon: Icons.map_outlined,
+                      iconColor: theme.colorScheme.onSurfaceVariant,
+                      text: l10n.qiblaFindNorthHint,
+                      style: muted,
+                    ),
+                    ?_buildSunHint(l10n, theme, coords, bearing, bodyStyle),
+                  ] else if ((_accuracy ?? 0) > _poorAccuracyDeg) ...[
+                    const SizedBox(height: AppSpacing.xs),
+                    _GuideLine(
+                      icon: Icons.all_inclusive,
+                      iconColor: theme.colorScheme.onSurfaceVariant,
+                      text: l10n.qiblaCalibrate,
+                      style: muted,
+                    ),
+                  ],
+                ],
+              ),
             ),
-            if (heading == null) ...[
-              const SizedBox(height: AppSpacing.xxs),
-              Text(
-                l10n.qiblaFindNorthHint,
-                style: muted,
-                textAlign: TextAlign.center,
-              ),
-              ..._buildSunHint(l10n, theme, coords, bearing, compact: compact),
-            ] else if ((_accuracy ?? 0) > _poorAccuracyDeg) ...[
-              const SizedBox(height: AppSpacing.xxs),
-              Text(
-                l10n.qiblaCalibrate,
-                style: muted,
-                textAlign: TextAlign.center,
-              ),
-            ],
           ],
         ),
       ),
@@ -273,15 +279,15 @@ class _QiblaCardState extends ConsumerState<QiblaCard> {
   }
 
   /// "The Qibla is N° left/right of the sun", shown while the sun is up.
-  List<Widget> _buildSunHint(
+  Widget? _buildSunHint(
     AppLocalizations l10n,
     ThemeData theme,
     Coordinates coords,
-    double bearing, {
-    bool compact = false,
-  }) {
+    double bearing,
+    TextStyle? style,
+  ) {
     final sun = sunPosition(DateTime.now(), coords);
-    if (!sun.isUsable) return const [];
+    if (!sun.isUsable) return null;
 
     final rel = relativeAngle(sun.azimuth, bearing);
     final degrees = rel.abs().round().toString();
@@ -296,24 +302,15 @@ class _QiblaCardState extends ConsumerState<QiblaCard> {
       text = l10n.qiblaSunRight(degrees);
     }
 
-    return [
-      const SizedBox(height: AppSpacing.xs),
-      Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.wb_sunny_outlined, color: theme.colorScheme.tertiary),
-          const SizedBox(width: AppSpacing.xs),
-          Flexible(
-            child: Text(
-              text,
-              style: compact
-                  ? theme.textTheme.bodySmall
-                  : theme.textTheme.bodyMedium,
-            ),
-          ),
-        ],
+    return Padding(
+      padding: const EdgeInsets.only(top: AppSpacing.xs),
+      child: _GuideLine(
+        icon: Icons.wb_sunny_outlined,
+        iconColor: theme.colorScheme.tertiary,
+        text: text,
+        style: style,
       ),
-    ];
+    );
   }
 
   String _directionName(AppLocalizations l10n, int index) => switch (index) {
@@ -326,6 +323,60 @@ class _QiblaCardState extends ConsumerState<QiblaCard> {
     6 => l10n.dirW,
     _ => l10n.dirNW,
   };
+}
+
+/// One guide step: an icon beside text that may wrap over several lines.
+class _GuideLine extends StatelessWidget {
+  const _GuideLine({
+    required this.icon,
+    required this.iconColor,
+    required this.text,
+    required this.style,
+  });
+
+  final IconData icon;
+  final Color iconColor;
+  final String text;
+  final TextStyle? style;
+
+  @override
+  Widget build(BuildContext ctx) {
+    final resolved = DefaultTextStyle.of(ctx).style.merge(style);
+    // Center the icon on the first line rather than on the whole paragraph,
+    // so it stays beside the start of a wrapped hint.
+    final fontSize = MediaQuery.textScalerOf(ctx)
+        .scale(resolved.fontSize ?? AppControlSizes.toolbarIcon);
+    final textLineHeight = fontSize * (resolved.height ?? 1.2);
+    final firstLineHeight = math.max(
+      textLineHeight,
+      AppControlSizes.toolbarIcon,
+    );
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: firstLineHeight,
+          child: Icon(
+            icon,
+            color: iconColor,
+            size: AppControlSizes.toolbarIcon,
+          ),
+        ),
+        const SizedBox(width: AppSpacing.sm),
+        Flexible(
+          child: Padding(
+            // Line the text's first line up with the icon when the icon is
+            // taller than the text.
+            padding: EdgeInsets.only(
+              top: (firstLineHeight - textLineHeight) / 2,
+            ),
+            child: Text(text, style: style),
+          ),
+        ),
+      ],
+    );
+  }
 }
 
 /// Compass rose turned by -[heading] so north tracks the real north, with an
