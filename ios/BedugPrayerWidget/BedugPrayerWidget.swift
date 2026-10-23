@@ -456,7 +456,7 @@ struct LockScreenScheduleView: View {
         let isNext = item.date == next.date
         let passed = item.date <= entry.date
         return HStack(spacing: 2) {
-            Text(item.name)
+            Text(abbreviation(of: item.name))
             Spacer(minLength: 0)
             // A formatted time, unlike a `.time` style, sizes to its text instead
             // of reserving room, so the name and time fit a half-width cell.
@@ -477,6 +477,13 @@ struct LockScreenScheduleView: View {
         .opacity(passed ? 0.45 : 1)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text("\(item.name) \(Text(item.date, style: .time))"))
+    }
+
+    /// Two letters, so every cell fits at one font size; Arabic names drop
+    /// their article first (الفجر reads فج).
+    private func abbreviation(of name: String) -> String {
+        let stem = name.hasPrefix("ال") ? name.dropFirst(2) : Substring(name)
+        return String(stem.prefix(2))
     }
 
     private func countdown(to next: Prayer) -> some View {
