@@ -1218,6 +1218,12 @@ abstract class AppLocalizations {
   /// **'Sirene'**
   String get sirenNotificationSound;
 
+  /// No description provided for @phoneNotificationSound.
+  ///
+  /// In id, this message translates to:
+  /// **'Suara ponsel…'**
+  String get phoneNotificationSound;
+
   /// No description provided for @soundPrayerChannel.
   ///
   /// In id, this message translates to:

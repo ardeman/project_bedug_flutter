@@ -192,6 +192,7 @@
   "silentNotificationSound": "Silent",
   "bedugNotificationSound": "Bedug",
   "sirenNotificationSound": "Siren",
+  "phoneNotificationSound": "Phone sound…",
   "soundPrayerChannel": "Prayer Times ({sound})",
   "@soundPrayerChannel": {
     "placeholders": {

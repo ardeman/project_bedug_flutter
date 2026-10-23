@@ -121,6 +121,7 @@ class SettingsNotifier extends Notifier<AppSettings> {
             ? p.getInt('notification_reminder_minutes')!
             : 0,
         sounds: Map.unmodifiable(_storedSounds(p)),
+        phoneSounds: Map.unmodifiable(_storedPhoneSounds(p)),
       ),
     );
   }
@@ -138,6 +139,18 @@ class SettingsNotifier extends Notifier<AppSettings> {
         alert:
             ?(_soundNamed(p.getString('notification_sound_${alert.name}')) ??
             legacy),
+    };
+  }
+
+  /// Each tone is stored as `[uri, title]`.
+  static Map<PrayerAlert, PhoneSound> _storedPhoneSounds(SharedPreferences p) {
+    return {
+      for (final alert in PrayerAlert.values)
+        if (p.getStringList('notification_phone_sound_${alert.name}') case [
+          final uri,
+          final title,
+        ])
+          alert: PhoneSound(uri: uri, title: title),
     };
   }
 
@@ -164,6 +177,15 @@ class SettingsNotifier extends Notifier<AppSettings> {
         'notification_sound_${alert.name}',
         value.soundOf(alert).name,
       );
+      final phone = value.phoneSounds[alert];
+      if (phone == null) {
+        await _prefs.remove('notification_phone_sound_${alert.name}');
+      } else {
+        await _prefs.setStringList('notification_phone_sound_${alert.name}', [
+          phone.uri,
+          phone.title,
+        ]);
+      }
     }
     await _prefs.remove('notification_sound');
   }

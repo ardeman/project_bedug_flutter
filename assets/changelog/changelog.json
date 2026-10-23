@@ -16,6 +16,15 @@
         {
           "type": "new",
           "text": {
+            "en": "On Android, a notification time can also play any sound already on your phone: choose Phone sound… under Notifications → Sounds.",
+            "id": "Di Android, waktu notifikasi juga bisa memakai suara apa pun yang sudah ada di ponselmu: pilih Suara ponsel… di Notifikasi → Suara.",
+            "ms": "Di Android, waktu pemberitahuan juga boleh memainkan apa-apa bunyi yang sudah ada dalam telefon anda: pilih Bunyi telefon… di Pemberitahuan → Bunyi.",
+            "ar": "على أندرويد، يمكن لوقت الإشعار أيضًا أن يشغّل أي نغمة موجودة على هاتفك: اختر نغمة الهاتف… من الإشعارات ← الأصوات."
+          }
+        },
+        {
+          "type": "new",
+          "text": {
             "en": "Notifications now cover every time on the prayer timeline: besides the five prayers, you can turn on alerts for the last third of the night, Imsak, sunrise and Dhuha. The settings page is now called Notifications.",
             "id": "Notifikasi kini mencakup semua waktu di jadwal salat: selain lima salat wajib, kamu bisa menyalakan pengingat untuk sepertiga malam terakhir, imsak, terbit, dan duha. Halaman pengaturannya kini bernama Notifikasi.",
             "ms": "Pemberitahuan kini meliputi setiap waktu dalam jadual solat: selain lima solat fardu, anda boleh menghidupkan peringatan untuk sepertiga malam terakhir, imsak, syuruk dan duha. Halaman tetapannya kini bernama Pemberitahuan.",

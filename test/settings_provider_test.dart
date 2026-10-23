@@ -95,6 +95,15 @@ void main() {
         sounds: {
           PrayerAlert.fajr: PrayerNotificationSound.bedug,
           PrayerAlert.isha: PrayerNotificationSound.silent,
+          PrayerAlert.maghrib: PrayerNotificationSound.phone,
+          // A phone sound without a tone falls back to the system sound.
+          PrayerAlert.asr: PrayerNotificationSound.phone,
+        },
+        phoneSounds: {
+          PrayerAlert.maghrib: PhoneSound(
+            uri: 'content://tone/1',
+            title: 'Chime',
+          ),
         },
       ),
     );
@@ -115,6 +124,15 @@ void main() {
       preferences.soundOf(PrayerAlert.asr),
       PrayerNotificationSound.system,
     );
+    expect(
+      preferences.soundOf(PrayerAlert.maghrib),
+      PrayerNotificationSound.phone,
+    );
+    expect(
+      preferences.phoneSounds[PrayerAlert.maghrib]?.uri,
+      'content://tone/1',
+    );
+    expect(preferences.phoneSounds[PrayerAlert.maghrib]?.title, 'Chime');
     await notifier.setThemeMode(2);
     expect(container.read(settingsProvider).notifications.reminderMinutes, 15);
   });

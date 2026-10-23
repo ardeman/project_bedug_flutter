@@ -100,6 +100,7 @@ class NotificationService {
           AndroidFlutterLocalNotificationsPlugin
         >();
     final exact = await android?.canScheduleExactNotifications() ?? false;
+    final phoneChannels = <String>{};
     for (final alert in schedule) {
       final name = switch (alert.alert) {
         PrayerAlert.lastThirdOfNight => l10n.lastThirdOfNight,
@@ -130,6 +131,13 @@ class NotificationService {
       final sound = preferences.soundOf(alert.alert);
       final playSound = sound != PrayerNotificationSound.silent;
       final resource = sound.resource;
+      final phone = sound == PrayerNotificationSound.phone
+          ? preferences.phoneSounds[alert.alert]
+          : null;
+      final channelId = phone == null
+          ? 'bedug_prayer_v3_${sound.name}'
+          : phoneChannelId(phone);
+      if (phone != null) phoneChannels.add(channelId);
       await _plugin.zonedSchedule(
         id: alert.id,
         scheduledDate: tz.TZDateTime.from(alert.time, tz.local),
@@ -142,7 +150,7 @@ class NotificationService {
           android: AndroidNotificationDetails(
             // Android channel sound is immutable after creation, so each
             // sound gets its own channel.
-            'bedug_prayer_v3_${sound.name}',
+            channelId,
             switch (sound) {
               PrayerNotificationSound.system => l10n.notificationChannelName,
               PrayerNotificationSound.silent => l10n.silentPrayerChannel,
@@ -152,15 +160,22 @@ class NotificationService {
               PrayerNotificationSound.siren => l10n.soundPrayerChannel(
                 l10n.sirenNotificationSound,
               ),
+              PrayerNotificationSound.phone => l10n.soundPrayerChannel(
+                phone?.title ?? '',
+              ),
             },
             channelDescription: l10n.notificationChannelDescription,
             icon: 'ic_stat_bedug',
             importance: Importance.high,
             priority: Priority.high,
             playSound: playSound,
-            sound: resource == null
-                ? null
-                : RawResourceAndroidNotificationSound(resource),
+            sound: switch ((resource, phone)) {
+              (final resource?, _) => RawResourceAndroidNotificationSound(
+                resource,
+              ),
+              (_, final phone?) => UriAndroidNotificationSound(phone.uri),
+              _ => null,
+            },
             silent: !playSound,
             enableVibration: playSound,
           ),
@@ -177,7 +192,25 @@ class NotificationService {
         ),
       );
     }
+    // Drop the channels of tones no alert plays any more. The alerts are
+    // already scheduled, so a failed cleanup only leaves a spare channel.
+    try {
+      for (final channel
+          in await android?.getNotificationChannels() ?? const []) {
+        if (channel.id.startsWith(_phoneChannelPrefix) &&
+            !phoneChannels.contains(channel.id)) {
+          await android?.deleteNotificationChannel(channelId: channel.id);
+        }
+      }
+    } catch (_) {}
   }
+
+  static const _phoneChannelPrefix = 'bedug_prayer_v3_phone_';
+
+  /// One channel per phone tone, named after its URI so it stays stable.
+  @visibleForTesting
+  static String phoneChannelId(PhoneSound sound) =>
+      '$_phoneChannelPrefix${sound.uri.replaceAll(RegExp('[^A-Za-z0-9]+'), '_')}';
 
   static Future<void> openSystemSettings() async {
     if (!await init()) return;

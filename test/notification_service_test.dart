@@ -16,6 +16,7 @@ void main() {
   final calls = <MethodCall>[];
   var allowExact = false;
   var failNext = false;
+  var existingChannels = <String>[];
 
   setUpAll(() {
     debugDefaultTargetPlatformOverride = TargetPlatform.android;
@@ -25,6 +26,9 @@ void main() {
         .setMockMethodCallHandler(channel, (call) async {
           calls.add(call);
           if (call.method == 'canScheduleExactNotifications') return allowExact;
+          if (call.method == 'getNotificationChannels') {
+            return [for (final id in existingChannels) _channelMap(id)];
+          }
           if (call.method == 'zonedSchedule' && failNext) {
             failNext = false;
             throw PlatformException(code: 'schedule_failed');
@@ -36,7 +40,10 @@ void main() {
     () => TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(channel, null),
   );
-  setUp(calls.clear);
+  setUp(() {
+    calls.clear();
+    existingChannels = [];
+  });
 
   final times = PrayerTimes.today(
     Coordinates(-6.2088, 106.8456),
@@ -108,6 +115,56 @@ void main() {
   });
 
   test(
+    'a phone tone gets a channel per URI; unused ones are deleted',
+    () async {
+      const tone = PhoneSound(
+        uri: 'content://media/internal/audio/media/42',
+        title: 'Chime',
+      );
+      final toneChannel = NotificationService.phoneChannelId(tone);
+      existingChannels = [
+        toneChannel,
+        'bedug_prayer_v3_phone_content_media_internal_audio_media_7',
+        'bedug_prayer_v3_bedug',
+      ];
+      await NotificationService.schedulePrayerNotifications(
+        times,
+        l10n,
+        const NotificationPreferences(
+          sounds: {
+            PrayerAlert.fajr: PrayerNotificationSound.phone,
+            // No stored tone: plays the system sound.
+            PrayerAlert.asr: PrayerNotificationSound.phone,
+          },
+          phoneSounds: {PrayerAlert.fajr: tone},
+        ),
+      );
+      final channels = {
+        for (final call in calls.where((c) => c.method == 'zonedSchedule'))
+          (call.arguments as Map)['title']:
+              (call.arguments as Map)['platformSpecifics'] as Map,
+      };
+      expect(
+        toneChannel,
+        'bedug_prayer_v3_phone_content_media_internal_audio_media_42',
+      );
+      expect(channels['Fajr']!['channelId'], toneChannel);
+      expect(channels['Fajr']!['sound'], tone.uri);
+      expect(channels['Fajr']!['channelName'], 'Prayer Times (Chime)');
+      expect(channels['Asr']!['channelId'], 'bedug_prayer_v3_system');
+      final deleted = calls
+          .where((c) => c.method == 'deleteNotificationChannel')
+          .map((c) => c.arguments);
+      expect(
+        deleted,
+        contains('bedug_prayer_v3_phone_content_media_internal_audio_media_7'),
+      );
+      expect(deleted, isNot(contains(toneChannel)));
+      expect(deleted, isNot(contains('bedug_prayer_v3_bedug')));
+    },
+  );
+
+  test(
     'rapid disable runs after scheduling, leaving no pending alerts',
     () async {
       final enabled = NotificationService.schedulePrayerNotifications(
@@ -137,12 +194,13 @@ void main() {
         ),
         throwsA(isA<PlatformException>()),
       );
+      calls.clear();
       await NotificationService.schedulePrayerNotifications(
         times,
         l10n,
         const NotificationPreferences(),
       );
-      expect(calls.last.method, 'zonedSchedule');
+      expect(calls.map((c) => c.method), contains('zonedSchedule'));
     },
   );
   for (final platform in [TargetPlatform.iOS, TargetPlatform.macOS]) {
@@ -189,3 +247,16 @@ NotificationPreferences _allSounds(PrayerNotificationSound sound) =>
     NotificationPreferences(
       sounds: {for (final alert in PrayerAlert.values) alert: sound},
     );
+
+/// A channel as the Android plugin reports it.
+Map<String, Object?> _channelMap(String id) => {
+  'id': id,
+  'name': id,
+  'importance': Importance.high.value,
+  'showBadge': true,
+  'bypassDnd': false,
+  'playSound': true,
+  'enableLights': false,
+  'enableVibration': true,
+  'ledColor': 0,
+};

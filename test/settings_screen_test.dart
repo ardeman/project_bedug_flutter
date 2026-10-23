@@ -4,6 +4,7 @@ import 'package:bedug/core/design/platform_capabilities.dart';
 import 'package:bedug/core/services/kemenag_method.dart';
 import 'package:bedug/core/services/notification_preferences.dart';
 import 'package:bedug/core/services/notification_sound_preview.dart';
+import 'package:bedug/core/services/phone_sound_picker.dart';
 import 'package:bedug/core/services/prayer_service.dart';
 import 'package:bedug/core/widgets/calculation_method_picker.dart';
 import 'package:bedug/features/settings/settings_screen.dart';
@@ -327,6 +328,53 @@ void main() {
       TargetPlatform.iOS,
       TargetPlatform.macOS,
     }),
+  );
+
+  testWidgets(
+    'Android offers the phone sound picker and names the picked tone',
+    (tester) async {
+      NotificationSoundPreview.debugOverride = (_) {};
+      const tone = PhoneSound(uri: 'content://tone/1', title: 'Chime');
+      final asked = <PhoneSound?>[];
+      PhoneSoundPicker.debugOverride = (current) async {
+        asked.add(current);
+        return tone;
+      };
+      addTearDown(() {
+        NotificationSoundPreview.debugOverride = null;
+        PhoneSoundPicker.debugOverride = null;
+      });
+      final container = await _pumpSettings(tester);
+      await tester.tap(find.text('Notifications'));
+      await tester.pumpAndSettle();
+      final dhuhr = find.byKey(const ValueKey('notification-sound-dhuhr'));
+      await tester.ensureVisible(dhuhr);
+      await tester.pumpAndSettle();
+      await tester.tap(
+        find.descendant(
+          of: dhuhr,
+          matching: find.byType(M3EDropdownMenu<PrayerNotificationSound>),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Phone sound…').last);
+      await tester.pumpAndSettle();
+      final notifications = container.read(settingsProvider).notifications;
+      expect(asked, [null]);
+      expect(
+        notifications.soundOf(PrayerAlert.dhuhr),
+        PrayerNotificationSound.phone,
+      );
+      expect(notifications.phoneSounds[PrayerAlert.dhuhr]?.uri, tone.uri);
+      expect(
+        find.descendant(of: dhuhr, matching: find.text('Chime')),
+        findsWidgets,
+      );
+      expect(tester.takeException(), isNull);
+      await tester.pumpWidget(const SizedBox.shrink());
+      container.invalidate(prayerProvider);
+    },
+    variant: TargetPlatformVariant.only(TargetPlatform.android),
   );
 
   for (final brightness in Brightness.values) {

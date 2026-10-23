@@ -360,6 +360,7 @@
   "silentNotificationSound": "Senyap",
   "bedugNotificationSound": "Bedug",
   "sirenNotificationSound": "Sirene",
+  "phoneNotificationSound": "Suara ponsel…",
   "soundPrayerChannel": "Waktu Salat ({sound})",
   "@soundPrayerChannel": {
     "placeholders": {

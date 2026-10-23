@@ -601,6 +601,9 @@ class AppLocalizationsMs extends AppLocalizations {
   String get sirenNotificationSound => 'Siren';
 
   @override
+  String get phoneNotificationSound => 'Bunyi telefon…';
+
+  @override
   String soundPrayerChannel(String sound) {
     return 'Waktu Solat ($sound)';
   }

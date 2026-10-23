@@ -192,6 +192,7 @@
   "silentNotificationSound": "Senyap",
   "bedugNotificationSound": "Bedug",
   "sirenNotificationSound": "Siren",
+  "phoneNotificationSound": "Bunyi telefon…",
   "soundPrayerChannel": "Waktu Solat ({sound})",
   "@soundPrayerChannel": {
     "placeholders": {

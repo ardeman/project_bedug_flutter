@@ -17,6 +17,7 @@ import '../../core/providers/locale_provider.dart';
 import '../../core/services/notification_preferences.dart';
 import '../../core/services/notification_service.dart';
 import '../../core/services/notification_sound_preview.dart';
+import '../../core/services/phone_sound_picker.dart';
 import '../../core/services/prayer_service.dart';
 import '../../core/services/widget_appearance.dart';
 import '../../core/theme/app_tokens.dart';
@@ -358,25 +359,46 @@ class NotificationSettingsScreen extends ConsumerWidget {
                       value: preferences.soundOf(alert),
                       options: [
                         for (final sound in PrayerNotificationSound.values)
-                          GlassMenuOption(
-                            value: sound,
-                            label: switch (sound) {
-                              PrayerNotificationSound.system =>
-                                l10n.systemNotificationSound,
-                              PrayerNotificationSound.bedug =>
-                                l10n.bedugNotificationSound,
-                              PrayerNotificationSound.siren =>
-                                l10n.sirenNotificationSound,
-                              PrayerNotificationSound.silent =>
-                                l10n.silentNotificationSound,
-                            },
-                          ),
+                          if (sound != PrayerNotificationSound.phone ||
+                              PhoneSoundPicker.isSupported)
+                            GlassMenuOption(
+                              value: sound,
+                              label: switch (sound) {
+                                PrayerNotificationSound.system =>
+                                  l10n.systemNotificationSound,
+                                PrayerNotificationSound.bedug =>
+                                  l10n.bedugNotificationSound,
+                                PrayerNotificationSound.siren =>
+                                  l10n.sirenNotificationSound,
+                                // Once picked, the menu names the tone.
+                                PrayerNotificationSound.phone =>
+                                  preferences.soundOf(alert) == sound
+                                      ? preferences.phoneSounds[alert]!.title
+                                      : l10n.phoneNotificationSound,
+                                PrayerNotificationSound.silent =>
+                                  l10n.silentNotificationSound,
+                              },
+                            ),
                       ],
-                      onChanged: (sound) {
+                      onChanged: (sound) async {
                         NotificationSoundPreview.play(sound);
-                        notifier.setNotifications(
-                          preferences.copyWith(
-                            sounds: {...preferences.sounds, alert: sound},
+                        PhoneSound? picked;
+                        if (sound == PrayerNotificationSound.phone) {
+                          // The system picker plays each tone as it's tried.
+                          picked = await PhoneSoundPicker.pick(
+                            current: preferences.phoneSounds[alert],
+                          );
+                          if (picked == null || !ctx.mounted) return;
+                        }
+                        // Read again: the picker may have been open a while.
+                        final latest = ref.read(settingsProvider).notifications;
+                        await notifier.setNotifications(
+                          latest.copyWith(
+                            sounds: {...latest.sounds, alert: sound},
+                            phoneSounds: {
+                              ...latest.phoneSounds,
+                              alert: ?picked,
+                            },
                           ),
                         );
                       },

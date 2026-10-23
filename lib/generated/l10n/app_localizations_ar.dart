@@ -596,6 +596,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get sirenNotificationSound => 'صفارة';
 
   @override
+  String get phoneNotificationSound => 'نغمة الهاتف…';
+
+  @override
   String soundPrayerChannel(String sound) {
     return 'أوقات الصلاة ($sound)';
   }

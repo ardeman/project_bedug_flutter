@@ -36,18 +36,32 @@ const reminderMinuteOptions = [0, 5, 10, 15, 30];
 
 /// What an alert plays. [bedug] and [siren] are bundled recordings: the
 /// native copies live in `android/app/src/main/res/raw` and
-/// `ios|macos/Runner/Sounds`, the previews in `assets/sounds`.
+/// `ios|macos/Runner/Sounds`, the previews in `assets/sounds`. [phone] is
+/// a tone installed on an Android phone, kept in
+/// [NotificationPreferences.phoneSounds].
 enum PrayerNotificationSound {
   system,
   bedug,
   siren,
+  phone,
   silent;
 
   /// The bundled file's name without its extension, or null for none.
   String? get resource => switch (this) {
     bedug || siren => 'prayer_$name',
-    system || silent => null,
+    system || phone || silent => null,
   };
+}
+
+/// A tone picked from the phone's own sounds (Android only).
+class PhoneSound {
+  /// The tone's content URI, as the system picker returned it.
+  final String uri;
+
+  /// The tone's name, as the system shows it.
+  final String title;
+
+  const PhoneSound({required this.uri, required this.title});
 }
 
 /// Device-local preferences.
@@ -59,27 +73,38 @@ class NotificationPreferences {
   /// Each alert's sound; an alert missing here plays the system sound.
   final Map<PrayerAlert, PrayerNotificationSound> sounds;
 
+  /// The tone of each alert whose sound is [PrayerNotificationSound.phone].
+  final Map<PrayerAlert, PhoneSound> phoneSounds;
+
   const NotificationPreferences({
     this.enabled = true,
     this.alerts = defaultPrayerAlerts,
     this.reminderMinutes = 0,
     this.sounds = const {},
+    this.phoneSounds = const {},
   });
 
   bool includes(PrayerAlert alert) => enabled && alerts.contains(alert);
 
-  PrayerNotificationSound soundOf(PrayerAlert alert) =>
-      sounds[alert] ?? PrayerNotificationSound.system;
+  /// A phone sound without a stored tone falls back to the system sound.
+  PrayerNotificationSound soundOf(PrayerAlert alert) => switch (sounds[alert]) {
+    PrayerNotificationSound.phone when phoneSounds[alert] == null =>
+      PrayerNotificationSound.system,
+    final sound? => sound,
+    null => PrayerNotificationSound.system,
+  };
 
   NotificationPreferences copyWith({
     bool? enabled,
     Set<PrayerAlert>? alerts,
     int? reminderMinutes,
     Map<PrayerAlert, PrayerNotificationSound>? sounds,
+    Map<PrayerAlert, PhoneSound>? phoneSounds,
   }) => NotificationPreferences(
     enabled: enabled ?? this.enabled,
     alerts: Set.unmodifiable(alerts ?? this.alerts),
     reminderMinutes: reminderMinutes ?? this.reminderMinutes,
     sounds: Map.unmodifiable(sounds ?? this.sounds),
+    phoneSounds: Map.unmodifiable(phoneSounds ?? this.phoneSounds),
   );
 }

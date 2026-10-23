@@ -192,6 +192,7 @@
   "silentNotificationSound": "صامت",
   "bedugNotificationSound": "طبل البدوغ",
   "sirenNotificationSound": "صفارة",
+  "phoneNotificationSound": "نغمة الهاتف…",
   "soundPrayerChannel": "أوقات الصلاة ({sound})",
   "@soundPrayerChannel": {
     "placeholders": {
