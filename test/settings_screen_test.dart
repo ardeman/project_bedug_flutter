@@ -370,6 +370,21 @@ void main() {
         find.descendant(of: dhuhr, matching: find.text('Chime')),
         findsWidgets,
       );
+      // Tapping the selected tone again reopens the picker.
+      await tester.tap(
+        find.descendant(
+          of: dhuhr,
+          matching: find.byType(M3EDropdownMenu<PrayerNotificationSound>),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Chime').last);
+      await tester.pumpAndSettle();
+      expect(asked, [null, tone]);
+      expect(
+        find.descendant(of: dhuhr, matching: find.text('Chime')),
+        findsWidgets,
+      );
       expect(tester.takeException(), isNull);
       await tester.pumpWidget(const SizedBox.shrink());
       container.invalidate(prayerProvider);

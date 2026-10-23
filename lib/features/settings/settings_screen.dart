@@ -657,6 +657,14 @@ class _ChoiceTileState<T> extends State<_ChoiceTile<T>> {
                     onSelectionChanged: (items) {
                       if (items.isNotEmpty) {
                         widget.onChanged(items.single.value);
+                        return;
+                      }
+                      // Tapping the selected item deselects it; rebuild to
+                      // reselect it (the dropdown reloads its items) and treat
+                      // it as picking it again, e.g. to choose another tone.
+                      setState(() {});
+                      if (widget.value case final T value) {
+                        widget.onChanged(value);
                       }
                     },
                   ),
