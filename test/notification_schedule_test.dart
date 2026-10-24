@@ -35,14 +35,14 @@ void main() {
   );
 
   test('disabled prayer removes both alerts and master switch removes all', () {
-    const preferences = NotificationPreferences(
-      alerts: {
+    final preferences = NotificationPreferences(
+      alerts: const {
         PrayerAlert.dhuhr,
         PrayerAlert.asr,
         PrayerAlert.maghrib,
         PrayerAlert.isha,
       },
-      reminderMinutes: 10,
+      reminders: _every(10),
     );
     final schedule = buildNotificationSchedule(times, preferences, now);
     expect(schedule, hasLength(48));
@@ -62,7 +62,7 @@ void main() {
     () {
       final schedule = buildNotificationSchedule(
         times,
-        const NotificationPreferences(reminderMinutes: 30),
+        NotificationPreferences(reminders: _every(30)),
         now,
       );
       expect(schedule, hasLength(60));
@@ -79,11 +79,35 @@ void main() {
     },
   );
 
+  test('each time keeps its own reminder', () {
+    final schedule = buildNotificationSchedule(
+      times,
+      const NotificationPreferences(
+        reminders: {PrayerAlert.fajr: 5, PrayerAlert.isha: 30},
+      ),
+      now,
+    );
+    final reminders = schedule.where((alert) => alert.isReminder);
+    expect(reminders.map((alert) => alert.alert).toSet(), {
+      PrayerAlert.fajr,
+      PrayerAlert.isha,
+    });
+    for (final reminder in reminders) {
+      final prayer = schedule.singleWhere(
+        (alert) => alert.id == reminder.id - PrayerAlert.values.length,
+      );
+      expect(
+        prayer.time.difference(reminder.time),
+        Duration(minutes: reminder.alert == PrayerAlert.fajr ? 5 : 30),
+      );
+    }
+  });
+
   test('past reminders are omitted without dropping the upcoming prayer', () {
     final current = times.dhuhr.subtract(const Duration(minutes: 2));
     final schedule = buildNotificationSchedule(
       times,
-      const NotificationPreferences(reminderMinutes: 10),
+      NotificationPreferences(reminders: _every(10)),
       current,
     );
     expect(schedule.every((alert) => alert.time.isAfter(current)), isTrue);
@@ -96,7 +120,7 @@ void main() {
       times,
       NotificationPreferences(
         alerts: PrayerAlert.values.toSet(),
-        reminderMinutes: 10,
+        reminders: _every(10),
       ),
       now,
     );
@@ -112,3 +136,7 @@ void main() {
     expect(today[PrayerAlert.dhuha]!.time, extra.dhuha);
   });
 }
+
+Map<PrayerAlert, int> _every(int minutes) => {
+  for (final alert in PrayerAlert.values) alert: minutes,
+};

@@ -114,7 +114,7 @@ class NotificationService {
         PrayerAlert.isha => l10n.isha,
       };
       final body = alert.isReminder
-          ? l10n.prayerReminderBody(name, preferences.reminderMinutes)
+          ? l10n.prayerReminderBody(name, preferences.reminderOf(alert.alert))
           : switch (alert.alert) {
               PrayerAlert.lastThirdOfNight => l10n.notifLastThirdOfNight,
               PrayerAlert.imsak => l10n.notifImsak(

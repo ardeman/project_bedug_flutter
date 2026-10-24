@@ -187,7 +187,7 @@
       }
     }
   },
-  "notificationSound": "الأصوات",
+  "notificationSound": "الصوت",
   "systemNotificationSound": "صوت النظام",
   "silentNotificationSound": "صامت",
   "bedugNotificationSound": "طبل البدوغ",

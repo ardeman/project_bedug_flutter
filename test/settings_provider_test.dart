@@ -91,7 +91,7 @@ void main() {
       const NotificationPreferences(
         enabled: false,
         alerts: {PrayerAlert.imsak, PrayerAlert.dhuhr},
-        reminderMinutes: 15,
+        reminders: {PrayerAlert.imsak: 5, PrayerAlert.dhuhr: 15},
         sounds: {
           PrayerAlert.fajr: PrayerNotificationSound.bedug,
           PrayerAlert.isha: PrayerNotificationSound.silent,
@@ -111,7 +111,9 @@ void main() {
     final preferences = container.read(settingsProvider).notifications;
     expect(preferences.enabled, isFalse);
     expect(preferences.alerts, {PrayerAlert.imsak, PrayerAlert.dhuhr});
-    expect(preferences.reminderMinutes, 15);
+    expect(preferences.reminderOf(PrayerAlert.imsak), 5);
+    expect(preferences.reminderOf(PrayerAlert.dhuhr), 15);
+    expect(preferences.reminderOf(PrayerAlert.fajr), 0);
     expect(
       preferences.soundOf(PrayerAlert.fajr),
       PrayerNotificationSound.bedug,
@@ -134,7 +136,25 @@ void main() {
     );
     expect(preferences.phoneSounds[PrayerAlert.maghrib]?.title, 'Chime');
     await notifier.setThemeMode(2);
-    expect(container.read(settingsProvider).notifications.reminderMinutes, 15);
+    expect(
+      container
+          .read(settingsProvider)
+          .notifications
+          .reminderOf(PrayerAlert.dhuhr),
+      15,
+    );
+  });
+
+  test('a legacy shared reminder applies to every alert', () async {
+    final container = await _container({
+      'notification_reminder_minutes': 10,
+      'notification_reminder_fajr': 0,
+    });
+    final preferences = container.read(settingsProvider).notifications;
+    expect(preferences.reminderOf(PrayerAlert.fajr), 0);
+    for (final alert in PrayerAlert.values.skip(PrayerAlert.fajr.index + 1)) {
+      expect(preferences.reminderOf(alert), 10);
+    }
   });
 
   test('a legacy silent setting silences every alert', () async {
@@ -161,7 +181,7 @@ void main() {
         'notifications_disabled': ['fajr', 'unknown'],
       });
       final preferences = container.read(settingsProvider).notifications;
-      expect(preferences.reminderMinutes, 0);
+      expect(preferences.reminders, isEmpty);
       expect(
         preferences.soundOf(PrayerAlert.fajr),
         PrayerNotificationSound.system,

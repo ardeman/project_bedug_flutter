@@ -247,8 +247,39 @@ class SettingsScreen extends ConsumerWidget {
   }
 }
 
-/// Each prayer alert plays the system sound, a bundled bedug or siren, or
-/// nothing; never a recorded azan.
+String _alertName(AppLocalizations l10n, PrayerAlert alert) => switch (alert) {
+  PrayerAlert.lastThirdOfNight => l10n.lastThirdOfNight,
+  PrayerAlert.imsak => l10n.imsak,
+  PrayerAlert.fajr => l10n.fajr,
+  PrayerAlert.sunrise => l10n.sunrise,
+  PrayerAlert.dhuha => l10n.dhuha,
+  PrayerAlert.dhuhr => l10n.dhuhr,
+  PrayerAlert.asr => l10n.asr,
+  PrayerAlert.maghrib => l10n.maghrib,
+  PrayerAlert.isha => l10n.isha,
+};
+
+/// The alert's sound as the menu names it; a picked phone tone by its name.
+String _soundLabel(
+  AppLocalizations l10n,
+  NotificationPreferences preferences,
+  PrayerAlert alert,
+  PrayerNotificationSound sound,
+) => switch (sound) {
+  PrayerNotificationSound.system => l10n.systemNotificationSound,
+  PrayerNotificationSound.bedug => l10n.bedugNotificationSound,
+  PrayerNotificationSound.siren => l10n.sirenNotificationSound,
+  PrayerNotificationSound.phone =>
+    preferences.soundOf(alert) == sound
+        ? preferences.phoneSounds[alert]!.title
+        : l10n.phoneNotificationSound,
+  PrayerNotificationSound.silent => l10n.silentNotificationSound,
+};
+
+/// One row per time: its switch, and when it's on, a summary of its sound
+/// and reminder that opens [_NotificationTimeScreen]. Each alert plays the
+/// system sound, a bundled bedug or siren, a phone tone, or nothing; never
+/// a recorded azan.
 class NotificationSettingsScreen extends ConsumerWidget {
   const NotificationSettingsScreen({super.key});
 
@@ -258,37 +289,27 @@ class NotificationSettingsScreen extends ConsumerWidget {
     final preferences = ref.watch(settingsProvider).notifications;
     final notifier = ref.read(settingsProvider.notifier);
     final failed = ref.watch(prayerProvider.select((s) => s.notificationError));
-    String nameOf(PrayerAlert alert) => switch (alert) {
-      PrayerAlert.lastThirdOfNight => l10n.lastThirdOfNight,
-      PrayerAlert.imsak => l10n.imsak,
-      PrayerAlert.fajr => l10n.fajr,
-      PrayerAlert.sunrise => l10n.sunrise,
-      PrayerAlert.dhuha => l10n.dhuha,
-      PrayerAlert.dhuhr => l10n.dhuhr,
-      PrayerAlert.asr => l10n.asr,
-      PrayerAlert.maghrib => l10n.maghrib,
-      PrayerAlert.isha => l10n.isha,
-    };
+    final muted = Theme.of(ctx).colorScheme.onSurfaceVariant;
+    void setAlert(PrayerAlert alert, bool value) {
+      final alerts = {...preferences.alerts};
+      value ? alerts.add(alert) : alerts.remove(alert);
+      notifier.setNotifications(preferences.copyWith(alerts: alerts));
+    }
+
+    String summaryOf(PrayerAlert alert) {
+      final minutes = preferences.reminderOf(alert);
+      return [
+        _soundLabel(l10n, preferences, alert, preferences.soundOf(alert)),
+        if (minutes > 0) l10n.minutesBeforePrayer(minutes),
+      ].join(' · ');
+    }
+
     return Scaffold(
       extendBodyBehindAppBar: PlatformCapabilities.isApple,
       appBar: GlassTopBar(title: l10n.notifications),
       body: ListView(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(AppSpacing.md),
-            child: Text(
-              NotificationService.supportsScheduling
-                  ? l10n.notificationDeliveryInfo
-                  : l10n.notificationPlatformUnavailable,
-            ),
-          ),
-          if (failed)
-            Padding(
-              padding: const EdgeInsets.all(AppSpacing.md),
-              child: Text(l10n.notificationSchedulingError),
-            ),
           _Section(
-            title: l10n.notificationTimes,
             children: [
               PlatformListTile(
                 title: Text(l10n.allNotifications),
@@ -300,109 +321,54 @@ class NotificationSettingsScreen extends ConsumerWidget {
                   ),
                 ),
               ),
-              if (preferences.enabled) ...[
-                for (final alert in PrayerAlert.values)
-                  PlatformListTile(
-                    title: Text(nameOf(alert)),
-                    trailing: _AdaptiveSwitch(
-                      key: ValueKey('notification-${alert.name}'),
-                      value: preferences.includes(alert),
-                      onChanged: (value) {
-                        final alerts = {...preferences.alerts};
-                        value ? alerts.add(alert) : alerts.remove(alert);
-                        notifier.setNotifications(
-                          preferences.copyWith(alerts: alerts),
-                        );
-                      },
-                    ),
-                  ),
-              ],
             ],
           ),
+          if (failed)
+            Padding(
+              padding: const EdgeInsets.all(AppSpacing.md),
+              child: Text(l10n.notificationSchedulingError),
+            ),
           if (preferences.enabled)
             _Section(
-              title: l10n.notificationPreferences,
-              children: [
-                _ChoiceTile<int>(
-                  icon: Icons.alarm_outlined,
-                  title: l10n.beforePrayerReminder,
-                  value: preferences.reminderMinutes,
-                  options: [
-                    for (final minutes in reminderMinuteOptions)
-                      GlassMenuOption(
-                        value: minutes,
-                        label: minutes == 0
-                            ? l10n.reminderOff
-                            : l10n.minutesBeforePrayer(minutes),
-                      ),
-                  ],
-                  onChanged: (minutes) => notifier.setNotifications(
-                    preferences.copyWith(reminderMinutes: minutes),
-                  ),
-                ),
-              ],
-            ),
-          if (preferences.enabled && preferences.alerts.isNotEmpty)
-            _Section(
-              title: l10n.notificationSound,
+              title: l10n.notificationTimes,
               children: [
                 for (final alert in PrayerAlert.values)
-                  if (preferences.includes(alert))
-                    _ChoiceTile<PrayerNotificationSound>(
-                      key: ValueKey('notification-sound-${alert.name}'),
-                      icon:
-                          preferences.soundOf(alert) ==
-                              PrayerNotificationSound.silent
-                          ? Icons.volume_off_outlined
-                          : Icons.volume_up_outlined,
-                      title: nameOf(alert),
-                      value: preferences.soundOf(alert),
-                      options: [
-                        for (final sound in PrayerNotificationSound.values)
-                          if (sound != PrayerNotificationSound.phone ||
-                              PhoneSoundPicker.isSupported)
-                            GlassMenuOption(
-                              value: sound,
-                              label: switch (sound) {
-                                PrayerNotificationSound.system =>
-                                  l10n.systemNotificationSound,
-                                PrayerNotificationSound.bedug =>
-                                  l10n.bedugNotificationSound,
-                                PrayerNotificationSound.siren =>
-                                  l10n.sirenNotificationSound,
-                                // Once picked, the menu names the tone.
-                                PrayerNotificationSound.phone =>
-                                  preferences.soundOf(alert) == sound
-                                      ? preferences.phoneSounds[alert]!.title
-                                      : l10n.phoneNotificationSound,
-                                PrayerNotificationSound.silent =>
-                                  l10n.silentNotificationSound,
-                              },
-                            ),
+                  PlatformListTile(
+                    key: ValueKey('notification-row-${alert.name}'),
+                    title: Text(_alertName(l10n, alert)),
+                    subtitle: preferences.includes(alert)
+                        ? Text(
+                            summaryOf(alert),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          )
+                        : null,
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        _AdaptiveSwitch(
+                          key: ValueKey('notification-${alert.name}'),
+                          value: preferences.includes(alert),
+                          onChanged: (value) => setAlert(alert, value),
+                        ),
+                        // Keeps the switches aligned whether or not the
+                        // row opens its detail page.
+                        Opacity(
+                          opacity: preferences.includes(alert) ? 1 : 0,
+                          child: Icon(Icons.chevron_right, color: muted),
+                        ),
                       ],
-                      onChanged: (sound) async {
-                        NotificationSoundPreview.play(sound);
-                        PhoneSound? picked;
-                        if (sound == PrayerNotificationSound.phone) {
-                          // The system picker plays each tone as it's tried.
-                          picked = await PhoneSoundPicker.pick(
-                            current: preferences.phoneSounds[alert],
-                          );
-                          if (picked == null || !ctx.mounted) return;
-                        }
-                        // Read again: the picker may have been open a while.
-                        final latest = ref.read(settingsProvider).notifications;
-                        await notifier.setNotifications(
-                          latest.copyWith(
-                            sounds: {...latest.sounds, alert: sound},
-                            phoneSounds: {
-                              ...latest.phoneSounds,
-                              alert: ?picked,
-                            },
-                          ),
-                        );
-                      },
                     ),
+                    // An off time turns on; an on time opens its options.
+                    onTap: preferences.includes(alert)
+                        ? () => Navigator.of(ctx).push(
+                            MaterialPageRoute<void>(
+                              builder: (_) =>
+                                  _NotificationTimeScreen(alert: alert),
+                            ),
+                          )
+                        : () => setAlert(alert, true),
+                  ),
               ],
             ),
           if (NotificationService.supportsScheduling)
@@ -437,7 +403,102 @@ class NotificationSettingsScreen extends ConsumerWidget {
                   ),
               ],
             ),
+          Padding(
+            padding: const EdgeInsets.all(AppSpacing.md),
+            child: Text(
+              NotificationService.supportsScheduling
+                  ? l10n.notificationDeliveryInfo
+                  : l10n.notificationPlatformUnavailable,
+              style: Theme.of(ctx).textTheme.bodySmall?.copyWith(color: muted),
+            ),
+          ),
           const SizedBox(height: AppSpacing.xl),
+        ],
+      ),
+    );
+  }
+}
+
+/// One time's early reminder and sound.
+class _NotificationTimeScreen extends ConsumerWidget {
+  final PrayerAlert alert;
+
+  const _NotificationTimeScreen({required this.alert});
+
+  @override
+  Widget build(BuildContext ctx, WidgetRef ref) {
+    final l10n = AppLocalizations.of(ctx);
+    final preferences = ref.watch(settingsProvider).notifications;
+    final notifier = ref.read(settingsProvider.notifier);
+    return Scaffold(
+      extendBodyBehindAppBar: PlatformCapabilities.isApple,
+      appBar: GlassTopBar(title: _alertName(l10n, alert)),
+      body: ListView(
+        children: [
+          _Section(
+            children: [
+              _ChoiceTile<PrayerNotificationSound>(
+                key: ValueKey('notification-sound-${alert.name}'),
+                icon:
+                    preferences.soundOf(alert) == PrayerNotificationSound.silent
+                    ? Icons.volume_off_outlined
+                    : Icons.volume_up_outlined,
+                title: l10n.notificationSound,
+                value: preferences.soundOf(alert),
+                options: [
+                  for (final sound in PrayerNotificationSound.values)
+                    if (sound != PrayerNotificationSound.phone ||
+                        PhoneSoundPicker.isSupported)
+                      GlassMenuOption(
+                        value: sound,
+                        label: _soundLabel(l10n, preferences, alert, sound),
+                      ),
+                ],
+                onChanged: (sound) async {
+                  NotificationSoundPreview.play(sound);
+                  PhoneSound? picked;
+                  if (sound == PrayerNotificationSound.phone) {
+                    // The system picker plays each tone as it's tried.
+                    picked = await PhoneSoundPicker.pick(
+                      current: preferences.phoneSounds[alert],
+                    );
+                    if (picked == null || !ctx.mounted) return;
+                  }
+                  // Read again: the picker may have been open a while.
+                  final latest = ref.read(settingsProvider).notifications;
+                  await notifier.setNotifications(
+                    latest.copyWith(
+                      sounds: {...latest.sounds, alert: sound},
+                      phoneSounds: {...latest.phoneSounds, alert: ?picked},
+                    ),
+                  );
+                },
+              ),
+              _ChoiceTile<int>(
+                key: ValueKey('notification-reminder-${alert.name}'),
+                icon: Icons.alarm_outlined,
+                title: l10n.beforePrayerReminder,
+                value: preferences.reminderOf(alert),
+                options: [
+                  for (final minutes in reminderMinuteOptions)
+                    GlassMenuOption(
+                      value: minutes,
+                      label: minutes == 0
+                          ? l10n.reminderOff
+                          : l10n.minutesBeforePrayer(minutes),
+                    ),
+                ],
+                onChanged: (minutes) {
+                  final latest = ref.read(settingsProvider).notifications;
+                  notifier.setNotifications(
+                    latest.copyWith(
+                      reminders: {...latest.reminders, alert: minutes},
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
         ],
       ),
     );
@@ -448,31 +509,35 @@ class NotificationSettingsScreen extends ConsumerWidget {
 /// A titled group of rows: an inset glass card on iOS and macOS, like the
 /// system Settings app, and a flat list elsewhere.
 class _Section extends StatelessWidget {
-  final String title;
+  /// Null for an untitled group, such as a page's single master switch.
+  final String? title;
   final List<Widget> children;
 
-  const _Section({required this.title, required this.children});
+  const _Section({this.title, required this.children});
 
   @override
   Widget build(BuildContext ctx) {
     final isApple = PlatformCapabilities.isApple;
-    final header = Padding(
-      padding: EdgeInsets.fromLTRB(
-        // Line the header up with the rows inside the inset card.
-        isApple ? AppSpacing.md * 2 : AppSpacing.md,
-        AppSpacing.md + AppSpacing.xxs,
-        AppSpacing.md,
-        AppSpacing.xxs,
-      ),
-      child: Text(
-        title.toUpperCase(),
-        style: Theme.of(ctx).textTheme.labelSmall?.copyWith(
-          fontWeight: FontWeight.bold,
-          color: AppColors.accentOf(ctx),
-          letterSpacing: 1.2,
-        ),
-      ),
-    );
+    final title = this.title;
+    final header = title == null
+        ? const SizedBox(height: AppSpacing.md)
+        : Padding(
+            padding: EdgeInsets.fromLTRB(
+              // Line the header up with the rows inside the inset card.
+              isApple ? AppSpacing.md * 2 : AppSpacing.md,
+              AppSpacing.md + AppSpacing.xxs,
+              AppSpacing.md,
+              AppSpacing.xxs,
+            ),
+            child: Text(
+              title.toUpperCase(),
+              style: Theme.of(ctx).textTheme.labelSmall?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: AppColors.accentOf(ctx),
+                letterSpacing: 1.2,
+              ),
+            ),
+          );
     if (PlatformDesign.usesExpressive) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

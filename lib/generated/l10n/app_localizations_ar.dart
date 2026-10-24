@@ -581,7 +581,7 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get notificationSound => 'الأصوات';
+  String get notificationSound => 'الصوت';
 
   @override
   String get systemNotificationSound => 'صوت النظام';

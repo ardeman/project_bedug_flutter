@@ -114,12 +114,7 @@ class SettingsNotifier extends Notifier<AppSettings> {
       notifications: NotificationPreferences(
         enabled: p.getBool('notifications_enabled') ?? true,
         alerts: Set.unmodifiable(_storedAlerts(p)),
-        reminderMinutes:
-            reminderMinuteOptions.contains(
-              p.getInt('notification_reminder_minutes'),
-            )
-            ? p.getInt('notification_reminder_minutes')!
-            : 0,
+        reminders: Map.unmodifiable(_storedReminders(p)),
         sounds: Map.unmodifiable(_storedSounds(p)),
         phoneSounds: Map.unmodifiable(_storedPhoneSounds(p)),
       ),
@@ -139,6 +134,22 @@ class SettingsNotifier extends Notifier<AppSettings> {
         alert:
             ?(_soundNamed(p.getString('notification_sound_${alert.name}')) ??
             legacy),
+    };
+  }
+
+  /// Builds before this one saved one reminder for every alert.
+  static Map<PrayerAlert, int> _storedReminders(SharedPreferences p) {
+    int? valid(int? minutes) =>
+        reminderMinuteOptions.contains(minutes) && minutes! > 0
+        ? minutes
+        : null;
+    final legacy = valid(p.getInt('notification_reminder_minutes'));
+    return {
+      for (final alert in PrayerAlert.values)
+        if (p.containsKey('notification_reminder_${alert.name}'))
+          alert: ?valid(p.getInt('notification_reminder_${alert.name}'))
+        else
+          alert: ?legacy,
     };
   }
 
@@ -171,8 +182,11 @@ class SettingsNotifier extends Notifier<AppSettings> {
       'notification_alerts',
       value.alerts.map((alert) => alert.name).toList(),
     );
-    await _prefs.setInt('notification_reminder_minutes', value.reminderMinutes);
     for (final alert in PrayerAlert.values) {
+      await _prefs.setInt(
+        'notification_reminder_${alert.name}',
+        value.reminderOf(alert),
+      );
       await _prefs.setString(
         'notification_sound_${alert.name}',
         value.soundOf(alert).name,
@@ -188,6 +202,7 @@ class SettingsNotifier extends Notifier<AppSettings> {
       }
     }
     await _prefs.remove('notification_sound');
+    await _prefs.remove('notification_reminder_minutes');
   }
 
   Future<void> setMethod(AppCalculationMethod m) async {

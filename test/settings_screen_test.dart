@@ -274,29 +274,53 @@ void main() {
         isNot(contains(PrayerAlert.fajr)),
       );
 
+      // An off time has no summary and turns on when tapped.
+      final fajrRow = find.byKey(const ValueKey('notification-row-fajr'));
+      expect(
+        find.descendant(of: fajrRow, matching: find.text('System sound')),
+        findsNothing,
+      );
+      await tester.tap(find.text('Fajr'));
+      await tester.pumpAndSettle();
+      expect(
+        container.read(settingsProvider).notifications.alerts,
+        contains(PrayerAlert.fajr),
+      );
+      expect(find.byType(NotificationSettingsScreen), findsOneWidget);
+
+      // An on time opens its own reminder and sound.
+      final dhuhrRow = find.byKey(const ValueKey('notification-row-dhuhr'));
+      await tester.ensureVisible(dhuhrRow);
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Dhuhr'));
+      await tester.pumpAndSettle();
+      final reminder = find.byKey(
+        const ValueKey('notification-reminder-dhuhr'),
+      );
+      final sound = find.byKey(const ValueKey('notification-sound-dhuhr'));
       if (PlatformCapabilities.isApple) {
-        await tester.tap(find.text('Off'));
+        await tester.tap(
+          find.descendant(of: reminder, matching: find.text('Off')),
+        );
         await tester.pumpAndSettle();
         await tester.tap(find.text('10 minutes before').last);
         await tester.pumpAndSettle();
         await tester.tap(
-          find.descendant(
-            of: find.byKey(const ValueKey('notification-sound-dhuhr')),
-            matching: find.text('System sound'),
-          ),
+          find.descendant(of: sound, matching: find.text('System sound')),
         );
       } else {
-        await tester.tap(find.byType(M3EDropdownMenu<int>).last);
+        await tester.tap(
+          find.descendant(
+            of: reminder,
+            matching: find.byType(M3EDropdownMenu<int>),
+          ),
+        );
         await tester.pumpAndSettle();
         await tester.tap(find.text('10 minutes before').last);
         await tester.pumpAndSettle();
-        await tester.ensureVisible(
-          find.byKey(const ValueKey('notification-sound-dhuhr')),
-        );
-        await tester.pumpAndSettle();
         await tester.tap(
           find.descendant(
-            of: find.byKey(const ValueKey('notification-sound-dhuhr')),
+            of: sound,
             matching: find.byType(M3EDropdownMenu<PrayerNotificationSound>),
           ),
         );
@@ -305,15 +329,20 @@ void main() {
       await tester.tap(find.text('Bedug').last);
       await tester.pumpAndSettle();
       final notifications = container.read(settingsProvider).notifications;
-      expect(notifications.reminderMinutes, 10);
+      expect(notifications.reminders, {PrayerAlert.dhuhr: 10});
       expect(
         notifications.soundOf(PrayerAlert.dhuhr),
         PrayerNotificationSound.bedug,
       );
       expect(previewed, [PrayerNotificationSound.bedug]);
+      Navigator.of(tester.element(reminder)).pop();
+      await tester.pumpAndSettle();
       expect(
-        find.byKey(const ValueKey('notification-sound-fajr')),
-        findsNothing,
+        find.descendant(
+          of: dhuhrRow,
+          matching: find.text('Bedug · 10 minutes before'),
+        ),
+        findsOneWidget,
       );
       await tester.tap(find.byKey(const ValueKey('notifications-enabled')));
       await tester.pumpAndSettle();
@@ -347,9 +376,13 @@ void main() {
       final container = await _pumpSettings(tester);
       await tester.tap(find.text('Notifications'));
       await tester.pumpAndSettle();
-      final dhuhr = find.byKey(const ValueKey('notification-sound-dhuhr'));
-      await tester.ensureVisible(dhuhr);
+      await tester.ensureVisible(
+        find.byKey(const ValueKey('notification-row-dhuhr')),
+      );
       await tester.pumpAndSettle();
+      await tester.tap(find.text('Dhuhr'));
+      await tester.pumpAndSettle();
+      final dhuhr = find.byKey(const ValueKey('notification-sound-dhuhr'));
       await tester.tap(
         find.descendant(
           of: dhuhr,

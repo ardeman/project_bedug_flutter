@@ -56,10 +56,9 @@ List<PrayerNotification> buildNotificationSchedule(
       if (time.isAfter(now)) {
         result.add(PrayerNotification(id, alert, time));
       }
-      if (preferences.reminderMinutes > 0) {
-        final reminder = time.subtract(
-          Duration(minutes: preferences.reminderMinutes),
-        );
+      final minutes = preferences.reminderOf(alert);
+      if (minutes > 0) {
+        final reminder = time.subtract(Duration(minutes: minutes));
         if (reminder.isAfter(now)) {
           result.add(
             PrayerNotification(

@@ -7,19 +7,19 @@
         {
           "type": "new",
           "text": {
-            "en": "Each notification time can have its own sound: the system sound, a bedug drum, a siren or silence. Pick one under Notifications → Sounds and you hear it straight away.",
-            "id": "Setiap waktu notifikasi kini bisa punya suaranya sendiri: suara sistem, tabuhan bedug, sirene, atau senyap. Pilih di Notifikasi → Suara dan suaranya langsung terdengar.",
-            "ms": "Setiap waktu pemberitahuan kini boleh mempunyai bunyinya sendiri: bunyi sistem, paluan bedug, siren atau senyap. Pilih di Pemberitahuan → Bunyi dan bunyinya terus kedengaran.",
-            "ar": "يمكن الآن أن يكون لكل وقت إشعار صوته الخاص: صوت النظام، أو قرع طبل البدوغ، أو صفارة، أو الصمت. اختره من الإشعارات ← الأصوات وستسمعه فورًا."
+            "en": "Each notification time now has its own early reminder and sound: tap a time to choose them, and its row sums up your picks. Sounds include the system sound, a bedug drum, a siren or silence, and you hear your pick straight away.",
+            "id": "Setiap waktu notifikasi kini punya pengingat lebih awal dan suaranya sendiri: ketuk sebuah waktu untuk memilihnya, dan barisnya merangkum pilihanmu. Pilihan suaranya: suara sistem, tabuhan bedug, sirene, atau senyap, dan suaranya langsung terdengar saat dipilih.",
+            "ms": "Setiap waktu pemberitahuan kini mempunyai peringatan awal dan bunyinya sendiri: ketik sesuatu waktu untuk memilihnya, dan barisnya meringkaskan pilihan anda. Pilihan bunyinya: bunyi sistem, paluan bedug, siren atau senyap, dan bunyinya terus kedengaran apabila dipilih.",
+            "ar": "أصبح لكل وقت إشعار الآن تذكيره المسبق وصوته الخاص: اضغط على الوقت لاختيارهما، ويلخّص سطره اختياراتك. تشمل الأصوات صوت النظام، أو قرع طبل البدوغ، أو صفارة، أو الصمت، وتسمع اختيارك فورًا."
           }
         },
         {
           "type": "new",
           "text": {
-            "en": "On Android, a notification time can also play any sound already on your phone: choose Phone sound… under Notifications → Sounds.",
-            "id": "Di Android, waktu notifikasi juga bisa memakai suara apa pun yang sudah ada di ponselmu: pilih Suara ponsel… di Notifikasi → Suara.",
-            "ms": "Di Android, waktu pemberitahuan juga boleh memainkan apa-apa bunyi yang sudah ada dalam telefon anda: pilih Bunyi telefon… di Pemberitahuan → Bunyi.",
-            "ar": "على أندرويد، يمكن لوقت الإشعار أيضًا أن يشغّل أي نغمة موجودة على هاتفك: اختر نغمة الهاتف… من الإشعارات ← الأصوات."
+            "en": "On Android, a notification time can also play any sound already on your phone: choose Phone sound… as its sound.",
+            "id": "Di Android, waktu notifikasi juga bisa memakai suara apa pun yang sudah ada di ponselmu: pilih Suara ponsel… sebagai suaranya.",
+            "ms": "Di Android, waktu pemberitahuan juga boleh memainkan apa-apa bunyi yang sudah ada dalam telefon anda: pilih Bunyi telefon… sebagai bunyinya.",
+            "ar": "على أندرويد، يمكن لوقت الإشعار أيضًا أن يشغّل أي نغمة موجودة على هاتفك: اختر نغمة الهاتف… صوتًا له."
           }
         },
         {

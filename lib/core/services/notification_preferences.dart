@@ -68,7 +68,9 @@ class PhoneSound {
 class NotificationPreferences {
   final bool enabled;
   final Set<PrayerAlert> alerts;
-  final int reminderMinutes;
+
+  /// Each alert's early reminder in minutes; an alert missing here has none.
+  final Map<PrayerAlert, int> reminders;
 
   /// Each alert's sound; an alert missing here plays the system sound.
   final Map<PrayerAlert, PrayerNotificationSound> sounds;
@@ -79,12 +81,14 @@ class NotificationPreferences {
   const NotificationPreferences({
     this.enabled = true,
     this.alerts = defaultPrayerAlerts,
-    this.reminderMinutes = 0,
+    this.reminders = const {},
     this.sounds = const {},
     this.phoneSounds = const {},
   });
 
   bool includes(PrayerAlert alert) => enabled && alerts.contains(alert);
+
+  int reminderOf(PrayerAlert alert) => reminders[alert] ?? 0;
 
   /// A phone sound without a stored tone falls back to the system sound.
   PrayerNotificationSound soundOf(PrayerAlert alert) => switch (sounds[alert]) {
@@ -97,13 +101,13 @@ class NotificationPreferences {
   NotificationPreferences copyWith({
     bool? enabled,
     Set<PrayerAlert>? alerts,
-    int? reminderMinutes,
+    Map<PrayerAlert, int>? reminders,
     Map<PrayerAlert, PrayerNotificationSound>? sounds,
     Map<PrayerAlert, PhoneSound>? phoneSounds,
   }) => NotificationPreferences(
     enabled: enabled ?? this.enabled,
     alerts: Set.unmodifiable(alerts ?? this.alerts),
-    reminderMinutes: reminderMinutes ?? this.reminderMinutes,
+    reminders: Map.unmodifiable(reminders ?? this.reminders),
     sounds: Map.unmodifiable(sounds ?? this.sounds),
     phoneSounds: Map.unmodifiable(phoneSounds ?? this.phoneSounds),
   );

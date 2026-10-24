@@ -213,9 +213,11 @@ void main() {
       expect(scheduled, hasLength(1));
       await container
           .read(settingsProvider.notifier)
-          .setNotifications(const NotificationPreferences(reminderMinutes: 10));
+          .setNotifications(
+            const NotificationPreferences(reminders: {PrayerAlert.fajr: 10}),
+          );
       await pumpEventQueue();
-      expect(scheduled.last.reminderMinutes, 10);
+      expect(scheduled.last.reminderOf(PrayerAlert.fajr), 10);
       expect(container.read(prayerProvider).times, same(times));
       expect(container.read(prayerProvider).loading, isFalse);
       fail = true;
