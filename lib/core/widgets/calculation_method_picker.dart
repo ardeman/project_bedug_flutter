@@ -309,7 +309,6 @@ class _CalculationMethodPickerSheetState
   Widget build(BuildContext ctx) {
     final theme = Theme.of(ctx);
     final colors = theme.colorScheme;
-    final isDark = theme.brightness == Brightness.dark;
     final bottom = MediaQuery.of(ctx).padding.bottom;
     final h = MediaQuery.of(ctx).size.height;
 
@@ -342,9 +341,7 @@ class _CalculationMethodPickerSheetState
                                 cornerRadius: AppRadii.xl,
                               ),
                           blur: 28,
-                          color: isDark
-                              ? Colors.black.withValues(alpha: .55)
-                              : Colors.white.withValues(alpha: .78),
+                          color: glassSheetTintOf(ctx),
                           child: Container(
                             height: h * 0.6 + AppRadii.xl,
                             padding: EdgeInsets.only(

@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'dart:ui' show lerpDouble;
 
 import 'package:material_ui/material_ui.dart';
 import 'package:liquid_glass_easy/liquid_glass_easy.dart';
@@ -6,15 +7,67 @@ import 'package:material_3_expressive/material_3_expressive.dart';
 
 import '../constants/app_colors.dart';
 import '../theme/app_tokens.dart';
+import 'glass_accessibility.dart';
 import 'platform_capabilities.dart';
 import 'platform_design.dart';
 
-/// Glass tint for bars and controls that float over content: milky in
-/// light mode, smoked in dark mode, so their icons and text stay legible.
-Color glassTintOf(BuildContext ctx) =>
-    Theme.of(ctx).brightness == Brightness.dark
-    ? Colors.black.withValues(alpha: 0.28)
-    : Colors.white.withValues(alpha: 0.55);
+/// Picks a glass tint from the system settings ([GlassAccessibility]): the
+/// solid surface with Reduce Transparency, else an alpha between the clear
+/// one and the opaque one by [GlassAccessibility.opacity], so glass follows
+/// the system's Clear/Tinted style and Increase Contrast.
+Color _adaptiveTint(
+  BuildContext ctx, {
+  required Color light,
+  required Color dark,
+  required double lightAlpha,
+  required double darkAlpha,
+  required double lightOpaqueAlpha,
+  required double darkOpaqueAlpha,
+}) {
+  final theme = Theme.of(ctx);
+  final glass = GlassAccessibility.of(ctx);
+  if (glass.reduceTransparency) return theme.colorScheme.surface;
+  final t = glass.opacity;
+  return theme.brightness == Brightness.dark
+      ? dark.withValues(alpha: lerpDouble(darkAlpha, darkOpaqueAlpha, t))
+      : light.withValues(alpha: lerpDouble(lightAlpha, lightOpaqueAlpha, t));
+}
+
+/// Glass tint for bars and controls that float over content: a light
+/// veil when Clear, milky (light) or smoked (dark) when Tinted.
+Color glassTintOf(BuildContext ctx) => _adaptiveTint(
+  ctx,
+  light: Colors.white,
+  dark: Colors.black,
+  lightAlpha: 0.08,
+  darkAlpha: 0.05,
+  lightOpaqueAlpha: 0.85,
+  darkOpaqueAlpha: 0.6,
+);
+
+/// Glass tint for content cards that scroll with their list: a white frost
+/// that is faint when Clear and milky when Tinted.
+Color glassCardTintOf(BuildContext ctx) => _adaptiveTint(
+  ctx,
+  light: Colors.white,
+  dark: Colors.white,
+  lightAlpha: 0.15,
+  darkAlpha: 0.02,
+  lightOpaqueAlpha: 0.88,
+  darkOpaqueAlpha: 0.16,
+);
+
+/// Glass tint for sheets that cover most of the screen, heavier than
+/// [glassTintOf] so a long list stays readable over the page behind.
+Color glassSheetTintOf(BuildContext ctx) => _adaptiveTint(
+  ctx,
+  light: Colors.white,
+  dark: Colors.black,
+  lightAlpha: 0.35,
+  darkAlpha: 0.25,
+  lightOpaqueAlpha: 0.94,
+  darkOpaqueAlpha: 0.82,
+);
 
 /// The floating Liquid Glass tab bar on iOS and macOS: a refracting
 /// capsule whose selection pill can be tapped or dragged between tabs.
@@ -285,7 +338,6 @@ class GlassCard extends StatelessWidget {
     if (!PlatformCapabilities.isApple) {
       return Card(margin: margin, clipBehavior: Clip.antiAlias, child: child);
     }
-    final isDark = Theme.of(ctx).brightness == Brightness.dark;
     return Padding(
       padding: margin,
       child: Material(
@@ -295,7 +347,7 @@ class GlassCard extends StatelessWidget {
             cornerRadius: AppRadii.lg,
           ),
           blur: 10,
-          color: Colors.white.withValues(alpha: isDark ? 0.07 : 0.62),
+          color: glassCardTintOf(ctx),
           // The glass doesn't clip its child on every renderer; keep ink
           // splashes inside the continuous corners.
           child: ClipRSuperellipse(

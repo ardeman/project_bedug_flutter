@@ -855,8 +855,18 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
     // the title capsule.
     const actionAreaWidth =
         _actionSize * 2 + AppSpacing.xs + AppSpacing.sm + AppSpacing.md;
-    // White over the accent hero, the text color once it has faded.
-    final actionColor = Color.lerp(Colors.white, onSurface, progress)!;
+    // Over the accent hero, white unless the glass is tinted enough to turn
+    // light (the system's Tinted style), then the text color; the text color
+    // once the hero has faded.
+    final heroGlass = Color.alphaBlend(
+      glassTintOf(ctx),
+      AppColors.accentOf(ctx),
+    );
+    final heroActionColor =
+        ThemeData.estimateBrightnessForColor(heroGlass) == Brightness.light
+        ? onSurface
+        : Colors.white;
+    final actionColor = Color.lerp(heroActionColor, onSurface, progress)!;
 
     return Stack(
       fit: StackFit.expand,
@@ -1600,11 +1610,7 @@ class _LiquidGlassCard extends StatelessWidget {
             cornerRadius: AppRadii.lg,
           ),
           blur: isNext ? 14 : 10,
-          color: isNext
-              ? Colors.transparent
-              : (isDark
-                    ? Colors.white.withValues(alpha: 0.07)
-                    : Colors.white.withValues(alpha: 0.62)),
+          color: isNext ? Colors.transparent : glassCardTintOf(ctx),
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 300),
             padding: const EdgeInsets.symmetric(

@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Use the generated path directly, not flutter_gen.
 import 'generated/l10n/app_localizations.dart';
+import 'core/design/glass_accessibility.dart';
 import 'core/design/linux_desktop.dart';
 import 'core/design/platform_capabilities.dart';
 import 'core/providers/locale_provider.dart';
@@ -24,6 +25,9 @@ class BedugApp extends ConsumerWidget {
     final locale = ref.watch(localeProvider);
     final settings = ref.watch(settingsProvider);
     final accent = ref.watch(systemAccentProvider).value;
+    final glass =
+        ref.watch(glassAccessibilityProvider).value ??
+        GlassAccessibility.standard;
 
     final themeMode = switch (settings.themeMode) {
       1 => ThemeMode.light,
@@ -58,7 +62,10 @@ class BedugApp extends ConsumerWidget {
           ? const CupertinoScrollBehavior()
           : null,
       home: const HomeScreen(),
-      builder: (context, child) => AppThemeScope(child: child!),
+      builder: (context, child) => GlassAccessibilityScope(
+        settings: glass,
+        child: AppThemeScope(child: child!),
+      ),
     );
   }
 }
