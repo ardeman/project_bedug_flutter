@@ -386,7 +386,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get qiblaRotateHint =>
-      'Pusingkan peranti sehingga anak panah menghala lurus ke atas.';
+      'Pusingkan peranti sehingga ikon Kaabah tepat di atas.';
 
   @override
   String get qiblaFacing => 'Anda menghadap kiblat';

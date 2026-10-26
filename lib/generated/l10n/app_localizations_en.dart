@@ -386,7 +386,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get qiblaRotateHint =>
-      'Turn the device until the arrow points straight up.';
+      'Turn the device until the Kaaba icon is straight up.';
 
   @override
   String get qiblaFacing => 'You are facing the Qibla';

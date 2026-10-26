@@ -116,7 +116,7 @@
   "qiblaDistance": "{km} km to the Kaaba",
   "qiblaFaceNorthHint": "Point the top of the screen north, then follow the arrow.",
   "qiblaFindNorthHint": "Find north with a phone compass, a map app, or the sun.",
-  "qiblaRotateHint": "Turn the device until the arrow points straight up.",
+  "qiblaRotateHint": "Turn the device until the Kaaba icon is straight up.",
   "qiblaFacing": "You are facing the Qibla",
   "qiblaCalibrate": "Compass accuracy is low. Move the device in a figure 8.",
   "qiblaSunLeft": "The Qibla is {degrees}° to the left of the sun.",

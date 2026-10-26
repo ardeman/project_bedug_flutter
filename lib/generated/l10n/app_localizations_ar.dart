@@ -382,7 +382,8 @@ class AppLocalizationsAr extends AppLocalizations {
       'حدّد الشمال ببوصلة الهاتف أو تطبيق خرائط أو موقع الشمس.';
 
   @override
-  String get qiblaRotateHint => 'أدِر الجهاز حتى يشير السهم إلى الأعلى مباشرة.';
+  String get qiblaRotateHint =>
+      'أدِر الجهاز حتى تصبح أيقونة الكعبة في الأعلى مباشرة.';
 
   @override
   String get qiblaFacing => 'أنت تتجه نحو القبلة';

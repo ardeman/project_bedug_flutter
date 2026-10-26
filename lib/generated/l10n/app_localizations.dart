@@ -807,7 +807,7 @@ abstract class AppLocalizations {
   /// No description provided for @qiblaRotateHint.
   ///
   /// In id, this message translates to:
-  /// **'Putar perangkat sampai panah menunjuk lurus ke atas.'**
+  /// **'Putar perangkat sampai ikon Ka\'bah tepat di atas.'**
   String get qiblaRotateHint;
 
   /// No description provided for @qiblaFacing.

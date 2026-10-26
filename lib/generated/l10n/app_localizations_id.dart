@@ -387,7 +387,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get qiblaRotateHint =>
-      'Putar perangkat sampai panah menunjuk lurus ke atas.';
+      'Putar perangkat sampai ikon Ka\'bah tepat di atas.';
 
   @override
   String get qiblaFacing => 'Anda menghadap kiblat';
