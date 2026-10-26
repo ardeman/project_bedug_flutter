@@ -740,6 +740,18 @@ class _ChoiceTileState<T> extends State<_ChoiceTile<T>> {
   }
 }
 
+// Sample order is Dhuhr through Fajr; current-prayer mode starts at Asr.
+IconData _widgetPreviewPrayerIcon(int index, {bool showCurrent = false}) {
+  const icons = [
+    Icons.wb_sunny_outlined,
+    Icons.wb_cloudy_outlined,
+    Icons.nights_stay_outlined,
+    Icons.dark_mode_outlined,
+    Icons.bedtime_outlined,
+  ];
+  return icons[(index + (showCurrent ? 1 : 0)) % icons.length];
+}
+
 class WidgetAppearanceScreen extends ConsumerWidget {
   const WidgetAppearanceScreen({super.key});
 
@@ -989,7 +1001,7 @@ class _AppleWidgetCard extends StatelessWidget {
         child: CustomPaint(
           painter: _WidgetDialPainter(accent),
           child: Icon(
-            appearance.showCurrent ? Icons.wb_sunny_outlined : Icons.light_mode,
+            _widgetPreviewPrayerIcon(0, showCurrent: appearance.showCurrent),
             size: 22,
             color: accent,
           ),
@@ -1004,7 +1016,7 @@ class _AppleWidgetCard extends StatelessWidget {
         fit(
           label(
             headline,
-            large ? 28 : 22,
+            small || large ? 28 : 22,
             color: accent,
             weight: FontWeight.bold,
           ),
@@ -1090,6 +1102,15 @@ class _AppleWidgetCard extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Row(
                             children: [
+                              Icon(
+                                _widgetPreviewPrayerIcon(
+                                  index,
+                                  showCurrent: appearance.showCurrent,
+                                ),
+                                size: 18,
+                                color: ink,
+                              ),
+                              const SizedBox(width: AppSpacing.xs),
                               Expanded(child: fit(label(names[index], 15))),
                               const SizedBox(width: AppSpacing.xs),
                               label(time(index), 15),
@@ -1107,11 +1128,26 @@ class _AppleWidgetCard extends StatelessWidget {
                   for (var index = 1; index < names.length; index++)
                     Expanded(
                       child: Column(
+                        key: ValueKey('widget_preview_schedule_${size}_$index'),
                         mainAxisSize: MainAxisSize.min,
                         spacing: 2,
                         children: [
                           fit(
-                            label(names[index], 11),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              spacing: 2,
+                              children: [
+                                Icon(
+                                  _widgetPreviewPrayerIcon(
+                                    index,
+                                    showCurrent: appearance.showCurrent,
+                                  ),
+                                  size: 11,
+                                  color: ink,
+                                ),
+                                label(names[index], 11),
+                              ],
+                            ),
                             alignment: Alignment.center,
                           ),
                           fit(
@@ -1261,6 +1297,11 @@ class _AndroidWidgetCard extends StatelessWidget {
                 Expanded(
                   child: Column(
                     children: [
+                      Icon(
+                        _widgetPreviewPrayerIcon(index),
+                        size: 16,
+                        color: ink,
+                      ),
                       for (final value in [names[index], time(index)])
                         line(value, text.labelSmall, color: ink),
                     ],
@@ -1280,6 +1321,8 @@ class _AndroidWidgetCard extends StatelessWidget {
               ),
               child: Row(
                 children: [
+                  Icon(_widgetPreviewPrayerIcon(index), size: 16, color: ink),
+                  const SizedBox(width: AppSpacing.xs),
                   Expanded(
                     child: line(names[index], text.bodyMedium, color: ink),
                   ),

@@ -14,13 +14,119 @@ struct Prayer: Decodable {
     // The sky at this prayer's time, shown in the countdown dial.
     var symbol: String {
         switch key {
-        case "fajr": "sunrise.fill"
-        case "dhuhr": "sun.max.fill"
-        case "asr": "sun.min.fill"
-        case "maghrib": "sunset.fill"
-        case "isha": "moon.stars.fill"
+        case "fajr": "moon"
+        case "dhuhr": "sun.max"
+        case "asr": "cloud"
+        case "isha": "moon"
         default: "clock.fill"
         }
+    }
+}
+
+// Google Material Icons nights_stay_outlined (CC BY 4.0).
+// https://github.com/google/material-design-icons
+// https://creativecommons.org/licenses/by/4.0/
+// Glyph coordinates normalized from the same MaterialIcons font used by Flutter.
+private struct MaghribIcon: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        path.move(to: CGPoint(x: 0.82422, y: 0.73047))
+        path.addCurve(to: CGPoint(x: 0.46289, y: 0.50391), control1: CGPoint(x: 0.72070, y: 0.73047), control2: CGPoint(x: 0.55078, y: 0.67383))
+        path.addCurve(to: CGPoint(x: 0.48438, y: 0.08398), control1: CGPoint(x: 0.36523, y: 0.31445), control2: CGPoint(x: 0.44141, y: 0.15039))
+        path.addCurve(to: CGPoint(x: 0.08203, y: 0.50000), control1: CGPoint(x: 0.26172, y: 0.09180), control2: CGPoint(x: 0.08203, y: 0.27539))
+        path.addCurve(to: CGPoint(x: 0.08398, y: 0.51758), control1: CGPoint(x: 0.08203, y: 0.50586), control2: CGPoint(x: 0.08398, y: 0.51172))
+        path.addCurve(to: CGPoint(x: 0.16602, y: 0.50000), control1: CGPoint(x: 0.10938, y: 0.50586), control2: CGPoint(x: 0.13672, y: 0.50000))
+        path.addCurve(to: CGPoint(x: 0.34570, y: 0.20508), control1: CGPoint(x: 0.16602, y: 0.37109), control2: CGPoint(x: 0.23828, y: 0.25977))
+        path.addCurve(to: CGPoint(x: 0.38867, y: 0.54102), control1: CGPoint(x: 0.32422, y: 0.29492), control2: CGPoint(x: 0.32227, y: 0.41406))
+        path.addCurve(to: CGPoint(x: 0.67188, y: 0.78516), control1: CGPoint(x: 0.45312, y: 0.66797), control2: CGPoint(x: 0.56250, y: 0.74805))
+        path.addCurve(to: CGPoint(x: 0.50000, y: 0.83398), control1: CGPoint(x: 0.62109, y: 0.81641), control2: CGPoint(x: 0.56055, y: 0.83398))
+        path.addCurve(to: CGPoint(x: 0.43750, y: 0.82812), control1: CGPoint(x: 0.47852, y: 0.83398), control2: CGPoint(x: 0.45703, y: 0.83203))
+        path.addCurve(to: CGPoint(x: 0.36914, y: 0.89648), control1: CGPoint(x: 0.42188, y: 0.85742), control2: CGPoint(x: 0.39844, y: 0.88086))
+        path.addCurve(to: CGPoint(x: 0.50000, y: 0.91797), control1: CGPoint(x: 0.41016, y: 0.91016), control2: CGPoint(x: 0.45508, y: 0.91797))
+        path.addCurve(to: CGPoint(x: 0.84766, y: 0.72852), control1: CGPoint(x: 0.64453, y: 0.91797), control2: CGPoint(x: 0.77344, y: 0.84180))
+        path.addCurve(to: CGPoint(x: 0.82422, y: 0.73047), control1: CGPoint(x: 0.84180, y: 0.72852), control2: CGPoint(x: 0.83203, y: 0.73047))
+        path.closeSubpath()
+        path.move(to: CGPoint(x: 0.29102, y: 0.66602))
+        path.addLine(to: CGPoint(x: 0.28320, y: 0.66602))
+        path.addCurve(to: CGPoint(x: 0.16602, y: 0.58398), control1: CGPoint(x: 0.26758, y: 0.61914), control2: CGPoint(x: 0.22070, y: 0.58398))
+        path.addCurve(to: CGPoint(x: 0.04102, y: 0.70898), control1: CGPoint(x: 0.09766, y: 0.58398), control2: CGPoint(x: 0.04102, y: 0.63867))
+        path.addCurve(to: CGPoint(x: 0.16602, y: 0.83398), control1: CGPoint(x: 0.04102, y: 0.77734), control2: CGPoint(x: 0.09766, y: 0.83398))
+        path.addCurve(to: CGPoint(x: 0.29102, y: 0.83398), control1: CGPoint(x: 0.19336, y: 0.83398), control2: CGPoint(x: 0.26953, y: 0.83398))
+        path.addCurve(to: CGPoint(x: 0.37500, y: 0.75000), control1: CGPoint(x: 0.33789, y: 0.83398), control2: CGPoint(x: 0.37500, y: 0.79492))
+        path.addCurve(to: CGPoint(x: 0.29102, y: 0.66602), control1: CGPoint(x: 0.37500, y: 0.70508), control2: CGPoint(x: 0.33789, y: 0.66602))
+        path.closeSubpath()
+        return path.applying(CGAffineTransform(scaleX: rect.width, y: rect.height)
+            .concatenating(CGAffineTransform(translationX: rect.minX, y: rect.minY)))
+    }
+}
+
+// Google Material Icons bedtime_outlined; attribution and license above MaghribIcon.
+private struct FajrIcon: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        path.move(to: CGPoint(x: 0.38672, y: 0.18750))
+        path.addCurve(to: CGPoint(x: 0.70508, y: 0.76172), control1: CGPoint(x: 0.31836, y: 0.50195), control2: CGPoint(x: 0.54297, y: 0.70508))
+        path.addCurve(to: CGPoint(x: 0.50000, y: 0.83398), control1: CGPoint(x: 0.64844, y: 0.80664), control2: CGPoint(x: 0.57617, y: 0.83398))
+        path.addCurve(to: CGPoint(x: 0.16602, y: 0.50000), control1: CGPoint(x: 0.31641, y: 0.83398), control2: CGPoint(x: 0.16602, y: 0.68359))
+        path.addCurve(to: CGPoint(x: 0.38672, y: 0.18750), control1: CGPoint(x: 0.16602, y: 0.35547), control2: CGPoint(x: 0.25781, y: 0.23242))
+        path.closeSubpath()
+        path.move(to: CGPoint(x: 0.50000, y: 0.08398))
+        path.addCurve(to: CGPoint(x: 0.08398, y: 0.50000), control1: CGPoint(x: 0.26758, y: 0.08398), control2: CGPoint(x: 0.08398, y: 0.27344))
+        path.addCurve(to: CGPoint(x: 0.50000, y: 0.91602), control1: CGPoint(x: 0.08398, y: 0.73047), control2: CGPoint(x: 0.26953, y: 0.91602))
+        path.addCurve(to: CGPoint(x: 0.86133, y: 0.70703), control1: CGPoint(x: 0.65430, y: 0.91602), control2: CGPoint(x: 0.78906, y: 0.83203))
+        path.addCurve(to: CGPoint(x: 0.51367, y: 0.08398), control1: CGPoint(x: 0.54883, y: 0.69727), control2: CGPoint(x: 0.35742, y: 0.35547))
+        path.addCurve(to: CGPoint(x: 0.50000, y: 0.08398), control1: CGPoint(x: 0.50977, y: 0.08398), control2: CGPoint(x: 0.50391, y: 0.08398))
+        path.closeSubpath()
+        return path.applying(CGAffineTransform(scaleX: rect.width, y: rect.height)
+            .concatenating(CGAffineTransform(translationX: rect.minX, y: rect.minY)))
+    }
+}
+
+// Google Material Icons dark_mode_outlined; attribution and license above MaghribIcon.
+private struct IshaIcon: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        path.move(to: CGPoint(x: 0.39062, y: 0.23047))
+        path.addCurve(to: CGPoint(x: 0.37891, y: 0.31250), control1: CGPoint(x: 0.38281, y: 0.25586), control2: CGPoint(x: 0.37891, y: 0.28320))
+        path.addCurve(to: CGPoint(x: 0.68750, y: 0.62109), control1: CGPoint(x: 0.37891, y: 0.48242), control2: CGPoint(x: 0.51758, y: 0.62109))
+        path.addCurve(to: CGPoint(x: 0.76953, y: 0.60938), control1: CGPoint(x: 0.71680, y: 0.62109), control2: CGPoint(x: 0.74414, y: 0.61719))
+        path.addCurve(to: CGPoint(x: 0.50000, y: 0.79102), control1: CGPoint(x: 0.72656, y: 0.71680), control2: CGPoint(x: 0.62305, y: 0.79102))
+        path.addCurve(to: CGPoint(x: 0.20898, y: 0.50000), control1: CGPoint(x: 0.33984, y: 0.79102), control2: CGPoint(x: 0.20898, y: 0.66016))
+        path.addCurve(to: CGPoint(x: 0.39062, y: 0.23047), control1: CGPoint(x: 0.20898, y: 0.37695), control2: CGPoint(x: 0.28320, y: 0.27344))
+        path.closeSubpath()
+        path.move(to: CGPoint(x: 0.50000, y: 0.12500))
+        path.addCurve(to: CGPoint(x: 0.12500, y: 0.50000), control1: CGPoint(x: 0.29297, y: 0.12500), control2: CGPoint(x: 0.12500, y: 0.29297))
+        path.addCurve(to: CGPoint(x: 0.50000, y: 0.87500), control1: CGPoint(x: 0.12500, y: 0.70703), control2: CGPoint(x: 0.29297, y: 0.87500))
+        path.addCurve(to: CGPoint(x: 0.87500, y: 0.50000), control1: CGPoint(x: 0.70703, y: 0.87500), control2: CGPoint(x: 0.87500, y: 0.70703))
+        path.addCurve(to: CGPoint(x: 0.87109, y: 0.44336), control1: CGPoint(x: 0.87500, y: 0.48047), control2: CGPoint(x: 0.87305, y: 0.46094))
+        path.addCurve(to: CGPoint(x: 0.68750, y: 0.53711), control1: CGPoint(x: 0.83008, y: 0.50000), control2: CGPoint(x: 0.76367, y: 0.53711))
+        path.addCurve(to: CGPoint(x: 0.46289, y: 0.31250), control1: CGPoint(x: 0.56250, y: 0.53711), control2: CGPoint(x: 0.46289, y: 0.43750))
+        path.addCurve(to: CGPoint(x: 0.55664, y: 0.12891), control1: CGPoint(x: 0.46289, y: 0.23633), control2: CGPoint(x: 0.50000, y: 0.16992))
+        path.addCurve(to: CGPoint(x: 0.50000, y: 0.12500), control1: CGPoint(x: 0.53906, y: 0.12695), control2: CGPoint(x: 0.51953, y: 0.12500))
+        path.closeSubpath()
+        return path.applying(CGAffineTransform(scaleX: rect.width, y: rect.height)
+            .concatenating(CGAffineTransform(translationX: rect.minX, y: rect.minY)))
+    }
+}
+
+private struct PrayerIcon: View {
+    let prayer: Prayer
+    let size: CGFloat
+
+    var body: some View {
+        Group {
+            if prayer.key == "maghrib" {
+                MaghribIcon().fill()
+            } else if prayer.key == "isha" {
+                IshaIcon().fill()
+            } else if prayer.key == "fajr" {
+                FajrIcon().fill()
+            } else {
+                Image(systemName: prayer.symbol).font(.system(size: size))
+            }
+        }
+        .frame(width: size, height: size)
+        .accessibilityHidden(true)
     }
 }
 
@@ -205,7 +311,7 @@ struct PrayerWidgetView: View {
                 if family == .systemSmall {
                     HStack(spacing: 8) {
                         VStack(alignment: .leading, spacing: 4) {
-                            Text(entry.headline?.name ?? prayer.name).font(.title2.bold())
+                            Text(entry.headline?.name ?? prayer.name).font(.title.bold())
                                 .foregroundStyle(accent).widgetAccentable()
                             timeLine(for: prayer).font(.caption)
                         }
@@ -256,6 +362,9 @@ struct PrayerWidgetView: View {
                     VStack(spacing: 0) {
                         ForEach(entry.upcoming, id: \.time) { item in
                             HStack {
+                                PrayerIcon(prayer: item, size: 17)
+                                    .frame(width: 20)
+                                    .accessibilityHidden(true)
                                 Text(item.name)
                                 Spacer(minLength: 8)
                                 Text(item.date, style: .time).monospacedDigit()
@@ -272,7 +381,11 @@ struct PrayerWidgetView: View {
                     HStack(spacing: 4) {
                         ForEach(entry.upcoming, id: \.time) { item in
                             VStack(spacing: 2) {
-                                Text(item.name).font(.caption2)
+                                HStack(spacing: 2) {
+                                    PrayerIcon(prayer: item, size: 11)
+                                        .accessibilityHidden(true)
+                                    Text(item.name)
+                                }.font(.caption2)
                                 Text(item.date, style: .time).font(.caption2.monospacedDigit())
                             }
                             .lineLimit(1).minimumScaleFactor(0.65)
@@ -315,8 +428,7 @@ struct PrayerWidgetView: View {
                          countsDown: true) {
                 EmptyView()
             } currentValueLabel: {
-                Image(systemName: prayer.symbol)
-                    .font(.title3).foregroundStyle(accent)
+                PrayerIcon(prayer: prayer, size: 20).foregroundStyle(accent)
             }
             .progressViewStyle(.circular).tint(accent).widgetAccentable()
             // Draw ticks in place so WidgetKit's archived view contains no
@@ -356,7 +468,7 @@ struct LockScreenPrayerView: View {
                     ZStack {
                         countdownRing(for: prayer)
                         VStack(spacing: 0) {
-                            Image(systemName: prayer.symbol).font(.caption)
+                            PrayerIcon(prayer: prayer, size: 12)
                                 .widgetAccentable()
                             Text(prayer.date, style: .time)
                                 .font(.caption2.monospacedDigit())
@@ -369,14 +481,14 @@ struct LockScreenPrayerView: View {
                     Label {
                         Text("\(prayer.name) \(Text(prayer.date, style: .time))")
                     } icon: {
-                        Image(systemName: prayer.symbol)
+                        PrayerIcon(prayer: prayer, size: 12)
                     }
                 default:
                     HStack(spacing: 8) {
                         if entry.data?.showAnalog != false {
                             ZStack {
                                 countdownRing(for: prayer)
-                                Image(systemName: prayer.symbol).font(.body)
+                                PrayerIcon(prayer: prayer, size: 17)
                                     .widgetAccentable()
                             }
                             .frame(width: 44, height: 44)
@@ -558,8 +670,7 @@ struct LockScreenSkyStripView: View {
         let isNext = item.date == next.date
         let passed = item.date <= entry.date
         return VStack(spacing: 3) {
-            Image(systemName: item.symbol)
-                .font(.system(size: 15, weight: .medium))
+            PrayerIcon(prayer: item, size: 15)
                 .symbolRenderingMode(.hierarchical)
                 // The symbols differ in height; a shared box keeps the times level.
                 .frame(height: 18)

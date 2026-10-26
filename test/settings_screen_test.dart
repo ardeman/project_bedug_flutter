@@ -149,8 +149,10 @@ void main() {
         expect(container.read(widgetAppearanceProvider).showCurrent, isTrue);
         expect(find.text('Now'), findsNWidgets(3));
         expect(find.textContaining('Asr ·'), findsNWidgets(3));
+        expect(find.byIcon(Icons.wb_cloudy_outlined), findsNWidgets(3));
         await tester.tap(currentSwitch);
         await tester.pumpAndSettle();
+        expect(find.byIcon(Icons.wb_sunny_outlined), findsNWidgets(3));
       } else {
         expect(currentSwitch, findsNothing);
       }
@@ -229,13 +231,26 @@ void main() {
       final prayerName = tester.widget<Text>(
         find.descendant(of: preview(0), matching: find.text('Dhuhr')),
       );
-      expect(prayerName.style?.fontSize, 22);
+      expect(prayerName.style?.fontSize, 28);
       expect(prayerName.style?.fontWeight, FontWeight.bold);
-      final columns = ['Asr', 'Maghrib', 'Isha', 'Fajr']
+      for (final size in [1, 2]) {
+        for (final icon in [
+          Icons.wb_cloudy_outlined,
+          Icons.nights_stay_outlined,
+          Icons.dark_mode_outlined,
+          Icons.bedtime_outlined,
+        ]) {
+          expect(
+            find.descendant(of: preview(size), matching: find.byIcon(icon)),
+            findsOneWidget,
+          );
+        }
+      }
+      final columns = [1, 2, 3, 4]
           .map(
-            (name) => tester
+            (index) => tester
                 .getCenter(
-                  find.descendant(of: preview(1), matching: find.text(name)),
+                  find.byKey(ValueKey('widget_preview_schedule_1_$index')),
                 )
                 .dx,
           )

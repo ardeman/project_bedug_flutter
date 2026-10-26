@@ -5,6 +5,15 @@
       "date": null,
       "changes": [
         {
+          "type": "fixed",
+          "text": {
+            "en": "Widget prayer icons now match Prayer Times. Medium and large widgets also show icons for upcoming prayers.",
+            "id": "Ikon salat di widget kini sesuai dengan Waktu Salat. Widget sedang dan besar juga menampilkan ikon salat mendatang.",
+            "ms": "Ikon solat pada widget kini sepadan dengan Waktu Solat. Widget sederhana dan besar turut memaparkan ikon solat akan datang.",
+            "ar": "تتطابق رموز الصلاة في الأدوات الآن مع مواقيت الصلاة. تعرض الأدوات المتوسطة والكبيرة أيضًا رموز الصلوات القادمة."
+          }
+        },
+        {
           "type": "improved",
           "text": {
             "en": "Small iPhone widgets show a larger, bold prayer name, with matching Widget Style previews.",
