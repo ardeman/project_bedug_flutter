@@ -282,7 +282,7 @@ The infaq method depends on where the build is distributed, not only on the plat
 | --- | --- | --- | --- |
 | `play` | Android on Google Play | AdMob | Play Billing |
 | `appstore` | iOS App Store, Mac App Store | AdMob on iOS only | StoreKit |
-| `direct` | Windows (Microsoft Store), Linux (Flathub); later perhaps an Android APK and a macOS DMG | AdMob on an Android APK only (expect lower fill: app-ads.txt can't verify an app without a store listing) | Trakteer / Ko-fi links |
+| `direct` | Windows (Microsoft Store), Linux (Flathub); later perhaps an Android APK and a macOS DMG | AdMob on an Android APK only (expect lower fill: app-ads.txt can't verify an app without a store listing) | Dahlunas infaq code (Phase 3), Trakteer / Ko-fi links until then |
 | `fdroid` (later) | Android on F-Droid | None | Trakteer / Ko-fi links, plus F-Droid's Donate metadata |
 
 - Rollout order: `play` and `appstore` (iOS and the Mac App Store) first, since that's where users and ad revenue are. Then `direct` for Windows on the Microsoft Store and Linux on Flathub. A direct Android APK, a macOS DMG, Snap, AppImage and `fdroid` are skipped for now.
@@ -308,6 +308,17 @@ The infaq method depends on where the build is distributed, not only on the plat
 4. **Placement:** one adaptive banner above the nav bar on the Calendar and Settings tabs, padded for the glass nav bar and the safe area. No ads on prayer times, qibla or (later) the Quran, dzikir and dua screens, and no interstitials. The banner carries a short "Your infaq turns off the ads" line that opens the infaq sheet. Hide every ad when `adFree` is set.
 5. **Content filter:** in the AdMob console, block gambling, alcohol, dating and other sensitive categories. This matters for a Muslim audience, and online gambling ads are a known problem in Indonesia.
 6. **Tests:** ads are hidden when `adFree` is set and are never built on macOS, Windows or Linux.
+
+**Phase 3: Infaq through Dahlunas on direct builds**
+
+[Dahlunas](https://github.com/ardeman/project-dahlunas-go), Ardeman's own shop, sells Bedug infaq codes (project 2) at the same Rp 5,000, 19,000 and 49,000, paid by QRIS through Midtrans. It is in Dahlunas's sandbox since 2026-10-26; Dahlunas's production shop opens after Midtrans approves the account. Only `direct` (and later `fdroid`) builds use it: store builds keep in-app purchase, as store rules require. A code is active on one device at a time and moves to another up to 3 times. The contract is Dahlunas's `docs/activation.md`, with the code format in `docs/code-format.md`.
+
+1. **Install ID:** on first launch, 16 random bytes in `shared_preferences`, as 32 lowercase hex characters; never a hardware or advertising ID.
+2. **Code entry:** a "Have a code?" row on the infaq page on direct builds. It posts the code, the install ID and `"move": true` to `https://dahlunas.ardeman.com/activations`, verifies the returned `DA1.` activation with Dahlunas's public key for Bedug (Ed25519, `cryptography` package or a small pure-Dart verifier), stores code and activation, and sets `adFree`. Show the moves left, and the support email on `move_limit`.
+3. **Checks:** verify the stored activation offline on every launch. About once a week while online, post with `"move": false`; on `moved`, clear the activation and `adFree` and offer to enter the code again. Network failures and `busy` keep the current state, so prayer times never depend on Dahlunas.
+4. **Links:** a "Give infaq" row opening the Dahlunas shop in the browser, in place of Trakteer and Ko-fi once Dahlunas's production shop is open; until then keep the links.
+5. **Keys:** debug builds bundle the sandbox public key (key 1) `31267471750b709622d73dbf2dc88df415d67895609910fa967a0545b04f7e50` and use `https://dah-lunas-sandbox.web.app`; release builds bundle the production key, made when Dahlunas adds Bedug to production.
+6. **Privacy policy and l10n:** say that entering a code sends it and the random install ID to Dahlunas, which keeps the ID's hash to allow one device at a time; `infaqCode*` keys in every ARB file. Tests against the fixture in Dahlunas's `docs/activation.md`.
 
 **Owner setup (not code)**
 
