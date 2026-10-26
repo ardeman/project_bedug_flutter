@@ -14,6 +14,15 @@
           }
         },
         {
+          "type": "new",
+          "text": {
+            "en": "Settings → Infaq: support Bedug's development with an infaq. Any infaq turns off the ads, and it comes back on a new device with Restore purchases. On Windows and Linux, Infaq links to Trakteer and Ko-fi.",
+            "id": "Pengaturan → Infak: dukung pengembangan Bedug dengan berinfak. Infak apa pun mematikan iklan, dan bisa dipulihkan di perangkat baru lewat Pulihkan pembelian. Di Windows dan Linux, Infak membuka Trakteer dan Ko-fi.",
+            "ms": "Tetapan → Infak: sokong pembangunan Bedug dengan berinfak. Sebarang infak mematikan iklan, dan boleh dipulihkan pada peranti baharu melalui Pulihkan pembelian. Di Windows dan Linux, Infak membuka Trakteer dan Ko-fi.",
+            "ar": "الإعدادات ← إنفاق: ادعم تطوير بدوق بالإنفاق. أي إنفاق يوقف الإعلانات، ويُستعاد على جهاز جديد عبر «استعادة المشتريات». وعلى Windows وLinux يفتح «إنفاق» صفحتي Trakteer وKo-fi."
+          }
+        },
+        {
           "type": "improved",
           "text": {
             "en": "On Mac, the glass follows your Liquid Glass setting, from Clear to Tinted, and Clear glass is now clearer. On iPhone, iPad and Mac it also follows your accessibility settings: Increase Contrast makes it more opaque, and Reduce Transparency makes it solid.",

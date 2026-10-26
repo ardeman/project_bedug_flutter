@@ -15,6 +15,7 @@ import 'core/theme/app_theme.dart';
 import 'core/theme/app_theme_scope.dart';
 import 'home/home_screen.dart';
 import 'core/services/prayer_widget_service.dart';
+import 'features/infaq/infaq_provider.dart';
 
 class BedugApp extends ConsumerWidget {
   const BedugApp({super.key});
@@ -22,6 +23,7 @@ class BedugApp extends ConsumerWidget {
   @override
   Widget build(BuildContext ctx, WidgetRef ref) {
     ref.watch(prayerWidgetSyncProvider);
+    ref.watch(infaqListenerProvider);
     final locale = ref.watch(localeProvider);
     final settings = ref.watch(settingsProvider);
     final accent = ref.watch(systemAccentProvider).value;

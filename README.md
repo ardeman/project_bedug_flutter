@@ -290,15 +290,14 @@ The infaq method depends on where the build is distributed, not only on the plat
 - In-app purchase on macOS works only in a Mac App Store build. A DMG build uses the links.
 - Skipped for now: Huawei AppGallery (no Google services, so it would need Huawei's own IAP and ads SDK), Samsung Galaxy Store (check whether its policy requires Samsung IAP first), and EU alternative iOS marketplaces.
 
-**Phase 1: Infaq (next)**
+**Phase 1: Infaq (done in code; store products and device purchase checks pending)**
 
 1. **Store setup (manual):** paid-apps agreement, tax and bank details. Create the same product IDs in App Store Connect and Play Console:
-   - consumables `infaq_small`, `infaq_medium` and `infaq_large` at Rp 10k, 25k and 50k (matching price tiers abroad), which can be given repeatedly;
-   - a non-consumable `infaq_ad_free` at Rp 29k (about US$1.99), which can be restored on a new device.
+   - non-consumables `infaq_small`, `infaq_medium` and `infaq_large`, priced as in Coba Lagi: a US base price of $0.99, $2.99 and $4.99, with Indonesia set by hand to Rp 5,000, 19,000 and 49,000, the same in both stores. Any of them turns the ads off and is restored on a new device, so the small one is in effect the ad-free price. Keep the US base: with an Indonesian base, Apple rounds Rp 5,000 and Rp 19,000 both up to $0.99 elsewhere. Family Sharing, once on, can't be turned off again.
    Create the Trakteer and Ko-fi pages. In the App Store review notes, explain: "Infaq is a voluntary in-app purchase that funds Bedug's development. No money goes to a charity or a third party."
-2. **`lib/features/infaq/`:** an `infaqProvider` that picks in-app purchase or links from the build channel, loads the products, buys and completes purchases, restores `infaq_ad_free`, and handles cancellation and errors. It stores an `adFree` flag in `shared_preferences`. Any infaq sets the flag. Only `infaq_ad_free` survives a reinstall, and the sheet says so.
-3. **UI:** an "Infaq" entry in Settings opens a sheet with the tiers, a restore button and a thank-you state after payment. Use a liquid-glass or native sheet on Apple platforms, guarded against opening twice; an M3 bottom sheet on Android; and link buttons on Windows and Linux. No nag pop-ups.
-4. **l10n keys** (`infaq*`) in every ARB file, and tests for the provider (with a fake `InAppPurchase` platform) and for the Settings entry.
+2. **`lib/features/infaq/` (done):** `infaqProvider` picks in-app purchase or links from the build channel (`DistributionChannel` in `lib/core/services/distribution_channel.dart`; without `CHANNEL`, a build gets its platform's store), listens for purchases from launch, loads the products, buys and completes purchases, restores earlier infaq, and handles cancellation and errors. It stores an `adFree` flag in `shared_preferences`, set by any infaq bought or restored; the page says Restore purchases brings it back after a reinstall.
+3. **UI (done; device visual checks pending):** an "Infaq" row in Settings → About opens a page (`InfaqScreen`) with the tiers and their store prices, a restore row and a thank-you state after payment; on direct builds, Trakteer and Ko-fi rows. It is a pushed page like the other Settings pages rather than a sheet, so it uses the same grouped rows on every platform and needs no double-open guard. No nag pop-ups.
+4. **l10n keys (done)** (`infaq*`) in every ARB file, and tests (`test/infaq_test.dart`) for the provider with a fake `InAppPurchase` and for the page.
 
 **Phase 2: Ads (Android and iOS)**
 
@@ -322,7 +321,7 @@ The infaq method depends on where the build is distributed, not only on the plat
 
 **Owner setup (not code)**
 
-- Create the AdMob, Trakteer and Ko-fi accounts and put the handles in the code. Debug builds use AdMob test IDs, so coding doesn't wait on this.
+- Create the AdMob, Trakteer and Ko-fi accounts and put the handles in the code (`InfaqLinks` in `lib/features/infaq/infaq_provider.dart` assumes `trakteer.id/bedug` and `ko-fi.com/bedug`). Debug builds use AdMob test IDs, so coding doesn't wait on this.
 - Enroll in Apple's Small Business Program so the App Store takes 15% instead of 30% (Google applies 15% to the first US$1M a year automatically).
 
 ## Website

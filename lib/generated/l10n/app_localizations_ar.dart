@@ -680,6 +680,71 @@ class AppLocalizationsAr extends AppLocalizations {
   String get widgetPreviewCountdown => '٠١:٣٠:٠٠';
 
   @override
+  String get infaq => 'إنفاق';
+
+  @override
+  String get infaqSubtitle => 'ادعم تطوير بدوق';
+
+  @override
+  String get infaqThanksSubtitle => 'شكرًا على إنفاقك';
+
+  @override
+  String get infaqIntro =>
+      'بدوق مجاني. إنفاقك يدعم تطوير بدوق ويوقف الإعلانات، ولا يذهب إلى جمعية خيرية أو أي جهة أخرى.';
+
+  @override
+  String get infaqIntroNoAds =>
+      'بدوق مجاني. إنفاقك يدعم تطوير بدوق، ولا يذهب إلى جمعية خيرية أو أي جهة أخرى.';
+
+  @override
+  String get infaqSmall => 'إنفاق صغير';
+
+  @override
+  String get infaqMedium => 'إنفاق متوسط';
+
+  @override
+  String get infaqLarge => 'إنفاق كبير';
+
+  @override
+  String get infaqRestoreNote =>
+      'يعود إنفاقك بعد إعادة التثبيت أو على جهاز جديد: اضغط «استعادة المشتريات».';
+
+  @override
+  String get infaqRestore => 'استعادة المشتريات';
+
+  @override
+  String get infaqThanks => 'شكرًا على إنفاقك. جزاك الله خيرًا!';
+
+  @override
+  String get infaqAdsOff => 'الإعلانات متوقفة على هذا الجهاز.';
+
+  @override
+  String get infaqPending => 'بانتظار اكتمال الدفع…';
+
+  @override
+  String get infaqUnavailable =>
+      'تعذّر الوصول إلى المتجر. تحقق من اتصالك وحاول مرة أخرى.';
+
+  @override
+  String get infaqFailed => 'لم يكتمل الإنفاق. حاول مرة أخرى.';
+
+  @override
+  String get infaqRetry => 'حاول مرة أخرى';
+
+  @override
+  String get infaqTrakteer => 'Trakteer';
+
+  @override
+  String get infaqTrakteerMethods =>
+      'QRIS والمحافظ الإلكترونية والتحويل البنكي';
+
+  @override
+  String get infaqKofi => 'Ko-fi';
+
+  @override
+  String get infaqKofiMethods => 'PayPal والبطاقات';
+
+  @override
   String get widgetShowCurrent => 'عرض الصلاة الحالية';
 
   @override

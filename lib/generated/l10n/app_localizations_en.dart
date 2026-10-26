@@ -684,6 +684,70 @@ class AppLocalizationsEn extends AppLocalizations {
   String get widgetPreviewCountdown => '01:30:00';
 
   @override
+  String get infaq => 'Infaq';
+
+  @override
+  String get infaqSubtitle => 'Support Bedug\'s development';
+
+  @override
+  String get infaqThanksSubtitle => 'Thank you for your infaq';
+
+  @override
+  String get infaqIntro =>
+      'Bedug is free. Your infaq supports Bedug\'s development and turns off the ads. It does not go to a charity or anyone else.';
+
+  @override
+  String get infaqIntroNoAds =>
+      'Bedug is free. Your infaq supports Bedug\'s development. It does not go to a charity or anyone else.';
+
+  @override
+  String get infaqSmall => 'Small infaq';
+
+  @override
+  String get infaqMedium => 'Medium infaq';
+
+  @override
+  String get infaqLarge => 'Large infaq';
+
+  @override
+  String get infaqRestoreNote =>
+      'Your infaq comes back after reinstalling or on a new device: tap Restore purchases.';
+
+  @override
+  String get infaqRestore => 'Restore purchases';
+
+  @override
+  String get infaqThanks => 'Thank you for your infaq. Jazakallahu khairan!';
+
+  @override
+  String get infaqAdsOff => 'Ads are off on this device.';
+
+  @override
+  String get infaqPending => 'Waiting for the payment to finish…';
+
+  @override
+  String get infaqUnavailable =>
+      'The store can\'t be reached. Check your connection and try again.';
+
+  @override
+  String get infaqFailed => 'The infaq didn\'t go through. Please try again.';
+
+  @override
+  String get infaqRetry => 'Try again';
+
+  @override
+  String get infaqTrakteer => 'Trakteer';
+
+  @override
+  String get infaqTrakteerMethods => 'QRIS, e-wallets and bank transfer';
+
+  @override
+  String get infaqKofi => 'Ko-fi';
+
+  @override
+  String get infaqKofiMethods => 'PayPal and cards';
+
+  @override
   String get widgetShowCurrent => 'Show current prayer';
 
   @override

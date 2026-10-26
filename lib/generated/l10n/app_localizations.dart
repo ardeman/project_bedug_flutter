@@ -1362,6 +1362,126 @@ abstract class AppLocalizations {
   /// **'01:30:00'**
   String get widgetPreviewCountdown;
 
+  /// No description provided for @infaq.
+  ///
+  /// In id, this message translates to:
+  /// **'Infak'**
+  String get infaq;
+
+  /// No description provided for @infaqSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Dukung pengembangan Bedug'**
+  String get infaqSubtitle;
+
+  /// No description provided for @infaqThanksSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Terima kasih atas infak Anda'**
+  String get infaqThanksSubtitle;
+
+  /// No description provided for @infaqIntro.
+  ///
+  /// In id, this message translates to:
+  /// **'Bedug gratis. Infak Anda mendukung pengembangan Bedug dan mematikan iklan. Infak tidak disalurkan ke lembaga amal atau pihak lain.'**
+  String get infaqIntro;
+
+  /// No description provided for @infaqIntroNoAds.
+  ///
+  /// In id, this message translates to:
+  /// **'Bedug gratis. Infak Anda mendukung pengembangan Bedug. Infak tidak disalurkan ke lembaga amal atau pihak lain.'**
+  String get infaqIntroNoAds;
+
+  /// No description provided for @infaqSmall.
+  ///
+  /// In id, this message translates to:
+  /// **'Infak kecil'**
+  String get infaqSmall;
+
+  /// No description provided for @infaqMedium.
+  ///
+  /// In id, this message translates to:
+  /// **'Infak sedang'**
+  String get infaqMedium;
+
+  /// No description provided for @infaqLarge.
+  ///
+  /// In id, this message translates to:
+  /// **'Infak besar'**
+  String get infaqLarge;
+
+  /// No description provided for @infaqRestoreNote.
+  ///
+  /// In id, this message translates to:
+  /// **'Infak Anda kembali setelah instal ulang atau di perangkat baru: ketuk Pulihkan pembelian.'**
+  String get infaqRestoreNote;
+
+  /// No description provided for @infaqRestore.
+  ///
+  /// In id, this message translates to:
+  /// **'Pulihkan pembelian'**
+  String get infaqRestore;
+
+  /// No description provided for @infaqThanks.
+  ///
+  /// In id, this message translates to:
+  /// **'Terima kasih atas infak Anda. Jazakallahu khairan!'**
+  String get infaqThanks;
+
+  /// No description provided for @infaqAdsOff.
+  ///
+  /// In id, this message translates to:
+  /// **'Iklan sudah dimatikan di perangkat ini.'**
+  String get infaqAdsOff;
+
+  /// No description provided for @infaqPending.
+  ///
+  /// In id, this message translates to:
+  /// **'Menunggu pembayaran selesai…'**
+  String get infaqPending;
+
+  /// No description provided for @infaqUnavailable.
+  ///
+  /// In id, this message translates to:
+  /// **'Toko tidak dapat dijangkau. Periksa koneksi lalu coba lagi.'**
+  String get infaqUnavailable;
+
+  /// No description provided for @infaqFailed.
+  ///
+  /// In id, this message translates to:
+  /// **'Infak tidak berhasil. Silakan coba lagi.'**
+  String get infaqFailed;
+
+  /// No description provided for @infaqRetry.
+  ///
+  /// In id, this message translates to:
+  /// **'Coba lagi'**
+  String get infaqRetry;
+
+  /// No description provided for @infaqTrakteer.
+  ///
+  /// In id, this message translates to:
+  /// **'Trakteer'**
+  String get infaqTrakteer;
+
+  /// No description provided for @infaqTrakteerMethods.
+  ///
+  /// In id, this message translates to:
+  /// **'QRIS, dompet digital, dan transfer bank'**
+  String get infaqTrakteerMethods;
+
+  /// No description provided for @infaqKofi.
+  ///
+  /// In id, this message translates to:
+  /// **'Ko-fi'**
+  String get infaqKofi;
+
+  /// No description provided for @infaqKofiMethods.
+  ///
+  /// In id, this message translates to:
+  /// **'PayPal dan kartu'**
+  String get infaqKofiMethods;
+
   /// No description provided for @widgetShowCurrent.
   ///
   /// In id, this message translates to:

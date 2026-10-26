@@ -686,6 +686,71 @@ class AppLocalizationsId extends AppLocalizations {
   String get widgetPreviewCountdown => '01:30:00';
 
   @override
+  String get infaq => 'Infak';
+
+  @override
+  String get infaqSubtitle => 'Dukung pengembangan Bedug';
+
+  @override
+  String get infaqThanksSubtitle => 'Terima kasih atas infak Anda';
+
+  @override
+  String get infaqIntro =>
+      'Bedug gratis. Infak Anda mendukung pengembangan Bedug dan mematikan iklan. Infak tidak disalurkan ke lembaga amal atau pihak lain.';
+
+  @override
+  String get infaqIntroNoAds =>
+      'Bedug gratis. Infak Anda mendukung pengembangan Bedug. Infak tidak disalurkan ke lembaga amal atau pihak lain.';
+
+  @override
+  String get infaqSmall => 'Infak kecil';
+
+  @override
+  String get infaqMedium => 'Infak sedang';
+
+  @override
+  String get infaqLarge => 'Infak besar';
+
+  @override
+  String get infaqRestoreNote =>
+      'Infak Anda kembali setelah instal ulang atau di perangkat baru: ketuk Pulihkan pembelian.';
+
+  @override
+  String get infaqRestore => 'Pulihkan pembelian';
+
+  @override
+  String get infaqThanks =>
+      'Terima kasih atas infak Anda. Jazakallahu khairan!';
+
+  @override
+  String get infaqAdsOff => 'Iklan sudah dimatikan di perangkat ini.';
+
+  @override
+  String get infaqPending => 'Menunggu pembayaran selesai…';
+
+  @override
+  String get infaqUnavailable =>
+      'Toko tidak dapat dijangkau. Periksa koneksi lalu coba lagi.';
+
+  @override
+  String get infaqFailed => 'Infak tidak berhasil. Silakan coba lagi.';
+
+  @override
+  String get infaqRetry => 'Coba lagi';
+
+  @override
+  String get infaqTrakteer => 'Trakteer';
+
+  @override
+  String get infaqTrakteerMethods => 'QRIS, dompet digital, dan transfer bank';
+
+  @override
+  String get infaqKofi => 'Ko-fi';
+
+  @override
+  String get infaqKofiMethods => 'PayPal dan kartu';
+
+  @override
   String get widgetShowCurrent => 'Tampilkan salat saat ini';
 
   @override

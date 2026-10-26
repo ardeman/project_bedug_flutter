@@ -1,5 +1,6 @@
 import 'package:bedug/app.dart';
 import 'package:bedug/core/providers/locale_provider.dart';
+import 'package:bedug/features/infaq/infaq_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,7 +11,10 @@ void main() {
     final prefs = await SharedPreferences.getInstance();
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [sharedPreferencesProvider.overrideWithValue(prefs)],
+        overrides: [
+          sharedPreferencesProvider.overrideWithValue(prefs),
+          infaqStoreProvider.overrideWithValue(null),
+        ],
         child: const BedugApp(),
       ),
     );

@@ -685,6 +685,71 @@ class AppLocalizationsMs extends AppLocalizations {
   String get widgetPreviewCountdown => '01:30:00';
 
   @override
+  String get infaq => 'Infak';
+
+  @override
+  String get infaqSubtitle => 'Sokong pembangunan Bedug';
+
+  @override
+  String get infaqThanksSubtitle => 'Terima kasih atas infak anda';
+
+  @override
+  String get infaqIntro =>
+      'Bedug percuma. Infak anda menyokong pembangunan Bedug dan mematikan iklan. Infak tidak disalurkan kepada badan amal atau pihak lain.';
+
+  @override
+  String get infaqIntroNoAds =>
+      'Bedug percuma. Infak anda menyokong pembangunan Bedug. Infak tidak disalurkan kepada badan amal atau pihak lain.';
+
+  @override
+  String get infaqSmall => 'Infak kecil';
+
+  @override
+  String get infaqMedium => 'Infak sederhana';
+
+  @override
+  String get infaqLarge => 'Infak besar';
+
+  @override
+  String get infaqRestoreNote =>
+      'Infak anda kembali selepas pasang semula atau pada peranti baharu: ketik Pulihkan pembelian.';
+
+  @override
+  String get infaqRestore => 'Pulihkan pembelian';
+
+  @override
+  String get infaqThanks =>
+      'Terima kasih atas infak anda. Jazakallahu khairan!';
+
+  @override
+  String get infaqAdsOff => 'Iklan telah dimatikan pada peranti ini.';
+
+  @override
+  String get infaqPending => 'Menunggu pembayaran selesai…';
+
+  @override
+  String get infaqUnavailable =>
+      'Kedai tidak dapat dicapai. Semak sambungan dan cuba lagi.';
+
+  @override
+  String get infaqFailed => 'Infak tidak berjaya. Sila cuba lagi.';
+
+  @override
+  String get infaqRetry => 'Cuba lagi';
+
+  @override
+  String get infaqTrakteer => 'Trakteer';
+
+  @override
+  String get infaqTrakteerMethods => 'QRIS, e-dompet dan pindahan bank';
+
+  @override
+  String get infaqKofi => 'Ko-fi';
+
+  @override
+  String get infaqKofiMethods => 'PayPal dan kad';
+
+  @override
   String get widgetShowCurrent => 'Tunjukkan solat semasa';
 
   @override

@@ -28,6 +28,9 @@ import '../../core/widgets/city_picker.dart';
 import '../../core/widgets/glass_menu.dart';
 import '../../generated/l10n/app_localizations.dart';
 import '../changelog/changelog_screen.dart';
+import '../infaq/infaq_provider.dart';
+import '../infaq/infaq_screen.dart';
+import 'settings_section.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -43,7 +46,7 @@ class SettingsScreen extends ConsumerWidget {
 
     final sections = [
       // ── Section: Salat ─────────────────────────────────────────────────
-      _Section(
+      SettingsSection(
         title: l10n.prayerTimes,
         children: [
           // Metode Hisab
@@ -148,7 +151,7 @@ class SettingsScreen extends ConsumerWidget {
       ),
 
       // ── Section: Tampilan ────────────────────────────────────────────────
-      _Section(
+      SettingsSection(
         title: l10n.theme,
         children: [
           _ChoiceTile<int>(
@@ -166,7 +169,7 @@ class SettingsScreen extends ConsumerWidget {
       ),
 
       // ── Section: Bahasa ──────────────────────────────────────────────────
-      _Section(
+      SettingsSection(
         title: l10n.language,
         children: [
           _ChoiceTile<String>(
@@ -188,9 +191,25 @@ class SettingsScreen extends ConsumerWidget {
       ),
 
       // ── Section: Lainnya ─────────────────────────────────────────────────
-      _Section(
+      SettingsSection(
         title: l10n.about,
         children: [
+          PlatformListTile(
+            leading: Icon(
+              Icons.volunteer_activism_outlined,
+              color: AppColors.accentOf(ctx),
+            ),
+            title: Text(l10n.infaq),
+            subtitle: Text(
+              ref.watch(infaqProvider.select((s) => s.adFree))
+                  ? l10n.infaqThanksSubtitle
+                  : l10n.infaqSubtitle,
+            ),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => Navigator.of(ctx).push(
+              MaterialPageRoute<void>(builder: (_) => const InfaqScreen()),
+            ),
+          ),
           PlatformListTile(
             leading: Icon(
               Icons.new_releases_outlined,
@@ -311,7 +330,7 @@ class NotificationSettingsScreen extends ConsumerWidget {
       appBar: GlassTopBar(title: l10n.notifications),
       body: ListView(
         children: [
-          _Section(
+          SettingsSection(
             children: [
               PlatformListTile(
                 title: Text(l10n.allNotifications),
@@ -331,7 +350,7 @@ class NotificationSettingsScreen extends ConsumerWidget {
               child: Text(l10n.notificationSchedulingError),
             ),
           if (preferences.enabled)
-            _Section(
+            SettingsSection(
               title: l10n.notificationTimes,
               children: [
                 for (final alert in PrayerAlert.values)
@@ -374,7 +393,7 @@ class NotificationSettingsScreen extends ConsumerWidget {
               ],
             ),
           if (NotificationService.supportsScheduling)
-            _Section(
+            SettingsSection(
               title: l10n.notificationSystemSection,
               children: [
                 PlatformListTile(
@@ -437,7 +456,7 @@ class _NotificationTimeScreen extends ConsumerWidget {
       appBar: GlassTopBar(title: _alertName(l10n, alert)),
       body: ListView(
         children: [
-          _Section(
+          SettingsSection(
             children: [
               _ChoiceTile<PrayerNotificationSound>(
                 key: ValueKey('notification-sound-${alert.name}'),
@@ -503,83 +522,6 @@ class _NotificationTimeScreen extends ConsumerWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-// ─── Section ──────────────────────────────────────────────────────────────────
-/// A titled group of rows: an inset glass card on iOS and macOS, like the
-/// system Settings app, and a flat list elsewhere.
-class _Section extends StatelessWidget {
-  /// Null for an untitled group, such as a page's single master switch.
-  final String? title;
-  final List<Widget> children;
-
-  const _Section({this.title, required this.children});
-
-  @override
-  Widget build(BuildContext ctx) {
-    final isApple = PlatformCapabilities.isApple;
-    final title = this.title;
-    final header = title == null
-        ? const SizedBox(height: AppSpacing.md)
-        : Padding(
-            padding: EdgeInsets.fromLTRB(
-              // Line the header up with the rows inside the inset card.
-              isApple ? AppSpacing.md * 2 : AppSpacing.md,
-              AppSpacing.md + AppSpacing.xxs,
-              AppSpacing.md,
-              AppSpacing.xxs,
-            ),
-            child: Text(
-              title.toUpperCase(),
-              style: Theme.of(ctx).textTheme.labelSmall?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: AppColors.accentOf(ctx),
-                letterSpacing: 1.2,
-              ),
-            ),
-          );
-    if (PlatformDesign.usesExpressive) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          header,
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-            child: M3EList(
-              itemCount: children.length,
-              onTap: (index) {
-                final row = children[index];
-                if (row is PlatformListTile && row.enabled) row.onTap?.call();
-              },
-              itemBuilder: (context, index) => children[index],
-            ),
-          ),
-        ],
-      );
-    }
-    if (!isApple) {
-      return Column(children: [header, ...children]);
-    }
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        header,
-        GlassCard(
-          margin: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-          child: Column(
-            children: [
-              for (final (i, row) in children.indexed) ...[
-                // Inset past the leading icon, like grouped iOS lists.
-                if (i > 0) const Hairline(indent: PlatformListTile.textInset),
-                row,
-              ],
-            ],
-          ),
-        ),
-      ],
     );
   }
 }
@@ -822,7 +764,7 @@ class WidgetAppearanceScreen extends ConsumerWidget {
           bottom: MediaQuery.paddingOf(context).bottom + AppSpacing.lg,
         ),
         children: [
-          _Section(
+          SettingsSection(
             title: l10n.widgetStyle,
             children: [
               if (PlatformCapabilities.isApple)
