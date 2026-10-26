@@ -9,6 +9,7 @@ import '../../core/providers/locale_provider.dart';
 /// them. Adding a collection is adding its JSON here and to `pubspec.yaml`.
 const dzikirCollectionAssets = {
   'hisnul_muslim': 'assets/content/dzikir/hisnul_muslim.json',
+  'rateb_siribee': 'assets/content/dzikir/rateb_siribee.json',
 };
 
 /// The collection used until the user picks another.

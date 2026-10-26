@@ -1,0 +1,65 @@
+{
+  "id": "rateb_siribee",
+  "name": {
+    "id": "Ratéb Siribèe (MPTT)",
+    "en": "Ratéb Siribèe (MPTT)",
+    "ms": "Ratéb Siribèe (MPTT)",
+    "ar": "راتب الألف (MPTT)"
+  },
+  "source": {
+    "id": "Zikir Majelis Pengkajian Tauhid Tasawuf Indonesia (MPTT-I) yang digagas Abuya Syekh H. Amran Waly al-Khalidy. Urutan menurut Makalah MPTT (2016) sebagaimana dicatat Siti Farhanah, tesis UIN Ar-Raniry Banda Aceh (2022) (repository.ar-raniry.ac.id/27748). Terjemahan oleh Bedug.",
+    "en": "The dzikir of the Majelis Pengkajian Tauhid Tasawuf Indonesia (MPTT-I), begun by Abuya Syekh H. Amran Waly al-Khalidy. Order from Makalah MPTT (2016) as recorded by Siti Farhanah, thesis, UIN Ar-Raniry Banda Aceh (2022) (repository.ar-raniry.ac.id/27748). Translated by Bedug.",
+    "ms": "Zikir Majelis Pengkajian Tauhid Tasawuf Indonesia (MPTT-I) yang diasaskan Abuya Syekh H. Amran Waly al-Khalidy. Susunan menurut Makalah MPTT (2016) sebagaimana dicatat Siti Farhanah, tesis UIN Ar-Raniry Banda Aceh (2022) (repository.ar-raniry.ac.id/27748). Terjemahan oleh Bedug.",
+    "ar": "ذكر مجلس دراسة التوحيد والتصوف بإندونيسيا (MPTT-I) الذي أسسه الشيخ عمران والي الخالدي. الترتيب من مقالة MPTT (2016) كما نقلته سيتي فرحانة، رسالة ماجستير، جامعة الرانيري الإسلامية الحكومية بندا آتشيه (2022) (repository.ar-raniry.ac.id/27748)."
+  },
+  "items": [
+    {
+      "sessions": ["morning", "evening"],
+      "arabic": "أَسْتَغْفِرُ اللّٰهَ الْعَظِيْمَ الَّذِيْ لَا إِلٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّوْمُ وَأَتُوْبُ إِلَيْهِ",
+      "transliteration": "Astaghfirullāhal-'aẓīm, alladzī lā ilāha illā huwal-ḥayyul-qayyūm, wa atūbu ilaih.",
+      "translation": {
+        "id": "Aku memohon ampun kepada Allah Yang Mahaagung, yang tidak ada tuhan selain Dia, Yang Mahahidup, Yang terus-menerus mengurus makhluk-Nya, dan aku bertobat kepada-Nya.",
+        "en": "I seek the forgiveness of Allah the Magnificent, besides whom there is no god, the Ever-Living, the Sustainer of all, and I repent to Him.",
+        "ms": "Aku memohon ampun kepada Allah Yang Maha Agung, yang tiada tuhan melainkan Dia, Yang Maha Hidup, Yang terus-menerus mentadbir makhluk-Nya, dan aku bertaubat kepada-Nya."
+      },
+      "repeat": 3,
+      "reference": "Makalah MPTT; Farhanah 2022, 61-62"
+    },
+    {
+      "sessions": ["morning", "evening"],
+      "arabic": "اللّٰهُمَّ صَلِّ عَلَى سَيِّدِنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ وَسَلِّمْ",
+      "transliteration": "Allāhumma ṣalli 'alā sayyidinā Muḥammadin wa 'alā ālihī wa ṣaḥbihī wa sallim.",
+      "translation": {
+        "id": "Ya Allah, limpahkanlah selawat dan salam kepada junjungan kami Nabi Muhammad, kepada keluarganya, dan para sahabatnya.",
+        "en": "O Allah, send blessings and peace upon our master Muhammad, his family and his companions.",
+        "ms": "Ya Allah, limpahkanlah selawat dan salam ke atas junjungan kami Nabi Muhammad, ke atas keluarganya dan para sahabatnya."
+      },
+      "repeat": 10,
+      "reference": "Makalah MPTT; Farhanah 2022, 61-62"
+    },
+    {
+      "sessions": ["morning", "evening"],
+      "arabic": "بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ. اَلْحَمْدُ لِلّٰهِ رَبِّ الْعٰلَمِيْنَ. الرَّحْمٰنِ الرَّحِيْمِ. مٰلِكِ يَوْمِ الدِّيْنِ. إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِيْنُ. اِهْدِنَا الصِّرَاطَ الْمُسْتَقِيْمَ. صِرَاطَ الَّذِيْنَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوْبِ عَلَيْهِمْ وَلَا الضَّآلِّيْنَ",
+      "transliteration": "Bismillāhir-raḥmānir-raḥīm. Al-ḥamdu lillāhi rabbil-'ālamīn. Ar-raḥmānir-raḥīm. Māliki yaumid-dīn. Iyyāka na'budu wa iyyāka nasta'īn. Ihdinaṣ-ṣirāṭal-mustaqīm. Ṣirāṭal-ladzīna an'amta 'alaihim ghairil-maghḍūbi 'alaihim wa laḍ-ḍāllīn.",
+      "translation": {
+        "id": "Dengan nama Allah Yang Maha Pengasih, Maha Penyayang. Segala puji bagi Allah, Tuhan seluruh alam, Yang Maha Pengasih, Maha Penyayang, Pemilik hari pembalasan. Hanya kepada-Mu kami menyembah dan hanya kepada-Mu kami mohon pertolongan. Tunjukilah kami jalan yang lurus, jalan orang-orang yang telah Engkau beri nikmat, bukan jalan mereka yang dimurkai dan bukan pula jalan mereka yang sesat. (Bacaan pertama dihadiahkan kepada Rasulullah, keluarga, dan sahabatnya; kedua kepada para masyaikh; ketiga agar pintu hati dibukakan bagi cahaya makrifat.)",
+        "en": "In the name of Allah, the Most Gracious, the Most Merciful. All praise is for Allah, Lord of all worlds, the Most Gracious, the Most Merciful, Master of the Day of Judgement. You alone we worship and You alone we ask for help. Guide us to the straight path, the path of those You have blessed, not of those who earned Your anger, nor of those who went astray. (The first recitation is offered for the Messenger of Allah, his family and companions; the second for the masyaikh; the third so the heart opens to the light of ma'rifah.)",
+        "ms": "Dengan nama Allah Yang Maha Pemurah, lagi Maha Mengasihani. Segala puji bagi Allah, Tuhan sekalian alam, Yang Maha Pemurah, lagi Maha Mengasihani, Yang Menguasai hari pembalasan. Hanya kepada-Mu kami sembah dan hanya kepada-Mu kami memohon pertolongan. Tunjukilah kami jalan yang lurus, jalan orang-orang yang telah Engkau kurniakan nikmat, bukan jalan mereka yang dimurkai dan bukan pula jalan mereka yang sesat. (Bacaan pertama dihadiahkan kepada Rasulullah, keluarga dan sahabatnya; kedua kepada para masyaikh; ketiga agar pintu hati dibukakan bagi cahaya makrifat.)"
+      },
+      "repeat": 3,
+      "reference": "Al-Fatihah 1-7; Farhanah 2022, 62"
+    },
+    {
+      "sessions": ["morning", "evening"],
+      "arabic": "لَا إِلٰهَ إِلَّا اللّٰهُ",
+      "transliteration": "Lā ilāha illallāh.",
+      "translation": {
+        "id": "Tidak ada tuhan selain Allah. (Siribèe berarti seribu, tetapi zikir ini tidak dibatasi: bacalah sebanyak-banyaknya, mulai pelan, lalu cepat, lalu lebih cepat.)",
+        "en": "There is no god but Allah. (Siribèe means a thousand, but this dzikir has no limit: recite it as many times as you can, slowly at first, then faster, then faster still.)",
+        "ms": "Tiada tuhan melainkan Allah. (Siribèe bermaksud seribu, tetapi zikir ini tidak terbatas: bacalah sebanyak-banyaknya, mula-mula perlahan, kemudian cepat, kemudian lebih cepat.)"
+      },
+      "repeat": 1000,
+      "reference": "Al-Ahzab 41-42; Farhanah 2022, 62"
+    }
+  ]
+}

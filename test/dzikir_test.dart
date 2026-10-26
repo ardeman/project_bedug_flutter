@@ -46,7 +46,8 @@ void main() {
         expect(item.sessions, isNotEmpty, reason: reason);
         expect(item.arabic.trim(), isNotEmpty, reason: reason);
         expect(item.transliteration.trim(), isNotEmpty, reason: reason);
-        expect(item.reference.trim(), isNotEmpty, reason: reason);
+        // A hadith number, verse or page, so readers can look it up.
+        expect(item.reference, contains(RegExp(r'\d')), reason: reason);
         expect(item.repeat, greaterThan(0), reason: reason);
         // Arabic readers read the text itself, so it has no translation.
         expect(item.translation.keys.toSet(), languages.difference({'ar'}));
