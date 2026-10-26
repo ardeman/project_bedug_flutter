@@ -205,7 +205,7 @@ struct PrayerWidgetView: View {
                 if family == .systemSmall {
                     HStack(spacing: 8) {
                         VStack(alignment: .leading, spacing: 4) {
-                            Text(entry.headline?.name ?? prayer.name).font(.headline)
+                            Text(entry.headline?.name ?? prayer.name).font(.title2.bold())
                                 .foregroundStyle(accent).widgetAccentable()
                             timeLine(for: prayer).font(.caption)
                         }

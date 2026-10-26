@@ -1004,11 +1004,7 @@ class _AppleWidgetCard extends StatelessWidget {
         fit(
           label(
             headline,
-            small
-                ? 17
-                : large
-                ? 28
-                : 22,
+            large ? 28 : 22,
             color: accent,
             weight: FontWeight.bold,
           ),

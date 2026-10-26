@@ -226,6 +226,11 @@ void main() {
       expect(small.aspectRatio, 1);
       expect(medium.aspectRatio, closeTo(364 / 170, 0.001));
       expect(large.aspectRatio, closeTo(364 / 382, 0.001));
+      final prayerName = tester.widget<Text>(
+        find.descendant(of: preview(0), matching: find.text('Dhuhr')),
+      );
+      expect(prayerName.style?.fontSize, 22);
+      expect(prayerName.style?.fontWeight, FontWeight.bold);
       final columns = ['Asr', 'Maghrib', 'Isha', 'Fajr']
           .map(
             (name) => tester
