@@ -1305,7 +1305,7 @@ abstract class AppLocalizations {
   /// No description provided for @widgetScheduleDescription.
   ///
   /// In id, this message translates to:
-  /// **'Tampilkan lima salat berikutnya pada widget iPhone sedang dan besar serta widget Android lebar.'**
+  /// **'Tampilkan empat salat setelah salat berikutnya yang ditonjolkan pada widget iPhone sedang dan besar serta widget Android lebar.'**
   String get widgetScheduleDescription;
 
   /// No description provided for @widgetAppearanceHelp.
@@ -1361,6 +1361,24 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'01:30:00'**
   String get widgetPreviewCountdown;
+
+  /// No description provided for @widgetShowCurrent.
+  ///
+  /// In id, this message translates to:
+  /// **'Tampilkan salat saat ini'**
+  String get widgetShowCurrent;
+
+  /// No description provided for @widgetShowCurrentDescription.
+  ///
+  /// In id, this message translates to:
+  /// **'Utamakan salat saat ini di iPhone dan iPad; hitung mundur tetap menuju salat berikutnya. Pengaturan masing-masing widget dapat menggantikan pilihan ini.'**
+  String get widgetShowCurrentDescription;
+
+  /// No description provided for @widgetNow.
+  ///
+  /// In id, this message translates to:
+  /// **'Sekarang'**
+  String get widgetNow;
 }
 
 class _AppLocalizationsDelegate

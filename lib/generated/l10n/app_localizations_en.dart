@@ -652,7 +652,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get widgetScheduleDescription =>
-      'Show the next five prayers on medium and large iPhone widgets and wide Android widgets.';
+      'Show the four prayers after the featured next prayer on medium and large iPhone widgets and wide Android widgets.';
 
   @override
   String get widgetAppearanceHelp =>
@@ -682,4 +682,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get widgetPreviewCountdown => '01:30:00';
+
+  @override
+  String get widgetShowCurrent => 'Show current prayer';
+
+  @override
+  String get widgetShowCurrentDescription =>
+      'Headline the current prayer on iPhone and iPad; the countdown still leads to the next prayer. Individual widget settings can override this.';
+
+  @override
+  String get widgetNow => 'Now';
 }

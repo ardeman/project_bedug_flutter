@@ -139,6 +139,22 @@ void main() {
       await tester.tap(find.text('Widget Style'));
       await tester.pumpAndSettle();
       expect(find.byType(WidgetAppearanceScreen), findsOneWidget);
+      // Each preview features Dhuhr once, and lists only the four after it.
+      expect(find.textContaining('Dhuhr'), findsNWidgets(3));
+      expect(find.text('Asr'), findsNWidgets(2));
+      final currentSwitch = find.byKey(const ValueKey('widget_current_switch'));
+      if (PlatformCapabilities.isIOS) {
+        await tester.tap(currentSwitch);
+        await tester.pumpAndSettle();
+        expect(container.read(widgetAppearanceProvider).showCurrent, isTrue);
+        expect(find.text('Now'), findsNWidgets(3));
+        expect(find.textContaining('Asr ·'), findsNWidgets(3));
+        await tester.tap(currentSwitch);
+        await tester.pumpAndSettle();
+      } else {
+        expect(currentSwitch, findsNothing);
+      }
+
       expect(
         tester.getTopLeft(find.text('Analog countdown')).dy,
         greaterThanOrEqualTo(tester.getBottomLeft(find.byType(GlassTopBar)).dy),
@@ -168,6 +184,48 @@ void main() {
       TargetPlatform.android,
       TargetPlatform.windows,
     }),
+  );
+
+  testWidgets(
+    'Apple previews keep WidgetKit proportions and evenly spaced schedule columns',
+    (tester) async {
+      final container = await _pumpSettings(
+        tester,
+        home: const WidgetAppearanceScreen(),
+      );
+      Finder preview(int size) =>
+          find.byKey(ValueKey('widget_preview_apple_$size'));
+      final small = tester.getSize(preview(0));
+      final medium = tester.getSize(preview(1));
+      final large = tester.getSize(preview(2));
+      expect(small.aspectRatio, 1);
+      expect(medium.aspectRatio, closeTo(364 / 170, 0.001));
+      expect(large.aspectRatio, closeTo(364 / 382, 0.001));
+      final columns = ['Asr', 'Maghrib', 'Isha', 'Fajr']
+          .map(
+            (name) => tester
+                .getCenter(
+                  find.descendant(of: preview(1), matching: find.text(name)),
+                )
+                .dx,
+          )
+          .toList();
+      final spacing = columns[1] - columns[0];
+      for (var index = 2; index < columns.length; index++) {
+        expect(columns[index] - columns[index - 1], closeTo(spacing, 0.01));
+      }
+      await container
+          .read(widgetAppearanceProvider.notifier)
+          .setShowSchedule(false);
+      await container
+          .read(widgetAppearanceProvider.notifier)
+          .setShowAnalog(false);
+      await tester.pumpAndSettle();
+      expect(tester.getSize(preview(1)), medium);
+      expect(tester.getSize(preview(2)), large);
+      expect(tester.takeException(), isNull);
+    },
+    variant: TargetPlatformVariant.only(TargetPlatform.iOS),
   );
 
   testWidgets(

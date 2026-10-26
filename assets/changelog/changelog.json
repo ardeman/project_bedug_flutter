@@ -7,6 +7,15 @@
         {
           "type": "improved",
           "text": {
+            "en": "Home widgets have a cleaner schedule without repeating the featured next prayer. Widget Style now includes the current-prayer headline option for iPhone and iPad, with matching previews. Apple previews now follow the native widget proportions, system typography and evenly spaced schedule.",
+            "id": "Jadwal widget kini lebih rapi tanpa mengulang salat berikutnya yang ditonjolkan. Gaya Widget kini menyediakan pilihan judul salat saat ini untuk iPhone dan iPad, dengan pratinjau yang sesuai. Pratinjau Apple kini mengikuti proporsi widget asli, tipografi sistem, dan jarak jadwal yang merata.",
+            "ms": "Jadual widget kini lebih kemas tanpa mengulang solat seterusnya yang ditonjolkan. Gaya Widget kini menyediakan pilihan tajuk solat semasa untuk iPhone dan iPad, dengan pratonton yang sepadan. Pratonton Apple kini mengikut perkadaran widget asli, tipografi sistem dan jarak jadual yang sekata.",
+            "ar": "جدول الأدوات أوضح دون تكرار الصلاة التالية البارزة. يتضمن نمط الأداة الآن خيار عرض الصلاة الحالية على iPhone وiPad مع معاينات مطابقة. تتبع معاينات Apple الآن أبعاد الأداة الأصلية وخط النظام وتوزيع الجدول المتساوي."
+          }
+        },
+        {
+          "type": "improved",
+          "text": {
             "en": "On Mac, the glass follows your Liquid Glass setting, from Clear to Tinted, and Clear glass is now clearer. On iPhone, iPad and Mac it also follows your accessibility settings: Increase Contrast makes it more opaque, and Reduce Transparency makes it solid.",
             "id": "Di Mac, efek kacanya mengikuti pengaturan Liquid Glass-mu, dari Bening hingga Berwarna, dan kaca Bening kini lebih bening. Di iPhone, iPad, dan Mac, efek kacanya juga mengikuti pengaturan aksesibilitasmu: Tingkatkan Kontras membuatnya lebih pekat, dan Kurangi Transparansi membuatnya tidak tembus pandang.",
             "ms": "Di Mac, kesan kacanya mengikut tetapan Liquid Glass anda, daripada Jernih hingga Berwarna, dan kaca Jernih kini lebih jernih. Di iPhone, iPad dan Mac, kesan kacanya juga mengikut tetapan kebolehcapaian anda: Tingkatkan Kontras menjadikannya lebih pekat, dan Kurangkan Ketelusan menjadikannya legap.",

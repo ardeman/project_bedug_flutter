@@ -1,5 +1,7 @@
 import 'dart:math' as math;
 
+import 'package:cupertino_ui/cupertino_ui.dart' show CupertinoTheme;
+
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter/foundation.dart';
 import 'package:material_3_expressive/material_3_expressive.dart';
@@ -823,6 +825,16 @@ class WidgetAppearanceScreen extends ConsumerWidget {
           _Section(
             title: l10n.widgetStyle,
             children: [
+              if (PlatformCapabilities.isApple)
+                PlatformListTile(
+                  title: Text(l10n.widgetShowCurrent),
+                  subtitle: Text(l10n.widgetShowCurrentDescription),
+                  trailing: _AdaptiveSwitch(
+                    key: const ValueKey('widget_current_switch'),
+                    value: appearance.showCurrent,
+                    onChanged: notifier.setShowCurrent,
+                  ),
+                ),
               PlatformListTile(
                 title: Text(l10n.widgetAnalogCountdown),
                 subtitle: Text(l10n.widgetAnalogDescription),
@@ -899,50 +911,14 @@ class _WidgetLayoutPreview extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final text = Theme.of(context).textTheme;
-    final accent = AppColors.accentOf(context);
-    final names = [l10n.dhuhr, l10n.asr, l10n.maghrib, l10n.isha, l10n.fajr];
-    final hours = [12, 15, 18, 19, 4];
-    final focus = size == 2 && !appearance.showSchedule;
+    final showCurrent = PlatformCapabilities.isApple && appearance.showCurrent;
+    final names = showCurrent
+        ? [l10n.asr, l10n.maghrib, l10n.isha, l10n.fajr, l10n.dhuhr]
+        : [l10n.dhuhr, l10n.asr, l10n.maghrib, l10n.isha, l10n.fajr];
+    final hours = showCurrent ? [15, 18, 19, 4, 12] : [12, 15, 18, 19, 4];
     String time(int index) => MaterialLocalizations.of(context).formatTimeOfDay(
       TimeOfDay(hour: hours[index], minute: 0),
       alwaysUse24HourFormat: MediaQuery.alwaysUse24HourFormatOf(context),
-    );
-    Widget countdown({bool prominent = false}) => Text(
-      l10n.widgetPreviewCountdown,
-      style: prominent ? text.headlineLarge : text.titleLarge,
-      maxLines: 1,
-      overflow: TextOverflow.ellipsis,
-    );
-    Widget dial(double diameter) => ExcludeSemantics(
-      child: SizedBox.square(
-        key: ValueKey('widget_preview_analog_$size'),
-        dimension: diameter,
-        child: CustomPaint(
-          painter: _WidgetDialPainter(
-            accent,
-            apple: PlatformCapabilities.isApple,
-          ),
-          // WidgetKit shows the next prayer's sky; the preview's is Dhuhr.
-          child: PlatformCapabilities.isApple
-              ? Icon(Icons.light_mode, size: diameter / 4, color: accent)
-              : null,
-        ),
-      ),
-    );
-    Widget details() => Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          names.first,
-          style: (size == 2 ? text.headlineSmall : text.titleLarge)?.copyWith(
-            color: accent,
-          ),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-        Text(time(0), style: text.bodyMedium),
-        if (size != 0) countdown(),
-      ],
     );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -964,121 +940,275 @@ class _WidgetLayoutPreview extends StatelessWidget {
                     time: time,
                     location: location,
                   )
-                : GlassCard(
-                    margin: EdgeInsets.zero,
-                    child: Padding(
-                      padding: const EdgeInsets.all(AppSpacing.md),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(l10n.nextPrayer, style: text.labelSmall),
-                          const SizedBox(height: AppSpacing.xs),
-                          if (focus)
-                            SizedBox(
-                              width: double.infinity,
-                              child: Column(
-                                children: [
-                                  if (appearance.showAnalog) ...[
-                                    dial(AppSpacing.xxl * 3),
-                                    const SizedBox(height: AppSpacing.xs),
-                                  ],
-                                  Text(
-                                    names.first,
-                                    style: text.headlineSmall?.copyWith(
-                                      color: accent,
-                                    ),
-                                  ),
-                                  Text(time(0), style: text.titleMedium),
-                                  countdown(prominent: true),
-                                ],
-                              ),
-                            )
-                          else ...[
-                            Row(
-                              children: [
-                                Expanded(child: details()),
-                                if (appearance.showAnalog) ...[
-                                  const SizedBox(width: AppSpacing.xs),
-                                  dial(
-                                    size == 2
-                                        ? AppSpacing.xxl * 2
-                                        : size == 0
-                                        ? AppSpacing.xxl
-                                        : AppSpacing.xxl + AppSpacing.lg,
-                                  ),
-                                ],
-                              ],
-                            ),
-                            if (size == 0) ...[
-                              const SizedBox(height: AppSpacing.xs),
-                              countdown(),
-                            ],
-                          ],
-                          if (appearance.showSchedule && size > 0) ...[
-                            const SizedBox(height: AppSpacing.md),
-                            if (size == 2)
-                              for (var index = 0; index < names.length; index++)
-                                Container(
-                                  padding: const EdgeInsets.all(AppSpacing.sm),
-                                  decoration: BoxDecoration(
-                                    color: index == 0
-                                        ? accent.withValues(alpha: 0.12)
-                                        : null,
-                                    borderRadius: BorderRadius.circular(
-                                      AppRadii.sm,
-                                    ),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          names[index],
-                                          style: text.bodyMedium?.copyWith(
-                                            color: index == 0 ? accent : null,
-                                            fontWeight: index == 0
-                                                ? FontWeight.bold
-                                                : null,
-                                          ),
-                                        ),
-                                      ),
-                                      Text(time(index), style: text.bodyMedium),
-                                    ],
-                                  ),
-                                )
-                            else
-                              Wrap(
-                                spacing: AppSpacing.md,
-                                runSpacing: AppSpacing.xs,
-                                children: [
-                                  for (
-                                    var index = 0;
-                                    index < names.length;
-                                    index++
-                                  )
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          names[index],
-                                          style: text.labelSmall,
-                                        ),
-                                        Text(
-                                          time(index),
-                                          style: text.bodySmall,
-                                        ),
-                                      ],
-                                    ),
-                                ],
-                              ),
-                          ],
-                        ],
-                      ),
-                    ),
+                : _AppleWidgetCard(
+                    size: size,
+                    appearance: appearance,
+                    names: names,
+                    time: time,
+                    location: location,
                   ),
           ),
         ),
       ],
+    );
+  }
+}
+
+/// A scaled WidgetKit canvas, following PrayerWidgetView's sizes and spacing.
+/// Keep app text scaling outside this illustration: widget text has its own
+/// system typography, independent of the app's Plus Jakarta Sans theme.
+class _AppleWidgetCard extends StatelessWidget {
+  final int size;
+  final WidgetAppearance appearance;
+  final List<String> names;
+  final String Function(int index) time;
+  final String location;
+
+  const _AppleWidgetCard({
+    required this.size,
+    required this.appearance,
+    required this.names,
+    required this.time,
+    required this.location,
+  });
+
+  // Representative iPhone widget canvases; WidgetKit varies them by device.
+  static const _canvases = [Size(170, 170), Size(364, 170), Size(364, 382)];
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final text = Theme.of(context).textTheme;
+    final dark = Theme.of(context).brightness == Brightness.dark;
+    // Match the palette sent to WidgetKit, rather than the app's glass tint.
+    final background = dark ? AppColors.darkBg : AppColors.lightBg;
+    final ink = dark ? AppColors.darkText : AppColors.lightText;
+    final accent = dark ? AppColors.emeraldDark : AppColors.emerald;
+    final small = size == 0;
+    final large = size == 2;
+    final focus = large && !appearance.showSchedule;
+    final city = location
+        .replaceFirst(
+          RegExp(r'^(Kota Administrasi |Kabupaten |Kab\. |Kota )'),
+          '',
+        )
+        .split(',')
+        .first
+        .trim();
+    final family = CupertinoTheme.of(context).textTheme.textStyle.fontFamily;
+
+    // SwiftUI default point sizes for caption, title2, title and callout.
+    TextStyle style(double points, {FontWeight weight = FontWeight.normal}) =>
+        text.bodyMedium!.copyWith(
+          fontFamily: family,
+          fontSize: points,
+          height: 1.2,
+          letterSpacing: 0,
+          fontWeight: weight,
+          color: ink,
+          fontFeatures: const [FontFeature.tabularFigures()],
+        );
+    Widget label(
+      String value,
+      double points, {
+      Color? color,
+      FontWeight weight = FontWeight.normal,
+      TextAlign? align,
+    }) => Text(
+      value,
+      style: style(points, weight: weight).copyWith(color: color ?? ink),
+      maxLines: 1,
+      textAlign: align,
+    );
+    Widget fit(
+      Widget child, {
+      AlignmentGeometry alignment = AlignmentDirectional.centerStart,
+    }) => FittedBox(fit: BoxFit.scaleDown, alignment: alignment, child: child);
+    final headline = appearance.showCurrent ? l10n.dhuhr : names.first;
+    final timeLine = appearance.showCurrent
+        ? '${names.first} · ${time(0)}'
+        : time(0);
+    Widget countdown({bool prominent = false}) => fit(
+      label(
+        l10n.widgetPreviewCountdown,
+        prominent ? 34 : 22,
+        weight: prominent
+            ? FontWeight.bold
+            : small
+            ? FontWeight.normal
+            : FontWeight.w600,
+      ),
+      alignment: focus ? Alignment.center : AlignmentDirectional.centerStart,
+    );
+    Widget dial(double diameter) => ExcludeSemantics(
+      child: SizedBox.square(
+        key: ValueKey('widget_preview_analog_$size'),
+        dimension: diameter,
+        child: CustomPaint(
+          painter: _WidgetDialPainter(accent),
+          child: Icon(
+            appearance.showCurrent ? Icons.wb_sunny_outlined : Icons.light_mode,
+            size: 22,
+            color: accent,
+          ),
+        ),
+      ),
+    );
+    final details = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      spacing: AppSpacing.xxs,
+      children: [
+        fit(
+          label(
+            headline,
+            small
+                ? 17
+                : large
+                ? 28
+                : 22,
+            color: accent,
+            weight: FontWeight.bold,
+          ),
+        ),
+        fit(label(timeLine, small ? 13 : 16)),
+        if (!small) countdown(),
+      ],
+    );
+    // The outer VStack uses six points between sections (14 on large widgets).
+    final gap = large ? 14.0 : 6.0;
+    final content = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: large
+          ? MainAxisAlignment.start
+          : MainAxisAlignment.center,
+      spacing: gap,
+      children: [
+        Row(
+          children: [
+            Flexible(
+              child: fit(
+                label(
+                  appearance.showCurrent ? l10n.widgetNow : l10n.nextPrayer,
+                  13,
+                ),
+              ),
+            ),
+            if (!small) ...[
+              const SizedBox(width: AppSpacing.xs),
+              Expanded(
+                child: fit(
+                  label(city, 13, color: ink.withValues(alpha: 0.65)),
+                  alignment: AlignmentDirectional.centerEnd,
+                ),
+              ),
+            ],
+          ],
+        ),
+        if (focus)
+          Expanded(
+            child: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                spacing: AppSpacing.xs,
+                children: [
+                  if (appearance.showAnalog) dial(144),
+                  fit(
+                    label(headline, 28, weight: FontWeight.bold, color: accent),
+                  ),
+                  fit(label(timeLine, 20)),
+                  countdown(prominent: true),
+                ],
+              ),
+            ),
+          )
+        else ...[
+          Row(
+            children: [
+              Expanded(child: details),
+              if (appearance.showAnalog) ...[
+                SizedBox(width: small ? AppSpacing.xs : AppSpacing.md),
+                dial(
+                  small
+                      ? 48
+                      : large
+                      ? 96
+                      : 70,
+                ),
+              ],
+            ],
+          ),
+          if (small) ...[
+            countdown(),
+            fit(label(city, 13)),
+          ] else if (appearance.showSchedule)
+            if (large)
+              Expanded(
+                child: Column(
+                  children: [
+                    for (var index = 1; index < names.length; index++)
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Row(
+                            children: [
+                              Expanded(child: fit(label(names[index], 15))),
+                              const SizedBox(width: AppSpacing.xs),
+                              label(time(index), 15),
+                            ],
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              )
+            else
+              Row(
+                spacing: AppSpacing.xxs,
+                children: [
+                  for (var index = 1; index < names.length; index++)
+                    Expanded(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        spacing: 2,
+                        children: [
+                          fit(
+                            label(names[index], 11),
+                            alignment: Alignment.center,
+                          ),
+                          fit(
+                            label(time(index), 11),
+                            alignment: Alignment.center,
+                          ),
+                        ],
+                      ),
+                    ),
+                ],
+              ),
+        ],
+      ],
+    );
+    final canvas = _canvases[size];
+    return AspectRatio(
+      key: ValueKey('widget_preview_apple_$size'),
+      aspectRatio: canvas.aspectRatio,
+      child: FittedBox(
+        child: SizedBox.fromSize(
+          size: canvas,
+          child: MediaQuery.withNoTextScaling(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                color: background,
+                borderRadius: BorderRadius.circular(AppRadii.lg),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(AppSpacing.md),
+                child: content,
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -1105,9 +1235,6 @@ class _AndroidWidgetCard extends StatelessWidget {
   static const _dials = [56.0, 76.0, 104.0];
   static const _paddings = [12.0, 16.0, 20.0];
   static const _rowHeight = 36.0;
-
-  // About 16% of the accent behind the next prayer's row, as on the widget.
-  static const _highlightAlpha = 40 / 255;
 
   @override
   Widget build(BuildContext context) {
@@ -1188,16 +1315,12 @@ class _AndroidWidgetCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.sm),
           Row(
             children: [
-              for (var index = 0; index < names.length; index++)
+              for (var index = 1; index < names.length; index++)
                 Expanded(
                   child: Column(
                     children: [
                       for (final value in [names[index], time(index)])
-                        line(
-                          value,
-                          text.labelSmall,
-                          color: index == 0 ? accent : ink,
-                        ),
+                        line(value, text.labelSmall, color: ink),
                     ],
                   ),
                 ),
@@ -1206,30 +1329,23 @@ class _AndroidWidgetCard extends StatelessWidget {
         ],
         if (appearance.showSchedule && large) ...[
           const SizedBox(height: AppSpacing.sm),
-          for (var index = 0; index < names.length; index++)
+          for (var index = 1; index < names.length; index++)
             Container(
               height: _rowHeight,
               padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
               decoration: BoxDecoration(
-                color: index == 0
-                    ? accent.withValues(alpha: _highlightAlpha)
-                    : null,
                 borderRadius: BorderRadius.circular(AppRadii.sm),
               ),
               child: Row(
                 children: [
                   Expanded(
-                    child: line(
-                      names[index],
-                      text.bodyMedium,
-                      color: index == 0 ? accent : ink,
-                    ),
+                    child: line(names[index], text.bodyMedium, color: ink),
                   ),
                   const SizedBox(width: AppSpacing.xs),
                   line(
                     time(index),
                     text.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
-                    color: index == 0 ? accent : ink,
+                    color: ink,
                   ),
                 ],
               ),
@@ -1318,48 +1434,43 @@ class _AndroidDialPainter extends CustomPainter {
       oldDelegate.accent != accent;
 }
 
+/// WidgetKit's ring has a heavier stroke with ticks inside its outer edge.
 class _WidgetDialPainter extends CustomPainter {
   final Color accent;
-  final bool apple;
-  const _WidgetDialPainter(this.accent, {required this.apple});
+  const _WidgetDialPainter(this.accent);
 
   @override
   void paint(Canvas canvas, Size size) {
     final center = size.center(Offset.zero);
-    final radius = size.shortestSide / 2 - AppSpacing.xxs;
+    final stroke = size.shortestSide / 10;
+    final radius = (size.shortestSide - stroke) / 2;
     final paint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = AppSpacing.xxs
+      ..strokeWidth = stroke
       ..strokeCap = StrokeCap.round
-      ..color = accent.withValues(alpha: 0.15);
+      ..color = accent.withValues(alpha: 0.25);
     final ring = Rect.fromCircle(center: center, radius: radius);
     canvas.drawOval(ring, paint);
     paint.color = accent;
     canvas.drawArc(ring, -math.pi / 2, math.pi * 1.5, false, paint);
-    if (apple) {
-      // WidgetKit's ticks: 2 pt capsules at 40% accent, longer every quarter.
-      paint
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 2
-        ..color = accent.withValues(alpha: 0.4);
-      for (var tick = 0; tick < 12; tick++) {
-        final angle = tick * math.pi / 6 - math.pi / 2;
-        final direction = Offset(math.cos(angle), math.sin(angle));
-        final outer = size.shortestSide / 2 - 4 + 2.5;
-        final length = tick % 3 == 0 ? 5 : 3;
-        canvas.drawLine(
-          center + direction * (outer - length),
-          center + direction * outer,
-          paint,
-        );
-      }
-    } else {
-      // Scale the Android widget's 76-unit dial to this preview.
-      _paintSun(canvas, center, size.shortestSide / 76, paint..strokeWidth = 2);
+    // Same 2 pt capsules and positions as countdownDial in SwiftUI.
+    paint
+      ..strokeWidth = 2
+      ..color = accent.withValues(alpha: 0.4);
+    for (var tick = 0; tick < 12; tick++) {
+      final angle = tick * math.pi / 6 - math.pi / 2;
+      final direction = Offset(math.cos(angle), math.sin(angle));
+      final outer = size.shortestSide / 2 - 4 + 2.5;
+      final length = tick % 3 == 0 ? 5 : 3;
+      canvas.drawLine(
+        center + direction * (outer - length),
+        center + direction * outer,
+        paint,
+      );
     }
   }
 
   @override
   bool shouldRepaint(_WidgetDialPainter oldDelegate) =>
-      oldDelegate.accent != accent || oldDelegate.apple != apple;
+      oldDelegate.accent != accent;
 }

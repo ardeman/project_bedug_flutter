@@ -654,7 +654,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get widgetScheduleDescription =>
-      'Tampilkan lima salat berikutnya pada widget iPhone sedang dan besar serta widget Android lebar.';
+      'Tampilkan empat salat setelah salat berikutnya yang ditonjolkan pada widget iPhone sedang dan besar serta widget Android lebar.';
 
   @override
   String get widgetAppearanceHelp =>
@@ -684,4 +684,14 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get widgetPreviewCountdown => '01:30:00';
+
+  @override
+  String get widgetShowCurrent => 'Tampilkan salat saat ini';
+
+  @override
+  String get widgetShowCurrentDescription =>
+      'Utamakan salat saat ini di iPhone dan iPad; hitung mundur tetap menuju salat berikutnya. Pengaturan masing-masing widget dapat menggantikan pilihan ini.';
+
+  @override
+  String get widgetNow => 'Sekarang';
 }

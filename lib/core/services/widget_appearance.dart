@@ -5,8 +5,13 @@ import '../providers/locale_provider.dart';
 class WidgetAppearance {
   final bool showAnalog;
   final bool showSchedule;
+  final bool showCurrent;
 
-  const WidgetAppearance({this.showAnalog = true, this.showSchedule = true});
+  const WidgetAppearance({
+    this.showAnalog = true,
+    this.showSchedule = true,
+    this.showCurrent = false,
+  });
 }
 
 class WidgetAppearanceNotifier extends Notifier<WidgetAppearance> {
@@ -16,6 +21,7 @@ class WidgetAppearanceNotifier extends Notifier<WidgetAppearance> {
     return WidgetAppearance(
       showAnalog: prefs.getBool('widget_show_analog') ?? true,
       showSchedule: prefs.getBool('widget_show_schedule') ?? true,
+      showCurrent: prefs.getBool('widget_show_current') ?? false,
     );
   }
 
@@ -23,6 +29,7 @@ class WidgetAppearanceNotifier extends Notifier<WidgetAppearance> {
     state = WidgetAppearance(
       showAnalog: value,
       showSchedule: state.showSchedule,
+      showCurrent: state.showCurrent,
     );
     await ref
         .read(sharedPreferencesProvider)
@@ -30,10 +37,25 @@ class WidgetAppearanceNotifier extends Notifier<WidgetAppearance> {
   }
 
   Future<void> setShowSchedule(bool value) async {
-    state = WidgetAppearance(showAnalog: state.showAnalog, showSchedule: value);
+    state = WidgetAppearance(
+      showAnalog: state.showAnalog,
+      showSchedule: value,
+      showCurrent: state.showCurrent,
+    );
     await ref
         .read(sharedPreferencesProvider)
         .setBool('widget_show_schedule', value);
+  }
+
+  Future<void> setShowCurrent(bool value) async {
+    state = WidgetAppearance(
+      showAnalog: state.showAnalog,
+      showSchedule: state.showSchedule,
+      showCurrent: value,
+    );
+    await ref
+        .read(sharedPreferencesProvider)
+        .setBool('widget_show_current', value);
   }
 }
 

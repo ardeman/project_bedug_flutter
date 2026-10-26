@@ -223,7 +223,7 @@
   "widgetAnalogCountdown": "Analog countdown",
   "widgetAnalogDescription": "Show a circular timer alongside the digital countdown.",
   "widgetSchedule": "Upcoming prayer times",
-  "widgetScheduleDescription": "Show the next five prayers on medium and large iPhone widgets and wide Android widgets.",
+  "widgetScheduleDescription": "Show the four prayers after the featured next prayer on medium and large iPhone widgets and wide Android widgets.",
   "widgetAppearanceHelp": "Applies to home screen widgets on iPhone and Android. Choose or resize the widget on your home screen.",
   "widgetPreview": "Preview",
   "widgetPreviewHelp": "Sample times illustrate the layout. Native widgets may look slightly different. Changes are saved automatically.",
@@ -232,5 +232,8 @@
   "widgetLarge": "Large",
   "widgetAnalogAndDigital": "Analog + digital",
   "widgetDigitalOnly": "Digital only",
-  "widgetPreviewCountdown": "01:30:00"
+  "widgetPreviewCountdown": "01:30:00",
+  "widgetShowCurrent": "Show current prayer",
+  "widgetShowCurrentDescription": "Headline the current prayer on iPhone and iPad; the countdown still leads to the next prayer. Individual widget settings can override this.",
+  "widgetNow": "Now"
 }

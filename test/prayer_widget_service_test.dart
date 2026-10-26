@@ -77,6 +77,12 @@ void main() {
           .read(widgetAppearanceProvider.notifier)
           .setShowSchedule(false);
       expect(service.updates.last['showSchedule'], isFalse);
+      await container
+          .read(widgetAppearanceProvider.notifier)
+          .setShowCurrent(true);
+      expect(service.updates.last['showCurrent'], isTrue);
+      expect(service.updates.last['showAnalog'], isFalse);
+      expect(service.updates.last['showSchedule'], isFalse);
       notifier.replace(
         PrayerState(times: times, locationLabel: 'Jakarta', loading: true),
       );

@@ -648,7 +648,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get widgetScheduleDescription =>
-      'عرض الصلوات الخمس القادمة في أدوات iPhone المتوسطة والكبيرة وأدوات Android العريضة.';
+      'اعرض الصلوات الأربع التي تلي الصلاة التالية البارزة على أدوات iPhone المتوسطة والكبيرة وأدوات Android العريضة.';
 
   @override
   String get widgetAppearanceHelp =>
@@ -678,4 +678,14 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get widgetPreviewCountdown => '٠١:٣٠:٠٠';
+
+  @override
+  String get widgetShowCurrent => 'عرض الصلاة الحالية';
+
+  @override
+  String get widgetShowCurrentDescription =>
+      'اعرض الصلاة الحالية على iPhone وiPad؛ يظل العد التنازلي للصلاة التالية. يمكن لإعدادات كل أداة تجاوز هذا الاختيار.';
+
+  @override
+  String get widgetNow => 'الآن';
 }

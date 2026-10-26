@@ -30,6 +30,7 @@ struct PrayerWidgetData: Decodable {
     let intervalStart: Double?
     let showAnalog: Bool?
     let showSchedule: Bool?
+    let showCurrent: Bool?
     let location: String
     let locale: String
     let title: String
@@ -73,8 +74,9 @@ struct PrayerEntry: TimelineEntry {
     /// True when the headline is the current prayer rather than the next.
     var showsCurrent: Bool { showCurrent && current != nil }
 
+    /// The four prayers after the next one, which is already featured above.
     var upcoming: [Prayer] {
-        Array((data?.prayers ?? []).filter { $0.date > date }.prefix(5))
+        Array((data?.prayers ?? []).filter { $0.date > date }.dropFirst().prefix(4))
     }
 
     /// Every prayer on the next prayer's day, including those already passed.
@@ -115,9 +117,10 @@ struct PrayerProvider: TimelineProvider {
         completion(Self.timeline())
     }
 
-    static func timeline(showCurrent: Bool = false) -> Timeline<PrayerEntry> {
+    static func timeline(showCurrent: Bool? = nil) -> Timeline<PrayerEntry> {
         let now = Date.now
         let data = PrayerWidgetData.load()
+        let showCurrent = showCurrent ?? data?.showCurrent ?? false
         var entries = [entry(at: now, data: data, showCurrent: showCurrent)]
         // At each boundary select the following prayer; the final entry expires
         // the schedule instead of repeating yesterday's times indefinitely.
@@ -132,9 +135,9 @@ struct PrayerProvider: TimelineProvider {
         return Timeline(entries: entries, policy: .never)
     }
 
-    static func entry(at date: Date, data: PrayerWidgetData?, showCurrent: Bool = false) -> PrayerEntry {
+    static func entry(at date: Date, data: PrayerWidgetData?, showCurrent: Bool? = nil) -> PrayerEntry {
         PrayerEntry(date: date, data: data,
-                    prayer: data?.prayers.first(where: { $0.date > date }), showCurrent: showCurrent)
+                    prayer: data?.prayers.first(where: { $0.date > date }), showCurrent: showCurrent ?? data?.showCurrent ?? false)
     }
 
     private func entry(at date: Date, data: PrayerWidgetData?) -> PrayerEntry {
@@ -147,8 +150,8 @@ struct PrayerWidgetIntent: WidgetConfigurationIntent {
     static let title: LocalizedStringResource = "Next prayer"
     static let description = IntentDescription("Counts down to the next prayer, with its time and your city.")
 
-    @Parameter(title: "Show current prayer", default: false)
-    var showCurrent: Bool
+    @Parameter(title: "Show current prayer")
+    var showCurrent: Bool?
 }
 
 struct ConfigurablePrayerProvider: AppIntentTimelineProvider {
@@ -193,7 +196,8 @@ struct PrayerWidgetView: View {
                 Text(entry.showsCurrent ? AppLanguage.string("Now") : entry.data?.title ?? "Bedug")
                 if family != .systemSmall {
                     Spacer(minLength: 8)
-                    Text(entry.data?.location ?? "")
+                    Text(entry.shortLocation.components(separatedBy: ",").first ?? "")
+                        .foregroundStyle(.secondary)
                 }
             }
             .font(.caption).lineLimit(1).minimumScaleFactor(0.7)
@@ -235,7 +239,7 @@ struct PrayerWidgetView: View {
                                 .foregroundStyle(accent).widgetAccentable()
                             timeLine(for: prayer).font(.callout)
                             Text(timerInterval: entry.date...prayer.date, countsDown: true)
-                                .font(.title2.monospacedDigit())
+                                .font(.title2.monospacedDigit().weight(.semibold))
                         }
                         .lineLimit(1).minimumScaleFactor(0.65)
                         Spacer(minLength: 0)
@@ -245,36 +249,35 @@ struct PrayerWidgetView: View {
                     }
                 }
                 if family == .systemSmall {
-                    Text(entry.data?.location ?? "").font(.caption).lineLimit(1)
+                    Text(entry.shortLocation.components(separatedBy: ",").first ?? "")
+                        .font(.caption).lineLimit(1)
                 } else if family == .systemLarge && entry.data?.showSchedule != false {
                     // Distribute the schedule across the remaining widget height.
                     VStack(spacing: 0) {
-                        ForEach(Array(entry.upcoming.enumerated()), id: \.offset) { index, item in
+                        ForEach(entry.upcoming, id: \.time) { item in
                             HStack {
                                 Text(item.name)
                                 Spacer(minLength: 8)
                                 Text(item.date, style: .time).monospacedDigit()
                             }
-                            .font(.subheadline.weight(index == 0 ? .bold : .regular))
-                            .foregroundStyle(index == 0 ? accent : .primary)
+                            .font(.subheadline)
+                            .foregroundStyle(.primary)
                             .lineLimit(1).minimumScaleFactor(0.7)
                             .padding(.horizontal, 10)
                             .frame(maxHeight: .infinity)
-                            .background(accent.opacity(index == 0 ? 0.12 : 0),
-                                        in: RoundedRectangle(cornerRadius: 12))
                         }
                     }
                     .frame(maxHeight: .infinity)
                 } else if entry.data?.showSchedule != false {
                     HStack(spacing: 4) {
-                        ForEach(Array(entry.upcoming.enumerated()), id: \.offset) { index, item in
+                        ForEach(entry.upcoming, id: \.time) { item in
                             VStack(spacing: 2) {
-                                Text(item.name).font(.caption2.weight(index == 0 ? .bold : .regular))
+                                Text(item.name).font(.caption2)
                                 Text(item.date, style: .time).font(.caption2.monospacedDigit())
                             }
                             .lineLimit(1).minimumScaleFactor(0.65)
                             .frame(maxWidth: .infinity)
-                            .foregroundStyle(index == 0 ? accent : .primary)
+                            .foregroundStyle(.primary)
                         }
                     }
                 }

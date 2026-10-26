@@ -87,6 +87,7 @@ Map<String, Object> buildPrayerWidgetData({
     'themeMode': themeMode,
     'showAnalog': appearance.showAnalog,
     'showSchedule': appearance.showSchedule,
+    'showCurrent': appearance.showCurrent,
     // Native views share the app's palette instead of duplicating hex values.
     'lightBackground': AppColors.lightBg.toARGB32(),
     'darkBackground': AppColors.darkBg.toARGB32(),

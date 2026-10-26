@@ -223,7 +223,7 @@
   "widgetAnalogCountdown": "Kira detik analog",
   "widgetAnalogDescription": "Paparkan pemasa bulatan di samping kira detik digital.",
   "widgetSchedule": "Waktu solat seterusnya",
-  "widgetScheduleDescription": "Paparkan lima solat seterusnya pada widget iPhone sederhana dan besar serta widget Android lebar.",
+  "widgetScheduleDescription": "Paparkan empat solat selepas solat seterusnya yang ditonjolkan pada widget iPhone sederhana dan besar serta widget Android lebar.",
   "widgetAppearanceHelp": "Digunakan untuk widget skrin utama iPhone dan Android. Pilih atau ubah saiz widget pada skrin utama.",
   "widgetPreview": "Pratonton",
   "widgetPreviewHelp": "Waktu contoh menunjukkan susun atur. Paparan widget sebenar mungkin sedikit berbeza. Perubahan disimpan secara automatik.",
@@ -232,5 +232,8 @@
   "widgetLarge": "Besar",
   "widgetAnalogAndDigital": "Analog + digital",
   "widgetDigitalOnly": "Digital sahaja",
-  "widgetPreviewCountdown": "01:30:00"
+  "widgetPreviewCountdown": "01:30:00",
+  "widgetShowCurrent": "Tunjukkan solat semasa",
+  "widgetShowCurrentDescription": "Utamakan solat semasa pada iPhone dan iPad; kira detik tetap menuju solat seterusnya. Tetapan setiap widget boleh menggantikan pilihan ini.",
+  "widgetNow": "Sekarang"
 }

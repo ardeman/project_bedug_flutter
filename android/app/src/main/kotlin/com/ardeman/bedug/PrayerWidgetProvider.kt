@@ -155,11 +155,11 @@ class PrayerWidgetProvider : HomeWidgetProvider() {
             ScheduleStyle.ROW -> {
                 views.setViewVisibility(R.id.widget_schedule, if (showSchedule) View.VISIBLE else View.GONE)
                 views.removeAllViews(R.id.widget_schedule)
-                if (showSchedule) upcoming.forEachIndexed { index, prayer ->
+                if (showSchedule) upcoming.drop(1).forEach { prayer ->
                     val slot = RemoteViews(context.packageName, R.layout.prayer_widget_slot)
                     slot.setTextViewText(R.id.slot_name, prayer.getString("name"))
                     slot.setTextViewText(R.id.slot_time, timeFormat.format(Date(prayer.getLong("time"))))
-                    val ink = if (index == 0) accent else text
+                    val ink = text
                     slot.setTextColor(R.id.slot_name, ink)
                     slot.setTextColor(R.id.slot_time, ink)
                     views.addView(R.id.widget_schedule, slot)
@@ -168,17 +168,12 @@ class PrayerWidgetProvider : HomeWidgetProvider() {
             ScheduleStyle.LIST -> {
                 views.setViewVisibility(R.id.widget_list, if (showSchedule) View.VISIBLE else View.GONE)
                 views.removeAllViews(R.id.widget_list)
-                if (showSchedule) upcoming.forEachIndexed { index, prayer ->
+                if (showSchedule) upcoming.drop(1).forEach { prayer ->
                     val row = RemoteViews(context.packageName, R.layout.prayer_widget_row)
                     row.setTextViewText(R.id.row_name, prayer.getString("name"))
                     row.setTextViewText(R.id.row_time, timeFormat.format(Date(prayer.getLong("time"))))
-                    if (index == 0) {
-                        row.setViewVisibility(R.id.row_highlight, View.VISIBLE)
-                        row.setInt(R.id.row_highlight, "setColorFilter", accent)
-                        row.setInt(R.id.row_highlight, "setImageAlpha", HIGHLIGHT_ALPHA)
-                    }
                     if (colored) {
-                        val ink = if (index == 0) accent else text
+                        val ink = text
                         row.setTextColor(R.id.row_name, ink)
                         row.setTextColor(R.id.row_time, ink)
                     }
@@ -281,7 +276,6 @@ class PrayerWidgetProvider : HomeWidgetProvider() {
     companion object {
         private const val REFRESH = "com.ardeman.bedug.WIDGET_REFRESH"
         // About 16% of the accent behind the next prayer's row.
-        private const val HIGHLIGHT_ALPHA = 40
     }
 }
 
