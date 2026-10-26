@@ -38,6 +38,15 @@ class AppLocalizationsId extends AppLocalizations {
   String get recommended => 'Rekomendasi';
 
   @override
+  String get prayerCategoryObligatory => 'Salat wajib';
+
+  @override
+  String get prayerCategorySunnah => 'Salat sunnah';
+
+  @override
+  String get prayerCategoryOther => 'Waktu lainnya';
+
+  @override
   String get fajr => 'Subuh';
 
   @override

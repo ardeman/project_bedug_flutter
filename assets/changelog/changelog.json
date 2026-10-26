@@ -5,6 +5,15 @@
       "date": null,
       "changes": [
         {
+          "type": "improved",
+          "text": {
+            "en": "Prayer Times distinguishes obligatory prayers, sunnah prayers and other times with category labels and icon colors.",
+            "id": "Waktu Salat membedakan salat wajib, salat sunnah, dan waktu lainnya dengan label kategori dan warna ikon.",
+            "ms": "Waktu Solat membezakan solat wajib, solat sunat dan waktu lain dengan label kategori dan warna ikon.",
+            "ar": "تميّز مواقيت الصلاة بين الصلوات المفروضة والنوافل والأوقات الأخرى بتسميات الفئات وألوان الرموز."
+          }
+        },
+        {
           "type": "fixed",
           "text": {
             "en": "Widget prayer icons now match Prayer Times. Medium and large widgets also show icons for upcoming prayers.",

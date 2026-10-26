@@ -27,6 +27,10 @@
   "recommended": "Rekomendasi",
   "@recommended": {},
 
+  "prayerCategoryObligatory": "Salat wajib",
+  "prayerCategorySunnah": "Salat sunnah",
+  "prayerCategoryOther": "Waktu lainnya",
+
   "fajr": "Subuh",
   "@fajr": { "description": "Fajr prayer name in Indonesian" },
 

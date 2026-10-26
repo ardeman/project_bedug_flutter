@@ -37,6 +37,15 @@ class AppLocalizationsMs extends AppLocalizations {
   String get recommended => 'Disyorkan';
 
   @override
+  String get prayerCategoryObligatory => 'Solat wajib';
+
+  @override
+  String get prayerCategorySunnah => 'Solat sunat';
+
+  @override
+  String get prayerCategoryOther => 'Waktu lain';
+
+  @override
   String get fajr => 'Subuh';
 
   @override

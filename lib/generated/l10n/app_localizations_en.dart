@@ -38,6 +38,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get recommended => 'Recommended';
 
   @override
+  String get prayerCategoryObligatory => 'Obligatory prayer';
+
+  @override
+  String get prayerCategorySunnah => 'Sunnah prayer';
+
+  @override
+  String get prayerCategoryOther => 'Other time';
+
+  @override
   String get fajr => 'Fajr';
 
   @override

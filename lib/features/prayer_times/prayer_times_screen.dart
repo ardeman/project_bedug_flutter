@@ -1585,6 +1585,7 @@ class _LiquidGlassCard extends StatelessWidget {
     final theme = Theme.of(ctx);
     final isDark = theme.brightness == Brightness.dark;
     final onSurface = theme.colorScheme.onSurface;
+    final categoryColor = entry.category.colorOf(ctx);
     final mq = MediaQuery.of(ctx);
     final isLandscape = mq.orientation == Orientation.landscape;
     final sideInsetLeft = isLandscape ? mq.padding.left : 0.0;
@@ -1645,12 +1646,12 @@ class _LiquidGlassCard extends StatelessWidget {
                     shape: BoxShape.circle,
                     color: isNext
                         ? Colors.white.withValues(alpha: 0.2)
-                        : AppColors.accentOf(ctx).withValues(alpha: 0.12),
+                        : categoryColor.withValues(alpha: 0.12),
                   ),
                   child: Icon(
                     entry.icon,
                     size: 20,
-                    color: isNext ? Colors.white : AppColors.accentOf(ctx),
+                    color: isNext ? Colors.white : categoryColor,
                   ),
                 ),
                 const SizedBox(width: AppSpacing.md),
@@ -1667,6 +1668,11 @@ class _LiquidGlassCard extends StatelessWidget {
                             color: Colors.white.withValues(alpha: 0.75),
                           ),
                         ),
+                      _PrayerCategoryLabel(
+                        category: entry.category,
+                        l10n: l10n,
+                        color: isNext ? Colors.white : categoryColor,
+                      ),
                       Text(
                         entry.label,
                         style: theme.textTheme.titleMedium?.copyWith(
@@ -1722,6 +1728,7 @@ class _MaterialCard extends StatelessWidget {
 
     final theme = Theme.of(ctx);
     final onAccent = theme.colorScheme.onPrimary;
+    final categoryColor = entry.category.colorOf(ctx);
     // Follow the theme's flat card (hairline, large radius; Adwaita/Breeze
     // cards on Linux) and fill it with the accent for the next prayer.
     final cardShape =
@@ -1737,7 +1744,7 @@ class _MaterialCard extends StatelessWidget {
       ),
       leading: Icon(
         entry.icon,
-        color: isNext ? onAccent : AppColors.accentOf(ctx),
+        color: isNext ? onAccent : categoryColor,
         size: 28,
       ),
       // The "up next" label leads, so it reads as a heading for the name.
@@ -1752,6 +1759,11 @@ class _MaterialCard extends StatelessWidget {
                 color: onAccent.withValues(alpha: 0.7),
               ),
             ),
+          _PrayerCategoryLabel(
+            category: entry.category,
+            l10n: l10n,
+            color: isNext ? onAccent : categoryColor,
+          ),
           Text(
             entry.label,
             style: theme.textTheme.titleMedium?.copyWith(
@@ -1848,12 +1860,55 @@ String _formatCountdown(Duration d) {
 }
 
 // ── Prayer Entry model ────────────────────────────────────────────────────────
+enum _PrayerCategory {
+  obligatory,
+  sunnah,
+  other;
+
+  String label(AppLocalizations l10n) => switch (this) {
+    obligatory => l10n.prayerCategoryObligatory,
+    sunnah => l10n.prayerCategorySunnah,
+    other => l10n.prayerCategoryOther,
+  };
+
+  Color colorOf(BuildContext ctx) => switch (this) {
+    obligatory => AppColors.accentOf(ctx),
+    sunnah => Theme.of(ctx).colorScheme.tertiary,
+    other => Theme.of(ctx).colorScheme.onSurfaceVariant,
+  };
+}
+
+class _PrayerCategoryLabel extends StatelessWidget {
+  final _PrayerCategory category;
+  final AppLocalizations l10n;
+  final Color color;
+
+  const _PrayerCategoryLabel({
+    required this.category,
+    required this.l10n,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) => Text(
+    category.label(l10n),
+    style: Theme.of(context).textTheme.labelSmall?.copyWith(color: color),
+  );
+}
+
 class _PrayerEntry {
   final String key;
   final String label;
   final IconData icon;
   final DateTime? time;
   final String? description;
+
+  // The night window is guidance for tahajud; imsak and sunrise are markers.
+  _PrayerCategory get category => switch (key) {
+    'lastThirdOfNight' || 'dhuha' => _PrayerCategory.sunnah,
+    'imsak' || 'sunrise' => _PrayerCategory.other,
+    _ => _PrayerCategory.obligatory,
+  };
 
   const _PrayerEntry(
     this.key,

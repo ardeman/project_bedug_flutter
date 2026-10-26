@@ -156,6 +156,24 @@ abstract class AppLocalizations {
   /// **'Rekomendasi'**
   String get recommended;
 
+  /// No description provided for @prayerCategoryObligatory.
+  ///
+  /// In id, this message translates to:
+  /// **'Salat wajib'**
+  String get prayerCategoryObligatory;
+
+  /// No description provided for @prayerCategorySunnah.
+  ///
+  /// In id, this message translates to:
+  /// **'Salat sunnah'**
+  String get prayerCategorySunnah;
+
+  /// No description provided for @prayerCategoryOther.
+  ///
+  /// In id, this message translates to:
+  /// **'Waktu lainnya'**
+  String get prayerCategoryOther;
+
   /// Fajr prayer name in Indonesian
   ///
   /// In id, this message translates to:

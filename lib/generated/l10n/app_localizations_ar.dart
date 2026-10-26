@@ -37,6 +37,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get recommended => 'موصى به';
 
   @override
+  String get prayerCategoryObligatory => 'صلاة مفروضة';
+
+  @override
+  String get prayerCategorySunnah => 'صلاة نافلة';
+
+  @override
+  String get prayerCategoryOther => 'وقت آخر';
+
+  @override
   String get fajr => 'الفجر';
 
   @override

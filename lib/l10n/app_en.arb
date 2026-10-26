@@ -11,6 +11,10 @@
   "upNext": "Up next",
   "recommended": "Recommended",
 
+  "prayerCategoryObligatory": "Obligatory prayer",
+  "prayerCategorySunnah": "Sunnah prayer",
+  "prayerCategoryOther": "Other time",
+
   "fajr": "Fajr",
   "sunrise": "Sunrise",
   "imsak": "Imsak",

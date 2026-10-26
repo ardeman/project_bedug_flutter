@@ -11,6 +11,10 @@
   "upNext": "التالية",
   "recommended": "موصى به",
 
+  "prayerCategoryObligatory": "صلاة مفروضة",
+  "prayerCategorySunnah": "صلاة نافلة",
+  "prayerCategoryOther": "وقت آخر",
+
   "fajr": "الفجر",
   "sunrise": "الشروق",
   "imsak": "الإمساك",

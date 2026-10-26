@@ -68,6 +68,21 @@ void main() {
           ]) {
             expect(find.text(label), findsOneWidget);
           }
+          // Categories remain explicit on glass and Material cards in every
+          // language, independent of the next-prayer highlight.
+          expect(find.text(l10n.prayerCategoryObligatory), findsNWidgets(5));
+          expect(find.text(l10n.prayerCategorySunnah), findsNWidgets(2));
+          expect(find.text(l10n.prayerCategoryOther), findsNWidgets(2));
+          Color? labelColor(String label) =>
+              tester.widget<Text>(find.text(label).first).style?.color;
+          expect(
+            labelColor(l10n.prayerCategorySunnah),
+            Theme.of(context).colorScheme.tertiary,
+          );
+          expect(
+            labelColor(l10n.prayerCategoryOther),
+            Theme.of(context).colorScheme.onSurfaceVariant,
+          );
           // Choosing another date must recalculate the additional times too.
           final picker = tester.widget<PrayerDayPicker>(
             find.byType(PrayerDayPicker),

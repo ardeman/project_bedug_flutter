@@ -11,6 +11,10 @@
   "upNext": "Seterusnya",
   "recommended": "Disyorkan",
 
+  "prayerCategoryObligatory": "Solat wajib",
+  "prayerCategorySunnah": "Solat sunat",
+  "prayerCategoryOther": "Waktu lain",
+
   "fajr": "Subuh",
   "sunrise": "Syuruk",
   "imsak": "Imsak",
