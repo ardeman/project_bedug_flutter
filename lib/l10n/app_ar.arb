@@ -262,5 +262,13 @@
   "infaqKofiMethods": "PayPal والبطاقات",
   "widgetShowCurrent": "عرض الصلاة الحالية",
   "widgetShowCurrentDescription": "اعرض الصلاة الحالية على iPhone وiPad؛ يظل العد التنازلي للصلاة التالية. يمكن لإعدادات كل أداة تجاوز هذا الاختيار.",
-  "widgetNow": "الآن"
+  "widgetNow": "الآن",
+
+  "dzikirMorningEvening": "أذكار الصباح والمساء",
+  "dzikirMorning": "الصباح",
+  "dzikirEvening": "المساء",
+  "dzikirLoadError": "تعذّر تحميل الأذكار.",
+  "dzikirSource": "المصدر: {source}",
+  "dzikirRepeat": "{count}×",
+  "dzikirCollection": "كتاب الأذكار"
 }

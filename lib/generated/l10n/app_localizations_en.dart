@@ -775,4 +775,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get widgetNow => 'Now';
+
+  @override
+  String get dzikirMorningEvening => 'Morning and evening dzikir';
+
+  @override
+  String get dzikirMorning => 'Morning';
+
+  @override
+  String get dzikirEvening => 'Evening';
+
+  @override
+  String get dzikirLoadError => 'Couldn\'t load the dzikir.';
+
+  @override
+  String dzikirSource(String source) {
+    return 'Source: $source';
+  }
+
+  @override
+  String dzikirRepeat(int count) {
+    return '$count×';
+  }
+
+  @override
+  String get dzikirCollection => 'Dzikir collection';
 }

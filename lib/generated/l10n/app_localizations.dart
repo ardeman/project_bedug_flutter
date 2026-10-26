@@ -1535,6 +1535,48 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Sekarang'**
   String get widgetNow;
+
+  /// No description provided for @dzikirMorningEvening.
+  ///
+  /// In id, this message translates to:
+  /// **'Zikir pagi dan petang'**
+  String get dzikirMorningEvening;
+
+  /// No description provided for @dzikirMorning.
+  ///
+  /// In id, this message translates to:
+  /// **'Pagi'**
+  String get dzikirMorning;
+
+  /// No description provided for @dzikirEvening.
+  ///
+  /// In id, this message translates to:
+  /// **'Petang'**
+  String get dzikirEvening;
+
+  /// No description provided for @dzikirLoadError.
+  ///
+  /// In id, this message translates to:
+  /// **'Zikir gagal dimuat.'**
+  String get dzikirLoadError;
+
+  /// No description provided for @dzikirSource.
+  ///
+  /// In id, this message translates to:
+  /// **'Sumber: {source}'**
+  String dzikirSource(String source);
+
+  /// How many times to recite an item.
+  ///
+  /// In id, this message translates to:
+  /// **'{count}×'**
+  String dzikirRepeat(int count);
+
+  /// No description provided for @dzikirCollection.
+  ///
+  /// In id, this message translates to:
+  /// **'Kitab zikir'**
+  String get dzikirCollection;
 }
 
 class _AppLocalizationsDelegate

@@ -772,4 +772,29 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get widgetNow => 'الآن';
+
+  @override
+  String get dzikirMorningEvening => 'أذكار الصباح والمساء';
+
+  @override
+  String get dzikirMorning => 'الصباح';
+
+  @override
+  String get dzikirEvening => 'المساء';
+
+  @override
+  String get dzikirLoadError => 'تعذّر تحميل الأذكار.';
+
+  @override
+  String dzikirSource(String source) {
+    return 'المصدر: $source';
+  }
+
+  @override
+  String dzikirRepeat(int count) {
+    return '$count×';
+  }
+
+  @override
+  String get dzikirCollection => 'كتاب الأذكار';
 }

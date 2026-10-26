@@ -7,6 +7,15 @@
         {
           "type": "new",
           "text": {
+            "en": "Morning and evening dzikir in the Worship tab, from Hisnul Muslim, with Arabic, transliteration, translation and how many times to recite each one. It opens on the session for the time of day.",
+            "id": "Zikir pagi dan petang di tab Ibadah, dari Hisnul Muslim, dengan teks Arab, transliterasi, terjemahan, dan jumlah bacaan tiap zikir. Bagian yang terbuka mengikuti waktu saat itu.",
+            "ms": "Zikir pagi dan petang dalam tab Ibadah, daripada Hisnul Muslim, dengan teks Arab, transliterasi, terjemahan dan bilangan bacaan setiap zikir. Bahagian yang dibuka mengikut waktu semasa.",
+            "ar": "أذكار الصباح والمساء في تبويب العبادة، من حصن المسلم، مع عدد مرات قراءة كل ذكر. ويُفتح على أذكار الوقت الحالي."
+          }
+        },
+        {
+          "type": "new",
+          "text": {
             "en": "On Fridays, Dhuhr shows as Jumu'ah in Prayer Times, notifications and widgets, with a note that those who don't attend still pray Dhuhr.",
             "id": "Pada hari Jumat, Zuhur tampil sebagai Jumat di Waktu Salat, notifikasi, dan widget, dengan catatan bahwa yang tidak salat Jumat tetap salat Zuhur.",
             "ms": "Pada hari Jumaat, Zohor dipaparkan sebagai Jumaat dalam Waktu Solat, pemberitahuan dan widget, dengan catatan bahawa yang tidak solat Jumaat tetap solat Zohor.",

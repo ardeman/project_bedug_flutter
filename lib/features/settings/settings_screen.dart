@@ -28,6 +28,7 @@ import '../../core/widgets/city_picker.dart';
 import '../../core/widgets/glass_menu.dart';
 import '../../generated/l10n/app_localizations.dart';
 import '../changelog/changelog_screen.dart';
+import '../dzikir/dzikir.dart';
 import '../infaq/infaq_provider.dart';
 import '../infaq/infaq_screen.dart';
 import 'settings_section.dart';
@@ -43,6 +44,7 @@ class SettingsScreen extends ConsumerWidget {
     final manualCity = ref.watch(manualCityProvider);
     final notifier = ref.read(settingsProvider.notifier);
     final isApple = PlatformCapabilities.isApple;
+    final dzikirCollections = ref.watch(dzikirCollectionsProvider).value;
 
     final sections = [
       // ── Section: Salat ─────────────────────────────────────────────────
@@ -149,6 +151,27 @@ class SettingsScreen extends ConsumerWidget {
           ),
         ],
       ),
+
+      // ── Section: Ibadah (shown once there is a collection to choose) ──
+      if (dzikirCollections case final collections? when collections.length > 1)
+        SettingsSection(
+          title: l10n.worship,
+          children: [
+            _ChoiceTile<String>(
+              icon: Icons.menu_book_outlined,
+              title: l10n.dzikirCollection,
+              value: ref.watch(dzikirCollectionIdProvider),
+              options: [
+                for (final c in collections)
+                  GlassMenuOption(
+                    value: c.id,
+                    label: c.nameFor(locale.languageCode),
+                  ),
+              ],
+              onChanged: ref.read(dzikirCollectionIdProvider.notifier).select,
+            ),
+          ],
+        ),
 
       // ── Section: Tampilan ────────────────────────────────────────────────
       SettingsSection(

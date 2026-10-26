@@ -262,5 +262,13 @@
   "infaqKofiMethods": "PayPal dan kad",
   "widgetShowCurrent": "Tunjukkan solat semasa",
   "widgetShowCurrentDescription": "Utamakan solat semasa pada iPhone dan iPad; kira detik tetap menuju solat seterusnya. Tetapan setiap widget boleh menggantikan pilihan ini.",
-  "widgetNow": "Sekarang"
+  "widgetNow": "Sekarang",
+
+  "dzikirMorningEvening": "Zikir pagi dan petang",
+  "dzikirMorning": "Pagi",
+  "dzikirEvening": "Petang",
+  "dzikirLoadError": "Zikir tidak dapat dimuatkan.",
+  "dzikirSource": "Sumber: {source}",
+  "dzikirRepeat": "{count}×",
+  "dzikirCollection": "Kitab zikir"
 }

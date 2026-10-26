@@ -128,3 +128,5 @@ Record architectural choices here as one line each: date, decision, reason.
 - 2026-10-20: Home screen widgets use `home_widget` to share seven calculated days with native WidgetKit and Android RemoteViews, so countdowns and prayer transitions work without a running Flutter engine; cache expiry asks users to reopen Bedug.
 
 - 2026-10-24: Glass follows the system's Clear/Tinted Liquid Glass amount by reading the undocumented `NSGlassTintAmount` global default (macOS; Clear when it is missing), plus Reduce Transparency and Increase Contrast, because Apple has no API for the style and an in-app switch would disagree with the system one.
+
+- 2026-10-27: Dzikir comes in selectable collections, each one JSON file under `assets/content/dzikir/` with the Arabic once and every translation inline, so users follow the collection they practise and a new one is data, not code.

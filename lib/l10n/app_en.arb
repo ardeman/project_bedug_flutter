@@ -262,5 +262,13 @@
   "infaqKofiMethods": "PayPal and cards",
   "widgetShowCurrent": "Show current prayer",
   "widgetShowCurrentDescription": "Headline the current prayer on iPhone and iPad; the countdown still leads to the next prayer. Individual widget settings can override this.",
-  "widgetNow": "Now"
+  "widgetNow": "Now",
+
+  "dzikirMorningEvening": "Morning and evening dzikir",
+  "dzikirMorning": "Morning",
+  "dzikirEvening": "Evening",
+  "dzikirLoadError": "Couldn't load the dzikir.",
+  "dzikirSource": "Source: {source}",
+  "dzikirRepeat": "{count}×",
+  "dzikirCollection": "Dzikir collection"
 }

@@ -433,5 +433,18 @@
   "infaqKofiMethods": "PayPal dan kartu",
   "widgetShowCurrent": "Tampilkan salat saat ini",
   "widgetShowCurrentDescription": "Utamakan salat saat ini di iPhone dan iPad; hitung mundur tetap menuju salat berikutnya. Pengaturan masing-masing widget dapat menggantikan pilihan ini.",
-  "widgetNow": "Sekarang"
+  "widgetNow": "Sekarang",
+
+  "dzikirMorningEvening": "Zikir pagi dan petang",
+  "dzikirMorning": "Pagi",
+  "dzikirEvening": "Petang",
+  "dzikirLoadError": "Zikir gagal dimuat.",
+  "dzikirSource": "Sumber: {source}",
+  "dzikirRepeat": "{count}×",
+  "dzikirCollection": "Kitab zikir",
+  "@dzikirSource": {"placeholders": {"source": {"type": "String"}}},
+  "@dzikirRepeat": {
+    "description": "How many times to recite an item.",
+    "placeholders": {"count": {"type": "int"}}
+  }
 }

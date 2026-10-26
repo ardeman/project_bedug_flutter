@@ -188,7 +188,7 @@ Bedug grows from a prayer-times app into a companion for a Muslim's day, week an
 
 - **Offline first, private by default.** Everything works without a network or an account, and the user's worship data (bookmarks and reading history) stays on the device. Any sync is opt-in and comes later.
 - **Trusted, licensed content.** Quran text, translations, duas and dzikir come from named sources whose license allows bundling (for example Tanzil for Quran text, Kemenag RI for the Indonesian translation). Each source is credited in the app.
-- **Content is data, not UI strings.** Religious texts ship as per-locale JSON under `assets/content/<locale>/`. Only UI labels go through `AppLocalizations`.
+- **Content is data, not UI strings.** Religious texts ship as JSON under `assets/content/`, one file per collection with the Arabic once and every translation inline, like the changelog. Only UI labels go through `AppLocalizations`.
 - **Every feature on every platform design** (Liquid Glass, Material 3 Expressive, Fluent), in all four languages, including right-to-left Arabic.
 
 **Phase 1: Daily prayer (next)**
@@ -204,7 +204,7 @@ Prayer tracking and prayer-progress features (completion logs, streaks and qada 
 
 **Phase 2: Dzikir and dua**
 
-1. **Morning and evening dzikir** (dzikir pagi/petang): Arabic, transliteration and translation, with a reminder after Subuh and Asar.
+1. **Morning and evening dzikir** (dzikir pagi/petang; reader done, reminder pending): Arabic, transliteration, translation and repeat count from a dzikir collection the user picks in Settings (the picker appears once a second collection ships). Each collection is one JSON file in `assets/content/dzikir/` with every language inline, registered in `lib/features/dzikir/dzikir.dart`. Hisnul Muslim ships first, translated by Bedug; its text needs a review by someone qualified before release. Next: a second collection (such as Al-Ma'tsurat, from a verified edition), then a reminder after Subuh and Asar.
 2. **Daily duas** by situation (waking, eating, travel, entering the mosque) and the **Asmaul Husna**.
 3. **After-prayer dzikir** accessible directly from the Worship tab.
 

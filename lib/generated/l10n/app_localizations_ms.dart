@@ -777,4 +777,29 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get widgetNow => 'Sekarang';
+
+  @override
+  String get dzikirMorningEvening => 'Zikir pagi dan petang';
+
+  @override
+  String get dzikirMorning => 'Pagi';
+
+  @override
+  String get dzikirEvening => 'Petang';
+
+  @override
+  String get dzikirLoadError => 'Zikir tidak dapat dimuatkan.';
+
+  @override
+  String dzikirSource(String source) {
+    return 'Sumber: $source';
+  }
+
+  @override
+  String dzikirRepeat(int count) {
+    return '$count×';
+  }
+
+  @override
+  String get dzikirCollection => 'Kitab zikir';
 }

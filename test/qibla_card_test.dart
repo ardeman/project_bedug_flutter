@@ -238,14 +238,16 @@ void main() {
             events.add(CompassEvent.fromList([0, 0, 1]));
             await tester.pump();
           }
-          expect(find.byType(GlassCard), findsOneWidget);
-          final card = tester.getRect(find.byType(GlassCard));
+          // The Qibla card fits between the bars; entries below it, such as
+          // dzikir, may scroll.
+          final qiblaCard = find.descendant(
+            of: find.byType(QiblaCard),
+            matching: find.byType(GlassCard),
+          );
+          expect(qiblaCard, findsOneWidget);
+          final card = tester.getRect(qiblaCard);
           expect(card.top, greaterThanOrEqualTo(44 + kToolbarHeight));
           expect(card.bottom, lessThanOrEqualTo(size.height - 90));
-          final scrollable = tester.state<ScrollableState>(
-            find.byType(Scrollable),
-          );
-          expect(scrollable.position.maxScrollExtent, 0);
           expect(tester.takeException(), isNull);
         },
         variant: TargetPlatformVariant({
