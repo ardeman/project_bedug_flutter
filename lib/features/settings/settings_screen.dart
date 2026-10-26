@@ -1142,6 +1142,10 @@ class _AppleWidgetCard extends StatelessWidget {
               decoration: BoxDecoration(
                 color: background,
                 borderRadius: BorderRadius.circular(AppRadii.lg),
+                // The native widget palette can match the page background.
+                border: Border.all(
+                  color: Theme.of(context).colorScheme.outlineVariant,
+                ),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(AppSpacing.md),

@@ -319,12 +319,23 @@ struct PrayerWidgetView: View {
                     .font(.title3).foregroundStyle(accent)
             }
             .progressViewStyle(.circular).tint(accent).widgetAccentable()
-            ForEach(0..<12) { tick in
-                Capsule().fill(accent.opacity(0.4))
-                    .frame(width: 2, height: tick % 3 == 0 ? 5 : 3)
-                    .offset(y: -(diameter / 2 - 4))
-                    .rotationEffect(.degrees(Double(tick) * 30))
+            // Draw ticks in place so WidgetKit's archived view contains no
+            // rotation transforms alongside the live circular progress view.
+            Path { path in
+                let radius = diameter / 2 - 4
+                let center = diameter / 2
+                for tick in 0..<12 {
+                    let angle = Double(tick) * .pi / 6 - .pi / 2
+                    let halfLength: CGFloat = tick % 3 == 0 ? 2.5 : 1.5
+                    path.move(to: CGPoint(
+                        x: center + (radius - halfLength) * cos(angle),
+                        y: center + (radius - halfLength) * sin(angle)))
+                    path.addLine(to: CGPoint(
+                        x: center + (radius + halfLength) * cos(angle),
+                        y: center + (radius + halfLength) * sin(angle)))
+                }
             }
+            .stroke(accent.opacity(0.4), style: StrokeStyle(lineWidth: 2, lineCap: .round))
         }
         .frame(width: diameter, height: diameter)
         .accessibilityLabel(Text(timerInterval: entry.date...end, countsDown: true))

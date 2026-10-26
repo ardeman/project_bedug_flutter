@@ -186,6 +186,31 @@ void main() {
     }),
   );
 
+  for (final brightness in Brightness.values) {
+    testWidgets('Apple preview edges remain visible in $brightness', (
+      tester,
+    ) async {
+      await _pumpSettings(
+        tester,
+        brightness: brightness,
+        home: const WidgetAppearanceScreen(),
+      );
+      for (var size = 0; size < 3; size++) {
+        final canvas = find.descendant(
+          of: find.byKey(ValueKey('widget_preview_apple_$size')),
+          matching: find.byType(DecoratedBox),
+        );
+        final decoration =
+            tester.widget<DecoratedBox>(canvas).decoration as BoxDecoration;
+        final border = decoration.border! as Border;
+        expect(border.top.color, isNot(decoration.color));
+        expect(border.top.color.a, greaterThan(0));
+        expect(border.top.width, greaterThan(0));
+      }
+      expect(tester.takeException(), isNull);
+    }, variant: TargetPlatformVariant.only(TargetPlatform.iOS));
+  }
+
   testWidgets(
     'Apple previews keep WidgetKit proportions and evenly spaced schedule columns',
     (tester) async {

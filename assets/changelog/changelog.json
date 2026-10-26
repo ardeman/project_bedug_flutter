@@ -5,6 +5,15 @@
       "date": null,
       "changes": [
         {
+          "type": "fixed",
+          "text": {
+            "en": "Widget Style previews have visible rounded edges in light and dark mode. The iPhone widget dial draws its tick marks without rotation transforms.",
+            "id": "Pratinjau Gaya Widget memiliki tepi membulat yang terlihat dalam mode terang dan gelap. Dial widget iPhone menggambar tanda skala tanpa transformasi rotasi.",
+            "ms": "Pratonton Gaya Widget mempunyai tepi bulat yang jelas dalam mod cerah dan gelap. Dail widget iPhone melukis tanda skala tanpa transformasi putaran.",
+            "ar": "أصبحت الحواف المستديرة لمعاينات نمط الأداة واضحة في الوضعين الفاتح والداكن. يرسم قرص أداة iPhone علامات التدريج دون تحويلات دوران."
+          }
+        },
+        {
           "type": "improved",
           "text": {
             "en": "Home widgets have a cleaner schedule without repeating the featured next prayer. Widget Style now includes the current-prayer headline option for iPhone and iPad, with matching previews. Apple previews now follow the native widget proportions, system typography and evenly spaced schedule.",
