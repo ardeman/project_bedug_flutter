@@ -34,6 +34,7 @@ void main() {
       expect(collection.id, key);
       expect(collection.name.keys.toSet(), languages, reason: key);
       expect(collection.source.keys.toSet(), languages, reason: key);
+      expect(collection.items, isNotEmpty, reason: key);
       for (final session in DzikirSession.values) {
         expect(
           collection.itemsFor(session),
@@ -43,7 +44,6 @@ void main() {
       }
       for (final item in collection.items) {
         final reason = '$key: ${item.transliteration}';
-        expect(item.sessions, isNotEmpty, reason: reason);
         expect(item.arabic.trim(), isNotEmpty, reason: reason);
         expect(item.transliteration.trim(), isNotEmpty, reason: reason);
         // A hadith number, verse or page, so readers can look it up.
@@ -88,6 +88,15 @@ void main() {
     });
   });
 
+  test('Hisnul Muslim is split by session; Ratéb Siribèe is not', () {
+    expect(collections['hisnul_muslim']!.hasSessions, isTrue);
+    final rateb = collections['rateb_siribee']!;
+    expect(rateb.hasSessions, isFalse);
+    // Dzikir for any time is listed under both sessions.
+    expect(rateb.itemsFor(DzikirSession.morning), rateb.items);
+    expect(rateb.itemsFor(DzikirSession.evening), rateb.items);
+  });
+
   test('an unknown stored collection falls back to the default', () async {
     SharedPreferences.setMockInitialValues({'dzikir_collection': 'removed'});
     final container = ProviderContainer(
@@ -104,10 +113,12 @@ void main() {
     );
   });
 
-  testWidgets('opens on the current session and switches', (tester) async {
+  Future<void> pumpScreen(
+    WidgetTester tester,
+    DzikirCollection collection,
+  ) async {
     SharedPreferences.setMockInitialValues({});
     final prefs = await SharedPreferences.getInstance();
-    final collection = collections[defaultDzikirCollectionId]!;
     // Tall enough that the lazy list builds the first session-only items.
     tester.view.physicalSize = const Size(800, 12000);
     tester.view.devicePixelRatio = 1;
@@ -135,6 +146,11 @@ void main() {
       );
       await tester.pumpAndSettle();
     });
+  }
+
+  testWidgets('opens on the current session and switches', (tester) async {
+    final collection = collections[defaultDzikirCollectionId]!;
+    await pumpScreen(tester, collection);
 
     final morningOnly = collection.items.firstWhere(
       (i) =>
@@ -144,7 +160,7 @@ void main() {
       (i) =>
           i.sessions.length == 1 && i.sessions.contains(DzikirSession.evening),
     );
-    expect(find.text('Morning and evening dzikir'), findsOneWidget);
+    expect(find.text('Dzikir'), findsOneWidget);
     expect(find.text(collection.items.first.arabic), findsOneWidget);
     expect(find.text(morningOnly.arabic, skipOffstage: false), findsOneWidget);
     expect(find.text(eveningOnly.arabic, skipOffstage: false), findsNothing);
@@ -153,5 +169,18 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text(eveningOnly.arabic, skipOffstage: false), findsOneWidget);
     expect(find.text(morningOnly.arabic, skipOffstage: false), findsNothing);
+  });
+
+  testWidgets('lists a collection without sessions whole, with no switch', (
+    tester,
+  ) async {
+    final collection = collections['rateb_siribee']!;
+    await pumpScreen(tester, collection);
+
+    expect(find.text('Morning'), findsNothing);
+    expect(find.text('Evening'), findsNothing);
+    for (final item in collection.items) {
+      expect(find.text(item.arabic, skipOffstage: false), findsOneWidget);
+    }
   });
 }

@@ -264,7 +264,7 @@
   "widgetShowCurrentDescription": "اعرض الصلاة الحالية على iPhone وiPad؛ يظل العد التنازلي للصلاة التالية. يمكن لإعدادات كل أداة تجاوز هذا الاختيار.",
   "widgetNow": "الآن",
 
-  "dzikirMorningEvening": "أذكار الصباح والمساء",
+  "dzikir": "الأذكار",
   "dzikirMorning": "الصباح",
   "dzikirEvening": "المساء",
   "dzikirLoadError": "تعذّر تحميل الأذكار.",

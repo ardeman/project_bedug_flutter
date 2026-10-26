@@ -774,7 +774,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get widgetNow => 'الآن';
 
   @override
-  String get dzikirMorningEvening => 'أذكار الصباح والمساء';
+  String get dzikir => 'الأذكار';
 
   @override
   String get dzikirMorning => 'الصباح';

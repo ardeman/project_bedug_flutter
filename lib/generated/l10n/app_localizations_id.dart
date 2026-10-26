@@ -780,7 +780,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get widgetNow => 'Sekarang';
 
   @override
-  String get dzikirMorningEvening => 'Zikir pagi dan petang';
+  String get dzikir => 'Zikir';
 
   @override
   String get dzikirMorning => 'Pagi';

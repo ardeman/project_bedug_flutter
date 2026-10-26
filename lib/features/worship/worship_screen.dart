@@ -58,7 +58,7 @@ class _DzikirEntry extends ConsumerWidget {
       ),
       child: PlatformListTile(
         leading: Icon(Icons.wb_twilight, color: AppColors.accentOf(ctx)),
-        title: Text(l10n.dzikirMorningEvening),
+        title: Text(l10n.dzikir),
         subtitle: collection == null
             ? null
             : Text(collection.nameFor(languageCode)),

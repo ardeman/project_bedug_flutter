@@ -264,7 +264,7 @@
   "widgetShowCurrentDescription": "Headline the current prayer on iPhone and iPad; the countdown still leads to the next prayer. Individual widget settings can override this.",
   "widgetNow": "Now",
 
-  "dzikirMorningEvening": "Morning and evening dzikir",
+  "dzikir": "Dzikir",
   "dzikirMorning": "Morning",
   "dzikirEvening": "Evening",
   "dzikirLoadError": "Couldn't load the dzikir.",

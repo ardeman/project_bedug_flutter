@@ -1536,11 +1536,11 @@ abstract class AppLocalizations {
   /// **'Sekarang'**
   String get widgetNow;
 
-  /// No description provided for @dzikirMorningEvening.
+  /// No description provided for @dzikir.
   ///
   /// In id, this message translates to:
-  /// **'Zikir pagi dan petang'**
-  String get dzikirMorningEvening;
+  /// **'Zikir'**
+  String get dzikir;
 
   /// No description provided for @dzikirMorning.
   ///

@@ -777,7 +777,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get widgetNow => 'Now';
 
   @override
-  String get dzikirMorningEvening => 'Morning and evening dzikir';
+  String get dzikir => 'Dzikir';
 
   @override
   String get dzikirMorning => 'Morning';

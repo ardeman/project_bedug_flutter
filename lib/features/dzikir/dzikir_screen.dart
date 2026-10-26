@@ -14,7 +14,8 @@ import '../../core/theme/app_tokens.dart';
 import '../../generated/l10n/app_localizations.dart';
 import 'dzikir.dart';
 
-/// Morning and evening dzikir from the collection picked in Settings.
+/// Dzikir from the collection picked in Settings, split into morning and
+/// evening when the collection has sessions.
 class DzikirScreen extends ConsumerStatefulWidget {
   const DzikirScreen({super.key});
 
@@ -51,7 +52,7 @@ class _DzikirScreenState extends ConsumerState<DzikirScreen> {
 
     return Scaffold(
       extendBodyBehindAppBar: PlatformCapabilities.isApple,
-      appBar: GlassTopBar(title: l10n.dzikirMorningEvening),
+      appBar: GlassTopBar(title: l10n.dzikir),
       body: collection.when(
         loading: () => const Center(child: AdaptiveSpinner()),
         error: (_, _) => Center(
@@ -66,19 +67,25 @@ class _DzikirScreenState extends ConsumerState<DzikirScreen> {
             constraints: const BoxConstraints(maxWidth: 640),
             child: ListView(
               children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(
-                    AppSpacing.md,
-                    AppSpacing.md,
-                    AppSpacing.md,
-                    AppSpacing.xs,
-                  ),
-                  child: _SessionSwitch(
-                    value: _session,
-                    onChanged: (s) => setState(() => _session = s),
-                  ),
-                ),
-                for (final item in collection.itemsFor(_session))
+                if (collection.hasSessions)
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      AppSpacing.md,
+                      AppSpacing.md,
+                      AppSpacing.md,
+                      AppSpacing.xs,
+                    ),
+                    child: _SessionSwitch(
+                      value: _session,
+                      onChanged: (s) => setState(() => _session = s),
+                    ),
+                  )
+                else
+                  const SizedBox(height: AppSpacing.sm),
+                for (final item
+                    in collection.hasSessions
+                        ? collection.itemsFor(_session)
+                        : collection.items)
                   _DzikirCard(item: item, languageCode: languageCode),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(

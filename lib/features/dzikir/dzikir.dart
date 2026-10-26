@@ -18,6 +18,8 @@ const defaultDzikirCollectionId = 'hisnul_muslim';
 enum DzikirSession { morning, evening }
 
 class DzikirItem {
+  /// When it is recited; empty for dzikir not tied to morning or evening,
+  /// such as a ratib.
   final Set<DzikirSession> sessions;
   final String arabic;
   final String transliteration;
@@ -67,10 +69,15 @@ class DzikirCollection {
   String sourceFor(String languageCode) =>
       source[languageCode] ?? source['en'] ?? '';
 
-  /// The items recited in [session], in reading order.
+  /// Whether any item belongs to the morning or evening session, so the
+  /// reader splits the collection by session.
+  bool get hasSessions => items.any((i) => i.sessions.isNotEmpty);
+
+  /// The items recited in [session], in reading order, including those
+  /// recited at any time.
   List<DzikirItem> itemsFor(DzikirSession session) => [
     for (final item in items)
-      if (item.sessions.contains(session)) item,
+      if (item.sessions.isEmpty || item.sessions.contains(session)) item,
   ];
 }
 
@@ -85,7 +92,7 @@ DzikirCollection parseDzikirCollection(String source) {
       for (final i in json['items'] as List)
         DzikirItem(
           sessions: {
-            for (final s in i['sessions'] as List)
+            for (final s in i['sessions'] as List? ?? const [])
               DzikirSession.values.byName(s as String),
           },
           arabic: i['arabic'] as String,

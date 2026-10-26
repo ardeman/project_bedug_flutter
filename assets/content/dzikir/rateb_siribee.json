@@ -14,7 +14,6 @@
   },
   "items": [
     {
-      "sessions": ["morning", "evening"],
       "arabic": "أَسْتَغْفِرُ اللّٰهَ الْعَظِيْمَ الَّذِيْ لَا إِلٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّوْمُ وَأَتُوْبُ إِلَيْهِ",
       "transliteration": "Astaghfirullāhal-'aẓīm, alladzī lā ilāha illā huwal-ḥayyul-qayyūm, wa atūbu ilaih.",
       "translation": {
@@ -26,7 +25,6 @@
       "reference": "Makalah MPTT; Farhanah 2022, 61-62"
     },
     {
-      "sessions": ["morning", "evening"],
       "arabic": "اللّٰهُمَّ صَلِّ عَلَى سَيِّدِنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ وَسَلِّمْ",
       "transliteration": "Allāhumma ṣalli 'alā sayyidinā Muḥammadin wa 'alā ālihī wa ṣaḥbihī wa sallim.",
       "translation": {
@@ -38,7 +36,6 @@
       "reference": "Makalah MPTT; Farhanah 2022, 61-62"
     },
     {
-      "sessions": ["morning", "evening"],
       "arabic": "بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ. اَلْحَمْدُ لِلّٰهِ رَبِّ الْعٰلَمِيْنَ. الرَّحْمٰنِ الرَّحِيْمِ. مٰلِكِ يَوْمِ الدِّيْنِ. إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِيْنُ. اِهْدِنَا الصِّرَاطَ الْمُسْتَقِيْمَ. صِرَاطَ الَّذِيْنَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوْبِ عَلَيْهِمْ وَلَا الضَّآلِّيْنَ",
       "transliteration": "Bismillāhir-raḥmānir-raḥīm. Al-ḥamdu lillāhi rabbil-'ālamīn. Ar-raḥmānir-raḥīm. Māliki yaumid-dīn. Iyyāka na'budu wa iyyāka nasta'īn. Ihdinaṣ-ṣirāṭal-mustaqīm. Ṣirāṭal-ladzīna an'amta 'alaihim ghairil-maghḍūbi 'alaihim wa laḍ-ḍāllīn.",
       "translation": {
@@ -50,7 +47,6 @@
       "reference": "Al-Fatihah 1-7; Farhanah 2022, 62"
     },
     {
-      "sessions": ["morning", "evening"],
       "arabic": "لَا إِلٰهَ إِلَّا اللّٰهُ",
       "transliteration": "Lā ilāha illallāh.",
       "translation": {

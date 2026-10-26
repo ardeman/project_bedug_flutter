@@ -7,10 +7,10 @@
         {
           "type": "new",
           "text": {
-            "en": "Morning and evening dzikir in the Worship tab, from Hisnul Muslim or MPTT's Ratéb Siribèe, with Arabic, transliteration, translation and how many times to recite each one. It opens on the session for the time of day.",
-            "id": "Zikir pagi dan petang di tab Ibadah, dari Hisnul Muslim atau Ratéb Siribèe MPTT, dengan teks Arab, transliterasi, terjemahan, dan jumlah bacaan tiap zikir. Bagian yang terbuka mengikuti waktu saat itu.",
-            "ms": "Zikir pagi dan petang dalam tab Ibadah, daripada Hisnul Muslim atau Ratéb Siribèe MPTT, dengan teks Arab, transliterasi, terjemahan dan bilangan bacaan setiap zikir. Bahagian yang dibuka mengikut waktu semasa.",
-            "ar": "أذكار الصباح والمساء في تبويب العبادة، من حصن المسلم أو راتب الألف لمجلس MPTT، مع عدد مرات قراءة كل ذكر. ويُفتح على أذكار الوقت الحالي."
+            "en": "Dzikir in the Worship tab, with Arabic, transliteration, translation and how many times to recite each one: morning and evening dzikir from Hisnul Muslim, opening on the session for the time of day, or MPTT's Ratéb Siribèe.",
+            "id": "Zikir di tab Ibadah, dengan teks Arab, transliterasi, terjemahan, dan jumlah bacaan tiap zikir: zikir pagi dan petang dari Hisnul Muslim, yang terbuka sesuai waktu saat itu, atau Ratéb Siribèe MPTT.",
+            "ms": "Zikir dalam tab Ibadah, dengan teks Arab, transliterasi, terjemahan dan bilangan bacaan setiap zikir: zikir pagi dan petang daripada Hisnul Muslim, yang dibuka mengikut waktu semasa, atau Ratéb Siribèe MPTT.",
+            "ar": "الأذكار في تبويب العبادة مع عدد مرات قراءة كل ذكر: أذكار الصباح والمساء من حصن المسلم، وتُفتح على أذكار الوقت الحالي، أو راتب الألف لمجلس MPTT."
           }
         },
         {
