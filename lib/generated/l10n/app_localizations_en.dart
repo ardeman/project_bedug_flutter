@@ -79,6 +79,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dhuhr => 'Dhuhr';
 
   @override
+  String get jumuah => 'Jumu\'ah';
+
+  @override
+  String get jumuahDescription =>
+      'Dhuhr time. Those who don\'t attend Jumu\'ah pray Dhuhr.';
+
+  @override
   String get asr => 'Asr';
 
   @override
@@ -325,6 +332,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get notifDzuhur => 'Dhuhr prayer time has arrived';
+
+  @override
+  String get notifJumuah => 'Jumu\'ah prayer time has arrived';
 
   @override
   String get notifAshar => 'Asr prayer time has arrived';

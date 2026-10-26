@@ -78,6 +78,13 @@ class AppLocalizationsMs extends AppLocalizations {
   String get dhuhr => 'Zohor';
 
   @override
+  String get jumuah => 'Jumaat';
+
+  @override
+  String get jumuahDescription =>
+      'Waktu Zohor. Yang tidak solat Jumaat tetap solat Zohor.';
+
+  @override
   String get asr => 'Asar';
 
   @override
@@ -324,6 +331,9 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get notifDzuhur => 'Tiba waktu solat Zohor';
+
+  @override
+  String get notifJumuah => 'Tiba waktu solat Jumaat';
 
   @override
   String get notifAshar => 'Tiba waktu solat Asar';

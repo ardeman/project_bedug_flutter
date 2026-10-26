@@ -72,7 +72,7 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
     final l10n = AppLocalizations.of(ctx);
     final state = ref.watch(prayerProvider);
     final next = ref.watch(nextPrayerProvider);
-    final nextName = _prayerLabel(l10n, next.key);
+    final nextName = _prayerLabel(l10n, next.key, next.time);
     final nextTime = next.time;
     final nextTimeLabel = nextTime == null
         ? null
@@ -216,11 +216,11 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
     );
   }
 
-  String _prayerLabel(AppLocalizations l10n, String key) {
+  String _prayerLabel(AppLocalizations l10n, String key, DateTime? time) {
     return switch (key) {
       'fajr' => l10n.fajr,
       'sunrise' => l10n.sunrise,
-      'dhuhr' => l10n.dhuhr,
+      'dhuhr' => time == null ? l10n.dhuhr : dhuhrName(l10n, time),
       'asr' => l10n.asr,
       'maghrib' => l10n.maghrib,
       'isha' => l10n.isha,
@@ -296,7 +296,15 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
         extra.dhuha,
         description: l10n.dhuhaDescription,
       ),
-      _PrayerEntry('dhuhr', l10n.dhuhr, Icons.wb_sunny_outlined, times.dhuhr),
+      _PrayerEntry(
+        'dhuhr',
+        dhuhrName(l10n, times.dhuhr),
+        Icons.wb_sunny_outlined,
+        times.dhuhr,
+        description: times.dhuhr.weekday == DateTime.friday
+            ? l10n.jumuahDescription
+            : null,
+      ),
       _PrayerEntry('asr', l10n.asr, Icons.wb_cloudy_outlined, times.asr),
       _PrayerEntry(
         'maghrib',

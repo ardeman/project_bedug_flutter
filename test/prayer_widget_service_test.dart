@@ -105,6 +105,8 @@ void main() {
       'Asr',
       'Maghrib',
       'Isha',
+      // The week includes a Friday.
+      "Jumu'ah",
     });
     final tomorrow = PrayerTimes(
       times.coordinates,
@@ -206,6 +208,26 @@ void main() {
       }
     },
   );
+
+  test('Friday names Dhuhr as Jumu\'ah in all locales', () {
+    for (final locale in ['id', 'en', 'ar', 'ms']) {
+      final l10n = lookupAppLocalizations(Locale(locale));
+      final dhuhrs = (build(schedule: times, locale: locale)['prayers'] as List)
+          .cast<Map<String, Object>>()
+          .where((prayer) => prayer['key'] == 'dhuhr');
+      for (final prayer in dhuhrs) {
+        final time = DateTime.fromMillisecondsSinceEpoch(prayer['time'] as int);
+        expect(
+          prayer['name'],
+          time.weekday == DateTime.friday ? l10n.jumuah : l10n.dhuhr,
+        );
+      }
+      expect(
+        dhuhrs.where((prayer) => prayer['name'] == l10n.jumuah),
+        hasLength(1),
+      );
+    }
+  });
 
   test(
     'missing schedule clears times and all locales supply refresh guidance',

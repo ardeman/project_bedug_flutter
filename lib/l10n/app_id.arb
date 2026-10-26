@@ -46,6 +46,10 @@
 
   "dhuhr": "Zuhur",
   "@dhuhr": {},
+  "jumuah": "Jumat",
+  "@jumuah": {},
+  "jumuahDescription": "Waktu Zuhur. Yang tidak salat Jumat tetap salat Zuhur.",
+  "@jumuahDescription": {},
 
   "asr": "Asar",
   "@asr": {},
@@ -235,6 +239,8 @@
   "@notifSubuh": {},
   "notifDzuhur": "Waktu Zuhur telah tiba",
   "@notifDzuhur": {},
+  "notifJumuah": "Waktu salat Jumat telah tiba",
+  "@notifJumuah": {},
   "notifAshar": "Waktu Asar telah tiba",
   "@notifAshar": {},
   "notifMaghrib": "Waktu Magrib telah tiba",

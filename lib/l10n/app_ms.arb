@@ -25,6 +25,8 @@
   "dhuhaDescription": "Anggaran mula: 20 minit selepas syuruk.",
   "lastThirdOfNightDescription": "Untuk tahajud sebelum Subuh hari ini, dikira dari Maghrib sebelumnya.",
   "dhuhr": "Zohor",
+  "jumuah": "Jumaat",
+  "jumuahDescription": "Waktu Zohor. Yang tidak solat Jumaat tetap solat Zohor.",
   "asr": "Asar",
   "maghrib": "Maghrib",
   "isha": "Isyak",
@@ -99,6 +101,7 @@
 
   "notifSubuh": "Tiba waktu solat Subuh",
   "notifDzuhur": "Tiba waktu solat Zohor",
+  "notifJumuah": "Tiba waktu solat Jumaat",
   "notifAshar": "Tiba waktu solat Asar",
   "notifMaghrib": "Tiba waktu solat Maghrib",
   "notifIsya": "Tiba waktu solat Isyak",

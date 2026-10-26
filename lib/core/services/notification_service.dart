@@ -11,6 +11,7 @@ import '../../generated/l10n/app_localizations.dart';
 import 'extra_prayer_times.dart';
 import 'notification_preferences.dart';
 import 'notification_schedule.dart';
+import 'prayer_service.dart';
 
 class NotificationService {
   static final _plugin = FlutterLocalNotificationsPlugin();
@@ -108,7 +109,7 @@ class NotificationService {
         PrayerAlert.fajr => l10n.fajr,
         PrayerAlert.sunrise => l10n.sunrise,
         PrayerAlert.dhuha => l10n.dhuha,
-        PrayerAlert.dhuhr => l10n.dhuhr,
+        PrayerAlert.dhuhr => dhuhrName(l10n, alert.time),
         PrayerAlert.asr => l10n.asr,
         PrayerAlert.maghrib => l10n.maghrib,
         PrayerAlert.isha => l10n.isha,
@@ -123,7 +124,10 @@ class NotificationService {
               PrayerAlert.fajr => l10n.notifSubuh,
               PrayerAlert.sunrise => l10n.notifSunrise,
               PrayerAlert.dhuha => l10n.notifDhuha,
-              PrayerAlert.dhuhr => l10n.notifDzuhur,
+              PrayerAlert.dhuhr =>
+                alert.time.weekday == DateTime.friday
+                    ? l10n.notifJumuah
+                    : l10n.notifDzuhur,
               PrayerAlert.asr => l10n.notifAshar,
               PrayerAlert.maghrib => l10n.notifMaghrib,
               PrayerAlert.isha => l10n.notifIsya,

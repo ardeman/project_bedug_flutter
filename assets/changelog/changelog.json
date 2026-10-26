@@ -5,6 +5,15 @@
       "date": null,
       "changes": [
         {
+          "type": "new",
+          "text": {
+            "en": "On Fridays, Dhuhr shows as Jumu'ah in Prayer Times, notifications and widgets, with a note that those who don't attend still pray Dhuhr.",
+            "id": "Pada hari Jumat, Zuhur tampil sebagai Jumat di Waktu Salat, notifikasi, dan widget, dengan catatan bahwa yang tidak salat Jumat tetap salat Zuhur.",
+            "ms": "Pada hari Jumaat, Zohor dipaparkan sebagai Jumaat dalam Waktu Solat, pemberitahuan dan widget, dengan catatan bahawa yang tidak solat Jumaat tetap solat Zohor.",
+            "ar": "في يوم الجمعة، يظهر الظهر باسم الجمعة في مواقيت الصلاة والإشعارات والأدوات، مع ملاحظة أن من لا يصلي الجمعة يصلي الظهر."
+          }
+        },
+        {
           "type": "improved",
           "text": {
             "en": "Prayer Times distinguishes obligatory prayers, sunnah prayers and other times with category labels and icon colors.",

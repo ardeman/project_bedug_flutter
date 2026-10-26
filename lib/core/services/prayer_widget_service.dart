@@ -44,7 +44,7 @@ Map<String, Object> buildPrayerWidgetData({
         if (time == null) continue;
         final name = switch (prayer) {
           Prayer.fajr => l10n.fajr,
-          Prayer.dhuhr => l10n.dhuhr,
+          Prayer.dhuhr => dhuhrName(l10n, time),
           Prayer.asr => l10n.asr,
           Prayer.maghrib => l10n.maghrib,
           Prayer.isha => l10n.isha,

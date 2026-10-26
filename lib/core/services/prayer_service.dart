@@ -357,6 +357,11 @@ PrayerTimes prayerTimesOn(PrayerTimes reference, DateTime date) => PrayerTimes(
   reference.calculationParameters,
 );
 
+/// Friday's Dhuhr is Jumu'ah, at the same time. Those who don't attend it
+/// still pray Dhuhr, so screens that list it say so.
+String dhuhrName(AppLocalizations l10n, DateTime day) =>
+    day.weekday == DateTime.friday ? l10n.jumuah : l10n.dhuhr;
+
 // ── Providers ─────────────────────────────────────────────────────────────────
 final prayerProvider = NotifierProvider<PrayerNotifier, PrayerState>(
   PrayerNotifier.new,

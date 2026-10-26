@@ -25,6 +25,8 @@
   "dhuhaDescription": "Estimated start: 20 minutes after sunrise.",
   "lastThirdOfNightDescription": "For tahajud before this day’s Fajr, using the previous sunset.",
   "dhuhr": "Dhuhr",
+  "jumuah": "Jumu'ah",
+  "jumuahDescription": "Dhuhr time. Those who don't attend Jumu'ah pray Dhuhr.",
   "asr": "Asr",
   "maghrib": "Maghrib",
   "isha": "Isha",
@@ -99,6 +101,7 @@
 
   "notifSubuh": "Fajr prayer time has arrived",
   "notifDzuhur": "Dhuhr prayer time has arrived",
+  "notifJumuah": "Jumu'ah prayer time has arrived",
   "notifAshar": "Asr prayer time has arrived",
   "notifMaghrib": "Maghrib prayer time has arrived",
   "notifIsya": "Isha prayer time has arrived",

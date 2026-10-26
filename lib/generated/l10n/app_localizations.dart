@@ -234,6 +234,18 @@ abstract class AppLocalizations {
   /// **'Zuhur'**
   String get dhuhr;
 
+  /// No description provided for @jumuah.
+  ///
+  /// In id, this message translates to:
+  /// **'Jumat'**
+  String get jumuah;
+
+  /// No description provided for @jumuahDescription.
+  ///
+  /// In id, this message translates to:
+  /// **'Waktu Zuhur. Yang tidak salat Jumat tetap salat Zuhur.'**
+  String get jumuahDescription;
+
   /// No description provided for @asr.
   ///
   /// In id, this message translates to:
@@ -707,6 +719,12 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Waktu Zuhur telah tiba'**
   String get notifDzuhur;
+
+  /// No description provided for @notifJumuah.
+  ///
+  /// In id, this message translates to:
+  /// **'Waktu salat Jumat telah tiba'**
+  String get notifJumuah;
 
   /// No description provided for @notifAshar.
   ///

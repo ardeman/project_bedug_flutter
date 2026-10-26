@@ -78,6 +78,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get dhuhr => 'الظهر';
 
   @override
+  String get jumuah => 'الجمعة';
+
+  @override
+  String get jumuahDescription => 'وقت الظهر. من لا يصلي الجمعة يصلي الظهر.';
+
+  @override
   String get asr => 'العصر';
 
   @override
@@ -324,6 +330,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get notifDzuhur => 'حان وقت صلاة الظهر';
+
+  @override
+  String get notifJumuah => 'حان وقت صلاة الجمعة';
 
   @override
   String get notifAshar => 'حان وقت صلاة العصر';
