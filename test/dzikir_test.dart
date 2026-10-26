@@ -88,8 +88,11 @@ void main() {
     });
   });
 
-  test('Hisnul Muslim is split by session; Ratéb Siribèe is not', () {
+  test('Hisnul Muslim and Al-Ma\'tsurat are split by session; Ratéb '
+      'Siribèe is not', () {
     expect(collections['hisnul_muslim']!.hasSessions, isTrue);
+    expect(collections['matsurat_sughra']!.hasSessions, isTrue);
+    expect(collections['matsurat_kubra']!.hasSessions, isTrue);
     final rateb = collections['rateb_siribee']!;
     expect(rateb.hasSessions, isFalse);
     // Dzikir for any time is listed under both sessions.
