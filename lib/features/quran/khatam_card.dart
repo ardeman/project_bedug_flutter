@@ -106,11 +106,28 @@ class _KhatamCardState extends ConsumerState<KhatamCard> {
     final todayDone = reached != null && reached.compareTo(target) >= 0;
     final progress = juzProgress(index, reached) / index.juzStarts.length;
     return [
+      // Ending and changing the plan sit beside its title as icons, so the
+      // card keeps one row of buttons.
       _Heading(
         icon: Icons.flag,
         title: l10n.khatamFinishBy(_formatDate(ctx, plan.finish)),
+        trailing: [
+          _IconAction(
+            icon: Icons.edit_calendar,
+            label: l10n.khatamChange,
+            onPressed: () => setState(() {
+              if (khatamDurations.contains(plan.days)) _days = plan.days;
+              _changing = true;
+            }),
+          ),
+          _IconAction(
+            icon: Icons.stop,
+            label: l10n.khatamEnd,
+            onPressed: _notifier.end,
+          ),
+        ],
       ),
-      const SizedBox(height: AppSpacing.sm),
+      const SizedBox(height: AppSpacing.xs),
       Text(
         todayDone
             ? l10n.khatamTodayDone
@@ -122,43 +139,36 @@ class _KhatamCardState extends ConsumerState<KhatamCard> {
       ),
       const SizedBox(height: AppSpacing.sm),
       _ProgressBar(value: progress),
-      const SizedBox(height: AppSpacing.xs),
-      _Muted(
-        '${l10n.khatamPercentRead((progress * 100).floor())} · '
-        '${l10n.khatamDaysLeft(plan.daysLeft(today))}',
-      ),
       const SizedBox(height: AppSpacing.sm),
-      _Actions([
-        _Action(
-          icon: Icons.stop,
-          label: l10n.khatamEnd,
-          onPressed: _notifier.end,
-        ),
-        _Action(
-          icon: Icons.edit_calendar,
-          label: l10n.khatamChange,
-          onPressed: () => setState(() {
-            if (khatamDurations.contains(plan.days)) _days = plan.days;
-            _changing = true;
-          }),
-        ),
-        _Action(
-          icon: Icons.auto_stories,
-          label: l10n.quranContinueReading,
-          primary: true,
-          onPressed: () {
-            final next = plan.next(index);
-            Navigator.of(ctx).push(
-              MaterialPageRoute<void>(
-                builder: (_) => QuranReaderScreen(
-                  surah: next.surah,
-                  initialAyah: next.ayah,
-                ),
-              ),
-            );
-          },
-        ),
-      ]),
+      Row(
+        children: [
+          Expanded(
+            child: _Muted(
+              '${l10n.khatamPercentRead((progress * 100).floor())} · '
+              '${l10n.khatamDaysLeft(plan.daysLeft(today))}',
+            ),
+          ),
+          const SizedBox(width: AppSpacing.sm),
+          _Actions([
+            _Action(
+              icon: Icons.auto_stories,
+              label: l10n.quranContinueReading,
+              primary: true,
+              onPressed: () {
+                final next = plan.next(index);
+                Navigator.of(ctx).push(
+                  MaterialPageRoute<void>(
+                    builder: (_) => QuranReaderScreen(
+                      surah: next.surah,
+                      initialAyah: next.ayah,
+                    ),
+                  ),
+                );
+              },
+            ),
+          ]),
+        ],
+      ),
     ];
   }
 
@@ -187,8 +197,13 @@ class _KhatamCardState extends ConsumerState<KhatamCard> {
 class _Heading extends StatelessWidget {
   final IconData icon;
   final String title;
+  final List<Widget> trailing;
 
-  const _Heading({required this.icon, required this.title});
+  const _Heading({
+    required this.icon,
+    required this.title,
+    this.trailing = const [],
+  });
 
   @override
   Widget build(BuildContext ctx) => Row(
@@ -196,8 +211,48 @@ class _Heading extends StatelessWidget {
       Icon(icon, color: AppColors.accentOf(ctx)),
       const SizedBox(width: AppSpacing.sm),
       Expanded(child: Text(title, style: Theme.of(ctx).textTheme.titleMedium)),
+      ...trailing,
     ],
   );
+}
+
+/// A secondary action shown as its icon, with [label] as its tooltip and
+/// screen reader name: a press-highlighted icon on Apple, an icon button
+/// elsewhere.
+class _IconAction extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final VoidCallback onPressed;
+
+  const _IconAction({
+    required this.icon,
+    required this.label,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext ctx) {
+    if (!PlatformCapabilities.isApple) {
+      return MaterialIconButton(
+        icon: Icon(icon),
+        tooltip: label,
+        onPressed: onPressed,
+      );
+    }
+    return Semantics(
+      button: true,
+      label: label,
+      excludeSemantics: true,
+      child: GlassPressable(
+        borderRadius: BorderRadius.circular(kMinInteractiveDimension / 2),
+        onTap: onPressed,
+        child: SizedBox.square(
+          dimension: kMinInteractiveDimension,
+          child: Icon(icon, color: AppColors.accentOf(ctx)),
+        ),
+      ),
+    );
+  }
 }
 
 class _Muted extends StatelessWidget {
