@@ -799,6 +799,24 @@ class AppLocalizationsAr extends AppLocalizations {
   String get dzikirCollection => 'كتاب الأذكار';
 
   @override
+  String get duas => 'الأدعية اليومية';
+
+  @override
+  String get duasSubtitle => 'الاستيقاظ والطعام والسفر وغيرها';
+
+  @override
+  String get duasLoadError => 'تعذّر تحميل الأدعية.';
+
+  @override
+  String get asmaulHusna => 'الأسماء الحسنى';
+
+  @override
+  String get asmaulHusnaSubtitle => 'أسماء الله التسعة والتسعون';
+
+  @override
+  String get asmaulHusnaLoadError => 'تعذّر تحميل الأسماء الحسنى.';
+
+  @override
   String get dzikirMorningReminder => 'أذكار الصباح';
 
   @override

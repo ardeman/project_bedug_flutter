@@ -442,6 +442,12 @@
   "dzikirSource": "Sumber: {source}",
   "dzikirRepeat": "{count}×",
   "dzikirCollection": "Kitab zikir",
+  "duas": "Doa harian",
+  "duasSubtitle": "Bangun tidur, makan, bepergian, dan lainnya",
+  "duasLoadError": "Doa gagal dimuat.",
+  "asmaulHusna": "Asmaul Husna",
+  "asmaulHusnaSubtitle": "99 nama Allah",
+  "asmaulHusnaLoadError": "Asmaul Husna gagal dimuat.",
   "@dzikirSource": {"placeholders": {"source": {"type": "String"}}},
   "@dzikirRepeat": {
     "description": "How many times to recite an item.",

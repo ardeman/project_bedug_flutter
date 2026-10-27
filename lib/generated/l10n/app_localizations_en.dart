@@ -802,6 +802,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dzikirCollection => 'Dzikir collection';
 
   @override
+  String get duas => 'Daily duas';
+
+  @override
+  String get duasSubtitle => 'Waking, eating, travel and more';
+
+  @override
+  String get duasLoadError => 'Couldn\'t load the duas.';
+
+  @override
+  String get asmaulHusna => 'Asmaul Husna';
+
+  @override
+  String get asmaulHusnaSubtitle => 'The 99 names of Allah';
+
+  @override
+  String get asmaulHusnaLoadError => 'Couldn\'t load the Asmaul Husna.';
+
+  @override
   String get dzikirMorningReminder => 'Morning dzikir';
 
   @override

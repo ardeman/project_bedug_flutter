@@ -1578,6 +1578,42 @@ abstract class AppLocalizations {
   /// **'Kitab zikir'**
   String get dzikirCollection;
 
+  /// No description provided for @duas.
+  ///
+  /// In id, this message translates to:
+  /// **'Doa harian'**
+  String get duas;
+
+  /// No description provided for @duasSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Bangun tidur, makan, bepergian, dan lainnya'**
+  String get duasSubtitle;
+
+  /// No description provided for @duasLoadError.
+  ///
+  /// In id, this message translates to:
+  /// **'Doa gagal dimuat.'**
+  String get duasLoadError;
+
+  /// No description provided for @asmaulHusna.
+  ///
+  /// In id, this message translates to:
+  /// **'Asmaul Husna'**
+  String get asmaulHusna;
+
+  /// No description provided for @asmaulHusnaSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'99 nama Allah'**
+  String get asmaulHusnaSubtitle;
+
+  /// No description provided for @asmaulHusnaLoadError.
+  ///
+  /// In id, this message translates to:
+  /// **'Asmaul Husna gagal dimuat.'**
+  String get asmaulHusnaLoadError;
+
   /// No description provided for @dzikirMorningReminder.
   ///
   /// In id, this message translates to:

@@ -130,10 +130,13 @@ lib/
     theme/           buildAppTheme, BrandColors (accent from the theme), AppSpacing / AppRadii tokens
     services/        Prayer times, Kemenag method, notifications
     utils/           Hijri helpers
-    widgets/         Shared widgets (calculation method picker)
+    widgets/         Shared widgets (calculation method picker, recitation card)
   features/
     prayer_times/    Prayer times screen, day picker and Hijri month grid
-    worship/         Worship tab (hosts Qibla, later dzikir and duas)
+    worship/         Worship tab (hosts Qibla, dzikir, duas and the Asmaul Husna)
+    dzikir/          Dzikir collections and reader
+    duas/            Daily duas by situation
+    asmaul_husna/    The 99 names of Allah
     qibla/           Qibla compass card
     prayer/          Prayer card widget
     settings/        Settings screen
@@ -205,7 +208,7 @@ Prayer tracking and prayer-progress features (completion logs, streaks and qada 
 **Phase 2: Dzikir and dua**
 
 1. **Morning and evening dzikir** (dzikir pagi/petang; done): Arabic, transliteration, translation and repeat count from a dzikir collection the user picks in Settings (the picker appears once a second collection ships). Each collection is one JSON file in `assets/content/dzikir/` with every language inline, registered in `lib/features/dzikir/dzikir.dart`; items tag their `sessions` (morning, evening), and a collection whose items have none, such as a ratib, is listed whole without the morning/evening switch. Hisnul Muslim, Al-Ma'tsurat (Sughra and Kubra, after al-Banna's 1351 H text with the order of common Indonesian printings) and MPTT's Ratéb Siribèe ship, translated by Bedug; their text and hadith references need a review by someone qualified before release. Optional reminders, off by default, fire 15 minutes after Subuh and Asar with the system sound (Android, iOS and macOS, like the prayer alerts); a collection without sessions gets none, and the switches come back with the next collection that has them.
-2. **Daily duas** by situation (waking, eating, travel, entering the mosque) and the **Asmaul Husna**.
+2. **Daily duas and the Asmaul Husna (done):** duas grouped by situation (sleeping and waking, eating, dressing, the toilet, wudu, home, the mosque, travel, rain, sneezing, hardship and any time), each with Arabic, transliteration, translation and its hadith or verse, from `assets/content/duas/daily.json`; and the 99 names, numbered with transliteration and meaning, from `assets/content/asmaul_husna.json` (at-Tirmidzi 3507 in the order common in Indonesia). Both open from the Worship tab and share the dzikir's card (`lib/core/widgets/recitation_card.dart`). Translations and meanings are by Bedug and need the same qualified review as the dzikir before release.
 3. **After-prayer dzikir** accessible directly from the Worship tab.
 
 **Phase 3: Quran**

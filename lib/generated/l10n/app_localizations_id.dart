@@ -805,6 +805,24 @@ class AppLocalizationsId extends AppLocalizations {
   String get dzikirCollection => 'Kitab zikir';
 
   @override
+  String get duas => 'Doa harian';
+
+  @override
+  String get duasSubtitle => 'Bangun tidur, makan, bepergian, dan lainnya';
+
+  @override
+  String get duasLoadError => 'Doa gagal dimuat.';
+
+  @override
+  String get asmaulHusna => 'Asmaul Husna';
+
+  @override
+  String get asmaulHusnaSubtitle => '99 nama Allah';
+
+  @override
+  String get asmaulHusnaLoadError => 'Asmaul Husna gagal dimuat.';
+
+  @override
   String get dzikirMorningReminder => 'Zikir pagi';
 
   @override

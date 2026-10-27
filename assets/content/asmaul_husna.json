@@ -1,0 +1,901 @@
+{
+  "source": {
+    "id": "Riwayat at-Tirmidzi 3507, dengan urutan yang lazim di Indonesia. Makna oleh Bedug.",
+    "en": "As narrated by at-Tirmidzi 3507, in the order common in Indonesia. Meanings by Bedug.",
+    "ms": "Riwayat at-Tirmidzi 3507, mengikut susunan yang lazim di Nusantara. Makna oleh Bedug.",
+    "ar": "رواية الترمذي 3507، على الترتيب الشائع في إندونيسيا."
+  },
+  "names": [
+    {
+      "arabic": "الرَّحْمَٰنُ",
+      "transliteration": "Ar-Raḥmān",
+      "meaning": {
+        "id": "Maha Pengasih",
+        "en": "The Most Gracious",
+        "ms": "Maha Pemurah"
+      }
+    },
+    {
+      "arabic": "الرَّحِيمُ",
+      "transliteration": "Ar-Raḥīm",
+      "meaning": {
+        "id": "Maha Penyayang",
+        "en": "The Most Merciful",
+        "ms": "Maha Mengasihani"
+      }
+    },
+    {
+      "arabic": "الْمَلِكُ",
+      "transliteration": "Al-Malik",
+      "meaning": {
+        "id": "Maha Merajai",
+        "en": "The King",
+        "ms": "Maha Merajai"
+      }
+    },
+    {
+      "arabic": "الْقُدُّوسُ",
+      "transliteration": "Al-Quddūs",
+      "meaning": {
+        "id": "Maha Suci",
+        "en": "The Most Holy",
+        "ms": "Maha Suci"
+      }
+    },
+    {
+      "arabic": "السَّلَامُ",
+      "transliteration": "As-Salām",
+      "meaning": {
+        "id": "Maha Memberi Kesejahteraan",
+        "en": "The Source of Peace",
+        "ms": "Maha Sejahtera"
+      }
+    },
+    {
+      "arabic": "الْمُؤْمِنُ",
+      "transliteration": "Al-Mu'min",
+      "meaning": {
+        "id": "Maha Memberi Keamanan",
+        "en": "The Giver of Security",
+        "ms": "Maha Memberi Keamanan"
+      }
+    },
+    {
+      "arabic": "الْمُهَيْمِنُ",
+      "transliteration": "Al-Muhaimin",
+      "meaning": {
+        "id": "Maha Menjaga",
+        "en": "The Guardian",
+        "ms": "Maha Pengawal"
+      }
+    },
+    {
+      "arabic": "الْعَزِيزُ",
+      "transliteration": "Al-'Azīz",
+      "meaning": {
+        "id": "Maha Perkasa",
+        "en": "The Almighty",
+        "ms": "Maha Perkasa"
+      }
+    },
+    {
+      "arabic": "الْجَبَّارُ",
+      "transliteration": "Al-Jabbār",
+      "meaning": {
+        "id": "Maha Gagah",
+        "en": "The Compeller",
+        "ms": "Maha Gagah"
+      }
+    },
+    {
+      "arabic": "الْمُتَكَبِّرُ",
+      "transliteration": "Al-Mutakabbir",
+      "meaning": {
+        "id": "Maha Megah",
+        "en": "The Supreme in Greatness",
+        "ms": "Maha Megah"
+      }
+    },
+    {
+      "arabic": "الْخَالِقُ",
+      "transliteration": "Al-Khāliq",
+      "meaning": {
+        "id": "Maha Pencipta",
+        "en": "The Creator",
+        "ms": "Maha Pencipta"
+      }
+    },
+    {
+      "arabic": "الْبَارِئُ",
+      "transliteration": "Al-Bāri'",
+      "meaning": {
+        "id": "Maha Mengadakan",
+        "en": "The Maker",
+        "ms": "Maha Mengadakan"
+      }
+    },
+    {
+      "arabic": "الْمُصَوِّرُ",
+      "transliteration": "Al-Muṣawwir",
+      "meaning": {
+        "id": "Maha Membentuk Rupa",
+        "en": "The Fashioner",
+        "ms": "Maha Pembentuk Rupa"
+      }
+    },
+    {
+      "arabic": "الْغَفَّارُ",
+      "transliteration": "Al-Ghaffār",
+      "meaning": {
+        "id": "Maha Pengampun",
+        "en": "The Ever-Forgiving",
+        "ms": "Maha Pengampun"
+      }
+    },
+    {
+      "arabic": "الْقَهَّارُ",
+      "transliteration": "Al-Qahhār",
+      "meaning": {
+        "id": "Maha Menundukkan",
+        "en": "The Subduer",
+        "ms": "Maha Menundukkan"
+      }
+    },
+    {
+      "arabic": "الْوَهَّابُ",
+      "transliteration": "Al-Wahhāb",
+      "meaning": {
+        "id": "Maha Pemberi Karunia",
+        "en": "The Bestower",
+        "ms": "Maha Pemberi Kurnia"
+      }
+    },
+    {
+      "arabic": "الرَّزَّاقُ",
+      "transliteration": "Ar-Razzāq",
+      "meaning": {
+        "id": "Maha Pemberi Rezeki",
+        "en": "The Provider",
+        "ms": "Maha Pemberi Rezeki"
+      }
+    },
+    {
+      "arabic": "الْفَتَّاحُ",
+      "transliteration": "Al-Fattāḥ",
+      "meaning": {
+        "id": "Maha Pembuka Rahmat",
+        "en": "The Opener",
+        "ms": "Maha Pembuka"
+      }
+    },
+    {
+      "arabic": "الْعَلِيمُ",
+      "transliteration": "Al-'Alīm",
+      "meaning": {
+        "id": "Maha Mengetahui",
+        "en": "The All-Knowing",
+        "ms": "Maha Mengetahui"
+      }
+    },
+    {
+      "arabic": "الْقَابِضُ",
+      "transliteration": "Al-Qābiḍ",
+      "meaning": {
+        "id": "Maha Menyempitkan",
+        "en": "The Withholder",
+        "ms": "Maha Menyempitkan"
+      }
+    },
+    {
+      "arabic": "الْبَاسِطُ",
+      "transliteration": "Al-Bāsiṭ",
+      "meaning": {
+        "id": "Maha Melapangkan",
+        "en": "The Extender",
+        "ms": "Maha Melapangkan"
+      }
+    },
+    {
+      "arabic": "الْخَافِضُ",
+      "transliteration": "Al-Khāfiḍ",
+      "meaning": {
+        "id": "Maha Merendahkan",
+        "en": "The Abaser",
+        "ms": "Maha Merendahkan"
+      }
+    },
+    {
+      "arabic": "الرَّافِعُ",
+      "transliteration": "Ar-Rāfi'",
+      "meaning": {
+        "id": "Maha Meninggikan",
+        "en": "The Exalter",
+        "ms": "Maha Meninggikan"
+      }
+    },
+    {
+      "arabic": "الْمُعِزُّ",
+      "transliteration": "Al-Mu'izz",
+      "meaning": {
+        "id": "Maha Memuliakan",
+        "en": "The Bestower of Honour",
+        "ms": "Maha Memuliakan"
+      }
+    },
+    {
+      "arabic": "الْمُذِلُّ",
+      "transliteration": "Al-Mudzill",
+      "meaning": {
+        "id": "Maha Menghinakan",
+        "en": "The Humiliator",
+        "ms": "Maha Menghinakan"
+      }
+    },
+    {
+      "arabic": "السَّمِيعُ",
+      "transliteration": "As-Samī'",
+      "meaning": {
+        "id": "Maha Mendengar",
+        "en": "The All-Hearing",
+        "ms": "Maha Mendengar"
+      }
+    },
+    {
+      "arabic": "الْبَصِيرُ",
+      "transliteration": "Al-Baṣīr",
+      "meaning": {
+        "id": "Maha Melihat",
+        "en": "The All-Seeing",
+        "ms": "Maha Melihat"
+      }
+    },
+    {
+      "arabic": "الْحَكَمُ",
+      "transliteration": "Al-Ḥakam",
+      "meaning": {
+        "id": "Maha Menetapkan Hukum",
+        "en": "The Judge",
+        "ms": "Maha Menghakimi"
+      }
+    },
+    {
+      "arabic": "الْعَدْلُ",
+      "transliteration": "Al-'Adl",
+      "meaning": {
+        "id": "Maha Adil",
+        "en": "The Utterly Just",
+        "ms": "Maha Adil"
+      }
+    },
+    {
+      "arabic": "اللَّطِيفُ",
+      "transliteration": "Al-Laṭīf",
+      "meaning": {
+        "id": "Maha Lembut",
+        "en": "The Subtle One",
+        "ms": "Maha Lemah Lembut"
+      }
+    },
+    {
+      "arabic": "الْخَبِيرُ",
+      "transliteration": "Al-Khabīr",
+      "meaning": {
+        "id": "Maha Teliti",
+        "en": "The All-Aware",
+        "ms": "Maha Mengetahui Rahsia"
+      }
+    },
+    {
+      "arabic": "الْحَلِيمُ",
+      "transliteration": "Al-Ḥalīm",
+      "meaning": {
+        "id": "Maha Penyantun",
+        "en": "The Forbearing",
+        "ms": "Maha Penyantun"
+      }
+    },
+    {
+      "arabic": "الْعَظِيمُ",
+      "transliteration": "Al-'Aẓīm",
+      "meaning": {
+        "id": "Maha Agung",
+        "en": "The Magnificent",
+        "ms": "Maha Agung"
+      }
+    },
+    {
+      "arabic": "الْغَفُورُ",
+      "transliteration": "Al-Ghafūr",
+      "meaning": {
+        "id": "Maha Pemberi Ampunan",
+        "en": "The All-Forgiving",
+        "ms": "Maha Pemberi Ampun"
+      }
+    },
+    {
+      "arabic": "الشَّكُورُ",
+      "transliteration": "Asy-Syakūr",
+      "meaning": {
+        "id": "Maha Menghargai",
+        "en": "The Most Appreciative",
+        "ms": "Maha Membalas Kesyukuran"
+      }
+    },
+    {
+      "arabic": "الْعَلِيُّ",
+      "transliteration": "Al-'Aliyy",
+      "meaning": {
+        "id": "Maha Tinggi",
+        "en": "The Most High",
+        "ms": "Maha Tinggi"
+      }
+    },
+    {
+      "arabic": "الْكَبِيرُ",
+      "transliteration": "Al-Kabīr",
+      "meaning": {
+        "id": "Maha Besar",
+        "en": "The Most Great",
+        "ms": "Maha Besar"
+      }
+    },
+    {
+      "arabic": "الْحَفِيظُ",
+      "transliteration": "Al-Ḥafīẓ",
+      "meaning": {
+        "id": "Maha Memelihara",
+        "en": "The Preserver",
+        "ms": "Maha Memelihara"
+      }
+    },
+    {
+      "arabic": "الْمُقِيتُ",
+      "transliteration": "Al-Muqīt",
+      "meaning": {
+        "id": "Maha Pemberi Kecukupan",
+        "en": "The Nourisher",
+        "ms": "Maha Pemberi Kecukupan"
+      }
+    },
+    {
+      "arabic": "الْحَسِيبُ",
+      "transliteration": "Al-Ḥasīb",
+      "meaning": {
+        "id": "Maha Membuat Perhitungan",
+        "en": "The Reckoner",
+        "ms": "Maha Penghisab"
+      }
+    },
+    {
+      "arabic": "الْجَلِيلُ",
+      "transliteration": "Al-Jalīl",
+      "meaning": {
+        "id": "Maha Luhur",
+        "en": "The Majestic",
+        "ms": "Maha Luhur"
+      }
+    },
+    {
+      "arabic": "الْكَرِيمُ",
+      "transliteration": "Al-Karīm",
+      "meaning": {
+        "id": "Maha Pemurah",
+        "en": "The Most Generous",
+        "ms": "Maha Dermawan"
+      }
+    },
+    {
+      "arabic": "الرَّقِيبُ",
+      "transliteration": "Ar-Raqīb",
+      "meaning": {
+        "id": "Maha Mengawasi",
+        "en": "The Watchful",
+        "ms": "Maha Mengawasi"
+      }
+    },
+    {
+      "arabic": "الْمُجِيبُ",
+      "transliteration": "Al-Mujīb",
+      "meaning": {
+        "id": "Maha Mengabulkan",
+        "en": "The Responsive",
+        "ms": "Maha Memperkenankan"
+      }
+    },
+    {
+      "arabic": "الْوَاسِعُ",
+      "transliteration": "Al-Wāsi'",
+      "meaning": {
+        "id": "Maha Luas",
+        "en": "The All-Encompassing",
+        "ms": "Maha Luas"
+      }
+    },
+    {
+      "arabic": "الْحَكِيمُ",
+      "transliteration": "Al-Ḥakīm",
+      "meaning": {
+        "id": "Maha Bijaksana",
+        "en": "The All-Wise",
+        "ms": "Maha Bijaksana"
+      }
+    },
+    {
+      "arabic": "الْوَدُودُ",
+      "transliteration": "Al-Wadūd",
+      "meaning": {
+        "id": "Maha Mencintai",
+        "en": "The Most Loving",
+        "ms": "Maha Mencintai"
+      }
+    },
+    {
+      "arabic": "الْمَجِيدُ",
+      "transliteration": "Al-Majīd",
+      "meaning": {
+        "id": "Maha Mulia",
+        "en": "The Most Glorious",
+        "ms": "Maha Mulia"
+      }
+    },
+    {
+      "arabic": "الْبَاعِثُ",
+      "transliteration": "Al-Bā'its",
+      "meaning": {
+        "id": "Maha Membangkitkan",
+        "en": "The Resurrector",
+        "ms": "Maha Membangkitkan"
+      }
+    },
+    {
+      "arabic": "الشَّهِيدُ",
+      "transliteration": "Asy-Syahīd",
+      "meaning": {
+        "id": "Maha Menyaksikan",
+        "en": "The Witness",
+        "ms": "Maha Menyaksikan"
+      }
+    },
+    {
+      "arabic": "الْحَقُّ",
+      "transliteration": "Al-Ḥaqq",
+      "meaning": {
+        "id": "Maha Benar",
+        "en": "The Truth",
+        "ms": "Maha Benar"
+      }
+    },
+    {
+      "arabic": "الْوَكِيلُ",
+      "transliteration": "Al-Wakīl",
+      "meaning": {
+        "id": "Maha Tempat Berserah",
+        "en": "The Trustee",
+        "ms": "Maha Tempat Berserah"
+      }
+    },
+    {
+      "arabic": "الْقَوِيُّ",
+      "transliteration": "Al-Qawiyy",
+      "meaning": {
+        "id": "Maha Kuat",
+        "en": "The All-Strong",
+        "ms": "Maha Kuat"
+      }
+    },
+    {
+      "arabic": "الْمَتِينُ",
+      "transliteration": "Al-Matīn",
+      "meaning": {
+        "id": "Maha Kokoh",
+        "en": "The Firm",
+        "ms": "Maha Teguh"
+      }
+    },
+    {
+      "arabic": "الْوَلِيُّ",
+      "transliteration": "Al-Waliyy",
+      "meaning": {
+        "id": "Maha Melindungi",
+        "en": "The Protecting Friend",
+        "ms": "Maha Melindungi"
+      }
+    },
+    {
+      "arabic": "الْحَمِيدُ",
+      "transliteration": "Al-Ḥamīd",
+      "meaning": {
+        "id": "Maha Terpuji",
+        "en": "The Praiseworthy",
+        "ms": "Maha Terpuji"
+      }
+    },
+    {
+      "arabic": "الْمُحْصِي",
+      "transliteration": "Al-Muḥṣī",
+      "meaning": {
+        "id": "Maha Menghitung",
+        "en": "The Enumerator",
+        "ms": "Maha Menghitung"
+      }
+    },
+    {
+      "arabic": "الْمُبْدِئُ",
+      "transliteration": "Al-Mubdi'",
+      "meaning": {
+        "id": "Maha Memulai",
+        "en": "The Initiator",
+        "ms": "Maha Memulakan"
+      }
+    },
+    {
+      "arabic": "الْمُعِيدُ",
+      "transliteration": "Al-Mu'īd",
+      "meaning": {
+        "id": "Maha Mengembalikan",
+        "en": "The Restorer",
+        "ms": "Maha Mengembalikan"
+      }
+    },
+    {
+      "arabic": "الْمُحْيِي",
+      "transliteration": "Al-Muḥyī",
+      "meaning": {
+        "id": "Maha Menghidupkan",
+        "en": "The Giver of Life",
+        "ms": "Maha Menghidupkan"
+      }
+    },
+    {
+      "arabic": "الْمُمِيتُ",
+      "transliteration": "Al-Mumīt",
+      "meaning": {
+        "id": "Maha Mematikan",
+        "en": "The Bringer of Death",
+        "ms": "Maha Mematikan"
+      }
+    },
+    {
+      "arabic": "الْحَيُّ",
+      "transliteration": "Al-Ḥayy",
+      "meaning": {
+        "id": "Maha Hidup",
+        "en": "The Ever-Living",
+        "ms": "Maha Hidup"
+      }
+    },
+    {
+      "arabic": "الْقَيُّومُ",
+      "transliteration": "Al-Qayyūm",
+      "meaning": {
+        "id": "Maha Berdiri Sendiri",
+        "en": "The Self-Subsisting",
+        "ms": "Maha Berdiri Sendiri"
+      }
+    },
+    {
+      "arabic": "الْوَاجِدُ",
+      "transliteration": "Al-Wājid",
+      "meaning": {
+        "id": "Maha Menemukan",
+        "en": "The Finder",
+        "ms": "Maha Penemu"
+      }
+    },
+    {
+      "arabic": "الْمَاجِدُ",
+      "transliteration": "Al-Mājid",
+      "meaning": {
+        "id": "Maha Sempurna Kemuliaan-Nya",
+        "en": "The Noble",
+        "ms": "Maha Sempurna Kemuliaan-Nya"
+      }
+    },
+    {
+      "arabic": "الْوَاحِدُ",
+      "transliteration": "Al-Wāḥid",
+      "meaning": {
+        "id": "Maha Esa",
+        "en": "The One",
+        "ms": "Maha Esa"
+      }
+    },
+    {
+      "arabic": "الْأَحَدُ",
+      "transliteration": "Al-Aḥad",
+      "meaning": {
+        "id": "Maha Tunggal",
+        "en": "The Unique",
+        "ms": "Maha Tunggal"
+      }
+    },
+    {
+      "arabic": "الصَّمَدُ",
+      "transliteration": "Aṣ-Ṣamad",
+      "meaning": {
+        "id": "Maha Tempat Bergantung",
+        "en": "The Eternal Refuge",
+        "ms": "Maha Tempat Bergantung"
+      }
+    },
+    {
+      "arabic": "الْقَادِرُ",
+      "transliteration": "Al-Qādir",
+      "meaning": {
+        "id": "Maha Kuasa",
+        "en": "The All-Capable",
+        "ms": "Maha Berkuasa"
+      }
+    },
+    {
+      "arabic": "الْمُقْتَدِرُ",
+      "transliteration": "Al-Muqtadir",
+      "meaning": {
+        "id": "Maha Berkuasa Mutlak",
+        "en": "The All-Powerful",
+        "ms": "Maha Berkuasa Mutlak"
+      }
+    },
+    {
+      "arabic": "الْمُقَدِّمُ",
+      "transliteration": "Al-Muqaddim",
+      "meaning": {
+        "id": "Maha Mendahulukan",
+        "en": "The Expediter",
+        "ms": "Maha Mendahulukan"
+      }
+    },
+    {
+      "arabic": "الْمُؤَخِّرُ",
+      "transliteration": "Al-Mu'akhkhir",
+      "meaning": {
+        "id": "Maha Mengakhirkan",
+        "en": "The Delayer",
+        "ms": "Maha Mengemudiankan"
+      }
+    },
+    {
+      "arabic": "الْأَوَّلُ",
+      "transliteration": "Al-Awwal",
+      "meaning": {
+        "id": "Maha Awal",
+        "en": "The First",
+        "ms": "Maha Awal"
+      }
+    },
+    {
+      "arabic": "الْآخِرُ",
+      "transliteration": "Al-Ākhir",
+      "meaning": {
+        "id": "Maha Akhir",
+        "en": "The Last",
+        "ms": "Maha Akhir"
+      }
+    },
+    {
+      "arabic": "الظَّاهِرُ",
+      "transliteration": "Aẓ-Ẓāhir",
+      "meaning": {
+        "id": "Maha Nyata",
+        "en": "The Manifest",
+        "ms": "Maha Nyata"
+      }
+    },
+    {
+      "arabic": "الْبَاطِنُ",
+      "transliteration": "Al-Bāṭin",
+      "meaning": {
+        "id": "Maha Tersembunyi",
+        "en": "The Hidden",
+        "ms": "Maha Tersembunyi"
+      }
+    },
+    {
+      "arabic": "الْوَالِي",
+      "transliteration": "Al-Wālī",
+      "meaning": {
+        "id": "Maha Memerintah",
+        "en": "The Governor",
+        "ms": "Maha Memerintah"
+      }
+    },
+    {
+      "arabic": "الْمُتَعَالِي",
+      "transliteration": "Al-Muta'ālī",
+      "meaning": {
+        "id": "Maha Tinggi di Atas Segalanya",
+        "en": "The Supremely Exalted",
+        "ms": "Maha Tinggi di Atas Segalanya"
+      }
+    },
+    {
+      "arabic": "الْبَرُّ",
+      "transliteration": "Al-Barr",
+      "meaning": {
+        "id": "Maha Sumber Kebaikan",
+        "en": "The Source of Goodness",
+        "ms": "Maha Pemberi Kebaikan"
+      }
+    },
+    {
+      "arabic": "التَّوَّابُ",
+      "transliteration": "At-Tawwāb",
+      "meaning": {
+        "id": "Maha Penerima Tobat",
+        "en": "The Accepter of Repentance",
+        "ms": "Maha Penerima Taubat"
+      }
+    },
+    {
+      "arabic": "الْمُنْتَقِمُ",
+      "transliteration": "Al-Muntaqim",
+      "meaning": {
+        "id": "Maha Pemberi Balasan",
+        "en": "The Avenger",
+        "ms": "Maha Pembalas"
+      }
+    },
+    {
+      "arabic": "الْعَفُوُّ",
+      "transliteration": "Al-'Afuww",
+      "meaning": {
+        "id": "Maha Pemaaf",
+        "en": "The Pardoner",
+        "ms": "Maha Pemaaf"
+      }
+    },
+    {
+      "arabic": "الرَّءُوفُ",
+      "transliteration": "Ar-Ra'ūf",
+      "meaning": {
+        "id": "Maha Belas Kasihan",
+        "en": "The Most Kind",
+        "ms": "Maha Belas Kasihan"
+      }
+    },
+    {
+      "arabic": "مَالِكُ الْمُلْكِ",
+      "transliteration": "Mālikul-Mulk",
+      "meaning": {
+        "id": "Pemilik Kerajaan Semesta",
+        "en": "Owner of All Sovereignty",
+        "ms": "Pemilik Kerajaan Semesta"
+      }
+    },
+    {
+      "arabic": "ذُو الْجَلَالِ وَالْإِكْرَامِ",
+      "transliteration": "Dzul-Jalāli wal-Ikrām",
+      "meaning": {
+        "id": "Pemilik Kebesaran dan Kemuliaan",
+        "en": "Lord of Majesty and Honour",
+        "ms": "Pemilik Kebesaran dan Kemuliaan"
+      }
+    },
+    {
+      "arabic": "الْمُقْسِطُ",
+      "transliteration": "Al-Muqsiṭ",
+      "meaning": {
+        "id": "Maha Menegakkan Keadilan",
+        "en": "The Equitable",
+        "ms": "Maha Saksama"
+      }
+    },
+    {
+      "arabic": "الْجَامِعُ",
+      "transliteration": "Al-Jāmi'",
+      "meaning": {
+        "id": "Maha Mengumpulkan",
+        "en": "The Gatherer",
+        "ms": "Maha Menghimpunkan"
+      }
+    },
+    {
+      "arabic": "الْغَنِيُّ",
+      "transliteration": "Al-Ghaniyy",
+      "meaning": {
+        "id": "Maha Kaya",
+        "en": "The Self-Sufficient",
+        "ms": "Maha Kaya"
+      }
+    },
+    {
+      "arabic": "الْمُغْنِي",
+      "transliteration": "Al-Mughnī",
+      "meaning": {
+        "id": "Maha Memberi Kekayaan",
+        "en": "The Enricher",
+        "ms": "Maha Mengkayakan"
+      }
+    },
+    {
+      "arabic": "الْمَانِعُ",
+      "transliteration": "Al-Māni'",
+      "meaning": {
+        "id": "Maha Mencegah",
+        "en": "The Preventer",
+        "ms": "Maha Menghalang"
+      }
+    },
+    {
+      "arabic": "الضَّارُّ",
+      "transliteration": "Aḍ-Ḍārr",
+      "meaning": {
+        "id": "Maha Memberi Mudarat",
+        "en": "The Distresser",
+        "ms": "Maha Memberi Mudarat"
+      }
+    },
+    {
+      "arabic": "النَّافِعُ",
+      "transliteration": "An-Nāfi'",
+      "meaning": {
+        "id": "Maha Memberi Manfaat",
+        "en": "The Giver of Benefit",
+        "ms": "Maha Memberi Manfaat"
+      }
+    },
+    {
+      "arabic": "النُّورُ",
+      "transliteration": "An-Nūr",
+      "meaning": {
+        "id": "Maha Bercahaya",
+        "en": "The Light",
+        "ms": "Maha Bercahaya"
+      }
+    },
+    {
+      "arabic": "الْهَادِي",
+      "transliteration": "Al-Hādī",
+      "meaning": {
+        "id": "Maha Pemberi Petunjuk",
+        "en": "The Guide",
+        "ms": "Maha Pemberi Petunjuk"
+      }
+    },
+    {
+      "arabic": "الْبَدِيعُ",
+      "transliteration": "Al-Badī'",
+      "meaning": {
+        "id": "Maha Pencipta Tanpa Contoh",
+        "en": "The Incomparable Originator",
+        "ms": "Maha Pencipta Tanpa Contoh"
+      }
+    },
+    {
+      "arabic": "الْبَاقِي",
+      "transliteration": "Al-Bāqī",
+      "meaning": {
+        "id": "Maha Kekal",
+        "en": "The Everlasting",
+        "ms": "Maha Kekal"
+      }
+    },
+    {
+      "arabic": "الْوَارِثُ",
+      "transliteration": "Al-Wārits",
+      "meaning": {
+        "id": "Maha Mewarisi",
+        "en": "The Inheritor",
+        "ms": "Maha Mewarisi"
+      }
+    },
+    {
+      "arabic": "الرَّشِيدُ",
+      "transliteration": "Ar-Rasyīd",
+      "meaning": {
+        "id": "Maha Membimbing",
+        "en": "The Rightly Guiding",
+        "ms": "Maha Memimpin"
+      }
+    },
+    {
+      "arabic": "الصَّبُورُ",
+      "transliteration": "Aṣ-Ṣabūr",
+      "meaning": {
+        "id": "Maha Sabar",
+        "en": "The Most Patient",
+        "ms": "Maha Sabar"
+      }
+    }
+  ]
+}

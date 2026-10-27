@@ -7,6 +7,24 @@
         {
           "type": "new",
           "text": {
+            "en": "Daily duas in the Worship tab, grouped by situation (sleeping and waking, eating, getting dressed, the toilet, ablution, home, the mosque, travel, rain, sneezing, hardship and any time), with Arabic, transliteration, translation and the hadith or verse each comes from.",
+            "id": "Doa harian di tab Ibadah, dikelompokkan menurut keadaan (tidur dan bangun, makan, berpakaian, kamar kecil, wudu, rumah, masjid, bepergian, hujan, bersin, kesulitan, dan setiap saat), dengan teks Arab, transliterasi, terjemahan, serta hadis atau ayat sumbernya.",
+            "ms": "Doa harian dalam tab Ibadah, dikumpulkan mengikut keadaan (tidur dan bangun, makan, berpakaian, tandas, wuduk, rumah, masjid, perjalanan, hujan, bersin, kesusahan dan bila-bila masa), dengan teks Arab, transliterasi, terjemahan serta hadis atau ayat sumbernya.",
+            "ar": "الأدعية اليومية في تبويب العبادة، مرتبة حسب الحال (النوم والاستيقاظ، والطعام، واللباس، والخلاء، والوضوء، والمنزل، والمسجد، والسفر، والمطر، والعطاس، والكرب، وكل وقت)، مع ذكر الحديث أو الآية لكل دعاء."
+          }
+        },
+        {
+          "type": "new",
+          "text": {
+            "en": "The Asmaul Husna in the Worship tab: the 99 names of Allah, numbered, with transliteration and meaning.",
+            "id": "Asmaul Husna di tab Ibadah: 99 nama Allah, bernomor, dengan transliterasi dan maknanya.",
+            "ms": "Asmaul Husna dalam tab Ibadah: 99 nama Allah, bernombor, dengan transliterasi dan maknanya.",
+            "ar": "الأسماء الحسنى في تبويب العبادة: أسماء الله التسعة والتسعون مرقّمة."
+          }
+        },
+        {
+          "type": "new",
+          "text": {
             "en": "Optional dzikir reminders in Notifications: the morning dzikir 15 minutes after Subuh and the evening dzikir 15 minutes after Asr, for collections with morning and evening dzikir.",
             "id": "Pengingat zikir opsional di Notifikasi: zikir pagi 15 menit setelah Subuh dan zikir petang 15 menit setelah Asar, untuk kitab yang memiliki zikir pagi dan petang.",
             "ms": "Peringatan zikir pilihan dalam Pemberitahuan: zikir pagi 15 minit selepas Subuh dan zikir petang 15 minit selepas Asar, bagi kitab yang mempunyai zikir pagi dan petang.",

@@ -1,0 +1,542 @@
+{
+  "source": {
+    "id": "Al-Qur'an dan hadis, sebagian besar melalui Hisnul Muslim karya Sa'id bin Ali bin Wahf al-Qahthani. Terjemahan oleh Bedug.",
+    "en": "The Quran and hadith, mostly by way of Hisnul Muslim by Sa'id bin Ali bin Wahf al-Qahtani. Translated by Bedug.",
+    "ms": "Al-Quran dan hadis, kebanyakannya melalui Hisnul Muslim karya Sa'id bin Ali bin Wahf al-Qahtani. Terjemahan oleh Bedug.",
+    "ar": "من القرآن والسنة، وأكثرها من حصن المسلم لسعيد بن علي بن وهف القحطاني."
+  },
+  "categories": [
+    {
+      "id": "sleep",
+      "name": {
+        "id": "Tidur dan bangun",
+        "en": "Sleeping and waking",
+        "ms": "Tidur dan bangun",
+        "ar": "النوم والاستيقاظ"
+      },
+      "items": [
+        {
+          "title": {
+            "id": "Sebelum tidur",
+            "en": "Before sleeping",
+            "ms": "Sebelum tidur",
+            "ar": "قبل النوم"
+          },
+          "arabic": "بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا",
+          "transliteration": "Bismikallāhumma amūtu wa aḥyā.",
+          "translation": {
+            "id": "Dengan nama-Mu, ya Allah, aku mati dan aku hidup.",
+            "en": "In Your name, O Allah, I die and I live.",
+            "ms": "Dengan nama-Mu, ya Allah, aku mati dan aku hidup."
+          },
+          "reference": "Al-Bukhari 6324"
+        },
+        {
+          "title": {
+            "id": "Bangun tidur",
+            "en": "Waking up",
+            "ms": "Bangun tidur",
+            "ar": "عند الاستيقاظ"
+          },
+          "arabic": "الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ",
+          "transliteration": "Al-ḥamdu lillāhil-ladzī aḥyānā ba'da mā amātanā wa ilaihin-nusyūr.",
+          "translation": {
+            "id": "Segala puji bagi Allah yang menghidupkan kami setelah mematikan kami, dan kepada-Nya kami dibangkitkan.",
+            "en": "All praise is for Allah, who gave us life after He caused us to die, and to Him is the resurrection.",
+            "ms": "Segala puji bagi Allah yang menghidupkan kami selepas mematikan kami, dan kepada-Nya kami dibangkitkan."
+          },
+          "reference": "Al-Bukhari 6324"
+        }
+      ]
+    },
+    {
+      "id": "eating",
+      "name": {
+        "id": "Makan dan minum",
+        "en": "Eating and drinking",
+        "ms": "Makan dan minum",
+        "ar": "الطعام والشراب"
+      },
+      "items": [
+        {
+          "title": {
+            "id": "Sebelum makan",
+            "en": "Before eating",
+            "ms": "Sebelum makan",
+            "ar": "قبل الطعام"
+          },
+          "arabic": "بِسْمِ اللَّهِ",
+          "transliteration": "Bismillāh.",
+          "translation": {
+            "id": "Dengan nama Allah.",
+            "en": "In the name of Allah.",
+            "ms": "Dengan nama Allah."
+          },
+          "reference": "Abu Dawud 3767, at-Tirmidzi 1858"
+        },
+        {
+          "title": {
+            "id": "Jika lupa membaca basmalah di awal",
+            "en": "If you forgot to say it at the start",
+            "ms": "Jika terlupa membaca basmalah pada awalnya",
+            "ar": "إذا نسي التسمية في أوله"
+          },
+          "arabic": "بِسْمِ اللَّهِ أَوَّلَهُ وَآخِرَهُ",
+          "transliteration": "Bismillāhi awwalahū wa ākhirah.",
+          "translation": {
+            "id": "Dengan nama Allah, di awal dan di akhirnya.",
+            "en": "In the name of Allah, at its beginning and at its end.",
+            "ms": "Dengan nama Allah, pada awal dan akhirnya."
+          },
+          "reference": "Abu Dawud 3767, at-Tirmidzi 1858"
+        },
+        {
+          "title": {
+            "id": "Setelah makan",
+            "en": "After eating",
+            "ms": "Selepas makan",
+            "ar": "بعد الطعام"
+          },
+          "arabic": "الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنِي هَٰذَا وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلَا قُوَّةٍ",
+          "transliteration": "Al-ḥamdu lillāhil-ladzī aṭ'amanī hādzā wa razaqanīhi min ghairi ḥaulin minnī wa lā quwwah.",
+          "translation": {
+            "id": "Segala puji bagi Allah yang memberiku makanan ini dan menganugerahkannya kepadaku tanpa daya dan kekuatan dariku.",
+            "en": "All praise is for Allah, who fed me this and provided it for me without any might or power on my part.",
+            "ms": "Segala puji bagi Allah yang memberiku makanan ini dan mengurniakannya kepadaku tanpa daya dan kekuatan daripadaku."
+          },
+          "reference": "Abu Dawud 4023, at-Tirmidzi 3458"
+        }
+      ]
+    },
+    {
+      "id": "clothing",
+      "name": {
+        "id": "Berpakaian",
+        "en": "Getting dressed",
+        "ms": "Berpakaian",
+        "ar": "اللباس"
+      },
+      "items": [
+        {
+          "title": {
+            "id": "Memakai pakaian",
+            "en": "Putting on clothes",
+            "ms": "Memakai pakaian",
+            "ar": "عند لبس الثوب"
+          },
+          "arabic": "الْحَمْدُ لِلَّهِ الَّذِي كَسَانِي هَٰذَا الثَّوْبَ وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلَا قُوَّةٍ",
+          "transliteration": "Al-ḥamdu lillāhil-ladzī kasānī hādzats-tsauba wa razaqanīhi min ghairi ḥaulin minnī wa lā quwwah.",
+          "translation": {
+            "id": "Segala puji bagi Allah yang memakaikan pakaian ini kepadaku dan menganugerahkannya kepadaku tanpa daya dan kekuatan dariku.",
+            "en": "All praise is for Allah, who clothed me with this garment and provided it for me without any might or power on my part.",
+            "ms": "Segala puji bagi Allah yang memakaikan pakaian ini kepadaku dan mengurniakannya kepadaku tanpa daya dan kekuatan daripadaku."
+          },
+          "reference": "Abu Dawud 4023"
+        }
+      ]
+    },
+    {
+      "id": "toilet",
+      "name": {
+        "id": "Kamar kecil",
+        "en": "The toilet",
+        "ms": "Tandas",
+        "ar": "الخلاء"
+      },
+      "items": [
+        {
+          "title": {
+            "id": "Masuk kamar kecil",
+            "en": "Entering the toilet",
+            "ms": "Masuk tandas",
+            "ar": "عند دخول الخلاء"
+          },
+          "arabic": "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبُثِ وَالْخَبَائِثِ",
+          "transliteration": "Allāhumma innī a'ūdzu bika minal-khubutsi wal-khabā'its.",
+          "translation": {
+            "id": "Ya Allah, aku berlindung kepada-Mu dari setan laki-laki dan setan perempuan.",
+            "en": "O Allah, I seek refuge in You from male and female devils.",
+            "ms": "Ya Allah, aku berlindung kepada-Mu daripada syaitan lelaki dan syaitan perempuan."
+          },
+          "reference": "Al-Bukhari 142, Muslim 375"
+        },
+        {
+          "title": {
+            "id": "Keluar kamar kecil",
+            "en": "Leaving the toilet",
+            "ms": "Keluar tandas",
+            "ar": "عند الخروج من الخلاء"
+          },
+          "arabic": "غُفْرَانَكَ",
+          "transliteration": "Ghufrānak.",
+          "translation": {
+            "id": "Aku memohon ampunan-Mu.",
+            "en": "I seek Your forgiveness.",
+            "ms": "Aku memohon keampunan-Mu."
+          },
+          "reference": "Abu Dawud 30, at-Tirmidzi 7"
+        }
+      ]
+    },
+    {
+      "id": "wudu",
+      "name": {
+        "id": "Wudu",
+        "en": "Ablution",
+        "ms": "Wuduk",
+        "ar": "الوضوء"
+      },
+      "items": [
+        {
+          "title": {
+            "id": "Setelah wudu",
+            "en": "After ablution",
+            "ms": "Selepas wuduk",
+            "ar": "بعد الوضوء"
+          },
+          "arabic": "أَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ. اللَّهُمَّ اجْعَلْنِي مِنَ التَّوَّابِينَ، وَاجْعَلْنِي مِنَ الْمُتَطَهِّرِينَ",
+          "transliteration": "Asyhadu an lā ilāha illallāhu waḥdahū lā syarīka lah, wa asyhadu anna Muḥammadan 'abduhū wa rasūluh. Allāhummaj'alnī minat-tawwābīna, waj'alnī minal-mutaṭahhirīn.",
+          "translation": {
+            "id": "Aku bersaksi bahwa tiada tuhan selain Allah semata, tiada sekutu bagi-Nya, dan aku bersaksi bahwa Muhammad adalah hamba dan utusan-Nya. Ya Allah, jadikanlah aku termasuk orang-orang yang bertobat, dan jadikanlah aku termasuk orang-orang yang menyucikan diri.",
+            "en": "I bear witness that there is no god but Allah alone, without partner, and I bear witness that Muhammad is His servant and Messenger. O Allah, make me among those who repent, and make me among those who purify themselves.",
+            "ms": "Aku bersaksi bahawa tiada tuhan melainkan Allah Yang Esa, tiada sekutu bagi-Nya, dan aku bersaksi bahawa Muhammad ialah hamba dan pesuruh-Nya. Ya Allah, jadikanlah aku daripada golongan orang yang bertaubat, dan jadikanlah aku daripada golongan orang yang menyucikan diri."
+          },
+          "reference": "Muslim 234, at-Tirmidzi 55"
+        }
+      ]
+    },
+    {
+      "id": "home",
+      "name": {
+        "id": "Rumah",
+        "en": "Home",
+        "ms": "Rumah",
+        "ar": "المنزل"
+      },
+      "items": [
+        {
+          "title": {
+            "id": "Keluar rumah",
+            "en": "Leaving home",
+            "ms": "Keluar rumah",
+            "ar": "عند الخروج من المنزل"
+          },
+          "arabic": "بِسْمِ اللَّهِ، تَوَكَّلْتُ عَلَى اللَّهِ، وَلَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ",
+          "transliteration": "Bismillāh, tawakkaltu 'alallāh, wa lā ḥaula wa lā quwwata illā billāh.",
+          "translation": {
+            "id": "Dengan nama Allah, aku bertawakal kepada Allah, dan tiada daya dan kekuatan kecuali dengan pertolongan Allah.",
+            "en": "In the name of Allah, I put my trust in Allah, and there is no might nor power except by Allah.",
+            "ms": "Dengan nama Allah, aku bertawakal kepada Allah, dan tiada daya dan kekuatan melainkan dengan Allah."
+          },
+          "reference": "Abu Dawud 5095, at-Tirmidzi 3426"
+        },
+        {
+          "title": {
+            "id": "Masuk rumah",
+            "en": "Entering home",
+            "ms": "Masuk rumah",
+            "ar": "عند دخول المنزل"
+          },
+          "arabic": "بِسْمِ اللَّهِ وَلَجْنَا، وَبِسْمِ اللَّهِ خَرَجْنَا، وَعَلَى رَبِّنَا تَوَكَّلْنَا",
+          "transliteration": "Bismillāhi walajnā, wa bismillāhi kharajnā, wa 'alā rabbinā tawakkalnā.",
+          "translation": {
+            "id": "Dengan nama Allah kami masuk, dengan nama Allah kami keluar, dan kepada Tuhan kami, kami bertawakal.",
+            "en": "In the name of Allah we enter, in the name of Allah we leave, and upon our Lord we rely.",
+            "ms": "Dengan nama Allah kami masuk, dengan nama Allah kami keluar, dan kepada Tuhan kami, kami bertawakal."
+          },
+          "reference": "Abu Dawud 5096"
+        }
+      ]
+    },
+    {
+      "id": "mosque",
+      "name": {
+        "id": "Masjid",
+        "en": "The mosque",
+        "ms": "Masjid",
+        "ar": "المسجد"
+      },
+      "items": [
+        {
+          "title": {
+            "id": "Masuk masjid",
+            "en": "Entering the mosque",
+            "ms": "Masuk masjid",
+            "ar": "عند دخول المسجد"
+          },
+          "arabic": "اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ",
+          "transliteration": "Allāhummaftaḥ lī abwāba raḥmatik.",
+          "translation": {
+            "id": "Ya Allah, bukakanlah untukku pintu-pintu rahmat-Mu.",
+            "en": "O Allah, open for me the gates of Your mercy.",
+            "ms": "Ya Allah, bukakanlah bagiku pintu-pintu rahmat-Mu."
+          },
+          "reference": "Muslim 713"
+        },
+        {
+          "title": {
+            "id": "Keluar masjid",
+            "en": "Leaving the mosque",
+            "ms": "Keluar masjid",
+            "ar": "عند الخروج من المسجد"
+          },
+          "arabic": "اللَّهُمَّ إِنِّي أَسْأَلُكَ مِنْ فَضْلِكَ",
+          "transliteration": "Allāhumma innī as'aluka min faḍlik.",
+          "translation": {
+            "id": "Ya Allah, aku memohon kepada-Mu sebagian karunia-Mu.",
+            "en": "O Allah, I ask You of Your bounty.",
+            "ms": "Ya Allah, aku memohon kepada-Mu sebahagian daripada kurniaan-Mu."
+          },
+          "reference": "Muslim 713"
+        }
+      ]
+    },
+    {
+      "id": "travel",
+      "name": {
+        "id": "Bepergian",
+        "en": "Travel",
+        "ms": "Perjalanan",
+        "ar": "السفر"
+      },
+      "items": [
+        {
+          "title": {
+            "id": "Naik kendaraan",
+            "en": "Boarding a vehicle",
+            "ms": "Menaiki kenderaan",
+            "ar": "عند الركوب"
+          },
+          "arabic": "سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَٰذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ، وَإِنَّا إِلَىٰ رَبِّنَا لَمُنْقَلِبُونَ",
+          "transliteration": "Subḥānal-ladzī sakhkhara lanā hādzā wa mā kunnā lahū muqrinīn, wa innā ilā rabbinā lamunqalibūn.",
+          "translation": {
+            "id": "Mahasuci Allah yang telah menundukkan ini untuk kami, padahal sebelumnya kami tidak mampu menguasainya, dan sesungguhnya kepada Tuhan kamilah kami akan kembali.",
+            "en": "Glory be to Him who has subjected this to us, for we could never have done it ourselves, and to our Lord we will surely return.",
+            "ms": "Maha Suci Allah yang telah menundukkan ini bagi kami, sedangkan sebelum itu kami tidak mampu menguasainya, dan sesungguhnya kepada Tuhan kamilah kami akan kembali."
+          },
+          "reference": "Az-Zukhruf 13–14; Muslim 1342"
+        },
+        {
+          "title": {
+            "id": "Singgah di suatu tempat",
+            "en": "Stopping at a place",
+            "ms": "Singgah di sesuatu tempat",
+            "ar": "عند نزول منزل"
+          },
+          "arabic": "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ",
+          "transliteration": "A'ūdzu bikalimātillāhit-tāmmāti min syarri mā khalaq.",
+          "translation": {
+            "id": "Aku berlindung dengan kalimat-kalimat Allah yang sempurna dari kejahatan makhluk yang Dia ciptakan.",
+            "en": "I seek refuge in the perfect words of Allah from the evil of what He has created.",
+            "ms": "Aku berlindung dengan kalimah-kalimah Allah yang sempurna daripada kejahatan makhluk yang Dia ciptakan."
+          },
+          "reference": "Muslim 2708"
+        }
+      ]
+    },
+    {
+      "id": "rain",
+      "name": {
+        "id": "Hujan",
+        "en": "Rain",
+        "ms": "Hujan",
+        "ar": "المطر"
+      },
+      "items": [
+        {
+          "title": {
+            "id": "Saat hujan turun",
+            "en": "When it rains",
+            "ms": "Ketika hujan turun",
+            "ar": "عند نزول المطر"
+          },
+          "arabic": "اللَّهُمَّ صَيِّبًا نَافِعًا",
+          "transliteration": "Allāhumma ṣayyiban nāfi'ā.",
+          "translation": {
+            "id": "Ya Allah, jadikanlah hujan ini hujan yang bermanfaat.",
+            "en": "O Allah, let it be a beneficial rain.",
+            "ms": "Ya Allah, jadikanlah hujan ini hujan yang bermanfaat."
+          },
+          "reference": "Al-Bukhari 1032"
+        },
+        {
+          "title": {
+            "id": "Setelah hujan",
+            "en": "After rain",
+            "ms": "Selepas hujan",
+            "ar": "بعد المطر"
+          },
+          "arabic": "مُطِرْنَا بِفَضْلِ اللَّهِ وَرَحْمَتِهِ",
+          "transliteration": "Muṭirnā bifaḍlillāhi wa raḥmatih.",
+          "translation": {
+            "id": "Kami diberi hujan karena karunia Allah dan rahmat-Nya.",
+            "en": "We have been given rain by the bounty of Allah and His mercy.",
+            "ms": "Kami diturunkan hujan dengan kurniaan Allah dan rahmat-Nya."
+          },
+          "reference": "Al-Bukhari 846, Muslim 71"
+        }
+      ]
+    },
+    {
+      "id": "sneezing",
+      "name": {
+        "id": "Bersin",
+        "en": "Sneezing",
+        "ms": "Bersin",
+        "ar": "العطاس"
+      },
+      "items": [
+        {
+          "title": {
+            "id": "Saat bersin",
+            "en": "When you sneeze",
+            "ms": "Apabila bersin",
+            "ar": "إذا عطس"
+          },
+          "arabic": "الْحَمْدُ لِلَّهِ",
+          "transliteration": "Al-ḥamdu lillāh.",
+          "translation": {
+            "id": "Segala puji bagi Allah.",
+            "en": "All praise is for Allah.",
+            "ms": "Segala puji bagi Allah."
+          },
+          "reference": "Al-Bukhari 6224"
+        },
+        {
+          "title": {
+            "id": "Mendengar orang bersin",
+            "en": "When someone sneezes",
+            "ms": "Apabila mendengar orang bersin",
+            "ar": "تشميت العاطس"
+          },
+          "arabic": "يَرْحَمُكَ اللَّهُ",
+          "transliteration": "Yarḥamukallāh.",
+          "translation": {
+            "id": "Semoga Allah merahmatimu.",
+            "en": "May Allah have mercy on you.",
+            "ms": "Semoga Allah merahmatimu."
+          },
+          "reference": "Al-Bukhari 6224"
+        },
+        {
+          "title": {
+            "id": "Membalasnya",
+            "en": "Replying",
+            "ms": "Membalasnya",
+            "ar": "رد العاطس"
+          },
+          "arabic": "يَهْدِيكُمُ اللَّهُ وَيُصْلِحُ بَالَكُمْ",
+          "transliteration": "Yahdīkumullāhu wa yuṣliḥu bālakum.",
+          "translation": {
+            "id": "Semoga Allah memberimu petunjuk dan memperbaiki keadaanmu.",
+            "en": "May Allah guide you and set your affairs right.",
+            "ms": "Semoga Allah memberi kamu petunjuk dan memperbaiki keadaanmu."
+          },
+          "reference": "Al-Bukhari 6224"
+        }
+      ]
+    },
+    {
+      "id": "hardship",
+      "name": {
+        "id": "Kesulitan dan sakit",
+        "en": "Hardship and illness",
+        "ms": "Kesusahan dan sakit",
+        "ar": "الكرب والمرض"
+      },
+      "items": [
+        {
+          "title": {
+            "id": "Saat ditimpa kesulitan",
+            "en": "In distress",
+            "ms": "Ketika ditimpa kesusahan",
+            "ar": "دعاء الكرب"
+          },
+          "arabic": "لَا إِلَٰهَ إِلَّا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ",
+          "transliteration": "Lā ilāha illā anta subḥānaka innī kuntu minaẓ-ẓālimīn.",
+          "translation": {
+            "id": "Tiada tuhan selain Engkau, Mahasuci Engkau, sesungguhnya aku termasuk orang-orang yang zalim.",
+            "en": "There is no god but You, glory be to You; I have indeed been among the wrongdoers.",
+            "ms": "Tiada tuhan melainkan Engkau, Maha Suci Engkau, sesungguhnya aku termasuk dalam golongan orang yang zalim."
+          },
+          "reference": "Al-Anbiya' 87; at-Tirmidzi 3505"
+        },
+        {
+          "title": {
+            "id": "Menjenguk orang sakit",
+            "en": "Visiting the sick",
+            "ms": "Menziarahi orang sakit",
+            "ar": "عند عيادة المريض"
+          },
+          "arabic": "لَا بَأْسَ، طَهُورٌ إِنْ شَاءَ اللَّهُ",
+          "transliteration": "Lā ba's, ṭahūrun in syā'allāh.",
+          "translation": {
+            "id": "Tidak apa-apa, (sakit ini) menyucikan (dari dosa), insyaallah.",
+            "en": "No harm; it is a purification, if Allah wills.",
+            "ms": "Tidak mengapa, (sakit ini) menyucikan (daripada dosa), insya-Allah."
+          },
+          "reference": "Al-Bukhari 3616"
+        }
+      ]
+    },
+    {
+      "id": "anytime",
+      "name": {
+        "id": "Setiap saat",
+        "en": "Any time",
+        "ms": "Bila-bila masa",
+        "ar": "في كل وقت"
+      },
+      "items": [
+        {
+          "title": {
+            "id": "Kebaikan dunia dan akhirat",
+            "en": "Good in this world and the next",
+            "ms": "Kebaikan dunia dan akhirat",
+            "ar": "حسنة الدنيا والآخرة"
+          },
+          "arabic": "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
+          "transliteration": "Rabbanā ātinā fid-dunyā ḥasanah, wa fil-ākhirati ḥasanah, wa qinā 'adzāban-nār.",
+          "translation": {
+            "id": "Ya Tuhan kami, berilah kami kebaikan di dunia dan kebaikan di akhirat, dan lindungilah kami dari azab neraka.",
+            "en": "Our Lord, give us good in this world and good in the Hereafter, and protect us from the punishment of the Fire.",
+            "ms": "Wahai Tuhan kami, berilah kami kebaikan di dunia dan kebaikan di akhirat, dan peliharalah kami daripada azab neraka."
+          },
+          "reference": "Al-Baqarah 201; Al-Bukhari 6389"
+        },
+        {
+          "title": {
+            "id": "Untuk orang tua",
+            "en": "For parents",
+            "ms": "Untuk ibu bapa",
+            "ar": "للوالدين"
+          },
+          "arabic": "رَبِّ ارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا",
+          "transliteration": "Rabbir-ḥamhumā kamā rabbayānī ṣaghīrā.",
+          "translation": {
+            "id": "Ya Tuhanku, sayangilah keduanya sebagaimana mereka berdua telah mendidikku sewaktu kecil.",
+            "en": "My Lord, have mercy on them as they raised me when I was small.",
+            "ms": "Wahai Tuhanku, kasihanilah mereka berdua sebagaimana mereka telah mendidikku semasa kecil."
+          },
+          "reference": "Al-Isra' 24"
+        },
+        {
+          "title": {
+            "id": "Memohon tambahan ilmu",
+            "en": "For more knowledge",
+            "ms": "Memohon tambahan ilmu",
+            "ar": "لطلب العلم"
+          },
+          "arabic": "رَبِّ زِدْنِي عِلْمًا",
+          "transliteration": "Rabbi zidnī 'ilmā.",
+          "translation": {
+            "id": "Ya Tuhanku, tambahkanlah ilmu kepadaku.",
+            "en": "My Lord, increase me in knowledge.",
+            "ms": "Wahai Tuhanku, tambahkanlah ilmu kepadaku."
+          },
+          "reference": "Taha 114"
+        }
+      ]
+    }
+  ]
+}

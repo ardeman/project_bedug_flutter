@@ -11,6 +11,7 @@ import '../../core/design/platform_capabilities.dart';
 import '../../core/design/platform_design.dart';
 import '../../core/services/prayer_service.dart';
 import '../../core/theme/app_tokens.dart';
+import '../../core/widgets/recitation_card.dart';
 import '../../generated/l10n/app_localizations.dart';
 import 'dzikir.dart';
 
@@ -86,7 +87,13 @@ class _DzikirScreenState extends ConsumerState<DzikirScreen> {
                     in collection.hasSessions
                         ? collection.itemsFor(_session)
                         : collection.items)
-                  _DzikirCard(item: item, languageCode: languageCode),
+                  RecitationCard(
+                    badge: l10n.dzikirRepeat(item.repeat),
+                    arabic: item.arabic,
+                    transliteration: item.transliteration,
+                    translation: item.translationFor(languageCode),
+                    reference: item.reference,
+                  ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(
                     AppSpacing.lg,
@@ -190,88 +197,6 @@ class _SessionSwitch extends StatelessWidget {
                   ),
                 ),
               ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _DzikirCard extends StatelessWidget {
-  final DzikirItem item;
-  final String languageCode;
-
-  const _DzikirCard({required this.item, required this.languageCode});
-
-  @override
-  Widget build(BuildContext ctx) {
-    final l10n = AppLocalizations.of(ctx);
-    final theme = Theme.of(ctx);
-    final accent = AppColors.accentOf(ctx);
-    final muted = theme.colorScheme.onSurfaceVariant;
-    final translation = item.translationFor(languageCode);
-
-    return GlassCard(
-      margin: const EdgeInsets.fromLTRB(
-        AppSpacing.md,
-        AppSpacing.xs,
-        AppSpacing.md,
-        AppSpacing.xs,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.md),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.sm,
-                    vertical: AppSpacing.xxs,
-                  ),
-                  decoration: BoxDecoration(
-                    color: accent.withValues(alpha: 0.12),
-                    borderRadius: BorderRadius.circular(AppRadii.lg),
-                  ),
-                  child: Text(
-                    l10n.dzikirRepeat(item.repeat),
-                    style: theme.textTheme.labelMedium?.copyWith(
-                      color: accent,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.sm),
-                Expanded(
-                  child: Text(
-                    item.reference,
-                    textAlign: TextAlign.end,
-                    style: theme.textTheme.labelSmall?.copyWith(color: muted),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.md),
-            Text(
-              item.arabic,
-              textDirection: TextDirection.rtl,
-              textAlign: TextAlign.right,
-              // Tall lines keep the harakat of adjacent lines apart.
-              style: theme.textTheme.headlineSmall?.copyWith(height: 2),
-            ),
-            if (translation != null) ...[
-              const SizedBox(height: AppSpacing.md),
-              Text(
-                item.transliteration,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: accent,
-                  fontStyle: FontStyle.italic,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.sm),
-              Text(translation, style: theme.textTheme.bodyMedium),
-            ],
           ],
         ),
       ),
