@@ -235,6 +235,44 @@ void main() {
     expect(find.text(shownTitle), findsNothing);
   });
 
+  testWidgets('swipes the Hijri month grid between months', (tester) async {
+    await tester.pumpWidget(app());
+    final l10n = AppLocalizations.of(tester.element(find.byType(Scaffold)));
+    String title(({int year, int month}) m) =>
+        '${hijriMonthName(l10n, m.month)} ${m.year} H';
+    final month = hijriMonthOf(today);
+    final next = month.month == 12
+        ? (year: month.year + 1, month: 1)
+        : (year: month.year, month: month.month + 1);
+    await tester.tap(find.bySemanticsLabel('Hijri Calendar'));
+    await tester.pumpAndSettle();
+    final days = find.bySemanticsLabel(
+      RegExp(r'H, Wednesday, October 28, 2026$'),
+    );
+
+    // A short, slow drag springs back.
+    await tester.timedDrag(
+      days,
+      const Offset(-30, 0),
+      const Duration(milliseconds: 500),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text(title(month)), findsOneWidget);
+
+    // Leftward shows the next month, rightward the previous one.
+    await tester.drag(days, const Offset(-400, 0));
+    await tester.pumpAndSettle();
+    expect(find.text(title(next)), findsOneWidget);
+    await tester.drag(
+      find.bySemanticsLabel(RegExp(r'H, Wednesday, November 11, 2026$')),
+      const Offset(400, 0),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text(title(month)), findsOneWidget);
+    // Paging leaves the picked day alone.
+    expect(find.text('Tuesday, October 20'), findsOneWidget);
+  });
+
   testWidgets('moves the picked chip into its grid cell while opening', (
     tester,
   ) async {

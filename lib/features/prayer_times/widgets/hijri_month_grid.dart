@@ -5,7 +5,7 @@ import 'package:material_ui/material_ui.dart';
 import '../../../core/design/material_controls.dart';
 
 import 'package:hijri/hijri_calendar.dart';
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart' hide TextDirection;
 
 import '../../../core/constants/app_colors.dart';
 import '../../../core/design/glass_controls.dart';
@@ -118,7 +118,8 @@ String? hijriDateLabel(
   }
 }
 
-class HijriMonthGridState extends State<HijriMonthGrid> {
+class HijriMonthGridState extends State<HijriMonthGrid>
+    with SingleTickerProviderStateMixin {
   late var _view = _monthOf(widget.selected);
 
   ({int year, int month}) _monthOf(DateTime date) =>
@@ -137,6 +138,101 @@ class HijriMonthGridState extends State<HijriMonthGrid> {
     _view.month == 12
         ? (year: _view.year + 1, month: 1)
         : (year: _view.year, month: _view.month + 1),
+  );
+
+  /// How far the days are dragged sideways, in logical pixels.
+  late final _swipe = AnimationController.unbounded(vsync: this);
+
+  /// Width of the days, measured while they are laid out.
+  double _swipeWidth = 1;
+
+  /// A fling faster than this pages, however short the drag, in logical
+  /// pixels per second.
+  static const _flingVelocity = 700.0;
+
+  /// The paging duration of a swipe.
+  static const _swipeDuration = Duration(milliseconds: 260);
+
+  @override
+  void dispose() {
+    _swipe.dispose();
+    super.dispose();
+  }
+
+  /// Whether dragging by [dx] heads for the next month. Months run with the
+  /// reading direction: dragging the days leftward reveals the next month
+  /// in left-to-right languages and the previous one in Arabic.
+  bool _isForward(double dx) =>
+      (Directionality.of(context) == TextDirection.rtl) == (dx > 0);
+
+  void _onSwipeUpdate(DragUpdateDetails details) {
+    _swipe.stop();
+    final delta = details.primaryDelta ?? 0;
+    final dx = _swipe.value + delta;
+    final canPage = dx == 0 || (_isForward(dx) ? _hasNext : _hasPrev);
+    // Past the first or last month the days only give a little.
+    _swipe.value = canPage ? dx : _swipe.value + delta / 4;
+  }
+
+  Future<void> _onSwipeEnd(DragEndDetails details) async {
+    final dx = _swipe.value;
+    final velocity = details.primaryVelocity ?? 0;
+    final forward = _isForward(dx);
+    final flung = velocity.abs() > _flingVelocity && (velocity > 0) == (dx > 0);
+    final pages =
+        dx != 0 &&
+        (dx.abs() > _swipeWidth / 4 || flung) &&
+        (forward ? _hasNext : _hasPrev);
+    final reduceMotion = MediaQuery.of(context).disableAnimations;
+    if (!pages) {
+      if (reduceMotion) {
+        _swipe.value = 0;
+      } else {
+        await _swipe.animateTo(
+          0,
+          duration: _swipeDuration,
+          curve: Curves.easeOutCubic,
+        );
+      }
+      return;
+    }
+    forward ? _next() : _prev();
+    if (reduceMotion) {
+      _swipe.value = 0;
+      return;
+    }
+    // The new month comes in from the side the drag came from.
+    _swipe.value = -dx.sign * _swipeWidth / 3;
+    await _swipe.animateTo(
+      0,
+      duration: _swipeDuration,
+      curve: Curves.easeOutCubic,
+    );
+  }
+
+  /// [days] following a sideways drag, fading as they leave.
+  Widget _swipeable(Widget days) => LayoutBuilder(
+    builder: (ctx, constraints) {
+      _swipeWidth = constraints.maxWidth;
+      return GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onHorizontalDragUpdate: _onSwipeUpdate,
+        onHorizontalDragEnd: _onSwipeEnd,
+        child: ClipRect(
+          child: AnimatedBuilder(
+            animation: _swipe,
+            builder: (ctx, child) => Opacity(
+              opacity: (1 - _swipe.value.abs() / _swipeWidth).clamp(0.0, 1.0),
+              child: Transform.translate(
+                offset: Offset(_swipe.value, 0),
+                child: child,
+              ),
+            ),
+            child: days,
+          ),
+        ),
+      );
+    },
   );
 
   /// Pages back to the picked day's month.
@@ -430,39 +526,48 @@ class HijriMonthGridState extends State<HijriMonthGrid> {
             ),
           ),
           const SizedBox(height: AppSpacing.xs),
-          for (var week = 0; week < weekCount; week++)
-            Row(
+          () {
+            final grid = Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                for (var col = 0; col < 7; col++)
-                  Expanded(
-                    child: () {
-                      final i = week * 7 + col - lead;
-                      if (!showDays || i < 0 || i >= days.length) {
-                        return const SizedBox(height: _DayCell.height);
-                      }
-                      final events = [
-                        for (final e in widget.events?.events ?? const [])
-                          if (e.fallsOn(days[i])) e.nameFor(languageCode),
-                      ];
-                      return _DayCell(
-                        hijriDay: days[i].hDay,
-                        date: dates[i],
-                        hasEvent: events.isNotEmpty,
-                        label: [
-                          '${days[i].hDay} '
-                              '${hijriMonthName(l10n, _view.month)} '
-                              '${_view.year} H',
-                          DateFormat.yMMMMEEEEd(locale).format(dates[i]),
-                          ...events,
-                        ].join(', '),
-                        isSelected: _sameDay(dates[i], widget.selected),
-                        isToday: _sameDay(dates[i], widget.today),
-                        onTap: () => widget.onSelected(dates[i]),
-                      );
-                    }(),
+                for (var week = 0; week < weekCount; week++)
+                  Row(
+                    children: [
+                      for (var col = 0; col < 7; col++)
+                        Expanded(
+                          child: () {
+                            final i = week * 7 + col - lead;
+                            if (!showDays || i < 0 || i >= days.length) {
+                              return const SizedBox(height: _DayCell.height);
+                            }
+                            final events = [
+                              for (final e in widget.events?.events ?? const [])
+                                if (e.fallsOn(days[i])) e.nameFor(languageCode),
+                            ];
+                            return _DayCell(
+                              hijriDay: days[i].hDay,
+                              date: dates[i],
+                              hasEvent: events.isNotEmpty,
+                              label: [
+                                '${days[i].hDay} '
+                                    '${hijriMonthName(l10n, _view.month)} '
+                                    '${_view.year} H',
+                                DateFormat.yMMMMEEEEd(locale).format(dates[i]),
+                                ...events,
+                              ].join(', '),
+                              isSelected: _sameDay(dates[i], widget.selected),
+                              isToday: _sameDay(dates[i], widget.today),
+                              onTap: () => widget.onSelected(dates[i]),
+                            );
+                          }(),
+                        ),
+                    ],
                   ),
               ],
-            ),
+            );
+            // Swiping pages months once the grid is fully open.
+            return showDays ? _swipeable(grid) : grid;
+          }(),
         ],
       ),
     );

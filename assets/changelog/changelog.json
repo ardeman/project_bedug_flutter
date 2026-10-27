@@ -5,6 +5,15 @@
       "date": null,
       "changes": [
         {
+          "type": "improved",
+          "text": {
+            "en": "Swipe the Hijri month calendar sideways to move between months.",
+            "id": "Geser kalender bulan Hijriah ke samping untuk berpindah bulan.",
+            "ms": "Leret takwim bulan Hijrah ke tepi untuk beralih bulan.",
+            "ar": "اسحب تقويم الشهر الهجري جانبًا للتنقل بين الأشهر."
+          }
+        },
+        {
           "type": "new",
           "text": {
             "en": "Choose whose Hijri calendar to follow in Settings: Saudi Arabia's Umm al-Qura, or MABIMS as Indonesia's Ministry of Religious Affairs, Malaysia, Brunei and Singapore calculate it. The date, the calendar, Islamic events, their reminders and the verse of the day all follow it.",
