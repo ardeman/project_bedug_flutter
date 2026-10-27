@@ -5,6 +5,15 @@
       "date": null,
       "changes": [
         {
+          "type": "improved",
+          "text": {
+            "en": "On iPhone in landscape, the tab bar is slimmer and sits lower, so it covers less of the screen.",
+            "id": "Di iPhone dalam posisi lanskap, bilah tab lebih ramping dan lebih rendah sehingga tidak banyak menutupi layar.",
+            "ms": "Di iPhone dalam mod landskap, bar tab lebih nipis dan lebih rendah supaya kurang menutup skrin.",
+            "ar": "على iPhone في الوضع الأفقي، أصبح شريط التبويبات أنحف وأقرب إلى الحافة، فيغطي جزءًا أقل من الشاشة."
+          }
+        },
+        {
           "type": "fixed",
           "text": {
             "en": "The Hijri month calendar no longer cuts off its last week after moving between months of five and six weeks.",

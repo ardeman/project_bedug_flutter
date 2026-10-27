@@ -90,6 +90,22 @@ class GlassNavBar extends StatelessWidget {
   /// Bar height without the system inset (see AGENTS.md).
   static const height = 64.0;
 
+  /// Bar height in a short window, such as a phone in landscape, where a
+  /// full bar would cover a fifth of the screen. It still fits a smaller
+  /// icon over its label.
+  static const compactHeight = 52.0;
+
+  /// Windows shorter than this get the compact bar: every phone in
+  /// landscape (440 at most) but no phone in portrait (568 at least).
+  static const _compactMaxWindowHeight = 500.0;
+
+  static bool _isCompact(BuildContext ctx) =>
+      MediaQuery.sizeOf(ctx).height < _compactMaxWindowHeight;
+
+  /// The bar's height in this window: [compactHeight] when it is short.
+  static double heightOf(BuildContext ctx) =>
+      _isCompact(ctx) ? compactHeight : height;
+
   /// Widest the bar grows on tablets and desktop windows.
   static const _maxWidth = 440.0;
 
@@ -99,14 +115,18 @@ class GlassNavBar extends StatelessWidget {
   static const _homeIndicatorGap = 21.0;
 
   /// Gap between the bar and the bottom edge: over the home indicator
-  /// area, or just off the window edge.
+  /// area, or just off the window edge. A short window (a phone in
+  /// landscape, whose home indicator inset is smaller) uses the window-edge
+  /// gap, which still clears the indicator.
   static double _bottomGapOf(BuildContext ctx) =>
-      MediaQuery.of(ctx).padding.bottom > 0 ? _homeIndicatorGap : AppSpacing.sm;
+      MediaQuery.of(ctx).padding.bottom > 0 && !_isCompact(ctx)
+      ? _homeIndicatorGap
+      : AppSpacing.sm;
 
   /// How much of the screen bottom the floating bar covers, measured from
   /// the bottom edge, for the bottom padding of the page under it.
   static double occupiedHeight(BuildContext ctx) =>
-      _bottomGapOf(ctx) + height + AppSpacing.xs;
+      _bottomGapOf(ctx) + heightOf(ctx) + AppSpacing.xs;
 
   @override
   Widget build(BuildContext ctx) {
@@ -149,7 +169,7 @@ class GlassNavBar extends StatelessWidget {
           selectedIndex: visualIndex(currentIndex),
           onChanged: (index) => onTap(visualIndex(index)),
           width: width,
-          height: height,
+          height: heightOf(ctx),
           margin: EdgeInsets.only(bottom: bottomGap),
           style: LiquidGlassTabBar.defaultStyle.copyWith(
             color: glassTintOf(ctx),
@@ -159,7 +179,9 @@ class GlassNavBar extends StatelessWidget {
             unselectedColor: theme.colorScheme.onSurface.withValues(
               alpha: 0.62,
             ),
-            iconSize: AppControlSizes.navigationIcon,
+            iconSize: _isCompact(ctx)
+                ? AppControlSizes.toolbarIcon
+                : AppControlSizes.navigationIcon,
             labelFontSize: theme.textTheme.labelSmall!.fontSize!,
           ),
         ),

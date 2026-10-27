@@ -81,6 +81,70 @@ void main() {
     );
   }
 
+  for (final (size, compact) in [
+    (const Size(402, 874), false),
+    (const Size(874, 402), true),
+  ]) {
+    testWidgets(
+      'glass tabs are ${compact ? '' : 'not '}compact in a $size window',
+      (tester) async {
+        tester.view.physicalSize = size;
+        tester.view.devicePixelRatio = 1;
+        tester.view.padding = FakeViewPadding(bottom: compact ? 21 : 34);
+        addTearDown(tester.view.reset);
+        late BuildContext barContext;
+        await tester.pumpWidget(
+          MaterialApp(
+            theme: buildAppTheme(Brightness.light),
+            home: Scaffold(
+              body: Stack(
+                children: [
+                  Builder(
+                    builder: (context) {
+                      barContext = context;
+                      return GlassNavBar(
+                        currentIndex: 0,
+                        onTap: (_) {},
+                        items: const [
+                          GlassNavItem(
+                            icon: Icons.schedule,
+                            activeIcon: Icons.schedule,
+                            label: 'Prayers',
+                          ),
+                          GlassNavItem(
+                            icon: Icons.settings,
+                            activeIcon: Icons.settings,
+                            label: 'Settings',
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+
+        final bar = tester.widget<LiquidGlassTabBar>(
+          find.byType(LiquidGlassTabBar),
+        );
+        expect(
+          bar.height,
+          compact ? GlassNavBar.compactHeight : GlassNavBar.height,
+        );
+        final occupied = GlassNavBar.occupiedHeight(barContext);
+        // The page's bottom padding covers the bar and its margin.
+        expect(occupied, greaterThanOrEqualTo(bar.height + bar.margin.bottom));
+        if (compact) expect(occupied, lessThan(size.height / 5));
+        expect(find.text('Settings'), findsWidgets);
+        expect(tester.takeException(), isNull);
+      },
+      variant: TargetPlatformVariant.only(TargetPlatform.iOS),
+    );
+  }
+
   for (final brightness in Brightness.values) {
     for (final direction in TextDirection.values) {
       testWidgets(
