@@ -224,15 +224,11 @@ void main() {
 
       const name = ValueKey('material-name');
       const location = ValueKey('material-location');
-      final tune = find.byIcon(Icons.tune);
-      // The location shares the actions' centerline and leaves them room.
+      // The location shares the action's centerline and leaves it room.
       final expandedLocation = tester.getRect(find.byKey(location));
-      final tuneRect = tester.getRect(tune);
-      expect(expandedLocation.center.dy, closeTo(tuneRect.center.dy, 1));
+      final actions = tester.getRect(find.byIcon(Icons.refresh));
+      expect(expandedLocation.center.dy, closeTo(actions.center.dy, 1));
       final isRtl = config.locale == 'ar';
-      final actions = tester
-          .getRect(tune)
-          .expandToInclude(tester.getRect(find.byIcon(Icons.refresh)));
       expect(expandedLocation.overlaps(actions), isFalse);
       final nameRectExpanded = tester.getRect(find.byKey(name));
       final labelRect = tester.getRect(

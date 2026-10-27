@@ -25,7 +25,6 @@ import '../../core/services/prayer_service.dart';
 import '../../core/services/extra_prayer_times.dart';
 import '../../core/providers/locale_provider.dart';
 import '../../core/providers/live_hijri_date_provider.dart';
-import '../../core/widgets/calculation_method_picker.dart';
 import '../hijri_events/hijri_events.dart';
 import '../quran/daily_ayah_card.dart';
 import 'widgets/prayer_day_picker.dart';
@@ -42,7 +41,6 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
   Timer? _tick;
   // Only the countdown badges listen, so a tick doesn't rebuild the screen.
   final _remaining = ValueNotifier<Duration>(Duration.zero);
-  bool _isMethodPickerOpen = false;
 
   /// The day the cards show, or null for today. A date rather than an offset,
   /// so a reload after midnight doesn't shift it.
@@ -117,7 +115,6 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                     isIosPortrait: isIosPortrait,
                     topInset: topInset,
                     isDark: isDark,
-                    onTune: (anchor) => _showMethodMenu(ctx, anchor),
                     onRefresh: () => ref.read(prayerProvider.notifier).load(),
                   ),
                 )
@@ -130,7 +127,6 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                     locationLabel: locationLabel,
                     remaining: _remaining,
                     topInset: topInset,
-                    onTune: () => _showMethodPicker(ctx),
                     onRefresh: () => ref.read(prayerProvider.notifier).load(),
                   ),
                 ),
@@ -178,6 +174,7 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                         LiquidGlassButton(
                           icon: Icons.refresh,
                           label: l10n.retry,
+                          touch: glassButtonTouchOf(ctx),
                           foregroundColor: AppColors.accentOf(ctx),
                           style: LiquidGlassButton.defaultStyle.copyWith(
                             color: glassTintOf(ctx),
@@ -329,35 +326,6 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
         )
         .toList();
   }
-
-  Future<void> _showMethodMenu(BuildContext ctx, Rect anchor) async {
-    if (_isMethodPickerOpen) return;
-    _isMethodPickerOpen = true;
-    try {
-      await showCalculationMethodMenu(
-        ctx,
-        ref,
-        current: ref.read(settingsProvider).method,
-        anchor: anchor,
-      );
-    } finally {
-      _isMethodPickerOpen = false;
-    }
-  }
-
-  Future<void> _showMethodPicker(BuildContext ctx) async {
-    if (_isMethodPickerOpen) return;
-    _isMethodPickerOpen = true;
-    try {
-      await showCalculationMethodPicker(
-        ctx,
-        ref,
-        current: ref.read(settingsProvider).method,
-      );
-    } finally {
-      _isMethodPickerOpen = false;
-    }
-  }
 }
 
 // ── Liquid Glass App Bar ───────────────────────────────────────────────────────
@@ -403,7 +371,6 @@ class _MaterialHeroAppBar extends SliverPersistentHeaderDelegate {
   final String locationLabel;
   final ValueListenable<Duration> remaining;
   final double topInset;
-  final VoidCallback onTune;
   final VoidCallback onRefresh;
 
   const _MaterialHeroAppBar({
@@ -413,12 +380,11 @@ class _MaterialHeroAppBar extends SliverPersistentHeaderDelegate {
     required this.locationLabel,
     required this.remaining,
     required this.topInset,
-    required this.onTune,
     required this.onRefresh,
   });
 
-  /// Two 48 dp icon buttons and the toolbar's end padding.
-  static const _actionsWidth = kMinInteractiveDimension * 2 + AppSpacing.xs;
+  /// One 48 dp icon button and the toolbar's end padding.
+  static const _actionsWidth = kMinInteractiveDimension + AppSpacing.xs;
   static const _pinSize = 14.0;
 
   @override
@@ -497,10 +463,6 @@ class _MaterialHeroAppBar extends SliverPersistentHeaderDelegate {
                   height: kToolbarHeight,
                   child: Row(
                     children: [
-                      MaterialIconButton(
-                        icon: Icon(Icons.tune, color: onAccent),
-                        onPressed: onTune,
-                      ),
                       MaterialIconButton(
                         icon: Icon(Icons.refresh, color: onAccent),
                         onPressed: onRefresh,
@@ -799,7 +761,6 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
   final bool isDark;
 
   /// Called with the tune button's global rect, to anchor the menu.
-  final ValueChanged<Rect> onTune;
   final VoidCallback onRefresh;
 
   const _LiquidGlassAppBar({
@@ -812,7 +773,6 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
     required this.isIosPortrait,
     required this.topInset,
     required this.isDark,
-    required this.onTune,
     required this.onRefresh,
   });
 
@@ -866,10 +826,8 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
     // doesn't jump mid-collapse; the shrinking hero slides under its clip.
     final heroCompact =
         maxExtent - topInset - kToolbarHeight < _compactHeroHeight;
-    // Two buttons, the gap between them, the right inset and the gap to
-    // the title capsule.
-    const actionAreaWidth =
-        _actionSize * 2 + AppSpacing.xs + AppSpacing.sm + AppSpacing.md;
+    // The refresh button, the right inset and the gap to the title capsule.
+    const actionAreaWidth = _actionSize + AppSpacing.sm + AppSpacing.md;
     // Over the accent hero, white unless the glass is tinted enough to turn
     // light (the system's Tinted style), then the text color; the text color
     // once the hero has faded.
@@ -1123,18 +1081,6 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
                     height: kToolbarHeight,
                     child: Row(
                       children: [
-                        Builder(
-                          builder: (buttonCtx) => _GlassIconButton(
-                            icon: Icons.tune,
-                            onTap: () {
-                              final box =
-                                  buttonCtx.findRenderObject()! as RenderBox;
-                              onTune(box.localToGlobal(Offset.zero) & box.size);
-                            },
-                            color: actionColor,
-                          ),
-                        ),
-                        const SizedBox(width: AppSpacing.xs),
                         _GlassIconButton(
                           icon: Icons.refresh,
                           onTap: onRefresh,

@@ -448,6 +448,14 @@ class GlassCard extends StatelessWidget {
   }
 }
 
+/// How a floating glass button answers a finger: it swells under a press,
+/// stretches after a drag and springs back on release. Rigid when the system
+/// asks for reduced motion.
+LiquidGlassTouch? glassButtonTouchOf(BuildContext ctx) =>
+    MediaQuery.of(ctx).disableAnimations
+    ? null
+    : const LiquidGlassTouch.flexing(LiquidGlassFlex());
+
 /// A round, refracting Liquid Glass icon button for iOS and macOS.
 class GlassIconButton extends StatelessWidget {
   final IconData icon;
@@ -472,6 +480,7 @@ class GlassIconButton extends StatelessWidget {
     return LiquidGlassButton(
       icon: icon,
       onPressed: onPressed,
+      touch: glassButtonTouchOf(ctx),
       width: size,
       height: size,
       padding: EdgeInsets.zero,

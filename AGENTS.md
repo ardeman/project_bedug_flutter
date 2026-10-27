@@ -24,6 +24,7 @@ A change is done only when the **Checks** command in `README.md` passes. If you 
   ref.watch(localeProvider)                          // Locale
   ```
 
+- Settings must survive app updates: save enums in `shared_preferences` by `name`, never `index`, fall back to the default when a stored value is unknown, and when a key's format changes, read the old key once to migrate it.
 - User-facing text, including error messages shown to users, goes through `AppLocalizations` with keys in every ARB file under `lib/l10n/`. Never hardcode strings or throw hardcoded messages. Never edit `lib/generated/l10n/`; run `flutter gen-l10n`.
 - Indonesian text follows KBBI spelling: "salat", not "sholat" or "shalat" (also "azan", "kiblat"). Malay text keeps its own standard spelling, "solat". Other spellings belong only in store keywords.
 - Colors come from `AppColors` (`emerald` primary, `teal` secondary, `gold` highlight, each with a `…Dark` twin, plus the backgrounds, surfaces and the Adwaita and Breeze palettes). Never hardcode hex colors. In widgets, use `AppColors.accentOf(ctx)`, `AppColors.secondaryOf(ctx)` and `Theme.of(ctx).colorScheme.tertiary` (gold) rather than the constants, so colors follow dark mode and the Linux desktop accent; the theme itself is built in `lib/core/theme/app_theme.dart`.
@@ -55,6 +56,7 @@ Each platform gets its own design system. Check the platform before rendering an
 - Glass card: `Material(color: Colors.transparent)` → `LiquidGlassLite(shape: continuousRoundedRectangle(cornerRadius: AppRadii.lg))` with a white tint (alpha ~0.62 light, ~0.07 dark). `GlassCard` in `lib/core/design/liquid_glass.dart` builds it, and falls back to a Material `Card` elsewhere.
 - No Material widgets on Apple paths, including ink ripples, `ListTile`, `Divider` and Material spinners or scrollbars. Use `GlassIconButton` or `LiquidGlassButton` for buttons (`GlassPillButton` inside scrolling glass), `LiquidGlassSwitch` for switches, `showGlassMenu` (`lib/core/widgets/glass_menu.dart`) instead of `DropdownButton`, `ToggleButtons` or popup menus, and `PlatformListTile`, `GlassPressable`, `Hairline` and `AdaptiveSpinner` from `lib/core/design/glass_controls.dart`. The settings rows in `settings_screen.dart` show the pattern.
 - Glass follows the system's Liquid Glass style and accessibility through `GlassAccessibility` (`lib/core/design/glass_accessibility.dart`, fed by a native event channel in `ios/Runner/AppDelegate.swift` and `macos/Runner/MainFlutterWindow.swift`): the Clear-to-Tinted amount moves tints from clear to opaque, Increase Contrast makes them opaque, and Reduce Transparency makes them the solid `colorScheme.surface`. Take tints from `glassTintOf` (floating glass), `glassCardTintOf` (cards) or `glassSheetTintOf` (sheets), never a raw white or black alpha, and pick icon colors over glass from how light the tinted glass is, not a fixed white.
+- Floating glass buttons (`LiquidGlassButton`, `GlassIconButton`) take `touch: glassButtonTouchOf(ctx)`, so they squeeze under a press and stretch after a drag like system glass, and stay rigid with Reduce Motion.
 - Don't give a lens an `Opacity` of zero to hide it; also set `visibility: false` so it stops reading the backdrop.
 - Full-screen blur overlay (sheet, modal): push a `PageRouteBuilder(opaque: false, barrierColor: Colors.transparent)` whose page is a tap-to-dismiss `Scaffold(backgroundColor: Colors.black38)` with the glass panel aligned to the bottom.
 - Decorative layers (gradients, blur) stacked above tappable controls are wrapped in `IgnorePointer`, or they swallow taps on the app bar icons.
@@ -69,7 +71,7 @@ Each platform gets its own design system. Check the platform before rendering an
 ### Sheets
 
 - Native, non-blur Apple sheets are fine where native behavior is wanted: the calculation method picker (`lib/core/widgets/calculation_method_picker.dart`) uses `showCupertinoSheet` on iOS/macOS, `M3EBottomSheet` on Material paths and a liquid-glass route on other desktop paths.
-- Guard every sheet against opening twice; repeated taps while it opens stack a second sheet. Keep an open flag and reset it in `finally` (see `_showMethodPicker` in `prayer_times_screen.dart`).
+- Guard every sheet against opening twice; repeated taps while it opens stack a second sheet. Keep an open flag and reset it in `finally`.
 
 ## Location
 

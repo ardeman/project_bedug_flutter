@@ -5,6 +5,24 @@
       "date": null,
       "changes": [
         {
+          "type": "improved",
+          "text": {
+            "en": "On iPhone, iPad and Mac, glass buttons such as Back and Refresh squeeze under your finger and stretch as you drag, then spring back.",
+            "id": "Di iPhone, iPad, dan Mac, tombol kaca seperti Kembali dan Muat Ulang memipih di bawah jari dan meregang saat diseret, lalu memantul kembali.",
+            "ms": "Di iPhone, iPad dan Mac, butang kaca seperti Kembali dan Muat Semula memampat di bawah jari dan meregang apabila diseret, lalu melantun kembali.",
+            "ar": "على iPhone وiPad وMac، تنضغط الأزرار الزجاجية مثل الرجوع والتحديث تحت إصبعك وتتمدد أثناء السحب، ثم ترتد إلى شكلها."
+          }
+        },
+        {
+          "type": "improved",
+          "text": {
+            "en": "The prayer times screen no longer has its own calculation method button; change the method in Settings.",
+            "id": "Layar waktu salat tidak lagi memiliki tombol metode perhitungan sendiri; ubah metode di Pengaturan.",
+            "ms": "Skrin waktu solat tidak lagi mempunyai butang kaedah pengiraan sendiri; tukar kaedah dalam Tetapan.",
+            "ar": "لم تعد شاشة مواقيت الصلاة تحتوي على زر خاص لطريقة الحساب؛ غيّر الطريقة من الإعدادات."
+          }
+        },
+        {
           "type": "fixed",
           "text": {
             "en": "On iPhone, iPad and Mac, a surah's title in the Quran reader no longer hides under the top bar.",
