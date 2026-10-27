@@ -914,4 +914,78 @@ class AppLocalizationsAr extends AppLocalizations {
   String quranNextSurah(String name) {
     return 'السورة التالية: $name';
   }
+
+  @override
+  String get khatamPlanner => 'خطة الختمة';
+
+  @override
+  String get khatamSetupHint => 'اختر عدد الأيام التي تختم فيها القرآن كاملًا.';
+
+  @override
+  String khatamDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count يوم',
+      many: '$count يومًا',
+      few: '$count أيام',
+      two: 'يومان',
+      one: 'يوم واحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String khatamFinishBy(String date) {
+    return 'الختم بحلول $date';
+  }
+
+  @override
+  String get khatamStart => 'ابدأ';
+
+  @override
+  String get khatamChange => 'تغيير';
+
+  @override
+  String get khatamEnd => 'إنهاء الخطة';
+
+  @override
+  String get cancel => 'إلغاء';
+
+  @override
+  String khatamTodayTarget(String surah, int ayah) {
+    return 'اليوم: اقرأ حتى $surah، الآية $ayah';
+  }
+
+  @override
+  String get khatamTodayDone => 'اكتملت قراءة اليوم';
+
+  @override
+  String khatamPercentRead(int percent) {
+    return 'قُرئ $percent٪';
+  }
+
+  @override
+  String khatamDaysLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'بقي $count يوم',
+      many: 'بقي $count يومًا',
+      few: 'بقيت $count أيام',
+      two: 'بقي يومان',
+      one: 'بقي يوم واحد',
+      zero: 'انقضى الموعد المحدد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get khatamComplete => 'تمّت الختمة، الحمد لله.';
+
+  @override
+  String get khatamNewPlan => 'خطة جديدة';
+
+  @override
+  String get khatamMarkRead => 'تحديد كمقروء حتى هنا';
 }

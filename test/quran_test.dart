@@ -4,6 +4,7 @@ import 'package:cupertino_ui/cupertino_ui.dart'
 import 'dart:io';
 
 import 'package:bedug/core/providers/locale_provider.dart';
+import 'package:bedug/features/quran/khatam.dart';
 import 'package:bedug/features/quran/quran.dart';
 import 'package:bedug/features/quran/quran_reader_screen.dart';
 import 'package:bedug/features/quran/quran_screen.dart';
@@ -123,6 +124,100 @@ void main() {
     expect(container.read(quranReadingProvider).textScale, 1.0);
   });
 
+  test('counts ayahs across the whole Quran', () {
+    expect(index.ayahCount, 6236);
+    expect(index.lastAyah, const AyahRef(114, 6));
+    expect(index.ordinalOf(const AyahRef(1, 1)), 0);
+    expect(index.ordinalOf(const AyahRef(2, 1)), 7);
+    for (final ref in [
+      const AyahRef(2, 255),
+      const AyahRef(36, 1),
+      index.lastAyah,
+    ]) {
+      expect(index.ayahAt(index.ordinalOf(ref)), ref);
+    }
+  });
+
+  test('measures khatam progress in juz', () {
+    expect(juzProgress(index, null), 0);
+    expect(juzProgress(index, index.lastAyah), 30);
+    // The ayah before a juz starts ends the previous juz.
+    final juz2 = index.juzStarts[1];
+    final endOfJuz1 = index.ayahAt(index.ordinalOf(juz2) - 1);
+    expect(juzProgress(index, endOfJuz1), closeTo(1, 1e-9));
+    expect(ayahAtProgress(index, 1), endOfJuz1);
+    expect(ayahAtProgress(index, 30), index.lastAyah);
+    expect(ayahAtProgress(index, 0), isNull);
+    // Halfway through a juz lands halfway through its ayahs.
+    final half = ayahAtProgress(index, 29.5)!;
+    expect(juzProgress(index, half), greaterThanOrEqualTo(29.5));
+    expect(index.juzOf(half), 30);
+  });
+
+  test('spreads a khatam plan evenly over its days', () {
+    final plan = KhatamPlan(
+      start: DateTime.utc(2026, 11, 1),
+      finish: DateTime.utc(2026, 11, 30),
+    );
+    final endOfJuz = [
+      for (final start in index.juzStarts.skip(1))
+        index.ayahAt(index.ordinalOf(start) - 1),
+    ];
+    expect(plan.days, 30);
+    expect(plan.targetFor(index, DateTime(2026, 11, 1, 23)), endOfJuz[0]);
+    expect(plan.targetFor(index, DateTime(2026, 11, 2)), endOfJuz[1]);
+    expect(plan.targetFor(index, DateTime(2026, 12, 5)), index.lastAyah);
+    expect(plan.daysLeft(DateTime(2026, 11, 30, 8)), 1);
+    expect(plan.daysLeft(DateTime(2026, 12, 1)), 0);
+    expect(plan.next(index), const AyahRef(1, 1));
+    expect(
+      plan.withReached(const AyahRef(1, 7)).next(index),
+      const AyahRef(2, 1),
+    );
+
+    // A plan begun mid-way spreads only what is left.
+    final rest = KhatamPlan(
+      start: DateTime.utc(2026, 11, 1),
+      finish: DateTime.utc(2026, 11, 2),
+      from: endOfJuz[27],
+    );
+    expect(rest.targetFor(index, DateTime(2026, 11, 1)), endOfJuz[28]);
+    expect(rest.targetFor(index, DateTime(2026, 11, 2)), index.lastAyah);
+  });
+
+  test(
+    'keeps the khatam plan and carries progress into a new length',
+    () async {
+      final container = await containerWith({});
+      final notifier = container.read(khatamProvider.notifier);
+      await notifier.markRead(const AyahRef(2, 1));
+      expect(container.read(khatamProvider), isNull);
+
+      await notifier.start(today: DateTime(2026, 11, 1, 21), days: 30);
+      await notifier.markRead(const AyahRef(2, 141));
+      await notifier.start(today: DateTime(2026, 11, 5), days: 7);
+
+      final prefs = container.read(sharedPreferencesProvider);
+      final restored = ProviderContainer(
+        overrides: [sharedPreferencesProvider.overrideWithValue(prefs)],
+      );
+      addTearDown(restored.dispose);
+      final plan = restored.read(khatamProvider)!;
+      expect(plan.start, DateTime.utc(2026, 11, 5));
+      expect(plan.finish, DateTime.utc(2026, 11, 11));
+      expect(plan.from, const AyahRef(2, 141));
+      expect(plan.reached, const AyahRef(2, 141));
+
+      await restored.read(khatamProvider.notifier).end();
+      expect(prefs.getString('quran_khatam'), isNull);
+    },
+  );
+
+  test('ignores a malformed stored khatam plan', () async {
+    final container = await containerWith({'quran_khatam': '{"start": 1}'});
+    expect(container.read(khatamProvider), isNull);
+  });
+
   Future<ProviderContainer> pump(WidgetTester tester, Widget home) async {
     SharedPreferences.setMockInitialValues({});
     final prefs = await SharedPreferences.getInstance();
@@ -196,6 +291,31 @@ void main() {
     expect(container.read(quranReadingProvider).bookmarks, [
       const AyahRef(2, 255),
     ]);
+  });
+
+  testWidgets('starts a khatam plan and marks reading in the reader', (
+    tester,
+  ) async {
+    final container = await pump(tester, const QuranScreen());
+
+    expect(find.text('Khatam planner'), findsOneWidget);
+    await tester.tap(find.text('7 days'));
+    await tester.pump();
+    await tester.tap(find.text('Start'));
+    await tester.pumpAndSettle();
+    expect(container.read(khatamProvider)!.days, 7);
+    expect(find.textContaining('Today: read up to'), findsOneWidget);
+
+    await tester.tap(find.text('Continue reading').first);
+    await tester.pumpAndSettle();
+    await tester.tap(
+      find.descendant(
+        of: find.byKey(const ValueKey(7)),
+        matching: find.byTooltip('Mark as read up to here'),
+      ),
+    );
+    await tester.pump();
+    expect(container.read(khatamProvider)!.reached, const AyahRef(1, 7));
   });
 
   testWidgets('steps the text size from the top bar', (tester) async {

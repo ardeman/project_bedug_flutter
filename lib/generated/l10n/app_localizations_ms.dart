@@ -919,4 +919,66 @@ class AppLocalizationsMs extends AppLocalizations {
   String quranNextSurah(String name) {
     return 'Surah seterusnya: $name';
   }
+
+  @override
+  String get khatamPlanner => 'Sasaran khatam';
+
+  @override
+  String get khatamSetupHint =>
+      'Pilih dalam berapa hari anda ingin mengkhatamkan al-Quran.';
+
+  @override
+  String khatamDays(int count) {
+    return '$count hari';
+  }
+
+  @override
+  String khatamFinishBy(String date) {
+    return 'Khatam pada $date';
+  }
+
+  @override
+  String get khatamStart => 'Mula';
+
+  @override
+  String get khatamChange => 'Ubah';
+
+  @override
+  String get khatamEnd => 'Tamatkan sasaran';
+
+  @override
+  String get cancel => 'Batal';
+
+  @override
+  String khatamTodayTarget(String surah, int ayah) {
+    return 'Hari ini: baca hingga $surah ayat $ayah';
+  }
+
+  @override
+  String get khatamTodayDone => 'Bacaan hari ini selesai';
+
+  @override
+  String khatamPercentRead(int percent) {
+    return '$percent% dibaca';
+  }
+
+  @override
+  String khatamDaysLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Tinggal $count hari',
+      zero: 'Tarikh sasaran telah berlalu',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get khatamComplete => 'Khatam! Alhamdulillah.';
+
+  @override
+  String get khatamNewPlan => 'Sasaran baharu';
+
+  @override
+  String get khatamMarkRead => 'Tandakan dibaca hingga di sini';
 }

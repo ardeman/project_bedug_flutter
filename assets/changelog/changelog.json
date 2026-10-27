@@ -7,6 +7,15 @@
         {
           "type": "new",
           "text": {
+            "en": "A khatam planner in the Quran tab: choose 7, 15, 30 or 60 days, see how far to read today, and mark where you stopped from any verse.",
+            "id": "Target khatam di tab Al-Qur'an: pilih 7, 15, 30, atau 60 hari, lihat sampai mana bacaan hari ini, dan tandai tempat berhenti dari ayat mana pun.",
+            "ms": "Sasaran khatam dalam tab Al-Quran: pilih 7, 15, 30 atau 60 hari, lihat sejauh mana bacaan hari ini, dan tandakan tempat berhenti dari mana-mana ayat.",
+            "ar": "خطة الختمة في تبويب القرآن: اختر 7 أو 15 أو 30 أو 60 يومًا، واعرف إلى أين تقرأ اليوم، وحدّد موضع توقفك من أي آية."
+          }
+        },
+        {
+          "type": "new",
+          "text": {
             "en": "A Quran tab: browse by surah or juz, read the Arabic with a translation, adjust the text size, bookmark verses and continue where you left off.",
             "id": "Tab Al-Qur'an: telusuri per surah atau juz, baca teks Arab beserta terjemahannya, atur ukuran teks, tandai ayat, dan lanjutkan dari bacaan terakhir.",
             "ms": "Tab Al-Quran: semak mengikut surah atau juz, baca teks Arab bersama terjemahannya, laraskan saiz teks, tandakan ayat dan sambung dari bacaan terakhir.",

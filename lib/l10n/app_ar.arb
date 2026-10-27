@@ -307,5 +307,20 @@
   "quranRemoveBookmark": "إزالة العلامة",
   "quranTextSmaller": "تصغير النص",
   "quranTextLarger": "تكبير النص",
-  "quranNextSurah": "السورة التالية: {name}"
+  "quranNextSurah": "السورة التالية: {name}",
+  "khatamPlanner": "خطة الختمة",
+  "khatamSetupHint": "اختر عدد الأيام التي تختم فيها القرآن كاملًا.",
+  "khatamDays": "{count, plural, =1{يوم واحد} =2{يومان} few{{count} أيام} many{{count} يومًا} other{{count} يوم}}",
+  "khatamFinishBy": "الختم بحلول {date}",
+  "khatamStart": "ابدأ",
+  "khatamChange": "تغيير",
+  "khatamEnd": "إنهاء الخطة",
+  "cancel": "إلغاء",
+  "khatamTodayTarget": "اليوم: اقرأ حتى {surah}، الآية {ayah}",
+  "khatamTodayDone": "اكتملت قراءة اليوم",
+  "khatamPercentRead": "قُرئ {percent}٪",
+  "khatamDaysLeft": "{count, plural, =0{انقضى الموعد المحدد} =1{بقي يوم واحد} =2{بقي يومان} few{بقيت {count} أيام} many{بقي {count} يومًا} other{بقي {count} يوم}}",
+  "khatamComplete": "تمّت الختمة، الحمد لله.",
+  "khatamNewPlan": "خطة جديدة",
+  "khatamMarkRead": "تحديد كمقروء حتى هنا"
 }

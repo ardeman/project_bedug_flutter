@@ -307,5 +307,20 @@
   "quranRemoveBookmark": "Buang penanda",
   "quranTextSmaller": "Kecilkan teks",
   "quranTextLarger": "Besarkan teks",
-  "quranNextSurah": "Surah seterusnya: {name}"
+  "quranNextSurah": "Surah seterusnya: {name}",
+  "khatamPlanner": "Sasaran khatam",
+  "khatamSetupHint": "Pilih dalam berapa hari anda ingin mengkhatamkan al-Quran.",
+  "khatamDays": "{count} hari",
+  "khatamFinishBy": "Khatam pada {date}",
+  "khatamStart": "Mula",
+  "khatamChange": "Ubah",
+  "khatamEnd": "Tamatkan sasaran",
+  "cancel": "Batal",
+  "khatamTodayTarget": "Hari ini: baca hingga {surah} ayat {ayah}",
+  "khatamTodayDone": "Bacaan hari ini selesai",
+  "khatamPercentRead": "{percent}% dibaca",
+  "khatamDaysLeft": "{count, plural, =0{Tarikh sasaran telah berlalu} other{Tinggal {count} hari}}",
+  "khatamComplete": "Khatam! Alhamdulillah.",
+  "khatamNewPlan": "Sasaran baharu",
+  "khatamMarkRead": "Tandakan dibaca hingga di sini"
 }

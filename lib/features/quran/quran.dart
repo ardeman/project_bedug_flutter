@@ -94,6 +94,31 @@ class QuranIndex {
   /// The juz, 1 to 30, that [ref] is in.
   int juzOf(AyahRef ref) =>
       juzStarts.lastIndexWhere((start) => start.compareTo(ref) <= 0) + 1;
+
+  /// Every ayah in the Quran, 6236.
+  int get ayahCount => surahs.fold(0, (sum, s) => sum + s.ayahCount);
+
+  /// The last ayah, An-Nas 6.
+  AyahRef get lastAyah => AyahRef(surahs.length, surahs.last.ayahCount);
+
+  /// [ref]'s place in the whole Quran, counted from 0 at Al-Fatihah 1.
+  int ordinalOf(AyahRef ref) {
+    var ordinal = ref.ayah - 1;
+    for (var s = 1; s < ref.surah; s++) {
+      ordinal += surah(s).ayahCount;
+    }
+    return ordinal;
+  }
+
+  /// The ayah at [ordinal], the inverse of [ordinalOf].
+  AyahRef ayahAt(int ordinal) {
+    var rest = ordinal;
+    for (final s in surahs) {
+      if (rest < s.ayahCount) return AyahRef(s.number, rest + 1);
+      rest -= s.ayahCount;
+    }
+    throw RangeError.range(ordinal, 0, ayahCount - 1, 'ordinal');
+  }
 }
 
 /// The Arabic text or one translation: each surah's ayahs in order.

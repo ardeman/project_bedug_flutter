@@ -1781,6 +1781,96 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Surah berikutnya: {name}'**
   String quranNextSurah(String name);
+
+  /// No description provided for @khatamPlanner.
+  ///
+  /// In id, this message translates to:
+  /// **'Target khatam'**
+  String get khatamPlanner;
+
+  /// No description provided for @khatamSetupHint.
+  ///
+  /// In id, this message translates to:
+  /// **'Pilih dalam berapa hari Anda ingin mengkhatamkan Al-Qur\'an.'**
+  String get khatamSetupHint;
+
+  /// No description provided for @khatamDays.
+  ///
+  /// In id, this message translates to:
+  /// **'{count} hari'**
+  String khatamDays(int count);
+
+  /// No description provided for @khatamFinishBy.
+  ///
+  /// In id, this message translates to:
+  /// **'Khatam pada {date}'**
+  String khatamFinishBy(String date);
+
+  /// No description provided for @khatamStart.
+  ///
+  /// In id, this message translates to:
+  /// **'Mulai'**
+  String get khatamStart;
+
+  /// No description provided for @khatamChange.
+  ///
+  /// In id, this message translates to:
+  /// **'Ubah'**
+  String get khatamChange;
+
+  /// No description provided for @khatamEnd.
+  ///
+  /// In id, this message translates to:
+  /// **'Akhiri target'**
+  String get khatamEnd;
+
+  /// No description provided for @cancel.
+  ///
+  /// In id, this message translates to:
+  /// **'Batal'**
+  String get cancel;
+
+  /// No description provided for @khatamTodayTarget.
+  ///
+  /// In id, this message translates to:
+  /// **'Hari ini: baca sampai {surah} ayat {ayah}'**
+  String khatamTodayTarget(String surah, int ayah);
+
+  /// No description provided for @khatamTodayDone.
+  ///
+  /// In id, this message translates to:
+  /// **'Bacaan hari ini selesai'**
+  String get khatamTodayDone;
+
+  /// No description provided for @khatamPercentRead.
+  ///
+  /// In id, this message translates to:
+  /// **'{percent}% terbaca'**
+  String khatamPercentRead(int percent);
+
+  /// No description provided for @khatamDaysLeft.
+  ///
+  /// In id, this message translates to:
+  /// **'{count, plural, =0{Tanggal target sudah lewat} other{Sisa {count} hari}}'**
+  String khatamDaysLeft(int count);
+
+  /// No description provided for @khatamComplete.
+  ///
+  /// In id, this message translates to:
+  /// **'Khatam! Alhamdulillah.'**
+  String get khatamComplete;
+
+  /// No description provided for @khatamNewPlan.
+  ///
+  /// In id, this message translates to:
+  /// **'Target baru'**
+  String get khatamNewPlan;
+
+  /// No description provided for @khatamMarkRead.
+  ///
+  /// In id, this message translates to:
+  /// **'Tandai terbaca sampai sini'**
+  String get khatamMarkRead;
 }
 
 class _AppLocalizationsDelegate

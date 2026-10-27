@@ -308,5 +308,20 @@
   "quranRemoveBookmark": "Remove bookmark",
   "quranTextSmaller": "Smaller text",
   "quranTextLarger": "Larger text",
-  "quranNextSurah": "Next surah: {name}"
+  "quranNextSurah": "Next surah: {name}",
+  "khatamPlanner": "Khatam planner",
+  "khatamSetupHint": "Choose how many days to finish reading the whole Quran in.",
+  "khatamDays": "{count} days",
+  "khatamFinishBy": "Finish by {date}",
+  "khatamStart": "Start",
+  "khatamChange": "Change",
+  "khatamEnd": "End plan",
+  "cancel": "Cancel",
+  "khatamTodayTarget": "Today: read up to {surah}, verse {ayah}",
+  "khatamTodayDone": "Today's reading is done",
+  "khatamPercentRead": "{percent}% read",
+  "khatamDaysLeft": "{count, plural, =0{Finish date passed} =1{1 day left} other{{count} days left}}",
+  "khatamComplete": "Khatam! Alhamdulillah.",
+  "khatamNewPlan": "New plan",
+  "khatamMarkRead": "Mark as read up to here"
 }

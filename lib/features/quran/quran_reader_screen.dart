@@ -7,6 +7,7 @@ import '../../core/design/liquid_glass.dart';
 import '../../core/design/platform_capabilities.dart';
 import '../../core/theme/app_tokens.dart';
 import '../../generated/l10n/app_localizations.dart';
+import 'khatam.dart';
 import 'quran.dart';
 
 /// One surah's ayahs, the Arabic with the translation for the app language,
@@ -270,6 +271,7 @@ class _AyahTileState extends ConsumerState<_AyahTile> {
     final accent = AppColors.accentOf(ctx);
     final reading = ref.watch(quranReadingProvider);
     final bookmarked = reading.isBookmarked(widget.ayah);
+    final khatam = ref.watch(khatamProvider);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -293,8 +295,18 @@ class _AyahTileState extends ConsumerState<_AyahTile> {
                     ),
                   ),
                   const Spacer(),
-                  _BookmarkButton(
-                    bookmarked: bookmarked,
+                  if (khatam != null)
+                    _AyahAction(
+                      icon: khatam.reached == widget.ayah
+                          ? Icons.flag
+                          : Icons.outlined_flag,
+                      tooltip: l10n.khatamMarkRead,
+                      onPressed: () => ref
+                          .read(khatamProvider.notifier)
+                          .markRead(widget.ayah),
+                    ),
+                  _AyahAction(
+                    icon: bookmarked ? Icons.bookmark : Icons.bookmark_border,
                     tooltip: bookmarked
                         ? l10n.quranRemoveBookmark
                         : l10n.quranAddBookmark,
@@ -337,23 +349,21 @@ class _AyahTileState extends ConsumerState<_AyahTile> {
   }
 }
 
-class _BookmarkButton extends StatelessWidget {
-  final bool bookmarked;
+/// An ayah's bookmark or khatam mark.
+class _AyahAction extends StatelessWidget {
+  final IconData icon;
   final String tooltip;
   final VoidCallback onPressed;
 
-  const _BookmarkButton({
-    required this.bookmarked,
+  const _AyahAction({
+    required this.icon,
     required this.tooltip,
     required this.onPressed,
   });
 
   @override
   Widget build(BuildContext ctx) {
-    final icon = Icon(
-      bookmarked ? Icons.bookmark : Icons.bookmark_border,
-      color: AppColors.accentOf(ctx),
-    );
+    final icon = Icon(this.icon, color: AppColors.accentOf(ctx));
     if (!PlatformCapabilities.isApple) {
       return IconButton(icon: icon, tooltip: tooltip, onPressed: onPressed);
     }

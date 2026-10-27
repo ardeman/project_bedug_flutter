@@ -7,13 +7,14 @@ import '../../core/design/liquid_glass.dart';
 import '../../core/design/platform_capabilities.dart';
 import '../../core/theme/app_tokens.dart';
 import '../../generated/l10n/app_localizations.dart';
+import 'khatam_card.dart';
 import 'quran.dart';
 import 'quran_reader_screen.dart';
 
 enum _QuranView { surahs, juz, bookmarks }
 
-/// Quran tab: the surahs, the 30 juz and the bookmarked ayahs, with a way
-/// back to where the reader left off.
+/// Quran tab: the khatam planner, the surahs, the 30 juz and the bookmarked
+/// ayahs, with a way back to where the reader left off.
 class QuranScreen extends ConsumerStatefulWidget {
   const QuranScreen({super.key});
 
@@ -75,6 +76,7 @@ class _QuranScreenState extends ConsumerState<QuranScreen> {
     };
     return ListView(
       children: [
+        KhatamCard(index: index, margin: _rowMargin),
         Padding(
           padding: const EdgeInsets.fromLTRB(
             AppSpacing.md,
