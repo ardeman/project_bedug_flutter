@@ -799,6 +799,20 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String dzikirProgress(int count, int total) {
+    return '$count/$total';
+  }
+
+  @override
+  String get dzikirCounterHint => 'Tap a card to count, long-press to reset.';
+
+  @override
+  String get dzikirCountAction => 'Count';
+
+  @override
+  String get dzikirResetAction => 'Reset count';
+
+  @override
   String get dzikirCollection => 'Dzikir collection';
 
   @override

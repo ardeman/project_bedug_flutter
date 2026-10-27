@@ -18,12 +18,14 @@ import 'package:material_3_expressive/material_3_expressive.dart';
 class GlassPressable extends StatefulWidget {
   final Widget child;
   final VoidCallback? onTap;
+  final VoidCallback? onLongPress;
   final BorderRadius borderRadius;
 
   const GlassPressable({
     super.key,
     required this.child,
     required this.onTap,
+    this.onLongPress,
     this.borderRadius = BorderRadius.zero,
   });
 
@@ -45,6 +47,7 @@ class _GlassPressableState extends State<GlassPressable> {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: widget.onTap,
+      onLongPress: widget.onLongPress,
       onTapDown: (_) => _setPressed(true),
       onTapUp: (_) => _setPressed(false),
       onTapCancel: () => _setPressed(false),

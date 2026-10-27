@@ -270,6 +270,13 @@
   "dzikirLoadError": "Zikir tidak dapat dimuatkan.",
   "dzikirSource": "Sumber: {source}",
   "dzikirRepeat": "{count}×",
+  "dzikirProgress": "{count}/{total}",
+  "@dzikirProgress": {
+    "placeholders": {"count": {"type": "int"}, "total": {"type": "int"}}
+  },
+  "dzikirCounterHint": "Ketik kad untuk mengira, tekan lama untuk menetapkan semula.",
+  "dzikirCountAction": "Kira",
+  "dzikirResetAction": "Tetapkan semula kiraan",
   "dzikirCollection": "Kitab zikir",
   "afterPrayerDzikir": "Zikir selepas solat",
   "afterPrayerDzikirSubtitle": "Istighfar, tasbih, Ayat Kursi dan lain-lain",

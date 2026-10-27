@@ -801,6 +801,21 @@ class AppLocalizationsMs extends AppLocalizations {
   }
 
   @override
+  String dzikirProgress(int count, int total) {
+    return '$count/$total';
+  }
+
+  @override
+  String get dzikirCounterHint =>
+      'Ketik kad untuk mengira, tekan lama untuk menetapkan semula.';
+
+  @override
+  String get dzikirCountAction => 'Kira';
+
+  @override
+  String get dzikirResetAction => 'Tetapkan semula kiraan';
+
+  @override
   String get dzikirCollection => 'Kitab zikir';
 
   @override

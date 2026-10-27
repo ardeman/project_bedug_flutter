@@ -10,6 +10,7 @@ import '../../core/design/liquid_glass.dart';
 import '../../core/design/platform_capabilities.dart';
 import '../../core/design/platform_design.dart';
 import '../../core/services/prayer_service.dart';
+import '../../core/services/selection_feedback.dart';
 import '../../core/theme/app_tokens.dart';
 import '../../core/widgets/recitation_card.dart';
 import '../../generated/l10n/app_localizations.dart';
@@ -31,6 +32,29 @@ class DzikirScreen extends ConsumerStatefulWidget {
 
 class _DzikirScreenState extends ConsumerState<DzikirScreen> {
   late DzikirSession _session = _currentSession();
+
+  /// Recitations counted on each item while the screen is open.
+  final _counts = <DzikirItem, int>{};
+
+  void _count(DzikirItem item) {
+    final count = _counts[item] ?? 0;
+    if (count >= item.repeat) return;
+    SelectionFeedback.tick();
+    setState(() => _counts[item] = count + 1);
+  }
+
+  void _reset(DzikirItem item) {
+    if (!_counts.containsKey(item)) return;
+    SelectionFeedback.tick();
+    setState(() => _counts.remove(item));
+  }
+
+  String _badge(AppLocalizations l10n, DzikirItem item) {
+    final count = _counts[item] ?? 0;
+    return count == 0 || count >= item.repeat
+        ? l10n.dzikirRepeat(item.repeat)
+        : l10n.dzikirProgress(count, item.repeat);
+  }
 
   /// Opens on the session for the time of day, using today's Subuh and Asar
   /// when the prayer times are loaded.
@@ -94,12 +118,32 @@ class _DzikirScreenState extends ConsumerState<DzikirScreen> {
                   )
                 else
                   const SizedBox(height: AppSpacing.sm),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(
+                    AppSpacing.lg,
+                    AppSpacing.xs,
+                    AppSpacing.lg,
+                    AppSpacing.xs,
+                  ),
+                  child: Text(
+                    l10n.dzikirCounterHint,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(ctx).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(ctx).colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                ),
                 for (final item
                     in collection.hasSessions
                         ? collection.itemsFor(_session)
                         : collection.items)
                   RecitationCard(
-                    badge: l10n.dzikirRepeat(item.repeat),
+                    badge: _badge(l10n, item),
+                    completed: (_counts[item] ?? 0) >= item.repeat,
+                    onTap: () => _count(item),
+                    onLongPress: () => _reset(item),
+                    tapHint: l10n.dzikirCountAction,
+                    longPressHint: l10n.dzikirResetAction,
                     note: item.noteFor(languageCode),
                     arabic: item.arabic,
                     transliteration: item.transliteration,

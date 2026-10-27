@@ -1572,6 +1572,30 @@ abstract class AppLocalizations {
   /// **'{count}×'**
   String dzikirRepeat(int count);
 
+  /// No description provided for @dzikirProgress.
+  ///
+  /// In id, this message translates to:
+  /// **'{count}/{total}'**
+  String dzikirProgress(int count, int total);
+
+  /// No description provided for @dzikirCounterHint.
+  ///
+  /// In id, this message translates to:
+  /// **'Ketuk kartu untuk menghitung, tekan lama untuk mengatur ulang.'**
+  String get dzikirCounterHint;
+
+  /// No description provided for @dzikirCountAction.
+  ///
+  /// In id, this message translates to:
+  /// **'Hitung'**
+  String get dzikirCountAction;
+
+  /// No description provided for @dzikirResetAction.
+  ///
+  /// In id, this message translates to:
+  /// **'Atur ulang hitungan'**
+  String get dzikirResetAction;
+
   /// No description provided for @dzikirCollection.
   ///
   /// In id, this message translates to:

@@ -8,6 +8,7 @@ import 'package:material_3_expressive/material_3_expressive.dart';
 import '../constants/app_colors.dart';
 import '../theme/app_tokens.dart';
 import 'glass_accessibility.dart';
+import 'glass_controls.dart';
 import 'platform_capabilities.dart';
 import 'platform_design.dart';
 
@@ -316,11 +317,20 @@ class GlassCard extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry margin;
 
+  /// Makes the whole card a press target: a highlight on Apple, ink
+  /// elsewhere.
+  final VoidCallback? onTap;
+  final VoidCallback? onLongPress;
+
   const GlassCard({
     super.key,
     required this.child,
     this.margin = const EdgeInsets.all(AppSpacing.md),
+    this.onTap,
+    this.onLongPress,
   });
+
+  bool get _pressable => onTap != null || onLongPress != null;
 
   @override
   Widget build(BuildContext ctx) {
@@ -331,12 +341,20 @@ class GlassCard extends StatelessWidget {
           variant: M3ECardVariant.filled,
           padding: EdgeInsets.zero,
           expanded: true,
+          onPressed: onTap,
+          onLongPress: onLongPress,
           child: child,
         ),
       );
     }
     if (!PlatformCapabilities.isApple) {
-      return Card(margin: margin, clipBehavior: Clip.antiAlias, child: child);
+      return Card(
+        margin: margin,
+        clipBehavior: Clip.antiAlias,
+        child: _pressable
+            ? InkWell(onTap: onTap, onLongPress: onLongPress, child: child)
+            : child,
+      );
     }
     return Padding(
       padding: margin,
@@ -352,7 +370,13 @@ class GlassCard extends StatelessWidget {
           // splashes inside the continuous corners.
           child: ClipRSuperellipse(
             borderRadius: BorderRadius.circular(AppRadii.lg),
-            child: child,
+            child: _pressable
+                ? GlassPressable(
+                    onTap: onTap,
+                    onLongPress: onLongPress,
+                    child: child,
+                  )
+                : child,
           ),
         ),
       ),

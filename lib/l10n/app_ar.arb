@@ -270,6 +270,13 @@
   "dzikirLoadError": "تعذّر تحميل الأذكار.",
   "dzikirSource": "المصدر: {source}",
   "dzikirRepeat": "{count}×",
+  "dzikirProgress": "{count}/{total}",
+  "@dzikirProgress": {
+    "placeholders": {"count": {"type": "int"}, "total": {"type": "int"}}
+  },
+  "dzikirCounterHint": "انقر على البطاقة للعدّ، واضغط مطوّلًا لإعادة الضبط.",
+  "dzikirCountAction": "عدّ",
+  "dzikirResetAction": "إعادة ضبط العدد",
   "dzikirCollection": "كتاب الأذكار",
   "afterPrayerDzikir": "الأذكار بعد الصلاة",
   "afterPrayerDzikirSubtitle": "الاستغفار والتسبيح وآية الكرسي وغيرها",

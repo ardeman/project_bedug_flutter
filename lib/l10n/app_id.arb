@@ -441,6 +441,13 @@
   "dzikirLoadError": "Zikir gagal dimuat.",
   "dzikirSource": "Sumber: {source}",
   "dzikirRepeat": "{count}×",
+  "dzikirProgress": "{count}/{total}",
+  "@dzikirProgress": {
+    "placeholders": {"count": {"type": "int"}, "total": {"type": "int"}}
+  },
+  "dzikirCounterHint": "Ketuk kartu untuk menghitung, tekan lama untuk mengatur ulang.",
+  "dzikirCountAction": "Hitung",
+  "dzikirResetAction": "Atur ulang hitungan",
   "dzikirCollection": "Kitab zikir",
   "afterPrayerDzikir": "Zikir setelah salat",
   "afterPrayerDzikirSubtitle": "Istigfar, tasbih, Ayat Kursi, dan lainnya",

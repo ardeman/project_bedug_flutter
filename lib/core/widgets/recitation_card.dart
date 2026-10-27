@@ -28,6 +28,18 @@ class RecitationCard extends StatelessWidget {
   /// Where it comes from, such as a surah or hadith collection.
   final String reference;
 
+  /// Fills the [badge] with a tick, such as when a dzikir has been recited
+  /// enough times.
+  final bool completed;
+
+  /// Makes the whole card a press target, such as for counting recitations.
+  final VoidCallback? onTap;
+  final VoidCallback? onLongPress;
+
+  /// What [onTap] and [onLongPress] do, read out by screen readers.
+  final String? tapHint;
+  final String? longPressHint;
+
   const RecitationCard({
     super.key,
     this.title,
@@ -37,6 +49,11 @@ class RecitationCard extends StatelessWidget {
     required this.transliteration,
     required this.translation,
     required this.reference,
+    this.completed = false,
+    this.onTap,
+    this.onLongPress,
+    this.tapHint,
+    this.longPressHint,
   });
 
   @override
@@ -46,7 +63,9 @@ class RecitationCard extends StatelessWidget {
     final muted = theme.colorScheme.onSurfaceVariant;
     final referenceStyle = theme.textTheme.labelSmall?.copyWith(color: muted);
 
-    return GlassCard(
+    final card = GlassCard(
+      onTap: onTap,
+      onLongPress: onLongPress,
       margin: const EdgeInsets.fromLTRB(
         AppSpacing.md,
         AppSpacing.xs,
@@ -71,21 +90,40 @@ class RecitationCard extends StatelessWidget {
               Row(
                 children: [
                   if (badge case final badge?) ...[
-                    Container(
+                    AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
                       padding: const EdgeInsets.symmetric(
                         horizontal: AppSpacing.sm,
                         vertical: AppSpacing.xxs,
                       ),
                       decoration: BoxDecoration(
-                        color: accent.withValues(alpha: 0.12),
+                        color: completed
+                            ? accent
+                            : accent.withValues(alpha: 0.12),
                         borderRadius: BorderRadius.circular(AppRadii.lg),
                       ),
-                      child: Text(
-                        badge,
-                        style: theme.textTheme.labelMedium?.copyWith(
-                          color: accent,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (completed) ...[
+                            Icon(
+                              Icons.check_rounded,
+                              // Matches the label's line height.
+                              size: 16,
+                              color: theme.colorScheme.onPrimary,
+                            ),
+                            const SizedBox(width: AppSpacing.xxs),
+                          ],
+                          Text(
+                            badge,
+                            style: theme.textTheme.labelMedium?.copyWith(
+                              color: completed
+                                  ? theme.colorScheme.onPrimary
+                                  : accent,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     const SizedBox(width: AppSpacing.sm),
@@ -129,6 +167,13 @@ class RecitationCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+    if (onTap == null && onLongPress == null) return card;
+    return Semantics(
+      button: true,
+      onTapHint: tapHint,
+      onLongPressHint: longPressHint,
+      child: card,
     );
   }
 }

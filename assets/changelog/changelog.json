@@ -7,6 +7,15 @@
         {
           "type": "new",
           "text": {
+            "en": "A counter on every dzikir: tap the card to count each recitation until the repeat is reached, and long-press to start over.",
+            "id": "Penghitung pada setiap zikir: ketuk kartunya untuk menghitung setiap bacaan hingga jumlahnya tercapai, dan tekan lama untuk mengulang dari awal.",
+            "ms": "Pengira pada setiap zikir: ketik kadnya untuk mengira setiap bacaan sehingga bilangannya dicapai, dan tekan lama untuk bermula semula.",
+            "ar": "عدّاد في كل ذكر: انقر على البطاقة لعدّ كل مرة حتى يكتمل العدد، واضغط مطوّلًا للبدء من جديد."
+          }
+        },
+        {
+          "type": "new",
+          "text": {
             "en": "After-prayer dzikir in the Worship tab: istighfar, Ayat al-Kursi, tasbih, tahmid and takbir 33 times each, and the three Quls, with what to add after Fajr and Maghrib.",
             "id": "Zikir setelah salat di tab Ibadah: istigfar, Ayat Kursi, tasbih, tahmid, dan takbir masing-masing 33 kali, serta tiga surah Qul, dengan bacaan tambahan setelah Subuh dan Magrib.",
             "ms": "Zikir selepas solat dalam tab Ibadah: istighfar, Ayat Kursi, tasbih, tahmid dan takbir 33 kali setiap satu, serta tiga surah Qul, dengan bacaan tambahan selepas Subuh dan Maghrib.",

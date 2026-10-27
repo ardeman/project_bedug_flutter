@@ -270,6 +270,14 @@
   "dzikirLoadError": "Couldn't load the dzikir.",
   "dzikirSource": "Source: {source}",
   "dzikirRepeat": "{count}×",
+  "dzikirProgress": "{count}/{total}",
+  "@dzikirProgress": {
+    "description": "How many of the times to recite an item are done, such as 12/33.",
+    "placeholders": {"count": {"type": "int"}, "total": {"type": "int"}}
+  },
+  "dzikirCounterHint": "Tap a card to count, long-press to reset.",
+  "dzikirCountAction": "Count",
+  "dzikirResetAction": "Reset count",
   "dzikirCollection": "Dzikir collection",
   "afterPrayerDzikir": "After-prayer dzikir",
   "afterPrayerDzikirSubtitle": "Istighfar, tasbih, Ayat al-Kursi and more",

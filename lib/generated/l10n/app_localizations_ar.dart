@@ -796,6 +796,21 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String dzikirProgress(int count, int total) {
+    return '$count/$total';
+  }
+
+  @override
+  String get dzikirCounterHint =>
+      'انقر على البطاقة للعدّ، واضغط مطوّلًا لإعادة الضبط.';
+
+  @override
+  String get dzikirCountAction => 'عدّ';
+
+  @override
+  String get dzikirResetAction => 'إعادة ضبط العدد';
+
+  @override
   String get dzikirCollection => 'كتاب الأذكار';
 
   @override

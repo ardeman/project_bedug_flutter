@@ -5,6 +5,8 @@ import 'dart:io';
 
 import 'package:bedug/core/providers/locale_provider.dart';
 import 'package:bedug/core/services/prayer_service.dart';
+import 'package:bedug/core/services/selection_feedback.dart';
+import 'package:bedug/core/widgets/recitation_card.dart';
 import 'package:bedug/features/dzikir/dzikir.dart';
 import 'package:bedug/features/dzikir/dzikir_screen.dart';
 import 'package:bedug/generated/l10n/app_localizations.dart';
@@ -211,9 +213,7 @@ void main() {
     }
   });
 
-  testWidgets('the after-prayer screen lists every item with its note', (
-    tester,
-  ) async {
+  Future<void> pumpAfterPrayer(WidgetTester tester) async {
     SharedPreferences.setMockInitialValues({});
     final prefs = await SharedPreferences.getInstance();
     tester.view.physicalSize = const Size(800, 12000);
@@ -240,6 +240,12 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
+  }
+
+  testWidgets('the after-prayer screen lists every item with its note', (
+    tester,
+  ) async {
+    await pumpAfterPrayer(tester);
 
     expect(find.text('After-prayer dzikir'), findsOneWidget);
     expect(find.text('Morning'), findsNothing);
@@ -247,5 +253,42 @@ void main() {
       expect(find.text(item.arabic, skipOffstage: false), findsOneWidget);
     }
     expect(find.text('After Fajr.', skipOffstage: false), findsOneWidget);
+  });
+
+  testWidgets('tapping a card counts up to its repeat, long-press resets', (
+    tester,
+  ) async {
+    var ticks = 0;
+    SelectionFeedback.debugOverride = () => ticks++;
+    addTearDown(() => SelectionFeedback.debugOverride = null);
+    await pumpAfterPrayer(tester);
+
+    final item = afterPrayer.items.firstWhere((i) => i.repeat == 3);
+    final card = find.text(item.arabic);
+    final badge = find.descendant(
+      of: find.ancestor(of: card, matching: find.byType(RecitationCard)),
+      matching: find.byIcon(Icons.check_rounded),
+    );
+    expect(find.text('Tap a card to count, long-press to reset.'), findsOne);
+
+    await tester.tap(card);
+    await tester.pumpAndSettle();
+    expect(find.text('1/3'), findsOneWidget);
+    await tester.tap(card);
+    await tester.tap(card);
+    await tester.pumpAndSettle();
+    expect(find.text('3/3'), findsNothing);
+    expect(badge, findsOneWidget);
+
+    // Done: further taps don't count past the repeat.
+    await tester.tap(card);
+    await tester.pumpAndSettle();
+    expect(ticks, 3);
+    expect(badge, findsOneWidget);
+
+    await tester.longPress(card);
+    await tester.pumpAndSettle();
+    expect(ticks, 4);
+    expect(badge, findsNothing);
   });
 }
