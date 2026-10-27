@@ -4,6 +4,7 @@ import 'dart:math' as math;
 
 import 'package:adhan/adhan.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_compass/flutter_compass.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -27,12 +28,24 @@ const double _facingToleranceDeg = 3;
 const double _feedbackResetToleranceDeg = 6;
 
 /// Desktop devices have no compass sensor; keep their dial north-up.
+///
+/// iOS reads the heading from the app's own channel (`AppDelegate.swift`),
+/// because `flutter_compass` misses screen rotation there; Android's plugin
+/// already measures to the top of the turned screen.
 final compassEventsProvider = Provider<Stream<CompassEvent>>((ref) {
   if (kIsWeb || !(Platform.isIOS || Platform.isAndroid)) {
     return const Stream.empty();
   }
+  if (Platform.isIOS) {
+    return _iosCompassChannel.receiveBroadcastStream().map((event) {
+      final [heading, accuracy] = (event as List).cast<double>();
+      return CompassEvent.fromList([heading, heading, accuracy]);
+    });
+  }
   return FlutterCompass.events ?? const Stream.empty();
 });
+
+const _iosCompassChannel = EventChannel('com.ardeman.bedug/compass');
 
 /// Within this many degrees of the sun (or of directly away from it) the hint
 /// says "toward" / "away" instead of a left/right angle.
