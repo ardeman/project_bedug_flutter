@@ -4,6 +4,7 @@ import 'package:adhan/adhan.dart';
 import 'package:bedug/core/providers/locale_provider.dart';
 import 'package:bedug/core/services/prayer_service.dart';
 import 'package:bedug/core/services/notification_preferences.dart';
+import 'package:bedug/features/dzikir/dzikir.dart';
 import 'package:fake_async/fake_async.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:flutter/services.dart';
@@ -231,6 +232,46 @@ void main() {
       expect(container.read(prayerProvider).notificationError, isFalse);
     },
   );
+
+  test('a collection without sessions gets no dzikir reminders until another is picked', () async {
+    SharedPreferences.setMockInitialValues({
+      'use_auto_location': false,
+      'dzikir_collection': 'rateb_siribee',
+      'notification_dzikir': ['morning', 'evening'],
+    });
+    final prefs = await SharedPreferences.getInstance();
+    final scheduled = <NotificationPreferences>[];
+    final container = ProviderContainer(
+      overrides: [
+        sharedPreferencesProvider.overrideWithValue(prefs),
+        notificationSchedulerProvider.overrideWithValue((
+          _,
+          _,
+          preferences,
+        ) async {
+          scheduled.add(preferences);
+        }),
+      ],
+    );
+    addTearDown(container.dispose);
+    container.listen(prayerProvider, (_, _) {});
+    await container.read(dzikirCollectionsProvider.future);
+    await pumpEventQueue();
+    expect(scheduled.last.dzikirReminders, isEmpty);
+    // The switches stay saved for collections with sessions.
+    expect(
+      container.read(settingsProvider).notifications.dzikirReminders,
+      hasLength(2),
+    );
+    await container
+        .read(dzikirCollectionIdProvider.notifier)
+        .select('hisnul_muslim');
+    await pumpEventQueue();
+    expect(scheduled.last.dzikirReminders, {
+      DzikirReminder.morning,
+      DzikirReminder.evening,
+    });
+  });
 
   test('after Isha uses tomorrow’s calculation and advances past Fajr', () {
     final times = PrayerTimes(

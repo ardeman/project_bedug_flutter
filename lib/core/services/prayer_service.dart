@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 
+import '../../features/dzikir/dzikir.dart';
 import '../../generated/l10n/app_localizations.dart';
 import '../constants/city_catalog.dart';
 import '../providers/locale_provider.dart';
@@ -137,6 +138,21 @@ class PrayerNotifier extends Notifier<PrayerState> {
       }
     });
     ref.listen(localeProvider, (_, _) => _scheduleNotifications());
+    // Dzikir reminders depend on whether the collection has sessions. The
+    // first load needs no reschedule: scheduling already waits for it.
+    ref.listen(
+      selectedDzikirCollectionProvider.select((c) => c.value?.hasSessions),
+      (prev, _) {
+        if (prev != null &&
+            ref
+                .read(settingsProvider)
+                .notifications
+                .dzikirReminders
+                .isNotEmpty) {
+          _scheduleNotifications();
+        }
+      },
+    );
     // Load after build returns, since state can't be set during build.
     Future.microtask(load);
     return const PrayerState(loading: true);
@@ -207,7 +223,9 @@ class PrayerNotifier extends Notifier<PrayerState> {
       await ref.read(notificationSchedulerProvider)(
         times,
         _l10n,
-        ref.read(settingsProvider).notifications,
+        await _withoutUnusedDzikirReminders(
+          ref.read(settingsProvider).notifications,
+        ),
       );
       if (ref.mounted && request == _notificationRequest) {
         state = state.copyWith(notificationError: false, error: state.error);
@@ -217,6 +235,23 @@ class PrayerNotifier extends Notifier<PrayerState> {
         state = state.copyWith(notificationError: true, error: state.error);
       }
     }
+  }
+
+  /// A collection without morning and evening sessions, such as a ratib,
+  /// gets no dzikir reminders; the switches stay saved for the others.
+  Future<NotificationPreferences> _withoutUnusedDzikirReminders(
+    NotificationPreferences preferences,
+  ) async {
+    if (preferences.dzikirReminders.isEmpty) return preferences;
+    try {
+      final collection = await ref.read(
+        selectedDzikirCollectionProvider.future,
+      );
+      if (collection.hasSessions) return preferences;
+    } catch (_) {
+      // The reader can't show an unreadable collection either.
+    }
+    return preferences.copyWith(dzikirReminders: const {});
   }
 
   CityOption? _nearestCity(double latitude, double longitude) {

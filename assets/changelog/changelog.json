@@ -7,10 +7,10 @@
         {
           "type": "new",
           "text": {
-            "en": "Optional dzikir reminders in Notifications: the morning dzikir 15 minutes after Subuh and the evening dzikir 15 minutes after Asr.",
-            "id": "Pengingat zikir opsional di Notifikasi: zikir pagi 15 menit setelah Subuh dan zikir petang 15 menit setelah Asar.",
-            "ms": "Peringatan zikir pilihan dalam Pemberitahuan: zikir pagi 15 minit selepas Subuh dan zikir petang 15 minit selepas Asar.",
-            "ar": "تذكير اختياري بالأذكار في الإشعارات: أذكار الصباح بعد الفجر بـ15 دقيقة وأذكار المساء بعد العصر بـ15 دقيقة."
+            "en": "Optional dzikir reminders in Notifications: the morning dzikir 15 minutes after Subuh and the evening dzikir 15 minutes after Asr, for collections with morning and evening dzikir.",
+            "id": "Pengingat zikir opsional di Notifikasi: zikir pagi 15 menit setelah Subuh dan zikir petang 15 menit setelah Asar, untuk kitab yang memiliki zikir pagi dan petang.",
+            "ms": "Peringatan zikir pilihan dalam Pemberitahuan: zikir pagi 15 minit selepas Subuh dan zikir petang 15 minit selepas Asar, bagi kitab yang mempunyai zikir pagi dan petang.",
+            "ar": "تذكير اختياري بالأذكار في الإشعارات: أذكار الصباح بعد الفجر بـ15 دقيقة وأذكار المساء بعد العصر بـ15 دقيقة، للكتب التي فيها أذكار الصباح والمساء."
           }
         },
         {

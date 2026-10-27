@@ -423,7 +423,11 @@ class NotificationSettingsScreen extends ConsumerWidget {
                   ),
               ],
             ),
-          if (preferences.enabled)
+          // Collections without morning and evening sessions get no
+          // reminders.
+          if (preferences.enabled &&
+              (ref.watch(selectedDzikirCollectionProvider).value?.hasSessions ??
+                  false))
             SettingsSection(
               title: l10n.dzikir,
               children: [

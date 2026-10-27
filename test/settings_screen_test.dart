@@ -1,4 +1,5 @@
 import 'package:bedug/core/providers/locale_provider.dart';
+import 'package:bedug/features/dzikir/dzikir.dart';
 import 'package:bedug/core/design/liquid_glass.dart';
 import 'package:bedug/core/design/platform_capabilities.dart';
 import 'package:bedug/core/services/kemenag_method.dart';
@@ -35,6 +36,8 @@ Future<ProviderContainer> _pumpSettings(
     overrides: [
       sharedPreferencesProvider.overrideWithValue(prefs),
       notificationSchedulerProvider.overrideWithValue((_, _, _) async {}),
+      // Asset loading never completes in the fake-async widget tests.
+      dzikirCollectionsProvider.overrideWith((ref) async => [_dzikir]),
     ],
   );
   addTearDown(container.dispose);
@@ -643,3 +646,20 @@ void main() {
     }),
   );
 }
+
+/// A collection with a morning session, so dzikir reminders are offered.
+const _dzikir = DzikirCollection(
+  id: 'hisnul_muslim',
+  name: {'en': 'Hisnul Muslim'},
+  source: {'en': 'Test'},
+  items: [
+    DzikirItem(
+      sessions: {DzikirSession.morning},
+      arabic: 'ذكر',
+      transliteration: 'dhikr',
+      translation: {'en': 'Dhikr'},
+      repeat: 1,
+      reference: 'Test',
+    ),
+  ],
+);
