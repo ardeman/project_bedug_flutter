@@ -68,25 +68,32 @@ class _KhatamCardState extends ConsumerState<KhatamCard> {
         onChanged: (days) => setState(() => _days = days),
       ),
       const SizedBox(height: AppSpacing.sm),
-      _Muted(l10n.khatamFinishBy(_formatDate(ctx, finish))),
-      const SizedBox(height: AppSpacing.sm),
-      _Actions([
-        if (plan != null)
-          _Action(
-            icon: Icons.close,
-            label: l10n.cancel,
-            onPressed: () => setState(() => _changing = false),
+      // The finish date beside the buttons, so the card stays compact.
+      Row(
+        children: [
+          Expanded(
+            child: _Muted(l10n.khatamFinishBy(_formatDate(ctx, finish))),
           ),
-        _Action(
-          icon: Icons.play_arrow,
-          label: l10n.khatamStart,
-          primary: true,
-          onPressed: () {
-            _notifier.start(today: today, days: _days);
-            setState(() => _changing = false);
-          },
-        ),
-      ]),
+          const SizedBox(width: AppSpacing.sm),
+          _Actions([
+            if (plan != null)
+              _Action(
+                icon: Icons.close,
+                label: l10n.cancel,
+                onPressed: () => setState(() => _changing = false),
+              ),
+            _Action(
+              icon: Icons.play_arrow,
+              label: l10n.khatamStart,
+              primary: true,
+              onPressed: () {
+                _notifier.start(today: today, days: _days);
+                setState(() => _changing = false);
+              },
+            ),
+          ]),
+        ],
+      ),
     ];
   }
 
