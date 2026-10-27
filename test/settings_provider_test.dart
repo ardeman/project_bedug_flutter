@@ -2,6 +2,7 @@ import 'package:bedug/core/constants/city_catalog.dart';
 import 'package:bedug/core/providers/locale_provider.dart';
 import 'package:bedug/core/services/kemenag_method.dart';
 import 'package:bedug/core/services/notification_preferences.dart';
+import 'package:bedug/core/utils/hijri_utils.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -56,6 +57,26 @@ void main() {
     );
     container = await _container({'hijri_adjustment': 5});
     expect(container.read(settingsProvider).hijriAdjustment, 0);
+  });
+
+  test('keeps a stored Hijri source and drops an unknown one', () async {
+    var container = await _container({});
+    expect(container.read(settingsProvider).hijriSource, HijriSource.ummAlQura);
+    await container
+        .read(settingsProvider.notifier)
+        .setHijriSource(HijriSource.mabims);
+    expect(
+      container.read(settingsProvider).hijriReckoning,
+      const HijriReckoning(source: HijriSource.mabims),
+    );
+    expect(
+      container.read(sharedPreferencesProvider).getString('hijri_source'),
+      'mabims',
+    );
+    container = await _container({'hijri_source': 'mabims'});
+    expect(container.read(settingsProvider).hijriSource, HijriSource.mabims);
+    container = await _container({'hijri_source': 'unknown'});
+    expect(container.read(settingsProvider).hijriSource, HijriSource.ummAlQura);
   });
 
   test('clearing the selected city clears state and storage', () async {

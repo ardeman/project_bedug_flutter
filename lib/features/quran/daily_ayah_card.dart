@@ -32,7 +32,7 @@ class DailyAyahCard extends ConsumerWidget {
     final languageCode = Localizations.localeOf(ctx).languageCode;
     final pick = ayahs.pick(
       day,
-      ref.watch(settingsProvider.select((s) => s.hijriAdjustment)),
+      ref.watch(settingsProvider.select((s) => s.hijriReckoning)),
     );
     final ayahRef = pick.ayah.ref;
     final translation = pick.ayah.translationFor(languageCode);

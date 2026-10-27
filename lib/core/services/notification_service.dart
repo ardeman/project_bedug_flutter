@@ -1,3 +1,5 @@
+import '../utils/hijri_utils.dart';
+
 import 'dart:ui';
 
 import 'package:clock/clock.dart';
@@ -81,10 +83,10 @@ class NotificationService {
     PrayerTimes? times,
     AppLocalizations l10n,
     NotificationPreferences preferences, [
-    int hijriAdjustment = 0,
+    HijriReckoning hijriReckoning = const HijriReckoning(),
   ]) {
     final result = _queue.then(
-      (_) => _replace(times, l10n, preferences, hijriAdjustment),
+      (_) => _replace(times, l10n, preferences, hijriReckoning),
     );
     _queue = result.catchError((Object _) {});
     return result;
@@ -94,7 +96,7 @@ class NotificationService {
     PrayerTimes? times,
     AppLocalizations l10n,
     NotificationPreferences preferences,
-    int hijriAdjustment,
+    HijriReckoning hijriReckoning,
   ) async {
     if (!supportsScheduling) return;
     if (!await init()) throw StateError(l10n.notificationSchedulingError);
@@ -105,7 +107,7 @@ class NotificationService {
       preferences,
       clock.now(),
       events: preferences.includesEvents ? await _loadEvents() : null,
-      hijriAdjustment: hijriAdjustment,
+      hijriReckoning: hijriReckoning,
     );
     if (schedule.isEmpty) return;
     final android = _plugin

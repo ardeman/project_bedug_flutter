@@ -31,8 +31,8 @@ class HijriMonthGrid extends StatefulWidget {
   final ValueChanged<DateTime> onSelected;
   final HijriGridMorph? morph;
 
-  /// Days the Hijri dates move to follow a local announcement.
-  final int hijriAdjustment;
+  /// How the Hijri dates are reckoned.
+  final HijriReckoning hijriReckoning;
 
   /// Called with true when paging leaves the picked day's month, and with
   /// false when [HijriMonthGridState.showSelectedMonth] brings it back. A
@@ -47,7 +47,7 @@ class HijriMonthGrid extends StatefulWidget {
     required this.onSelected,
     this.morph,
     this.onPagedAway,
-    this.hijriAdjustment = 0,
+    this.hijriReckoning = const HijriReckoning(),
   });
 
   @override
@@ -88,9 +88,12 @@ const _firstYear = 1356;
 const _lastYear = 1499;
 
 /// The Hijri (year, month) holding [date], clamped to the supported range.
-({int year, int month}) hijriMonthOf(DateTime date, [int adjustment = 0]) {
+({int year, int month}) hijriMonthOf(
+  DateTime date, [
+  HijriReckoning reckoning = const HijriReckoning(),
+]) {
   try {
-    final h = hijriOf(date, adjustment);
+    final h = hijriOf(date, reckoning);
     if (h.hYear > _lastYear) return (year: _lastYear, month: 12);
     return (year: h.hYear, month: h.hMonth);
   } on ArgumentError {
@@ -100,15 +103,15 @@ const _lastYear = 1499;
   }
 }
 
-/// [date] as a Hijri date ("8 Jumada al-Ula 1448 H"), moved [adjustment]
-/// days, or null outside the Umm al-Qura table.
+/// [date] as a Hijri date ("8 Jumada al-Ula 1448 H") under [reckoning], or
+/// null outside the Umm al-Qura table.
 String? hijriDateLabel(
   AppLocalizations l10n,
   DateTime date, [
-  int adjustment = 0,
+  HijriReckoning reckoning = const HijriReckoning(),
 ]) {
   try {
-    final h = hijriOf(date, adjustment);
+    final h = hijriOf(date, reckoning);
     return '${h.hDay} ${hijriMonthName(l10n, h.hMonth)} ${h.hYear} H';
   } on ArgumentError {
     return null;
@@ -119,7 +122,7 @@ class HijriMonthGridState extends State<HijriMonthGrid> {
   late var _view = _monthOf(widget.selected);
 
   ({int year, int month}) _monthOf(DateTime date) =>
-      hijriMonthOf(date, widget.hijriAdjustment);
+      hijriMonthOf(date, widget.hijriReckoning);
 
   bool get _hasPrev => _view.year > _firstYear || _view.month > 1;
   bool get _hasNext => _view.year < _lastYear || _view.month < 12;
@@ -151,7 +154,7 @@ class HijriMonthGridState extends State<HijriMonthGrid> {
     // into view.
     // Paging months alone leaves the picked day where it is.
     if (!_sameDay(widget.selected, oldWidget.selected) ||
-        widget.hijriAdjustment != oldWidget.hijriAdjustment) {
+        widget.hijriReckoning != oldWidget.hijriReckoning) {
       _view = _monthOf(widget.selected);
     }
   }
@@ -167,9 +170,13 @@ class HijriMonthGridState extends State<HijriMonthGrid> {
 
   @override
   Widget build(BuildContext ctx) {
-    final days = buildHijriMonth(_view.year, _view.month);
+    final days = buildHijriMonth(
+      _view.year,
+      _view.month,
+      widget.hijriReckoning.source,
+    );
     final dates = [
-      for (final day in days) hijriToGregorian(day, widget.hijriAdjustment),
+      for (final day in days) hijriToGregorian(day, widget.hijriReckoning),
     ];
     final morph = widget.morph;
     if (morph == null) return _grid(ctx, days, dates, showDays: true);

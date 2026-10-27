@@ -13,6 +13,7 @@ import 'package:bedug/core/services/widget_appearance.dart';
 import 'package:bedug/generated/l10n/app_localizations.dart';
 import 'package:bedug/core/theme/app_theme.dart';
 import 'package:bedug/core/theme/app_theme_scope.dart';
+import 'package:bedug/core/utils/hijri_utils.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:material_3_expressive/material_3_expressive.dart';
 import 'package:cupertino_ui/cupertino_ui.dart'
@@ -362,6 +363,12 @@ void main() {
     await tester.tap(find.text('−1 day').last);
     await tester.pumpAndSettle();
     expect(container.read(settingsProvider).hijriAdjustment, -1);
+    expect(find.text("Saudi Arabia's official calendar"), findsOneWidget);
+    await tester.tap(find.byType(M3EDropdownMenu<HijriSource>));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('MABIMS').last);
+    await tester.pumpAndSettle();
+    expect(container.read(settingsProvider).hijriSource, HijriSource.mabims);
     await tester.tap(find.byType(M3EDropdownMenu<int>).last);
     await tester.pumpAndSettle();
     await tester.tap(find.text('Dark').last);

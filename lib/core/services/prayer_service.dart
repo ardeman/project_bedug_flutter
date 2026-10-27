@@ -1,3 +1,5 @@
+import '../utils/hijri_utils.dart';
+
 import 'dart:async';
 
 import 'package:adhan/adhan.dart';
@@ -22,7 +24,7 @@ final notificationSchedulerProvider =
         PrayerTimes?,
         AppLocalizations,
         NotificationPreferences,
-        int,
+        HijriReckoning,
       )
     >((ref) => NotificationService.schedulePrayerNotifications);
 
@@ -128,7 +130,7 @@ class PrayerNotifier extends Notifier<PrayerState> {
           prev?.useAutoLocation != next.useAutoLocation) {
         load();
       } else if (prev?.notifications != next.notifications ||
-          prev?.hijriAdjustment != next.hijriAdjustment) {
+          prev?.hijriReckoning != next.hijriReckoning) {
         _scheduleNotifications();
       }
     });
@@ -228,7 +230,7 @@ class PrayerNotifier extends Notifier<PrayerState> {
         await _withoutUnusedDzikirReminders(
           ref.read(settingsProvider).notifications,
         ),
-        ref.read(settingsProvider).hijriAdjustment,
+        ref.read(settingsProvider).hijriReckoning,
       );
       if (ref.mounted && request == _notificationRequest) {
         state = state.copyWith(notificationError: false, error: state.error);

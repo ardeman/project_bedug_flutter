@@ -172,6 +172,23 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get hijriSource => 'Hijri calendar';
+
+  @override
+  String get hijriSourceUmmAlQura => 'Umm al-Qura';
+
+  @override
+  String get hijriSourceMabims => 'MABIMS';
+
+  @override
+  String get hijriSourceUmmAlQuraSubtitle =>
+      'Saudi Arabia\'s official calendar';
+
+  @override
+  String get hijriSourceMabimsSubtitle =>
+      'Calculated with the MABIMS criteria of Indonesia\'s Ministry of Religious Affairs, also used in Malaysia, Brunei and Singapore';
+
+  @override
   String get notifications => 'Notifications';
 
   @override
@@ -1050,8 +1067,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get hijriEventsNote =>
-      'Dates follow the calculated Umm al-Qura calendar, moved by the Hijri date setting, and can be a day off local announcements.';
+  String hijriEventsNote(Object calendar) {
+    return 'Dates follow the calculated $calendar calendar, moved by the Hijri date setting, and can be a day off local announcements.';
+  }
 
   @override
   String get hijriEventReminder => 'Event reminders';

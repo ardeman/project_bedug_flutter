@@ -59,6 +59,7 @@ const _kTheme = 'theme_mode';
 const _kUseAutoLocation = 'use_auto_location';
 const _kSelectedCityId = 'selected_city_id';
 const _kHijriAdjustment = 'hijri_adjustment';
+const _kHijriSource = 'hijri_source';
 
 class AppSettings {
   final AppCalculationMethod method;
@@ -72,6 +73,9 @@ class AppSettings {
   /// local announcement, one of [hijriAdjustmentOptions].
   final int hijriAdjustment;
 
+  /// Whose calendar the Hijri dates follow.
+  final HijriSource hijriSource;
+
   const AppSettings({
     this.method = AppCalculationMethod.kemenag,
     this.isHanafi = false,
@@ -80,7 +84,12 @@ class AppSettings {
     this.selectedCityId,
     this.notifications = const NotificationPreferences(),
     this.hijriAdjustment = 0,
+    this.hijriSource = HijriSource.ummAlQura,
   });
+
+  /// How every Hijri date in the app is reckoned.
+  HijriReckoning get hijriReckoning =>
+      HijriReckoning(source: hijriSource, adjustment: hijriAdjustment);
 
   AppSettings copyWith({
     AppCalculationMethod? method,
@@ -91,8 +100,10 @@ class AppSettings {
     bool clearSelectedCity = false,
     NotificationPreferences? notifications,
     int? hijriAdjustment,
+    HijriSource? hijriSource,
   }) => AppSettings(
     hijriAdjustment: hijriAdjustment ?? this.hijriAdjustment,
+    hijriSource: hijriSource ?? this.hijriSource,
     notifications: notifications ?? this.notifications,
     method: method ?? this.method,
     isHanafi: isHanafi ?? this.isHanafi,
@@ -124,6 +135,10 @@ class SettingsNotifier extends Notifier<AppSettings> {
         final days? when hijriAdjustmentOptions.contains(days) => days,
         _ => 0,
       },
+      hijriSource: HijriSource.values.firstWhere(
+        (source) => source.name == p.getString(_kHijriSource),
+        orElse: () => HijriSource.ummAlQura,
+      ),
       notifications: NotificationPreferences(
         enabled: p.getBool('notifications_enabled') ?? true,
         alerts: Set.unmodifiable(_storedAlerts(p)),
@@ -248,6 +263,11 @@ class SettingsNotifier extends Notifier<AppSettings> {
   Future<void> setHijriAdjustment(int days) async {
     state = state.copyWith(hijriAdjustment: days);
     await _prefs.setInt(_kHijriAdjustment, days);
+  }
+
+  Future<void> setHijriSource(HijriSource source) async {
+    state = state.copyWith(hijriSource: source);
+    await _prefs.setString(_kHijriSource, source.name);
   }
 
   Future<void> setUseAutoLocation(bool enabled) async {

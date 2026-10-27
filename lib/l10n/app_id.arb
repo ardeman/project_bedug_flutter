@@ -108,6 +108,11 @@
   "hijriAdjustmentNone": "Sesuai perhitungan",
   "hijriAdjustmentLater": "+{count} hari",
   "hijriAdjustmentEarlier": "−{count} hari",
+  "hijriSource": "Kalender Hijriah",
+  "hijriSourceUmmAlQura": "Ummul Qura",
+  "hijriSourceMabims": "MABIMS",
+  "hijriSourceUmmAlQuraSubtitle": "Kalender resmi Arab Saudi",
+  "hijriSourceMabimsSubtitle": "Dihitung dengan kriteria MABIMS Kementerian Agama RI, juga dipakai di Malaysia, Brunei, dan Singapura",
   "@madhabHanafi": {},
 
   "notifications": "Notifikasi",
@@ -526,7 +531,7 @@
   "hijriEventsLoadError": "Hari besar Islam gagal dimuat.",
   "hijriEventsWhen": "{count, plural, =0{Hari ini} =1{Besok} other{{count} hari lagi}}",
   "@hijriEventsWhen": {"placeholders": {"count": {"type": "int"}}},
-  "hijriEventsNote": "Tanggal mengikuti perhitungan kalender Ummul Qura, digeser oleh pengaturan tanggal Hijriah, dan bisa berbeda sehari dari pengumuman setempat, seperti sidang isbat.",
+  "hijriEventsNote": "Tanggal mengikuti perhitungan kalender {calendar}, digeser oleh pengaturan tanggal Hijriah, dan bisa berbeda sehari dari pengumuman setempat, seperti sidang isbat.",
   "hijriEventReminder": "Pengingat hari besar",
   "hijriEventReminderSubtitle": "Saat Magrib, malam sebelum hari besar dan ayyamul bidh",
   "notifHijriEventTomorrow": "Besok. Dalam kalender Hijriah, harinya dimulai malam ini."

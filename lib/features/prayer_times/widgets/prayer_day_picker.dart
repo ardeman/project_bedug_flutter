@@ -13,6 +13,7 @@ import '../../../core/design/liquid_glass.dart';
 import '../../../core/design/platform_capabilities.dart';
 import '../../../core/services/selection_feedback.dart';
 import '../../../core/theme/app_tokens.dart';
+import '../../../core/utils/hijri_utils.dart';
 import '../../../generated/l10n/app_localizations.dart';
 import '../../hijri_events/hijri_events.dart';
 import 'hijri_month_grid.dart';
@@ -45,8 +46,8 @@ class PrayerDayPicker extends StatefulWidget {
   final HijriEvents? events;
   final ValueChanged<DateTime> onSelected;
 
-  /// Days the Hijri dates move to follow a local announcement.
-  final int hijriAdjustment;
+  /// How the Hijri dates are reckoned.
+  final HijriReckoning hijriReckoning;
 
   const PrayerDayPicker({
     super.key,
@@ -55,7 +56,7 @@ class PrayerDayPicker extends StatefulWidget {
     this.liveHijriDate,
     this.events,
     required this.onSelected,
-    this.hijriAdjustment = 0,
+    this.hijriReckoning = const HijriReckoning(),
   });
 
   @override
@@ -236,10 +237,10 @@ class _PrayerDayPickerState extends State<PrayerDayPicker>
     final hijriDate = hijriDateLabel(
       l10n,
       liveDate ?? widget.selected,
-      widget.hijriAdjustment,
+      widget.hijriReckoning,
     );
     final events =
-        widget.events?.on(widget.selected, widget.hijriAdjustment) ?? const [];
+        widget.events?.on(widget.selected, widget.hijriReckoning) ?? const [];
 
     final content = Padding(
       padding: const EdgeInsets.only(top: AppSpacing.sm),
@@ -267,7 +268,7 @@ class _PrayerDayPickerState extends State<PrayerDayPicker>
                     today: widget.today,
                     selected: widget.selected,
                     events: widget.events,
-                    hijriAdjustment: widget.hijriAdjustment,
+                    hijriReckoning: widget.hijriReckoning,
                     onSelected: (date) =>
                         _pick(daysBetween(widget.today, date)),
                     onPagedAway: (away) =>

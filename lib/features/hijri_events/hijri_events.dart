@@ -51,13 +51,16 @@ class HijriEvents {
 
   const HijriEvents(this.events);
 
-  /// The events on the Gregorian [day], in the file's order. Hijri dates use
-  /// the standard conversion of the daytime date moved [adjustment] days
-  /// ([hijriOf]); days outside the Umm al-Qura table have none.
-  List<HijriEvent> on(DateTime day, [int adjustment = 0]) {
+  /// The events on the Gregorian [day], in the file's order. Hijri dates are
+  /// the daytime date's under [reckoning] ([hijriOf]); days outside the Umm
+  /// al-Qura table have none.
+  List<HijriEvent> on(
+    DateTime day, [
+    HijriReckoning reckoning = const HijriReckoning(),
+  ]) {
     final HijriCalendar hijri;
     try {
-      hijri = hijriOf(day, adjustment);
+      hijri = hijriOf(day, reckoning);
     } on ArgumentError {
       return const [];
     }
@@ -76,13 +79,13 @@ class HijriEvents {
     DateTime from, {
     int? count,
     int days = 354,
-    int adjustment = 0,
+    HijriReckoning reckoning = const HijriReckoning(),
   }) {
     final result = <({DateTime day, List<HijriEvent> events})>[];
     var previous = <HijriEvent>{};
     for (var i = 0; i < days && result.length < (count ?? days); i++) {
       final day = _addDays(from, i);
-      final today = on(day, adjustment);
+      final today = on(day, reckoning);
       final starting = [
         for (final event in today)
           if (!previous.contains(event)) event,

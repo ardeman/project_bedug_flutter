@@ -7,6 +7,15 @@
         {
           "type": "new",
           "text": {
+            "en": "Choose whose Hijri calendar to follow in Settings: Saudi Arabia's Umm al-Qura, or MABIMS as Indonesia's Ministry of Religious Affairs, Malaysia, Brunei and Singapore calculate it. The date, the calendar, Islamic events, their reminders and the verse of the day all follow it.",
+            "id": "Pilih kalender Hijriah yang diikuti di Pengaturan: Ummul Qura dari Arab Saudi, atau MABIMS seperti perhitungan Kementerian Agama RI, Malaysia, Brunei, dan Singapura. Tanggal, kalender, hari besar Islam beserta pengingatnya, dan ayat hari ini ikut menyesuaikan.",
+            "ms": "Pilih takwim Hijrah yang diikuti dalam Tetapan: Ummul Qura dari Arab Saudi, atau MABIMS seperti kiraan Malaysia, Brunei, Indonesia dan Singapura. Tarikh, takwim, hari kebesaran Islam beserta peringatannya, dan ayat hari ini turut mengikutinya.",
+            "ar": "اختر التقويم الهجري الذي تتبعه من الإعدادات: أم القرى السعودي، أو معايير MABIMS كما تحسبها إندونيسيا وماليزيا وبروناي وسنغافورة، فيتبعه التاريخ والتقويم والمناسبات الإسلامية وتذكيراتها وآية اليوم."
+          }
+        },
+        {
+          "type": "new",
+          "text": {
             "en": "Move the Hijri date a day or two in Settings to match your local announcement. The date, the calendar, Islamic events, their reminders and the verse of the day all follow it.",
             "id": "Geser tanggal Hijriah satu atau dua hari di Pengaturan agar sesuai pengumuman setempat, seperti sidang isbat. Tanggal, kalender, hari besar Islam beserta pengingatnya, dan ayat hari ini ikut menyesuaikan.",
             "ms": "Anjakkan tarikh Hijrah sehari atau dua dalam Tetapan supaya sepadan dengan pengumuman tempatan. Tarikh, takwim, hari kebesaran Islam beserta peringatannya, dan ayat hari ini turut mengikutinya.",

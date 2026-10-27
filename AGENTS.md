@@ -142,3 +142,5 @@ Record architectural choices here as one line each: date, decision, reason.
 - 2026-10-27: Hijri calendar events are data (`assets/content/hijri_events.json`, by Hijri month and day ranges with every name inline) matched against the standard Umm al-Qura conversion, and their reminders fire at Maghrib the evening before, because that is when the Hijri day begins and the same file then feeds the calendar, the list and the notifications.
 
 - 2026-10-27: The Hijri date adjustment (±2 days) is one setting passed explicitly to every Hijri conversion (`hijriOf`, `hijriToGregorian`), not a global offset in the `hijri` package, so the label, calendar, events, reminders and ayah of the day can't disagree and tests stay free of shared state.
+
+- 2026-10-27: The MABIMS Hijri calendar is calculated on the device (Meeus positions, checked at Kemenag's Lhoknga observatory with refraction in the altitude) rather than bundled as a table, so it covers the same years as Umm al-Qura with no data to update; tests pin it to Kemenag's published dates.

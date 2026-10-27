@@ -97,6 +97,22 @@ class SettingsScreen extends ConsumerWidget {
             ),
           ),
 
+          // Hijri calendar source
+          _ChoiceTile<HijriSource>(
+            icon: Icons.nights_stay_outlined,
+            title: l10n.hijriSource,
+            subtitle: Text(hijriSourceCredit(l10n, settings.hijriSource)),
+            value: settings.hijriSource,
+            options: [
+              for (final source in HijriSource.values)
+                GlassMenuOption(
+                  value: source,
+                  label: hijriSourceLabel(l10n, source),
+                ),
+            ],
+            onChanged: notifier.setHijriSource,
+          ),
+
           // Hijri date adjustment
           _ChoiceTile<int>(
             icon: Icons.calendar_month_outlined,

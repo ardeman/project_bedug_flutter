@@ -254,8 +254,8 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
         selected: day,
         liveHijriDate: ref.watch(liveHijriDateProvider),
         events: ref.watch(hijriEventsProvider).value,
-        hijriAdjustment: ref.watch(
-          settingsProvider.select((s) => s.hijriAdjustment),
+        hijriReckoning: ref.watch(
+          settingsProvider.select((s) => s.hijriReckoning),
         ),
         onSelected: (picked) => setState(
           () => _pickedDay = daysBetween(today, picked) == 0 ? null : picked,

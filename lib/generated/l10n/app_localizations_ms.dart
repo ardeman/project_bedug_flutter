@@ -159,6 +159,22 @@ class AppLocalizationsMs extends AppLocalizations {
   }
 
   @override
+  String get hijriSource => 'Takwim Hijrah';
+
+  @override
+  String get hijriSourceUmmAlQura => 'Ummul Qura';
+
+  @override
+  String get hijriSourceMabims => 'MABIMS';
+
+  @override
+  String get hijriSourceUmmAlQuraSubtitle => 'Takwim rasmi Arab Saudi';
+
+  @override
+  String get hijriSourceMabimsSubtitle =>
+      'Dikira dengan kriteria MABIMS, yang digunakan di Malaysia, Brunei, Indonesia dan Singapura';
+
+  @override
   String get notifications => 'Pemberitahuan';
 
   @override
@@ -1040,8 +1056,9 @@ class AppLocalizationsMs extends AppLocalizations {
   }
 
   @override
-  String get hijriEventsNote =>
-      'Tarikh mengikut kiraan takwim Ummul Qura, dianjakkan oleh tetapan tarikh Hijrah, dan mungkin berbeza sehari daripada pengumuman tempatan.';
+  String hijriEventsNote(Object calendar) {
+    return 'Tarikh mengikut kiraan takwim $calendar, dianjakkan oleh tetapan tarikh Hijrah, dan mungkin berbeza sehari daripada pengumuman tempatan.';
+  }
 
   @override
   String get hijriEventReminder => 'Peringatan hari kebesaran';

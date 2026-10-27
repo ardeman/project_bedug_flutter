@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bedug/core/utils/hijri_utils.dart';
 import 'package:bedug/features/hijri_events/hijri_events.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hijri/hijri_calendar.dart';
@@ -47,12 +48,49 @@ void main() {
     // Announced a day later than calculated: Eid comes the day after.
     final eid = _hijri(10, 1);
     final dayAfter = DateTime(eid.year, eid.month, eid.day + 1);
-    expect(events.on(eid, -1).map((e) => e.id), isEmpty);
-    expect(events.on(dayAfter, -1).map((e) => e.id), ['eid_al_fitr']);
+    expect(
+      events.on(eid, const HijriReckoning(adjustment: -1)).map((e) => e.id),
+      isEmpty,
+    );
+    expect(
+      events
+          .on(dayAfter, const HijriReckoning(adjustment: -1))
+          .map((e) => e.id),
+      ['eid_al_fitr'],
+    );
     final dayBefore = DateTime(eid.year, eid.month, eid.day - 1);
-    expect(events.on(dayBefore, 2).map((e) => e.id), isEmpty);
-    expect(events.on(dayBefore, 1).map((e) => e.id), ['eid_al_fitr']);
-    expect(events.upcoming(eid, count: 1, adjustment: -1).single.day, dayAfter);
+    expect(
+      events
+          .on(dayBefore, const HijriReckoning(adjustment: 2))
+          .map((e) => e.id),
+      isEmpty,
+    );
+    expect(
+      events
+          .on(dayBefore, const HijriReckoning(adjustment: 1))
+          .map((e) => e.id),
+      ['eid_al_fitr'],
+    );
+    expect(
+      events
+          .upcoming(
+            eid,
+            count: 1,
+            reckoning: const HijriReckoning(adjustment: -1),
+          )
+          .single
+          .day,
+      dayAfter,
+    );
+  });
+
+  test('the MABIMS calendar dates events by its own months', () {
+    // Kemenag's Eid al-Fitr 1447 came a day after Umm al-Qura's.
+    const mabims = HijriReckoning(source: HijriSource.mabims);
+    final ummAlQura = DateTime(2026, 3, 20), kemenag = DateTime(2026, 3, 21);
+    expect(events.on(ummAlQura).map((e) => e.id), ['eid_al_fitr']);
+    expect(events.on(ummAlQura, mabims).map((e) => e.id), isEmpty);
+    expect(events.on(kemenag, mabims).map((e) => e.id), ['eid_al_fitr']);
   });
 
   test('upcoming lists each run of days once, from its first day', () {

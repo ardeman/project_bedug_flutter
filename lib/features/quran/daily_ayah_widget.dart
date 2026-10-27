@@ -9,6 +9,7 @@ import 'package:material_ui/material_ui.dart';
 
 import '../../core/providers/locale_provider.dart';
 import '../../core/services/prayer_widget_service.dart';
+import '../../core/utils/hijri_utils.dart';
 import '../../generated/l10n/app_localizations.dart';
 import 'daily_ayah.dart';
 import 'quran.dart';
@@ -35,14 +36,14 @@ Map<String, Object> buildDailyAyahWidgetData({
   required AppLocalizations l10n,
   required DateTime now,
   required int themeMode,
-  int hijriAdjustment = 0,
+  HijriReckoning hijriReckoning = const HijriReckoning(),
 }) {
   final language = l10n.localeName;
   return {
     'days': [
       for (var i = 0; i < dailyAyahWidgetDays; i++)
         if (DateTime(now.year, now.month, now.day + i) case final day)
-          if (ayahs.pick(day, hijriAdjustment) case final pick)
+          if (ayahs.pick(day, hijriReckoning) case final pick)
             {
               'date': _dateKey(day),
               'link': dailyAyahWidgetUri(pick.ayah.ref).toString(),
@@ -113,8 +114,8 @@ final dailyAyahWidgetSyncProvider = Provider<void>((ref) {
   final index = ref.watch(quranIndexProvider).value;
   final locale = ref.watch(localeProvider);
   final themeMode = ref.watch(settingsProvider.select((s) => s.themeMode));
-  final hijriAdjustment = ref.watch(
-    settingsProvider.select((s) => s.hijriAdjustment),
+  final hijriReckoning = ref.watch(
+    settingsProvider.select((s) => s.hijriReckoning),
   );
   if (ayahs == null || index == null) return;
   void sync() => unawaited(
@@ -127,7 +128,7 @@ final dailyAyahWidgetSyncProvider = Provider<void>((ref) {
             l10n: lookupAppLocalizations(locale),
             now: clock.now(),
             themeMode: themeMode,
-            hijriAdjustment: hijriAdjustment,
+            hijriReckoning: hijriReckoning,
           ),
         ),
   );

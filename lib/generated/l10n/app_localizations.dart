@@ -384,6 +384,36 @@ abstract class AppLocalizations {
   /// **'−{count} hari'**
   String hijriAdjustmentEarlier(num count);
 
+  /// No description provided for @hijriSource.
+  ///
+  /// In id, this message translates to:
+  /// **'Kalender Hijriah'**
+  String get hijriSource;
+
+  /// No description provided for @hijriSourceUmmAlQura.
+  ///
+  /// In id, this message translates to:
+  /// **'Ummul Qura'**
+  String get hijriSourceUmmAlQura;
+
+  /// No description provided for @hijriSourceMabims.
+  ///
+  /// In id, this message translates to:
+  /// **'MABIMS'**
+  String get hijriSourceMabims;
+
+  /// No description provided for @hijriSourceUmmAlQuraSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Kalender resmi Arab Saudi'**
+  String get hijriSourceUmmAlQuraSubtitle;
+
+  /// No description provided for @hijriSourceMabimsSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Dihitung dengan kriteria MABIMS Kementerian Agama RI, juga dipakai di Malaysia, Brunei, dan Singapura'**
+  String get hijriSourceMabimsSubtitle;
+
   /// No description provided for @notifications.
   ///
   /// In id, this message translates to:
@@ -1953,8 +1983,8 @@ abstract class AppLocalizations {
   /// No description provided for @hijriEventsNote.
   ///
   /// In id, this message translates to:
-  /// **'Tanggal mengikuti perhitungan kalender Ummul Qura, digeser oleh pengaturan tanggal Hijriah, dan bisa berbeda sehari dari pengumuman setempat, seperti sidang isbat.'**
-  String get hijriEventsNote;
+  /// **'Tanggal mengikuti perhitungan kalender {calendar}, digeser oleh pengaturan tanggal Hijriah, dan bisa berbeda sehari dari pengumuman setempat, seperti sidang isbat.'**
+  String hijriEventsNote(Object calendar);
 
   /// No description provided for @hijriEventReminder.
   ///

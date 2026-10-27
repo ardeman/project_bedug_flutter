@@ -52,6 +52,11 @@
   "hijriAdjustmentNone": "As calculated",
   "hijriAdjustmentLater": "+{count} {count, plural, =1{day} other{days}}",
   "hijriAdjustmentEarlier": "−{count} {count, plural, =1{day} other{days}}",
+  "hijriSource": "Hijri calendar",
+  "hijriSourceUmmAlQura": "Umm al-Qura",
+  "hijriSourceMabims": "MABIMS",
+  "hijriSourceUmmAlQuraSubtitle": "Saudi Arabia's official calendar",
+  "hijriSourceMabimsSubtitle": "Calculated with the MABIMS criteria of Indonesia's Ministry of Religious Affairs, also used in Malaysia, Brunei and Singapore",
 
   "notifications": "Notifications",
   "allNotifications": "All notifications",
@@ -337,7 +342,7 @@
   "hijriEventsSubtitle": "Eids, holy days and the white days for the year ahead",
   "hijriEventsLoadError": "Couldn't load the Islamic events.",
   "hijriEventsWhen": "{count, plural, =0{Today} =1{Tomorrow} other{In {count} days}}",
-  "hijriEventsNote": "Dates follow the calculated Umm al-Qura calendar, moved by the Hijri date setting, and can be a day off local announcements.",
+  "hijriEventsNote": "Dates follow the calculated {calendar} calendar, moved by the Hijri date setting, and can be a day off local announcements.",
   "hijriEventReminder": "Event reminders",
   "hijriEventReminderSubtitle": "At Maghrib, the evening before holy days and the white days",
   "notifHijriEventTomorrow": "Tomorrow. Its Hijri day begins this evening."

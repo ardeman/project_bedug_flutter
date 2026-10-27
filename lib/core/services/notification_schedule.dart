@@ -1,3 +1,5 @@
+import '../utils/hijri_utils.dart';
+
 import 'package:adhan/adhan.dart';
 
 import '../../features/hijri_events/hijri_events.dart';
@@ -32,13 +34,13 @@ const maxScheduledNotifications = 64;
 
 /// Up to six days of alerts, the soonest first, capped at Apple's limit.
 /// Each date is calculated separately; prayer times must not repeat daily.
-/// Event reminders need [events], dated with [hijriAdjustment].
+/// Event reminders need [events], dated with [hijriReckoning].
 List<PrayerNotification> buildNotificationSchedule(
   PrayerTimes times,
   NotificationPreferences preferences,
   DateTime now, {
   HijriEvents? events,
-  int hijriAdjustment = 0,
+  HijriReckoning hijriReckoning = const HijriReckoning(),
 }) {
   if (!preferences.enabled) return const [];
   final alerts = PrayerAlert.values;
@@ -103,11 +105,11 @@ List<PrayerNotification> buildNotificationSchedule(
     if (events != null && preferences.includesEvents) {
       // A run of days, such as the white days, is announced once, before
       // its first day.
-      final today = events.on(date, hijriAdjustment).toSet();
+      final today = events.on(date, hijriReckoning).toSet();
       final starting = [
         for (final event in events.on(
           DateTime(date.year, date.month, date.day + 1),
-          hijriAdjustment,
+          hijriReckoning,
         ))
           if (!today.contains(event)) event,
       ];

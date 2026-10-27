@@ -171,6 +171,23 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get hijriSource => 'التقويم الهجري';
+
+  @override
+  String get hijriSourceUmmAlQura => 'أم القرى';
+
+  @override
+  String get hijriSourceMabims => 'MABIMS';
+
+  @override
+  String get hijriSourceUmmAlQuraSubtitle =>
+      'التقويم الرسمي للمملكة العربية السعودية';
+
+  @override
+  String get hijriSourceMabimsSubtitle =>
+      'محسوب وفق معايير MABIMS المعتمدة في إندونيسيا وماليزيا وبروناي وسنغافورة';
+
+  @override
   String get notifications => 'الإشعارات';
 
   @override
@@ -1061,8 +1078,9 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get hijriEventsNote =>
-      'التواريخ وفق تقويم أم القرى المحسوب، مع تعديل التاريخ الهجري من الإعدادات، وقد تختلف بيوم عن الإعلان المحلي.';
+  String hijriEventsNote(Object calendar) {
+    return 'التواريخ وفق تقويم $calendar المحسوب، مع تعديل التاريخ الهجري من الإعدادات، وقد تختلف بيوم عن الإعلان المحلي.';
+  }
 
   @override
   String get hijriEventReminder => 'تذكير بالمناسبات';

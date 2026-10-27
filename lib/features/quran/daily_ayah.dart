@@ -109,9 +109,12 @@ class DailyAyahs {
   }
 
   /// The ayah for the Gregorian [day]. An occasion that day comes first; on
-  /// other days the themes rotate. Hijri dates use the standard conversion
-  /// of the daytime date moved [hijriAdjustment] days ([hijriOf]).
-  DailyAyahPick pick(DateTime day, [int hijriAdjustment = 0]) {
+  /// other days the themes rotate. Hijri dates are the daytime date's under
+  /// [reckoning] ([hijriOf]).
+  DailyAyahPick pick(
+    DateTime day, [
+    HijriReckoning reckoning = const HijriReckoning(),
+  ]) {
     // Counting days in UTC keeps daylight saving from skipping or repeating
     // an ayah.
     final index = DateTime.utc(
@@ -119,7 +122,7 @@ class DailyAyahs {
       day.month,
       day.day,
     ).difference(DateTime.utc(1970)).inDays;
-    final hijri = hijriOf(day, hijriAdjustment);
+    final hijri = hijriOf(day, reckoning);
     DailyAyahGroup? occasion;
     for (final group in occasions) {
       if (!group.matches(day, hijri)) continue;
