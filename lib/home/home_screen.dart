@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../core/design/adaptive_scaffold.dart';
 import '../core/design/platform_capabilities.dart';
 import '../features/prayer_times/prayer_times_screen.dart';
+import '../features/quran/quran_screen.dart';
 import '../features/settings/settings_screen.dart';
 import '../features/worship/worship_screen.dart';
 import '../generated/l10n/app_localizations.dart';
@@ -42,6 +43,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         label: l10n.worship,
       ),
       AdaptiveNavigationDestination(
+        icon: PlatformCapabilities.isApple ? 'book' : Icons.menu_book_outlined,
+        selectedIcon: PlatformCapabilities.isApple
+            ? 'book.fill'
+            : Icons.menu_book,
+        label: l10n.quran,
+      ),
+      AdaptiveNavigationDestination(
         icon: PlatformCapabilities.isApple
             ? 'gearshape'
             : Icons.settings_outlined,
@@ -63,6 +71,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         children: [
           const PrayerTimesScreen(),
           WorshipScreen(isActive: _idx == 1),
+          const QuranScreen(),
           const SettingsScreen(),
         ],
       ),

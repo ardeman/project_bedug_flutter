@@ -290,5 +290,22 @@
   "dzikirEveningReminder": "Zikir petang",
   "dzikirReminderAfter": "{minutes} minit selepas {prayer}",
   "notifDzikirMorning": "Masa untuk membaca zikir pagi",
-  "notifDzikirEvening": "Masa untuk membaca zikir petang"
+  "notifDzikirEvening": "Masa untuk membaca zikir petang",
+  "quran": "Al-Quran",
+  "quranSurahs": "Surah",
+  "quranJuz": "Juz",
+  "quranBookmarks": "Penanda",
+  "quranLoadError": "Al-Quran gagal dimuatkan.",
+  "quranMeccan": "Makkiyah",
+  "quranMedinan": "Madaniyah",
+  "quranAyahCount": "{count} ayat",
+  "quranAyah": "Ayat {number}",
+  "quranJuzNumber": "Juz {number}",
+  "quranContinueReading": "Sambung membaca",
+  "quranNoBookmarks": "Belum ada penanda. Ketik ikon penanda pada ayat untuk menyimpannya.",
+  "quranAddBookmark": "Tandakan ayat",
+  "quranRemoveBookmark": "Buang penanda",
+  "quranTextSmaller": "Kecilkan teks",
+  "quranTextLarger": "Besarkan teks",
+  "quranNextSurah": "Surah seterusnya: {name}"
 }

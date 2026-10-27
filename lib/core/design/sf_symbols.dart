@@ -15,6 +15,8 @@ class SFSymbols {
       'clock' => Icons.access_time_outlined,
       'moon.stars.fill' => Icons.mosque,
       'moon.stars' => Icons.mosque_outlined,
+      'book.fill' => Icons.menu_book,
+      'book' => Icons.menu_book_outlined,
       'magnifyingglass' => Icons.search,
       'person.fill' => Icons.person,
       'person' => Icons.person_outline,

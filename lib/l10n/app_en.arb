@@ -291,5 +291,22 @@
   "dzikirEveningReminder": "Evening dzikir",
   "dzikirReminderAfter": "{minutes} minutes after {prayer}",
   "notifDzikirMorning": "Time for the morning dzikir",
-  "notifDzikirEvening": "Time for the evening dzikir"
+  "notifDzikirEvening": "Time for the evening dzikir",
+  "quran": "Quran",
+  "quranSurahs": "Surahs",
+  "quranJuz": "Juz",
+  "quranBookmarks": "Bookmarks",
+  "quranLoadError": "Couldn't load the Quran.",
+  "quranMeccan": "Meccan",
+  "quranMedinan": "Medinan",
+  "quranAyahCount": "{count} verses",
+  "quranAyah": "Verse {number}",
+  "quranJuzNumber": "Juz {number}",
+  "quranContinueReading": "Continue reading",
+  "quranNoBookmarks": "No bookmarks yet. Tap the bookmark icon on a verse to save it.",
+  "quranAddBookmark": "Bookmark verse",
+  "quranRemoveBookmark": "Remove bookmark",
+  "quranTextSmaller": "Smaller text",
+  "quranTextLarger": "Larger text",
+  "quranNextSurah": "Next surah: {name}"
 }

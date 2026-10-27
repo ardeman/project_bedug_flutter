@@ -290,5 +290,22 @@
   "dzikirEveningReminder": "أذكار المساء",
   "dzikirReminderAfter": "بعد {prayer} بـ{minutes} دقيقة",
   "notifDzikirMorning": "حان وقت أذكار الصباح",
-  "notifDzikirEvening": "حان وقت أذكار المساء"
+  "notifDzikirEvening": "حان وقت أذكار المساء",
+  "quran": "القرآن",
+  "quranSurahs": "السور",
+  "quranJuz": "الأجزاء",
+  "quranBookmarks": "العلامات",
+  "quranLoadError": "تعذّر تحميل القرآن.",
+  "quranMeccan": "مكية",
+  "quranMedinan": "مدنية",
+  "quranAyahCount": "{count} آية",
+  "quranAyah": "الآية {number}",
+  "quranJuzNumber": "الجزء {number}",
+  "quranContinueReading": "متابعة القراءة",
+  "quranNoBookmarks": "لا توجد علامات بعد. اضغط على أيقونة العلامة في آية لحفظها.",
+  "quranAddBookmark": "إضافة علامة",
+  "quranRemoveBookmark": "إزالة العلامة",
+  "quranTextSmaller": "تصغير النص",
+  "quranTextLarger": "تكبير النص",
+  "quranNextSurah": "السورة التالية: {name}"
 }

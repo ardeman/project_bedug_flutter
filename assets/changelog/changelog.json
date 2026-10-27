@@ -7,6 +7,15 @@
         {
           "type": "new",
           "text": {
+            "en": "A Quran tab: browse by surah or juz, read the Arabic with a translation, adjust the text size, bookmark verses and continue where you left off.",
+            "id": "Tab Al-Qur'an: telusuri per surah atau juz, baca teks Arab beserta terjemahannya, atur ukuran teks, tandai ayat, dan lanjutkan dari bacaan terakhir.",
+            "ms": "Tab Al-Quran: semak mengikut surah atau juz, baca teks Arab bersama terjemahannya, laraskan saiz teks, tandakan ayat dan sambung dari bacaan terakhir.",
+            "ar": "تبويب القرآن: تصفّح حسب السورة أو الجزء، واقرأ النص بالرسم العثماني، وغيّر حجم النص، وضع علامات على الآيات، وتابع من حيث توقفت."
+          }
+        },
+        {
+          "type": "new",
+          "text": {
             "en": "A counter on every dzikir: tap the card to count each recitation until the repeat is reached, and long-press to start over.",
             "id": "Penghitung pada setiap zikir: ketuk kartunya untuk menghitung setiap bacaan hingga jumlahnya tercapai, dan tekan lama untuk mengulang dari awal.",
             "ms": "Pengira pada setiap zikir: ketik kadnya untuk mengira setiap bacaan sehingga bilangannya dicapai, dan tekan lama untuk bermula semula.",

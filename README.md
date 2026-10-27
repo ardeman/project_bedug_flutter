@@ -90,6 +90,7 @@ Validation of the original layouts on 2026-10-21: on the connected iPhone 17 (iO
 | Check the adhan calculation from the command line | `dart run bin/check_adhan.dart` |
 | Regenerate the Android and Windows icons after editing `assets/branding/*.svg` (macOS) | `swift scripts/render_brand_icons.swift && dart run flutter_launcher_icons` |
 | Regenerate the Android notification icon after editing `assets/branding/icon_notification.svg` | `python3 scripts/generate_notification_icon.py` |
+| Rebuild the Quran text and translations from tanzil.net | `python3 scripts/build_quran_content.py` |
 | Edit the iOS and macOS icon (re-import any changed layer from `assets/branding/layers/`) | `open -a "Icon Composer" assets/branding/AppIcon.icon` |
 | Release build | `flutter build <apk\|appbundle\|ipa\|macos\|windows\|linux>` |
 | Build the landing page into `site/dist/` | `python3 site/build.py` |
@@ -137,6 +138,7 @@ lib/
     dzikir/          Dzikir collections and reader
     duas/            Daily duas by situation
     asmaul_husna/    The 99 names of Allah
+    quran/           Quran tab: surah, juz and bookmark lists, and the reader
     qibla/           Qibla compass card
     prayer/          Prayer card widget
     settings/        Settings screen
@@ -147,10 +149,10 @@ bin/                 Command-line helper scripts
 assets/branding/     App icon sources (SVG) and their 1024px renders
   AppIcon.icon/      Icon Composer icon for iOS and macOS
   layers/            Flat Icon Composer layers for the Apple icon
-assets/fonts/        Bundled brand font (Plus Jakarta Sans, OFL)
+assets/fonts/        Bundled fonts (Plus Jakarta Sans, and Amiri Quran for the Quran text; both OFL)
 assets/changelog/    Release notes in every language, shared by the app and the site
 site/                Landing page (bedug.ardeman.com), see "Website" below
-scripts/             Git hook scripts, icon renderer
+scripts/             Git hook scripts, icon renderer, Quran content builder
 .githooks/           Versioned Git hooks
 test/                Widget tests
 android/ ios/ macos/ windows/ linux/
@@ -213,7 +215,7 @@ Prayer tracking and prayer-progress features (completion logs, streaks and qada 
 
 **Phase 3: Quran**
 
-1. **Reader:** surah and juz lists, Arabic text with translation, adjustable font size, last-read position and bookmarks.
+1. **Reader (done; device visual checks pending):** a Quran tab with surah, juz and bookmark lists and a "continue reading" row. The reader shows one surah, opens at any ayah, and has the Arabic in the bundled Amiri Quran face with the app language's translation under it (none for Arabic), a text-size control, a bookmark on each ayah and the next surah at the end; the ayah at the top of the screen is saved as the last-read position. `scripts/build_quran_content.py` writes `assets/content/quran/` from tanzil.net: the Uthmani text (CC BY 3.0, verbatim, with its notice), Kemenag's Indonesian, Saheeh International's English and Basmeih's Malay translations, and the surah and juz metadata, with Kemenag's transliterated surah names for Indonesian and Malay. Tanzil opens each first ayah with the basmala, so the reader moves it into the surah's heading. Last-read, bookmarks and text size live in `shared_preferences`. Unlike other content, the text and each translation are separate files, because together they are about 5 MB and only one translation is read at a time. **Open:** Tanzil marks its translations for non-commercial use, so each translator's or publisher's permission is needed before an ad-supported release.
 2. **Khatam planner:** pick a finish date, get a daily target, track progress.
 3. **Ayah of the day** on the prayer-times screen and in the widget.
 4. **Audio recitation (later):** streamed per ayah with download for offline use; needs a source and a storage budget first.
@@ -231,12 +233,11 @@ Prayer tracking and prayer-progress features (completion logs, streaks and qada 
 2. **Nearby mosques:** needs a maps or places provider, so it waits on a cost and privacy review.
 3. **Optional backup and sync** of bookmarks and reading history across devices.
 
-**Navigation.** Three tabs can't hold this. Phase 1 adds a **Worship** tab (Qibla, and later dzikir and dua); Phase 3 adds a **Quran** tab, giving five: Prayer times, Worship, Quran, Calendar, Settings.
+**Navigation.** Three tabs can't hold this. Phase 1 adds a **Worship** tab (Qibla, and later dzikir and dua); Phase 3 adds a **Quran** tab (done), giving four: Prayer times, Worship, Quran, Settings, and a Calendar tab later makes five.
 
 **Open decisions**
 
-- Choose storage for Quran bookmarks and reading history before Phase 3.
-- Content sources and licenses for each language's Quran translation, duas and dzikir.
+- Licenses for each language's Quran translation (Kemenag, Saheeh International, Basmeih), duas and dzikir.
 - Whether Phase 1 ships as one release or feature by feature.
 
 ### Linux: follow the desktop environment

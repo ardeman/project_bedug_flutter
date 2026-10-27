@@ -859,4 +859,64 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get notifDzikirEvening => 'Masa untuk membaca zikir petang';
+
+  @override
+  String get quran => 'Al-Quran';
+
+  @override
+  String get quranSurahs => 'Surah';
+
+  @override
+  String get quranJuz => 'Juz';
+
+  @override
+  String get quranBookmarks => 'Penanda';
+
+  @override
+  String get quranLoadError => 'Al-Quran gagal dimuatkan.';
+
+  @override
+  String get quranMeccan => 'Makkiyah';
+
+  @override
+  String get quranMedinan => 'Madaniyah';
+
+  @override
+  String quranAyahCount(int count) {
+    return '$count ayat';
+  }
+
+  @override
+  String quranAyah(int number) {
+    return 'Ayat $number';
+  }
+
+  @override
+  String quranJuzNumber(int number) {
+    return 'Juz $number';
+  }
+
+  @override
+  String get quranContinueReading => 'Sambung membaca';
+
+  @override
+  String get quranNoBookmarks =>
+      'Belum ada penanda. Ketik ikon penanda pada ayat untuk menyimpannya.';
+
+  @override
+  String get quranAddBookmark => 'Tandakan ayat';
+
+  @override
+  String get quranRemoveBookmark => 'Buang penanda';
+
+  @override
+  String get quranTextSmaller => 'Kecilkan teks';
+
+  @override
+  String get quranTextLarger => 'Besarkan teks';
+
+  @override
+  String quranNextSurah(String name) {
+    return 'Surah seterusnya: $name';
+  }
 }

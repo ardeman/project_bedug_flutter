@@ -469,5 +469,26 @@
     "placeholders": {"minutes": {"type": "int"}, "prayer": {"type": "String"}}
   },
   "notifDzikirMorning": "Saatnya membaca zikir pagi",
-  "notifDzikirEvening": "Saatnya membaca zikir petang"
+  "notifDzikirEvening": "Saatnya membaca zikir petang",
+  "quran": "Al-Qur'an",
+  "quranSurahs": "Surah",
+  "quranJuz": "Juz",
+  "quranBookmarks": "Penanda",
+  "quranLoadError": "Al-Qur'an gagal dimuat.",
+  "quranMeccan": "Makkiyah",
+  "quranMedinan": "Madaniyah",
+  "quranAyahCount": "{count} ayat",
+  "@quranAyahCount": {"placeholders": {"count": {"type": "int"}}},
+  "quranAyah": "Ayat {number}",
+  "@quranAyah": {"placeholders": {"number": {"type": "int"}}},
+  "quranJuzNumber": "Juz {number}",
+  "@quranJuzNumber": {"placeholders": {"number": {"type": "int"}}},
+  "quranContinueReading": "Lanjutkan membaca",
+  "quranNoBookmarks": "Belum ada penanda. Ketuk ikon penanda pada ayat untuk menyimpannya.",
+  "quranAddBookmark": "Tandai ayat",
+  "quranRemoveBookmark": "Hapus penanda",
+  "quranTextSmaller": "Perkecil teks",
+  "quranTextLarger": "Perbesar teks",
+  "quranNextSurah": "Surah berikutnya: {name}",
+  "@quranNextSurah": {"placeholders": {"name": {"type": "String"}}}
 }

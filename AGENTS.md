@@ -132,3 +132,5 @@ Record architectural choices here as one line each: date, decision, reason.
 - 2026-10-27: Dzikir comes in selectable collections, each one JSON file under `assets/content/dzikir/` with the Arabic once and every translation inline, so users follow the collection they practise and a new one is data, not code.
 
 - 2026-10-27: Dzikir cards count recitations themselves (tap to count, long-press to reset, kept only while the screen is open) instead of a separate tasbih screen, back in scope after 2026-10-21, so counting follows the text being read and needs no stored worship data.
+
+- 2026-10-27: The Quran comes from Tanzil (Uthmani text, verbatim, and its hosted translations), built into `assets/content/quran/` by `scripts/build_quran_content.py` with the text and each translation in separate files, and set in the bundled Amiri Quran font; reading position, bookmarks and text size stay in `shared_preferences`, so the reader is offline, private and loads only the translation it shows.

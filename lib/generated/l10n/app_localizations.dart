@@ -1679,6 +1679,108 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Saatnya membaca zikir petang'**
   String get notifDzikirEvening;
+
+  /// No description provided for @quran.
+  ///
+  /// In id, this message translates to:
+  /// **'Al-Qur\'an'**
+  String get quran;
+
+  /// No description provided for @quranSurahs.
+  ///
+  /// In id, this message translates to:
+  /// **'Surah'**
+  String get quranSurahs;
+
+  /// No description provided for @quranJuz.
+  ///
+  /// In id, this message translates to:
+  /// **'Juz'**
+  String get quranJuz;
+
+  /// No description provided for @quranBookmarks.
+  ///
+  /// In id, this message translates to:
+  /// **'Penanda'**
+  String get quranBookmarks;
+
+  /// No description provided for @quranLoadError.
+  ///
+  /// In id, this message translates to:
+  /// **'Al-Qur\'an gagal dimuat.'**
+  String get quranLoadError;
+
+  /// No description provided for @quranMeccan.
+  ///
+  /// In id, this message translates to:
+  /// **'Makkiyah'**
+  String get quranMeccan;
+
+  /// No description provided for @quranMedinan.
+  ///
+  /// In id, this message translates to:
+  /// **'Madaniyah'**
+  String get quranMedinan;
+
+  /// No description provided for @quranAyahCount.
+  ///
+  /// In id, this message translates to:
+  /// **'{count} ayat'**
+  String quranAyahCount(int count);
+
+  /// No description provided for @quranAyah.
+  ///
+  /// In id, this message translates to:
+  /// **'Ayat {number}'**
+  String quranAyah(int number);
+
+  /// No description provided for @quranJuzNumber.
+  ///
+  /// In id, this message translates to:
+  /// **'Juz {number}'**
+  String quranJuzNumber(int number);
+
+  /// No description provided for @quranContinueReading.
+  ///
+  /// In id, this message translates to:
+  /// **'Lanjutkan membaca'**
+  String get quranContinueReading;
+
+  /// No description provided for @quranNoBookmarks.
+  ///
+  /// In id, this message translates to:
+  /// **'Belum ada penanda. Ketuk ikon penanda pada ayat untuk menyimpannya.'**
+  String get quranNoBookmarks;
+
+  /// No description provided for @quranAddBookmark.
+  ///
+  /// In id, this message translates to:
+  /// **'Tandai ayat'**
+  String get quranAddBookmark;
+
+  /// No description provided for @quranRemoveBookmark.
+  ///
+  /// In id, this message translates to:
+  /// **'Hapus penanda'**
+  String get quranRemoveBookmark;
+
+  /// No description provided for @quranTextSmaller.
+  ///
+  /// In id, this message translates to:
+  /// **'Perkecil teks'**
+  String get quranTextSmaller;
+
+  /// No description provided for @quranTextLarger.
+  ///
+  /// In id, this message translates to:
+  /// **'Perbesar teks'**
+  String get quranTextLarger;
+
+  /// No description provided for @quranNextSurah.
+  ///
+  /// In id, this message translates to:
+  /// **'Surah berikutnya: {name}'**
+  String quranNextSurah(String name);
 }
 
 class _AppLocalizationsDelegate

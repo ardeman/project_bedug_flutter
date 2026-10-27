@@ -856,4 +856,64 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get notifDzikirEvening => 'Time for the evening dzikir';
+
+  @override
+  String get quran => 'Quran';
+
+  @override
+  String get quranSurahs => 'Surahs';
+
+  @override
+  String get quranJuz => 'Juz';
+
+  @override
+  String get quranBookmarks => 'Bookmarks';
+
+  @override
+  String get quranLoadError => 'Couldn\'t load the Quran.';
+
+  @override
+  String get quranMeccan => 'Meccan';
+
+  @override
+  String get quranMedinan => 'Medinan';
+
+  @override
+  String quranAyahCount(int count) {
+    return '$count verses';
+  }
+
+  @override
+  String quranAyah(int number) {
+    return 'Verse $number';
+  }
+
+  @override
+  String quranJuzNumber(int number) {
+    return 'Juz $number';
+  }
+
+  @override
+  String get quranContinueReading => 'Continue reading';
+
+  @override
+  String get quranNoBookmarks =>
+      'No bookmarks yet. Tap the bookmark icon on a verse to save it.';
+
+  @override
+  String get quranAddBookmark => 'Bookmark verse';
+
+  @override
+  String get quranRemoveBookmark => 'Remove bookmark';
+
+  @override
+  String get quranTextSmaller => 'Smaller text';
+
+  @override
+  String get quranTextLarger => 'Larger text';
+
+  @override
+  String quranNextSurah(String name) {
+    return 'Next surah: $name';
+  }
 }
