@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:flutter/foundation.dart' show ValueListenable;
+import 'package:flutter/services.dart' show SystemUiOverlayStyle;
 import 'package:adhan/adhan.dart';
 import 'package:clock/clock.dart';
 import 'package:intl/intl.dart' show DateFormat;
@@ -840,264 +841,275 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
         ? onSurface
         : Colors.white;
     final actionColor = Color.lerp(heroActionColor, onSurface, progress)!;
+    // The status bar (on the right of a folding iPhone) sits on the hero too,
+    // so its time and icons follow the action color.
+    final statusBarStyle =
+        ThemeData.estimateBrightnessForColor(actionColor) == Brightness.light
+        ? SystemUiOverlayStyle.light
+        : SystemUiOverlayStyle.dark;
 
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        // Hero background, fading out as the bar collapses. Rounded at the
-        // bottom, so it reads as a card the list scrolls up under.
-        IgnorePointer(
-          child: Opacity(
-            opacity: 1 - progress,
-            child: ClipRRect(
-              borderRadius: const BorderRadius.vertical(
-                bottom: Radius.circular(AppRadii.xl),
-              ),
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  DecoratedBox(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          AppColors.accentOf(ctx)
-                              .withValues(alpha: isDark ? 0.9 : 1),
-                          AppColors.secondaryOf(ctx)
-                              .withValues(alpha: isDark ? 0.9 : 1),
-                        ],
-                      ),
-                    ),
-                  ),
-                  // A soft light from the top right, for depth.
-                  DecoratedBox(
-                    decoration: BoxDecoration(
-                      gradient: RadialGradient(
-                        center: Alignment.topRight,
-                        radius: 1.2,
-                        colors: [
-                          Colors.white.withValues(alpha: 0.16),
-                          Colors.white.withValues(alpha: 0),
-                        ],
-                      ),
-                    ),
-                  ),
-                  PositionedDirectional(
-                    end: -_BedugWatermark.size * 0.2,
-                    bottom: -_BedugWatermark.size * 0.25,
-                    child: const _BedugWatermark(),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        // Scroll edge: keeps the floating glass legible over the list.
-        IgnorePointer(
-          child: Opacity(
-            opacity: collapsedProgress,
-            child: LiquidGlassScrollEdge(
-              edge: LiquidGlassEdge.top,
-              color: theme.scaffoldBackgroundColor.withValues(alpha: 0.85),
-            ),
-          ),
-        ),
-        SafeArea(
-          bottom: false,
-          child: LayoutBuilder(
-            builder: (_, area) => Stack(
-              children: [
-                // Expanded layout: the location on the buttons' row, then the
-                // next prayer, left aligned under it. The location, the name
-                // and the countdown pill are hidden copies that hold their
-                // places; the moving layer below draws them.
-                IgnorePointer(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      // Lifted with the action buttons so the location stays
-                      // centered on their row.
-                      Transform.translate(
-                        offset: Offset(0, -iosPortraitLift),
-                        child: SizedBox(
-                          height: kToolbarHeight,
-                          // Physical sides, like the collapsed capsule: the
-                          // window controls stay left and the actions right
-                          // in either text direction.
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                              left: AppSpacing.md + windowControlsInset,
-                              right: actionAreaWidth,
-                            ),
-                            child: Row(
-                              children: [
-                                Opacity(
-                                  opacity: expandedFade,
-                                  child: Icon(
-                                    Icons.location_on,
-                                    size: _locationIconSize,
-                                    color: Colors.white.withValues(alpha: 0.85),
-                                  ),
-                                ),
-                                const SizedBox(width: AppSpacing.xxs),
-                                Flexible(
-                                  child: Visibility.maintain(
-                                    visible: false,
-                                    child: Text(
-                                      locationLabel,
-                                      key: const ValueKey('location-hero'),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: _locationStyle(
-                                        ctx,
-                                        expanded: true,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        // Collapsing slides the block up under the location
-                        // row instead of squeezing it.
-                        child: ClipRect(
-                          child: OverflowBox(
-                            alignment: AlignmentDirectional.bottomStart,
-                            minHeight: 0,
-                            maxHeight: double.infinity,
-                            child: _heroBody(
-                              ctx,
-                              compact: heroCompact,
-                              fade: expandedFade,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: statusBarStyle,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          // Hero background, fading out as the bar collapses. Rounded at the
+          // bottom, so it reads as a card the list scrolls up under.
+          IgnorePointer(
+            child: Opacity(
+              opacity: 1 - progress,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.vertical(
+                  bottom: Radius.circular(AppRadii.xl),
                 ),
-                // Collapsed layout: the title capsule on the same row as the
-                // collapsed action buttons, so their centers line up. Also
-                // hidden copies; the moving layer lands on them.
-                Positioned(
-                  top: collapsedRowTop,
-                  left: 0,
-                  right: 0,
-                  height: kToolbarHeight,
-                  child: IgnorePointer(
-                    child: Visibility.maintain(
-                      visible: false,
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            left: AppSpacing.md + windowControlsInset,
-                            right: actionAreaWidth,
-                          ),
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            AppColors.accentOf(ctx)
+                                .withValues(alpha: isDark ? 0.9 : 1),
+                            AppColors.secondaryOf(ctx)
+                                .withValues(alpha: isDark ? 0.9 : 1),
+                          ],
+                        ),
+                      ),
+                    ),
+                    // A soft light from the top right, for depth.
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: RadialGradient(
+                          center: Alignment.topRight,
+                          radius: 1.2,
+                          colors: [
+                            Colors.white.withValues(alpha: 0.16),
+                            Colors.white.withValues(alpha: 0),
+                          ],
+                        ),
+                      ),
+                    ),
+                    PositionedDirectional(
+                      end: -_BedugWatermark.size * 0.2,
+                      bottom: -_BedugWatermark.size * 0.25,
+                      child: const _BedugWatermark(),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          // Scroll edge: keeps the floating glass legible over the list.
+          IgnorePointer(
+            child: Opacity(
+              opacity: collapsedProgress,
+              child: LiquidGlassScrollEdge(
+                edge: LiquidGlassEdge.top,
+                color: theme.scaffoldBackgroundColor.withValues(alpha: 0.85),
+              ),
+            ),
+          ),
+          SafeArea(
+            bottom: false,
+            child: LayoutBuilder(
+              builder: (_, area) => Stack(
+                children: [
+                  // Expanded layout: the location on the buttons' row, then the
+                  // next prayer, left aligned under it. The location, the name
+                  // and the countdown pill are hidden copies that hold their
+                  // places; the moving layer below draws them.
+                  IgnorePointer(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        // Lifted with the action buttons so the location stays
+                        // centered on their row.
+                        Transform.translate(
+                          offset: Offset(0, -iosPortraitLift),
                           child: SizedBox(
-                            key: const ValueKey('pill-capsule'),
-                            height: _capsuleHeight,
+                            height: kToolbarHeight,
+                            // Physical sides, like the collapsed capsule: the
+                            // window controls stay left and the actions right
+                            // in either text direction.
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: AppSpacing.md,
+                              padding: EdgeInsets.only(
+                                left: AppSpacing.md + windowControlsInset,
+                                right: actionAreaWidth,
                               ),
                               child: Row(
                                 children: [
-                                  Expanded(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          locationLabel,
-                                          key: const ValueKey(
-                                            'location-capsule',
-                                          ),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: _locationStyle(
-                                            ctx,
-                                            expanded: false,
-                                          ),
-                                        ),
-                                        Text(
-                                          nextName,
-                                          key: const ValueKey('name-capsule'),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: _nameStyle(
-                                            ctx,
-                                            expanded: false,
-                                          ),
-                                        ),
-                                      ],
+                                  Opacity(
+                                    opacity: expandedFade,
+                                    child: Icon(
+                                      Icons.location_on,
+                                      size: _locationIconSize,
+                                      color: Colors.white.withValues(
+                                        alpha: 0.85,
+                                      ),
                                     ),
                                   ),
-                                  const SizedBox(width: AppSpacing.xs),
-                                  ValueListenableBuilder<Duration>(
-                                    valueListenable: remaining,
-                                    builder: (_, value, _) => value.isNegative
-                                        ? const SizedBox()
-                                        : Text(
-                                            _formatCountdown(value),
-                                            key: const ValueKey(
-                                              'countdown-capsule',
-                                            ),
-                                            style: _collapsedCountdownStyle(
-                                              ctx,
-                                            ),
-                                          ),
+                                  const SizedBox(width: AppSpacing.xxs),
+                                  Flexible(
+                                    child: Visibility.maintain(
+                                      visible: false,
+                                      child: Text(
+                                        locationLabel,
+                                        key: const ValueKey('location-hero'),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: _locationStyle(
+                                          ctx,
+                                          expanded: true,
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned.fill(
-                  child: _movingLayer(
-                    ctx,
-                    area.biggest,
-                    progress: progress,
-                    collapsedProgress: collapsedProgress,
-                    expandedFade: expandedFade,
-                    compact: heroCompact,
-                    collapsedRowTop: collapsedRowTop,
-                    iosPortraitLift: iosPortraitLift,
-                    actionAreaWidth: actionAreaWidth,
-                  ),
-                ),
-                // Actions, last so they stay on top and tappable
-                Positioned(
-                  top: actionTop - iosPortraitLift,
-                  right: AppSpacing.sm,
-                  child: SizedBox(
-                    height: kToolbarHeight,
-                    child: Row(
-                      children: [
-                        _GlassIconButton(
-                          icon: Icons.refresh,
-                          onTap: onRefresh,
-                          color: actionColor,
+                        Expanded(
+                          // Collapsing slides the block up under the location
+                          // row instead of squeezing it.
+                          child: ClipRect(
+                            child: OverflowBox(
+                              alignment: AlignmentDirectional.bottomStart,
+                              minHeight: 0,
+                              maxHeight: double.infinity,
+                              child: _heroBody(
+                                ctx,
+                                compact: heroCompact,
+                                fade: expandedFade,
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),
                   ),
-                ),
-              ],
+                  // Collapsed layout: the title capsule on the same row as the
+                  // collapsed action buttons, so their centers line up. Also
+                  // hidden copies; the moving layer lands on them.
+                  Positioned(
+                    top: collapsedRowTop,
+                    left: 0,
+                    right: 0,
+                    height: kToolbarHeight,
+                    child: IgnorePointer(
+                      child: Visibility.maintain(
+                        visible: false,
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              left: AppSpacing.md + windowControlsInset,
+                              right: actionAreaWidth,
+                            ),
+                            child: SizedBox(
+                              key: const ValueKey('pill-capsule'),
+                              height: _capsuleHeight,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: AppSpacing.md,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            locationLabel,
+                                            key: const ValueKey(
+                                              'location-capsule',
+                                            ),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: _locationStyle(
+                                              ctx,
+                                              expanded: false,
+                                            ),
+                                          ),
+                                          Text(
+                                            nextName,
+                                            key: const ValueKey('name-capsule'),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: _nameStyle(
+                                              ctx,
+                                              expanded: false,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(width: AppSpacing.xs),
+                                    ValueListenableBuilder<Duration>(
+                                      valueListenable: remaining,
+                                      builder: (_, value, _) => value.isNegative
+                                          ? const SizedBox()
+                                          : Text(
+                                              _formatCountdown(value),
+                                              key: const ValueKey(
+                                                'countdown-capsule',
+                                              ),
+                                              style: _collapsedCountdownStyle(
+                                                ctx,
+                                              ),
+                                            ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned.fill(
+                    child: _movingLayer(
+                      ctx,
+                      area.biggest,
+                      progress: progress,
+                      collapsedProgress: collapsedProgress,
+                      expandedFade: expandedFade,
+                      compact: heroCompact,
+                      collapsedRowTop: collapsedRowTop,
+                      iosPortraitLift: iosPortraitLift,
+                      actionAreaWidth: actionAreaWidth,
+                    ),
+                  ),
+                  // Actions, last so they stay on top and tappable
+                  Positioned(
+                    top: actionTop - iosPortraitLift,
+                    right: AppSpacing.sm,
+                    child: SizedBox(
+                      height: kToolbarHeight,
+                      child: Row(
+                        children: [
+                          _GlassIconButton(
+                            icon: Icons.refresh,
+                            onTap: onRefresh,
+                            color: actionColor,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -1658,6 +1670,10 @@ class _LiquidGlassCard extends StatelessWidget {
                 const SizedBox(width: AppSpacing.sm),
                 Text(
                   timeStr,
+                  // Already the card's largest text; at full accessibility
+                  // sizes it would push the row out of a narrow window.
+                  textScaler: MediaQuery.textScalerOf(ctx)
+                      .clamp(maxScaleFactor: 1.5),
                   style: theme.textTheme.titleLarge?.copyWith(
                     fontFeatures: const [FontFeature.tabularFigures()],
                     color: isNext

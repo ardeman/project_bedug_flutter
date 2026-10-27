@@ -108,8 +108,11 @@ class AdaptiveScaffold extends StatelessWidget {
               onDestinationSelected: onDestinationSelected,
               // Side-by-side icon and label items need room for the longest
               // label (such as "Waktu Salat") and its padding; the package's
-              // fixed 600 breakpoint overflows with four tabs.
-              wideBreakpoint: destinations.length * _wideDestinationWidth,
+              // fixed 600 breakpoint overflows with four tabs. Larger text
+              // needs proportionally more room.
+              wideBreakpoint:
+                  destinations.length *
+                  MediaQuery.textScalerOf(ctx).scale(_wideDestinationWidth),
               destinations: [
                 for (final d in destinations)
                   M3ENavigationBarDestination(

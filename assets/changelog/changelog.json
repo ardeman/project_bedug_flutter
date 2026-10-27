@@ -7,6 +7,15 @@
         {
           "type": "fixed",
           "text": {
+            "en": "With larger text sizes, the tab bar and prayer times no longer spill off narrow or landscape screens. On iPhone, including foldable iPhones, the time and status icons stay readable over the green Prayer Times header.",
+            "id": "Dengan ukuran teks yang lebih besar, bilah tab dan waktu salat tidak lagi meluber di layar sempit atau mendatar. Di iPhone, termasuk iPhone lipat, jam dan ikon status tetap terbaca di atas kepala Waktu Salat yang hijau.",
+            "ms": "Dengan saiz teks yang lebih besar, bar tab dan waktu solat tidak lagi melimpah pada skrin sempit atau melintang. Pada iPhone, termasuk iPhone boleh lipat, jam dan ikon status kekal jelas di atas pengepala Waktu Solat yang hijau.",
+            "ar": "مع أحجام النص الأكبر، لم يعد شريط التبويبات ومواقيت الصلاة يتجاوزان حدود الشاشات الضيقة أو الأفقية. وعلى iPhone، بما في ذلك أجهزة iPhone القابلة للطي، تبقى الساعة وأيقونات الحالة واضحة فوق ترويسة مواقيت الصلاة الخضراء."
+          }
+        },
+        {
+          "type": "fixed",
+          "text": {
             "en": "After you change the app language, a detected location's name switches to the new language right away instead of waiting for a refresh.",
             "id": "Setelah bahasa aplikasi diganti, nama lokasi yang terdeteksi langsung berganti ke bahasa baru tanpa menunggu dimuat ulang.",
             "ms": "Selepas bahasa aplikasi ditukar, nama lokasi yang dikesan terus bertukar kepada bahasa baharu tanpa menunggu dimuat semula.",

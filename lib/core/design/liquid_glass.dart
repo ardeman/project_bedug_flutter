@@ -106,6 +106,10 @@ class GlassNavBar extends StatelessWidget {
   static double heightOf(BuildContext ctx) =>
       _isCompact(ctx) ? compactHeight : height;
 
+  /// Largest text scale whose label still fits under the icon, even in
+  /// the [compactHeight] bar.
+  static const _maxLabelTextScale = 1.1;
+
   /// Widest the bar grows on tablets and desktop windows.
   static const _maxWidth = 440.0;
 
@@ -134,6 +138,7 @@ class GlassNavBar extends StatelessWidget {
     final mq = MediaQuery.of(ctx);
     final width = math.min(mq.size.width - AppSpacing.md * 2, _maxWidth);
     final bottomGap = _bottomGapOf(ctx);
+    final compact = _isCompact(ctx);
     final direction = Directionality.of(ctx);
     final isRtl = direction == TextDirection.rtl;
     final visualItems = isRtl ? items.reversed : items;
@@ -158,6 +163,11 @@ class GlassNavBar extends StatelessWidget {
                 labelBuilder: (_, l) => Text(
                   l.text ?? '',
                   textDirection: direction,
+                  // The bar has no room for enlarged text; like the native
+                  // tab bar, its labels stop growing with Dynamic Type.
+                  textScaler: mq.textScaler.clamp(
+                    maxScaleFactor: _maxLabelTextScale,
+                  ),
                   style: theme.textTheme.labelSmall?.copyWith(
                     color: l.textStyle.color,
                   ),
@@ -179,7 +189,7 @@ class GlassNavBar extends StatelessWidget {
             unselectedColor: theme.colorScheme.onSurface.withValues(
               alpha: 0.62,
             ),
-            iconSize: _isCompact(ctx)
+            iconSize: compact
                 ? AppControlSizes.toolbarIcon
                 : AppControlSizes.navigationIcon,
             labelFontSize: theme.textTheme.labelSmall!.fontSize!,
