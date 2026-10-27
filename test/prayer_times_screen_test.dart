@@ -349,6 +349,71 @@ void main() {
     await tester.pumpAndSettle();
     expectLanded('capsule');
   }, variant: TargetPlatformVariant.only(TargetPlatform.macOS));
+
+  for (final locale in ['en', 'ar']) {
+    testWidgets('a long place in the glass header clears refresh in $locale', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues({});
+      final prefs = await SharedPreferences.getInstance();
+      tester.view.physicalSize = const Size(393, 852);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+
+      final times = PrayerTimes.today(
+        Coordinates(-6.2088, 106.8456),
+        CalculationMethod.singapore.getParameters(),
+      );
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            sharedPreferencesProvider.overrideWithValue(prefs),
+            prayerProvider.overrideWith(
+              () => _FakePrayerNotifier(
+                PrayerState(
+                  times: times,
+                  locationLabel:
+                      'Kecamatan Pagedangan, Kabupaten Tangerang, Banten',
+                  loading: false,
+                ),
+              ),
+            ),
+          ],
+          child: MaterialApp(
+            locale: Locale(locale),
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+              ...AppLocalizations.localizationsDelegates,
+            ],
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: const PrayerTimesScreen(),
+          ),
+        ),
+      );
+      await tester.pump();
+
+      final location = tester.getRect(
+        find.byKey(const ValueKey('location-moving')),
+      );
+      final refresh = tester.getRect(find.byIcon(Icons.refresh));
+      expect(location.overlaps(refresh), isFalse);
+      expect(
+        location,
+        _rectCloseTo(
+          tester.getRect(find.byKey(const ValueKey('location-hero'))),
+        ),
+      );
+      final pin = tester.getRect(find.byIcon(Icons.location_on));
+      expect(pin.overlaps(refresh), isFalse);
+      expect(
+        locale == 'ar' ? pin.left : pin.right,
+        locale == 'ar'
+            ? greaterThanOrEqualTo(location.right)
+            : lessThanOrEqualTo(location.left),
+      );
+    }, variant: TargetPlatformVariant.only(TargetPlatform.iOS));
+  }
 }
 
 Matcher _rectCloseTo(Rect expected) => isA<Rect>()

@@ -922,10 +922,13 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
                         offset: Offset(0, -iosPortraitLift),
                         child: SizedBox(
                           height: kToolbarHeight,
+                          // Physical sides, like the collapsed capsule: the
+                          // window controls stay left and the actions right
+                          // in either text direction.
                           child: Padding(
-                            padding: EdgeInsetsDirectional.only(
-                              start: AppSpacing.md + windowControlsInset,
-                              end: actionAreaWidth,
+                            padding: EdgeInsets.only(
+                              left: AppSpacing.md + windowControlsInset,
+                              right: actionAreaWidth,
                             ),
                             child: Row(
                               children: [
@@ -1244,18 +1247,20 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
         ? capsuleRight - AppSpacing.md - width
         : capsuleLeft + AppSpacing.md;
 
-    // The location, after the pin on the buttons' row.
-    final locationInset =
-        AppSpacing.md +
-        windowControlsInset +
-        _locationIconSize +
-        AppSpacing.xxs;
-    final locationStartRoom = area.width - locationInset - actionAreaWidth;
+    // The location, after the pin on the buttons' row, between the window
+    // controls on the left and the actions on the right.
+    final locationLeft = AppSpacing.md + windowControlsInset;
+    final locationRight = area.width - actionAreaWidth;
+    const pinRoom = _locationIconSize + AppSpacing.xxs;
+    final locationStartRoom = locationRight - locationLeft - pinRoom;
     final locationStartSize = measure(
       locationLabel,
       locationStart,
       locationStartRoom,
     );
+    final locationStartLeft = isRtl
+        ? locationRight - pinRoom - locationStartSize.width
+        : locationLeft + pinRoom;
 
     return ValueListenableBuilder<Duration>(
       valueListenable: remaining,
@@ -1354,7 +1359,7 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
                 locationLabel,
                 const ValueKey('location-moving'),
                 Rect.fromLTWH(
-                  fromStart(locationInset, locationStartSize.width),
+                  locationStartLeft,
                   (kToolbarHeight - locationStartSize.height) / 2 -
                       iosPortraitLift,
                   locationStartSize.width,
