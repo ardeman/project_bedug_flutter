@@ -3,7 +3,7 @@
 A cross-platform Muslim prayer times app with a Hijri calendar, in Indonesian, English, Arabic and Malay.
 
 - **Prayer times** from Kemenag RI by default, or one of several global calculation methods, with a live countdown to the next prayer and adhan notifications.
-- **Hijri calendar** view.
+- **Hijri calendar** view, following Umm al-Qura or MABIMS (Kemenag) and adjustable to local announcements.
 - **Location** from GPS (auto detect) or a city picked in Settings.
 - **Adaptive design:** Liquid Glass on iOS and macOS, Material 3 Expressive on Android and other Linux desktops (Adwaita/Breeze on GNOME/KDE), a Fluent-style layout on Windows.
 
@@ -131,7 +131,7 @@ lib/
     providers/       localeProvider, settingsProvider, systemAccentProvider
     theme/           buildAppTheme, BrandColors (accent from the theme), AppSpacing / AppRadii tokens
     services/        Prayer times, Kemenag method, notifications
-    utils/           Hijri helpers
+    utils/           Hijri helpers, MABIMS calendar and sun/moon positions (Meeus), Qibla
     widgets/         Shared widgets (calculation method picker, recitation card)
   features/
     prayer_times/    Prayer times screen, day picker and Hijri month grid
@@ -390,7 +390,7 @@ macOS uses the same bundle ID; add it in App Store Connect with **+** next to th
 | --- | --- |
 | State management | `flutter_riverpod` |
 | Prayer times | `adhan` |
-| Hijri calendar | `hijri` |
+| Hijri calendar | `hijri` (Umm al-Qura); MABIMS calculated in-app |
 | Location | `geolocator`, `geocoding` |
 | Notifications | `flutter_local_notifications` |
 | Liquid Glass | `liquid_glass_easy` |
