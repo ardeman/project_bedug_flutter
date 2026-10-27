@@ -46,6 +46,39 @@ void main() {
     );
   });
 
+  test('saves the method by name and migrates a legacy index', () async {
+    final method = AppCalculationMethod.values.last;
+    var container = await _container({'calc_method': method.index});
+    expect(container.read(settingsProvider).method, method);
+
+    await container.read(settingsProvider.notifier).setMethod(method);
+    final prefs = container.read(sharedPreferencesProvider);
+    expect(prefs.getString('calc_method_name'), method.name);
+    expect(prefs.getInt('calc_method'), isNull);
+
+    container = await _container({'calc_method_name': method.name});
+    expect(container.read(settingsProvider).method, method);
+    container = await _container({'calc_method_name': 'gone'});
+    expect(
+      container.read(settingsProvider).method,
+      AppCalculationMethod.kemenag,
+    );
+  });
+
+  test('keeps the stored Hijri source across launches', () async {
+    var container = await _container({});
+    await container
+        .read(settingsProvider.notifier)
+        .setHijriSource(HijriSource.mabims);
+    final saved = container
+        .read(sharedPreferencesProvider)
+        .getString('hijri_source');
+    container = await _container({'hijri_source': saved!});
+    expect(container.read(settingsProvider).hijriSource, HijriSource.mabims);
+    container = await _container({'hijri_source': 'gone'});
+    expect(container.read(settingsProvider).hijriSource, HijriSource.ummAlQura);
+  });
+
   test('keeps a stored Hijri adjustment and drops an unknown one', () async {
     var container = await _container({'hijri_adjustment': -1});
     expect(container.read(settingsProvider).hijriAdjustment, -1);

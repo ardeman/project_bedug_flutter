@@ -53,7 +53,10 @@ const localeDisplayNames = {
 
 // ─── Settings ─────────────────────────────────────────────────────────────────
 
-const _kMethod = 'calc_method';
+// Earlier builds saved the method's enum index, which breaks when
+// methods are added or reordered; it is still read once to migrate.
+const _kLegacyMethodIndex = 'calc_method';
+const _kMethod = 'calc_method_name';
 const _kMadhab = 'madhab';
 const _kTheme = 'theme_mode';
 const _kUseAutoLocation = 'use_auto_location';
@@ -121,12 +124,8 @@ class SettingsNotifier extends Notifier<AppSettings> {
   @override
   AppSettings build() {
     final p = _prefs;
-    final methodIndex = p.getInt(_kMethod) ?? 0;
     return AppSettings(
-      // Guard against an index stored by a build with more methods.
-      method: methodIndex < AppCalculationMethod.values.length
-          ? AppCalculationMethod.values[methodIndex]
-          : AppCalculationMethod.kemenag,
+      method: _storedMethod(p),
       isHanafi: p.getBool(_kMadhab) ?? false,
       themeMode: p.getInt(_kTheme) ?? 0,
       useAutoLocation: p.getBool(_kUseAutoLocation) ?? true,
@@ -154,6 +153,21 @@ class SettingsNotifier extends Notifier<AppSettings> {
         eventReminders: p.getBool('notification_events') ?? false,
       ),
     );
+  }
+
+  /// The method saved by name, else by a legacy index, else Kemenag.
+  static AppCalculationMethod _storedMethod(SharedPreferences p) {
+    final named = AppCalculationMethod.values
+        .where((m) => m.name == p.getString(_kMethod))
+        .firstOrNull;
+    if (named != null) return named;
+    final index = p.getInt(_kLegacyMethodIndex);
+    // Guard against an index stored by a build with more methods.
+    return index != null &&
+            index >= 0 &&
+            index < AppCalculationMethod.values.length
+        ? AppCalculationMethod.values[index]
+        : AppCalculationMethod.kemenag;
   }
 
   static PrayerNotificationSound? _soundNamed(String? name) =>
@@ -247,7 +261,8 @@ class SettingsNotifier extends Notifier<AppSettings> {
 
   Future<void> setMethod(AppCalculationMethod m) async {
     state = state.copyWith(method: m);
-    await _prefs.setInt(_kMethod, m.index);
+    await _prefs.setString(_kMethod, m.name);
+    await _prefs.remove(_kLegacyMethodIndex);
   }
 
   Future<void> setMadhab(bool isHanafi) async {
