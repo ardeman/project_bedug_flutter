@@ -7,6 +7,15 @@
         {
           "type": "new",
           "text": {
+            "en": "Optional dzikir reminders in Notifications: the morning dzikir 15 minutes after Subuh and the evening dzikir 15 minutes after Asr.",
+            "id": "Pengingat zikir opsional di Notifikasi: zikir pagi 15 menit setelah Subuh dan zikir petang 15 menit setelah Asar.",
+            "ms": "Peringatan zikir pilihan dalam Pemberitahuan: zikir pagi 15 minit selepas Subuh dan zikir petang 15 minit selepas Asar.",
+            "ar": "تذكير اختياري بالأذكار في الإشعارات: أذكار الصباح بعد الفجر بـ15 دقيقة وأذكار المساء بعد العصر بـ15 دقيقة."
+          }
+        },
+        {
+          "type": "new",
+          "text": {
             "en": "Dzikir in the Worship tab, with Arabic, transliteration, translation and how many times to recite each one: morning and evening dzikir from Hisnul Muslim or Al-Ma'thurat (Sughra or Kubra), opening on the session for the time of day, or MPTT's Ratéb Siribèe.",
             "id": "Zikir di tab Ibadah, dengan teks Arab, transliterasi, terjemahan, dan jumlah bacaan tiap zikir: zikir pagi dan petang dari Hisnul Muslim atau Al-Ma'tsurat (Sughra atau Kubra), yang terbuka sesuai waktu saat itu, atau Ratéb Siribèe MPTT.",
             "ms": "Zikir dalam tab Ibadah, dengan teks Arab, transliterasi, terjemahan dan bilangan bacaan setiap zikir: zikir pagi dan petang daripada Hisnul Muslim atau Al-Ma'thurat (Sughra atau Kubra), yang dibuka mengikut waktu semasa, atau Ratéb Siribèe MPTT.",

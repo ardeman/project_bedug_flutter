@@ -447,6 +447,25 @@ void main() {
         ),
         findsOneWidget,
       );
+      final evening = find.byKey(const ValueKey('dzikir-reminder-evening'));
+      await tester.scrollUntilVisible(
+        evening,
+        100,
+        scrollable: find.byType(Scrollable).last,
+      );
+      expect(find.text('15 minutes after Asr'), findsOneWidget);
+      await tester.tap(evening);
+      await tester.pumpAndSettle();
+      expect(container.read(settingsProvider).notifications.dzikirReminders, {
+        DzikirReminder.evening,
+      });
+      final prefs = await SharedPreferences.getInstance();
+      expect(prefs.getStringList('notification_dzikir'), ['evening']);
+      await tester.scrollUntilVisible(
+        find.byKey(const ValueKey('notifications-enabled')),
+        -100,
+        scrollable: find.byType(Scrollable).last,
+      );
       await tester.tap(find.byKey(const ValueKey('notifications-enabled')));
       await tester.pumpAndSettle();
       expect(container.read(settingsProvider).notifications.enabled, isFalse);

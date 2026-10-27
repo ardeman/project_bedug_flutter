@@ -797,4 +797,21 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get dzikirCollection => 'كتاب الأذكار';
+
+  @override
+  String get dzikirMorningReminder => 'أذكار الصباح';
+
+  @override
+  String get dzikirEveningReminder => 'أذكار المساء';
+
+  @override
+  String dzikirReminderAfter(int minutes, String prayer) {
+    return 'بعد $prayer بـ$minutes دقيقة';
+  }
+
+  @override
+  String get notifDzikirMorning => 'حان وقت أذكار الصباح';
+
+  @override
+  String get notifDzikirEvening => 'حان وقت أذكار المساء';
 }

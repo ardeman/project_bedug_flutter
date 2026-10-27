@@ -803,4 +803,21 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get dzikirCollection => 'Kitab zikir';
+
+  @override
+  String get dzikirMorningReminder => 'Zikir pagi';
+
+  @override
+  String get dzikirEveningReminder => 'Zikir petang';
+
+  @override
+  String dzikirReminderAfter(int minutes, String prayer) {
+    return '$minutes menit setelah $prayer';
+  }
+
+  @override
+  String get notifDzikirMorning => 'Saatnya membaca zikir pagi';
+
+  @override
+  String get notifDzikirEvening => 'Saatnya membaca zikir petang';
 }

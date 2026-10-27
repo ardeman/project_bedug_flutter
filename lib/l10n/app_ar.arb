@@ -270,5 +270,10 @@
   "dzikirLoadError": "تعذّر تحميل الأذكار.",
   "dzikirSource": "المصدر: {source}",
   "dzikirRepeat": "{count}×",
-  "dzikirCollection": "كتاب الأذكار"
+  "dzikirCollection": "كتاب الأذكار",
+  "dzikirMorningReminder": "أذكار الصباح",
+  "dzikirEveningReminder": "أذكار المساء",
+  "dzikirReminderAfter": "بعد {prayer} بـ{minutes} دقيقة",
+  "notifDzikirMorning": "حان وقت أذكار الصباح",
+  "notifDzikirEvening": "حان وقت أذكار المساء"
 }

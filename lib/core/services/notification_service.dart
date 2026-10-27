@@ -114,7 +114,18 @@ class NotificationService {
         PrayerAlert.maghrib => l10n.maghrib,
         PrayerAlert.isha => l10n.isha,
       };
-      final body = alert.isReminder
+      final dzikir = alert.dzikir;
+      final title = switch (dzikir) {
+        DzikirReminder.morning => l10n.dzikirMorningReminder,
+        DzikirReminder.evening => l10n.dzikirEveningReminder,
+        null => name,
+      };
+      final body = dzikir != null
+          ? switch (dzikir) {
+              DzikirReminder.morning => l10n.notifDzikirMorning,
+              DzikirReminder.evening => l10n.notifDzikirEvening,
+            }
+          : alert.isReminder
           ? l10n.prayerReminderBody(name, preferences.reminderOf(alert.alert))
           : switch (alert.alert) {
               PrayerAlert.lastThirdOfNight => l10n.notifLastThirdOfNight,
@@ -132,7 +143,10 @@ class NotificationService {
               PrayerAlert.maghrib => l10n.notifMaghrib,
               PrayerAlert.isha => l10n.notifIsya,
             };
-      final sound = preferences.soundOf(alert.alert);
+      // Dzikir reminders play the system sound, not their prayer's.
+      final sound = dzikir != null
+          ? PrayerNotificationSound.system
+          : preferences.soundOf(alert.alert);
       final playSound = sound != PrayerNotificationSound.silent;
       final resource = sound.resource;
       final phone = sound == PrayerNotificationSound.phone
@@ -148,7 +162,7 @@ class NotificationService {
         androidScheduleMode: exact
             ? AndroidScheduleMode.exactAllowWhileIdle
             : AndroidScheduleMode.inexactAllowWhileIdle,
-        title: name,
+        title: title,
         body: body,
         notificationDetails: NotificationDetails(
           android: AndroidNotificationDetails(

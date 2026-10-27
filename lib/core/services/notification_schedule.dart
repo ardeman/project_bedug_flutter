@@ -9,11 +9,15 @@ class PrayerNotification {
   final DateTime time;
   final bool isReminder;
 
+  /// Set on a dzikir reminder, whose [alert] is the prayer it follows.
+  final DzikirReminder? dzikir;
+
   const PrayerNotification(
     this.id,
     this.alert,
     this.time, {
     this.isReminder = false,
+    this.dzikir,
   });
 }
 
@@ -30,7 +34,8 @@ List<PrayerNotification> buildNotificationSchedule(
   if (!preferences.enabled) return const [];
   final alerts = PrayerAlert.values;
   final result = <PrayerNotification>[];
-  for (var day = 0; day < 6; day++) {
+  const days = 6;
+  for (var day = 0; day < days; day++) {
     final date = DateTime(now.year, now.month, now.day + day);
     final daily = PrayerTimes(
       times.coordinates,
@@ -70,6 +75,21 @@ List<PrayerNotification> buildNotificationSchedule(
           );
         }
       }
+    }
+    for (final dzikir in DzikirReminder.values) {
+      if (!preferences.includesDzikir(dzikir)) continue;
+      final (alert, prayer) = switch (dzikir) {
+        DzikirReminder.morning => (PrayerAlert.fajr, daily.fajr),
+        DzikirReminder.evening => (PrayerAlert.asr, daily.asr),
+      };
+      final time = prayer.add(dzikirReminderDelay);
+      if (!time.isAfter(now)) continue;
+      // Dzikir IDs follow every day's prayer alerts and reminders.
+      final id =
+          days * alerts.length * 2 +
+          day * DzikirReminder.values.length +
+          dzikir.index;
+      result.add(PrayerNotification(id, alert, time, dzikir: dzikir));
     }
   }
   result.sort((a, b) => a.time.compareTo(b.time));

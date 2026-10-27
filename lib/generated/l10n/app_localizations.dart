@@ -1577,6 +1577,36 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Kitab zikir'**
   String get dzikirCollection;
+
+  /// No description provided for @dzikirMorningReminder.
+  ///
+  /// In id, this message translates to:
+  /// **'Zikir pagi'**
+  String get dzikirMorningReminder;
+
+  /// No description provided for @dzikirEveningReminder.
+  ///
+  /// In id, this message translates to:
+  /// **'Zikir petang'**
+  String get dzikirEveningReminder;
+
+  /// No description provided for @dzikirReminderAfter.
+  ///
+  /// In id, this message translates to:
+  /// **'{minutes} menit setelah {prayer}'**
+  String dzikirReminderAfter(int minutes, String prayer);
+
+  /// No description provided for @notifDzikirMorning.
+  ///
+  /// In id, this message translates to:
+  /// **'Saatnya membaca zikir pagi'**
+  String get notifDzikirMorning;
+
+  /// No description provided for @notifDzikirEvening.
+  ///
+  /// In id, this message translates to:
+  /// **'Saatnya membaca zikir petang'**
+  String get notifDzikirEvening;
 }
 
 class _AppLocalizationsDelegate

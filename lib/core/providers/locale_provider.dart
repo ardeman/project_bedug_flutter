@@ -117,6 +117,12 @@ class SettingsNotifier extends Notifier<AppSettings> {
         reminders: Map.unmodifiable(_storedReminders(p)),
         sounds: Map.unmodifiable(_storedSounds(p)),
         phoneSounds: Map.unmodifiable(_storedPhoneSounds(p)),
+        dzikirReminders: Set.unmodifiable(
+          DzikirReminder.values.where(
+            (reminder) => (p.getStringList('notification_dzikir') ?? const [])
+                .contains(reminder.name),
+          ),
+        ),
       ),
     );
   }
@@ -181,6 +187,10 @@ class SettingsNotifier extends Notifier<AppSettings> {
     await _prefs.setStringList(
       'notification_alerts',
       value.alerts.map((alert) => alert.name).toList(),
+    );
+    await _prefs.setStringList(
+      'notification_dzikir',
+      value.dzikirReminders.map((reminder) => reminder.name).toList(),
     );
     for (final alert in PrayerAlert.values) {
       await _prefs.setInt(

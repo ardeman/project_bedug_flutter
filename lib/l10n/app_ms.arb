@@ -270,5 +270,10 @@
   "dzikirLoadError": "Zikir tidak dapat dimuatkan.",
   "dzikirSource": "Sumber: {source}",
   "dzikirRepeat": "{count}×",
-  "dzikirCollection": "Kitab zikir"
+  "dzikirCollection": "Kitab zikir",
+  "dzikirMorningReminder": "Zikir pagi",
+  "dzikirEveningReminder": "Zikir petang",
+  "dzikirReminderAfter": "{minutes} minit selepas {prayer}",
+  "notifDzikirMorning": "Masa untuk membaca zikir pagi",
+  "notifDzikirEvening": "Masa untuk membaca zikir petang"
 }

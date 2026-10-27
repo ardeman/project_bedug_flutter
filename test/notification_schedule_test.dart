@@ -135,6 +135,39 @@ void main() {
     expect(today[PrayerAlert.sunrise]!.time, times.sunrise);
     expect(today[PrayerAlert.dhuha]!.time, extra.dhuha);
   });
+
+  test('dzikir reminders follow Subuh and Asar each day, only when on', () {
+    final schedule = buildNotificationSchedule(
+      times,
+      const NotificationPreferences(
+        dzikirReminders: {DzikirReminder.morning, DzikirReminder.evening},
+      ),
+      now,
+    );
+    final dzikir = schedule.where((alert) => alert.dzikir != null).toList();
+    expect(dzikir, hasLength(12));
+    expect(schedule.map((alert) => alert.id).toSet(), hasLength(42));
+    final morning = dzikir.firstWhere(
+      (alert) => alert.dzikir == DzikirReminder.morning,
+    );
+    expect(morning.alert, PrayerAlert.fajr);
+    expect(morning.time, times.fajr.add(dzikirReminderDelay));
+    expect(
+      dzikir.firstWhere((alert) => alert.dzikir == DzikirReminder.evening).time,
+      times.asr.add(dzikirReminderDelay),
+    );
+    expect(
+      buildNotificationSchedule(
+        times,
+        const NotificationPreferences(
+          enabled: false,
+          dzikirReminders: {DzikirReminder.morning},
+        ),
+        now,
+      ),
+      isEmpty,
+    );
+  });
 }
 
 Map<PrayerAlert, int> _every(int minutes) => {

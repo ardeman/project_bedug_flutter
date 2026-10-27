@@ -270,5 +270,10 @@
   "dzikirLoadError": "Couldn't load the dzikir.",
   "dzikirSource": "Source: {source}",
   "dzikirRepeat": "{count}×",
-  "dzikirCollection": "Dzikir collection"
+  "dzikirCollection": "Dzikir collection",
+  "dzikirMorningReminder": "Morning dzikir",
+  "dzikirEveningReminder": "Evening dzikir",
+  "dzikirReminderAfter": "{minutes} minutes after {prayer}",
+  "notifDzikirMorning": "Time for the morning dzikir",
+  "notifDzikirEvening": "Time for the evening dzikir"
 }

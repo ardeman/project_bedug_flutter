@@ -340,6 +340,14 @@ class NotificationSettingsScreen extends ConsumerWidget {
       notifier.setNotifications(preferences.copyWith(alerts: alerts));
     }
 
+    void setDzikir(DzikirReminder reminder, bool value) {
+      final reminders = {...preferences.dzikirReminders};
+      value ? reminders.add(reminder) : reminders.remove(reminder);
+      notifier.setNotifications(
+        preferences.copyWith(dzikirReminders: reminders),
+      );
+    }
+
     String summaryOf(PrayerAlert alert) {
       final minutes = preferences.reminderOf(alert);
       return [
@@ -412,6 +420,38 @@ class NotificationSettingsScreen extends ConsumerWidget {
                             ),
                           )
                         : () => setAlert(alert, true),
+                  ),
+              ],
+            ),
+          if (preferences.enabled)
+            SettingsSection(
+              title: l10n.dzikir,
+              children: [
+                for (final reminder in DzikirReminder.values)
+                  PlatformListTile(
+                    key: ValueKey('dzikir-reminder-row-${reminder.name}'),
+                    title: Text(switch (reminder) {
+                      DzikirReminder.morning => l10n.dzikirMorningReminder,
+                      DzikirReminder.evening => l10n.dzikirEveningReminder,
+                    }),
+                    subtitle: Text(
+                      l10n.dzikirReminderAfter(
+                        dzikirReminderDelay.inMinutes,
+                        switch (reminder) {
+                          DzikirReminder.morning => l10n.fajr,
+                          DzikirReminder.evening => l10n.asr,
+                        },
+                      ),
+                    ),
+                    trailing: _AdaptiveSwitch(
+                      key: ValueKey('dzikir-reminder-${reminder.name}'),
+                      value: preferences.includesDzikir(reminder),
+                      onChanged: (value) => setDzikir(reminder, value),
+                    ),
+                    onTap: () => setDzikir(
+                      reminder,
+                      !preferences.includesDzikir(reminder),
+                    ),
                   ),
               ],
             ),

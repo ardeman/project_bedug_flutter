@@ -34,6 +34,13 @@ const defaultPrayerAlerts = {
 
 const reminderMinuteOptions = [0, 5, 10, 15, 30];
 
+/// Reminders to read the morning dzikir after Subuh and the evening dzikir
+/// after Asar; names are stable storage keys.
+enum DzikirReminder { morning, evening }
+
+/// Leaves time to pray Subuh or Asar before the dzikir reminder.
+const dzikirReminderDelay = Duration(minutes: 15);
+
 /// What an alert plays. [bedug] and [siren] are bundled recordings: the
 /// native copies live in `android/app/src/main/res/raw` and
 /// `ios|macos/Runner/Sounds`, the previews in `assets/sounds`. [phone] is
@@ -78,15 +85,22 @@ class NotificationPreferences {
   /// The tone of each alert whose sound is [PrayerNotificationSound.phone].
   final Map<PrayerAlert, PhoneSound> phoneSounds;
 
+  /// Dzikir reminders the user turned on; none until they do.
+  final Set<DzikirReminder> dzikirReminders;
+
   const NotificationPreferences({
     this.enabled = true,
     this.alerts = defaultPrayerAlerts,
     this.reminders = const {},
     this.sounds = const {},
     this.phoneSounds = const {},
+    this.dzikirReminders = const {},
   });
 
   bool includes(PrayerAlert alert) => enabled && alerts.contains(alert);
+
+  bool includesDzikir(DzikirReminder reminder) =>
+      enabled && dzikirReminders.contains(reminder);
 
   int reminderOf(PrayerAlert alert) => reminders[alert] ?? 0;
 
@@ -104,11 +118,13 @@ class NotificationPreferences {
     Map<PrayerAlert, int>? reminders,
     Map<PrayerAlert, PrayerNotificationSound>? sounds,
     Map<PrayerAlert, PhoneSound>? phoneSounds,
+    Set<DzikirReminder>? dzikirReminders,
   }) => NotificationPreferences(
     enabled: enabled ?? this.enabled,
     alerts: Set.unmodifiable(alerts ?? this.alerts),
     reminders: Map.unmodifiable(reminders ?? this.reminders),
     sounds: Map.unmodifiable(sounds ?? this.sounds),
     phoneSounds: Map.unmodifiable(phoneSounds ?? this.phoneSounds),
+    dzikirReminders: Set.unmodifiable(dzikirReminders ?? this.dzikirReminders),
   );
 }

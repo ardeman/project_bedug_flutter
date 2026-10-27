@@ -800,4 +800,21 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dzikirCollection => 'Dzikir collection';
+
+  @override
+  String get dzikirMorningReminder => 'Morning dzikir';
+
+  @override
+  String get dzikirEveningReminder => 'Evening dzikir';
+
+  @override
+  String dzikirReminderAfter(int minutes, String prayer) {
+    return '$minutes minutes after $prayer';
+  }
+
+  @override
+  String get notifDzikirMorning => 'Time for the morning dzikir';
+
+  @override
+  String get notifDzikirEvening => 'Time for the evening dzikir';
 }

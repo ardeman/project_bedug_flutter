@@ -446,5 +446,13 @@
   "@dzikirRepeat": {
     "description": "How many times to recite an item.",
     "placeholders": {"count": {"type": "int"}}
-  }
+  },
+  "dzikirMorningReminder": "Zikir pagi",
+  "dzikirEveningReminder": "Zikir petang",
+  "dzikirReminderAfter": "{minutes} menit setelah {prayer}",
+  "@dzikirReminderAfter": {
+    "placeholders": {"minutes": {"type": "int"}, "prayer": {"type": "String"}}
+  },
+  "notifDzikirMorning": "Saatnya membaca zikir pagi",
+  "notifDzikirEvening": "Saatnya membaca zikir petang"
 }
