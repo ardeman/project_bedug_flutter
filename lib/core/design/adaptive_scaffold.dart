@@ -106,6 +106,10 @@ class AdaptiveScaffold extends StatelessWidget {
           ? M3ENavigationBar(
               selectedIndex: selectedIndex,
               onDestinationSelected: onDestinationSelected,
+              // Side-by-side icon and label items need room for the longest
+              // label (such as "Waktu Salat") and its padding; the package's
+              // fixed 600 breakpoint overflows with four tabs.
+              wideBreakpoint: destinations.length * _wideDestinationWidth,
               destinations: [
                 for (final d in destinations)
                   M3ENavigationBarDestination(
@@ -181,6 +185,10 @@ class AdaptiveScaffold extends StatelessWidget {
       ),
     );
   }
+
+  /// Room each horizontal Expressive nav item needs: its icon, label and
+  /// indicator padding.
+  static const _wideDestinationWidth = 220.0;
 
   IconData _materialIconFor(Object icon) {
     if (icon is IconData) return icon;

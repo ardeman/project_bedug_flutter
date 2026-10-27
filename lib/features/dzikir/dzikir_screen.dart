@@ -1,14 +1,10 @@
 import 'package:clock/clock.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:liquid_glass_easy/liquid_glass_easy.dart';
-import 'package:material_3_expressive/material_3_expressive.dart';
 import 'package:material_ui/material_ui.dart';
 
-import '../../core/constants/app_colors.dart';
 import '../../core/design/glass_controls.dart';
 import '../../core/design/liquid_glass.dart';
 import '../../core/design/platform_capabilities.dart';
-import '../../core/design/platform_design.dart';
 import '../../core/services/prayer_service.dart';
 import '../../core/services/selection_feedback.dart';
 import '../../core/theme/app_tokens.dart';
@@ -111,7 +107,11 @@ class _DzikirScreenState extends ConsumerState<DzikirScreen> {
                       AppSpacing.md,
                       AppSpacing.xs,
                     ),
-                    child: _SessionSwitch(
+                    child: PlatformSegmentedControl<DzikirSession>(
+                      segments: {
+                        DzikirSession.morning: l10n.dzikirMorning,
+                        DzikirSession.evening: l10n.dzikirEvening,
+                      },
                       value: _session,
                       onChanged: (s) => setState(() => _session = s),
                     ),
@@ -168,92 +168,6 @@ class _DzikirScreenState extends ConsumerState<DzikirScreen> {
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-/// Morning / evening switch: a glass segmented control on Apple, an
-/// Expressive segmented button on Material paths, a segmented button
-/// elsewhere.
-class _SessionSwitch extends StatelessWidget {
-  final DzikirSession value;
-  final ValueChanged<DzikirSession> onChanged;
-
-  const _SessionSwitch({required this.value, required this.onChanged});
-
-  @override
-  Widget build(BuildContext ctx) {
-    final l10n = AppLocalizations.of(ctx);
-    final labels = {
-      DzikirSession.morning: l10n.dzikirMorning,
-      DzikirSession.evening: l10n.dzikirEvening,
-    };
-
-    if (PlatformDesign.usesExpressive) {
-      return M3ESegmentedButton<DzikirSession>(
-        segments: [
-          for (final s in DzikirSession.values)
-            M3ESegment(value: s, label: labels[s]!),
-        ],
-        selected: {value},
-        onSelectionChanged: (values) => onChanged(values.single),
-      );
-    }
-    if (!PlatformCapabilities.isApple) {
-      return SegmentedButton<DzikirSession>(
-        segments: [
-          for (final s in DzikirSession.values)
-            ButtonSegment(value: s, label: Text(labels[s]!)),
-        ],
-        selected: {value},
-        showSelectedIcon: false,
-        onSelectionChanged: (values) => onChanged(values.single),
-      );
-    }
-
-    final theme = Theme.of(ctx);
-    final accent = AppColors.accentOf(ctx);
-    const height = AppControlSizes.toolbarButton;
-    final radius = BorderRadius.circular(height / 2);
-    return LiquidGlassLite(
-      shape: const LiquidGlassShape.continuousRoundedRectangle(
-        cornerRadius: height / 2,
-      ),
-      color: glassCardTintOf(ctx),
-      child: SizedBox(
-        height: height,
-        child: Row(
-          children: [
-            for (final s in DzikirSession.values)
-              Expanded(
-                child: Semantics(
-                  button: true,
-                  selected: s == value,
-                  child: GlassPressable(
-                    onTap: () => onChanged(s),
-                    borderRadius: radius,
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: s == value ? accent : Colors.transparent,
-                        borderRadius: radius,
-                      ),
-                      child: Text(
-                        labels[s]!,
-                        style: theme.textTheme.labelLarge?.copyWith(
-                          color: s == value
-                              ? theme.colorScheme.onPrimary
-                              : theme.colorScheme.onSurface,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-          ],
         ),
       ),
     );

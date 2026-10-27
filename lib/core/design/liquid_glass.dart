@@ -198,7 +198,11 @@ double get windowControlsInset =>
 class GlassTopBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
 
-  const GlassTopBar({super.key, required this.title});
+  /// Buttons at the trailing end: round glass on Apple, icon buttons
+  /// elsewhere.
+  final List<GlassTopBarAction> actions;
+
+  const GlassTopBar({super.key, required this.title, this.actions = const []});
 
   /// Height of the title capsule: one title line plus padding.
   static const _capsuleHeight = AppControlSizes.toolbarButton;
@@ -219,6 +223,7 @@ class GlassTopBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         automaticallyImplyLeading: true,
         toolbarHeight: kToolbarHeight,
+        actions: [for (final action in actions) action._materialButton()],
       );
     }
     if (!PlatformCapabilities.isApple) {
@@ -227,16 +232,20 @@ class GlassTopBar extends StatelessWidget implements PreferredSizeWidget {
         backgroundColor: AppColors.accentOf(ctx),
         foregroundColor: Colors.white,
         centerTitle: true,
+        actions: [for (final action in actions) action._materialButton()],
       );
     }
 
     final canPop = ModalRoute.of(ctx)?.impliesAppBarDismissal ?? false;
+    const buttonSlot = AppControlSizes.toolbarButton + AppSpacing.xs;
+    final leadingWidth = windowControlsInset + (canPop ? buttonSlot : 0);
+    final trailingWidth = actions.length * buttonSlot;
     // Reserve the same space on both sides to keep the title centered and
-    // clear of the back button and macOS traffic lights, including in RTL.
+    // clear of the back button, the actions and macOS traffic lights,
+    // including in RTL.
     final titleInset =
         AppSpacing.md +
-        windowControlsInset +
-        (canPop ? AppControlSizes.toolbarButton + AppSpacing.xs : 0);
+        (leadingWidth > trailingWidth ? leadingWidth : trailingWidth);
     return SizedBox(
       height: kToolbarHeight + MediaQuery.of(ctx).padding.top,
       child: Stack(
@@ -305,10 +314,65 @@ class GlassTopBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
               ),
             ),
+          if (actions.isNotEmpty)
+            SafeArea(
+              bottom: false,
+              child: Align(
+                alignment: AlignmentDirectional.centerEnd,
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.only(end: AppSpacing.md),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      for (final (i, action) in actions.indexed) ...[
+                        if (i > 0) const SizedBox(width: AppSpacing.xs),
+                        Semantics(
+                          button: true,
+                          label: action.tooltip,
+                          enabled: action.onPressed != null,
+                          child: IgnorePointer(
+                            ignoring: action.onPressed == null,
+                            child: GlassIconButton(
+                              icon: action.icon,
+                              onPressed: action.onPressed ?? () {},
+                              color: action.onPressed == null
+                                  ? theme.colorScheme.onSurface.withValues(
+                                      alpha: 0.38,
+                                    )
+                                  : null,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
     );
   }
+}
+
+/// A [GlassTopBar] button.
+class GlassTopBarAction {
+  final IconData icon;
+
+  /// What the button does, read out by screen readers.
+  final String tooltip;
+
+  /// Null disables the button.
+  final VoidCallback? onPressed;
+
+  const GlassTopBarAction({
+    required this.icon,
+    required this.tooltip,
+    required this.onPressed,
+  });
+
+  Widget _materialButton() =>
+      IconButton(icon: Icon(icon), tooltip: tooltip, onPressed: onPressed);
 }
 
 /// A content card: lite Liquid Glass on iOS and macOS, a Material [Card]

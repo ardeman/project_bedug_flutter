@@ -4,6 +4,7 @@ import 'package:liquid_glass_easy/liquid_glass_easy.dart';
 
 import '../constants/app_colors.dart';
 import '../theme/app_tokens.dart';
+import 'liquid_glass.dart';
 import 'platform_capabilities.dart';
 import 'platform_design.dart';
 
@@ -255,6 +256,95 @@ class GlassPillButton extends StatelessWidget {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+/// A choice between a few [segments]: a glass segmented control on Apple, an
+/// Expressive segmented button on Material paths, a segmented button
+/// elsewhere.
+class PlatformSegmentedControl<T> extends StatelessWidget {
+  /// Each value and its label, in display order.
+  final Map<T, String> segments;
+  final T value;
+  final ValueChanged<T> onChanged;
+
+  const PlatformSegmentedControl({
+    super.key,
+    required this.segments,
+    required this.value,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext ctx) {
+    if (PlatformDesign.usesExpressive) {
+      return M3ESegmentedButton<T>(
+        segments: [
+          for (final MapEntry(:key, :value) in segments.entries)
+            M3ESegment(value: key, label: value),
+        ],
+        selected: {value},
+        onSelectionChanged: (values) => onChanged(values.single),
+      );
+    }
+    if (!PlatformCapabilities.isApple) {
+      return SegmentedButton<T>(
+        segments: [
+          for (final MapEntry(:key, :value) in segments.entries)
+            ButtonSegment(value: key, label: Text(value)),
+        ],
+        selected: {value},
+        showSelectedIcon: false,
+        onSelectionChanged: (values) => onChanged(values.single),
+      );
+    }
+
+    final theme = Theme.of(ctx);
+    final accent = AppColors.accentOf(ctx);
+    const height = AppControlSizes.toolbarButton;
+    final radius = BorderRadius.circular(height / 2);
+    return LiquidGlassLite(
+      shape: const LiquidGlassShape.continuousRoundedRectangle(
+        cornerRadius: height / 2,
+      ),
+      color: glassCardTintOf(ctx),
+      child: SizedBox(
+        height: height,
+        child: Row(
+          children: [
+            for (final MapEntry(key: segment, value: label) in segments.entries)
+              Expanded(
+                child: Semantics(
+                  button: true,
+                  selected: segment == value,
+                  child: GlassPressable(
+                    onTap: () => onChanged(segment),
+                    borderRadius: radius,
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: segment == value ? accent : Colors.transparent,
+                        borderRadius: radius,
+                      ),
+                      child: Text(
+                        label,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: theme.textTheme.labelLarge?.copyWith(
+                          color: segment == value
+                              ? theme.colorScheme.onPrimary
+                              : theme.colorScheme.onSurface,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+          ],
         ),
       ),
     );
