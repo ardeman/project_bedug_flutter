@@ -802,6 +802,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dzikirCollection => 'Dzikir collection';
 
   @override
+  String get afterPrayerDzikir => 'After-prayer dzikir';
+
+  @override
+  String get afterPrayerDzikirSubtitle =>
+      'Istighfar, tasbih, Ayat al-Kursi and more';
+
+  @override
   String get duas => 'Daily duas';
 
   @override

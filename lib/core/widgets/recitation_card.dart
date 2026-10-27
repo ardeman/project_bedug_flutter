@@ -15,6 +15,9 @@ class RecitationCard extends StatelessWidget {
   /// to recite it. Shown only without a [title].
   final String? badge;
 
+  /// When it applies, such as "After Fajr", shown under the heading.
+  final String? note;
+
   final String arabic;
   final String transliteration;
 
@@ -29,6 +32,7 @@ class RecitationCard extends StatelessWidget {
     super.key,
     this.title,
     this.badge,
+    this.note,
     required this.arabic,
     required this.transliteration,
     required this.translation,
@@ -95,6 +99,13 @@ class RecitationCard extends StatelessWidget {
                   ),
                 ],
               ),
+            if (note case final note?) ...[
+              const SizedBox(height: AppSpacing.sm),
+              Text(
+                note,
+                style: theme.textTheme.labelMedium?.copyWith(color: accent),
+              ),
+            ],
             const SizedBox(height: AppSpacing.md),
             Text(
               arabic,

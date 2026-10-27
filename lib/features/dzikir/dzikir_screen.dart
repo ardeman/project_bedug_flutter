@@ -16,9 +16,14 @@ import '../../generated/l10n/app_localizations.dart';
 import 'dzikir.dart';
 
 /// Dzikir from the collection picked in Settings, split into morning and
-/// evening when the collection has sessions.
+/// evening when the collection has sessions, or the after-prayer dzikir.
 class DzikirScreen extends ConsumerStatefulWidget {
-  const DzikirScreen({super.key});
+  const DzikirScreen({super.key}) : afterPrayer = false;
+
+  const DzikirScreen.afterPrayer({super.key}) : afterPrayer = true;
+
+  /// Shows [afterPrayerDzikirProvider] instead of the picked collection.
+  final bool afterPrayer;
 
   @override
   ConsumerState<DzikirScreen> createState() => _DzikirScreenState();
@@ -48,12 +53,18 @@ class _DzikirScreenState extends ConsumerState<DzikirScreen> {
   @override
   Widget build(BuildContext ctx) {
     final l10n = AppLocalizations.of(ctx);
-    final collection = ref.watch(selectedDzikirCollectionProvider);
+    final collection = ref.watch(
+      widget.afterPrayer
+          ? afterPrayerDzikirProvider
+          : selectedDzikirCollectionProvider,
+    );
     final languageCode = Localizations.localeOf(ctx).languageCode;
 
     return Scaffold(
       extendBodyBehindAppBar: PlatformCapabilities.isApple,
-      appBar: GlassTopBar(title: l10n.dzikir),
+      appBar: GlassTopBar(
+        title: widget.afterPrayer ? l10n.afterPrayerDzikir : l10n.dzikir,
+      ),
       body: collection.when(
         loading: () => const Center(child: AdaptiveSpinner()),
         error: (_, _) => Center(
@@ -89,6 +100,7 @@ class _DzikirScreenState extends ConsumerState<DzikirScreen> {
                         : collection.items)
                   RecitationCard(
                     badge: l10n.dzikirRepeat(item.repeat),
+                    note: item.noteFor(languageCode),
                     arabic: item.arabic,
                     transliteration: item.transliteration,
                     translation: item.translationFor(languageCode),

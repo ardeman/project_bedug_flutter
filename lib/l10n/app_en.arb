@@ -271,6 +271,8 @@
   "dzikirSource": "Source: {source}",
   "dzikirRepeat": "{count}×",
   "dzikirCollection": "Dzikir collection",
+  "afterPrayerDzikir": "After-prayer dzikir",
+  "afterPrayerDzikirSubtitle": "Istighfar, tasbih, Ayat al-Kursi and more",
   "duas": "Daily duas",
   "duasSubtitle": "Waking, eating, travel and more",
   "duasLoadError": "Couldn't load the duas.",

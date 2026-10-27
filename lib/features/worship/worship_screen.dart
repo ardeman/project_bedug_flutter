@@ -13,7 +13,8 @@ import '../dzikir/dzikir.dart';
 import '../dzikir/dzikir_screen.dart';
 import '../qibla/widgets/qibla_card.dart';
 
-/// Worship tab: Qibla, dzikir, daily duas and the Asmaul Husna.
+/// Worship tab: Qibla, dzikir (morning and evening, and after prayer), daily
+/// duas and the Asmaul Husna.
 class WorshipScreen extends StatelessWidget {
   const WorshipScreen({super.key, this.isActive = true});
 
@@ -34,6 +35,12 @@ class WorshipScreen extends StatelessWidget {
             children: [
               QiblaCard(feedbackEnabled: isActive),
               const _DzikirEntry(),
+              _WorshipEntry(
+                icon: Icons.mosque,
+                title: l10n.afterPrayerDzikir,
+                subtitle: l10n.afterPrayerDzikirSubtitle,
+                builder: (_) => const DzikirScreen.afterPrayer(),
+              ),
               _WorshipEntry(
                 icon: Icons.menu_book_outlined,
                 title: l10n.duas,

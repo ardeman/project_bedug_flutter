@@ -14,6 +14,10 @@ const dzikirCollectionAssets = {
   'rateb_siribee': 'assets/content/dzikir/rateb_siribee.json',
 };
 
+/// Dzikir after the obligatory prayers, opened from the Worship tab rather
+/// than picked as a collection.
+const afterPrayerDzikirAsset = 'assets/content/after_prayer_dzikir.json';
+
 /// The collection used until the user picks another.
 const defaultDzikirCollectionId = 'hisnul_muslim';
 
@@ -35,6 +39,10 @@ class DzikirItem {
   /// Where it comes from, such as a surah or hadith collection.
   final String reference;
 
+  /// When it applies, in each language, such as "After Fajr"; empty when it
+  /// always does.
+  final Map<String, String> note;
+
   const DzikirItem({
     required this.sessions,
     required this.arabic,
@@ -42,7 +50,10 @@ class DzikirItem {
     required this.translation,
     required this.repeat,
     required this.reference,
+    this.note = const {},
   });
+
+  String? noteFor(String languageCode) => note[languageCode] ?? note['en'];
 
   /// The meaning in [languageCode], falling back to English; null for Arabic,
   /// where the text itself is read.
@@ -102,6 +113,7 @@ DzikirCollection parseDzikirCollection(String source) {
           translation: Map<String, String>.from(i['translation'] as Map),
           repeat: i['repeat'] as int,
           reference: i['reference'] as String,
+          note: Map<String, String>.from(i['note'] as Map? ?? const {}),
         ),
     ],
   );
@@ -116,6 +128,12 @@ final dzikirCollectionsProvider = FutureProvider<List<DzikirCollection>>((
       parseDzikirCollection(await rootBundle.loadString(asset)),
   ];
 });
+
+final afterPrayerDzikirProvider = FutureProvider<DzikirCollection>(
+  (ref) async => parseDzikirCollection(
+    await rootBundle.loadString(afterPrayerDzikirAsset),
+  ),
+);
 
 const _kDzikirCollection = 'dzikir_collection';
 

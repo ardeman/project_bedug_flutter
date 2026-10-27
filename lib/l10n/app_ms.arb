@@ -271,6 +271,8 @@
   "dzikirSource": "Sumber: {source}",
   "dzikirRepeat": "{count}×",
   "dzikirCollection": "Kitab zikir",
+  "afterPrayerDzikir": "Zikir selepas solat",
+  "afterPrayerDzikirSubtitle": "Istighfar, tasbih, Ayat Kursi dan lain-lain",
   "duas": "Doa harian",
   "duasSubtitle": "Bangun tidur, makan, perjalanan dan lain-lain",
   "duasLoadError": "Doa gagal dimuatkan.",

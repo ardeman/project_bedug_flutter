@@ -60,6 +60,7 @@ flutter:
     - assets/content/dzikir/
     - assets/content/duas/
     - assets/content/asmaul_husna.json
+    - assets/content/after_prayer_dzikir.json
     # The hero's watermark, tinted in the app.
     - assets/branding/icon_monochrome.png
   # Brand typeface, bundled so the app stays offline first (SIL OFL 1.1,

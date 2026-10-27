@@ -799,6 +799,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get dzikirCollection => 'كتاب الأذكار';
 
   @override
+  String get afterPrayerDzikir => 'الأذكار بعد الصلاة';
+
+  @override
+  String get afterPrayerDzikirSubtitle =>
+      'الاستغفار والتسبيح وآية الكرسي وغيرها';
+
+  @override
   String get duas => 'الأدعية اليومية';
 
   @override

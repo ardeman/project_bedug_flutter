@@ -804,6 +804,13 @@ class AppLocalizationsMs extends AppLocalizations {
   String get dzikirCollection => 'Kitab zikir';
 
   @override
+  String get afterPrayerDzikir => 'Zikir selepas solat';
+
+  @override
+  String get afterPrayerDzikirSubtitle =>
+      'Istighfar, tasbih, Ayat Kursi dan lain-lain';
+
+  @override
   String get duas => 'Doa harian';
 
   @override

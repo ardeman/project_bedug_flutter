@@ -271,6 +271,8 @@
   "dzikirSource": "المصدر: {source}",
   "dzikirRepeat": "{count}×",
   "dzikirCollection": "كتاب الأذكار",
+  "afterPrayerDzikir": "الأذكار بعد الصلاة",
+  "afterPrayerDzikirSubtitle": "الاستغفار والتسبيح وآية الكرسي وغيرها",
   "duas": "الأدعية اليومية",
   "duasSubtitle": "الاستيقاظ والطعام والسفر وغيرها",
   "duasLoadError": "تعذّر تحميل الأدعية.",

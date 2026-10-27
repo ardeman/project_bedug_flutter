@@ -1,0 +1,207 @@
+{
+  "id": "after_prayer",
+  "name": {
+    "id": "Zikir setelah salat",
+    "en": "After-prayer dzikir",
+    "ms": "Zikir selepas solat",
+    "ar": "الأذكار بعد الصلاة"
+  },
+  "source": {
+    "id": "Sa'id bin Ali bin Wahf al-Qahthani, Hisnul Muslim, bab zikir setelah salam. Terjemahan oleh Bedug.",
+    "en": "Sa'id bin Ali bin Wahf al-Qahtani, Hisnul Muslim, chapter on remembrance after the salam. Translated by Bedug.",
+    "ms": "Sa'id bin Ali bin Wahf al-Qahtani, Hisnul Muslim, bab zikir selepas salam. Terjemahan oleh Bedug.",
+    "ar": "سعيد بن علي بن وهف القحطاني، حصن المسلم، باب الأذكار بعد السلام من الصلاة."
+  },
+  "items": [
+    {
+      "arabic": "أَسْتَغْفِرُ اللَّهَ",
+      "transliteration": "Astaghfirullāh.",
+      "translation": {
+        "id": "Aku memohon ampunan kepada Allah.",
+        "en": "I seek Allah's forgiveness.",
+        "ms": "Aku memohon keampunan kepada Allah."
+      },
+      "repeat": 3,
+      "reference": "Muslim 591"
+    },
+    {
+      "arabic": "اللَّهُمَّ أَنْتَ السَّلَامُ وَمِنْكَ السَّلَامُ، تَبَارَكْتَ يَا ذَا الْجَلَالِ وَالْإِكْرَامِ",
+      "transliteration": "Allāhumma antas-salām wa minkas-salām, tabārakta yā dzal-jalāli wal-ikrām.",
+      "translation": {
+        "id": "Ya Allah, Engkaulah Yang Maha Sejahtera dan dari-Mu kesejahteraan. Maha Berkah Engkau, wahai Pemilik keagungan dan kemuliaan.",
+        "en": "O Allah, You are Peace and from You is peace. Blessed are You, O Owner of majesty and honour.",
+        "ms": "Ya Allah, Engkaulah Yang Maha Sejahtera dan daripada-Mu kesejahteraan. Maha Berkat Engkau, wahai Tuhan yang memiliki keagungan dan kemuliaan."
+      },
+      "repeat": 1,
+      "reference": "Muslim 591"
+    },
+    {
+      "arabic": "لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ. اللَّهُمَّ لَا مَانِعَ لِمَا أَعْطَيْتَ، وَلَا مُعْطِيَ لِمَا مَنَعْتَ، وَلَا يَنْفَعُ ذَا الْجَدِّ مِنْكَ الْجَدُّ",
+      "transliteration": "Lā ilāha illallāhu waḥdahū lā syarīka lah, lahul-mulku wa lahul-ḥamdu wa huwa 'alā kulli syai'in qadīr. Allāhumma lā māni'a limā a'ṭaita, wa lā mu'ṭiya limā mana'ta, wa lā yanfa'u dzal-jaddi minkal-jadd.",
+      "translation": {
+        "id": "Tiada tuhan selain Allah semata, tiada sekutu bagi-Nya. Milik-Nya kerajaan dan milik-Nya segala puji, dan Dia Mahakuasa atas segala sesuatu. Ya Allah, tiada yang dapat menghalangi apa yang Engkau berikan, tiada yang dapat memberi apa yang Engkau halangi, dan kekayaan orang yang kaya tidak bermanfaat baginya di hadapan-Mu.",
+        "en": "There is no god but Allah alone, without partner. His is the dominion and His is the praise, and He has power over all things. O Allah, none can withhold what You give, none can give what You withhold, and the wealth of the wealthy avails him nothing against You.",
+        "ms": "Tiada tuhan melainkan Allah Yang Esa, tiada sekutu bagi-Nya. Bagi-Nya kerajaan dan bagi-Nya segala puji, dan Dia Maha Berkuasa atas segala sesuatu. Ya Allah, tiada yang dapat menghalang apa yang Engkau berikan, tiada yang dapat memberi apa yang Engkau halang, dan kekayaan orang yang kaya tidak bermanfaat baginya di sisi-Mu."
+      },
+      "repeat": 1,
+      "reference": "Al-Bukhari 844, Muslim 593"
+    },
+    {
+      "arabic": "اللَّهُمَّ أَعِنِّي عَلَىٰ ذِكْرِكَ وَشُكْرِكَ وَحُسْنِ عِبَادَتِكَ",
+      "transliteration": "Allāhumma a'innī 'alā dzikrika wa syukrika wa ḥusni 'ibādatik.",
+      "translation": {
+        "id": "Ya Allah, tolonglah aku untuk mengingat-Mu, bersyukur kepada-Mu, dan beribadah kepada-Mu dengan baik.",
+        "en": "O Allah, help me to remember You, to thank You and to worship You well.",
+        "ms": "Ya Allah, bantulah aku untuk mengingati-Mu, bersyukur kepada-Mu dan beribadah kepada-Mu dengan sebaik-baiknya."
+      },
+      "repeat": 1,
+      "reference": "Abu Dawud 1522, an-Nasa'i 1303"
+    },
+    {
+      "arabic": "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَنْ ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ",
+      "transliteration": "Allāhu lā ilāha illā huwal-ḥayyul-qayyūm, lā ta'khudzuhū sinatuw wa lā naum, lahū mā fis-samāwāti wa mā fil-arḍ, man dzal-ladzī yasyfa'u 'indahū illā bi'idznih, ya'lamu mā baina aidīhim wa mā khalfahum, wa lā yuḥīṭūna bisyai'im min 'ilmihī illā bimā syā', wasi'a kursiyyuhus-samāwāti wal-arḍ, wa lā ya'ūduhū ḥifẓuhumā, wa huwal-'aliyyul-'aẓīm.",
+      "translation": {
+        "id": "Allah, tidak ada tuhan selain Dia, Yang Mahahidup, Yang terus-menerus mengurus makhluk-Nya. Dia tidak mengantuk dan tidak tidur. Milik-Nya apa yang ada di langit dan apa yang ada di bumi. Tidak ada yang dapat memberi syafaat di sisi-Nya tanpa izin-Nya. Dia mengetahui apa yang di hadapan mereka dan apa yang di belakang mereka, dan mereka tidak mengetahui sesuatu apa pun dari ilmu-Nya melainkan apa yang Dia kehendaki. Kursi-Nya meliputi langit dan bumi, dan Dia tidak merasa berat memelihara keduanya. Dia Mahatinggi, Mahabesar.",
+        "en": "Allah: there is no god but Him, the Ever-Living, the Sustainer of all. Neither drowsiness nor sleep overtakes Him. To Him belongs whatever is in the heavens and whatever is on the earth. Who could intercede with Him except by His permission? He knows what is before them and what is behind them, and they encompass nothing of His knowledge except what He wills. His Kursi extends over the heavens and the earth, and guarding them does not tire Him. He is the Most High, the Most Great.",
+        "ms": "Allah, tiada tuhan melainkan Dia, Yang Maha Hidup, Yang mentadbir sekalian makhluk. Dia tidak mengantuk dan tidak tidur. Milik-Nya segala yang ada di langit dan di bumi. Tiada sesiapa yang dapat memberi syafaat di sisi-Nya melainkan dengan izin-Nya. Dia mengetahui apa yang di hadapan mereka dan apa yang di belakang mereka, dan mereka tidak mengetahui sesuatu pun daripada ilmu-Nya melainkan apa yang Dia kehendaki. Kursi-Nya meliputi langit dan bumi, dan Dia tidak berasa berat memelihara keduanya. Dia Maha Tinggi, Maha Besar."
+      },
+      "repeat": 1,
+      "reference": "Al-Baqarah 255; an-Nasa'i, as-Sunan al-Kubra 9848"
+    },
+    {
+      "arabic": "سُبْحَانَ اللَّهِ",
+      "transliteration": "Subḥānallāh.",
+      "translation": {
+        "id": "Mahasuci Allah.",
+        "en": "Glory be to Allah.",
+        "ms": "Maha Suci Allah."
+      },
+      "repeat": 33,
+      "reference": "Muslim 597"
+    },
+    {
+      "arabic": "الْحَمْدُ لِلَّهِ",
+      "transliteration": "Al-ḥamdu lillāh.",
+      "translation": {
+        "id": "Segala puji bagi Allah.",
+        "en": "All praise is for Allah.",
+        "ms": "Segala puji bagi Allah."
+      },
+      "repeat": 33,
+      "reference": "Muslim 597"
+    },
+    {
+      "arabic": "اللَّهُ أَكْبَرُ",
+      "transliteration": "Allāhu akbar.",
+      "translation": {
+        "id": "Allah Mahabesar.",
+        "en": "Allah is the Greatest.",
+        "ms": "Allah Maha Besar."
+      },
+      "repeat": 33,
+      "reference": "Muslim 597"
+    },
+    {
+      "arabic": "لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ",
+      "transliteration": "Lā ilāha illallāhu waḥdahū lā syarīka lah, lahul-mulku wa lahul-ḥamdu wa huwa 'alā kulli syai'in qadīr.",
+      "translation": {
+        "id": "Tiada tuhan selain Allah semata, tiada sekutu bagi-Nya. Milik-Nya kerajaan dan milik-Nya segala puji, dan Dia Mahakuasa atas segala sesuatu.",
+        "en": "There is no god but Allah alone, without partner. His is the dominion and His is the praise, and He has power over all things.",
+        "ms": "Tiada tuhan melainkan Allah Yang Esa, tiada sekutu bagi-Nya. Bagi-Nya kerajaan dan bagi-Nya segala puji, dan Dia Maha Berkuasa atas segala sesuatu."
+      },
+      "repeat": 1,
+      "reference": "Muslim 597",
+      "note": {
+        "id": "Penyempurna seratus.",
+        "en": "Completes the hundred.",
+        "ms": "Penyempurna seratus.",
+        "ar": "تمام المئة."
+      }
+    },
+    {
+      "arabic": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ. قُلْ هُوَ اللَّهُ أَحَدٌ. اللَّهُ الصَّمَدُ. لَمْ يَلِدْ وَلَمْ يُولَدْ. وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ",
+      "transliteration": "Bismillāhir-raḥmānir-raḥīm. Qul huwallāhu aḥad. Allāhuṣ-ṣamad. Lam yalid wa lam yūlad. Wa lam yakul lahū kufuwan aḥad.",
+      "translation": {
+        "id": "Dengan nama Allah Yang Maha Pengasih, Maha Penyayang. Katakanlah: Dialah Allah, Yang Maha Esa. Allah tempat meminta segala sesuatu. Dia tidak beranak dan tidak diperanakkan. Dan tidak ada sesuatu pun yang setara dengan Dia.",
+        "en": "In the name of Allah, the Most Gracious, the Most Merciful. Say: He is Allah, the One. Allah, the Eternal Refuge. He neither begets nor is born. And there is none comparable to Him.",
+        "ms": "Dengan nama Allah Yang Maha Pemurah, lagi Maha Mengasihani. Katakanlah: Dialah Allah Yang Maha Esa. Allah tempat bergantung segala sesuatu. Dia tidak beranak dan tidak diperanakkan. Dan tiada sesuatu pun yang setara dengan-Nya."
+      },
+      "repeat": 1,
+      "reference": "Al-Ikhlas; Abu Dawud 1523, at-Tirmidzi 2903",
+      "note": {
+        "id": "Tiga kali setelah Subuh dan Magrib.",
+        "en": "Three times after Fajr and Maghrib.",
+        "ms": "Tiga kali selepas Subuh dan Maghrib.",
+        "ar": "ثلاث مرات بعد الفجر والمغرب."
+      }
+    },
+    {
+      "arabic": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ. قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ. مِنْ شَرِّ مَا خَلَقَ. وَمِنْ شَرِّ غَاسِقٍ إِذَا وَقَبَ. وَمِنْ شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ. وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ",
+      "transliteration": "Bismillāhir-raḥmānir-raḥīm. Qul a'ūdzu birabbil-falaq. Min syarri mā khalaq. Wa min syarri ghāsiqin idzā waqab. Wa min syarrin-naffātsāti fil-'uqad. Wa min syarri ḥāsidin idzā ḥasad.",
+      "translation": {
+        "id": "Dengan nama Allah Yang Maha Pengasih, Maha Penyayang. Katakanlah: Aku berlindung kepada Tuhan yang menguasai subuh, dari kejahatan makhluk yang Dia ciptakan, dari kejahatan malam apabila telah gelap gulita, dari kejahatan perempuan-perempuan penyihir yang meniup pada buhul-buhul, dan dari kejahatan orang yang dengki apabila dia dengki.",
+        "en": "In the name of Allah, the Most Gracious, the Most Merciful. Say: I seek refuge in the Lord of daybreak, from the evil of what He created, from the evil of darkness when it settles, from the evil of those who blow on knots, and from the evil of an envier when he envies.",
+        "ms": "Dengan nama Allah Yang Maha Pemurah, lagi Maha Mengasihani. Katakanlah: Aku berlindung kepada Tuhan yang menguasai waktu subuh, daripada kejahatan makhluk yang Dia ciptakan, daripada kejahatan malam apabila ia gelap gelita, daripada kejahatan ahli sihir yang meniup pada simpulan-simpulan, dan daripada kejahatan orang yang dengki apabila dia berdengki."
+      },
+      "repeat": 1,
+      "reference": "Al-Falaq; Abu Dawud 1523, at-Tirmidzi 2903",
+      "note": {
+        "id": "Tiga kali setelah Subuh dan Magrib.",
+        "en": "Three times after Fajr and Maghrib.",
+        "ms": "Tiga kali selepas Subuh dan Maghrib.",
+        "ar": "ثلاث مرات بعد الفجر والمغرب."
+      }
+    },
+    {
+      "arabic": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ. قُلْ أَعُوذُ بِرَبِّ النَّاسِ. مَلِكِ النَّاسِ. إِلَٰهِ النَّاسِ. مِنْ شَرِّ الْوَسْوَاسِ الْخَنَّاسِ. الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ. مِنَ الْجِنَّةِ وَالنَّاسِ",
+      "transliteration": "Bismillāhir-raḥmānir-raḥīm. Qul a'ūdzu birabbin-nās. Malikin-nās. Ilāhin-nās. Min syarril-waswāsil-khannās. Alladzī yuwaswisu fī ṣudūrin-nās. Minal-jinnati wan-nās.",
+      "translation": {
+        "id": "Dengan nama Allah Yang Maha Pengasih, Maha Penyayang. Katakanlah: Aku berlindung kepada Tuhan manusia, Raja manusia, sembahan manusia, dari kejahatan bisikan setan yang bersembunyi, yang membisikkan kejahatan ke dalam dada manusia, dari golongan jin dan manusia.",
+        "en": "In the name of Allah, the Most Gracious, the Most Merciful. Say: I seek refuge in the Lord of mankind, the King of mankind, the God of mankind, from the evil of the retreating whisperer, who whispers into the hearts of mankind, from among jinn and mankind.",
+        "ms": "Dengan nama Allah Yang Maha Pemurah, lagi Maha Mengasihani. Katakanlah: Aku berlindung kepada Tuhan sekalian manusia, Raja sekalian manusia, Tuhan yang disembah sekalian manusia, daripada kejahatan pembisik yang bersembunyi, yang membisikkan hasutan ke dalam dada manusia, daripada golongan jin dan manusia."
+      },
+      "repeat": 1,
+      "reference": "An-Nas; Abu Dawud 1523, at-Tirmidzi 2903",
+      "note": {
+        "id": "Tiga kali setelah Subuh dan Magrib.",
+        "en": "Three times after Fajr and Maghrib.",
+        "ms": "Tiga kali selepas Subuh dan Maghrib.",
+        "ar": "ثلاث مرات بعد الفجر والمغرب."
+      }
+    },
+    {
+      "arabic": "لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، يُحْيِي وَيُمِيتُ، وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ",
+      "transliteration": "Lā ilāha illallāhu waḥdahū lā syarīka lah, lahul-mulku wa lahul-ḥamdu, yuḥyī wa yumītu, wa huwa 'alā kulli syai'in qadīr.",
+      "translation": {
+        "id": "Tiada tuhan selain Allah semata, tiada sekutu bagi-Nya. Milik-Nya kerajaan dan milik-Nya segala puji. Dia menghidupkan dan mematikan, dan Dia Mahakuasa atas segala sesuatu.",
+        "en": "There is no god but Allah alone, without partner. His is the dominion and His is the praise. He gives life and causes death, and He has power over all things.",
+        "ms": "Tiada tuhan melainkan Allah Yang Esa, tiada sekutu bagi-Nya. Bagi-Nya kerajaan dan bagi-Nya segala puji. Dia menghidupkan dan mematikan, dan Dia Maha Berkuasa atas segala sesuatu."
+      },
+      "repeat": 10,
+      "reference": "At-Tirmidzi 3474",
+      "note": {
+        "id": "Setelah Subuh dan Magrib.",
+        "en": "After Fajr and Maghrib.",
+        "ms": "Selepas Subuh dan Maghrib.",
+        "ar": "بعد الفجر والمغرب."
+      }
+    },
+    {
+      "arabic": "اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا طَيِّبًا، وَعَمَلًا مُتَقَبَّلًا",
+      "transliteration": "Allāhumma innī as'aluka 'ilman nāfi'ā, wa rizqan ṭayyibā, wa 'amalan mutaqabbalā.",
+      "translation": {
+        "id": "Ya Allah, aku memohon kepada-Mu ilmu yang bermanfaat, rezeki yang baik, dan amal yang diterima.",
+        "en": "O Allah, I ask You for beneficial knowledge, good provision and deeds that are accepted.",
+        "ms": "Ya Allah, aku memohon kepada-Mu ilmu yang bermanfaat, rezeki yang baik dan amalan yang diterima."
+      },
+      "repeat": 1,
+      "reference": "Ibnu Majah 925",
+      "note": {
+        "id": "Setelah Subuh.",
+        "en": "After Fajr.",
+        "ms": "Selepas Subuh.",
+        "ar": "بعد الفجر."
+      }
+    }
+  ]
+}

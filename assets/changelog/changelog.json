@@ -7,6 +7,15 @@
         {
           "type": "new",
           "text": {
+            "en": "After-prayer dzikir in the Worship tab: istighfar, Ayat al-Kursi, tasbih, tahmid and takbir 33 times each, and the three Quls, with what to add after Fajr and Maghrib.",
+            "id": "Zikir setelah salat di tab Ibadah: istigfar, Ayat Kursi, tasbih, tahmid, dan takbir masing-masing 33 kali, serta tiga surah Qul, dengan bacaan tambahan setelah Subuh dan Magrib.",
+            "ms": "Zikir selepas solat dalam tab Ibadah: istighfar, Ayat Kursi, tasbih, tahmid dan takbir 33 kali setiap satu, serta tiga surah Qul, dengan bacaan tambahan selepas Subuh dan Maghrib.",
+            "ar": "الأذكار بعد الصلاة في تبويب العبادة: الاستغفار وآية الكرسي والتسبيح والتحميد والتكبير ثلاثًا وثلاثين، والمعوذات، مع ما يُزاد بعد الفجر والمغرب."
+          }
+        },
+        {
+          "type": "new",
+          "text": {
             "en": "Daily duas in the Worship tab, grouped by situation (sleeping and waking, eating, getting dressed, the toilet, ablution, home, the mosque, travel, rain, sneezing, hardship and any time), with Arabic, transliteration, translation and the hadith or verse each comes from.",
             "id": "Doa harian di tab Ibadah, dikelompokkan menurut keadaan (tidur dan bangun, makan, berpakaian, kamar kecil, wudu, rumah, masjid, bepergian, hujan, bersin, kesulitan, dan setiap saat), dengan teks Arab, transliterasi, terjemahan, serta hadis atau ayat sumbernya.",
             "ms": "Doa harian dalam tab Ibadah, dikumpulkan mengikut keadaan (tidur dan bangun, makan, berpakaian, tandas, wuduk, rumah, masjid, perjalanan, hujan, bersin, kesusahan dan bila-bila masa), dengan teks Arab, transliterasi, terjemahan serta hadis atau ayat sumbernya.",

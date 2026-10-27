@@ -1578,6 +1578,18 @@ abstract class AppLocalizations {
   /// **'Kitab zikir'**
   String get dzikirCollection;
 
+  /// No description provided for @afterPrayerDzikir.
+  ///
+  /// In id, this message translates to:
+  /// **'Zikir setelah salat'**
+  String get afterPrayerDzikir;
+
+  /// No description provided for @afterPrayerDzikirSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Istigfar, tasbih, Ayat Kursi, dan lainnya'**
+  String get afterPrayerDzikirSubtitle;
+
   /// No description provided for @duas.
   ///
   /// In id, this message translates to:

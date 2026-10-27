@@ -186,4 +186,66 @@ void main() {
       expect(find.text(item.arabic, skipOffstage: false), findsOneWidget);
     }
   });
+
+  final afterPrayer = parseDzikirCollection(
+    File(afterPrayerDzikirAsset).readAsStringSync(),
+  );
+
+  test('the after-prayer dzikir is complete and has no sessions', () {
+    final languages = AppLocalizations.supportedLocales
+        .map((l) => l.languageCode)
+        .toSet();
+    expect(afterPrayer.name.keys.toSet(), languages);
+    expect(afterPrayer.source.keys.toSet(), languages);
+    expect(afterPrayer.hasSessions, isFalse);
+    // Subhanallah, alhamdulillah and Allahu akbar 33 times each.
+    expect(afterPrayer.items.where((i) => i.repeat == 33), hasLength(3));
+    for (final item in afterPrayer.items) {
+      final reason = item.transliteration;
+      expect(item.arabic.trim(), isNotEmpty, reason: reason);
+      expect(item.reference, contains(RegExp(r'\d')), reason: reason);
+      expect(item.translation.keys.toSet(), languages.difference({'ar'}));
+      if (item.note.isNotEmpty) {
+        expect(item.note.keys.toSet(), languages, reason: reason);
+      }
+    }
+  });
+
+  testWidgets('the after-prayer screen lists every item with its note', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({});
+    final prefs = await SharedPreferences.getInstance();
+    tester.view.physicalSize = const Size(800, 12000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          sharedPreferencesProvider.overrideWithValue(prefs),
+          prayerProvider.overrideWith(_NoPrayerTimes.new),
+          afterPrayerDzikirProvider.overrideWith((ref) async => afterPrayer),
+        ],
+        child: const MaterialApp(
+          locale: Locale('en'),
+          localizationsDelegates: [
+            GlobalMaterialLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            ...AppLocalizations.localizationsDelegates,
+          ],
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: DzikirScreen.afterPrayer(),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('After-prayer dzikir'), findsOneWidget);
+    expect(find.text('Morning'), findsNothing);
+    for (final item in afterPrayer.items) {
+      expect(find.text(item.arabic, skipOffstage: false), findsOneWidget);
+    }
+    expect(find.text('After Fajr.', skipOffstage: false), findsOneWidget);
+  });
 }
