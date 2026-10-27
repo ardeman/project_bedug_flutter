@@ -74,7 +74,9 @@ Color glassSheetTintOf(BuildContext ctx) => _adaptiveTint(
 /// capsule whose selection pill can be tapped or dragged between tabs.
 ///
 /// It places itself at the bottom of its parent, so put it last in a
-/// [Stack] over the page.
+/// [Stack] over the page. Where the system keeps a vertical bar on one side
+/// of the screen, as iPhone Duo does, it becomes a rail in that bar instead
+/// (see [railSideOf]).
 class GlassNavBar extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
@@ -128,12 +130,37 @@ class GlassNavBar extends StatelessWidget {
       : AppSpacing.sm;
 
   /// How much of the screen bottom the floating bar covers, measured from
-  /// the bottom edge, for the bottom padding of the page under it.
-  static double occupiedHeight(BuildContext ctx) =>
-      _bottomGapOf(ctx) + heightOf(ctx) + AppSpacing.xs;
+  /// the bottom edge, for the bottom padding of the page under it. A rail
+  /// covers none of it, so the page only keeps clear of the home indicator.
+  static double occupiedHeight(BuildContext ctx) => railSideOf(ctx) != null
+      ? MediaQuery.of(ctx).padding.bottom
+      : _bottomGapOf(ctx) + heightOf(ctx) + AppSpacing.xs;
+
+  /// The side of the system's vertical bar, or null when there is none.
+  ///
+  /// iPhone Duo moves the status bar and the Dynamic Island into a bar along
+  /// one side (the right, or the outer edge in Split View), reported as a
+  /// safe-area inset on that side only, and puts the tab bar there too so it
+  /// sits under the right thumb. Other iPhones in landscape inset both sides
+  /// equally, so an uneven inset means the vertical bar.
+  static TextDirection? railSideOf(BuildContext ctx) {
+    final padding = MediaQuery.paddingOf(ctx);
+    if (padding.left == padding.right) return null;
+    return padding.right > padding.left ? TextDirection.rtl : TextDirection.ltr;
+  }
 
   @override
   Widget build(BuildContext ctx) {
+    final railSide = railSideOf(ctx);
+    if (railSide != null) {
+      return _GlassNavRail(
+        side: railSide,
+        bottomGap: _bottomGapOf(ctx),
+        currentIndex: currentIndex,
+        onTap: onTap,
+        items: items,
+      );
+    }
     final theme = Theme.of(ctx);
     final mq = MediaQuery.of(ctx);
     final width = math.min(mq.size.width - AppSpacing.md * 2, _maxWidth);
@@ -196,6 +223,162 @@ class GlassNavBar extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Keeps [child] clear of the system's vertical bar on iPhone Duo (see
+/// [GlassNavBar.railSideOf]), which holds the status items and the tab
+/// rail. Elsewhere it adds nothing.
+class SideBarSafeArea extends StatelessWidget {
+  final Widget child;
+
+  const SideBarSafeArea({super.key, required this.child});
+
+  @override
+  Widget build(BuildContext ctx) {
+    final side = GlassNavBar.railSideOf(ctx);
+    if (side == null) return child;
+    // The bar shows the page's background, not the shell's.
+    return ColoredBox(
+      color: Theme.of(ctx).scaffoldBackgroundColor,
+      child: SafeArea(
+        top: false,
+        bottom: false,
+        left: side == TextDirection.ltr,
+        right: side == TextDirection.rtl,
+        child: child,
+      ),
+    );
+  }
+}
+
+/// [GlassNavBar] as a vertical glass capsule in the system's side bar on
+/// iPhone Duo, below the status items and the Dynamic Island, like the
+/// system's own tab rail. Its selection pill can be tapped or dragged
+/// between tabs.
+class _GlassNavRail extends StatelessWidget {
+  /// The bar's side: [TextDirection.rtl] for the right, else the left.
+  final TextDirection side;
+  final double bottomGap;
+  final int currentIndex;
+  final ValueChanged<int> onTap;
+  final List<GlassNavItem> items;
+
+  const _GlassNavRail({
+    required this.side,
+    required this.bottomGap,
+    required this.currentIndex,
+    required this.onTap,
+    required this.items,
+  });
+
+  /// Rail width: a navigation icon in a 44pt touch target plus its pill
+  /// inset; it fits the 84pt side bar with room either side.
+  static const _width = 56.0;
+
+  /// Height of one tab: a 44pt touch target plus room for the pill.
+  static const _itemExtent = 52.0;
+
+  /// Space between the selection pill and the rail's edge.
+  static const _pillInset = AppSpacing.xxs;
+
+  void _selectAt(double dy, double extent) {
+    final index = (dy / extent).floor().clamp(0, items.length - 1);
+    if (index != currentIndex) onTap(index);
+  }
+
+  @override
+  Widget build(BuildContext ctx) {
+    final theme = Theme.of(ctx);
+    final mq = MediaQuery.of(ctx);
+    final barWidth = side == TextDirection.rtl
+        ? mq.padding.right
+        : mq.padding.left;
+    // Keep below the status items at the top of the side bar; the rail
+    // shrinks its tabs before it would reach them.
+    final maxHeight = mq.size.height * 0.6;
+    final extent = math.min(
+      _itemExtent,
+      (maxHeight - _pillInset * 2) / items.length,
+    );
+    final height = extent * items.length + _pillInset * 2;
+    final selectedColor = AppColors.accentOf(ctx);
+    final unselectedColor = theme.colorScheme.onSurface.withValues(alpha: 0.62);
+    final duration = mq.disableAnimations
+        ? Duration.zero
+        : const Duration(milliseconds: 320);
+    final rail = SizedBox(
+      width: _width,
+      height: height,
+      child: LiquidGlassLens(
+        style: LiquidGlassStyle(
+          shape: const LiquidGlassShape.continuousRoundedRectangle(
+            cornerRadius: _width / 2,
+          ),
+          color: glassTintOf(ctx),
+          blur: 6,
+        ),
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTapUp: (d) => _selectAt(d.localPosition.dy - _pillInset, extent),
+          onVerticalDragUpdate: (d) =>
+              _selectAt(d.localPosition.dy - _pillInset, extent),
+          child: Stack(
+            children: [
+              AnimatedPositioned(
+                duration: duration,
+                curve: Curves.easeOutBack,
+                left: _pillInset,
+                right: _pillInset,
+                top: _pillInset + extent * currentIndex,
+                height: extent,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: selectedColor.withValues(alpha: 0.14),
+                    shape: const StadiumBorder(),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(_pillInset),
+                child: Column(
+                  children: [
+                    for (final (i, item) in items.indexed)
+                      Semantics(
+                        button: true,
+                        selected: i == currentIndex,
+                        label: item.label,
+                        onTap: () => onTap(i),
+                        excludeSemantics: true,
+                        child: SizedBox(
+                          height: extent,
+                          child: Center(
+                            child: Icon(
+                              i == currentIndex ? item.activeIcon : item.icon,
+                              size: AppControlSizes.navigationIcon,
+                              color: i == currentIndex
+                                  ? selectedColor
+                                  : unselectedColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    // Centered in the side bar, at its bottom like the tab bar it replaces.
+    return Positioned(
+      bottom: bottomGap,
+      left: side == TextDirection.ltr ? 0 : null,
+      right: side == TextDirection.rtl ? 0 : null,
+      width: barWidth,
+      child: Center(child: rail),
     );
   }
 }

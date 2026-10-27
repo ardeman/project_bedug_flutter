@@ -222,9 +222,8 @@ class _PrayerDayPickerState extends State<PrayerDayPicker>
     final l10n = AppLocalizations.of(ctx);
     final theme = Theme.of(ctx);
     final mq = MediaQuery.of(ctx);
-    final isLandscape = mq.orientation == Orientation.landscape;
-    final sideInsetLeft = isLandscape ? mq.padding.left : 0.0;
-    final sideInsetRight = isLandscape ? mq.padding.right : 0.0;
+    final sideInsetLeft = mq.padding.left;
+    final sideInsetRight = mq.padding.right;
     final locale = Localizations.localeOf(ctx).toLanguageTag();
     final languageCode = Localizations.localeOf(ctx).languageCode;
     final offset = _selectedOffset;

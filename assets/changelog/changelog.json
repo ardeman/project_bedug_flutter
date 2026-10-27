@@ -5,6 +5,15 @@
       "date": null,
       "changes": [
         {
+          "type": "improved",
+          "text": {
+            "en": "On iPhone Duo, the tabs sit on the right side of the screen next to the clock, within reach of your thumb.",
+            "id": "Di iPhone Duo, tab berada di sisi kanan layar di samping jam sehingga mudah dijangkau ibu jari.",
+            "ms": "Di iPhone Duo, tab berada di sisi kanan skrin di sebelah jam supaya mudah dicapai ibu jari.",
+            "ar": "على iPhone Duo، أصبحت التبويبات على الجانب الأيمن من الشاشة بجوار الساعة في متناول إبهامك."
+          }
+        },
+        {
           "type": "fixed",
           "text": {
             "en": "With larger text sizes, the tab bar and prayer times no longer spill off narrow or landscape screens. On iPhone, including foldable iPhones, the time and status icons stay readable over the green Prayer Times header.",

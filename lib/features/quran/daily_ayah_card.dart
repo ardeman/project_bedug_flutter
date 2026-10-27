@@ -37,16 +37,15 @@ class DailyAyahCard extends ConsumerWidget {
     final ayahRef = pick.ayah.ref;
     final translation = pick.ayah.translationFor(languageCode);
     final mq = MediaQuery.of(ctx);
-    final landscape = mq.orientation == Orientation.landscape;
 
     return Semantics(
       button: true,
       onTapHint: l10n.dailyAyahOpen,
       child: GlassCard(
         margin: EdgeInsets.fromLTRB(
-          AppSpacing.md + (landscape ? mq.padding.left : 0),
+          AppSpacing.md + mq.padding.left,
           AppSpacing.sm,
-          AppSpacing.md + (landscape ? mq.padding.right : 0),
+          AppSpacing.md + mq.padding.right,
           AppSpacing.xxs,
         ),
         onTap: () => Navigator.of(ctx).push(

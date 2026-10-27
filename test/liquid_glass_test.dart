@@ -145,6 +145,71 @@ void main() {
     );
   }
 
+  for (final (padding, rail) in [
+    // iPhone Duo: the system's vertical bar takes the right side.
+    (const FakeViewPadding(right: 84, bottom: 34), true),
+    // Other iPhones in landscape inset both sides alike.
+    (const FakeViewPadding(left: 59, right: 59, bottom: 21), false),
+  ]) {
+    testWidgets(
+      'glass tabs ${rail ? 'move into' : 'stay out of'} a side bar with '
+      'insets ${padding.left}/${padding.right}',
+      (tester) async {
+        tester.view.physicalSize = const Size(466, 678);
+        tester.view.devicePixelRatio = 1;
+        tester.view.padding = padding;
+        addTearDown(tester.view.reset);
+        var selected = 0;
+        late BuildContext barContext;
+        await tester.pumpWidget(
+          MaterialApp(
+            theme: buildAppTheme(Brightness.light),
+            home: Scaffold(
+              body: StatefulBuilder(
+                builder: (context, setState) {
+                  barContext = context;
+                  return Stack(
+                    children: [
+                      GlassNavBar(
+                        currentIndex: selected,
+                        onTap: (index) => setState(() => selected = index),
+                        items: const [
+                          GlassNavItem(
+                            icon: Icons.schedule,
+                            activeIcon: Icons.schedule,
+                            label: 'Prayers',
+                          ),
+                          GlassNavItem(
+                            icon: Icons.settings,
+                            activeIcon: Icons.settings,
+                            label: 'Settings',
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+
+        expect(find.byType(LiquidGlassTabBar), rail ? findsNothing : findsOne);
+        if (!rail) return;
+        final settings = find.byIcon(Icons.settings);
+        // The rail sits in the side bar, under the right thumb.
+        expect(tester.getCenter(settings).dx, greaterThan(466 - 84));
+        expect(GlassNavBar.occupiedHeight(barContext), 34);
+        await tester.tap(settings);
+        await tester.pumpAndSettle();
+        expect(selected, 1);
+        expect(tester.takeException(), isNull);
+      },
+      variant: TargetPlatformVariant.only(TargetPlatform.iOS),
+    );
+  }
+
   for (final brightness in Brightness.values) {
     for (final direction in TextDirection.values) {
       testWidgets(

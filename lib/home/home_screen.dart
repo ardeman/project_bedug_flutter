@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/design/adaptive_scaffold.dart';
 import '../core/design/platform_capabilities.dart';
+import '../core/design/liquid_glass.dart';
 import '../features/prayer_times/prayer_times_screen.dart';
 import '../features/quran/quran_screen.dart';
 import '../features/settings/settings_screen.dart';
@@ -69,10 +70,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       child: IndexedStack(
         index: _idx,
         children: [
+          // Its header runs under the side bar; its cards keep clear.
           const PrayerTimesScreen(),
-          WorshipScreen(isActive: _idx == 1),
-          const QuranScreen(),
-          const SettingsScreen(),
+          SideBarSafeArea(child: WorshipScreen(isActive: _idx == 1)),
+          const SideBarSafeArea(child: QuranScreen()),
+          const SideBarSafeArea(child: SettingsScreen()),
         ],
       ),
     );

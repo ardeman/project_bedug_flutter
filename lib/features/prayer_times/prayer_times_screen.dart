@@ -1565,9 +1565,8 @@ class _LiquidGlassCard extends StatelessWidget {
     final onSurface = theme.colorScheme.onSurface;
     final categoryColor = entry.category.colorOf(ctx);
     final mq = MediaQuery.of(ctx);
-    final isLandscape = mq.orientation == Orientation.landscape;
-    final sideInsetLeft = isLandscape ? mq.padding.left : 0.0;
-    final sideInsetRight = isLandscape ? mq.padding.right : 0.0;
+    final sideInsetLeft = mq.padding.left;
+    final sideInsetRight = mq.padding.right;
     final t = entry.time;
     final timeStr = t == null
         ? '--:--'
