@@ -994,4 +994,41 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get khatamMarkRead => 'Mark as read up to here';
+
+  @override
+  String get hijriEvents => 'Islamic events';
+
+  @override
+  String get hijriEventsSubtitle =>
+      'Eids, holy days and the white days for the year ahead';
+
+  @override
+  String get hijriEventsLoadError => 'Couldn\'t load the Islamic events.';
+
+  @override
+  String hijriEventsWhen(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'In $count days',
+      one: 'Tomorrow',
+      zero: 'Today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get hijriEventsNote =>
+      'Dates follow the calculated Umm al-Qura calendar and can be a day off local announcements.';
+
+  @override
+  String get hijriEventReminder => 'Event reminders';
+
+  @override
+  String get hijriEventReminderSubtitle =>
+      'At Maghrib, the evening before holy days and the white days';
+
+  @override
+  String get notifHijriEventTomorrow =>
+      'Tomorrow. Its Hijri day begins this evening.';
 }

@@ -1,5 +1,6 @@
 import 'package:adhan/adhan.dart';
 
+import '../../features/hijri_events/hijri_events.dart';
 import 'extra_prayer_times.dart';
 import 'notification_preferences.dart';
 
@@ -12,12 +13,17 @@ class PrayerNotification {
   /// Set on a dzikir reminder, whose [alert] is the prayer it follows.
   final DzikirReminder? dzikir;
 
+  /// Set on an event reminder: the events of the next day, announced at
+  /// Maghrib ([alert]) when their Hijri day begins.
+  final List<HijriEvent>? events;
+
   const PrayerNotification(
     this.id,
     this.alert,
     this.time, {
     this.isReminder = false,
     this.dzikir,
+    this.events,
   });
 }
 
@@ -26,11 +32,13 @@ const maxScheduledNotifications = 64;
 
 /// Up to six days of alerts, the soonest first, capped at Apple's limit.
 /// Each date is calculated separately; prayer times must not repeat daily.
+/// Event reminders need [events].
 List<PrayerNotification> buildNotificationSchedule(
   PrayerTimes times,
   NotificationPreferences preferences,
-  DateTime now,
-) {
+  DateTime now, {
+  HijriEvents? events,
+}) {
   if (!preferences.enabled) return const [];
   final alerts = PrayerAlert.values;
   final result = <PrayerNotification>[];
@@ -90,6 +98,32 @@ List<PrayerNotification> buildNotificationSchedule(
           day * DzikirReminder.values.length +
           dzikir.index;
       result.add(PrayerNotification(id, alert, time, dzikir: dzikir));
+    }
+    if (events != null && preferences.includesEvents) {
+      // A run of days, such as the white days, is announced once, before
+      // its first day.
+      final today = events.on(date).toSet();
+      final starting = [
+        for (final event in events.on(
+          DateTime(date.year, date.month, date.day + 1),
+        ))
+          if (!today.contains(event)) event,
+      ];
+      if (starting.isNotEmpty && daily.maghrib.isAfter(now)) {
+        // Event IDs follow every day's dzikir reminders.
+        final id =
+            days * alerts.length * 2 +
+            days * DzikirReminder.values.length +
+            day;
+        result.add(
+          PrayerNotification(
+            id,
+            PrayerAlert.maghrib,
+            daily.maghrib,
+            events: starting,
+          ),
+        );
+      }
     }
   }
   result.sort((a, b) => a.time.compareTo(b.time));

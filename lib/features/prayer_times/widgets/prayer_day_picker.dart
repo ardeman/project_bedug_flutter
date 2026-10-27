@@ -14,6 +14,7 @@ import '../../../core/design/platform_capabilities.dart';
 import '../../../core/services/selection_feedback.dart';
 import '../../../core/theme/app_tokens.dart';
 import '../../../generated/l10n/app_localizations.dart';
+import '../../hijri_events/hijri_events.dart';
 import 'hijri_month_grid.dart';
 
 /// Picks the day the prayer cards below show: an endless strip of dates (past
@@ -38,6 +39,10 @@ class PrayerDayPicker extends StatefulWidget {
   /// Date to convert for today's live Hijri label, including sunset rollover.
   /// Other selected dates keep their static calendar conversion.
   final DateTime? liveHijriDate;
+
+  /// Events on the Hijri calendar, named under the picked date and marked
+  /// in the month grid; null while they load.
+  final HijriEvents? events;
   final ValueChanged<DateTime> onSelected;
 
   const PrayerDayPicker({
@@ -45,6 +50,7 @@ class PrayerDayPicker extends StatefulWidget {
     required this.today,
     required this.selected,
     this.liveHijriDate,
+    this.events,
     required this.onSelected,
   });
 
@@ -213,6 +219,7 @@ class _PrayerDayPickerState extends State<PrayerDayPicker>
     final sideInsetLeft = isLandscape ? mq.padding.left : 0.0;
     final sideInsetRight = isLandscape ? mq.padding.right : 0.0;
     final locale = Localizations.localeOf(ctx).toLanguageTag();
+    final languageCode = Localizations.localeOf(ctx).languageCode;
     final offset = _selectedOffset;
     final showToday = offset != 0 || (_isCalendarOpen && _isGridPagedAway);
     // Name the year only when it isn't this one.
@@ -223,6 +230,7 @@ class _PrayerDayPickerState extends State<PrayerDayPicker>
     final afterMaghrib =
         liveDate != null && daysBetween(widget.selected, liveDate) > 0;
     final hijriDate = hijriDateLabel(l10n, liveDate ?? widget.selected);
+    final events = widget.events?.on(widget.selected) ?? const [];
 
     final content = Padding(
       padding: const EdgeInsets.only(top: AppSpacing.sm),
@@ -249,6 +257,7 @@ class _PrayerDayPickerState extends State<PrayerDayPicker>
                     key: _gridKey,
                     today: widget.today,
                     selected: widget.selected,
+                    events: widget.events,
                     onSelected: (date) =>
                         _pick(daysBetween(widget.today, date)),
                     onPagedAway: (away) =>
@@ -319,6 +328,16 @@ class _PrayerDayPickerState extends State<PrayerDayPicker>
                               l10n.hijriAfterMaghrib,
                               style: theme.textTheme.bodySmall?.copyWith(
                                 color: theme.colorScheme.onSurfaceVariant,
+                              ),
+                            ),
+                          if (events.isNotEmpty)
+                            Text(
+                              events
+                                  .map((e) => e.nameFor(languageCode))
+                                  .join(' · '),
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.accentOf(ctx),
                               ),
                             ),
                         ],

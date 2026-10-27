@@ -62,6 +62,7 @@ flutter:
     - assets/content/duas/
     - assets/content/asmaul_husna.json
     - assets/content/after_prayer_dzikir.json
+    - assets/content/hijri_events.json
     # Built by scripts/build_quran_content.py from tanzil.net.
     - assets/content/quran/
     # The hero's watermark, tinted in the app.

@@ -88,6 +88,10 @@ class NotificationPreferences {
   /// Dzikir reminders the user turned on; none until they do.
   final Set<DzikirReminder> dzikirReminders;
 
+  /// A reminder at Maghrib the evening before each Hijri calendar event,
+  /// when its Hijri day begins; off until the user turns it on.
+  final bool eventReminders;
+
   const NotificationPreferences({
     this.enabled = true,
     this.alerts = defaultPrayerAlerts,
@@ -95,12 +99,15 @@ class NotificationPreferences {
     this.sounds = const {},
     this.phoneSounds = const {},
     this.dzikirReminders = const {},
+    this.eventReminders = false,
   });
 
   bool includes(PrayerAlert alert) => enabled && alerts.contains(alert);
 
   bool includesDzikir(DzikirReminder reminder) =>
       enabled && dzikirReminders.contains(reminder);
+
+  bool get includesEvents => enabled && eventReminders;
 
   int reminderOf(PrayerAlert alert) => reminders[alert] ?? 0;
 
@@ -119,6 +126,7 @@ class NotificationPreferences {
     Map<PrayerAlert, PrayerNotificationSound>? sounds,
     Map<PrayerAlert, PhoneSound>? phoneSounds,
     Set<DzikirReminder>? dzikirReminders,
+    bool? eventReminders,
   }) => NotificationPreferences(
     enabled: enabled ?? this.enabled,
     alerts: Set.unmodifiable(alerts ?? this.alerts),
@@ -126,5 +134,6 @@ class NotificationPreferences {
     sounds: Map.unmodifiable(sounds ?? this.sounds),
     phoneSounds: Map.unmodifiable(phoneSounds ?? this.phoneSounds),
     dzikirReminders: Set.unmodifiable(dzikirReminders ?? this.dzikirReminders),
+    eventReminders: eventReminders ?? this.eventReminders,
   );
 }

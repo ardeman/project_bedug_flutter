@@ -7,6 +7,15 @@
         {
           "type": "new",
           "text": {
+            "en": "Islamic events on the Hijri calendar: Eid al-Fitr, Eid al-Adha, Arafah, Ashura, Isra and Mi'raj, the Mawlid, the first day of Ramadan, the Islamic New Year and the white days are marked in the month grid and named under the picked date, listed for the year ahead in the Worship tab, and can remind you at Maghrib the evening before.",
+            "id": "Hari besar Islam di kalender Hijriah: Idulfitri, Iduladha, Arafah, Asyura, Isra Mikraj, Maulid Nabi, awal Ramadan, Tahun Baru Hijriah, dan ayyamul bidh ditandai di kalender bulanan dan disebut di bawah tanggal yang dipilih, didaftar untuk setahun ke depan di tab Ibadah, dan bisa diingatkan saat Magrib pada malam sebelumnya.",
+            "ms": "Hari kebesaran Islam dalam takwim Hijrah: Aidilfitri, Aidiladha, Arafah, Asyura, Israk dan Mikraj, Maulidur Rasul, awal Ramadan, Awal Muharam dan hari putih ditandakan dalam takwim bulanan dan dinamakan di bawah tarikh yang dipilih, disenaraikan untuk setahun ke hadapan dalam tab Ibadah, dan boleh diingatkan waktu Maghrib pada malam sebelumnya.",
+            "ar": "المناسبات الإسلامية في التقويم الهجري: عيد الفطر وعيد الأضحى وعرفة وعاشوراء والإسراء والمعراج والمولد النبوي وأول رمضان ورأس السنة الهجرية والأيام البيض، معلّمة في تقويم الشهر ومذكورة تحت التاريخ المختار، ومدرجة للعام القادم في تبويب العبادة، مع تذكير اختياري عند المغرب في الليلة السابقة."
+          }
+        },
+        {
+          "type": "new",
+          "text": {
             "en": "A verse of the day under the prayer times and as a home screen widget, chosen for the day: Ramadan, Eid, Arafah, Fridays and other occasions get their own verses, other days a theme, and each says why it was picked. Tap it to read on in the Quran.",
             "id": "Ayat hari ini di bawah jadwal salat dan sebagai widget layar utama, dipilih sesuai harinya: Ramadan, Idulfitri, Arafah, Jumat, dan momen lainnya punya ayatnya sendiri, hari lain bertema, dan masing-masing disertai alasan ayat itu dipilih. Ketuk untuk melanjutkan bacaan di Al-Qur'an.",
             "ms": "Ayat hari ini di bawah waktu solat dan sebagai widget skrin utama, dipilih mengikut hari: Ramadan, Aidilfitri, Arafah, Jumaat dan peristiwa lain ada ayatnya sendiri, hari lain bertema, dan setiap satu disertakan sebab ayat itu dipilih. Ketik untuk menyambung bacaan dalam al-Quran.",

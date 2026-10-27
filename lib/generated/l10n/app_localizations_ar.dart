@@ -1002,4 +1002,42 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get khatamMarkRead => 'تحديد كمقروء حتى هنا';
+
+  @override
+  String get hijriEvents => 'المناسبات الإسلامية';
+
+  @override
+  String get hijriEventsSubtitle =>
+      'الأعياد والمناسبات والأيام البيض للعام القادم';
+
+  @override
+  String get hijriEventsLoadError => 'تعذّر تحميل المناسبات الإسلامية.';
+
+  @override
+  String hijriEventsWhen(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'بعد $count يومًا',
+      few: 'بعد $count أيام',
+      two: 'بعد يومين',
+      one: 'غدًا',
+      zero: 'اليوم',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get hijriEventsNote =>
+      'التواريخ وفق تقويم أم القرى المحسوب وقد تختلف بيوم عن الإعلان المحلي.';
+
+  @override
+  String get hijriEventReminder => 'تذكير بالمناسبات';
+
+  @override
+  String get hijriEventReminderSubtitle =>
+      'عند المغرب، مساء اليوم الذي يسبق المناسبات والأيام البيض';
+
+  @override
+  String get notifHijriEventTomorrow => 'غدًا. يبدأ يومه الهجري هذا المساء.';
 }

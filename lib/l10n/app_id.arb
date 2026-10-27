@@ -515,5 +515,14 @@
   "@khatamDaysLeft": {"placeholders": {"count": {"type": "int"}}},
   "khatamComplete": "Khatam! Alhamdulillah.",
   "khatamNewPlan": "Target baru",
-  "khatamMarkRead": "Tandai terbaca sampai sini"
+  "khatamMarkRead": "Tandai terbaca sampai sini",
+  "hijriEvents": "Hari besar Islam",
+  "hijriEventsSubtitle": "Hari raya, hari besar dan ayyamul bidh setahun ke depan",
+  "hijriEventsLoadError": "Hari besar Islam gagal dimuat.",
+  "hijriEventsWhen": "{count, plural, =0{Hari ini} =1{Besok} other{{count} hari lagi}}",
+  "@hijriEventsWhen": {"placeholders": {"count": {"type": "int"}}},
+  "hijriEventsNote": "Tanggal mengikuti perhitungan kalender Ummul Qura dan bisa berbeda sehari dari pengumuman setempat, seperti sidang isbat.",
+  "hijriEventReminder": "Pengingat hari besar",
+  "hijriEventReminderSubtitle": "Saat Magrib, malam sebelum hari besar dan ayyamul bidh",
+  "notifHijriEventTomorrow": "Besok. Dalam kalender Hijriah, harinya dimulai malam ini."
 }

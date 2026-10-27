@@ -11,10 +11,11 @@ import '../asmaul_husna/asmaul_husna_screen.dart';
 import '../duas/duas_screen.dart';
 import '../dzikir/dzikir.dart';
 import '../dzikir/dzikir_screen.dart';
+import '../hijri_events/hijri_events_screen.dart';
 import '../qibla/widgets/qibla_card.dart';
 
 /// Worship tab: Qibla, dzikir (morning and evening, and after prayer), daily
-/// duas and the Asmaul Husna.
+/// duas, the Asmaul Husna and the Islamic events of the year.
 class WorshipScreen extends StatelessWidget {
   const WorshipScreen({super.key, this.isActive = true});
 
@@ -52,6 +53,12 @@ class WorshipScreen extends StatelessWidget {
                 title: l10n.asmaulHusna,
                 subtitle: l10n.asmaulHusnaSubtitle,
                 builder: (_) => const AsmaulHusnaScreen(),
+              ),
+              _WorshipEntry(
+                icon: Icons.event_outlined,
+                title: l10n.hijriEvents,
+                subtitle: l10n.hijriEventsSubtitle,
+                builder: (_) => const HijriEventsScreen(),
               ),
             ],
           ),

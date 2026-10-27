@@ -123,6 +123,7 @@ class SettingsNotifier extends Notifier<AppSettings> {
                 .contains(reminder.name),
           ),
         ),
+        eventReminders: p.getBool('notification_events') ?? false,
       ),
     );
   }
@@ -192,6 +193,7 @@ class SettingsNotifier extends Notifier<AppSettings> {
       'notification_dzikir',
       value.dzikirReminders.map((reminder) => reminder.name).toList(),
     );
+    await _prefs.setBool('notification_events', value.eventReminders);
     for (final alert in PrayerAlert.values) {
       await _prefs.setInt(
         'notification_reminder_${alert.name}',

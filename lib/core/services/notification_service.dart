@@ -2,11 +2,13 @@ import 'dart:ui';
 
 import 'package:clock/clock.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:adhan/adhan.dart';
 
+import '../../features/hijri_events/hijri_events.dart';
 import '../../generated/l10n/app_localizations.dart';
 import 'extra_prayer_times.dart';
 import 'notification_preferences.dart';
@@ -94,7 +96,12 @@ class NotificationService {
     if (!await init()) throw StateError(l10n.notificationSchedulingError);
     await _plugin.cancelAll();
     if (times == null) return;
-    final schedule = buildNotificationSchedule(times, preferences, clock.now());
+    final schedule = buildNotificationSchedule(
+      times,
+      preferences,
+      clock.now(),
+      events: preferences.includesEvents ? await _loadEvents() : null,
+    );
     if (schedule.isEmpty) return;
     final android = _plugin
         .resolvePlatformSpecificImplementation<
@@ -115,12 +122,19 @@ class NotificationService {
         PrayerAlert.isha => l10n.isha,
       };
       final dzikir = alert.dzikir;
-      final title = switch (dzikir) {
-        DzikirReminder.morning => l10n.dzikirMorningReminder,
-        DzikirReminder.evening => l10n.dzikirEveningReminder,
-        null => name,
-      };
-      final body = dzikir != null
+      final events = alert.events;
+      final title = events != null
+          ? events
+                .map((e) => e.nameFor(l10n.localeName.split('_').first))
+                .join(' · ')
+          : switch (dzikir) {
+              DzikirReminder.morning => l10n.dzikirMorningReminder,
+              DzikirReminder.evening => l10n.dzikirEveningReminder,
+              null => name,
+            };
+      final body = events != null
+          ? l10n.notifHijriEventTomorrow
+          : dzikir != null
           ? switch (dzikir) {
               DzikirReminder.morning => l10n.notifDzikirMorning,
               DzikirReminder.evening => l10n.notifDzikirEvening,
@@ -143,8 +157,9 @@ class NotificationService {
               PrayerAlert.maghrib => l10n.notifMaghrib,
               PrayerAlert.isha => l10n.notifIsya,
             };
-      // Dzikir reminders play the system sound, not their prayer's.
-      final sound = dzikir != null
+      // Dzikir and event reminders play the system sound, not their
+      // prayer's.
+      final sound = dzikir != null || events != null
           ? PrayerNotificationSound.system
           : preferences.soundOf(alert.alert);
       final playSound = sound != PrayerNotificationSound.silent;
@@ -221,6 +236,16 @@ class NotificationService {
         }
       }
     } catch (_) {}
+  }
+
+  /// The events for event reminders; none when the file can't be read, so
+  /// the prayer alerts are still scheduled.
+  static Future<HijriEvents?> _loadEvents() async {
+    try {
+      return parseHijriEvents(await rootBundle.loadString(hijriEventsAsset));
+    } catch (_) {
+      return null;
+    }
   }
 
   static const _phoneChannelPrefix = 'bedug_prayer_v3_phone_';

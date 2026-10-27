@@ -138,3 +138,5 @@ Record architectural choices here as one line each: date, decision, reason.
 - 2026-10-27: The khatam planner measures progress in juz (ayahs only within a juz) and moves it only when the reader marks an ayah, because ayah lengths vary too much for even daily portions and the last-read position also moves when browsing.
 
 - 2026-10-27: The ayah of the day comes from a hand-curated list of occasions and themes, each with its reason in every language, with the ayah texts copied into the same file by `scripts/build_daily_ayahs.py`, so each day's pick is meaningful and explained, and the card and the widget never load the 2.5 MB Quran.
+
+- 2026-10-27: Hijri calendar events are data (`assets/content/hijri_events.json`, by Hijri month and day ranges with every name inline) matched against the standard Umm al-Qura conversion, and their reminders fire at Maghrib the evening before, because that is when the Hijri day begins and the same file then feeds the calendar, the list and the notifications.

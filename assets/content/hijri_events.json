@@ -1,0 +1,114 @@
+{
+  "events": [
+    {
+      "id": "hijri_new_year",
+      "hijriMonth": 1,
+      "hijriDays": [1, 1],
+      "name": {
+        "id": "Tahun Baru Hijriah",
+        "en": "Islamic New Year",
+        "ms": "Awal Muharam",
+        "ar": "رأس السنة الهجرية"
+      }
+    },
+    {
+      "id": "ashura",
+      "hijriMonth": 1,
+      "hijriDays": [10, 10],
+      "name": {
+        "id": "Hari Asyura",
+        "en": "Day of Ashura",
+        "ms": "Hari Asyura",
+        "ar": "يوم عاشوراء"
+      }
+    },
+    {
+      "id": "mawlid",
+      "hijriMonth": 3,
+      "hijriDays": [12, 12],
+      "name": {
+        "id": "Maulid Nabi Muhammad",
+        "en": "Mawlid of the Prophet",
+        "ms": "Maulidur Rasul",
+        "ar": "المولد النبوي"
+      }
+    },
+    {
+      "id": "isra_miraj",
+      "hijriMonth": 7,
+      "hijriDays": [27, 27],
+      "name": {
+        "id": "Isra Mikraj",
+        "en": "Isra and Mi'raj",
+        "ms": "Israk dan Mikraj",
+        "ar": "الإسراء والمعراج"
+      }
+    },
+    {
+      "id": "ramadan_start",
+      "hijriMonth": 9,
+      "hijriDays": [1, 1],
+      "name": {
+        "id": "Awal Ramadan",
+        "en": "First day of Ramadan",
+        "ms": "Awal Ramadan",
+        "ar": "أول رمضان"
+      }
+    },
+    {
+      "id": "eid_al_fitr",
+      "hijriMonth": 10,
+      "hijriDays": [1, 1],
+      "name": {
+        "id": "Idulfitri",
+        "en": "Eid al-Fitr",
+        "ms": "Hari Raya Aidilfitri",
+        "ar": "عيد الفطر"
+      }
+    },
+    {
+      "id": "arafah",
+      "hijriMonth": 12,
+      "hijriDays": [9, 9],
+      "name": {
+        "id": "Hari Arafah",
+        "en": "Day of Arafah",
+        "ms": "Hari Arafah",
+        "ar": "يوم عرفة"
+      }
+    },
+    {
+      "id": "eid_al_adha",
+      "hijriMonth": 12,
+      "hijriDays": [10, 10],
+      "name": {
+        "id": "Iduladha",
+        "en": "Eid al-Adha",
+        "ms": "Hari Raya Aidiladha",
+        "ar": "عيد الأضحى"
+      }
+    },
+    {
+      "id": "tashreeq",
+      "hijriMonth": 12,
+      "hijriDays": [11, 13],
+      "name": {
+        "id": "Hari Tasyrik",
+        "en": "Days of Tashreeq",
+        "ms": "Hari Tasyrik",
+        "ar": "أيام التشريق"
+      }
+    },
+    {
+      "id": "ayyamul_bidh",
+      "hijriDays": [13, 15],
+      "except": [[12, 13]],
+      "name": {
+        "id": "Ayyamul Bidh",
+        "en": "The White Days",
+        "ms": "Hari Putih (Ayyamul Bidh)",
+        "ar": "الأيام البيض"
+      }
+    }
+  ]
+}

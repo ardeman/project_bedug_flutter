@@ -326,5 +326,13 @@
   "khatamDaysLeft": "{count, plural, =0{Tarikh sasaran telah berlalu} other{Tinggal {count} hari}}",
   "khatamComplete": "Khatam! Alhamdulillah.",
   "khatamNewPlan": "Sasaran baharu",
-  "khatamMarkRead": "Tandakan dibaca hingga di sini"
+  "khatamMarkRead": "Tandakan dibaca hingga di sini",
+  "hijriEvents": "Hari kebesaran Islam",
+  "hijriEventsSubtitle": "Hari raya, hari kebesaran dan hari putih setahun ke hadapan",
+  "hijriEventsLoadError": "Hari kebesaran Islam gagal dimuatkan.",
+  "hijriEventsWhen": "{count, plural, =0{Hari ini} =1{Esok} other{{count} hari lagi}}",
+  "hijriEventsNote": "Tarikh mengikut kiraan takwim Ummul Qura dan mungkin berbeza sehari daripada pengumuman tempatan.",
+  "hijriEventReminder": "Peringatan hari kebesaran",
+  "hijriEventReminderSubtitle": "Waktu Maghrib, malam sebelum hari kebesaran dan hari putih",
+  "notifHijriEventTomorrow": "Esok. Tarikh Hijrahnya bermula malam ini."
 }

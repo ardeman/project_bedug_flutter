@@ -459,6 +459,29 @@ class NotificationSettingsScreen extends ConsumerWidget {
                   ),
               ],
             ),
+          if (preferences.enabled)
+            SettingsSection(
+              title: l10n.hijriEvents,
+              children: [
+                PlatformListTile(
+                  key: const ValueKey('event-reminder-row'),
+                  title: Text(l10n.hijriEventReminder),
+                  subtitle: Text(l10n.hijriEventReminderSubtitle),
+                  trailing: _AdaptiveSwitch(
+                    key: const ValueKey('event-reminder'),
+                    value: preferences.includesEvents,
+                    onChanged: (value) => notifier.setNotifications(
+                      preferences.copyWith(eventReminders: value),
+                    ),
+                  ),
+                  onTap: () => notifier.setNotifications(
+                    preferences.copyWith(
+                      eventReminders: !preferences.eventReminders,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           if (NotificationService.supportsScheduling)
             SettingsSection(
               title: l10n.notificationSystemSection,

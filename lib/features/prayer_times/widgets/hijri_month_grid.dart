@@ -13,6 +13,7 @@ import '../../../core/design/platform_capabilities.dart';
 import '../../../core/theme/app_tokens.dart';
 import '../../../core/utils/hijri_utils.dart';
 import '../../../generated/l10n/app_localizations.dart';
+import '../../hijri_events/hijri_events.dart';
 
 /// A Hijri month, a week to a row, with each day's Gregorian date under its
 /// Hijri day. Opens on the month of [selected], follows it when it changes,
@@ -24,6 +25,9 @@ import '../../../generated/l10n/app_localizations.dart';
 class HijriMonthGrid extends StatefulWidget {
   final DateTime today;
   final DateTime selected;
+
+  /// Event days get a dot and the events' names in their label.
+  final HijriEvents? events;
   final ValueChanged<DateTime> onSelected;
   final HijriGridMorph? morph;
 
@@ -36,6 +40,7 @@ class HijriMonthGrid extends StatefulWidget {
     super.key,
     required this.today,
     required this.selected,
+    this.events,
     required this.onSelected,
     this.morph,
     this.onPagedAway,
@@ -329,6 +334,7 @@ class HijriMonthGridState extends State<HijriMonthGrid> {
     final l10n = AppLocalizations.of(ctx);
     final theme = Theme.of(ctx);
     final locale = Localizations.localeOf(ctx).toLanguageTag();
+    final languageCode = Localizations.localeOf(ctx).languageCode;
     // Weeks start on Sunday: DateTime.weekday is 7 for Sunday.
     final lead = dates.first.weekday % 7;
     final weekCount = ((lead + days.length) / 7).ceil();
@@ -413,14 +419,21 @@ class HijriMonthGridState extends State<HijriMonthGrid> {
                       if (!showDays || i < 0 || i >= days.length) {
                         return const SizedBox(height: _DayCell.height);
                       }
+                      final events = [
+                        for (final e in widget.events?.events ?? const [])
+                          if (e.fallsOn(days[i])) e.nameFor(languageCode),
+                      ];
                       return _DayCell(
                         hijriDay: days[i].hDay,
                         date: dates[i],
-                        label:
-                            '${days[i].hDay} '
-                            '${hijriMonthName(l10n, _view.month)} '
-                            '${_view.year} H, '
-                            '${DateFormat.yMMMMEEEEd(locale).format(dates[i])}',
+                        hasEvent: events.isNotEmpty,
+                        label: [
+                          '${days[i].hDay} '
+                              '${hijriMonthName(l10n, _view.month)} '
+                              '${_view.year} H',
+                          DateFormat.yMMMMEEEEd(locale).format(dates[i]),
+                          ...events,
+                        ].join(', '),
                         isSelected: _sameDay(dates[i], widget.selected),
                         isToday: _sameDay(dates[i], widget.today),
                         onTap: () => widget.onSelected(dates[i]),
@@ -450,9 +463,15 @@ class _DayCell extends StatelessWidget {
   /// for a 2 px gap between rows.
   static const height = 44.0;
 
+  /// Small enough to sit in a corner clear of the day numbers.
+  static const _eventDot = 5.0;
+
   final int hijriDay;
   final DateTime date;
   final String label;
+
+  /// Marks the day with a dot; its events are named in [label].
+  final bool hasEvent;
   final bool isSelected;
   final bool isToday;
   final VoidCallback onTap;
@@ -461,6 +480,7 @@ class _DayCell extends StatelessWidget {
     required this.hijriDay,
     required this.date,
     required this.label,
+    this.hasEvent = false,
     required this.isSelected,
     required this.isToday,
     required this.onTap,
@@ -473,15 +493,35 @@ class _DayCell extends StatelessWidget {
 
     final content = SizedBox(
       height: height,
-      // Scale down rather than clip at large text sizes.
-      child: FittedBox(
-        fit: BoxFit.scaleDown,
-        child: _DayCellLabel(
-          hijriDay: hijriDay,
-          date: date,
-          isSelected: isSelected,
-          isToday: isToday,
-        ),
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          // Scale down rather than clip at large text sizes.
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: _DayCellLabel(
+              hijriDay: hijriDay,
+              date: date,
+              isSelected: isSelected,
+              isToday: isToday,
+            ),
+          ),
+          if (hasEvent)
+            PositionedDirectional(
+              top: AppSpacing.xs,
+              end: AppSpacing.xs,
+              child: Container(
+                width: _eventDot,
+                height: _eventDot,
+                decoration: BoxDecoration(
+                  color: isSelected
+                      ? Theme.of(ctx).colorScheme.onPrimary
+                      : Theme.of(ctx).colorScheme.tertiary,
+                  shape: BoxShape.circle,
+                ),
+              ),
+            ),
+        ],
       ),
     );
 

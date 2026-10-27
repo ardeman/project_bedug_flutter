@@ -1895,6 +1895,54 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Tandai terbaca sampai sini'**
   String get khatamMarkRead;
+
+  /// No description provided for @hijriEvents.
+  ///
+  /// In id, this message translates to:
+  /// **'Hari besar Islam'**
+  String get hijriEvents;
+
+  /// No description provided for @hijriEventsSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Hari raya, hari besar dan ayyamul bidh setahun ke depan'**
+  String get hijriEventsSubtitle;
+
+  /// No description provided for @hijriEventsLoadError.
+  ///
+  /// In id, this message translates to:
+  /// **'Hari besar Islam gagal dimuat.'**
+  String get hijriEventsLoadError;
+
+  /// No description provided for @hijriEventsWhen.
+  ///
+  /// In id, this message translates to:
+  /// **'{count, plural, =0{Hari ini} =1{Besok} other{{count} hari lagi}}'**
+  String hijriEventsWhen(int count);
+
+  /// No description provided for @hijriEventsNote.
+  ///
+  /// In id, this message translates to:
+  /// **'Tanggal mengikuti perhitungan kalender Ummul Qura dan bisa berbeda sehari dari pengumuman setempat, seperti sidang isbat.'**
+  String get hijriEventsNote;
+
+  /// No description provided for @hijriEventReminder.
+  ///
+  /// In id, this message translates to:
+  /// **'Pengingat hari besar'**
+  String get hijriEventReminder;
+
+  /// No description provided for @hijriEventReminderSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Saat Magrib, malam sebelum hari besar dan ayyamul bidh'**
+  String get hijriEventReminderSubtitle;
+
+  /// No description provided for @notifHijriEventTomorrow.
+  ///
+  /// In id, this message translates to:
+  /// **'Besok. Dalam kalender Hijriah, harinya dimulai malam ini.'**
+  String get notifHijriEventTomorrow;
 }
 
 class _AppLocalizationsDelegate

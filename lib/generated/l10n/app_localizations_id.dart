@@ -996,4 +996,41 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get khatamMarkRead => 'Tandai terbaca sampai sini';
+
+  @override
+  String get hijriEvents => 'Hari besar Islam';
+
+  @override
+  String get hijriEventsSubtitle =>
+      'Hari raya, hari besar dan ayyamul bidh setahun ke depan';
+
+  @override
+  String get hijriEventsLoadError => 'Hari besar Islam gagal dimuat.';
+
+  @override
+  String hijriEventsWhen(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count hari lagi',
+      one: 'Besok',
+      zero: 'Hari ini',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get hijriEventsNote =>
+      'Tanggal mengikuti perhitungan kalender Ummul Qura dan bisa berbeda sehari dari pengumuman setempat, seperti sidang isbat.';
+
+  @override
+  String get hijriEventReminder => 'Pengingat hari besar';
+
+  @override
+  String get hijriEventReminderSubtitle =>
+      'Saat Magrib, malam sebelum hari besar dan ayyamul bidh';
+
+  @override
+  String get notifHijriEventTomorrow =>
+      'Besok. Dalam kalender Hijriah, harinya dimulai malam ini.';
 }

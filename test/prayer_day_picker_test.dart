@@ -6,16 +6,18 @@ import 'package:cupertino_ui/cupertino_ui.dart'
     show GlobalCupertinoLocalizations;
 import 'package:bedug/core/services/selection_feedback.dart';
 import 'package:bedug/core/utils/hijri_utils.dart';
+import 'package:bedug/features/hijri_events/hijri_events.dart';
 import 'package:bedug/features/prayer_times/widgets/hijri_month_grid.dart';
 import 'package:bedug/features/prayer_times/widgets/prayer_day_picker.dart';
 import 'package:bedug/generated/l10n/app_localizations.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hijri/hijri_calendar.dart';
 
 void main() {
   final today = DateTime(2026, 10, 20);
 
-  Widget app() {
+  Widget app({HijriEvents? events}) {
     var selected = today;
     return MaterialApp(
       locale: const Locale('en'),
@@ -30,12 +32,30 @@ void main() {
           builder: (ctx, setState) => PrayerDayPicker(
             today: today,
             selected: selected,
+            events: events,
             onSelected: (d) => setState(() => selected = d),
           ),
         ),
       ),
     );
   }
+
+  testWidgets('names the picked day\'s Hijri events', (tester) async {
+    final hijri = HijriCalendar.fromDate(today);
+    await tester.pumpWidget(
+      app(
+        events: HijriEvents([
+          HijriEvent(
+            id: 'test',
+            name: const {'en': 'Test event'},
+            hijriMonth: hijri.hMonth,
+            hijriDays: (hijri.hDay, hijri.hDay),
+          ),
+        ]),
+      ),
+    );
+    expect(find.text('Test event'), findsOneWidget);
+  });
 
   for (final brightness in Brightness.values) {
     for (final locale in ['en', 'ar']) {

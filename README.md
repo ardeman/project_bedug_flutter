@@ -223,7 +223,7 @@ Prayer tracking and prayer-progress features (completion logs, streaks and qada 
 
 **Phase 4: The Islamic year**
 
-1. **Events on the Hijri calendar:** Ramadan, Eid al-Fitr, Eid al-Adha, Arafah, Ashura, Isra Mi'raj, Mawlid, Ayyamul Bidh, with optional reminders.
+1. **Events on the Hijri calendar (done; device visual and delivery checks pending):** the Islamic New Year, Ashura, the Mawlid, Isra Mi'raj, the first day of Ramadan, Eid al-Fitr, Arafah, Eid al-Adha, the days of Tashreeq and Ayyamul Bidh (13 to 15 of every month, without 13 Dhu al-Hijjah, a day of Tashreeq), from `assets/content/hijri_events.json` with every name inline (`lib/features/hijri_events/`). Event days get a dot in the Hijri month grid and their names under the picked date; a Worship tab entry lists the year ahead with how many days away each is. Optional reminders, off by default, come at Maghrib the evening before, when the Hijri day begins (once before a run of days), with the system sound on Android, iOS and macOS. Dates use the standard Umm al-Qura conversion of the daytime date, as the ayah of the day does, until the Hijri adjustment below.
 2. **Hijri date adjustment** of ±1 or 2 days, because local announcements (such as Indonesia's sidang isbat) can differ from the calculated date.
 3. **Ramadan mode:** sahur and iftar countdown and a fasting log.
 4. **Sunnah fasting reminders:** Monday and Thursday, Ayyamul Bidh, Arafah, Ashura.

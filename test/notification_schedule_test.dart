@@ -2,7 +2,9 @@ import 'package:adhan/adhan.dart';
 import 'package:bedug/core/services/extra_prayer_times.dart';
 import 'package:bedug/core/services/notification_preferences.dart';
 import 'package:bedug/core/services/notification_schedule.dart';
+import 'package:bedug/features/hijri_events/hijri_events.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hijri/hijri_calendar.dart';
 
 void main() {
   final now = DateTime(2026, 10, 20);
@@ -134,6 +136,47 @@ void main() {
     expect(today[PrayerAlert.imsak]!.time, extra.imsak);
     expect(today[PrayerAlert.sunrise]!.time, times.sunrise);
     expect(today[PrayerAlert.dhuha]!.time, extra.dhuha);
+  });
+
+  test('event reminders come at Maghrib before a run of days starts', () {
+    final events = HijriEvents([
+      const HijriEvent(
+        id: 'ayyamul_bidh',
+        name: {'en': 'The White Days'},
+        hijriDays: (13, 15),
+      ),
+    ]);
+    // Midnight of 11 Jumada al-Ula 1448, so the six days run to the 16th.
+    final start = HijriCalendar().hijriToGregorian(1448, 5, 11);
+    final from = DateTime(start.year, start.month, start.day);
+    const preferences = NotificationPreferences(eventReminders: true);
+    final schedule = buildNotificationSchedule(
+      times,
+      preferences,
+      from,
+      events: events,
+    );
+    final reminders = schedule.where((alert) => alert.events != null);
+    final eve = PrayerTimes(
+      times.coordinates,
+      DateComponents(from.year, from.month, from.day + 1),
+      times.calculationParameters,
+    );
+    expect([for (final r in reminders) r.time], [eve.maghrib]);
+    expect(reminders.single.events!.single.id, 'ayyamul_bidh');
+    expect(
+      schedule.map((alert) => alert.id).toSet(),
+      hasLength(schedule.length),
+    );
+    expect(
+      buildNotificationSchedule(
+        times,
+        const NotificationPreferences(),
+        from,
+        events: events,
+      ).where((alert) => alert.events != null),
+      isEmpty,
+    );
   });
 
   test('dzikir reminders follow Subuh and Asar each day, only when on', () {

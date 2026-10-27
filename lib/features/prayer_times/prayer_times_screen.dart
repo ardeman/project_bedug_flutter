@@ -26,6 +26,7 @@ import '../../core/services/extra_prayer_times.dart';
 import '../../core/providers/locale_provider.dart';
 import '../../core/providers/live_hijri_date_provider.dart';
 import '../../core/widgets/calculation_method_picker.dart';
+import '../hijri_events/hijri_events.dart';
 import '../quran/daily_ayah_card.dart';
 import 'widgets/prayer_day_picker.dart';
 
@@ -252,6 +253,7 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
         today: today,
         selected: day,
         liveHijriDate: ref.watch(liveHijriDateProvider),
+        events: ref.watch(hijriEventsProvider).value,
         onSelected: (picked) => setState(
           () => _pickedDay = daysBetween(today, picked) == 0 ? null : picked,
         ),
