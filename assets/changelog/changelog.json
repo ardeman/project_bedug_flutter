@@ -7,6 +7,15 @@
         {
           "type": "fixed",
           "text": {
+            "en": "In light mode, the time, signal and battery icons stay readable on the Worship, Quran and Settings tabs.",
+            "id": "Dalam mode terang, jam serta ikon sinyal dan baterai tetap terbaca di tab Ibadah, Al-Qur’an, dan Pengaturan.",
+            "ms": "Dalam mod cerah, jam serta ikon isyarat dan bateri kekal jelas pada tab Ibadah, Al-Quran dan Tetapan.",
+            "ar": "في الوضع الفاتح، تبقى الساعة وأيقونات الإشارة والبطارية واضحة في تبويبات العبادة والقرآن والإعدادات."
+          }
+        },
+        {
+          "type": "fixed",
+          "text": {
             "en": "On iPhone and iPad turned sideways, the Qibla compass points the Kaaba the right way instead of a quarter turn off.",
             "id": "Di iPhone dan iPad yang dimiringkan, kompas kiblat kini menunjuk Ka'bah ke arah yang benar, tidak lagi meleset seperempat putaran.",
             "ms": "Di iPhone dan iPad yang dicondongkan, kompas kiblat kini menunjuk Kaabah ke arah yang betul, tidak lagi tersasar suku pusingan.",
