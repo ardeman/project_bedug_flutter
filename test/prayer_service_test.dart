@@ -8,6 +8,7 @@ import 'package:bedug/features/dzikir/dzikir.dart';
 import 'package:fake_async/fake_async.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart' show Locale;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -119,6 +120,68 @@ void main() {
       },
     );
   }
+
+  test(
+    'a language change asks for the GPS address again in that language',
+    () async {
+      final messenger =
+          TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
+      messenger.setMockMethodCallHandler(_geolocatorChannel, (call) async {
+        return switch (call.method) {
+          'isLocationServiceEnabled' => true,
+          'checkPermission' => 3,
+          'getCurrentPosition' => {
+            'latitude': -6.2088,
+            'longitude': 106.8456,
+            'timestamp': DateTime.now().millisecondsSinceEpoch,
+            'accuracy': 10.0,
+            'altitude': 0.0,
+            'altitude_accuracy': 0.0,
+            'heading': 0.0,
+            'heading_accuracy': 0.0,
+            'speed': 0.0,
+            'speed_accuracy': 0.0,
+          },
+          _ => null,
+        };
+      });
+      addTearDown(
+        () => messenger.setMockMethodCallHandler(_geolocatorChannel, null),
+      );
+      SharedPreferences.setMockInitialValues({'use_auto_location': true});
+      final prefs = await SharedPreferences.getInstance();
+      final lookups = <String, Completer<List<Placemark>>>{};
+      final container = ProviderContainer(
+        overrides: [
+          sharedPreferencesProvider.overrideWithValue(prefs),
+          reverseGeocoderProvider.overrideWithValue(
+            (_, locale) =>
+                (lookups[locale.languageCode] = Completer<List<Placemark>>())
+                    .future,
+          ),
+          notificationSchedulerProvider.overrideWithValue(
+            (_, _, _, _) async {},
+          ),
+        ],
+      );
+      addTearDown(container.dispose);
+      container.listen(prayerProvider, (_, _) {});
+      await pumpEventQueue();
+      final first = container.read(localeProvider).languageCode;
+      final other = first == 'ar' ? 'id' : 'ar';
+
+      await container.read(localeProvider.notifier).setLocale(Locale(other));
+      await pumpEventQueue();
+      lookups[other]!.complete([Placemark(locality: 'In $other')]);
+      await pumpEventQueue();
+      expect(container.read(prayerProvider).locationLabel, 'In $other');
+
+      // The earlier lookup answers late, in the language left behind.
+      lookups[first]!.complete([Placemark(locality: 'In $first')]);
+      await pumpEventQueue();
+      expect(container.read(prayerProvider).locationLabel, 'In $other');
+    },
+  );
 
   for (final servicesEnabled in [false, true]) {
     test(

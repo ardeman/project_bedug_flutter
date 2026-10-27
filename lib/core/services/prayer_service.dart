@@ -102,6 +102,10 @@ class PrayerNotifier extends Notifier<PrayerState> {
   /// result of a newer one.
   int _loadId = 0;
 
+  /// The latest GPS fix, so a language change can ask for the address again
+  /// in the new language without waiting for a new fix.
+  Position? _position;
+
   @override
   PrayerState build() {
     final observer = _PrayerLifecycleObserver(() => load());
@@ -141,7 +145,13 @@ class PrayerNotifier extends Notifier<PrayerState> {
         load();
       }
     });
-    ref.listen(localeProvider, (_, _) => _scheduleNotifications());
+    ref.listen(localeProvider, (_, _) {
+      _scheduleNotifications();
+      final position = _position;
+      if (position != null && ref.read(settingsProvider).useAutoLocation) {
+        unawaited(_refineLocationLabel(position, _loadId));
+      }
+    });
     // Dzikir reminders depend on whether the collection has sessions. The
     // first load needs no reschedule: scheduling already waits for it.
     ref.listen(
@@ -174,6 +184,7 @@ class PrayerNotifier extends Notifier<PrayerState> {
       final Coordinates coords;
       final String locationLabel;
       Position? position;
+      _position = null;
 
       if (settings.useAutoLocation) {
         final pos = await _getPosition();
@@ -196,6 +207,7 @@ class PrayerNotifier extends Notifier<PrayerState> {
         locationLabel: locationLabel,
         loading: false,
       );
+      _position = position;
       _scheduleNotifications();
       if (position != null) {
         unawaited(_refineLocationLabel(position, loadId));
@@ -356,17 +368,20 @@ class PrayerNotifier extends Notifier<PrayerState> {
           .name;
 
   Future<void> _refineLocationLabel(Position pos, int loadId) async {
-    final label = await _resolveLocationLabel(pos);
+    final locale = ref.read(localeProvider);
+    final label = await _resolveLocationLabel(pos, locale);
+    // A lookup in a language the user has since left must not win.
     if (!ref.mounted || loadId != _loadId) return;
+    if (locale != ref.read(localeProvider)) return;
     state = state.copyWith(locationLabel: label, error: state.error);
   }
 
-  Future<String> _resolveLocationLabel(Position pos) async {
+  Future<String> _resolveLocationLabel(Position pos, Locale locale) async {
     final fallback = _fallbackLocationLabel(pos);
     try {
       // A stalled/offline geocoder must not leave a pending lookup forever.
       final placemarks = await ref
-          .read(reverseGeocoderProvider)(pos, ref.read(localeProvider))
+          .read(reverseGeocoderProvider)(pos, locale)
           .timeout(const Duration(seconds: 3));
       if (placemarks.isNotEmpty) {
         final p = placemarks.first;

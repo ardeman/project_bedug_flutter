@@ -7,6 +7,15 @@
         {
           "type": "fixed",
           "text": {
+            "en": "After you change the app language, a detected location's name switches to the new language right away instead of waiting for a refresh.",
+            "id": "Setelah bahasa aplikasi diganti, nama lokasi yang terdeteksi langsung berganti ke bahasa baru tanpa menunggu dimuat ulang.",
+            "ms": "Selepas bahasa aplikasi ditukar, nama lokasi yang dikesan terus bertukar kepada bahasa baharu tanpa menunggu dimuat semula.",
+            "ar": "بعد تغيير لغة التطبيق، يتحول اسم الموقع المكتشف إلى اللغة الجديدة فورًا بدلًا من انتظار التحديث."
+          }
+        },
+        {
+          "type": "fixed",
+          "text": {
             "en": "On iPhone, iPad and Mac in Arabic, a long location at the top of Prayer Times no longer runs under the refresh button.",
             "id": "Di iPhone, iPad, dan Mac dalam bahasa Arab, lokasi yang panjang di bagian atas Waktu Salat tidak lagi tertutup tombol muat ulang.",
             "ms": "Di iPhone, iPad dan Mac dalam bahasa Arab, lokasi yang panjang di bahagian atas Waktu Solat tidak lagi terlindung oleh butang muat semula.",
