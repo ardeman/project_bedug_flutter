@@ -283,11 +283,6 @@ class _GlassNavRail extends StatelessWidget {
   /// Space between the selection pill and the rail's edge.
   static const _pillInset = AppSpacing.xxs;
 
-  void _selectAt(double dy, double extent) {
-    final index = (dy / extent).floor().clamp(0, items.length - 1);
-    if (index != currentIndex) onTap(index);
-  }
-
   @override
   Widget build(BuildContext ctx) {
     final theme = Theme.of(ctx);
@@ -303,71 +298,61 @@ class _GlassNavRail extends StatelessWidget {
       (maxHeight - _pillInset * 2) / items.length,
     );
     final height = extent * items.length + _pillInset * 2;
-    final selectedColor = AppColors.accentOf(ctx);
-    final unselectedColor = theme.colorScheme.onSurface.withValues(alpha: 0.62);
-    final duration = mq.disableAnimations
-        ? Duration.zero
-        : const Duration(milliseconds: 320);
     final rail = SizedBox(
       width: _width,
       height: height,
-      child: LiquidGlassLens(
-        style: LiquidGlassStyle(
-          shape: const LiquidGlassShape.continuousRoundedRectangle(
-            cornerRadius: _width / 2,
-          ),
-          color: glassTintOf(ctx),
-          blur: 6,
-        ),
-        child: GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTapUp: (d) => _selectAt(d.localPosition.dy - _pillInset, extent),
-          onVerticalDragUpdate: (d) =>
-              _selectAt(d.localPosition.dy - _pillInset, extent),
-          child: Stack(
-            children: [
-              AnimatedPositioned(
-                duration: duration,
-                curve: Curves.easeOutBack,
-                left: _pillInset,
-                right: _pillInset,
-                top: _pillInset + extent * currentIndex,
-                height: extent,
-                child: DecoratedBox(
-                  decoration: ShapeDecoration(
-                    color: selectedColor.withValues(alpha: 0.14),
-                    shape: const StadiumBorder(),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(_pillInset),
-                child: Column(
-                  children: [
-                    for (final (i, item) in items.indexed)
-                      Semantics(
+      // The package's refracting, morphing selection pill is horizontal.
+      // Rotate its layout and gestures together, then turn each icon back
+      // upright. LTR keeps the tab order top-to-bottom in every locale.
+      child: MediaQuery.removePadding(
+        context: ctx,
+        removeLeft: true,
+        removeTop: true,
+        removeRight: true,
+        removeBottom: true,
+        child: Directionality(
+          textDirection: TextDirection.ltr,
+          child: RotatedBox(
+            quarterTurns: 1,
+            child: LiquidGlassTabBar(
+              items: [
+                for (final (i, item) in items.indexed)
+                  LiquidGlassTabBarItem(
+                    iconBuilder: (_, glyph) => RotatedBox(
+                      quarterTurns: -1,
+                      child: Semantics(
                         button: true,
                         selected: i == currentIndex,
                         label: item.label,
                         onTap: () => onTap(i),
                         excludeSemantics: true,
-                        child: SizedBox(
-                          height: extent,
-                          child: Center(
-                            child: Icon(
-                              i == currentIndex ? item.activeIcon : item.icon,
-                              size: AppControlSizes.navigationIcon,
-                              color: i == currentIndex
-                                  ? selectedColor
-                                  : unselectedColor,
-                            ),
-                          ),
+                        child: Icon(
+                          glyph.selected ? item.activeIcon : item.icon,
+                          size: glyph.size,
+                          color: glyph.color,
                         ),
                       ),
-                  ],
-                ),
+                    ),
+                  ),
+              ],
+              selectedIndex: currentIndex,
+              onChanged: onTap,
+              width: height,
+              height: _width,
+              margin: EdgeInsets.zero,
+              itemPadding: _pillInset,
+              alignment: Alignment.center,
+              style: LiquidGlassTabBar.defaultStyle.copyWith(
+                color: glassTintOf(ctx),
               ),
-            ],
+              itemStyle: LiquidGlassTabItemStyle(
+                selectedColor: AppColors.accentOf(ctx),
+                unselectedColor: theme.colorScheme.onSurface.withValues(
+                  alpha: 0.62,
+                ),
+                iconSize: AppControlSizes.navigationIcon,
+              ),
+            ),
           ),
         ),
       ),

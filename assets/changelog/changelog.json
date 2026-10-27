@@ -7,6 +7,15 @@
         {
           "type": "fixed",
           "text": {
+            "en": "On iPhone Duo, the side tab bar now uses the same Liquid Glass refraction and moving glass selection pill as the bottom tab bar.",
+            "id": "Di iPhone Duo, bilah tab samping kini memakai pembiasan Liquid Glass dan penanda pilihan kaca yang bergerak seperti bilah tab bawah.",
+            "ms": "Di iPhone Duo, bar tab sisi kini menggunakan pembiasan Liquid Glass dan penanda pilihan kaca yang bergerak seperti bar tab bawah.",
+            "ar": "على iPhone Duo، يستخدم شريط التبويبات الجانبي الآن انكسار Liquid Glass ومؤشر التحديد الزجاجي المتحرك نفسه في شريط التبويبات السفلي."
+          }
+        },
+        {
+          "type": "fixed",
+          "text": {
             "en": "In light mode, the time, signal and battery icons stay readable on the Worship, Quran and Settings tabs.",
             "id": "Dalam mode terang, jam serta ikon sinyal dan baterai tetap terbaca di tab Ibadah, Al-Qur’an, dan Pengaturan.",
             "ms": "Dalam mod cerah, jam serta ikon isyarat dan bateri kekal jelas pada tab Ibadah, Al-Quran dan Tetapan.",

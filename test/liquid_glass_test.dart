@@ -148,6 +148,7 @@ void main() {
   for (final (padding, rail) in [
     // iPhone Duo: the system's vertical bar takes the right side.
     (const FakeViewPadding(right: 84, bottom: 34), true),
+    (const FakeViewPadding(left: 84, bottom: 34), true),
     // Other iPhones in landscape inset both sides alike.
     (const FakeViewPadding(left: 59, right: 59, bottom: 21), false),
   ]) {
@@ -195,15 +196,35 @@ void main() {
         );
         await tester.pumpAndSettle();
 
-        expect(find.byType(LiquidGlassTabBar), rail ? findsNothing : findsOne);
+        expect(find.byType(LiquidGlassTabBar), findsOne);
+        final bar = tester.widget<LiquidGlassTabBar>(
+          find.byType(LiquidGlassTabBar),
+        );
+        // Both layouts use the package's refracting, morphing glass pill.
+        expect(bar.glassPill, const LiquidGlassTabPillStyle().mode);
         if (!rail) return;
         final settings = find.byIcon(Icons.settings);
         // The rail sits in the side bar, under the right thumb.
-        expect(tester.getCenter(settings).dx, greaterThan(466 - 84));
+        expect(
+          tester.getCenter(settings).dx,
+          padding.right > 0 ? greaterThan(466 - 84) : lessThan(84),
+        );
+        expect(
+          tester.getCenter(find.byIcon(Icons.schedule)).dy,
+          lessThan(tester.getCenter(settings).dy),
+        );
+        expect(bar.margin, EdgeInsets.zero);
+        expect(bar.width, greaterThan(bar.height));
+        final semantics = tester.ensureSemantics();
+        expect(find.bySemanticsLabel('Settings'), findsWidgets);
         expect(GlassNavBar.occupiedHeight(barContext), 34);
         await tester.tap(settings);
         await tester.pumpAndSettle();
         expect(selected, 1);
+        await tester.tap(find.byIcon(Icons.schedule));
+        await tester.pumpAndSettle();
+        expect(selected, 0);
+        semantics.dispose();
         expect(tester.takeException(), isNull);
       },
       variant: TargetPlatformVariant.only(TargetPlatform.iOS),
