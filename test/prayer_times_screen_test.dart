@@ -1,3 +1,5 @@
+import 'dart:ui' show DisplayFeature, DisplayFeatureState, DisplayFeatureType;
+
 import 'package:cupertino_ui/cupertino_ui.dart'
     show GlobalCupertinoLocalizations;
 import 'package:adhan/adhan.dart';
@@ -26,6 +28,103 @@ class _FakePrayerNotifier extends PrayerNotifier {
 }
 
 void main() {
+  for (final platform in [TargetPlatform.iOS, TargetPlatform.android]) {
+    for (final posture in [
+      DisplayFeatureState.postureHalfOpened,
+      DisplayFeatureState.postureFlat,
+    ]) {
+      for (final locale in ['en', 'ar']) {
+        testWidgets('folded prayer panes: $platform $posture $locale', (
+          tester,
+        ) async {
+          SharedPreferences.setMockInitialValues({});
+          final prefs = await SharedPreferences.getInstance();
+          tester.view.physicalSize = const Size(466, 678);
+          tester.view.devicePixelRatio = 1;
+          tester.view.padding = const FakeViewPadding(right: 84, bottom: 34);
+          addTearDown(tester.view.reset);
+          final times = PrayerTimes(
+            Coordinates(-6.2088, 106.8456),
+            DateComponents(2026, 10, 28),
+            CalculationMethod.singapore.getParameters(),
+          );
+          await withClock(Clock.fixed(times.fajr), () async {
+            await tester.pumpWidget(
+              ProviderScope(
+                overrides: [
+                  sharedPreferencesProvider.overrideWithValue(prefs),
+                  prayerProvider.overrideWith(
+                    () => _FakePrayerNotifier(
+                      PrayerState(times: times, loading: false),
+                    ),
+                  ),
+                ],
+                child: MaterialApp(
+                  locale: Locale(locale),
+                  theme: ThemeData(
+                    brightness: locale == 'ar'
+                        ? Brightness.dark
+                        : Brightness.light,
+                  ),
+                  localizationsDelegates: const [
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate,
+                    ...AppLocalizations.localizationsDelegates,
+                  ],
+                  supportedLocales: AppLocalizations.supportedLocales,
+                  builder: (context, child) => MediaQuery(
+                    data: MediaQuery.of(context).copyWith(
+                      textScaler: TextScaler.linear(1.5),
+                      displayFeatures: [
+                        DisplayFeature(
+                          bounds: Rect.fromLTWH(
+                            0,
+                            320,
+                            466,
+                            locale == 'ar' ? 0 : 16,
+                          ),
+                          type: locale == 'ar'
+                              ? DisplayFeatureType.fold
+                              : DisplayFeatureType.hinge,
+                          state: posture,
+                        ),
+                      ],
+                    ),
+                    child: child!,
+                  ),
+                  home: const PrayerTimesScreen(),
+                ),
+              ),
+            );
+            await tester.pump();
+            final summary = find.byKey(const ValueKey('folded-prayer-summary'));
+            final split =
+                platform == TargetPlatform.iOS &&
+                posture == DisplayFeatureState.postureHalfOpened;
+            expect(summary, split ? findsOneWidget : findsNothing);
+            if (split) {
+              final schedule = find.byKey(
+                const ValueKey('folded-prayer-schedule'),
+              );
+              expect(tester.getBottomRight(summary).dy, 320);
+              expect(
+                tester.getTopLeft(schedule).dy,
+                locale == 'ar' ? 320 : 336,
+              );
+              expect(tester.getBottomRight(schedule).dy, 678);
+              final before = tester.getRect(summary);
+              await tester.drag(schedule, const Offset(0, -220));
+              await tester.pump();
+              expect(tester.getRect(summary), before);
+            }
+            expect(tester.takeException(), isNull);
+            await tester.pumpWidget(const SizedBox.shrink());
+          });
+        }, variant: TargetPlatformVariant.only(platform));
+      }
+    }
+  }
+
   for (final locale in AppLocalizations.supportedLocales) {
     testWidgets(
       'after-Isha header identifies the upcoming date in $locale',

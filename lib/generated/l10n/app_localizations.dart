@@ -102,6 +102,12 @@ abstract class AppLocalizations {
     Locale('ms'),
   ];
 
+  /// No description provided for @refresh.
+  ///
+  /// In id, this message translates to:
+  /// **'Muat ulang'**
+  String get refresh;
+
   /// Application name
   ///
   /// In id, this message translates to:

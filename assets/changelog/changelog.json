@@ -5,6 +5,15 @@
       "date": null,
       "changes": [
         {
+          "type": "improved",
+          "text": {
+            "en": "On a half-folded iPhone Duo, the prayer summary stays above the fold while the schedule and controls scroll below it.",
+            "id": "Saat iPhone Duo dilipat setengah, ringkasan salat tetap di atas lipatan, sedangkan jadwal dan kontrol dapat digulir di bawahnya.",
+            "ms": "Apabila iPhone Duo dilipat separuh, ringkasan solat kekal di atas lipatan manakala jadual dan kawalan boleh ditatal di bawahnya.",
+            "ar": "عند طي iPhone Duo جزئيًا، يبقى ملخص الصلاة أعلى الطية بينما يمكن تمرير الجدول وعناصر التحكم أسفلها."
+          }
+        },
+        {
           "type": "fixed",
           "text": {
             "en": "On iPhone Duo, the side tab bar now uses the same Liquid Glass refraction and moving glass selection pill as the bottom tab bar.",

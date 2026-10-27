@@ -98,10 +98,92 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
             ? 0.0
             : 44.0);
 
-    return Scaffold(
-      extendBodyBehindAppBar: _isApple,
-      body: CustomScrollView(
-        slivers: [
+    final fold = _horizontalFoldOf(ctx);
+    final bodySlivers = <Widget>[
+      // ── Body ─────────────────────────────────────────────────────
+      if (state.loading)
+        const SliverFillRemaining(child: Center(child: AdaptiveSpinner()))
+      else if (state.error != null)
+        SliverFillRemaining(
+          hasScrollBody: false,
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(AppSpacing.lg),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.location_off,
+                    size: 48,
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                  const SizedBox(height: AppSpacing.sm),
+                  Text(
+                    state.error!,
+                    textAlign: TextAlign.center,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.xs),
+                  if (state.showLocationGuide)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+                      child: Text(
+                        _isApple
+                            ? l10n.locationGuideApple
+                            : l10n.locationGuideAndroid,
+                        textAlign: TextAlign.center,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ),
+                  const SizedBox(height: AppSpacing.xxs),
+                  if (_isApple)
+                    LiquidGlassButton(
+                      icon: Icons.refresh,
+                      label: l10n.retry,
+                      touch: glassButtonTouchOf(ctx),
+                      foregroundColor: AppColors.accentOf(ctx),
+                      style: LiquidGlassButton.defaultStyle.copyWith(
+                        color: glassTintOf(ctx),
+                      ),
+                      onPressed: () => ref.read(prayerProvider.notifier).load(),
+                    )
+                  else
+                    MaterialLabelButton(
+                      filled: true,
+                      icon: const Icon(Icons.refresh),
+                      label: Text(l10n.retry),
+                      onPressed: () => ref.read(prayerProvider.notifier).load(),
+                    ),
+                ],
+              ),
+            ),
+          ),
+        )
+      else ...[
+        SliverList(
+          delegate: SliverChildListDelegate([
+            SizedBox(height: _isApple ? AppSpacing.xs : AppSpacing.md),
+            ..._buildDay(ctx, state.times!, next),
+            // Room to scroll the last card clear of the floating nav bar.
+            const SizedBox(height: 100),
+          ]),
+        ),
+        if (fold == null)
+          _CollapseRoom(
+            collapseRange: _isApple
+                ? _LiquidGlassAppBar.expandedExtent - minCollapsedExtent
+                : _materialExpandedHeight - kToolbarHeight,
+          ),
+      ],
+    ];
+    final schedule = CustomScrollView(
+      key: ValueKey(fold == null ? 'prayer-page' : 'folded-prayer-schedule'),
+      slivers: [
+        if (fold == null) ...[
           // ── App Bar ──────────────────────────────────────────────────
           _isApple
               ? SliverPersistentHeader(
@@ -131,88 +213,61 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                     onRefresh: () => ref.read(prayerProvider.notifier).load(),
                   ),
                 ),
-
-          // ── Body ─────────────────────────────────────────────────────
-          if (state.loading)
-            const SliverFillRemaining(child: Center(child: AdaptiveSpinner()))
-          else if (state.error != null)
-            SliverFillRemaining(
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(AppSpacing.lg),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.location_off,
-                        size: 48,
-                        color: theme.colorScheme.onSurfaceVariant,
-                      ),
-                      const SizedBox(height: AppSpacing.sm),
-                      Text(
-                        state.error!,
-                        textAlign: TextAlign.center,
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: theme.colorScheme.onSurfaceVariant,
-                        ),
-                      ),
-                      const SizedBox(height: AppSpacing.xs),
-                      if (state.showLocationGuide)
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: AppSpacing.xs),
-                          child: Text(
-                            _isApple
-                                ? l10n.locationGuideApple
-                                : l10n.locationGuideAndroid,
-                            textAlign: TextAlign.center,
-                            style: theme.textTheme.bodySmall?.copyWith(
-                              color: theme.colorScheme.onSurfaceVariant,
-                            ),
-                          ),
-                        ),
-                      const SizedBox(height: AppSpacing.xxs),
-                      if (_isApple)
-                        LiquidGlassButton(
-                          icon: Icons.refresh,
-                          label: l10n.retry,
-                          touch: glassButtonTouchOf(ctx),
-                          foregroundColor: AppColors.accentOf(ctx),
-                          style: LiquidGlassButton.defaultStyle.copyWith(
-                            color: glassTintOf(ctx),
-                          ),
-                          onPressed: () =>
-                              ref.read(prayerProvider.notifier).load(),
-                        )
-                      else
-                        MaterialLabelButton(
-                          filled: true,
-                          icon: const Icon(Icons.refresh),
-                          label: Text(l10n.retry),
-                          onPressed: () =>
-                              ref.read(prayerProvider.notifier).load(),
-                        ),
-                    ],
+        ] else
+          SliverToBoxAdapter(
+            child: SideBarSafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(AppSpacing.sm),
+                child: Align(
+                  alignment: AlignmentDirectional.centerEnd,
+                  child: GlassPillButton(
+                    icon: Icons.refresh,
+                    label: l10n.refresh,
+                    onPressed: () => ref.read(prayerProvider.notifier).load(),
                   ),
                 ),
               ),
-            )
-          else ...[
-            SliverList(
-              delegate: SliverChildListDelegate([
-                SizedBox(height: _isApple ? AppSpacing.xs : AppSpacing.md),
-                ..._buildDay(ctx, state.times!, next),
-                // Room to scroll the last card clear of the floating nav bar.
-                const SizedBox(height: 100),
-              ]),
             ),
-            _CollapseRoom(
-              collapseRange: _isApple
-                  ? _LiquidGlassAppBar.expandedExtent - minCollapsedExtent
-                  : _materialExpandedHeight - kToolbarHeight,
+          ),
+        ...bodySlivers,
+      ],
+    );
+    return Scaffold(
+      extendBodyBehindAppBar: _isApple,
+      body: fold == null
+          ? schedule
+          : LayoutBuilder(
+              builder: (context, constraints) {
+                // This tab fills the shell's body, so fold coordinates
+                // share its origin. Avoid reading transforms during layout:
+                // route transitions may not have been laid out yet.
+                final top = fold.top.clamp(0.0, constraints.maxHeight);
+                final bottom = fold.bottom.clamp(top, constraints.maxHeight);
+                return Column(
+                  children: [
+                    SizedBox(
+                      height: top,
+                      child: _FoldedPrayerSummary(
+                        location: locationLabel,
+                        label: l10n.nextPrayer,
+                        name: nextName,
+                        time: nextTimeLabel,
+                        remaining: _remaining,
+                      ),
+                    ),
+                    SizedBox(height: bottom - top),
+                    Expanded(
+                      // The lower pane has no status bar at its top.
+                      child: MediaQuery.removePadding(
+                        context: context,
+                        removeTop: true,
+                        child: schedule,
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
-          ],
-        ],
-      ),
     );
   }
 
@@ -326,6 +381,121 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
               : _MaterialCard(entry: p, isNext: p.key == nextKey, l10n: l10n),
         )
         .toList();
+  }
+}
+
+/// A horizontal fold only separates panes while the iPhone is half open.
+/// Side insets alone also occur in other postures and cannot locate a fold.
+Rect? _horizontalFoldOf(BuildContext context) {
+  if (!PlatformCapabilities.isIOS) return null;
+  final media = MediaQuery.of(context);
+  for (final feature in media.displayFeatures) {
+    final bounds = feature.bounds;
+    if (feature.state == DisplayFeatureState.postureHalfOpened &&
+        (feature.type == DisplayFeatureType.fold ||
+            feature.type == DisplayFeatureType.hinge) &&
+        bounds.left <= 0 &&
+        bounds.right >= media.size.width &&
+        bounds.top > 0 &&
+        bounds.bottom < media.size.height) {
+      return bounds;
+    }
+  }
+  return null;
+}
+
+/// The upper pane stays visible while the schedule below the fold scrolls.
+class _FoldedPrayerSummary extends StatelessWidget {
+  final String location;
+  final String label;
+  final String name;
+  final String? time;
+  final ValueListenable<Duration> remaining;
+
+  const _FoldedPrayerSummary({
+    required this.location,
+    required this.label,
+    required this.name,
+    required this.time,
+    required this.remaining,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final text = Theme.of(context).textTheme;
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.light,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              AppColors.accentOf(context),
+              AppColors.secondaryOf(context),
+            ],
+          ),
+        ),
+        child: SafeArea(
+          bottom: false,
+          child: LayoutBuilder(
+            builder: (context, constraints) => SingleChildScrollView(
+              key: const ValueKey('folded-prayer-summary'),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                child: Padding(
+                  padding: const EdgeInsets.all(AppSpacing.md),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        location,
+                        style: text.bodyMedium?.copyWith(color: Colors.white),
+                      ),
+                      const SizedBox(height: AppSpacing.sm),
+                      Text(
+                        label,
+                        style: text.labelLarge?.copyWith(color: Colors.white),
+                      ),
+                      Text(
+                        name,
+                        style: text.headlineMedium?.copyWith(
+                          color: Colors.white,
+                        ),
+                      ),
+                      if (time != null)
+                        Text(
+                          time!,
+                          style: text.titleMedium?.copyWith(
+                            color: Colors.white,
+                          ),
+                        ),
+                      const SizedBox(height: AppSpacing.sm),
+                      ValueListenableBuilder<Duration>(
+                        valueListenable: remaining,
+                        builder: (context, value, child) => value.isNegative
+                            ? const SizedBox.shrink()
+                            : Text(
+                                _formatCountdown(value),
+                                key: const ValueKey('folded-prayer-countdown'),
+                                style: text.headlineSmall?.copyWith(
+                                  color: Colors.white,
+                                  fontFeatures: const [
+                                    FontFeature.tabularFigures(),
+                                  ],
+                                ),
+                              ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 

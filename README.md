@@ -21,6 +21,7 @@ A cross-platform Muslim prayer times app with a Hijri calendar, in Indonesian, E
 - Apple-specific polish:
   - Liquid Glass from `liquid_glass_easy`: a refracting tab bar with a draggable pill, glass app bar buttons and countdown, and lite glass prayer cards.
   - Prayer header that collapses into a compact bar, keeps the countdown visible and adapts to the Dynamic Island in portrait and to camera cutouts in landscape.
+  - Half-folded iPhone Duo: the prayer summary stays above a reported horizontal fold; the schedule and refresh control scroll independently below it, with the fold kept clear.
   - macOS window with a hidden, transparent title bar, rounded corners and inset traffic-light buttons. Tabs can be selected by dragging across the nav bar.
   - A layered Icon Composer app icon, so iOS and macOS render it in Liquid Glass and in the Default, Dark, Clear and Tinted icon modes.
 

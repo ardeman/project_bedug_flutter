@@ -10,6 +10,9 @@ class AppLocalizationsMs extends AppLocalizations {
   AppLocalizationsMs([String locale = 'ms']) : super(locale);
 
   @override
+  String get refresh => 'Muat semula';
+
+  @override
   String get appName => 'Bedug';
 
   @override

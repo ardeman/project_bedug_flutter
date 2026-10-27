@@ -10,6 +10,9 @@ class AppLocalizationsAr extends AppLocalizations {
   AppLocalizationsAr([String locale = 'ar']) : super(locale);
 
   @override
+  String get refresh => 'تحديث';
+
+  @override
   String get appName => 'بيدوغ';
 
   @override
