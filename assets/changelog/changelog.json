@@ -5,6 +5,15 @@
       "date": null,
       "changes": [
         {
+          "type": "fixed",
+          "text": {
+            "en": "On iPhone, iPad and Mac, a surah's title in the Quran reader no longer hides under the top bar.",
+            "id": "Di iPhone, iPad, dan Mac, judul surah di pembaca Al-Qur'an tidak lagi tertutup bilah atas.",
+            "ms": "Di iPhone, iPad dan Mac, tajuk surah dalam pembaca al-Quran tidak lagi terlindung di bawah bar atas.",
+            "ar": "على iPhone وiPad وMac، لم يعد عنوان السورة في قارئ المصحف يختفي تحت الشريط العلوي."
+          }
+        },
+        {
           "type": "improved",
           "text": {
             "en": "Swipe the Hijri month calendar sideways to move between months.",

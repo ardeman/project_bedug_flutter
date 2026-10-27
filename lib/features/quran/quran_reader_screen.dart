@@ -141,6 +141,7 @@ class _QuranReaderScreenState extends ConsumerState<QuranReaderScreen> {
           ? text.ayah(const AyahRef(1, 1))
           : null,
     );
+    final startsAtHeader = initial == 1;
     final footer = _SurahFooter(
       next: surah.number < index.surahs.length
           ? index.surah(surah.number + 1)
@@ -165,18 +166,31 @@ class _QuranReaderScreenState extends ConsumerState<QuranReaderScreen> {
                   anchor: (topInset / constraints.maxHeight).clamp(0, 1),
                   slivers: [
                     // Ayahs above the initial one, built upwards, then the
-                    // header at the top.
+                    // header, then room for the top bar, so the scroll
+                    // view's top edge leaves the header clear of the bar.
                     SliverList.builder(
-                      itemCount: initial,
-                      itemBuilder: (_, i) =>
-                          i == initial - 1 ? header : tile(initial - 1 - i),
+                      itemCount: startsAtHeader ? 0 : initial + 1,
+                      itemBuilder: (_, i) => i == initial
+                          ? SizedBox(height: topInset)
+                          : i == initial - 1
+                          ? header
+                          : tile(initial - 1 - i),
                     ),
+                    // Opening at the first ayah starts with the header.
                     SliverList.builder(
                       key: _centerKey,
-                      itemCount: surah.ayahCount - initial + 2,
-                      itemBuilder: (_, i) => i == surah.ayahCount - initial + 1
-                          ? footer
-                          : tile(initial + i),
+                      itemCount:
+                          surah.ayahCount -
+                          initial +
+                          2 +
+                          (startsAtHeader ? 1 : 0),
+                      itemBuilder: (_, i) {
+                        if (startsAtHeader && i == 0) return header;
+                        final j = startsAtHeader ? i - 1 : i;
+                        return j == surah.ayahCount - initial + 1
+                            ? footer
+                            : tile(initial + j);
+                      },
                     ),
                   ],
                 ),

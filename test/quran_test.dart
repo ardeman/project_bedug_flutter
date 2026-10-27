@@ -265,6 +265,23 @@ void main() {
     expect(container.read(quranReadingProvider).lastRead, const AyahRef(2, 1));
   });
 
+  group('the surah heading stays clear of the glass top bar', () {
+    double headingTop(WidgetTester tester) =>
+        tester.getTopLeft(find.text(index.surah(2).arabic)).dy;
+
+    testWidgets('when opened at the first ayah', (tester) async {
+      await pump(tester, const QuranReaderScreen(surah: 2, initialAyah: 1));
+      expect(headingTop(tester), greaterThanOrEqualTo(kToolbarHeight));
+    }, variant: TargetPlatformVariant.only(TargetPlatform.iOS));
+
+    testWidgets('when scrolled back to the top', (tester) async {
+      await pump(tester, const QuranReaderScreen(surah: 2, initialAyah: 5));
+      await tester.drag(find.byType(CustomScrollView), const Offset(0, 1500));
+      await tester.pumpAndSettle();
+      expect(headingTop(tester), greaterThanOrEqualTo(kToolbarHeight));
+    }, variant: TargetPlatformVariant.only(TargetPlatform.iOS));
+  });
+
   testWidgets('opens at an ayah and bookmarks it', (tester) async {
     final container = await pump(
       tester,
