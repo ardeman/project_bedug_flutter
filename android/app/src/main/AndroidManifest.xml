@@ -55,6 +55,17 @@
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/prayer_widget_info" />
         </receiver>
+        <receiver android:name=".AyahWidgetProvider" android:exported="false"
+            android:label="@string/ayah_widget_title">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/ayah_widget_info" />
+        </receiver>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data

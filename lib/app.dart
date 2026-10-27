@@ -16,6 +16,10 @@ import 'core/theme/app_theme_scope.dart';
 import 'home/home_screen.dart';
 import 'core/services/prayer_widget_service.dart';
 import 'features/infaq/infaq_provider.dart';
+import 'features/quran/daily_ayah_widget.dart';
+
+/// Lets a tapped home screen widget open a screen from outside the tree.
+final _navigatorKey = GlobalKey<NavigatorState>();
 
 class BedugApp extends ConsumerWidget {
   const BedugApp({super.key});
@@ -24,6 +28,8 @@ class BedugApp extends ConsumerWidget {
   Widget build(BuildContext ctx, WidgetRef ref) {
     ref.watch(prayerWidgetSyncProvider);
     ref.watch(infaqListenerProvider);
+    ref.watch(dailyAyahWidgetSyncProvider);
+    ref.watch(dailyAyahWidgetTapProvider(_navigatorKey));
     final locale = ref.watch(localeProvider);
     final settings = ref.watch(settingsProvider);
     final accent = ref.watch(systemAccentProvider).value;
@@ -38,6 +44,7 @@ class BedugApp extends ConsumerWidget {
     };
 
     return MaterialApp(
+      navigatorKey: _navigatorKey,
       onGenerateTitle: (ctx) => AppLocalizations.of(ctx).appName,
       debugShowCheckedModeBanner: false,
       locale: locale,

@@ -921,6 +921,21 @@ class AppLocalizationsMs extends AppLocalizations {
   }
 
   @override
+  String get dailyAyah => 'Ayat hari ini';
+
+  @override
+  String get dailyAyahOpen => 'Buka dalam pembaca al-Quran';
+
+  @override
+  String get dailyAyahWidgetRefresh =>
+      'Buka Bedug untuk memuatkan ayat hari ini';
+
+  @override
+  String quranReference(String surah, int number, int ayah) {
+    return '$surah $number:$ayah';
+  }
+
+  @override
   String get khatamPlanner => 'Sasaran khatam';
 
   @override

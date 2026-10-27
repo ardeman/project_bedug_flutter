@@ -1782,6 +1782,30 @@ abstract class AppLocalizations {
   /// **'Surah berikutnya: {name}'**
   String quranNextSurah(String name);
 
+  /// No description provided for @dailyAyah.
+  ///
+  /// In id, this message translates to:
+  /// **'Ayat hari ini'**
+  String get dailyAyah;
+
+  /// No description provided for @dailyAyahOpen.
+  ///
+  /// In id, this message translates to:
+  /// **'Buka di pembaca Al-Qur\'an'**
+  String get dailyAyahOpen;
+
+  /// No description provided for @dailyAyahWidgetRefresh.
+  ///
+  /// In id, this message translates to:
+  /// **'Buka Bedug untuk memuat ayat hari ini'**
+  String get dailyAyahWidgetRefresh;
+
+  /// No description provided for @quranReference.
+  ///
+  /// In id, this message translates to:
+  /// **'QS. {surah} [{number}]: {ayah}'**
+  String quranReference(String surah, int number, int ayah);
+
   /// No description provided for @khatamPlanner.
   ///
   /// In id, this message translates to:

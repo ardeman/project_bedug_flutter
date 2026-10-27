@@ -88,15 +88,19 @@ Map<String, Object> buildPrayerWidgetData({
     'showAnalog': appearance.showAnalog,
     'showSchedule': appearance.showSchedule,
     'showCurrent': appearance.showCurrent,
-    // Native views share the app's palette instead of duplicating hex values.
-    'lightBackground': AppColors.lightBg.toARGB32(),
-    'darkBackground': AppColors.darkBg.toARGB32(),
-    'lightText': AppColors.lightText.toARGB32(),
-    'darkText': AppColors.darkText.toARGB32(),
-    'lightAccent': AppColors.emerald.toARGB32(),
-    'darkAccent': AppColors.emeraldDark.toARGB32(),
+    ...widgetPalette(),
   };
 }
+
+/// Native views share the app's palette instead of duplicating hex values.
+Map<String, Object> widgetPalette() => {
+  'lightBackground': AppColors.lightBg.toARGB32(),
+  'darkBackground': AppColors.darkBg.toARGB32(),
+  'lightText': AppColors.lightText.toARGB32(),
+  'darkText': AppColors.darkText.toARGB32(),
+  'lightAccent': AppColors.emerald.toARGB32(),
+  'darkAccent': AppColors.emeraldDark.toARGB32(),
+};
 
 class PrayerWidgetService {
   static const appGroup = 'group.com.ardeman.bedug';

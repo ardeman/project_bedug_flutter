@@ -22,6 +22,7 @@
 		B36991D5C76B0E1F4793BB3D /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEC6F370F77F9E0AE7189F58 /* Pods_Runner.framework */; };
 		BCE9FBF62595E39A17EDDD12 /* Pods_RunnerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 986E1C47339691B1D943D6D6 /* Pods_RunnerTests.framework */; };
 		D4256B7263AA14EE3000BC86 /* BedugPrayerWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48916DC2FAD03D49BEFA56CD /* BedugPrayerWidget.swift */; };
+		1D3998EDFF5B96466379C639 /* BedugAyahWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB13139FF46B266035B1607 /* BedugAyahWidget.swift */; };
 		E1244F46A5FE5FD05CD3D2C5 /* BedugPrayerWidget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C9A012D7B5CBA637A295C1D1 /* BedugPrayerWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EAAB83EC1E6769EA5E2132D7 /* prayer_bedug.caf in Resources */ = {isa = PBXBuildFile; fileRef = B138A4B94ED2B0E38CA3AC00 /* prayer_bedug.caf */; };
 /* End PBXBuildFile section */
@@ -78,6 +79,7 @@
 		3DD651B3679CD5D20D60F690 /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
 		400E84446A10DDC50E8917AB /* Pods-RunnerTests.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.profile.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.profile.xcconfig"; sourceTree = "<group>"; };
 		48916DC2FAD03D49BEFA56CD /* BedugPrayerWidget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BedugPrayerWidget.swift; sourceTree = "<group>"; };
+		4EB13139FF46B266035B1607 /* BedugAyahWidget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BedugAyahWidget.swift; sourceTree = "<group>"; };
 		4C0A1C0E2F00000100BED061 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; name = AppIcon.icon; path = ../assets/branding/AppIcon.icon; sourceTree = SOURCE_ROOT; };
 		4C84ED511EAE3B25AE1D1DC4 /* Pods-RunnerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.release.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.release.xcconfig"; sourceTree = "<group>"; };
 		5E7A1C0E2F00000400BED061 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 		35668D3C3B17FA9883C62690 /* BedugPrayerWidget */ = {
 			isa = PBXGroup;
 			children = (
+				4EB13139FF46B266035B1607 /* BedugAyahWidget.swift */,
 				48916DC2FAD03D49BEFA56CD /* BedugPrayerWidget.swift */,
 				05D410DF013F5CFF95D512AA /* Info.plist */,
 				E7E83A6C2C094F4F21B63912 /* BedugPrayerWidget.entitlements */,
@@ -495,6 +498,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D3998EDFF5B96466379C639 /* BedugAyahWidget.swift in Sources */,
 				D4256B7263AA14EE3000BC86 /* BedugPrayerWidget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

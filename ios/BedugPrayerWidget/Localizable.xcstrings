@@ -232,6 +232,93 @@
         }
       },
       "extractionState": "manual"
+    },
+    "Verse of the day": {
+      "localizations": {
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ayat hari ini"
+          }
+        },
+        "ms": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ayat hari ini"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "آية اليوم"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verse of the day"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "A verse from the Quran each day, with why it was picked.": {
+      "localizations": {
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Satu ayat Al-Qur'an setiap hari, beserta alasan ayat itu dipilih."
+          }
+        },
+        "ms": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Satu ayat al-Quran setiap hari, berserta sebab ayat itu dipilih."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "آية من القرآن كل يوم، مع سبب اختيارها."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A verse from the Quran each day, with why it was picked."
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "Open Bedug to load the verse of the day.": {
+      "localizations": {
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buka Bedug untuk memuat ayat hari ini."
+          }
+        },
+        "ms": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buka Bedug untuk memuatkan ayat hari ini."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "افتح Bedug لتحميل آية اليوم."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Bedug to load the verse of the day."
+          }
+        }
+      },
+      "extractionState": "manual"
     }
   },
   "version": "1.0"

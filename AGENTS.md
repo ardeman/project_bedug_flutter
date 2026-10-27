@@ -136,3 +136,5 @@ Record architectural choices here as one line each: date, decision, reason.
 - 2026-10-27: The Quran comes from Tanzil (Uthmani text, verbatim, and its hosted translations), built into `assets/content/quran/` by `scripts/build_quran_content.py` with the text and each translation in separate files, and set in the bundled Amiri Quran font; reading position, bookmarks and text size stay in `shared_preferences`, so the reader is offline, private and loads only the translation it shows.
 
 - 2026-10-27: The khatam planner measures progress in juz (ayahs only within a juz) and moves it only when the reader marks an ayah, because ayah lengths vary too much for even daily portions and the last-read position also moves when browsing.
+
+- 2026-10-27: The ayah of the day comes from a hand-curated list of occasions and themes, each with its reason in every language, with the ayah texts copied into the same file by `scripts/build_daily_ayahs.py`, so each day's pick is meaningful and explained, and the card and the widget never load the 2.5 MB Quran.

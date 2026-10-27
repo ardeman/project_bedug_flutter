@@ -1,0 +1,1847 @@
+{
+  "source": {
+    "id": "Pilihan ayat dan alasannya oleh Bedug. Teks dan terjemahan seperti di pembaca Al-Qur'an.",
+    "en": "Selection and reasons by Bedug. Text and translation as in the Quran reader.",
+    "ms": "Pilihan ayat dan sebabnya oleh Bedug. Teks dan terjemahan seperti dalam pembaca al-Quran.",
+    "ar": "اختيار الآيات وأسبابها من Bedug. النص كما في قارئ القرآن."
+  },
+  "occasions": [
+    {
+      "id": "hijri_new_year",
+      "hijriMonth": 1,
+      "hijriDays": [
+        1,
+        1
+      ],
+      "why": {
+        "id": "1 Muharam, Tahun Baru Hijriah: Muharam termasuk empat bulan haram.",
+        "en": "1 Muharram, the Islamic New Year: Muharram is one of the four sacred months.",
+        "ms": "1 Muharam, Tahun Baru Hijrah: Muharam salah satu daripada empat bulan haram.",
+        "ar": "الأول من المحرم، رأس السنة الهجرية: والمحرم من الأشهر الحرم الأربعة."
+      },
+      "ayahs": [
+        {
+          "ref": "9:36",
+          "text": {
+            "ar": "إِنَّ عِدَّةَ ٱلشُّهُورِ عِندَ ٱللَّهِ ٱثْنَا عَشَرَ شَهْرًا فِى كِتَـٰبِ ٱللَّهِ يَوْمَ خَلَقَ ٱلسَّمَـٰوَٰتِ وَٱلْأَرْضَ مِنْهَآ أَرْبَعَةٌ حُرُمٌ ۚ ذَٰلِكَ ٱلدِّينُ ٱلْقَيِّمُ ۚ فَلَا تَظْلِمُوا۟ فِيهِنَّ أَنفُسَكُمْ ۚ وَقَـٰتِلُوا۟ ٱلْمُشْرِكِينَ كَآفَّةً كَمَا يُقَـٰتِلُونَكُمْ كَآفَّةً ۚ وَٱعْلَمُوٓا۟ أَنَّ ٱللَّهَ مَعَ ٱلْمُتَّقِينَ",
+            "id": "Sesungguhnya bilangan bulan pada sisi Allah adalah dua belas bulan, dalam ketetapan Allah di waktu Dia menciptakan langit dan bumi, di antaranya empat bulan haram. Itulah (ketetapan) agama yang lurus, maka janganlah kamu menganiaya diri kamu dalam bulan yang empat itu, dan perangilah kaum musyrikin itu semuanya sebagaimana merekapun memerangi kamu semuanya, dan ketahuilah bahwasanya Allah beserta orang-orang yang bertakwa.",
+            "en": "Indeed, the number of months with Allah is twelve [lunar] months in the register of Allah [from] the day He created the heavens and the earth; of these, four are sacred. That is the correct religion, so do not wrong yourselves during them. And fight against the disbelievers collectively as they fight against you collectively. And know that Allah is with the righteous [who fear Him].",
+            "ms": "Sesungguhnya bilangan bulan-bulan di sisi (hukum) Allah ialah dua belas bulan, (yang telah ditetapkan) dalam Kitab Allah semasa Ia menciptakan langit dan bumi, di antaranya empat bulan yang dihormati. Ketetapan yang demikian itu ialah ugama yang betul lurus, maka janganlah kamu menganiaya diri kamu dalam bulan-bulan yang dihormati itu (dengan melanggar laranganNya); dan perangilah kaum kafir musyrik seluruhnya sebagaimana mereka memerangi kamu seluruhnya; dan ketahuilah sesungguhnya Allah beserta orang-orang yang bertaqwa."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ashura",
+      "hijriMonth": 1,
+      "hijriDays": [
+        9,
+        10
+      ],
+      "why": {
+        "id": "Tasua dan Asyura, hari yang dianjurkan untuk berpuasa; pada hari Asyura Allah menyelamatkan Nabi Musa dari Firaun.",
+        "en": "Tasu'a and Ashura, recommended days to fast; on Ashura Allah saved Musa from Pharaoh.",
+        "ms": "Tasua dan Asyura, hari yang disunatkan berpuasa; pada hari Asyura Allah menyelamatkan Nabi Musa daripada Firaun.",
+        "ar": "تاسوعاء وعاشوراء، يومان يُستحب صيامهما، وفي عاشوراء نجّى الله موسى من فرعون."
+      },
+      "ayahs": [
+        {
+          "ref": "26:62",
+          "text": {
+            "ar": "قَالَ كَلَّآ ۖ إِنَّ مَعِىَ رَبِّى سَيَهْدِينِ",
+            "id": "Musa menjawab: \"Sekali-kali tidak akan tersusul; sesungguhnya Tuhanku besertaku, kelak Dia akan memberi petunjuk kepadaku\".",
+            "en": "[Moses] said, \"No! Indeed, with me is my Lord; He will guide me.\"",
+            "ms": "Nabi Musa menjawab: \"Tidak! Jangan fikir (akan berlaku yang demikian)! Sesungguhnya aku sentiasa disertai oleh Tuhanku (dengan pemuliharaan dan pertolonganNya), Ia akan menunjuk jalan kepadaku\"."
+          }
+        },
+        {
+          "ref": "26:63",
+          "text": {
+            "ar": "فَأَوْحَيْنَآ إِلَىٰ مُوسَىٰٓ أَنِ ٱضْرِب بِّعَصَاكَ ٱلْبَحْرَ ۖ فَٱنفَلَقَ فَكَانَ كُلُّ فِرْقٍ كَٱلطَّوْدِ ٱلْعَظِيمِ",
+            "id": "Lalu Kami wahyukan kepada Musa: \"Pukullah lautan itu dengan tongkatmu\". Maka terbelahlah lautan itu dan tiap-tiap belahan adalah seperti gunung yang besar.",
+            "en": "Then We inspired to Moses, \"Strike with your staff the sea,\" and it parted, and each portion was like a great towering mountain.",
+            "ms": "Lalu Kami wahyukan kepada Nabi Musa: \"Pukulah laut itu dengan tongkatmu\". (Setelah dipukul) maka terbelahlah laut itu (kepada beberapa bahagian), lalu menjadilah air tiap-tiap bahagian yang terbelah itu terangkat seperti gunung yang besar."
+          }
+        }
+      ]
+    },
+    {
+      "id": "rabi_al_awwal",
+      "hijriMonth": 3,
+      "why": {
+        "id": "Rabiulawal, bulan kelahiran Nabi Muhammad ﷺ.",
+        "en": "Rabi' al-Awwal, the month the Prophet Muhammad ﷺ was born.",
+        "ms": "Rabiulawal, bulan kelahiran Nabi Muhammad ﷺ.",
+        "ar": "ربيع الأول، شهر مولد النبي محمد ﷺ."
+      },
+      "ayahs": [
+        {
+          "ref": "21:107",
+          "text": {
+            "ar": "وَمَآ أَرْسَلْنَـٰكَ إِلَّا رَحْمَةً لِّلْعَـٰلَمِينَ",
+            "id": "Dan tiadalah Kami mengutus kamu, melainkan untuk (menjadi) rahmat bagi semesta alam.",
+            "en": "And We have not sent you, [O Muhammad], except as a mercy to the worlds.",
+            "ms": "Dan tiadalah Kami mengutuskan engkau (wahai Muhammad), melainkan untuk menjadi rahmat bagi sekalian alam."
+          }
+        },
+        {
+          "ref": "33:21",
+          "text": {
+            "ar": "لَّقَدْ كَانَ لَكُمْ فِى رَسُولِ ٱللَّهِ أُسْوَةٌ حَسَنَةٌ لِّمَن كَانَ يَرْجُوا۟ ٱللَّهَ وَٱلْيَوْمَ ٱلْـَٔاخِرَ وَذَكَرَ ٱللَّهَ كَثِيرًا",
+            "id": "Sesungguhnya telah ada pada (diri) Rasulullah itu suri teladan yang baik bagimu (yaitu) bagi orang yang mengharap (rahmat) Allah dan (kedatangan) hari kiamat dan dia banyak menyebut Allah.",
+            "en": "There has certainly been for you in the Messenger of Allah an excellent pattern for anyone whose hope is in Allah and the Last Day and [who] remembers Allah often.",
+            "ms": "Demi sesungguhnya, adalah bagi kamu pada diri Rasulullah itu contoh ikutan yang baik, iaitu bagi orang yang sentiasa mengharapkan (keredaan) Allah dan (balasan baik) hari akhirat, serta ia pula menyebut dan mengingati Allah banyak-banyak (dalam masa susah dan senang)"
+          }
+        },
+        {
+          "ref": "9:128",
+          "text": {
+            "ar": "لَقَدْ جَآءَكُمْ رَسُولٌ مِّنْ أَنفُسِكُمْ عَزِيزٌ عَلَيْهِ مَا عَنِتُّمْ حَرِيصٌ عَلَيْكُم بِٱلْمُؤْمِنِينَ رَءُوفٌ رَّحِيمٌ",
+            "id": "Sungguh telah datang kepadamu seorang Rasul dari kaummu sendiri, berat terasa olehnya penderitaanmu, sangat menginginkan (keimanan dan keselamatan) bagimu, amat belas kasihan lagi penyayang terhadap orang-orang mukmin.",
+            "en": "There has certainly come to you a Messenger from among yourselves. Grievous to him is what you suffer; [he is] concerned over you and to the believers is kind and merciful.",
+            "ms": "Sesungguhnya telah datang kepada kamu seorang Rasul dari golongan kamu sendiri (iaitu Nabi Muhammad s.a.w), yang menjadi sangat berat kepadanya sebarang kesusahan yang ditanggung oleh kamu, yang sangat tamak (inginkan) kebaikan bagi kamu, (dan) ia pula menumpahkan perasaan belas serta kasih sayangnya kepada orang-orang yang beriman."
+          }
+        },
+        {
+          "ref": "68:4",
+          "text": {
+            "ar": "وَإِنَّكَ لَعَلَىٰ خُلُقٍ عَظِيمٍ",
+            "id": "Dan sesungguhnya kamu benar-benar berbudi pekerti yang agung.",
+            "en": "And indeed, you are of a great moral character.",
+            "ms": "Dan bahawa sesungguhnya engkau mempunyai akhlak yang amat mulia."
+          }
+        },
+        {
+          "ref": "33:56",
+          "text": {
+            "ar": "إِنَّ ٱللَّهَ وَمَلَـٰٓئِكَتَهُۥ يُصَلُّونَ عَلَى ٱلنَّبِىِّ ۚ يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ صَلُّوا۟ عَلَيْهِ وَسَلِّمُوا۟ تَسْلِيمًا",
+            "id": "Sesungguhnya Allah dan malaikat-malaikat-Nya bershalawat untuk Nabi. Hai orang-orang yang beriman, bershalawatlah kamu untuk Nabi dan ucapkanlah salam penghormatan kepadanya.",
+            "en": "Indeed, Allah confers blessing upon the Prophet, and His angels [ask Him to do so]. O you who have believed, ask [Allah to confer] blessing upon him and ask [Allah to grant him] peace.",
+            "ms": "Sesungguhnya Allah dan malaikatNya berselawat (memberi segala penghormatan dan kebaikan) kepada Nabi (Muhammad s.a.w); wahai orang-orang yang beriman berselawatlah kamu kepadanya serta ucapkanlah salam sejahtera dengan penghormatan yang sepenuhnya."
+          }
+        },
+        {
+          "ref": "3:164",
+          "text": {
+            "ar": "لَقَدْ مَنَّ ٱللَّهُ عَلَى ٱلْمُؤْمِنِينَ إِذْ بَعَثَ فِيهِمْ رَسُولًا مِّنْ أَنفُسِهِمْ يَتْلُوا۟ عَلَيْهِمْ ءَايَـٰتِهِۦ وَيُزَكِّيهِمْ وَيُعَلِّمُهُمُ ٱلْكِتَـٰبَ وَٱلْحِكْمَةَ وَإِن كَانُوا۟ مِن قَبْلُ لَفِى ضَلَـٰلٍ مُّبِينٍ",
+            "id": "Sungguh Allah telah memberi karunia kepada orang-orang yang beriman ketika Allah mengutus diantara mereka seorang rasul dari golongan mereka sendiri, yang membacakan kepada mereka ayat-ayat Allah, membersihkan (jiwa) mereka, dan mengajarkan kepada mereka Al Kitab dan Al Hikmah. Dan sesungguhnya sebelum (kedatangan Nabi) itu, mereka adalah benar-benar dalam kesesatan yang nyata.",
+            "en": "Certainly did Allah confer [great] favor upon the believers when He sent among them a Messenger from themselves, reciting to them His verses and purifying them and teaching them the Book and wisdom, although they had been before in manifest error.",
+            "ms": "Sesungguhnya Allah telah mengurniakan (rahmatNya) kepada orang-orang yang beriman, setelah Ia mengutuskan dalam kalangan mereka seorang Rasul dari bangsa mereka sendiri, yang membacakan kepada mereka ayat-ayat Allah (kandungan Al-Quran yang membuktikan keesaan Allah dan kekuasaanNya), dan membersihkan mereka (dari iktiqad yang sesat), serta mengajar mereka Kitab Allah (Al-Quran) dan Hikmah (pengetahuan yang mendalam mengenai hukum-hukum Syariat). Dan sesungguhnya mereka sebelum (kedatangan Nabi Muhammad) itu adalah dalam kesesatan yang nyata."
+          }
+        }
+      ]
+    },
+    {
+      "id": "isra_miraj",
+      "hijriMonth": 7,
+      "hijriDays": [
+        27,
+        27
+      ],
+      "why": {
+        "id": "27 Rajab, peringatan Isra Mikraj: perjalanan malam dan naiknya Nabi ﷺ ke langit.",
+        "en": "27 Rajab, when Isra' and Mi'raj are remembered: the Prophet's ﷺ night journey and ascension.",
+        "ms": "27 Rejab, memperingati Israk dan Mikraj: perjalanan malam dan naiknya Nabi ﷺ ke langit.",
+        "ar": "السابع والعشرون من رجب، ذكرى الإسراء والمعراج."
+      },
+      "ayahs": [
+        {
+          "ref": "17:1",
+          "text": {
+            "ar": "سُبْحَـٰنَ ٱلَّذِىٓ أَسْرَىٰ بِعَبْدِهِۦ لَيْلًا مِّنَ ٱلْمَسْجِدِ ٱلْحَرَامِ إِلَى ٱلْمَسْجِدِ ٱلْأَقْصَا ٱلَّذِى بَـٰرَكْنَا حَوْلَهُۥ لِنُرِيَهُۥ مِنْ ءَايَـٰتِنَآ ۚ إِنَّهُۥ هُوَ ٱلسَّمِيعُ ٱلْبَصِيرُ",
+            "id": "Maha Suci Allah, yang telah memperjalankan hamba-Nya pada suatu malam dari Al Masjidil Haram ke Al Masjidil Aqsha yang telah Kami berkahi sekelilingnya agar Kami perlihatkan kepadanya sebagian dari tanda-tanda (kebesaran) Kami. Sesungguhnya Dia adalah Maha Mendengar lagi Maha Mengetahui.",
+            "en": "Exalted is He who took His Servant by night from al-Masjid al-Haram to al-Masjid al-Aqsa, whose surroundings We have blessed, to show him of Our signs. Indeed, He is the Hearing, the Seeing.",
+            "ms": "Maha Suci Allah yang telah menjalankan hambaNya (Muhammad) pada malam hari dari Masjid Al-Haraam (di Makkah) ke Masjid Al-Aqsa (di Palestin), yang Kami berkati sekelilingnya, untuk memperlihatkan kepadanya tanda-tanda (kekuasaan dan kebesaran) Kami. Sesungguhnya Allah jualah yang Maha Mendengar, lagi Maha Mengetahui."
+          }
+        },
+        {
+          "ref": "53:18",
+          "text": {
+            "ar": "لَقَدْ رَأَىٰ مِنْ ءَايَـٰتِ رَبِّهِ ٱلْكُبْرَىٰٓ",
+            "id": "Sesungguhnya dia telah melihat sebahagian tanda-tanda (kekuasaan) Tuhannya yang paling besar.",
+            "en": "He certainly saw of the greatest signs of his Lord.",
+            "ms": "Demi sesungguhnya, ia telah melihat sebahagian dari sebesar-besar tanda-tanda (yang membuktikan luasnya pemerintahan dan kekuasaan) Tuhannya."
+          }
+        }
+      ]
+    },
+    {
+      "id": "before_ramadan",
+      "hijriMonth": 8,
+      "hijriDays": [
+        15,
+        30
+      ],
+      "why": {
+        "id": "Ramadan sudah dekat: saatnya menyiapkan hati.",
+        "en": "Ramadan is near: a time to prepare the heart.",
+        "ms": "Ramadan semakin hampir: masa untuk menyiapkan hati.",
+        "ar": "اقترب رمضان: وقت لتهيئة القلب."
+      },
+      "ayahs": [
+        {
+          "ref": "2:183",
+          "text": {
+            "ar": "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ كُتِبَ عَلَيْكُمُ ٱلصِّيَامُ كَمَا كُتِبَ عَلَى ٱلَّذِينَ مِن قَبْلِكُمْ لَعَلَّكُمْ تَتَّقُونَ",
+            "id": "Hai orang-orang yang beriman, diwajibkan atas kamu berpuasa sebagaimana diwajibkan atas orang-orang sebelum kamu agar kamu bertakwa,",
+            "en": "O you who have believed, decreed upon you is fasting as it was decreed upon those before you that you may become righteous -",
+            "ms": "Wahai orang-orang yang beriman! Kamu diwajibkan berpuasa sebagaimana diwajibkan atas orang-orang yang dahulu daripada kamu, supaya kamu bertaqwa."
+          }
+        },
+        {
+          "ref": "3:133",
+          "text": {
+            "ar": "۞ وَسَارِعُوٓا۟ إِلَىٰ مَغْفِرَةٍ مِّن رَّبِّكُمْ وَجَنَّةٍ عَرْضُهَا ٱلسَّمَـٰوَٰتُ وَٱلْأَرْضُ أُعِدَّتْ لِلْمُتَّقِينَ",
+            "id": "Dan bersegeralah kamu kepada ampunan dari Tuhanmu dan kepada surga yang luasnya seluas langit dan bumi yang disediakan untuk orang-orang yang bertakwa,",
+            "en": "And hasten to forgiveness from your Lord and a garden as wide as the heavens and earth, prepared for the righteous",
+            "ms": "Dan segeralah kamu kepada (mengerjakan amal-amal yang baik untuk mendapat) keampunan dari Tuhan kamu, dan (mendapat) Syurga yang bidangnya seluas segala langit dan bumi, yang disediakan bagi orang-orang yang bertaqwa;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "nuzulul_quran",
+      "hijriMonth": 9,
+      "hijriDays": [
+        17,
+        17
+      ],
+      "why": {
+        "id": "17 Ramadan, peringatan Nuzululquran, turunnya wahyu pertama.",
+        "en": "17 Ramadan, remembered as Nuzul al-Quran, the first revelation.",
+        "ms": "17 Ramadan, memperingati Nuzul al-Quran, turunnya wahyu pertama.",
+        "ar": "السابع عشر من رمضان، ذكرى نزول القرآن وأول الوحي."
+      },
+      "ayahs": [
+        {
+          "ref": "96:1",
+          "text": {
+            "ar": "ٱقْرَأْ بِٱسْمِ رَبِّكَ ٱلَّذِى خَلَقَ",
+            "id": "Bacalah dengan (menyebut) nama Tuhanmu Yang menciptakan,",
+            "en": "Recite in the name of your Lord who created -",
+            "ms": "Bacalah (wahai Muhammad) dengan nama Tuhanmu yang menciptakan (sekalian makhluk),"
+          }
+        },
+        {
+          "ref": "2:185",
+          "text": {
+            "ar": "شَهْرُ رَمَضَانَ ٱلَّذِىٓ أُنزِلَ فِيهِ ٱلْقُرْءَانُ هُدًى لِّلنَّاسِ وَبَيِّنَـٰتٍ مِّنَ ٱلْهُدَىٰ وَٱلْفُرْقَانِ ۚ فَمَن شَهِدَ مِنكُمُ ٱلشَّهْرَ فَلْيَصُمْهُ ۖ وَمَن كَانَ مَرِيضًا أَوْ عَلَىٰ سَفَرٍ فَعِدَّةٌ مِّنْ أَيَّامٍ أُخَرَ ۗ يُرِيدُ ٱللَّهُ بِكُمُ ٱلْيُسْرَ وَلَا يُرِيدُ بِكُمُ ٱلْعُسْرَ وَلِتُكْمِلُوا۟ ٱلْعِدَّةَ وَلِتُكَبِّرُوا۟ ٱللَّهَ عَلَىٰ مَا هَدَىٰكُمْ وَلَعَلَّكُمْ تَشْكُرُونَ",
+            "id": "(Beberapa hari yang ditentukan itu ialah) bulan Ramadhan, bulan yang di dalamnya diturunkan (permulaan) Al Quran sebagai petunjuk bagi manusia dan penjelasan-penjelasan mengenai petunjuk itu dan pembeda (antara yang hak dan yang bathil). Karena itu, barangsiapa di antara kamu hadir (di negeri tempat tinggalnya) di bulan itu, maka hendaklah ia berpuasa pada bulan itu, dan barangsiapa sakit atau dalam perjalanan (lalu ia berbuka), maka (wajiblah baginya berpuasa), sebanyak hari yang ditinggalkannya itu, pada hari-hari yang lain. Allah menghendaki kemudahan bagimu, dan tidak menghendaki kesukaran bagimu. Dan hendaklah kamu mencukupkan bilangannya dan hendaklah kamu mengagungkan Allah atas petunjuk-Nya yang diberikan kepadamu, supaya kamu bersyukur.",
+            "en": "The month of Ramadhan [is that] in which was revealed the Qur'an, a guidance for the people and clear proofs of guidance and criterion. So whoever sights [the new moon of] the month, let him fast it; and whoever is ill or on a journey - then an equal number of other days. Allah intends for you ease and does not intend for you hardship and [wants] for you to complete the period and to glorify Allah for that [to] which He has guided you; and perhaps you will be grateful.",
+            "ms": "(Masa yang diwajibkan kamu berpuasa itu ialah) bulan Ramadan yang padanya diturunkan Al-Quran, menjadi petunjuk bagi sekalian manusia, dan menjadi keterangan-keterangan yang menjelaskan petunjuk dan (menjelaskan) perbezaan antara yang benar dengan yang salah. Oleh itu, sesiapa dari antara kamu yang menyaksikan anak bulan Ramadan (atau mengetahuinya), maka hendaklah ia berpuasa bulan itu; dan sesiapa yang sakit atau dalam musafir maka (bolehlah ia berbuka, Kemudian wajiblah ia berpuasa) sebanyak hari yang ditinggalkan itu pada hari-hari yang lain. (Dengan ketetapan yang demikian itu) Allah menghendaki kamu beroleh kemudahan, dan Ia tidak menghendaki kamu menanggung kesukaran. Dan juga supaya kamu cukupkan bilangan puasa (sebulan Ramadan), dan supaya kamu membesarkan Allah kerana mendapat petunjukNya, dan supaya kamu bersyukur."
+          }
+        }
+      ]
+    },
+    {
+      "id": "last_ten_nights",
+      "hijriMonth": 9,
+      "hijriDays": [
+        21,
+        30
+      ],
+      "why": {
+        "id": "Sepuluh malam terakhir Ramadan, saat Lailatulkadar dinantikan.",
+        "en": "The last ten nights of Ramadan, when Laylat al-Qadr is sought.",
+        "ms": "Sepuluh malam terakhir Ramadan, ketika Lailatulqadar dicari.",
+        "ar": "العشر الأواخر من رمضان، التي تُتحرّى فيها ليلة القدر."
+      },
+      "ayahs": [
+        {
+          "ref": "97:1",
+          "text": {
+            "ar": "بِّسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ إِنَّآ أَنزَلْنَـٰهُ فِى لَيْلَةِ ٱلْقَدْرِ",
+            "id": "Sesungguhnya Kami telah menurunkannya (Al Quran) pada malam kemuliaan.",
+            "en": "Indeed, We sent the Qur'an down during the Night of Decree.",
+            "ms": "Sesungguhnya Kami telah menurunkan (Al-Quran) ini pada Malam Lailatul-Qadar,"
+          }
+        },
+        {
+          "ref": "97:3",
+          "text": {
+            "ar": "لَيْلَةُ ٱلْقَدْرِ خَيْرٌ مِّنْ أَلْفِ شَهْرٍ",
+            "id": "Malam kemuliaan itu lebih baik dari seribu bulan.",
+            "en": "The Night of Decree is better than a thousand months.",
+            "ms": "Malam Lailatul-Qadar lebih baik daripada seribu bulan."
+          }
+        },
+        {
+          "ref": "97:4",
+          "text": {
+            "ar": "تَنَزَّلُ ٱلْمَلَـٰٓئِكَةُ وَٱلرُّوحُ فِيهَا بِإِذْنِ رَبِّهِم مِّن كُلِّ أَمْرٍ",
+            "id": "Pada malam itu turun malaikat-malaikat dan malaikat Jibril dengan izin Tuhannya untuk mengatur segala urusan.",
+            "en": "The angels and the Spirit descend therein by permission of their Lord for every matter.",
+            "ms": "Pada Malam itu, turun malaikat dan Jibril dengan izin Tuhan mereka, kerana membawa segala perkara (yang ditakdirkan berlakunya pada tahun yang berikut);"
+          }
+        },
+        {
+          "ref": "97:5",
+          "text": {
+            "ar": "سَلَـٰمٌ هِىَ حَتَّىٰ مَطْلَعِ ٱلْفَجْرِ",
+            "id": "Malam itu (penuh) kesejahteraan sampai terbit fajar.",
+            "en": "Peace it is until the emergence of dawn.",
+            "ms": "Sejahteralah Malam (yang berkat) itu hingga terbit fajar!"
+          }
+        },
+        {
+          "ref": "44:3",
+          "text": {
+            "ar": "إِنَّآ أَنزَلْنَـٰهُ فِى لَيْلَةٍ مُّبَـٰرَكَةٍ ۚ إِنَّا كُنَّا مُنذِرِينَ",
+            "id": "sesungguhnya Kami menurunkannya pada suatu malam yang diberkahi dan sesungguhnya Kami-lah yang memberi peringatan.",
+            "en": "Indeed, We sent it down during a blessed night. Indeed, We were to warn [mankind].",
+            "ms": "Sesungguhnya Kami telah menurunkan Al-Quran itu pada malam yang berkat; (Kami berbuat demikian) kerana sesungguhnya Kami sentiasa memberi peringatan dan amaran (jangan hamba-hamba Kami ditimpa azab)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ramadan",
+      "hijriMonth": 9,
+      "why": {
+        "id": "Ramadan, bulan puasa dan bulan Al-Qur'an.",
+        "en": "Ramadan, the month of fasting and of the Quran.",
+        "ms": "Ramadan, bulan puasa dan bulan al-Quran.",
+        "ar": "رمضان، شهر الصيام والقرآن."
+      },
+      "ayahs": [
+        {
+          "ref": "2:183",
+          "text": {
+            "ar": "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ كُتِبَ عَلَيْكُمُ ٱلصِّيَامُ كَمَا كُتِبَ عَلَى ٱلَّذِينَ مِن قَبْلِكُمْ لَعَلَّكُمْ تَتَّقُونَ",
+            "id": "Hai orang-orang yang beriman, diwajibkan atas kamu berpuasa sebagaimana diwajibkan atas orang-orang sebelum kamu agar kamu bertakwa,",
+            "en": "O you who have believed, decreed upon you is fasting as it was decreed upon those before you that you may become righteous -",
+            "ms": "Wahai orang-orang yang beriman! Kamu diwajibkan berpuasa sebagaimana diwajibkan atas orang-orang yang dahulu daripada kamu, supaya kamu bertaqwa."
+          }
+        },
+        {
+          "ref": "2:185",
+          "text": {
+            "ar": "شَهْرُ رَمَضَانَ ٱلَّذِىٓ أُنزِلَ فِيهِ ٱلْقُرْءَانُ هُدًى لِّلنَّاسِ وَبَيِّنَـٰتٍ مِّنَ ٱلْهُدَىٰ وَٱلْفُرْقَانِ ۚ فَمَن شَهِدَ مِنكُمُ ٱلشَّهْرَ فَلْيَصُمْهُ ۖ وَمَن كَانَ مَرِيضًا أَوْ عَلَىٰ سَفَرٍ فَعِدَّةٌ مِّنْ أَيَّامٍ أُخَرَ ۗ يُرِيدُ ٱللَّهُ بِكُمُ ٱلْيُسْرَ وَلَا يُرِيدُ بِكُمُ ٱلْعُسْرَ وَلِتُكْمِلُوا۟ ٱلْعِدَّةَ وَلِتُكَبِّرُوا۟ ٱللَّهَ عَلَىٰ مَا هَدَىٰكُمْ وَلَعَلَّكُمْ تَشْكُرُونَ",
+            "id": "(Beberapa hari yang ditentukan itu ialah) bulan Ramadhan, bulan yang di dalamnya diturunkan (permulaan) Al Quran sebagai petunjuk bagi manusia dan penjelasan-penjelasan mengenai petunjuk itu dan pembeda (antara yang hak dan yang bathil). Karena itu, barangsiapa di antara kamu hadir (di negeri tempat tinggalnya) di bulan itu, maka hendaklah ia berpuasa pada bulan itu, dan barangsiapa sakit atau dalam perjalanan (lalu ia berbuka), maka (wajiblah baginya berpuasa), sebanyak hari yang ditinggalkannya itu, pada hari-hari yang lain. Allah menghendaki kemudahan bagimu, dan tidak menghendaki kesukaran bagimu. Dan hendaklah kamu mencukupkan bilangannya dan hendaklah kamu mengagungkan Allah atas petunjuk-Nya yang diberikan kepadamu, supaya kamu bersyukur.",
+            "en": "The month of Ramadhan [is that] in which was revealed the Qur'an, a guidance for the people and clear proofs of guidance and criterion. So whoever sights [the new moon of] the month, let him fast it; and whoever is ill or on a journey - then an equal number of other days. Allah intends for you ease and does not intend for you hardship and [wants] for you to complete the period and to glorify Allah for that [to] which He has guided you; and perhaps you will be grateful.",
+            "ms": "(Masa yang diwajibkan kamu berpuasa itu ialah) bulan Ramadan yang padanya diturunkan Al-Quran, menjadi petunjuk bagi sekalian manusia, dan menjadi keterangan-keterangan yang menjelaskan petunjuk dan (menjelaskan) perbezaan antara yang benar dengan yang salah. Oleh itu, sesiapa dari antara kamu yang menyaksikan anak bulan Ramadan (atau mengetahuinya), maka hendaklah ia berpuasa bulan itu; dan sesiapa yang sakit atau dalam musafir maka (bolehlah ia berbuka, Kemudian wajiblah ia berpuasa) sebanyak hari yang ditinggalkan itu pada hari-hari yang lain. (Dengan ketetapan yang demikian itu) Allah menghendaki kamu beroleh kemudahan, dan Ia tidak menghendaki kamu menanggung kesukaran. Dan juga supaya kamu cukupkan bilangan puasa (sebulan Ramadan), dan supaya kamu membesarkan Allah kerana mendapat petunjukNya, dan supaya kamu bersyukur."
+          }
+        },
+        {
+          "ref": "2:186",
+          "text": {
+            "ar": "وَإِذَا سَأَلَكَ عِبَادِى عَنِّى فَإِنِّى قَرِيبٌ ۖ أُجِيبُ دَعْوَةَ ٱلدَّاعِ إِذَا دَعَانِ ۖ فَلْيَسْتَجِيبُوا۟ لِى وَلْيُؤْمِنُوا۟ بِى لَعَلَّهُمْ يَرْشُدُونَ",
+            "id": "Dan apabila hamba-hamba-Ku bertanya kepadamu tentang Aku, maka (jawablah), bahwasanya Aku adalah dekat. Aku mengabulkan permohonan orang yang berdoa apabila ia memohon kepada-Ku, maka hendaklah mereka itu memenuhi (segala perintah-Ku) dan hendaklah mereka beriman kepada-Ku, agar mereka selalu berada dalam kebenaran.",
+            "en": "And when My servants ask you, [O Muhammad], concerning Me - indeed I am near. I respond to the invocation of the supplicant when he calls upon Me. So let them respond to Me [by obedience] and believe in Me that they may be [rightly] guided.",
+            "ms": "Dan apabila hamba-hambaKu bertanya kepadamu mengenai Aku maka (beritahu kepada mereka): sesungguhnya Aku (Allah) sentiasa hampir (kepada mereka); Aku perkenankan permohonan orang yang berdoa apabila ia berdoa kepadaKu. Maka hendaklah mereka menyahut seruanku (dengan mematuhi perintahKu), dan hendaklah mereka beriman kepadaKu supaya mereka menjadi baik serta betul."
+          }
+        },
+        {
+          "ref": "17:9",
+          "text": {
+            "ar": "إِنَّ هَـٰذَا ٱلْقُرْءَانَ يَهْدِى لِلَّتِى هِىَ أَقْوَمُ وَيُبَشِّرُ ٱلْمُؤْمِنِينَ ٱلَّذِينَ يَعْمَلُونَ ٱلصَّـٰلِحَـٰتِ أَنَّ لَهُمْ أَجْرًا كَبِيرًا",
+            "id": "Sesungguhnya Al Quran ini memberikan petunjuk kepada (jalan) yang lebih lurus dan memberi khabar gembira kepada orang-orang Mu'min yang mengerjakan amal saleh bahwa bagi mereka ada pahala yang besar,",
+            "en": "Indeed, this Qur'an guides to that which is most suitable and gives good tidings to the believers who do righteous deeds that they will have a great reward.",
+            "ms": "Sesungguhnya Al-Quran ini memberi petunjuk ke jalan yang amat betul (ugama Islam), dan memberikan berita yang mengembirakan orang-orang yang beriman yang mengerjakan amal-amal soleh, bahawa mereka beroleh pahala yang besar."
+          }
+        },
+        {
+          "ref": "10:57",
+          "text": {
+            "ar": "يَـٰٓأَيُّهَا ٱلنَّاسُ قَدْ جَآءَتْكُم مَّوْعِظَةٌ مِّن رَّبِّكُمْ وَشِفَآءٌ لِّمَا فِى ٱلصُّدُورِ وَهُدًى وَرَحْمَةٌ لِّلْمُؤْمِنِينَ",
+            "id": "Hai manusia, sesungguhnya telah datang kepadamu pelajaran dari Tuhanmu dan penyembuh bagi penyakit-penyakit (yang berada) dalam dada dan petunjuk serta rahmat bagi orang-orang yang beriman.",
+            "en": "O mankind, there has to come to you instruction from your Lord and healing for what is in the breasts and guidance and mercy for the believers.",
+            "ms": "Wahai umat manusia! Sesungguhnya telah datang kepada kamu Al-Quran yang menjadi nasihat pengajaran dari Tuhan kamu, dan yang menjadi penawar bagi penyakit-penyakit batin yang ada di dalam dada kamu, dan juga menjadi hidayah petunjuk untuk keselamatan, serta membawa rahmat bagi orang-orang yang beriman."
+          }
+        }
+      ]
+    },
+    {
+      "id": "eid_al_fitr",
+      "hijriMonth": 10,
+      "hijriDays": [
+        1,
+        1
+      ],
+      "why": {
+        "id": "Idulfitri: hari bahagia dan bersyukur setelah Ramadan.",
+        "en": "Eid al-Fitr: a day of joy and gratitude after Ramadan.",
+        "ms": "Aidilfitri: hari gembira dan bersyukur selepas Ramadan.",
+        "ar": "عيد الفطر: يوم فرح وشكر بعد رمضان."
+      },
+      "ayahs": [
+        {
+          "ref": "87:14",
+          "text": {
+            "ar": "قَدْ أَفْلَحَ مَن تَزَكَّىٰ",
+            "id": "Sesungguhnya beruntunglah orang yang membersihkan diri (dengan beriman),",
+            "en": "He has certainly succeeded who purifies himself",
+            "ms": "Sesungguhnya berjayalah orang yang - setelah menerima peringatan itu - berusaha membersihkan dirinya (dengan taat dan amal yang soleh),"
+          }
+        },
+        {
+          "ref": "10:58",
+          "text": {
+            "ar": "قُلْ بِفَضْلِ ٱللَّهِ وَبِرَحْمَتِهِۦ فَبِذَٰلِكَ فَلْيَفْرَحُوا۟ هُوَ خَيْرٌ مِّمَّا يَجْمَعُونَ",
+            "id": "Katakanlah: \"Dengan kurnia Allah dan rahmat-Nya, hendaklah dengan itu mereka bergembira. Kurnia Allah dan rahmat-Nya itu adalah lebih baik dari apa yang mereka kumpulkan\".",
+            "en": "Say, \"In the bounty of Allah and in His mercy - in that let them rejoice; it is better than what they accumulate.\"",
+            "ms": "Katakanlah (wahai Muhammad) \"kedatangan Al-Quran itu adalah semata-mata dengan limpah kurnia Allah dan kasih sayangNya, maka dengan isi kandungan Al-Quran itulah hendaknya mereka bersukacita (bukan dengan yang lainnya), kerana ia lebih baik daripada apa yang mereka himpunkan dari segala benda dan perkara yang tidak kekal)\"."
+          }
+        }
+      ]
+    },
+    {
+      "id": "shawwal_fasting",
+      "hijriMonth": 10,
+      "hijriDays": [
+        2,
+        7
+      ],
+      "why": {
+        "id": "Syawal, bulan dianjurkannya puasa enam hari.",
+        "en": "Shawwal, when fasting six days is recommended.",
+        "ms": "Syawal, bulan disunatkan berpuasa enam hari.",
+        "ar": "شوال، يُستحب فيه صيام ستة أيام."
+      },
+      "ayahs": [
+        {
+          "ref": "6:160",
+          "text": {
+            "ar": "مَن جَآءَ بِٱلْحَسَنَةِ فَلَهُۥ عَشْرُ أَمْثَالِهَا ۖ وَمَن جَآءَ بِٱلسَّيِّئَةِ فَلَا يُجْزَىٰٓ إِلَّا مِثْلَهَا وَهُمْ لَا يُظْلَمُونَ",
+            "id": "Barangsiapa membawa amal yang baik, maka baginya (pahala) sepuluh kali lipat amalnya; dan barangsiapa yang membawa perbuatan jahat maka dia tidak diberi pembalasan melainkan seimbang dengan kejahatannya, sedang mereka sedikitpun tidak dianiaya (dirugikan).",
+            "en": "Whoever comes [on the Day of Judgement] with a good deed will have ten times the like thereof [to his credit], and whoever comes with an evil deed will not be recompensed except the like thereof; and they will not be wronged.",
+            "ms": "Sesiapa yang membawa amal kebaikan (pada hari kiamat), maka baginya (balasan) sepuluh kali ganda (dari kebaikan) yang sama dengannya; dan sesiapa yang membawa amal kejahatan, maka ia tidak dibalas melainkan (kejahatan) yang sama dengannya; sedang mereka tidak dianiaya (sedikitpun)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "first_ten_days",
+      "hijriMonth": 12,
+      "hijriDays": [
+        1,
+        8
+      ],
+      "why": {
+        "id": "Sepuluh hari pertama Zulhijah, hari-hari terbaik untuk beramal saleh.",
+        "en": "The first ten days of Dhul Hijjah, the best days of the year for good deeds.",
+        "ms": "Sepuluh hari pertama Zulhijjah, hari-hari terbaik untuk beramal soleh.",
+        "ar": "العشر الأوائل من ذي الحجة، أفضل أيام السنة للعمل الصالح."
+      },
+      "ayahs": [
+        {
+          "ref": "22:27",
+          "text": {
+            "ar": "وَأَذِّن فِى ٱلنَّاسِ بِٱلْحَجِّ يَأْتُوكَ رِجَالًا وَعَلَىٰ كُلِّ ضَامِرٍ يَأْتِينَ مِن كُلِّ فَجٍّ عَمِيقٍ",
+            "id": "Dan berserulah kepada manusia untuk mengerjakan haji, niscaya mereka akan datang kepadamu dengan berjalan kaki, dan mengendarai unta yang kurus yang datang dari segenap penjuru yang jauh,",
+            "en": "And proclaim to the people the Hajj [pilgrimage]; they will come to you on foot and on every lean camel; they will come from every distant pass -",
+            "ms": "\"Dan serukanlah umat manusia untuk mengerjakan ibadat Haji, nescaya mereka akan datang ke (rumah Tuhan) mu dengan berjalan kaki, dan dengan menunggang berjenis-jenis unta yang kurus yang datangnya dari berbagai jalan (dan ceruk rantau) yang jauh."
+          }
+        },
+        {
+          "ref": "22:28",
+          "text": {
+            "ar": "لِّيَشْهَدُوا۟ مَنَـٰفِعَ لَهُمْ وَيَذْكُرُوا۟ ٱسْمَ ٱللَّهِ فِىٓ أَيَّامٍ مَّعْلُومَـٰتٍ عَلَىٰ مَا رَزَقَهُم مِّنۢ بَهِيمَةِ ٱلْأَنْعَـٰمِ ۖ فَكُلُوا۟ مِنْهَا وَأَطْعِمُوا۟ ٱلْبَآئِسَ ٱلْفَقِيرَ",
+            "id": "supaya mereka menyaksikan berbagai manfaat bagi mereka dan supaya mereka menyebut nama Allah pada hari yang telah ditentukan atas rezeki yang Allah telah berikan kepada mereka berupa binatang ternak. Maka makanlah sebahagian daripadanya dan (sebahagian lagi) berikanlah untuk dimakan orang-orang yang sengsara dan fakir.",
+            "en": "That they may witness benefits for themselves and mention the name of Allah on known days over what He has provided for them of [sacrificial] animals. So eat of them and feed the miserable and poor.",
+            "ms": "\"Supaya mereka menyaksikan berbagai perkara yang mendatangkan faedah kepada mereka serta memperingati dan menyebut nama Allah, pada hari-hari yang tertentu, kerana pengurniaanNya kepada mereka dengan binatang-binatang ternak (untuk dijadikan korban); dengan yang demikian makanlah kamu dari (daging) binatang-binatang korban itu dan berilah makan kepada orang yang susah, yang fakir miskin."
+          }
+        },
+        {
+          "ref": "3:97",
+          "text": {
+            "ar": "فِيهِ ءَايَـٰتٌۢ بَيِّنَـٰتٌ مَّقَامُ إِبْرَٰهِيمَ ۖ وَمَن دَخَلَهُۥ كَانَ ءَامِنًا ۗ وَلِلَّهِ عَلَى ٱلنَّاسِ حِجُّ ٱلْبَيْتِ مَنِ ٱسْتَطَاعَ إِلَيْهِ سَبِيلًا ۚ وَمَن كَفَرَ فَإِنَّ ٱللَّهَ غَنِىٌّ عَنِ ٱلْعَـٰلَمِينَ",
+            "id": "Padanya terdapat tanda-tanda yang nyata, (di antaranya) maqam Ibrahim; barangsiapa memasukinya (Baitullah itu) menjadi amanlah dia; mengerjakan haji adalah kewajiban manusia terhadap Allah, yaitu (bagi) orang yang sanggup mengadakan perjalanan ke Baitullah. Barangsiapa mengingkari (kewajiban haji), maka sesungguhnya Allah Maha Kaya (tidak memerlukan sesuatu) dari semesta alam.",
+            "en": "In it are clear signs [such as] the standing place of Abraham. And whoever enters it shall be safe. And [due] to Allah from the people is a pilgrimage to the House - for whoever is able to find thereto a way. But whoever disbelieves - then indeed, Allah is free from need of the worlds.",
+            "ms": "Di situ ada tanda-tanda keterangan yang nyata (yang menunjukkan kemuliaannya; di antaranya ialah) Makam Nabi Ibrahim. Dan sesiapa yang masuk ke dalamnya aman tenteramlah dia. Dan Allah mewajibkan manusia mengerjakan ibadat Haji dengan mengunjungi Baitullah iaitu sesiapa yang mampu sampai kepadanya. Dan sesiapa yang kufur (ingkarkan kewajipan ibadat Haji itu), maka sesungguhnya Allah Maha Kaya (tidak berhajatkan sesuatu pun) dari sekalian makhluk."
+          }
+        },
+        {
+          "ref": "2:197",
+          "text": {
+            "ar": "ٱلْحَجُّ أَشْهُرٌ مَّعْلُومَـٰتٌ ۚ فَمَن فَرَضَ فِيهِنَّ ٱلْحَجَّ فَلَا رَفَثَ وَلَا فُسُوقَ وَلَا جِدَالَ فِى ٱلْحَجِّ ۗ وَمَا تَفْعَلُوا۟ مِنْ خَيْرٍ يَعْلَمْهُ ٱللَّهُ ۗ وَتَزَوَّدُوا۟ فَإِنَّ خَيْرَ ٱلزَّادِ ٱلتَّقْوَىٰ ۚ وَٱتَّقُونِ يَـٰٓأُو۟لِى ٱلْأَلْبَـٰبِ",
+            "id": "(Musim) haji adalah beberapa bulan yang dimaklumi, barangsiapa yang menetapkan niatnya dalam bulan itu akan mengerjakan haji, maka tidak boleh rafats, berbuat fasik dan berbantah-bantahan di dalam masa mengerjakan haji. Dan apa yang kamu kerjakan berupa kebaikan, niscaya Allah mengetahuinya. Berbekallah, dan sesungguhnya sebaik-baik bekal adalah takwa dan bertakwalah kepada-Ku hai orang-orang yang berakal.",
+            "en": "Hajj is [during] well-known months, so whoever has made Hajj obligatory upon himself therein [by entering the state of ihram], there is [to be for him] no sexual relations and no disobedience and no disputing during Hajj. And whatever good you do - Allah knows it. And take provisions, but indeed, the best provision is fear of Allah. And fear Me, O you of understanding.",
+            "ms": "(Masa untuk mengerjakan ibadat) Haji itu ialah beberapa bulan yang termaklum. Oleh yang demikian sesiapa yang telah mewajibkan dirinya (dengan niat mengerjakan) ibadat Haji itu, maka tidak boleh mencampuri isteri, dan tidak boleh membuat maksiat, dan tidak boleh bertengkar, dalam masa mengerjakan ibadat Haji. Dan apa jua kebaikan yang kamu kerjakan adalah diketahui oleh Allah; dan hendaklah kamu membawa bekal dengan cukupnya kerana sesungguhnya sebaik-baik bekal itu ialah memelihara diri (dari keaiban meminta sedekah); dan bertaqwalah kepadaKu wahai orang-orang yang berakal (yang dapat memikir dan memahaminya)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "arafah",
+      "hijriMonth": 12,
+      "hijriDays": [
+        9,
+        9
+      ],
+      "why": {
+        "id": "Hari Arafah: jemaah haji wukuf di Arafah, dan yang tidak berhaji dianjurkan berpuasa.",
+        "en": "The Day of Arafah: pilgrims stand at Arafat, and those not on Hajj are encouraged to fast.",
+        "ms": "Hari Arafah: jemaah haji berwukuf di Arafah, dan yang tidak mengerjakan haji disunatkan berpuasa.",
+        "ar": "يوم عرفة: يقف الحجاج بعرفات، ويُستحب صيامه لغير الحاج."
+      },
+      "ayahs": [
+        {
+          "ref": "2:198",
+          "text": {
+            "ar": "لَيْسَ عَلَيْكُمْ جُنَاحٌ أَن تَبْتَغُوا۟ فَضْلًا مِّن رَّبِّكُمْ ۚ فَإِذَآ أَفَضْتُم مِّنْ عَرَفَـٰتٍ فَٱذْكُرُوا۟ ٱللَّهَ عِندَ ٱلْمَشْعَرِ ٱلْحَرَامِ ۖ وَٱذْكُرُوهُ كَمَا هَدَىٰكُمْ وَإِن كُنتُم مِّن قَبْلِهِۦ لَمِنَ ٱلضَّآلِّينَ",
+            "id": "Tidak ada dosa bagimu untuk mencari karunia (rezeki hasil perniagaan) dari Tuhanmu. Maka apabila kamu telah bertolak dari 'Arafat, berdzikirlah kepada Allah di Masy'arilharam. Dan berdzikirlah (dengan menyebut) Allah sebagaimana yang ditunjukkan-Nya kepadamu; dan sesungguhnya kamu sebelum itu benar-benar termasuk orang-orang yang sesat.",
+            "en": "There is no blame upon you for seeking bounty from your Lord [during Hajj]. But when you depart from 'Arafat, remember Allah at al- Mash'ar al-Haram. And remember Him, as He has guided you, for indeed, you were before that among those astray.",
+            "ms": "Tidaklah menjadi salah, kamu mencari limpah kurnia dari Tuhan kamu (dengan meneruskan perniagaan ketika mengerjakan Haji). Kemudian apabila kamu bertolak turun dari padang Arafah (menuju ke Muzdalifah) maka sebutlah nama Allah (dengan doa,\"talbiah\" dan tasbih) di tempat Masy'ar Al-Haraam (di Muzdalifah), dan ingatlah kepada Allah dengan menyebutnya sebagaimana Ia telah memberikan petunjuk hidayah kepadamu; dan sesungguhnya kamu sebelum itu adalah dari golongan orang-orang yang salah jalan ibadatnya."
+          }
+        },
+        {
+          "ref": "2:199",
+          "text": {
+            "ar": "ثُمَّ أَفِيضُوا۟ مِنْ حَيْثُ أَفَاضَ ٱلنَّاسُ وَٱسْتَغْفِرُوا۟ ٱللَّهَ ۚ إِنَّ ٱللَّهَ غَفُورٌ رَّحِيمٌ",
+            "id": "Kemudian bertolaklah kamu dari tempat bertolaknya orang-orang banyak ('Arafah) dan mohonlah ampun kepada Allah; sesungguhnya Allah Maha Pengampun lagi Maha Penyayang.",
+            "en": "Then depart from the place from where [all] the people depart and ask forgiveness of Allah. Indeed, Allah is Forgiving and Merciful.",
+            "ms": "Selain dari itu hendaklah kamu bertolak turun dari (Arafah) tempat bertolaknya orang ramai, dan beristighfarlah kamu kepada Allah (dengan memohon ampun), sesungguhnya Allah Maha Pengampun, lagi Maha Mengasihani."
+          }
+        }
+      ]
+    },
+    {
+      "id": "eid_al_adha",
+      "hijriMonth": 12,
+      "hijriDays": [
+        10,
+        10
+      ],
+      "why": {
+        "id": "Iduladha, hari raya kurban.",
+        "en": "Eid al-Adha, the day of sacrifice.",
+        "ms": "Aidiladha, hari raya korban.",
+        "ar": "عيد الأضحى، يوم النحر."
+      },
+      "ayahs": [
+        {
+          "ref": "108:2",
+          "text": {
+            "ar": "فَصَلِّ لِرَبِّكَ وَٱنْحَرْ",
+            "id": "Maka dirikanlah shalat karena Tuhanmu; dan berkorbanlah.",
+            "en": "So pray to your Lord and sacrifice [to Him alone].",
+            "ms": "Oleh itu, kerjakanlah sembahyang kerana Tuhanmu semata-mata, dan sembelihlah korban (sebagai bersyukur)."
+          }
+        },
+        {
+          "ref": "22:37",
+          "text": {
+            "ar": "لَن يَنَالَ ٱللَّهَ لُحُومُهَا وَلَا دِمَآؤُهَا وَلَـٰكِن يَنَالُهُ ٱلتَّقْوَىٰ مِنكُمْ ۚ كَذَٰلِكَ سَخَّرَهَا لَكُمْ لِتُكَبِّرُوا۟ ٱللَّهَ عَلَىٰ مَا هَدَىٰكُمْ ۗ وَبَشِّرِ ٱلْمُحْسِنِينَ",
+            "id": "Daging-daging unta dan darahnya itu sekali-kali tidak dapat mencapai (keridhaan) Allah, tetapi ketakwaan dari kamulah yang dapat mencapainya. Demikianlah Allah telah menundukkannya untuk kamu supaya kamu mengagungkan Allah terhadap hidayah-Nya kepada kamu. Dan berilah kabar gembira kepada orang-orang yang berbuat baik.",
+            "en": "Their meat will not reach Allah, nor will their blood, but what reaches Him is piety from you. Thus have We subjected them to you that you may glorify Allah for that [to] which He has guided you; and give good tidings to the doers of good.",
+            "ms": "Daging dan darah binatang korban atau hadiah itu tidak sekali-kali akan sampai kepada Allah, tetapi yang sampai kepadaNya ialah amal yang ikhlas yang berdasarkan taqwa dari kamu. Demikianlah Ia memudahkan binatang-binatang itu bagi kamu supaya kamu membesarkan Allah kerana mendapat nikmat petunjukNya. Dan sampaikanlah berita gembira (dengan balasan yang sebaik-baiknya) kepada orang-orang yang berusaha supaya baik amalnya."
+          }
+        },
+        {
+          "ref": "37:107",
+          "text": {
+            "ar": "وَفَدَيْنَـٰهُ بِذِبْحٍ عَظِيمٍ",
+            "id": "Dan Kami tebus anak itu dengan seekor sembelihan yang besar.",
+            "en": "And We ransomed him with a great sacrifice,",
+            "ms": "Dan Kami tebus anaknya itu dengan seekor binatang sembelihan yang besar;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "tashriq",
+      "hijriMonth": 12,
+      "hijriDays": [
+        11,
+        13
+      ],
+      "why": {
+        "id": "Hari Tasyrik, hari makan, minum, dan berzikir kepada Allah.",
+        "en": "The days of Tashriq, days of eating, drinking and remembering Allah.",
+        "ms": "Hari Tasyrik, hari makan, minum dan berzikir kepada Allah.",
+        "ar": "أيام التشريق، أيام أكل وشرب وذكر لله."
+      },
+      "ayahs": [
+        {
+          "ref": "2:203",
+          "text": {
+            "ar": "۞ وَٱذْكُرُوا۟ ٱللَّهَ فِىٓ أَيَّامٍ مَّعْدُودَٰتٍ ۚ فَمَن تَعَجَّلَ فِى يَوْمَيْنِ فَلَآ إِثْمَ عَلَيْهِ وَمَن تَأَخَّرَ فَلَآ إِثْمَ عَلَيْهِ ۚ لِمَنِ ٱتَّقَىٰ ۗ وَٱتَّقُوا۟ ٱللَّهَ وَٱعْلَمُوٓا۟ أَنَّكُمْ إِلَيْهِ تُحْشَرُونَ",
+            "id": "Dan berdzikirlah (dengan menyebut) Allah dalam beberapa hari yang berbilang. Barangsiapa yang ingin cepat berangkat (dari Mina) sesudah dua hari, maka tiada dosa baginya. Dan barangsiapa yang ingin menangguhkan (keberangkatannya dari dua hari itu), maka tidak ada dosa pula baginya, bagi orang yang bertakwa. Dan bertakwalah kepada Allah, dan ketahuilah, bahwa kamu akan dikumpulkan kepada-Nya.",
+            "en": "And remember Allah during [specific] numbered days. Then whoever hastens [his departure] in two days - there is no sin upon him; and whoever delays [until the third] - there is no sin upon him - for him who fears Allah. And fear Allah and know that unto Him you will be gathered.",
+            "ms": "Dan sebutlah kamu akan Allah (dengan takbir semasa mengerjakan Haji) dalam beberapa hari yang tertentu bilangannya. Kemudian sesiapa yang segera (meninggalkan Mina) pada hari yang kedua, maka ia tidaklah berdosa dan sesiapa yang melambatkan (meninggalkan Mina) maka ia juga tidaklah berdosa; (ketiadaan dosa itu ialah) bagi orang yang bertaqwa dan hendaklah kamu bertaqwa kepada Allah dan ketahuilah sesungguhnya kamu akan dihimpunkan kepadanya."
+          }
+        },
+        {
+          "ref": "22:36",
+          "text": {
+            "ar": "وَٱلْبُدْنَ جَعَلْنَـٰهَا لَكُم مِّن شَعَـٰٓئِرِ ٱللَّهِ لَكُمْ فِيهَا خَيْرٌ ۖ فَٱذْكُرُوا۟ ٱسْمَ ٱللَّهِ عَلَيْهَا صَوَآفَّ ۖ فَإِذَا وَجَبَتْ جُنُوبُهَا فَكُلُوا۟ مِنْهَا وَأَطْعِمُوا۟ ٱلْقَانِعَ وَٱلْمُعْتَرَّ ۚ كَذَٰلِكَ سَخَّرْنَـٰهَا لَكُمْ لَعَلَّكُمْ تَشْكُرُونَ",
+            "id": "Dan telah Kami jadikan untuk kamu unta-unta itu sebahagian dari syi'ar Allah, kamu memperoleh kebaikan yang banyak padanya, maka sebutlah olehmu nama Allah ketika kamu menyembelihnya dalam keadaan berdiri (dan telah terikat). Kemudian apabila telah roboh (mati), maka makanlah sebahagiannya dan beri makanlah orang yang rela dengan apa yang ada padanya (yang tidak meminta-minta) dan orang yang meminta. Demikianlah Kami telah menundukkan untua-unta itu kepada kamu, mudah-mudahan kamu bersyukur.",
+            "en": "And the camels and cattle We have appointed for you as among the symbols of Allah; for you therein is good. So mention the name of Allah upon them when lined up [for sacrifice]; and when they are [lifeless] on their sides, then eat from them and feed the needy and the beggar. Thus have We subjected them to you that you may be grateful.",
+            "ms": "Dan Kami jadikan unta (yang dihadiahkan kepada fakir miskin Makkah itu) sebahagian dari syiar ugama Allah untuk kamu; pada menyembelih unta yang tersebut ada kebaikan bagi kamu; oleh itu sebutlah nama Allah (semasa menyembelihnya) ketika ia berdiri di atas tiga kakinya maka apabila ia tumbang (serta putus nyawanya), makanlah sebahagian daripadanya, dan berilah (bahagian yang lain) kepada orang-orang yang tidak meminta dan yang meminta. Demikianlah Kami mudahkan dia untuk kamu (menguasainya dan menyembelihnya) supaya kamu bersyukur."
+          }
+        }
+      ]
+    },
+    {
+      "id": "friday",
+      "weekday": 5,
+      "why": {
+        "id": "Jumat: hari membaca surah Al-Kahf dan memperbanyak selawat.",
+        "en": "Friday: a day to read Al-Kahf and send blessings on the Prophet ﷺ.",
+        "ms": "Jumaat: hari membaca surah al-Kahfi dan memperbanyak selawat.",
+        "ar": "يوم الجمعة: يوم قراءة سورة الكهف والإكثار من الصلاة على النبي ﷺ."
+      },
+      "ayahs": [
+        {
+          "ref": "62:9",
+          "text": {
+            "ar": "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوٓا۟ إِذَا نُودِىَ لِلصَّلَوٰةِ مِن يَوْمِ ٱلْجُمُعَةِ فَٱسْعَوْا۟ إِلَىٰ ذِكْرِ ٱللَّهِ وَذَرُوا۟ ٱلْبَيْعَ ۚ ذَٰلِكُمْ خَيْرٌ لَّكُمْ إِن كُنتُمْ تَعْلَمُونَ",
+            "id": "Hai orang-orang beriman, apabila diseru untuk menunaikan shalat Jum'at, maka bersegeralah kamu kepada mengingat Allah dan tinggalkanlah jual beli. Yang demikian itu lebih baik bagimu jika kamu mengetahui.",
+            "en": "O you who have believed, when [the adhan] is called for the prayer on the day of Jumu'ah [Friday], then proceed to the remembrance of Allah and leave trade. That is better for you, if you only knew.",
+            "ms": "Wahai orang-orang yang beriman! Apabila diserukan azan (bang) untuk mengerjakan sembahyang pada hari Jumaat, maka segeralah kamu pergi (ke masjid) untuk mengingati Allah (dengan mengerjakan sembahyang jumaat) dan tinggalkanlah berjual-beli (pada saat itu); yang demikian adalah baik bagi kamu, jika kamu mengetahui (hakikat yang sebenarnya),"
+          }
+        },
+        {
+          "ref": "18:10",
+          "text": {
+            "ar": "إِذْ أَوَى ٱلْفِتْيَةُ إِلَى ٱلْكَهْفِ فَقَالُوا۟ رَبَّنَآ ءَاتِنَا مِن لَّدُنكَ رَحْمَةً وَهَيِّئْ لَنَا مِنْ أَمْرِنَا رَشَدًا",
+            "id": "(Ingatlah) tatkala para pemuda itu mencari tempat berlindung ke dalam gua, lalu mereka berdoa: \"Wahai Tuhan kami, berikanlah rahmat kepada kami dari sisi-Mu dan sempurnakanlah bagi kami petunjuk yang lurus dalam urusan kami (ini)\".",
+            "en": "[Mention] when the youths retreated to the cave and said, \"Our Lord, grant us from Yourself mercy and prepare for us from our affair right guidance.\"",
+            "ms": "(Ingatkanlah peristiwa) ketika serombongan orang-orang muda pergi ke gua, lalu mereka berdoa: \"Wahai Tuhan kami! Kurniakanlah kami rahmat dari sisiMu, dan berilah kemudahan-kemudahan serta pimpinan kepada kami untuk keselamatan ugama kami\"."
+          }
+        },
+        {
+          "ref": "62:10",
+          "text": {
+            "ar": "فَإِذَا قُضِيَتِ ٱلصَّلَوٰةُ فَٱنتَشِرُوا۟ فِى ٱلْأَرْضِ وَٱبْتَغُوا۟ مِن فَضْلِ ٱللَّهِ وَٱذْكُرُوا۟ ٱللَّهَ كَثِيرًا لَّعَلَّكُمْ تُفْلِحُونَ",
+            "id": "Apabila telah ditunaikan shalat, maka bertebaranlah kamu di muka bumi; dan carilah karunia Allah dan ingatlah Allah banyak-banyak supaya kamu beruntung.",
+            "en": "And when the prayer has been concluded, disperse within the land and seek from the bounty of Allah, and remember Allah often that you may succeed.",
+            "ms": "Kemudian setelah selesai sembahyang, maka bertebaranlah kamu di muka bumi (untuk menjalankan urusan masing-masing), dan carilah apa yang kamu hajati dari limpah kurnia Allah, serta ingatlah akan Allah banyak-banyak (dalam segala keadaan), supaya kamu berjaya (di dunia dan di akhirat)."
+          }
+        },
+        {
+          "ref": "18:46",
+          "text": {
+            "ar": "ٱلْمَالُ وَٱلْبَنُونَ زِينَةُ ٱلْحَيَوٰةِ ٱلدُّنْيَا ۖ وَٱلْبَـٰقِيَـٰتُ ٱلصَّـٰلِحَـٰتُ خَيْرٌ عِندَ رَبِّكَ ثَوَابًا وَخَيْرٌ أَمَلًا",
+            "id": "Harta dan anak-anak adalah perhiasan kehidupan dunia tetapi amalan-amalan yang kekal lagi saleh adalah lebih baik pahalanya di sisi Tuhanmu serta lebih baik untuk menjadi harapan.",
+            "en": "Wealth and children are [but] adornment of the worldly life. But the enduring good deeds are better to your Lord for reward and better for [one's] hope.",
+            "ms": "Harta benda dan anak pinak itu, ialah perhiasan hidup di dunia; dan amal-amal soleh yang kekal faedahnya itu lebih baik pada sisi Tuhanmu sebagai pahala balasan, dan lebih baik sebagai asas yang memberi harapan."
+          }
+        },
+        {
+          "ref": "33:56",
+          "text": {
+            "ar": "إِنَّ ٱللَّهَ وَمَلَـٰٓئِكَتَهُۥ يُصَلُّونَ عَلَى ٱلنَّبِىِّ ۚ يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ صَلُّوا۟ عَلَيْهِ وَسَلِّمُوا۟ تَسْلِيمًا",
+            "id": "Sesungguhnya Allah dan malaikat-malaikat-Nya bershalawat untuk Nabi. Hai orang-orang yang beriman, bershalawatlah kamu untuk Nabi dan ucapkanlah salam penghormatan kepadanya.",
+            "en": "Indeed, Allah confers blessing upon the Prophet, and His angels [ask Him to do so]. O you who have believed, ask [Allah to confer] blessing upon him and ask [Allah to grant him] peace.",
+            "ms": "Sesungguhnya Allah dan malaikatNya berselawat (memberi segala penghormatan dan kebaikan) kepada Nabi (Muhammad s.a.w); wahai orang-orang yang beriman berselawatlah kamu kepadanya serta ucapkanlah salam sejahtera dengan penghormatan yang sepenuhnya."
+          }
+        },
+        {
+          "ref": "18:109",
+          "text": {
+            "ar": "قُل لَّوْ كَانَ ٱلْبَحْرُ مِدَادًا لِّكَلِمَـٰتِ رَبِّى لَنَفِدَ ٱلْبَحْرُ قَبْلَ أَن تَنفَدَ كَلِمَـٰتُ رَبِّى وَلَوْ جِئْنَا بِمِثْلِهِۦ مَدَدًا",
+            "id": "Katakanlah: Sekiranya lautan menjadi tinta untuk (menulis) kalimat-kalimat Tuhanku, sungguh habislah lautan itu sebelum habis (ditulis) kalimat-kalimat Tuhanku, meskipun Kami datangkan tambahan sebanyak itu (pula)\".",
+            "en": "Say, \"If the sea were ink for [writing] the words of my Lord, the sea would be exhausted before the words of my Lord were exhausted, even if We brought the like of it as a supplement.\"",
+            "ms": "Katakanlah (wahai Muhammad): \"Kalaulah semua jenis lautan menjadi tinta untuk menulis Kalimah-kalimah Tuhanku, sudah tentu akan habis kering lautan itu sebelum habis Kalimah-kalimah Tuhanku, walaupun Kami tambahi lagi dengan lautan yang sebanding dengannya, sebagai bantuan\"."
+          }
+        },
+        {
+          "ref": "18:110",
+          "text": {
+            "ar": "قُلْ إِنَّمَآ أَنَا۠ بَشَرٌ مِّثْلُكُمْ يُوحَىٰٓ إِلَىَّ أَنَّمَآ إِلَـٰهُكُمْ إِلَـٰهٌ وَٰحِدٌ ۖ فَمَن كَانَ يَرْجُوا۟ لِقَآءَ رَبِّهِۦ فَلْيَعْمَلْ عَمَلًا صَـٰلِحًا وَلَا يُشْرِكْ بِعِبَادَةِ رَبِّهِۦٓ أَحَدًۢا",
+            "id": "Katakanlah: Sesungguhnya aku ini manusia biasa seperti kamu, yang diwahyukan kepadaku: \"Bahwa sesungguhnya Tuhan kamu itu adalah Tuhan yang Esa\". Barangsiapa mengharap perjumpaan dengan Tuhannya, maka hendaklah ia mengerjakan amal yang saleh dan janganlah ia mempersekutukan seorangpun dalam beribadat kepada Tuhannya\".",
+            "en": "Say, \"I am only a man like you, to whom has been revealed that your god is one God. So whoever would hope for the meeting with his Lord - let him do righteous work and not associate in the worship of his Lord anyone.\"",
+            "ms": "Katakanlah (wahai Muhammad): \"Sesungguhnya aku hanyalah seorang manusia seperti kamu, diwahyukan kepadaku bahawa Tuhan kamu hanyalah Tuhan Yang Satu; Oleh itu, sesiapa yang percaya dan berharap akan pertemuan dengan Tuhannya, hendaklah ia mengerjakan amal yang soleh dan janganlah ia mempersekutukan sesiapapun dalam ibadatnya kepada Tuhannya\"."
+          }
+        }
+      ]
+    }
+  ],
+  "themes": [
+    {
+      "id": "oneness",
+      "why": {
+        "id": "Tentang keesaan Allah, landasan setiap hari.",
+        "en": "On the oneness of Allah, the foundation of every day.",
+        "ms": "Tentang keesaan Allah, asas setiap hari.",
+        "ar": "عن توحيد الله، أساس كل يوم."
+      },
+      "ayahs": [
+        {
+          "ref": "2:163",
+          "text": {
+            "ar": "وَإِلَـٰهُكُمْ إِلَـٰهٌ وَٰحِدٌ ۖ لَّآ إِلَـٰهَ إِلَّا هُوَ ٱلرَّحْمَـٰنُ ٱلرَّحِيمُ",
+            "id": "Dan Tuhanmu adalah Tuhan Yang Maha Esa; tidak ada Tuhan melainkan Dia Yang Maha Pemurah lagi Maha Penyayang.",
+            "en": "And your god is one God. There is no deity [worthy of worship] except Him, the Entirely Merciful, the Especially Merciful.",
+            "ms": "Dan Tuhan kamu ialah Tuhan yang Maha Esa; tiada Tuhan (Yang berhak disembah) selain dari Allah, yang Maha Pemurah, lagi Maha Mengasihani."
+          }
+        },
+        {
+          "ref": "2:255",
+          "text": {
+            "ar": "ٱللَّهُ لَآ إِلَـٰهَ إِلَّا هُوَ ٱلْحَىُّ ٱلْقَيُّومُ ۚ لَا تَأْخُذُهُۥ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُۥ مَا فِى ٱلسَّمَـٰوَٰتِ وَمَا فِى ٱلْأَرْضِ ۗ مَن ذَا ٱلَّذِى يَشْفَعُ عِندَهُۥٓ إِلَّا بِإِذْنِهِۦ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَىْءٍ مِّنْ عِلْمِهِۦٓ إِلَّا بِمَا شَآءَ ۚ وَسِعَ كُرْسِيُّهُ ٱلسَّمَـٰوَٰتِ وَٱلْأَرْضَ ۖ وَلَا يَـُٔودُهُۥ حِفْظُهُمَا ۚ وَهُوَ ٱلْعَلِىُّ ٱلْعَظِيمُ",
+            "id": "Allah, tidak ada Tuhan (yang berhak disembah) melainkan Dia Yang Hidup kekal lagi terus menerus mengurus (makhluk-Nya); tidak mengantuk dan tidak tidur. Kepunyaan-Nya apa yang di langit dan di bumi. Tiada yang dapat memberi syafa'at di sisi Allah tanpa izin-Nya? Allah mengetahui apa-apa yang di hadapan mereka dan di belakang mereka, dan mereka tidak mengetahui apa-apa dari ilmu Allah melainkan apa yang dikehendaki-Nya. Kursi Allah meliputi langit dan bumi. Dan Allah tidak merasa berat memelihara keduanya, dan Allah Maha Tinggi lagi Maha Besar.",
+            "en": "Allah - there is no deity except Him, the Ever-Living, the Sustainer of [all] existence. Neither drowsiness overtakes Him nor sleep. To Him belongs whatever is in the heavens and whatever is on the earth. Who is it that can intercede with Him except by His permission? He knows what is [presently] before them and what will be after them, and they encompass not a thing of His knowledge except for what He wills. His Kursi extends over the heavens and the earth, and their preservation tires Him not. And He is the Most High, the Most Great.",
+            "ms": "Allah, tiada Tuhan (yang berhak disembah) melainkan Dia, Yang Tetap hidup, Yang Kekal selama-lamanya mentadbirkan (sekalian makhlukNya). Yang tidak mengantuk usahkan tidur. Yang memiliki segala yang ada di langit dan yang ada di bumi. Tiada sesiapa yang dapat memberi syafaat (pertolongan) di sisiNya melainkan dengan izinNya. yang mengetahui apa yang ada di hadapan mereka dan apa yang ada di belakang mereka, sedang mereka tidak mengetahui sesuatu pun dari (kandungan) ilmu Allah melainkan apa yang Allah kehendaki (memberitahu kepadanya). Luasnya Kursi Allah (ilmuNya dan kekuasaanNya) meliputi langit dan bumi; dan tiadalah menjadi keberatan kepada Allah menjaga serta memelihara keduanya. Dan Dia lah Yang Maha Tinggi (darjat kemuliaanNya), lagi Maha Besar (kekuasaanNya)"
+          }
+        },
+        {
+          "ref": "59:22",
+          "text": {
+            "ar": "هُوَ ٱللَّهُ ٱلَّذِى لَآ إِلَـٰهَ إِلَّا هُوَ ۖ عَـٰلِمُ ٱلْغَيْبِ وَٱلشَّهَـٰدَةِ ۖ هُوَ ٱلرَّحْمَـٰنُ ٱلرَّحِيمُ",
+            "id": "Dialah Allah Yang tiada Tuhan selain Dia, Yang Mengetahui yang ghaib dan yang nyata, Dialah Yang Maha Pemurah lagi Maha Penyayang.",
+            "en": "He is Allah, other than whom there is no deity, Knower of the unseen and the witnessed. He is the Entirely Merciful, the Especially Merciful.",
+            "ms": "Dia lah Allah, yang tidak ada Tuhan melainkan Dia; Yang Mengetahui perkara yang ghaib dan yang nyata; Dia lah Yang Maha Pemurah, lagi Maha Mengasihani."
+          }
+        },
+        {
+          "ref": "59:24",
+          "text": {
+            "ar": "هُوَ ٱللَّهُ ٱلْخَـٰلِقُ ٱلْبَارِئُ ٱلْمُصَوِّرُ ۖ لَهُ ٱلْأَسْمَآءُ ٱلْحُسْنَىٰ ۚ يُسَبِّحُ لَهُۥ مَا فِى ٱلسَّمَـٰوَٰتِ وَٱلْأَرْضِ ۖ وَهُوَ ٱلْعَزِيزُ ٱلْحَكِيمُ",
+            "id": "Dialah Allah Yang Menciptakan, Yang Mengadakan, Yang Membentuk Rupa, Yang Mempunyai Asmaaul Husna. Bertasbih kepada-Nya apa yang di langit dan bumi. Dan Dialah Yang Maha Perkasa lagi Maha Bijaksana.",
+            "en": "He is Allah, the Creator, the Inventor, the Fashioner; to Him belong the best names. Whatever is in the heavens and earth is exalting Him. And He is the Exalted in Might, the Wise.",
+            "ms": "Dia lah Allah, Yang Menciptakan sekalian makhluk; Yang Mengadakan (dari tiada kepada ada); Yang Membentuk rupa (makhluk-makhlukNya menurut yang dikehendakiNya); bagiNyalah nama-nama yang sebaik-baiknya dan semulia-mulianya; bertasbih kepadaNya segala yang ada di langit dan di bumi; dan Dia lah Yang tiada bandingNya, lagi Maha Bijaksana."
+          }
+        },
+        {
+          "ref": "20:8",
+          "text": {
+            "ar": "ٱللَّهُ لَآ إِلَـٰهَ إِلَّا هُوَ ۖ لَهُ ٱلْأَسْمَآءُ ٱلْحُسْنَىٰ",
+            "id": "Dialah Allah, tidak ada Tuhan (yang berhak disembah) melainkan Dia. Dia mempunyai al asmaaul husna (nama-nama yang baik),",
+            "en": "Allah - there is no deity except Him. To Him belong the best names.",
+            "ms": "Allah! Tiada Tuhan yang berhak disembah melainkan Dia, bagiNyalah segala nama yang baik."
+          }
+        },
+        {
+          "ref": "6:103",
+          "text": {
+            "ar": "لَّا تُدْرِكُهُ ٱلْأَبْصَـٰرُ وَهُوَ يُدْرِكُ ٱلْأَبْصَـٰرَ ۖ وَهُوَ ٱللَّطِيفُ ٱلْخَبِيرُ",
+            "id": "Dia tidak dapat dicapai oleh penglihatan mata, sedang Dia dapat melihat segala yang kelihatan; dan Dialah Yang Maha Halus lagi Maha Mengetahui.",
+            "en": "Vision perceives Him not, but He perceives [all] vision; and He is the Subtle, the Acquainted.",
+            "ms": "Ia tidak dapat dilihat dan diliputi oleh penglihatan mata, sedang Ia dapat melihat (dan mengetahui hakikat) segala penglihatan (mata), dan Dia lah Yang Maha Halus (melayan hamba-hambaNya dengan belas kasihan), lagi Maha Mendalam pengetahuanNya."
+          }
+        },
+        {
+          "ref": "42:11",
+          "text": {
+            "ar": "فَاطِرُ ٱلسَّمَـٰوَٰتِ وَٱلْأَرْضِ ۚ جَعَلَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَٰجًا وَمِنَ ٱلْأَنْعَـٰمِ أَزْوَٰجًا ۖ يَذْرَؤُكُمْ فِيهِ ۚ لَيْسَ كَمِثْلِهِۦ شَىْءٌ ۖ وَهُوَ ٱلسَّمِيعُ ٱلْبَصِيرُ",
+            "id": "(Dia) Pencipta langit dan bumi. Dia menjadikan bagi kamu dari jenis kamu sendiri pasangan-pasangan dan dari jenis binatang ternak pasangan-pasangan (pula), dijadikan-Nya kamu berkembang biak dengan jalan itu. Tidak ada sesuatupun yang serupa dengan Dia, dan Dialah yang Maha Mendengar dan Melihat.",
+            "en": "[He is] Creator of the heavens and the earth. He has made for you from yourselves, mates, and among the cattle, mates; He multiplies you thereby. There is nothing like unto Him, and He is the Hearing, the Seeing.",
+            "ms": "Dia lah yang menciptakan langit dan bumi; Ia menjadikan bagi kamu pasangan-pasangan dari jenis kamu sendiri, dan menjadikan dari jenis binatang-binatang ternak pasangan-pasangan (bagi bintang-binatang itu); dengan jalan yang demikian dikembangkanNya (zuriat keturunan) kamu semua. Tiada sesuatupun yang sebanding dengan (ZatNya, sifat-sifatNya, dan pentadbiranNya) dan Dia lah Yang Maha Mendengar, lagi Maha Melihat."
+          }
+        }
+      ]
+    },
+    {
+      "id": "prayer",
+      "why": {
+        "id": "Tentang salat, agar salat hari ini tetap terjaga.",
+        "en": "On salat, to keep today's prayers in mind.",
+        "ms": "Tentang solat, agar solat hari ini terus terjaga.",
+        "ar": "عن الصلاة، لنحافظ على صلوات اليوم."
+      },
+      "ayahs": [
+        {
+          "ref": "2:45",
+          "text": {
+            "ar": "وَٱسْتَعِينُوا۟ بِٱلصَّبْرِ وَٱلصَّلَوٰةِ ۚ وَإِنَّهَا لَكَبِيرَةٌ إِلَّا عَلَى ٱلْخَـٰشِعِينَ",
+            "id": "Jadikanlah sabar dan shalat sebagai penolongmu. Dan sesungguhnya yang demikian itu sungguh berat, kecuali bagi orang-orang yang khusyu',",
+            "en": "And seek help through patience and prayer, and indeed, it is difficult except for the humbly submissive [to Allah]",
+            "ms": "Dan mintalah pertolongan (kepada Allah) dengan jalan sabar dan mengerjakan sembahyang; dan sesungguhnya sembahyang itu amatlah berat kecuali kepada orang-orang yang khusyuk;"
+          }
+        },
+        {
+          "ref": "2:238",
+          "text": {
+            "ar": "حَـٰفِظُوا۟ عَلَى ٱلصَّلَوَٰتِ وَٱلصَّلَوٰةِ ٱلْوُسْطَىٰ وَقُومُوا۟ لِلَّهِ قَـٰنِتِينَ",
+            "id": "Peliharalah semua shalat(mu), dan (peliharalah) shalat wusthaa. Berdirilah untuk Allah (dalam shalatmu) dengan khusyu'.",
+            "en": "Maintain with care the [obligatory] prayers and [in particular] the middle prayer and stand before Allah, devoutly obedient.",
+            "ms": "Peliharalah kamu (kerjakanlah dengan tetap dan sempurna pada waktunya) segala sembahyang fardu, khasnya sembahyang Wusta (sembahyang Asar), dan berdirilah kerana Allah (dalam sembahyang kamu) dengan taat dan khusyuk."
+          }
+        },
+        {
+          "ref": "29:45",
+          "text": {
+            "ar": "ٱتْلُ مَآ أُوحِىَ إِلَيْكَ مِنَ ٱلْكِتَـٰبِ وَأَقِمِ ٱلصَّلَوٰةَ ۖ إِنَّ ٱلصَّلَوٰةَ تَنْهَىٰ عَنِ ٱلْفَحْشَآءِ وَٱلْمُنكَرِ ۗ وَلَذِكْرُ ٱللَّهِ أَكْبَرُ ۗ وَٱللَّهُ يَعْلَمُ مَا تَصْنَعُونَ",
+            "id": "Bacalah apa yang telah diwahyukan kepadamu, yaitu Al Kitab (Al Quran) dan dirikanlah shalat. Sesungguhnya shalat itu mencegah dari (perbuatan-perbuatan) keji dan mungkar. Dan sesungguhnya mengingat Allah (shalat) adalah lebih besar (keutamaannya dari ibadat-ibadat yang lain). Dan Allah mengetahui apa yang kamu kerjakan.",
+            "en": "Recite, [O Muhammad], what has been revealed to you of the Book and establish prayer. Indeed, prayer prohibits immorality and wrongdoing, and the remembrance of Allah is greater. And Allah knows that which you do.",
+            "ms": "Bacalah serta ikutlah (wahai Muhammad) akan apa yang diwahyukan kepadamu dari Al-Quran, dan dirikanlah sembahyang (dengan tekun); sesungguhnya sembahyang itu mencegah dari perbuatan yang keji dan mungkar; dan sesungguhnya mengingati Allah adalah lebih besar (faedahnya dan kesannya); dan (ingatlah) Allah mengetahui akan apa yang kamu kerjakan."
+          }
+        },
+        {
+          "ref": "11:114",
+          "text": {
+            "ar": "وَأَقِمِ ٱلصَّلَوٰةَ طَرَفَىِ ٱلنَّهَارِ وَزُلَفًا مِّنَ ٱلَّيْلِ ۚ إِنَّ ٱلْحَسَنَـٰتِ يُذْهِبْنَ ٱلسَّيِّـَٔاتِ ۚ ذَٰلِكَ ذِكْرَىٰ لِلذَّٰكِرِينَ",
+            "id": "Dan dirikanlah sembahyang itu pada kedua tepi siang (pagi dan petang) dan pada bahagian permulaan daripada malam. Sesungguhnya perbuatan-perbuatan yang baik itu menghapuskan (dosa) perbuatan-perbuatan yang buruk. Itulah peringatan bagi orang-orang yang ingat.",
+            "en": "And establish prayer at the two ends of the day and at the approach of the night. Indeed, good deeds do away with misdeeds. That is a reminder for those who remember.",
+            "ms": "Dan dirikanlah sembahyang (wahai Muhammad, engkau dan umatmu), pada dua bahagian siang (pagi dan petang), dan pada waktu-waktu yang berhampiran dengannya dari waktu malam. Sesungguhnya amal-amal kebajikan (terutama sembahyang) itu menghapuskan kejahatan. Perintah-perintah Allah yang demikian adalah menjadi peringatan bagi orang-orang yang mahu beringat."
+          }
+        },
+        {
+          "ref": "20:14",
+          "text": {
+            "ar": "إِنَّنِىٓ أَنَا ٱللَّهُ لَآ إِلَـٰهَ إِلَّآ أَنَا۠ فَٱعْبُدْنِى وَأَقِمِ ٱلصَّلَوٰةَ لِذِكْرِىٓ",
+            "id": "Sesungguhnya Aku ini adalah Allah, tidak ada Tuhan (yang hak) selain Aku, maka sembahlah Aku dan dirikanlah shalat untuk mengingat Aku.",
+            "en": "Indeed, I am Allah. There is no deity except Me, so worship Me and establish prayer for My remembrance.",
+            "ms": "\"Sesungguhnya Akulah Allah; tiada tuhan melainkan Aku; oleh itu, sembahlah akan Daku, dan dirikanlah sembahyang untuk mengingati Daku."
+          }
+        },
+        {
+          "ref": "17:78",
+          "text": {
+            "ar": "أَقِمِ ٱلصَّلَوٰةَ لِدُلُوكِ ٱلشَّمْسِ إِلَىٰ غَسَقِ ٱلَّيْلِ وَقُرْءَانَ ٱلْفَجْرِ ۖ إِنَّ قُرْءَانَ ٱلْفَجْرِ كَانَ مَشْهُودًا",
+            "id": "Dirikanlah shalat dari sesudah matahari tergelincir sampai gelap malam dan (dirikanlah pula shalat) subuh. Sesungguhnya shalat subuh itu disaksikan (oleh malaikat).",
+            "en": "Establish prayer at the decline of the sun [from its meridian] until the darkness of the night and [also] the Qur'an of dawn. Indeed, the recitation of dawn is ever witnessed.",
+            "ms": "Dirikanlah olehmu sembahyang ketika gelincir matahari hingga waktu gelap malam, dan (dirikanlah) sembahyang subuh sesungguhnya sembahyang subuh itu adalah disaksikan (keistimewaannya)."
+          }
+        },
+        {
+          "ref": "20:132",
+          "text": {
+            "ar": "وَأْمُرْ أَهْلَكَ بِٱلصَّلَوٰةِ وَٱصْطَبِرْ عَلَيْهَا ۖ لَا نَسْـَٔلُكَ رِزْقًا ۖ نَّحْنُ نَرْزُقُكَ ۗ وَٱلْعَـٰقِبَةُ لِلتَّقْوَىٰ",
+            "id": "Dan perintahkanlah kepada keluargamu mendirikan shalat dan bersabarlah kamu dalam mengerjakannya. Kami tidak meminta rezeki kepadamu, Kamilah yang memberi rezeki kepadamu. Dan akibat (yang baik) itu adalah bagi orang yang bertakwa.",
+            "en": "And enjoin prayer upon your family [and people] and be steadfast therein. We ask you not for provision; We provide for you, and the [best] outcome is for [those of] righteousness.",
+            "ms": "Dan perintahkanlah keluargamu serta umatmu mengerjakan sembahyang, dan hendaklah engkau tekun bersabar menunaikannya. Kami tidak meminta rezeki kepadamu, (bahkan) Kamilah yang memberi rezeki kepadamu. Dan (ingatlah) kesudahan yang baik adalah bagi orang-orang yang bertaqwa."
+          }
+        }
+      ]
+    },
+    {
+      "id": "remembrance",
+      "why": {
+        "id": "Tentang zikir, agar hati tenang sepanjang hari.",
+        "en": "On remembering Allah, for a calm heart through the day.",
+        "ms": "Tentang zikir, agar hati tenang sepanjang hari.",
+        "ar": "عن ذكر الله، لقلب مطمئن طوال اليوم."
+      },
+      "ayahs": [
+        {
+          "ref": "13:28",
+          "text": {
+            "ar": "ٱلَّذِينَ ءَامَنُوا۟ وَتَطْمَئِنُّ قُلُوبُهُم بِذِكْرِ ٱللَّهِ ۗ أَلَا بِذِكْرِ ٱللَّهِ تَطْمَئِنُّ ٱلْقُلُوبُ",
+            "id": "(yaitu) orang-orang yang beriman dan hati mereka manjadi tenteram dengan mengingat Allah. Ingatlah, hanya dengan mengingati Allah-lah hati menjadi tenteram.",
+            "en": "Those who have believed and whose hearts are assured by the remembrance of Allah. Unquestionably, by the remembrance of Allah hearts are assured.\"",
+            "ms": "\"(Iaitu) orang-orang yang beriman dan tenang tenteram hati mereka dengan zikrullah\". Ketahuilah dengan \"zikrullah\" itu, tenang tenteramlah hati manusia."
+          }
+        },
+        {
+          "ref": "2:152",
+          "text": {
+            "ar": "فَٱذْكُرُونِىٓ أَذْكُرْكُمْ وَٱشْكُرُوا۟ لِى وَلَا تَكْفُرُونِ",
+            "id": "Karena itu, ingatlah kamu kepada-Ku niscaya Aku ingat (pula) kepadamu, dan bersyukurlah kepada-Ku, dan janganlah kamu mengingkari (nikmat)-Ku.",
+            "en": "So remember Me; I will remember you. And be grateful to Me and do not deny Me.",
+            "ms": "Oleh itu ingatlah kamu kepadaKu (dengan mematuhi hukum dan undang-undangKu), supaya Aku membalas kamu dengan kebaikan; dan bersyukurlah kamu kepadaKu dan janganlah kamu kufur (akan nikmatKu)."
+          }
+        },
+        {
+          "ref": "33:41",
+          "text": {
+            "ar": "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ ٱذْكُرُوا۟ ٱللَّهَ ذِكْرًا كَثِيرًا",
+            "id": "Hai orang-orang yang beriman, berzdikirlah (dengan menyebut nama) Allah, zikir yang sebanyak-banyaknya.",
+            "en": "O you who have believed, remember Allah with much remembrance",
+            "ms": "Wahai orang-orang yang beriman, (untuk bersyukur kepada Allah) ingatlah serta sebutlah nama Allah dengan ingatan serta sebutan yang sebanyak-banyaknya;"
+          }
+        },
+        {
+          "ref": "7:205",
+          "text": {
+            "ar": "وَٱذْكُر رَّبَّكَ فِى نَفْسِكَ تَضَرُّعًا وَخِيفَةً وَدُونَ ٱلْجَهْرِ مِنَ ٱلْقَوْلِ بِٱلْغُدُوِّ وَٱلْـَٔاصَالِ وَلَا تَكُن مِّنَ ٱلْغَـٰفِلِينَ",
+            "id": "Dan sebutlah (nama) Tuhanmu dalam hatimu dengan merendahkan diri dan rasa takut, dan dengan tidak mengeraskan suara, di waktu pagi dan petang, dan janganlah kamu termasuk orang-orang yang lalai.",
+            "en": "And remember your Lord within yourself in humility and in fear without being apparent in speech - in the mornings and the evenings. And do not be among the heedless.",
+            "ms": "Dan sebutlah serta ingatlah akan Tuhanmu dalam hatimu, dengan merendah diri serta dengan perasaan takut (melanggar perintahnya), dan dengan tidak pula menyaringkan suara, pada waktu pagi dan petang dan janganlah engkau menjadi dari orang-orang yang lalai."
+          }
+        },
+        {
+          "ref": "3:191",
+          "text": {
+            "ar": "ٱلَّذِينَ يَذْكُرُونَ ٱللَّهَ قِيَـٰمًا وَقُعُودًا وَعَلَىٰ جُنُوبِهِمْ وَيَتَفَكَّرُونَ فِى خَلْقِ ٱلسَّمَـٰوَٰتِ وَٱلْأَرْضِ رَبَّنَا مَا خَلَقْتَ هَـٰذَا بَـٰطِلًا سُبْحَـٰنَكَ فَقِنَا عَذَابَ ٱلنَّارِ",
+            "id": "(yaitu) orang-orang yang mengingat Allah sambil berdiri atau duduk atau dalam keadan berbaring dan mereka memikirkan tentang penciptaan langit dan bumi (seraya berkata): \"Ya Tuhan kami, tiadalah Engkau menciptakan ini dengan sia-sia, Maha Suci Engkau, maka peliharalah kami dari siksa neraka.",
+            "en": "Who remember Allah while standing or sitting or [lying] on their sides and give thought to the creation of the heavens and the earth, [saying], \"Our Lord, You did not create this aimlessly; exalted are You [above such a thing]; then protect us from the punishment of the Fire.",
+            "ms": "(Iaitu) orang-orang yang menyebut dan mengingati Allah semasa mereka berdiri dan duduk dan semasa mereka berbaring mengiring, dan mereka pula memikirkan tentang kejadian langit dan bumi (sambil berkata): \"Wahai Tuhan kami! Tidaklah Engkau menjadikan benda-benda ini dengan sia-sia, Maha Suci Engkau, maka peliharalah kami dari azab neraka."
+          }
+        },
+        {
+          "ref": "63:9",
+          "text": {
+            "ar": "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ لَا تُلْهِكُمْ أَمْوَٰلُكُمْ وَلَآ أَوْلَـٰدُكُمْ عَن ذِكْرِ ٱللَّهِ ۚ وَمَن يَفْعَلْ ذَٰلِكَ فَأُو۟لَـٰٓئِكَ هُمُ ٱلْخَـٰسِرُونَ",
+            "id": "Hai orang-orang beriman, janganlah hartamu dan anak-anakmu melalaikan kamu dari mengingat Allah. Barangsiapa yang berbuat demikian maka mereka itulah orang-orang yang merugi.",
+            "en": "O you who have believed, let not your wealth and your children divert you from remembrance of Allah. And whoever does that - then those are the losers.",
+            "ms": "Wahai orang-orang yang beriman! Janganlah kamu dilalaikan oleh (urusan) harta benda kamu dan anak-pinak kamu daripada mengingati Allah (dengan menjalankan perintahNya). Dan (ingatlah), sesiapa yang melakukan demikian, maka mereka itulah orang-orang yang rugi."
+          }
+        }
+      ]
+    },
+    {
+      "id": "patience",
+      "why": {
+        "id": "Tentang sabar, untuk apa pun yang dihadapi hari ini.",
+        "en": "On patience, for whatever today brings.",
+        "ms": "Tentang sabar, untuk apa jua yang dihadapi hari ini.",
+        "ar": "عن الصبر، لكل ما يحمله هذا اليوم."
+      },
+      "ayahs": [
+        {
+          "ref": "2:153",
+          "text": {
+            "ar": "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ ٱسْتَعِينُوا۟ بِٱلصَّبْرِ وَٱلصَّلَوٰةِ ۚ إِنَّ ٱللَّهَ مَعَ ٱلصَّـٰبِرِينَ",
+            "id": "Hai orang-orang yang beriman, jadikanlah sabar dan shalat sebagai penolongmu, sesungguhnya Allah beserta orang-orang yang sabar.",
+            "en": "O you who have believed, seek help through patience and prayer. Indeed, Allah is with the patient.",
+            "ms": "Wahai sekalian orang-orang yang beriman! Mintalah pertolongan (untuk menghadapi susah payah dalam menyempurnakan sesuatu perintah Tuhan) dengan bersabar dan dengan (mengerjakan) sembahyang; kerana sesungguhnya Allah menyertai (menolong) orang-orang yang sabar"
+          }
+        },
+        {
+          "ref": "94:6",
+          "text": {
+            "ar": "إِنَّ مَعَ ٱلْعُسْرِ يُسْرًا",
+            "id": "sesungguhnya sesudah kesulitan itu ada kemudahan.",
+            "en": "Indeed, with hardship [will be] ease.",
+            "ms": "(Sekali lagi ditegaskan): bahawa sesungguhnya tiap-tiap kesukaran disertai kemudahan."
+          }
+        },
+        {
+          "ref": "2:155",
+          "text": {
+            "ar": "وَلَنَبْلُوَنَّكُم بِشَىْءٍ مِّنَ ٱلْخَوْفِ وَٱلْجُوعِ وَنَقْصٍ مِّنَ ٱلْأَمْوَٰلِ وَٱلْأَنفُسِ وَٱلثَّمَرَٰتِ ۗ وَبَشِّرِ ٱلصَّـٰبِرِينَ",
+            "id": "Dan sungguh akan Kami berikan cobaan kepadamu, dengan sedikit ketakutan, kelaparan, kekurangan harta, jiwa dan buah-buahan. Dan berikanlah berita gembira kepada orang-orang yang sabar.",
+            "en": "And We will surely test you with something of fear and hunger and a loss of wealth and lives and fruits, but give good tidings to the patient,",
+            "ms": "Demi sesungguhnya! Kami akan menguji kamu dengan sedikit perasaan takut (kepada musuh) dan (dengan merasai) kelaparan, dan (dengan berlakunya) kekurangan dari harta benda dan jiwa serta hasil tanaman. Dan berilah khabar gembira kepada orang-orang yang sabar:"
+          }
+        },
+        {
+          "ref": "3:200",
+          "text": {
+            "ar": "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ ٱصْبِرُوا۟ وَصَابِرُوا۟ وَرَابِطُوا۟ وَٱتَّقُوا۟ ٱللَّهَ لَعَلَّكُمْ تُفْلِحُونَ",
+            "id": "Hai orang-orang yang beriman, bersabarlah kamu dan kuatkanlah kesabaranmu dan tetaplah bersiap siaga (di perbatasan negerimu) dan bertakwalah kepada Allah, supaya kamu beruntung.",
+            "en": "O you who have believed, persevere and endure and remain stationed and fear Allah that you may be successful.",
+            "ms": "Wahai orang-orang yang beriman! Bersabarlah kamu (menghadapi segala kesukaran dalam mengerjakan perkara-perkara yang berkebajikan), dan kuatkanlah kesabaran kamu lebih daripada kesabaran musuh, di medan perjuangan), dan bersedialah (dengan kekuatan pertahanan di daerah-daerah sempadan) serta bertaqwalah kamu kepada Allah supaya, kamu berjaya (mencapai kemenangan)."
+          }
+        },
+        {
+          "ref": "39:10",
+          "text": {
+            "ar": "قُلْ يَـٰعِبَادِ ٱلَّذِينَ ءَامَنُوا۟ ٱتَّقُوا۟ رَبَّكُمْ ۚ لِلَّذِينَ أَحْسَنُوا۟ فِى هَـٰذِهِ ٱلدُّنْيَا حَسَنَةٌ ۗ وَأَرْضُ ٱللَّهِ وَٰسِعَةٌ ۗ إِنَّمَا يُوَفَّى ٱلصَّـٰبِرُونَ أَجْرَهُم بِغَيْرِ حِسَابٍ",
+            "id": "Katakanlah: \"Hai hamba-hamba-Ku yang beriman. bertakwalah kepada Tuhanmu\". Orang-orang yang berbuat baik di dunia ini memperoleh kebaikan. Dan bumi Allah itu adalah luas. Sesungguhnya hanya orang-orang yang bersabarlah Yang dicukupkan pahala mereka tanpa batas.",
+            "en": "Say, \"O My servants who have believed, fear your Lord. For those who do good in this world is good, and the earth of Allah is spacious. Indeed, the patient will be given their reward without account.\"",
+            "ms": "Katakanlah (wahai Muhammad, akan firmanKu ini, kepada orang-orang yang berakal sempurna itu): \"Wahai hamba-hambaKu yang beriman! Bertaqwalah kepada Tuhan kamu. (Ingatlah) orang-orang yang berbuat baik di dunia ini akan beroleh kebaikan (yang sebenar di akhirat). dan (ingatlah) bumi Allah ini luas (untuk berhijrah sekiranya kamu ditindas). Sesungguhnya orang-orang yang bersabarlah sahaja yang akan disempurnakan pahala mereka dengan tidak terkira\"."
+          }
+        },
+        {
+          "ref": "16:127",
+          "text": {
+            "ar": "وَٱصْبِرْ وَمَا صَبْرُكَ إِلَّا بِٱللَّهِ ۚ وَلَا تَحْزَنْ عَلَيْهِمْ وَلَا تَكُ فِى ضَيْقٍ مِّمَّا يَمْكُرُونَ",
+            "id": "Bersabarlah (hai Muhammad) dan tiadalah kesabaranmu itu melainkan dengan pertolongan Allah dan janganlah kamu bersedih hati terhadap (kekafiran) mereka dan janganlah kamu bersempit dada terhadap apa yang mereka tipu dayakan.",
+            "en": "And be patient, [O Muhammad], and your patience is not but through Allah. And do not grieve over them and do not be in distress over what they conspire.",
+            "ms": "Dan bersabarlah (wahai Muhammad terhadap perbuatan dan telatah golongan yang ingkar itu); dan tiadalah berhasil kesabaranmu melainkan dengan (memohon pertolongan) Allah; dan janganlah engkau berdukacita terhadap kedegilan mereka, dan janganlah engkau bersempit dada disebabkan tipu daya yang mereka lakukan."
+          }
+        },
+        {
+          "ref": "2:286",
+          "text": {
+            "ar": "لَا يُكَلِّفُ ٱللَّهُ نَفْسًا إِلَّا وُسْعَهَا ۚ لَهَا مَا كَسَبَتْ وَعَلَيْهَا مَا ٱكْتَسَبَتْ ۗ رَبَّنَا لَا تُؤَاخِذْنَآ إِن نَّسِينَآ أَوْ أَخْطَأْنَا ۚ رَبَّنَا وَلَا تَحْمِلْ عَلَيْنَآ إِصْرًا كَمَا حَمَلْتَهُۥ عَلَى ٱلَّذِينَ مِن قَبْلِنَا ۚ رَبَّنَا وَلَا تُحَمِّلْنَا مَا لَا طَاقَةَ لَنَا بِهِۦ ۖ وَٱعْفُ عَنَّا وَٱغْفِرْ لَنَا وَٱرْحَمْنَآ ۚ أَنتَ مَوْلَىٰنَا فَٱنصُرْنَا عَلَى ٱلْقَوْمِ ٱلْكَـٰفِرِينَ",
+            "id": "Allah tidak membebani seseorang melainkan sesuai dengan kesanggupannya. Ia mendapat pahala (dari kebajikan) yang diusahakannya dan ia mendapat siksa (dari kejahatan) yang dikerjakannya. (Mereka berdoa): \"Ya Tuhan kami, janganlah Engkau hukum kami jika kami lupa atau kami tersalah. Ya Tuhan kami, janganlah Engkau bebankan kepada kami beban yang berat sebagaimana Engkau bebankan kepada orang-orang sebelum kami. Ya Tuhan kami, janganlah Engkau pikulkan kepada kami apa yang tak sanggup kami memikulnya. Beri maaflah kami; ampunilah kami; dan rahmatilah kami. Engkaulah Penolong kami, maka tolonglah kami terhadap kaum yang kafir\".",
+            "en": "Allah does not charge a soul except [with that within] its capacity. It will have [the consequence of] what [good] it has gained, and it will bear [the consequence of] what [evil] it has earned. \"Our Lord, do not impose blame upon us if we have forgotten or erred. Our Lord, and lay not upon us a burden like that which You laid upon those before us. Our Lord, and burden us not with that which we have no ability to bear. And pardon us; and forgive us; and have mercy upon us. You are our protector, so give us victory over the disbelieving people.\"",
+            "ms": "Allah tidak memberati seseorang melainkan apa yang terdaya olehnya. Ia mendapat pahala kebaikan yang diusahakannya, dan ia juga menanggung dosa kejahatan yang diusahakannya. (Mereka berdoa dengan berkata): \"Wahai Tuhan kami! Janganlah Engkau mengirakan kami salah jika kami lupa atau kami tersalah. Wahai Tuhan kami ! Janganlah Engkau bebankan kepada kami bebanan yang berat sebagaimana yang telah Engkau bebankan kepada orang-orang yang terdahulu daripada kami. Wahai Tuhan kami! Janganlah Engkau pikulkan kepada kami apa yang kami tidak terdaya memikulnya. Dan maafkanlah kesalahan kami, serta ampunkanlah dosa kami, dan berilah rahmat kepada kami. Engkaulah Penolong kami; oleh itu, tolonglah kami untuk mencapai kemenangan terhadap kaum-kaum yang kafir\"."
+          }
+        },
+        {
+          "ref": "8:46",
+          "text": {
+            "ar": "وَأَطِيعُوا۟ ٱللَّهَ وَرَسُولَهُۥ وَلَا تَنَـٰزَعُوا۟ فَتَفْشَلُوا۟ وَتَذْهَبَ رِيحُكُمْ ۖ وَٱصْبِرُوٓا۟ ۚ إِنَّ ٱللَّهَ مَعَ ٱلصَّـٰبِرِينَ",
+            "id": "Dan taatlah kepada Allah dan Rasul-Nya dan janganlah kamu berbantah-bantahan, yang menyebabkan kamu menjadi gentar dan hilang kekuatanmu dan bersabarlah. Sesungguhnya Allah beserta orang-orang yang sabar.",
+            "en": "And obey Allah and His Messenger, and do not dispute and [thus] lose courage and [then] your strength would depart; and be patient. Indeed, Allah is with the patient.",
+            "ms": "Dan taatlah kamu kepada Allah dan RasulNya, dan janganlah kamu berbantah-bantahan; kalau tidak nescaya kamu menjadi lemah semangat dan hilang kekuatan kamu, dan sabarlah (menghadapi segala kesukaran dengan cekal hati); sesungguhnya Allah beserta orang-orang yang sabar."
+          }
+        }
+      ]
+    },
+    {
+      "id": "trust",
+      "why": {
+        "id": "Tentang tawakal kepada Allah setelah berusaha.",
+        "en": "On trusting Allah after doing your best.",
+        "ms": "Tentang tawakal kepada Allah selepas berusaha.",
+        "ar": "عن التوكل على الله بعد بذل الجهد."
+      },
+      "ayahs": [
+        {
+          "ref": "65:3",
+          "text": {
+            "ar": "وَيَرْزُقْهُ مِنْ حَيْثُ لَا يَحْتَسِبُ ۚ وَمَن يَتَوَكَّلْ عَلَى ٱللَّهِ فَهُوَ حَسْبُهُۥٓ ۚ إِنَّ ٱللَّهَ بَـٰلِغُ أَمْرِهِۦ ۚ قَدْ جَعَلَ ٱللَّهُ لِكُلِّ شَىْءٍ قَدْرًا",
+            "id": "Dan memberinya rezeki dari arah yang tiada disangka-sangkanya. Dan barangsiapa yang bertawakkal kepada Allah niscaya Allah akan mencukupkan (keperluan)nya. Sesungguhnya Allah melaksanakan urusan yang (dikehendaki)Nya. Sesungguhnya Allah telah mengadakan ketentuan bagi tiap-tiap sesuatu.",
+            "en": "And will provide for him from where he does not expect. And whoever relies upon Allah - then He is sufficient for him. Indeed, Allah will accomplish His purpose. Allah has already set for everything a [decreed] extent.",
+            "ms": "Serta memberinya rezeki dari jalan yang tidak terlintas di hatinya. Dan (Ingatlah), sesiapa berserah diri bulat-bulat kepada Allah, maka Allah cukuplah baginya (untuk menolong dan menyelamatkannya). Sesungguhnya Allah tetap melakukan segala perkara yang dikehendakiNya. Allah telahpun menentukan kadar dan masa bagi berlakunya tiap-tiap sesuatu."
+          }
+        },
+        {
+          "ref": "3:173",
+          "text": {
+            "ar": "ٱلَّذِينَ قَالَ لَهُمُ ٱلنَّاسُ إِنَّ ٱلنَّاسَ قَدْ جَمَعُوا۟ لَكُمْ فَٱخْشَوْهُمْ فَزَادَهُمْ إِيمَـٰنًا وَقَالُوا۟ حَسْبُنَا ٱللَّهُ وَنِعْمَ ٱلْوَكِيلُ",
+            "id": "(Yaitu) orang-orang (yang mentaati Allah dan Rasul) yang kepada mereka ada orang-orang yang mengatakan: \"Sesungguhnya manusia telah mengumpulkan pasukan untuk menyerang kamu, karena itu takutlah kepada mereka\", maka perkataan itu menambah keimanan mereka dan mereka menjawab: \"Cukuplah Allah menjadi Penolong kami dan Allah adalah sebaik-baik Pelindung\".",
+            "en": "Those to whom hypocrites said, \"Indeed, the people have gathered against you, so fear them.\" But it [merely] increased them in faith, and they said, \"Sufficient for us is Allah, and [He is] the best Disposer of affairs.\"",
+            "ms": "Mereka juga ialah yang diberitahu oleh orang-orang (pembawa berita) kepada mereka: \"Bahawa kaum (kafir musyrik) telah mengumpulkan tentera untuk memerangi kamu, oleh itu hendaklah kamu gerun kepadanya\". Maka berita itu makin menambahkan iman mereka lalu berkata: \"Cukuplah untuk (menolong) kami, dan Ia sebaik-baik pengurus (yang terserah kepadaNya segala urusan kami)\"."
+          }
+        },
+        {
+          "ref": "9:51",
+          "text": {
+            "ar": "قُل لَّن يُصِيبَنَآ إِلَّا مَا كَتَبَ ٱللَّهُ لَنَا هُوَ مَوْلَىٰنَا ۚ وَعَلَى ٱللَّهِ فَلْيَتَوَكَّلِ ٱلْمُؤْمِنُونَ",
+            "id": "Katakanlah: \"Sekali-kali tidak akan menimpa kami melainkan apa yang telah ditetapkan Allah untuk kami. Dialah Pelindung kami, dan hanya kepada Allah orang-orang yang beriman harus bertawakal\".",
+            "en": "Say, \"Never will we be struck except by what Allah has decreed for us; He is our protector.\" And upon Allah let the believers rely.",
+            "ms": "Katakanlah (wahai Muhammad): \"Tidak sekali-kali akan menimpa kami sesuatu pun melainkan apa yang telah ditetapkan Allah bagi kami. Dia lah Pelindung yang menyelamatkan kami, dan (dengan kepercayaan itu) maka kepada Allah jualah hendaknya orang-orang yang beriman bertawakal\"."
+          }
+        },
+        {
+          "ref": "9:129",
+          "text": {
+            "ar": "فَإِن تَوَلَّوْا۟ فَقُلْ حَسْبِىَ ٱللَّهُ لَآ إِلَـٰهَ إِلَّا هُوَ ۖ عَلَيْهِ تَوَكَّلْتُ ۖ وَهُوَ رَبُّ ٱلْعَرْشِ ٱلْعَظِيمِ",
+            "id": "Jika mereka berpaling (dari keimanan), maka katakanlah: \"Cukuplah Allah bagiku; tidak ada Tuhan selain Dia. Hanya kepada-Nya aku bertawakkal dan Dia adalah Tuhan yang memiliki 'Arsy yang agung\".",
+            "en": "But if they turn away, [O Muhammad], say, \"Sufficient for me is Allah; there is no deity except Him. On Him I have relied, and He is the Lord of the Great Throne.\"",
+            "ms": "Kemudian jika mereka berpaling ingkar, maka katakanlah (wahai Muhammad): \"cukuplah bagiku Allah (yang menolong dan memeliharaku), tiada Tuhan (yang berhak disembah) melainkan Dia; kepadaNya aku berserah diri, dan Dia lah yang mempunyai Arasy yang besar.\""
+          }
+        },
+        {
+          "ref": "25:58",
+          "text": {
+            "ar": "وَتَوَكَّلْ عَلَى ٱلْحَىِّ ٱلَّذِى لَا يَمُوتُ وَسَبِّحْ بِحَمْدِهِۦ ۚ وَكَفَىٰ بِهِۦ بِذُنُوبِ عِبَادِهِۦ خَبِيرًا",
+            "id": "Dan bertawakkallah kepada Allah yang hidup (kekal) Yang tidak mati, dan bertasbihlah dengan memuji-Nya. Dan cukuplah Dia Maha Mengetahui dosa-dosa hamba-hamba-Nya.",
+            "en": "And rely upon the Ever-Living who does not die, and exalt [Allah] with His praise. And sufficient is He to be, with the sins of His servants, Acquainted -",
+            "ms": "Dan berserahlah engkau kepada Allah Tuhan Yang Hidup, yang tidak mati; serta bertasbihlah dengan memujiNya; dan cukuplah Ia mengetahui secara mendalam akan dosa-dosa hambaNya;"
+          }
+        },
+        {
+          "ref": "33:3",
+          "text": {
+            "ar": "وَتَوَكَّلْ عَلَى ٱللَّهِ ۚ وَكَفَىٰ بِٱللَّهِ وَكِيلًا",
+            "id": "dan bertawakkallah kepada Allah. Dan cukuplah Allah sebagai Pemelihara.",
+            "en": "And rely upon Allah; and sufficient is Allah as Disposer of affairs.",
+            "ms": "Dan berserahlah kepada Allah (dan janganlah menumpukan harapanmu kepada yang lain), kerana cukuplah Allah menjadi Pentadbir urusanmu."
+          }
+        },
+        {
+          "ref": "64:13",
+          "text": {
+            "ar": "ٱللَّهُ لَآ إِلَـٰهَ إِلَّا هُوَ ۚ وَعَلَى ٱللَّهِ فَلْيَتَوَكَّلِ ٱلْمُؤْمِنُونَ",
+            "id": "(Dialah) Allah tidak ada Tuhan selain Dia. Dan hendaklah orang-orang mukmin bertawakkal kepada Allah saja.",
+            "en": "Allah - there is no deity except Him. And upon Allah let the believers rely.",
+            "ms": "Allah, tiada Tuhan melainkan Dia; dan dengan yang demikian, kepada Allah jualah orang-orang yang beriman wajib berserah diri."
+          }
+        }
+      ]
+    },
+    {
+      "id": "gratitude",
+      "why": {
+        "id": "Tentang syukur, agar menyadari nikmat hari ini.",
+        "en": "On gratitude, to notice today's blessings.",
+        "ms": "Tentang syukur, agar menyedari nikmat hari ini.",
+        "ar": "عن الشكر، لنتأمل نعم هذا اليوم."
+      },
+      "ayahs": [
+        {
+          "ref": "14:7",
+          "text": {
+            "ar": "وَإِذْ تَأَذَّنَ رَبُّكُمْ لَئِن شَكَرْتُمْ لَأَزِيدَنَّكُمْ ۖ وَلَئِن كَفَرْتُمْ إِنَّ عَذَابِى لَشَدِيدٌ",
+            "id": "Dan (ingatlah juga), tatkala Tuhanmu memaklumkan; \"Sesungguhnya jika kamu bersyukur, pasti Kami akan menambah (nikmat) kepadamu, dan jika kamu mengingkari (nikmat-Ku), maka sesungguhnya azab-Ku sangat pedih\".",
+            "en": "And [remember] when your Lord proclaimed, 'If you are grateful, I will surely increase you [in favor]; but if you deny, indeed, My punishment is severe.' \"",
+            "ms": "Dan (ingatlah) ketika Tuhan kamu memberitahu: \"Demi sesungguhnya! Jika kamu bersyukur nescaya Aku akan tambahi nikmatKu kepada kamu, dan demi sesungguhnya, jika kamu kufur ingkar sesungguhnya azabKu amatlah keras\"."
+          }
+        },
+        {
+          "ref": "31:12",
+          "text": {
+            "ar": "وَلَقَدْ ءَاتَيْنَا لُقْمَـٰنَ ٱلْحِكْمَةَ أَنِ ٱشْكُرْ لِلَّهِ ۚ وَمَن يَشْكُرْ فَإِنَّمَا يَشْكُرُ لِنَفْسِهِۦ ۖ وَمَن كَفَرَ فَإِنَّ ٱللَّهَ غَنِىٌّ حَمِيدٌ",
+            "id": "Dan sesungguhnya telah Kami berikan hikmat kepada Luqman, yaitu: \"Bersyukurlah kepada Allah. Dan barangsiapa yang bersyukur (kepada Allah), maka sesungguhnya ia bersyukur untuk dirinya sendiri; dan barangsiapa yang tidak bersyukur, maka sesungguhnya Allah Maha Kaya lagi Maha Terpuji\".",
+            "en": "And We had certainly given Luqman wisdom [and said], \"Be grateful to Allah.\" And whoever is grateful is grateful for [the benefit of] himself. And whoever denies [His favor] - then indeed, Allah is Free of need and Praiseworthy.",
+            "ms": "Dan sesungguhnya Kami telah memberi kepada Luqman, hikmat kebijaksanaan, (serta Kami perintahkan kepadanya): Bersyukurlah kepada Allah (akan segala nikmatNya kepadamu)\". Dan sesiapa yang bersyukur maka faedahnya itu hanyalah terpulang kepada dirinya sendiri, dan sesiapa yang tidak bersyukur (maka tidaklah menjadi hal kepada Allah), kerana sesungguhnya Allah Maha Kaya, lagi Maha Terpuji."
+          }
+        },
+        {
+          "ref": "16:18",
+          "text": {
+            "ar": "وَإِن تَعُدُّوا۟ نِعْمَةَ ٱللَّهِ لَا تُحْصُوهَآ ۗ إِنَّ ٱللَّهَ لَغَفُورٌ رَّحِيمٌ",
+            "id": "Dan jika kamu menghitung-hitung nikmat Allah, niscaya kamu tak dapat menentukan jumlahnya. Sesungguhnya Allah benar-benar Maha Pengampun lagi Maha Penyayang.",
+            "en": "And if you should count the favors of Allah, you could not enumerate them. Indeed, Allah is Forgiving and Merciful.",
+            "ms": "Dan jika kamu menghitung nikmat Allah (yang dilimpahkannya kepada kamu), tiadalah kamu akan dapat menghitungnya satu persatu; sesungguhnya Allah Maha Pengampun, lagi Maha Mengasihani."
+          }
+        },
+        {
+          "ref": "55:13",
+          "text": {
+            "ar": "فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ",
+            "id": "Maka nikmat Tuhan kamu yang manakah yang kamu dustakan?",
+            "en": "So which of the favors of your Lord would you deny?",
+            "ms": "Maka yang mana satu di antara nikmat-nikmat Tuhan kamu, yang kamu hendak dustakan (wahai umat manusia dan jin)?"
+          }
+        },
+        {
+          "ref": "16:114",
+          "text": {
+            "ar": "فَكُلُوا۟ مِمَّا رَزَقَكُمُ ٱللَّهُ حَلَـٰلًا طَيِّبًا وَٱشْكُرُوا۟ نِعْمَتَ ٱللَّهِ إِن كُنتُمْ إِيَّاهُ تَعْبُدُونَ",
+            "id": "Maka makanlah yang halal lagi baik dari rezeki yang telah diberikan Allah kepadamu; dan syukurilah nikmat Allah, jika kamu hanya kepada-Nya saja menyembah.",
+            "en": "Then eat of what Allah has provided for you [which is] lawful and good. And be grateful for the favor of Allah, if it is [indeed] Him that you worship.",
+            "ms": "Oleh itu, makanlah (wahai orang-orang yang beriman) dari apa yang telah dikurniakan Allah kepada kamu dari benda-benda yang halal lagi baik, dan bersyukurlah akan nikmat Allah, jika benar kamu hanya menyembahNya semata-mata."
+          }
+        },
+        {
+          "ref": "39:66",
+          "text": {
+            "ar": "بَلِ ٱللَّهَ فَٱعْبُدْ وَكُن مِّنَ ٱلشَّـٰكِرِينَ",
+            "id": "Karena itu, maka hendaklah Allah saja kamu sembah dan hendaklah kamu termasuk orang-orang yang bersyukur\".",
+            "en": "Rather, worship [only] Allah and be among the grateful.",
+            "ms": "\"(Janganlah menyembah yang lain dari Allah) bahkan (apabila beribadat) maka hendaklah engkau menyembah Allah semata-mata, dan hendaklah engkau menjadi dari orang-orang yang bersyukur\"."
+          }
+        },
+        {
+          "ref": "27:19",
+          "text": {
+            "ar": "فَتَبَسَّمَ ضَاحِكًا مِّن قَوْلِهَا وَقَالَ رَبِّ أَوْزِعْنِىٓ أَنْ أَشْكُرَ نِعْمَتَكَ ٱلَّتِىٓ أَنْعَمْتَ عَلَىَّ وَعَلَىٰ وَٰلِدَىَّ وَأَنْ أَعْمَلَ صَـٰلِحًا تَرْضَىٰهُ وَأَدْخِلْنِى بِرَحْمَتِكَ فِى عِبَادِكَ ٱلصَّـٰلِحِينَ",
+            "id": "maka dia tersenyum dengan tertawa karena (mendengar) perkataan semut itu. Dan dia berdoa: \"Ya Tuhanku berilah aku ilham untuk tetap mensyukuri nikmat Mu yang telah Engkau anugerahkan kepadaku dan kepada dua orang ibu bapakku dan untuk mengerjakan amal saleh yang Engkau ridhai; dan masukkanlah aku dengan rahmat-Mu ke dalam golongan hamba-hamba-Mu yang saleh\".",
+            "en": "So [Solomon] smiled, amused at her speech, and said, \"My Lord, enable me to be grateful for Your favor which You have bestowed upon me and upon my parents and to do righteousness of which You approve. And admit me by Your mercy into [the ranks of] Your righteous servants.\"",
+            "ms": "Maka tersenyumlah Nabi Sulaiman mendengar kata-kata semut itu, dan berdoa dengan berkata:\" Wahai Tuhanku, ilhamkanlah daku supaya tetap bersyukur akan nikmatMu yang Engkau kurniakan kepadaku dan kepada ibu bapaku, dan supaya aku tetap mengerjakan amal soleh yang Engkau redai; dan masukkanlah daku - dengan limpah rahmatMu - dalam kumpulan hamba-hambaMu yang soleh\"."
+          }
+        }
+      ]
+    },
+    {
+      "id": "mercy",
+      "why": {
+        "id": "Tentang rahmat dan ampunan Allah: tidak pernah terlambat untuk kembali.",
+        "en": "On Allah's mercy and forgiveness: it is never too late to turn back.",
+        "ms": "Tentang rahmat dan keampunan Allah: tidak pernah terlambat untuk kembali.",
+        "ar": "عن رحمة الله ومغفرته: لا يفوت أوان التوبة."
+      },
+      "ayahs": [
+        {
+          "ref": "39:53",
+          "text": {
+            "ar": "۞ قُلْ يَـٰعِبَادِىَ ٱلَّذِينَ أَسْرَفُوا۟ عَلَىٰٓ أَنفُسِهِمْ لَا تَقْنَطُوا۟ مِن رَّحْمَةِ ٱللَّهِ ۚ إِنَّ ٱللَّهَ يَغْفِرُ ٱلذُّنُوبَ جَمِيعًا ۚ إِنَّهُۥ هُوَ ٱلْغَفُورُ ٱلرَّحِيمُ",
+            "id": "Katakanlah: \"Hai hamba-hamba-Ku yang malampaui batas terhadap diri mereka sendiri, janganlah kamu berputus asa dari rahmat Allah. Sesungguhnya Allah mengampuni dosa-dosa semuanya. Sesungguhnya Dialah Yang Maha Pengampun lagi Maha Penyayang.",
+            "en": "Say, \"O My servants who have transgressed against themselves [by sinning], do not despair of the mercy of Allah. Indeed, Allah forgives all sins. Indeed, it is He who is the Forgiving, the Merciful.\"",
+            "ms": "Katakanlah (wahai Muhammad): \"Wahai hamba-hambaKu yang telah melampaui batas terhadap diri mereka sendiri (dengan perbuatan-perbuatan maksiat), janganlah kamu berputus asa dari rahmat Allah, kerana sesungguhnya Allah mengampunkan segala dosa; sesungguhnya Dia lah jua Yang Maha Pengampun, lagi Maha Mengasihani."
+          }
+        },
+        {
+          "ref": "7:156",
+          "text": {
+            "ar": "۞ وَٱكْتُبْ لَنَا فِى هَـٰذِهِ ٱلدُّنْيَا حَسَنَةً وَفِى ٱلْـَٔاخِرَةِ إِنَّا هُدْنَآ إِلَيْكَ ۚ قَالَ عَذَابِىٓ أُصِيبُ بِهِۦ مَنْ أَشَآءُ ۖ وَرَحْمَتِى وَسِعَتْ كُلَّ شَىْءٍ ۚ فَسَأَكْتُبُهَا لِلَّذِينَ يَتَّقُونَ وَيُؤْتُونَ ٱلزَّكَوٰةَ وَٱلَّذِينَ هُم بِـَٔايَـٰتِنَا يُؤْمِنُونَ",
+            "id": "Dan tetapkanlah untuk kami kebajikan di dunia ini dan di akhirat; sesungguhnya kami kembali (bertaubat) kepada Engkau. Allah berfirman: \"Siksa-Ku akan Kutimpakan kepada siapa yang Aku kehendaki dan rahmat-Ku meliputi segala sesuatu. Maka akan Aku tetapkan rahmat-Ku untuk orang-orang yang bertakwa, yang menunaikan zakat dan orang-orang yang beriman kepada ayat-ayat Kami\".",
+            "en": "And decree for us in this world [that which is] good and [also] in the Hereafter; indeed, we have turned back to You.\" [Allah] said, \"My punishment - I afflict with it whom I will, but My mercy encompasses all things.\" So I will decree it [especially] for those who fear Me and give zakah and those who believe in Our verses -",
+            "ms": "\"Dan tetapkanlah untuk Kami kebaikan dalam dunia ini dan juga di akhirat, sesungguhnya kami kembali (bertaubat) kepadaMu\". Allah berfirman: \"AzabKu akan Aku timpakan kepada sesiapa yang Aku kehendaki, dan rahmatKu meliputi tiap-tiap sesuatu; maka Aku akan menentukannya bagi orang-orang yang bertaqwa, dan yang memberi zakat, serta orang-orang yang beriman kepada ayat-ayat Kami."
+          }
+        },
+        {
+          "ref": "6:54",
+          "text": {
+            "ar": "وَإِذَا جَآءَكَ ٱلَّذِينَ يُؤْمِنُونَ بِـَٔايَـٰتِنَا فَقُلْ سَلَـٰمٌ عَلَيْكُمْ ۖ كَتَبَ رَبُّكُمْ عَلَىٰ نَفْسِهِ ٱلرَّحْمَةَ ۖ أَنَّهُۥ مَنْ عَمِلَ مِنكُمْ سُوٓءًۢا بِجَهَـٰلَةٍ ثُمَّ تَابَ مِنۢ بَعْدِهِۦ وَأَصْلَحَ فَأَنَّهُۥ غَفُورٌ رَّحِيمٌ",
+            "id": "Apabila orang-orang yang beriman kepada ayat-ayat Kami itu datang kepadamu, maka katakanlah: \"Salaamun alaikum. Tuhanmu telah menetapkan atas diri-Nya kasih sayang, (yaitu) bahwasanya barang siapa yang berbuat kejahatan di antara kamu lantaran kejahilan, kemudian ia bertaubat setelah mengerjakannya dan mengadakan perbaikan, maka sesungguhnya Allah Maha Pengampun lagi Maha Penyayang.",
+            "en": "And when those come to you who believe in Our verses, say, \"Peace be upon you. Your Lord has decreed upon Himself mercy: that any of you who does wrong out of ignorance and then repents after that and corrects himself - indeed, He is Forgiving and Merciful.\"",
+            "ms": "Dan apabila orang-orang yang beriman kepada ayat-ayat keterangan Kami itu datang kepadamu (dengan tujuan hendak bertaubat dari dosa-dosa mereka), maka katakanlah: \"Mudah-mudahan kamu beroleh selamat! Tuhan kamu telah menetapkan bagi diriNya untuk memberi rahmat (yang melimpah-limpah): bahawasanya sesiapa di antara kamu yang melakukan kejahatan dengan sebab kejahilannya, kemudian ia bertaubat sesudah itu, dan berusaha memperbaiki (amalannya), maka sesungguhnya Allah Maha Pengampun, lagi Maha Mengasihani\"."
+          }
+        },
+        {
+          "ref": "4:110",
+          "text": {
+            "ar": "وَمَن يَعْمَلْ سُوٓءًا أَوْ يَظْلِمْ نَفْسَهُۥ ثُمَّ يَسْتَغْفِرِ ٱللَّهَ يَجِدِ ٱللَّهَ غَفُورًا رَّحِيمًا",
+            "id": "Dan barangsiapa yang mengerjakan kejahatan dan menganiaya dirinya, kemudian ia mohon ampun kepada Allah, niscaya ia mendapati Allah Maha Pengampun lagi Maha Penyayang.",
+            "en": "And whoever does a wrong or wrongs himself but then seeks forgiveness of Allah will find Allah Forgiving and Merciful.",
+            "ms": "Dan sesiapa yang melakukan kejahatan atau menganiaya dirinya sendiri (dengan melakukan maksiat) kemudian ia memohon ampun kepada Allah, nescaya ia akan mendapati Allah Maha Pengampun, lagi Maha Mengasihani."
+          }
+        },
+        {
+          "ref": "15:49",
+          "text": {
+            "ar": "۞ نَبِّئْ عِبَادِىٓ أَنِّىٓ أَنَا ٱلْغَفُورُ ٱلرَّحِيمُ",
+            "id": "Kabarkanlah kepada hamba-hamba-Ku, bahwa sesungguhnya Aku-lah Yang Maha Pengampun lagi Maha Penyayang,",
+            "en": "[O Muhammad], inform My servants that it is I who am the Forgiving, the Merciful.",
+            "ms": "Khabarkanlah kepada hamba-hambaKu (wahai Muhammad), bahawa Akulah Yang Maha Pengampun lagi Maha Mengasihani (bagi mereka yang bertaubat dan beramal soleh)."
+          }
+        },
+        {
+          "ref": "71:10",
+          "text": {
+            "ar": "فَقُلْتُ ٱسْتَغْفِرُوا۟ رَبَّكُمْ إِنَّهُۥ كَانَ غَفَّارًا",
+            "id": "maka aku katakan kepada mereka: 'Mohonlah ampun kepada Tuhanmu, -sesungguhnya Dia adalah Maha Pengampun-,",
+            "en": "And said, 'Ask forgiveness of your Lord. Indeed, He is ever a Perpetual Forgiver.",
+            "ms": "\"Sehingga aku berkata (kepada mereka): `Pohonkanlah ampun kepada Tuhan kamu, sesungguhnya adalah Ia Maha Pengampun."
+          }
+        },
+        {
+          "ref": "3:135",
+          "text": {
+            "ar": "وَٱلَّذِينَ إِذَا فَعَلُوا۟ فَـٰحِشَةً أَوْ ظَلَمُوٓا۟ أَنفُسَهُمْ ذَكَرُوا۟ ٱللَّهَ فَٱسْتَغْفَرُوا۟ لِذُنُوبِهِمْ وَمَن يَغْفِرُ ٱلذُّنُوبَ إِلَّا ٱللَّهُ وَلَمْ يُصِرُّوا۟ عَلَىٰ مَا فَعَلُوا۟ وَهُمْ يَعْلَمُونَ",
+            "id": "Dan (juga) orang-orang yang apabila mengerjakan perbuatan keji atau menganiaya diri sendiri, mereka ingat akan Allah, lalu memohon ampun terhadap dosa-dosa mereka dan siapa lagi yang dapat mengampuni dosa selain dari pada Allah? Dan mereka tidak meneruskan perbuatan kejinya itu, sedang mereka mengetahui.",
+            "en": "And those who, when they commit an immorality or wrong themselves [by transgression], remember Allah and seek forgiveness for their sins - and who can forgive sins except Allah? - and [who] do not persist in what they have done while they know.",
+            "ms": "Dan juga orang-orang yang apabila melakukan perbuatan keji, atau menganiaya diri sendiri, mereka segera ingat kepada Allah lalu memohon ampun akan dosa mereka - dan sememangnya tidak ada yang mengampunkan dosa-dosa melainkan Allah -, dan mereka juga tidak meneruskan perbuatan keji yang mereka telah lakukan itu, sedang mereka mengetahui (akan salahnya dan akibatnya)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "supplication",
+      "why": {
+        "id": "Doa dari Al-Qur'an untuk dipanjatkan hari ini.",
+        "en": "A dua from the Quran to make your own today.",
+        "ms": "Doa daripada al-Quran untuk dipanjatkan hari ini.",
+        "ar": "دعاء من القرآن تدعو به اليوم."
+      },
+      "ayahs": [
+        {
+          "ref": "40:60",
+          "text": {
+            "ar": "وَقَالَ رَبُّكُمُ ٱدْعُونِىٓ أَسْتَجِبْ لَكُمْ ۚ إِنَّ ٱلَّذِينَ يَسْتَكْبِرُونَ عَنْ عِبَادَتِى سَيَدْخُلُونَ جَهَنَّمَ دَاخِرِينَ",
+            "id": "Dan Tuhanmu berfirman: \"Berdoalah kepada-Ku, niscaya akan Kuperkenankan bagimu. Sesungguhnya orang-orang yang menyombongkan diri dari menyembah-Ku akan masuk neraka Jahannam dalam keadaan hina dina\".",
+            "en": "And your Lord says, \"Call upon Me; I will respond to you.\" Indeed, those who disdain My worship will enter Hell [rendered] contemptible.",
+            "ms": "Dan Tuhan kamu berfirman: \"Berdoalah kamu kepadaKu nescaya Aku perkenankan doa permohonan kamu. Sesungguhnya orang-orang yang sombong takbur daripada beribadat dan berdoa kepadaKu, akan masuk neraka Jahannam dalam keadaan hina."
+          }
+        },
+        {
+          "ref": "2:201",
+          "text": {
+            "ar": "وَمِنْهُم مَّن يَقُولُ رَبَّنَآ ءَاتِنَا فِى ٱلدُّنْيَا حَسَنَةً وَفِى ٱلْـَٔاخِرَةِ حَسَنَةً وَقِنَا عَذَابَ ٱلنَّارِ",
+            "id": "Dan di antara mereka ada orang yang berdoa: \"Ya Tuhan kami, berilah kami kebaikan di dunia dan kebaikan di akhirat dan peliharalah kami dari siksa neraka\".",
+            "en": "But among them is he who says, \"Our Lord, give us in this world [that which is] good and in the Hereafter [that which is] good and protect us from the punishment of the Fire.\"",
+            "ms": "Dan di antara mereka pula ada yang (berdoa dengan) berkata: \"Wahai Tuhan kami, berilah kami kebaikan di dunia dan kebaikan di akhirat, dan peliharalah kami dari azab neraka\"."
+          }
+        },
+        {
+          "ref": "7:55",
+          "text": {
+            "ar": "ٱدْعُوا۟ رَبَّكُمْ تَضَرُّعًا وَخُفْيَةً ۚ إِنَّهُۥ لَا يُحِبُّ ٱلْمُعْتَدِينَ",
+            "id": "Berdoalah kepada Tuhanmu dengan berendah diri dan suara yang lembut. Sesungguhnya Allah tidak menyukai orang-orang yang melampaui batas.",
+            "en": "Call upon your Lord in humility and privately; indeed, He does not like transgressors.",
+            "ms": "Berdoalah kepada Tuhan kamu dengan merendah diri dan (dengan suara) perlahan-lahan. Sesungguhnya Allah tidak suka kepada orang-orang yang melampaui batas."
+          }
+        },
+        {
+          "ref": "3:8",
+          "text": {
+            "ar": "رَبَّنَا لَا تُزِغْ قُلُوبَنَا بَعْدَ إِذْ هَدَيْتَنَا وَهَبْ لَنَا مِن لَّدُنكَ رَحْمَةً ۚ إِنَّكَ أَنتَ ٱلْوَهَّابُ",
+            "id": "(Mereka berdoa): \"Ya Tuhan kami, janganlah Engkau jadikan hati kami condong kepada kesesatan sesudah Engkau beri petunjuk kepada kami, dan karuniakanlah kepada kami rahmat dari sisi Engkau; karena sesungguhnya Engkau-lah Maha Pemberi (karunia)\".",
+            "en": "[Who say], \"Our Lord, let not our hearts deviate after You have guided us and grant us from Yourself mercy. Indeed, You are the Bestower.",
+            "ms": "(Mereka berdoa dengan berkata): \"Wahai Tuhan kami! Janganlah Engkau memesongkan hati kami sesudah Engkau beri petunjuk kepada kami, dan kurniakanlah kepada kami limpah rahmat dari sisiMu; sesungguhnya Engkau jualah Tuhan Yang melimpah-limpah pemberianNya."
+          }
+        },
+        {
+          "ref": "14:40",
+          "text": {
+            "ar": "رَبِّ ٱجْعَلْنِى مُقِيمَ ٱلصَّلَوٰةِ وَمِن ذُرِّيَّتِى ۚ رَبَّنَا وَتَقَبَّلْ دُعَآءِ",
+            "id": "Ya Tuhanku, jadikanlah aku dan anak cucuku orang-orang yang tetap mendirikan shalat, ya Tuhan kami, perkenankanlah doaku.",
+            "en": "My Lord, make me an establisher of prayer, and [many] from my descendants. Our Lord, and accept my supplication.",
+            "ms": "\"Wahai Tuhanku! Jadikanlah daku orang yang mendirikan sembahyang dan demikianlah juga zuriat keturunanku. Wahai Tuhan kami, perkenankanlah doa permohonanku."
+          }
+        },
+        {
+          "ref": "21:87",
+          "text": {
+            "ar": "وَذَا ٱلنُّونِ إِذ ذَّهَبَ مُغَـٰضِبًا فَظَنَّ أَن لَّن نَّقْدِرَ عَلَيْهِ فَنَادَىٰ فِى ٱلظُّلُمَـٰتِ أَن لَّآ إِلَـٰهَ إِلَّآ أَنتَ سُبْحَـٰنَكَ إِنِّى كُنتُ مِنَ ٱلظَّـٰلِمِينَ",
+            "id": "Dan (ingatlah kisah) Dzun Nun (Yunus), ketika ia pergi dalam keadaan marah, lalu ia menyangka bahwa Kami tidak akan mempersempitnya (menyulitkannya), maka ia menyeru dalam keadaan yang sangat gelap: \"Bahwa tidak ada Tuhan selain Engkau. Maha Suci Engkau, sesungguhnya aku adalah termasuk orang-orang yang zalim\".",
+            "en": "And [mention] the man of the fish, when he went off in anger and thought that We would not decree [anything] upon him. And he called out within the darknesses, \"There is no deity except You; exalted are You. Indeed, I have been of the wrongdoers.\"",
+            "ms": "Dan (sebutkanlah peristiwa) Zun-Nun, ketika ia pergi (meninggalkan kaumnya) dalam keadaan marah, yang menyebabkan ia menyangka bahawa Kami tidak akan mengenakannya kesusahan atau cubaan; (setelah berlaku kepadanya apa yang berlaku) maka ia pun menyeru dalam keadaan yang gelap-gelita dengan berkata: \"Sesungguhnya tiada Tuhan (yang dapat menolong) melainkan Engkau (ya Allah)! Maha Suci Engkau (daripada melakukan aniaya, tolongkanlah daku)! Sesungguhnya aku adalah dari orang-orang yang menganiaya diri sendiri\"."
+          }
+        },
+        {
+          "ref": "25:74",
+          "text": {
+            "ar": "وَٱلَّذِينَ يَقُولُونَ رَبَّنَا هَبْ لَنَا مِنْ أَزْوَٰجِنَا وَذُرِّيَّـٰتِنَا قُرَّةَ أَعْيُنٍ وَٱجْعَلْنَا لِلْمُتَّقِينَ إِمَامًا",
+            "id": "Dan orang orang yang berkata: \"Ya Tuhan kami, anugrahkanlah kepada kami isteri-isteri kami dan keturunan kami sebagai penyenang hati (kami), dan jadikanlah kami imam bagi orang-orang yang bertakwa.",
+            "en": "And those who say, \"Our Lord, grant us from among our wives and offspring comfort to our eyes and make us an example for the righteous.\"",
+            "ms": "Dan juga mereka (yang diredhai Allah itu ialah orang-orang) yang berdoa dengan berkata: \"Wahai Tuhan kami, berilah kami beroleh dari isteri-isteri dan zuriat keturunan kami: perkara-perkara yang menyukakan hati melihatnya, dan jadikanlah kami imam ikutan bagi orang-orang yang (mahu) bertaqwa."
+          }
+        },
+        {
+          "ref": "7:23",
+          "text": {
+            "ar": "قَالَا رَبَّنَا ظَلَمْنَآ أَنفُسَنَا وَإِن لَّمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ ٱلْخَـٰسِرِينَ",
+            "id": "Keduanya berkata: \"Ya Tuhan kami, kami telah menganiaya diri kami sendiri, dan jika Engkau tidak mengampuni kami dan memberi rahmat kepada kami, niscaya pastilah kami termasuk orang-orang yang merugi.",
+            "en": "They said, \"Our Lord, we have wronged ourselves, and if You do not forgive us and have mercy upon us, we will surely be among the losers.\"",
+            "ms": "Mereka berdua merayu: \"Wahai Tuhan kami, kami telah menganiaya diri kami sendiri, dan kalau Engkau tidak mengampunkan kami dan memberi rahmat kepada kami, nescaya menjadilah kami dari orang-orang yang rugi\"."
+          }
+        }
+      ]
+    },
+    {
+      "id": "hope",
+      "why": {
+        "id": "Tentang harapan: Allah itu dekat.",
+        "en": "On hope: Allah is near.",
+        "ms": "Tentang harapan: Allah itu dekat.",
+        "ar": "عن الرجاء: الله قريب."
+      },
+      "ayahs": [
+        {
+          "ref": "50:16",
+          "text": {
+            "ar": "وَلَقَدْ خَلَقْنَا ٱلْإِنسَـٰنَ وَنَعْلَمُ مَا تُوَسْوِسُ بِهِۦ نَفْسُهُۥ ۖ وَنَحْنُ أَقْرَبُ إِلَيْهِ مِنْ حَبْلِ ٱلْوَرِيدِ",
+            "id": "Dan sesungguhnya Kami telah menciptakan manusia dan mengetahui apa yang dibisikkan oleh hatinya, dan Kami lebih dekat kepadanya daripada urat lehernya,",
+            "en": "And We have already created man and know what his soul whispers to him, and We are closer to him than [his] jugular vein",
+            "ms": "Dan demi sesungguhnya, Kami telah mencipta manusia dan Kami sedia mengetahui apa yang dibisikkan oleh hatinya, sedang (pengetahuan) Kami lebih dekat kepadanya daripada urat lehernya,"
+          }
+        },
+        {
+          "ref": "93:3",
+          "text": {
+            "ar": "مَا وَدَّعَكَ رَبُّكَ وَمَا قَلَىٰ",
+            "id": "Tuhanmu tiada meninggalkan kamu dan tiada (pula) benci kepadamu.",
+            "en": "Your Lord has not taken leave of you, [O Muhammad], nor has He detested [you].",
+            "ms": "(Bahawa) Tuhanmu (wahai Muhammad) tidak meninggalkanmu, dan Ia tidak benci (kepadamu, sebagaimana yang dituduh oleh kaum musyrik)."
+          }
+        },
+        {
+          "ref": "93:5",
+          "text": {
+            "ar": "وَلَسَوْفَ يُعْطِيكَ رَبُّكَ فَتَرْضَىٰٓ",
+            "id": "Dan kelak Tuhanmu pasti memberikan karunia-Nya kepadamu, lalu (hati) kamu menjadi puas.",
+            "en": "And your Lord is going to give you, and you will be satisfied.",
+            "ms": "Dan sesungguhnya Tuhanmu akan memberikanmu (kejayaan dan kebahagiaan di dunia dan di akhirat) sehingga engkau reda - berpuas hati."
+          }
+        },
+        {
+          "ref": "57:4",
+          "text": {
+            "ar": "هُوَ ٱلَّذِى خَلَقَ ٱلسَّمَـٰوَٰتِ وَٱلْأَرْضَ فِى سِتَّةِ أَيَّامٍ ثُمَّ ٱسْتَوَىٰ عَلَى ٱلْعَرْشِ ۚ يَعْلَمُ مَا يَلِجُ فِى ٱلْأَرْضِ وَمَا يَخْرُجُ مِنْهَا وَمَا يَنزِلُ مِنَ ٱلسَّمَآءِ وَمَا يَعْرُجُ فِيهَا ۖ وَهُوَ مَعَكُمْ أَيْنَ مَا كُنتُمْ ۚ وَٱللَّهُ بِمَا تَعْمَلُونَ بَصِيرٌ",
+            "id": "Dialah yang menciptakan langit dan bumi dalam enam masa: Kemudian Dia bersemayam di atas 'Arsy. Dia mengetahui apa yang masuk ke dalam bumi dan apa yang keluar daripadanya dan apa yang turun dari langit dan apa yang naik kepada-Nya. Dan Dia bersama kamu di mana saja kamu berada. Dan Allah Maha Melihat apa yang kamu kerjakan.",
+            "en": "It is He who created the heavens and earth in six days and then established Himself above the Throne. He knows what penetrates into the earth and what emerges from it and what descends from the heaven and what ascends therein; and He is with you wherever you are. And Allah, of what you do, is Seeing.",
+            "ms": "Dia lah yang telah menciptakan langit dan bumi dalam enam masa, kemudian Ia bersemayam di atas Arasy; Ia mengetahui apa yang masuk ke bumi serta apa yang keluar daripadanya; dan apa yang diturunkan dari langit serta apa yang naik padanya. Dan Ia tetap bersama-sama kamu di mana sahaja kamu berada, dan Allah Maha Melihat akan apa yang kamu kerjakan."
+          }
+        },
+        {
+          "ref": "20:46",
+          "text": {
+            "ar": "قَالَ لَا تَخَافَآ ۖ إِنَّنِى مَعَكُمَآ أَسْمَعُ وَأَرَىٰ",
+            "id": "Allah berfirman: \"Janganlah kamu berdua khawatir, sesungguhnya Aku beserta kamu berdua, Aku mendengar dan melihat\".",
+            "en": "[Allah] said, \"Fear not. Indeed, I am with you both; I hear and I see.",
+            "ms": "Allah berfirman: \"Janganlah kamu takut, sesungguhnya Aku ada bersama-sama kamu; Aku mendengar dan melihat segala-galanya."
+          }
+        },
+        {
+          "ref": "3:139",
+          "text": {
+            "ar": "وَلَا تَهِنُوا۟ وَلَا تَحْزَنُوا۟ وَأَنتُمُ ٱلْأَعْلَوْنَ إِن كُنتُم مُّؤْمِنِينَ",
+            "id": "Janganlah kamu bersikap lemah, dan janganlah (pula) kamu bersedih hati, padahal kamulah orang-orang yang paling tinggi (derajatnya), jika kamu orang-orang yang beriman.",
+            "en": "So do not weaken and do not grieve, and you will be superior if you are [true] believers.",
+            "ms": "Dan janganlah kamu merasa lemah (dalam perjuangan mempertahan dan menegakkan Islam), dan janganlah kamu berdukacita (terhadap apa yang akan menimpa kamu), padahal kamulah orang-orang yang tertinggi (mengatasi musuh dengan mencapai kemenangan) jika kamu orang-orang yang (sungguh-sungguh) beriman."
+          }
+        },
+        {
+          "ref": "12:87",
+          "text": {
+            "ar": "يَـٰبَنِىَّ ٱذْهَبُوا۟ فَتَحَسَّسُوا۟ مِن يُوسُفَ وَأَخِيهِ وَلَا تَا۟يْـَٔسُوا۟ مِن رَّوْحِ ٱللَّهِ ۖ إِنَّهُۥ لَا يَا۟يْـَٔسُ مِن رَّوْحِ ٱللَّهِ إِلَّا ٱلْقَوْمُ ٱلْكَـٰفِرُونَ",
+            "id": "Hai anak-anakku, pergilah kamu, maka carilah berita tentang Yusuf dan saudaranya dan jangan kamu berputus asa dari rahmat Allah. Sesungguhnya tiada berputus asa dari rahmat Allah, melainkan kaum yang kafir\".",
+            "en": "O my sons, go and find out about Joseph and his brother and despair not of relief from Allah. Indeed, no one despairs of relief from Allah except the disbelieving people.\"",
+            "ms": "Wahai anak-anakku! Pergilah dan intiplah khabar berita mengenai Yusuf dan saudaranya (Bunyamin), dan janganlah kamu berputus asa dari rahmat serta pertolongan Allah. Sesungguhnya tidak berputus asa dari rahmat dan pertolongan Allah itu melainkan kaum yang kafir\"."
+          }
+        }
+      ]
+    },
+    {
+      "id": "family",
+      "why": {
+        "id": "Tentang orang tua dan keluarga, yang paling berhak atas kebaikan kita.",
+        "en": "On parents and family, the first to deserve our kindness.",
+        "ms": "Tentang ibu bapa dan keluarga, yang paling berhak atas kebaikan kita.",
+        "ar": "عن الوالدين والأهل، أحق الناس ببرّنا."
+      },
+      "ayahs": [
+        {
+          "ref": "17:23",
+          "text": {
+            "ar": "۞ وَقَضَىٰ رَبُّكَ أَلَّا تَعْبُدُوٓا۟ إِلَّآ إِيَّاهُ وَبِٱلْوَٰلِدَيْنِ إِحْسَـٰنًا ۚ إِمَّا يَبْلُغَنَّ عِندَكَ ٱلْكِبَرَ أَحَدُهُمَآ أَوْ كِلَاهُمَا فَلَا تَقُل لَّهُمَآ أُفٍّ وَلَا تَنْهَرْهُمَا وَقُل لَّهُمَا قَوْلًا كَرِيمًا",
+            "id": "Dan Tuhanmu telah memerintahkan supaya kamu jangan menyembah selain Dia dan hendaklah kamu berbuat baik pada ibu bapakmu dengan sebaik-baiknya. Jika salah seorang di antara keduanya atau kedua-duanya sampai berumur lanjut dalam pemeliharaanmu, maka sekali-kali janganlah kamu mengatakan kepada keduanya perkataan \"ah\" dan janganlah kamu membentak mereka dan ucapkanlah kepada mereka perkataan yang mulia.",
+            "en": "And your Lord has decreed that you not worship except Him, and to parents, good treatment. Whether one or both of them reach old age [while] with you, say not to them [so much as], \"uff,\" and do not repel them but speak to them a noble word.",
+            "ms": "Dan Tuhanmu telah perintahkan, supaya engkau tidak menyembah melainkan kepadaNya semata-mata, dan hendaklah engkau berbuat baik kepada ibu bapa. Jika salah seorang dari keduanya, atau kedua-duanya sekali, sampai kepada umur tua dalam jagaan dan peliharaanmu, maka janganlah engkau berkata kepada mereka (sebarang perkataan kasar) sekalipun perkataan \"Ha\", dan janganlah engkau menengking menyergah mereka, tetapi katakanlah kepada mereka perkataan yang mulia (yang bersopan santun)."
+          }
+        },
+        {
+          "ref": "17:24",
+          "text": {
+            "ar": "وَٱخْفِضْ لَهُمَا جَنَاحَ ٱلذُّلِّ مِنَ ٱلرَّحْمَةِ وَقُل رَّبِّ ٱرْحَمْهُمَا كَمَا رَبَّيَانِى صَغِيرًا",
+            "id": "Dan rendahkanlah dirimu terhadap mereka berdua dengan penuh kesayangan dan ucapkanlah: \"Wahai Tuhanku, kasihilah mereka keduanya, sebagaimana mereka berdua telah mendidik aku waktu kecil\".",
+            "en": "And lower to them the wing of humility out of mercy and say, \"My Lord, have mercy upon them as they brought me up [when I was] small.\"",
+            "ms": "Dan hendaklah engkau merendah diri kepada keduanya kerana belas kasihan dan kasih sayangmu, dan doakanlah (untuk mereka, dengan berkata): \"Wahai Tuhanku! Cucurilah rahmat kepada mereka berdua sebagaimana mereka telah mencurahkan kasih sayangnya memelihara dan mendidikku semasa kecil.\""
+          }
+        },
+        {
+          "ref": "31:14",
+          "text": {
+            "ar": "وَوَصَّيْنَا ٱلْإِنسَـٰنَ بِوَٰلِدَيْهِ حَمَلَتْهُ أُمُّهُۥ وَهْنًا عَلَىٰ وَهْنٍ وَفِصَـٰلُهُۥ فِى عَامَيْنِ أَنِ ٱشْكُرْ لِى وَلِوَٰلِدَيْكَ إِلَىَّ ٱلْمَصِيرُ",
+            "id": "Dan Kami perintahkan kepada manusia (berbuat baik) kepada dua orang ibu-bapaknya; ibunya telah mengandungnya dalam keadaan lemah yang bertambah-tambah, dan menyapihnya dalam dua tahun. Bersyukurlah kepada-Ku dan kepada dua orang ibu bapakmu, hanya kepada-Kulah kembalimu.",
+            "en": "And We have enjoined upon man [care] for his parents. His mother carried him, [increasing her] in weakness upon weakness, and his weaning is in two years. Be grateful to Me and to your parents; to Me is the [final] destination.",
+            "ms": "Dan Kami wajibkan manusia berbuat baik kepada kedua ibu bapanya; ibunya telah mengandungnya dengan menanggung kelemahan demi kelemahan (dari awal mengandung hingga akhir menyusunya), dan tempoh menceraikan susunya ialah dalam masa dua tahun; (dengan yang demikian) bersyukurlah kepadaKu dan kepada kedua ibubapamu; dan (ingatlah), kepada Akulah jua tempat kembali (untuk menerima balasan)."
+          }
+        },
+        {
+          "ref": "46:15",
+          "text": {
+            "ar": "وَوَصَّيْنَا ٱلْإِنسَـٰنَ بِوَٰلِدَيْهِ إِحْسَـٰنًا ۖ حَمَلَتْهُ أُمُّهُۥ كُرْهًا وَوَضَعَتْهُ كُرْهًا ۖ وَحَمْلُهُۥ وَفِصَـٰلُهُۥ ثَلَـٰثُونَ شَهْرًا ۚ حَتَّىٰٓ إِذَا بَلَغَ أَشُدَّهُۥ وَبَلَغَ أَرْبَعِينَ سَنَةً قَالَ رَبِّ أَوْزِعْنِىٓ أَنْ أَشْكُرَ نِعْمَتَكَ ٱلَّتِىٓ أَنْعَمْتَ عَلَىَّ وَعَلَىٰ وَٰلِدَىَّ وَأَنْ أَعْمَلَ صَـٰلِحًا تَرْضَىٰهُ وَأَصْلِحْ لِى فِى ذُرِّيَّتِىٓ ۖ إِنِّى تُبْتُ إِلَيْكَ وَإِنِّى مِنَ ٱلْمُسْلِمِينَ",
+            "id": "Kami perintahkan kepada manusia supaya berbuat baik kepada dua orang ibu bapaknya, ibunya mengandungnya dengan susah payah, dan melahirkannya dengan susah payah (pula). Mengandungnya sampai menyapihnya adalah tiga puluh bulan, sehingga apabila dia telah dewasa dan umurnya sampai empat puluh tahun ia berdoa: \"Ya Tuhanku, tunjukilah aku untuk mensyukuri nikmat Engkau yang telah Engkau berikan kepadaku dan kepada ibu bapakku dan supaya aku dapat berbuat amal yang saleh yang Engkau ridhai; berilah kebaikan kepadaku dengan (memberi kebaikan) kepada anak cucuku. Sesungguhnya aku bertaubat kepada Engkau dan sesungguhnya aku termasuk orang-orang yang berserah diri\".",
+            "en": "And We have enjoined upon man, to his parents, good treatment. His mother carried him with hardship and gave birth to him with hardship, and his gestation and weaning [period] is thirty months. [He grows] until, when he reaches maturity and reaches [the age of] forty years, he says, \"My Lord, enable me to be grateful for Your favor which You have bestowed upon me and upon my parents and to work righteousness of which You will approve and make righteous for me my offspring. Indeed, I have repented to You, and indeed, I am of the Muslims.\"",
+            "ms": "Dan Kami wajibkan manusia berbuat baik kepada kedua ibu bapanya; ibunya telah mengandungnya dengan menanggung susah payah dan telah melahirkannya dengan menanggung susah payah. Sedang tempoh mengandungnya beserta dengan tempoh menceraikan susunya ialah dalam masa tiga puluh bulan. Setelah ia besar sampai ke peringkat dewasa yang sempurna kekuatannya dan sampai ke peringkat umur empat puluh tahun, berdoalah ia dengan berkata: \"Wahai Tuhanku, ilhamkanlah daku supaya tetap bersyukur akan nikmatmu yang engkau kurniakan kepadaku dan kepada ibu bapaku, dan supaya aku tetap mengerjakan amal soleh yang Engkau redai; dan jadikanlah sifat-sifat kebaikan meresap masuk ke dalam jiwa zuriat keturunanku. Sesungguhnya aku bertaubat kepadamu, dan sesungguhnya aku dari orang-orang Islam (yang tunduk patuh kepadamu)\"."
+          }
+        },
+        {
+          "ref": "66:6",
+          "text": {
+            "ar": "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ قُوٓا۟ أَنفُسَكُمْ وَأَهْلِيكُمْ نَارًا وَقُودُهَا ٱلنَّاسُ وَٱلْحِجَارَةُ عَلَيْهَا مَلَـٰٓئِكَةٌ غِلَاظٌ شِدَادٌ لَّا يَعْصُونَ ٱللَّهَ مَآ أَمَرَهُمْ وَيَفْعَلُونَ مَا يُؤْمَرُونَ",
+            "id": "Hai orang-orang yang beriman, peliharalah dirimu dan keluargamu dari api neraka yang bahan bakarnya adalah manusia dan batu; penjaganya malaikat-malaikat yang kasar, keras, dan tidak mendurhakai Allah terhadap apa yang diperintahkan-Nya kepada mereka dan selalu mengerjakan apa yang diperintahkan.",
+            "en": "O you who have believed, protect yourselves and your families from a Fire whose fuel is people and stones, over which are [appointed] angels, harsh and severe; they do not disobey Allah in what He commands them but do what they are commanded.",
+            "ms": "Wahai orang-orang yang beriman! Peliharalah diri kamu dan keluarga kamu dari neraka yang bahan-bahan bakarannya: manusia dan batu (berhala); neraka itu dijaga dan dikawal oleh malaikat-malaikat yang keras kasar (layanannya); mereka tidak menderhaka kepada Allah dalam segala yang diperintahkanNya kepada mereka, dan mereka pula tetap melakukan segala yang diperintahkan."
+          }
+        },
+        {
+          "ref": "29:8",
+          "text": {
+            "ar": "وَوَصَّيْنَا ٱلْإِنسَـٰنَ بِوَٰلِدَيْهِ حُسْنًا ۖ وَإِن جَـٰهَدَاكَ لِتُشْرِكَ بِى مَا لَيْسَ لَكَ بِهِۦ عِلْمٌ فَلَا تُطِعْهُمَآ ۚ إِلَىَّ مَرْجِعُكُمْ فَأُنَبِّئُكُم بِمَا كُنتُمْ تَعْمَلُونَ",
+            "id": "Dan Kami wajibkan manusia (berbuat) kebaikan kepada dua orang ibu-bapaknya. Dan jika keduanya memaksamu untuk mempersekutukan Aku dengan sesuatu yang tidak ada pengetahuanmu tentang itu, maka janganlah kamu mengikuti keduanya. Hanya kepada-Ku-lah kembalimu, lalu Aku kabarkan kepadamu apa yang telah kamu kerjakan.",
+            "en": "And We have enjoined upon man goodness to parents. But if they endeavor to make you associate with Me that of which you have no knowledge, do not obey them. To Me is your return, and I will inform you about what you used to do.",
+            "ms": "Dan Kami wajibkan manusia berbuat baik kepada kedua ibu bapanya; dan jika mereka berdua mendesakmu supaya engkau mempersekutukan Daku (dalam ibadatmu) dengan sesuatu yang engkau tidak mempunyai pengetahuan mengenainya, maka janganlah engkau taat kepada mereka. Kepada Akulah tempat kembali kamu semuanya, kemudian Aku akan menerangkan kepada kamu segala yang kamu telah kerjakan."
+          }
+        },
+        {
+          "ref": "30:21",
+          "text": {
+            "ar": "وَمِنْ ءَايَـٰتِهِۦٓ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَٰجًا لِّتَسْكُنُوٓا۟ إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ إِنَّ فِى ذَٰلِكَ لَـَٔايَـٰتٍ لِّقَوْمٍ يَتَفَكَّرُونَ",
+            "id": "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya diantaramu rasa kasih dan sayang. Sesungguhnya pada yang demikian itu benar-benar terdapat tanda-tanda bagi kaum yang berfikir.",
+            "en": "And of His signs is that He created for you from yourselves mates that you may find tranquillity in them; and He placed between you affection and mercy. Indeed in that are signs for a people who give thought.",
+            "ms": "Dan di antara tanda-tanda yang membuktikan kekuasaannya dan rahmatNya, bahawa Ia menciptakan untuk kamu (wahai kaum lelaki), isteri-isteri dari jenis kamu sendiri, supaya kamu bersenang hati dan hidup mesra dengannya, dan dijadikanNya di antara kamu (suami isteri) perasaan kasih sayang dan belas kasihan. Sesungguhnya yang demikian itu mengandungi keterangan-keterangan (yang menimbulkan kesedaran) bagi orang-orang yang berfikir."
+          }
+        }
+      ]
+    },
+    {
+      "id": "character",
+      "why": {
+        "id": "Tentang akhlak mulia dalam bergaul dengan sesama.",
+        "en": "On good character in how we treat others.",
+        "ms": "Tentang akhlak mulia dalam pergaulan sesama manusia.",
+        "ar": "عن حسن الخلق في معاملة الناس."
+      },
+      "ayahs": [
+        {
+          "ref": "41:34",
+          "text": {
+            "ar": "وَلَا تَسْتَوِى ٱلْحَسَنَةُ وَلَا ٱلسَّيِّئَةُ ۚ ٱدْفَعْ بِٱلَّتِى هِىَ أَحْسَنُ فَإِذَا ٱلَّذِى بَيْنَكَ وَبَيْنَهُۥ عَدَٰوَةٌ كَأَنَّهُۥ وَلِىٌّ حَمِيمٌ",
+            "id": "Dan tidaklah sama kebaikan dan kejahatan. Tolaklah (kejahatan itu) dengan cara yang lebih baik, maka tiba-tiba orang yang antaramu dan antara dia ada permusuhan seolah-olah telah menjadi teman yang sangat setia.",
+            "en": "And not equal are the good deed and the bad. Repel [evil] by that [deed] which is better; and thereupon the one whom between you and him is enmity [will become] as though he was a devoted friend.",
+            "ms": "Dan tidaklah sama (kesannya dan hukumnya) perbuatan yang baik dan perbuatan yang jahat. Tolaklah (kejahatan yang ditujukan kepadamu) dengan cara yang lebih baik; apabila engkau berlaku demikian maka orang yang menaruh rasa permusuhan terhadapmu, dengan serta merta akan menjadi seolah-olah seorang sahabat karib."
+          }
+        },
+        {
+          "ref": "3:134",
+          "text": {
+            "ar": "ٱلَّذِينَ يُنفِقُونَ فِى ٱلسَّرَّآءِ وَٱلضَّرَّآءِ وَٱلْكَـٰظِمِينَ ٱلْغَيْظَ وَٱلْعَافِينَ عَنِ ٱلنَّاسِ ۗ وَٱللَّهُ يُحِبُّ ٱلْمُحْسِنِينَ",
+            "id": "(yaitu) orang-orang yang menafkahkan (hartanya), baik di waktu lapang maupun sempit, dan orang-orang yang menahan amarahnya dan memaafkan (kesalahan) orang. Allah menyukai orang-orang yang berbuat kebajikan.",
+            "en": "Who spend [in the cause of Allah] during ease and hardship and who restrain anger and who pardon the people - and Allah loves the doers of good;",
+            "ms": "Iaitu orang-orang yang mendermakan hartanya pada masa senang dan susah, dan orang-orang yang menahan kemarahannya, dan orang-orang yang memaafkan kesalahan orang. Dan (ingatlah), Allah mengasihi orang-orang yang berbuat perkara-perkara yang baik;"
+          }
+        },
+        {
+          "ref": "49:10",
+          "text": {
+            "ar": "إِنَّمَا ٱلْمُؤْمِنُونَ إِخْوَةٌ فَأَصْلِحُوا۟ بَيْنَ أَخَوَيْكُمْ ۚ وَٱتَّقُوا۟ ٱللَّهَ لَعَلَّكُمْ تُرْحَمُونَ",
+            "id": "Orang-orang beriman itu sesungguhnya bersaudara. Sebab itu damaikanlah (perbaikilah hubungan) antara kedua saudaramu itu dan takutlah terhadap Allah, supaya kamu mendapat rahmat.",
+            "en": "The believers are but brothers, so make settlement between your brothers. And fear Allah that you may receive mercy.",
+            "ms": "Sebenarnya orang-orang yang beriman itu adalah bersaudara, maka damaikanlah di antara dua saudara kamu (yang bertelingkah) itu; dan bertaqwalah kepada Allah supaya kamu beroleh rahmat."
+          }
+        },
+        {
+          "ref": "49:13",
+          "text": {
+            "ar": "يَـٰٓأَيُّهَا ٱلنَّاسُ إِنَّا خَلَقْنَـٰكُم مِّن ذَكَرٍ وَأُنثَىٰ وَجَعَلْنَـٰكُمْ شُعُوبًا وَقَبَآئِلَ لِتَعَارَفُوٓا۟ ۚ إِنَّ أَكْرَمَكُمْ عِندَ ٱللَّهِ أَتْقَىٰكُمْ ۚ إِنَّ ٱللَّهَ عَلِيمٌ خَبِيرٌ",
+            "id": "Hai manusia, sesungguhnya Kami menciptakan kamu dari seorang laki-laki dan seorang perempuan dan menjadikan kamu berbangsa-bangsa dan bersuku-suku supaya kamu saling kenal-mengenal. Sesungguhnya orang yang paling mulia diantara kamu disisi Allah ialah orang yang paling takwa diantara kamu. Sesungguhnya Allah Maha Mengetahui lagi Maha Mengenal.",
+            "en": "O mankind, indeed We have created you from male and female and made you peoples and tribes that you may know one another. Indeed, the most noble of you in the sight of Allah is the most righteous of you. Indeed, Allah is Knowing and Acquainted.",
+            "ms": "Wahai umat manusia! Sesungguhnya Kami telah menciptakan kamu dari lelaki dan perempuan, dan Kami telah menjadikan kamu berbagai bangsa dan bersuku puak, supaya kamu berkenal-kenalan (dan beramah mesra antara satu dengan yang lain). Sesungguhnya semulia-mulia kamu di sisi Allah ialah orang yang lebih taqwanya di antara kamu, (bukan yang lebih keturunan atau bangsanya). Sesungguhnya Allah Maha Mengetahui, lagi Maha Mendalam PengetahuanNya (akan keadaan dan amalan kamu)."
+          }
+        },
+        {
+          "ref": "16:90",
+          "text": {
+            "ar": "۞ إِنَّ ٱللَّهَ يَأْمُرُ بِٱلْعَدْلِ وَٱلْإِحْسَـٰنِ وَإِيتَآئِ ذِى ٱلْقُرْبَىٰ وَيَنْهَىٰ عَنِ ٱلْفَحْشَآءِ وَٱلْمُنكَرِ وَٱلْبَغْىِ ۚ يَعِظُكُمْ لَعَلَّكُمْ تَذَكَّرُونَ",
+            "id": "Sesungguhnya Allah menyuruh (kamu) berlaku adil dan berbuat kebajikan, memberi kepada kaum kerabat, dan Allah melarang dari perbuatan keji, kemungkaran dan permusuhan. Dia memberi pengajaran kepadamu agar kamu dapat mengambil pelajaran.",
+            "en": "Indeed, Allah orders justice and good conduct and giving to relatives and forbids immorality and bad conduct and oppression. He admonishes you that perhaps you will be reminded.",
+            "ms": "Sesungguhnya Allah menyuruh berlaku adil, dan berbuat kebaikan, serta memberi bantuan kepada kaum kerabat; dan melarang daripada melakukan perbuatan-perbuatan yang keji dan mungkar serta kezaliman. Ia mengajar kamu (dengan suruhan dan laranganNya ini), supaya kamu mengambil peringatan mematuhiNya."
+          }
+        },
+        {
+          "ref": "25:63",
+          "text": {
+            "ar": "وَعِبَادُ ٱلرَّحْمَـٰنِ ٱلَّذِينَ يَمْشُونَ عَلَى ٱلْأَرْضِ هَوْنًا وَإِذَا خَاطَبَهُمُ ٱلْجَـٰهِلُونَ قَالُوا۟ سَلَـٰمًا",
+            "id": "Dan hamba-hamba Tuhan yang Maha Penyayang itu (ialah) orang-orang yang berjalan di atas bumi dengan rendah hati dan apabila orang-orang jahil menyapa mereka, mereka mengucapkan kata-kata (yang mengandung) keselamatan.",
+            "en": "And the servants of the Most Merciful are those who walk upon the earth easily, and when the ignorant address them [harshly], they say [words of] peace,",
+            "ms": "Dan hamba-hamba (Allah) Ar-Rahman (yang diredhaiNya), ialah mereka yang berjalan di bumi dengan sopan santun, dan apabila orang-orang yang berkelakuan kurang adab, hadapkan kata-kata kepada mereka, mereka menjawab dengan perkataan yang selamat dari perkara yang tidak diingini;"
+          }
+        },
+        {
+          "ref": "31:18",
+          "text": {
+            "ar": "وَلَا تُصَعِّرْ خَدَّكَ لِلنَّاسِ وَلَا تَمْشِ فِى ٱلْأَرْضِ مَرَحًا ۖ إِنَّ ٱللَّهَ لَا يُحِبُّ كُلَّ مُخْتَالٍ فَخُورٍ",
+            "id": "Dan janganlah kamu memalingkan mukamu dari manusia (karena sombong) dan janganlah kamu berjalan di muka bumi dengan angkuh. Sesungguhnya Allah tidak menyukai orang-orang yang sombong lagi membanggakan diri.",
+            "en": "And do not turn your cheek [in contempt] toward people and do not walk through the earth exultantly. Indeed, Allah does not like everyone self-deluded and boastful.",
+            "ms": "\"Dan janganlah engkau memalingkan mukamu (kerana memandang rendah) kepada manusia, dan janganlah engkau berjalan di bumi dengan berlagak sombong; sesungguhnya Allah tidak suka kepada tiap-tiap orang yang sombong takbur, lagi membanggakan diri."
+          }
+        },
+        {
+          "ref": "2:263",
+          "text": {
+            "ar": "۞ قَوْلٌ مَّعْرُوفٌ وَمَغْفِرَةٌ خَيْرٌ مِّن صَدَقَةٍ يَتْبَعُهَآ أَذًى ۗ وَٱللَّهُ غَنِىٌّ حَلِيمٌ",
+            "id": "Perkataan yang baik dan pemberian maaf lebih baik dari sedekah yang diiringi dengan sesuatu yang menyakitkan (perasaan si penerima). Allah Maha Kaya lagi Maha Penyantun.",
+            "en": "Kind speech and forgiveness are better than charity followed by injury. And Allah is Free of need and Forbearing.",
+            "ms": "(Menolak peminta-peminta sedekah) dengan perkataan yang baik dan memaafkan (kesilapan mereka) adalah lebih baik daripada sedekah (pemberian) yang diiringi (dengan perbuatan atau perkataan yang) menyakitkan hati. Dan (ingatlah), Allah Maha Kaya, lagi Maha Penyabar."
+          }
+        }
+      ]
+    },
+    {
+      "id": "justice",
+      "why": {
+        "id": "Tentang kejujuran dan keadilan, meski terasa berat.",
+        "en": "On honesty and justice, even when they are hard.",
+        "ms": "Tentang kejujuran dan keadilan, walaupun terasa berat.",
+        "ar": "عن الصدق والعدل ولو شقّا."
+      },
+      "ayahs": [
+        {
+          "ref": "4:135",
+          "text": {
+            "ar": "۞ يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ كُونُوا۟ قَوَّٰمِينَ بِٱلْقِسْطِ شُهَدَآءَ لِلَّهِ وَلَوْ عَلَىٰٓ أَنفُسِكُمْ أَوِ ٱلْوَٰلِدَيْنِ وَٱلْأَقْرَبِينَ ۚ إِن يَكُنْ غَنِيًّا أَوْ فَقِيرًا فَٱللَّهُ أَوْلَىٰ بِهِمَا ۖ فَلَا تَتَّبِعُوا۟ ٱلْهَوَىٰٓ أَن تَعْدِلُوا۟ ۚ وَإِن تَلْوُۥٓا۟ أَوْ تُعْرِضُوا۟ فَإِنَّ ٱللَّهَ كَانَ بِمَا تَعْمَلُونَ خَبِيرًا",
+            "id": "Wahai orang-orang yang beriman, jadilah kamu orang yang benar-benar penegak keadilan, menjadi saksi karena Allah biarpun terhadap dirimu sendiri atau ibu bapa dan kaum kerabatmu. Jika ia kaya ataupun miskin, maka Allah lebih tahu kemaslahatannya. Maka janganlah kamu mengikuti hawa nafsu karena ingin menyimpang dari kebenaran. Dan jika kamu memutar balikkan (kata-kata) atau enggan menjadi saksi, maka sesungguhnya Allah adalah Maha Mengetahui segala apa yang kamu kerjakan.",
+            "en": "O you who have believed, be persistently standing firm in justice, witnesses for Allah, even if it be against yourselves or parents and relatives. Whether one is rich or poor, Allah is more worthy of both. So follow not [personal] inclination, lest you not be just. And if you distort [your testimony] or refuse [to give it], then indeed Allah is ever, with what you do, Acquainted.",
+            "ms": "Wahai orang-orang yang beriman! Hendaklah kamu menjadi orang-orang yang sentiasa menegakkan keadilan, lagi menjadi saksi (yang menerangkan kebenaran) kerana Allah, sekalipun terhadap diri kamu sendiri, atau ibu bapa dan kaum kerabat kamu. Kalaulah orang (yang didakwa) itu kaya atau miskin (maka janganlah kamu terhalang daripada menjadi saksi yang memperkatakan kebenaran disebabkan kamu bertimbang rasa), kerana Allah lebih bertimbang rasa kepada keduanya. Oleh itu, janganlah kamu turutkan hawa nafsu supaya kamu tidak menyeleweng dari keadilan. Dan jika kamu memutar-balikkan keterangan ataupun enggan (daripada menjadi saksi), maka sesungguhnya Allah sentiasa Mengetahui dengan mendalam akan apa yang kamu lakukan."
+          }
+        },
+        {
+          "ref": "5:8",
+          "text": {
+            "ar": "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ كُونُوا۟ قَوَّٰمِينَ لِلَّهِ شُهَدَآءَ بِٱلْقِسْطِ ۖ وَلَا يَجْرِمَنَّكُمْ شَنَـَٔانُ قَوْمٍ عَلَىٰٓ أَلَّا تَعْدِلُوا۟ ۚ ٱعْدِلُوا۟ هُوَ أَقْرَبُ لِلتَّقْوَىٰ ۖ وَٱتَّقُوا۟ ٱللَّهَ ۚ إِنَّ ٱللَّهَ خَبِيرٌۢ بِمَا تَعْمَلُونَ",
+            "id": "Hai orang-orang yang beriman hendaklah kamu jadi orang-orang yang selalu menegakkan (kebenaran) karena Allah, menjadi saksi dengan adil. Dan janganlah sekali-kali kebencianmu terhadap sesuatu kaum, mendorong kamu untuk berlaku tidak adil. Berlaku adillah, karena adil itu lebih dekat kepada takwa. Dan bertakwalah kepada Allah, sesungguhnya Allah Maha Mengetahui apa yang kamu kerjakan.",
+            "en": "O you who have believed, be persistently standing firm for Allah, witnesses in justice, and do not let the hatred of a people prevent you from being just. Be just; that is nearer to righteousness. And fear Allah; indeed, Allah is Acquainted with what you do.",
+            "ms": "Wahai orang-orang yang beriman, hendaklah kamu semua sentiasa menjadi orang-orang yang menegakkan keadilan kerana Allah, lagi menerangkan kebenaran; dan jangan sekali-kali kebencian kamu terhadap sesuatu kaum itu mendorong kamu kepada tidak melakukan keadilan. Hendaklah kamu berlaku adil (kepada sesiapa jua) kerana sikap adil itu lebih hampir kepada taqwa. Dan bertaqwalah kepada Allah, sesungguhnya Allah Maha Mengetahui dengan mendalam akan apa yang kamu lakukan."
+          }
+        },
+        {
+          "ref": "9:119",
+          "text": {
+            "ar": "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ ٱتَّقُوا۟ ٱللَّهَ وَكُونُوا۟ مَعَ ٱلصَّـٰدِقِينَ",
+            "id": "Hai orang-orang yang beriman bertakwalah kepada Allah, dan hendaklah kamu bersama orang-orang yang benar.",
+            "en": "O you who have believed, fear Allah and be with those who are true.",
+            "ms": "Wahai orang-orang yang beriman! Bertaqwalah kamu kepada Allah, dan hendaklah kamu berada bersama-sama orang-orang yang benar."
+          }
+        },
+        {
+          "ref": "33:70",
+          "text": {
+            "ar": "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ ٱتَّقُوا۟ ٱللَّهَ وَقُولُوا۟ قَوْلًا سَدِيدًا",
+            "id": "Hai orang-orang yang beriman, bertakwalah kamu kepada Allah dan katakanlah perkataan yang benar,",
+            "en": "O you who have believed, fear Allah and speak words of appropriate justice.",
+            "ms": "Wahai orang-orang yang beriman, bertaqwalah kepada Allah, dan katakanlah perkataan yang tepat - benar (dalam segala perkara),"
+          }
+        },
+        {
+          "ref": "17:35",
+          "text": {
+            "ar": "وَأَوْفُوا۟ ٱلْكَيْلَ إِذَا كِلْتُمْ وَزِنُوا۟ بِٱلْقِسْطَاسِ ٱلْمُسْتَقِيمِ ۚ ذَٰلِكَ خَيْرٌ وَأَحْسَنُ تَأْوِيلًا",
+            "id": "Dan sempurnakanlah takaran apabila kamu menakar, dan timbanglah dengan neraca yang benar. Itulah yang lebih utama (bagimu) dan lebih baik akibatnya.",
+            "en": "And give full measure when you measure, and weigh with an even balance. That is the best [way] and best in result.",
+            "ms": "Dan sempurnakanlah sukatan apabila kamu menyukat, dan timbanglah dengan timbangan yang adil. Yang demikian itu baik (kesannya bagi kamu di dunia) dan sebaik baik kesudahan (yang mendatangkan pahala di akhirat kelak)."
+          }
+        },
+        {
+          "ref": "4:58",
+          "text": {
+            "ar": "۞ إِنَّ ٱللَّهَ يَأْمُرُكُمْ أَن تُؤَدُّوا۟ ٱلْأَمَـٰنَـٰتِ إِلَىٰٓ أَهْلِهَا وَإِذَا حَكَمْتُم بَيْنَ ٱلنَّاسِ أَن تَحْكُمُوا۟ بِٱلْعَدْلِ ۚ إِنَّ ٱللَّهَ نِعِمَّا يَعِظُكُم بِهِۦٓ ۗ إِنَّ ٱللَّهَ كَانَ سَمِيعًۢا بَصِيرًا",
+            "id": "Sesungguhnya Allah menyuruh kamu menyampaikan amanat kepada yang berhak menerimanya, dan (menyuruh kamu) apabila menetapkan hukum di antara manusia supaya kamu menetapkan dengan adil. Sesungguhnya Allah memberi pengajaran yang sebaik-baiknya kepadamu. Sesungguhnya Allah adalah Maha Mendengar lagi Maha Melihat.",
+            "en": "Indeed, Allah commands you to render trusts to whom they are due and when you judge between people to judge with justice. Excellent is that which Allah instructs you. Indeed, Allah is ever Hearing and Seeing.",
+            "ms": "Sesungguhnya Allah menyuruh kamu supaya menyerahkan segala jenis amanah kepada ahlinya (yang berhak menerimanya), dan apabila kamu menjalankan hukum di antara manusia, (Allah menyuruh) kamu menghukum dengan adil. Sesungguhnya Allah dengan (suruhanNya) itu memberi pengajaran yang sebaik-baiknya kepada kamu. Sesungguhnya Allah sentiasa Mendengar, lagi sentiasa Melihat."
+          }
+        }
+      ]
+    },
+    {
+      "id": "charity",
+      "why": {
+        "id": "Tentang sedekah, sekecil apa pun, karena Allah.",
+        "en": "On giving, however little, for Allah's sake.",
+        "ms": "Tentang sedekah, walau sekecil mana, kerana Allah.",
+        "ar": "عن الإنفاق في سبيل الله ولو قليلًا."
+      },
+      "ayahs": [
+        {
+          "ref": "2:261",
+          "text": {
+            "ar": "مَّثَلُ ٱلَّذِينَ يُنفِقُونَ أَمْوَٰلَهُمْ فِى سَبِيلِ ٱللَّهِ كَمَثَلِ حَبَّةٍ أَنۢبَتَتْ سَبْعَ سَنَابِلَ فِى كُلِّ سُنۢبُلَةٍ مِّا۟ئَةُ حَبَّةٍ ۗ وَٱللَّهُ يُضَـٰعِفُ لِمَن يَشَآءُ ۗ وَٱللَّهُ وَٰسِعٌ عَلِيمٌ",
+            "id": "Perumpamaan (nafkah yang dikeluarkan oleh) orang-orang yang menafkahkan hartanya di jalan Allah adalah serupa dengan sebutir benih yang menumbuhkan tujuh bulir, pada tiap-tiap bulir seratus biji. Allah melipat gandakan (ganjaran) bagi siapa yang Dia kehendaki. Dan Allah Maha Luas (karunia-Nya) lagi Maha Mengetahui.",
+            "en": "The example of those who spend their wealth in the way of Allah is like a seed [of grain] which grows seven spikes; in each spike is a hundred grains. And Allah multiplies [His reward] for whom He wills. And Allah is all-Encompassing and Knowing.",
+            "ms": "Bandingan (derma) orang-orang yang membelanjakan hartanya pada jalan Allah, ialah sama seperti sebiji benih yang tumbuh menerbitkan tujuh tangkai; tiap-tiap tangkai itu pula mengandungi seratus biji. Dan (ingatlah), Allah akan melipatgandakan pahala bagi sesiapa yang dikehendakiNya, dan Allah Maha Luas (rahmat) kurniaNya, lagi Meliputi ilmu pengetahuanNya."
+          }
+        },
+        {
+          "ref": "3:92",
+          "text": {
+            "ar": "لَن تَنَالُوا۟ ٱلْبِرَّ حَتَّىٰ تُنفِقُوا۟ مِمَّا تُحِبُّونَ ۚ وَمَا تُنفِقُوا۟ مِن شَىْءٍ فَإِنَّ ٱللَّهَ بِهِۦ عَلِيمٌ",
+            "id": "Kamu sekali-kali tidak sampai kepada kebajikan (yang sempurna), sebelum kamu menafkahkan sehahagian harta yang kamu cintai. Dan apa saja yang kamu nafkahkan maka sesungguhnya Allah mengetahuinya.",
+            "en": "Never will you attain the good [reward] until you spend [in the way of Allah] from that which you love. And whatever you spend - indeed, Allah is Knowing of it.",
+            "ms": "Kamu tidak sekali-kali akan dapat mencapai (hakikat) kebajikan dan kebaktian (yang sempurna) sebelum kamu dermakan sebahagian dari apa yang kamu sayangi. Dan sesuatu apa jua yang kamu dermakan maka sesungguhnya Allah mengetahuinya."
+          }
+        },
+        {
+          "ref": "2:274",
+          "text": {
+            "ar": "ٱلَّذِينَ يُنفِقُونَ أَمْوَٰلَهُم بِٱلَّيْلِ وَٱلنَّهَارِ سِرًّا وَعَلَانِيَةً فَلَهُمْ أَجْرُهُمْ عِندَ رَبِّهِمْ وَلَا خَوْفٌ عَلَيْهِمْ وَلَا هُمْ يَحْزَنُونَ",
+            "id": "Orang-orang yang menafkahkan hartanya di malam dan di siang hari secara tersembunyi dan terang-terangan, maka mereka mendapat pahala di sisi Tuhannya. Tidak ada kekhawatiran terhadap mereka dan tidak (pula) mereka bersedih hati.",
+            "en": "Those who spend their wealth [in Allah 's way] by night and by day, secretly and publicly - they will have their reward with their Lord. And no fear will there be concerning them, nor will they grieve.",
+            "ms": "Orang-orang yang membelanjakan (mendermakan) hartanya pada waktu malam dan siang, dengan cara sulit atau terbuka, maka mereka beroleh pahala di sisi Tuhan mereka, dan tidak ada kebimbangan (dari berlakunya kejadian yang tidak baik) terhadap mereka, serta mereka pula tidak akan berdukacita."
+          }
+        },
+        {
+          "ref": "57:7",
+          "text": {
+            "ar": "ءَامِنُوا۟ بِٱللَّهِ وَرَسُولِهِۦ وَأَنفِقُوا۟ مِمَّا جَعَلَكُم مُّسْتَخْلَفِينَ فِيهِ ۖ فَٱلَّذِينَ ءَامَنُوا۟ مِنكُمْ وَأَنفَقُوا۟ لَهُمْ أَجْرٌ كَبِيرٌ",
+            "id": "Berimanlah kamu kepada Allah dan Rasul-Nya dan nafkahkanlah sebagian dari hartamu yang Allah telah menjadikan kamu menguasainya. Maka orang-orang yang beriman di antara kamu dan menafkahkan (sebagian) dari hartanya memperoleh pahala yang besar.",
+            "en": "Believe in Allah and His Messenger and spend out of that in which He has made you successors. For those who have believed among you and spent, there will be a great reward.",
+            "ms": "Berimanlah kamu kepada Allah dan RasulNya, dan belanjakanlah (pada jalan kebajikan) sebahagian dari harta benda (pemberian Allah) yang dijadikannya kamu menguasainya sebagai wakil. Maka orang-orang yang beriman di antara kamu serta mereka membelanjakan (sebahagian dari harta itu pada jalan Allah); mereka tetap beroleh pahala yang besar."
+          }
+        },
+        {
+          "ref": "64:16",
+          "text": {
+            "ar": "فَٱتَّقُوا۟ ٱللَّهَ مَا ٱسْتَطَعْتُمْ وَٱسْمَعُوا۟ وَأَطِيعُوا۟ وَأَنفِقُوا۟ خَيْرًا لِّأَنفُسِكُمْ ۗ وَمَن يُوقَ شُحَّ نَفْسِهِۦ فَأُو۟لَـٰٓئِكَ هُمُ ٱلْمُفْلِحُونَ",
+            "id": "Maka bertakwalah kamu kepada Allah menurut kesanggupanmu dan dengarlah serta taatlah dan nafkahkanlah nafkah yang baik untuk dirimu. Dan barangsiapa yang dipelihara dari kekikiran dirinya, maka mereka itulah orang-orang yang beruntung.",
+            "en": "So fear Allah as much as you are able and listen and obey and spend [in the way of Allah]; it is better for your selves. And whoever is protected from the stinginess of his soul - it is those who will be the successful.",
+            "ms": "Oleh itu bertaqwalah kamu kepada Allah sedaya supaya kamu; dan dengarlah (akan pengajaran-pengajaranNya) serta taatlah (akan perintah-perintahNya); dan belanjakanlah harta kamu (serta buatlah) kebajikan untuk diri kamu. Dan (ingatlah), sesiapa yang menjaga serta memelihara dirinya daripada dipengaruhi oleh tabiat bakhilnya, maka merekalah orang-orang yang berjaya."
+          }
+        },
+        {
+          "ref": "2:245",
+          "text": {
+            "ar": "مَّن ذَا ٱلَّذِى يُقْرِضُ ٱللَّهَ قَرْضًا حَسَنًا فَيُضَـٰعِفَهُۥ لَهُۥٓ أَضْعَافًا كَثِيرَةً ۚ وَٱللَّهُ يَقْبِضُ وَيَبْصُۜطُ وَإِلَيْهِ تُرْجَعُونَ",
+            "id": "Siapakah yang mau memberi pinjaman kepada Allah, pinjaman yang baik (menafkahkan hartanya di jalan Allah), maka Allah akan meperlipat gandakan pembayaran kepadanya dengan lipat ganda yang banyak. Dan Allah menyempitkan dan melapangkan (rezeki) dan kepada-Nya-lah kamu dikembalikan.",
+            "en": "Who is it that would loan Allah a goodly loan so He may multiply it for him many times over? And it is Allah who withholds and grants abundance, and to Him you will be returned.",
+            "ms": "Siapakah orangnya yang (mahu) memberikan pinjaman kepada Allah sebagai pinjaman yang baik (yang ikhlas) supaya Allah melipatgandakan balasannya dengan berganda-ganda banyaknya? Dan (ingatlah), Allah jualah Yang menyempit dan Yang meluaskan (pemberian rezeki) dan kepadaNyalah kamu semua dikembalikan."
+          }
+        },
+        {
+          "ref": "34:39",
+          "text": {
+            "ar": "قُلْ إِنَّ رَبِّى يَبْسُطُ ٱلرِّزْقَ لِمَن يَشَآءُ مِنْ عِبَادِهِۦ وَيَقْدِرُ لَهُۥ ۚ وَمَآ أَنفَقْتُم مِّن شَىْءٍ فَهُوَ يُخْلِفُهُۥ ۖ وَهُوَ خَيْرُ ٱلرَّٰزِقِينَ",
+            "id": "Katakanlah: \"Sesungguhnya Tuhanku melapangkan rezeki bagi siapa yang dikehendaki-Nya di antara hamba-hamba-Nya dan menyempitkan bagi (siapa yang dikehendaki-Nya)\". Dan barang apa saja yang kamu nafkahkan, maka Allah akan menggantinya dan Dialah Pemberi rezeki yang sebaik-baiknya.",
+            "en": "Say, \"Indeed, my Lord extends provision for whom He wills of His servants and restricts [it] for him. But whatever thing you spend [in His cause] - He will compensate it; and He is the best of providers.\"",
+            "ms": "Katakanlah (wahai Muhammad): \"Sesungguhnya Tuhanku memewahkan rezeki bagi sesiapa yang dikehendakiNya di antara hamba-hambaNya, dan Ia juga yang menyempitkan baginya; dan apa sahaja yang kamu dermakan maka Allah akan menggantikannya; dan Dia lah jua sebaik-baik Pemberi rezeki\"."
+          }
+        }
+      ]
+    },
+    {
+      "id": "knowledge",
+      "why": {
+        "id": "Tentang menuntut ilmu dan merenungkan Al-Qur'an.",
+        "en": "On seeking knowledge and reflecting on the Quran.",
+        "ms": "Tentang menuntut ilmu dan merenungi al-Quran.",
+        "ar": "عن طلب العلم وتدبّر القرآن."
+      },
+      "ayahs": [
+        {
+          "ref": "20:114",
+          "text": {
+            "ar": "فَتَعَـٰلَى ٱللَّهُ ٱلْمَلِكُ ٱلْحَقُّ ۗ وَلَا تَعْجَلْ بِٱلْقُرْءَانِ مِن قَبْلِ أَن يُقْضَىٰٓ إِلَيْكَ وَحْيُهُۥ ۖ وَقُل رَّبِّ زِدْنِى عِلْمًا",
+            "id": "Maka Maha Tinggi Allah Raja Yang sebenar-benarnya, dan janganlah kamu tergesa-gesa membaca Al qur'an sebelum disempurnakan mewahyukannya kepadamu, dan katakanlah: \"Ya Tuhanku, tambahkanlah kepadaku ilmu pengetahuan\".",
+            "en": "So high [above all] is Allah, the Sovereign, the Truth. And, [O Muhammad], do not hasten with [recitation of] the Qur'an before its revelation is completed to you, and say, \"My Lord, increase me in knowledge.\"",
+            "ms": "Maka Maha Tinggilah Allah, yang Menguasai seluruh alam, lagi Yang Benar (pada segala-galanya). Dan janganlah engkau (wahai Muhammad) tergesa-gesa membaca Al-Quran sebelum selesai dibacakan oleh Jibril kepadamu, dan berdoalah dengan berkata: \"Wahai Tuhanku, tambahilah ilmuku\"."
+          }
+        },
+        {
+          "ref": "39:9",
+          "text": {
+            "ar": "أَمَّنْ هُوَ قَـٰنِتٌ ءَانَآءَ ٱلَّيْلِ سَاجِدًا وَقَآئِمًا يَحْذَرُ ٱلْـَٔاخِرَةَ وَيَرْجُوا۟ رَحْمَةَ رَبِّهِۦ ۗ قُلْ هَلْ يَسْتَوِى ٱلَّذِينَ يَعْلَمُونَ وَٱلَّذِينَ لَا يَعْلَمُونَ ۗ إِنَّمَا يَتَذَكَّرُ أُو۟لُوا۟ ٱلْأَلْبَـٰبِ",
+            "id": "(Apakah kamu hai orang musyrik yang lebih beruntung) ataukah orang yang beribadat di waktu-waktu malam dengan sujud dan berdiri, sedang ia takut kepada (azab) akhirat dan mengharapkan rahmat Tuhannya? Katakanlah: \"Adakah sama orang-orang yang mengetahui dengan orang-orang yang tidak mengetahui?\" Sesungguhnya orang yang berakallah yang dapat menerima pelajaran.",
+            "en": "Is one who is devoutly obedient during periods of the night, prostrating and standing [in prayer], fearing the Hereafter and hoping for the mercy of his Lord, [like one who does not]? Say, \"Are those who know equal to those who do not know?\" Only they will remember [who are] people of understanding.",
+            "ms": "\"(Engkaukah yang lebih baik) atau orang yang taat mengerjakan ibadat pada waktu malam dengan sujud dan berdiri sambil takutkan (azab) hari akhirat serta mengharapkan rahmat Tuhannya? \"Katakanlah lagi (kepadanya): \"Adakah sama orang-orang yang mengetahui dengan orang-orang yang tidak mengetahui?\" Sesungguhnya orang-orang yang dapat mengambil pelajaran dan peringatan hanyalah orang-orang yang berakal sempurna."
+          }
+        },
+        {
+          "ref": "58:11",
+          "text": {
+            "ar": "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوٓا۟ إِذَا قِيلَ لَكُمْ تَفَسَّحُوا۟ فِى ٱلْمَجَـٰلِسِ فَٱفْسَحُوا۟ يَفْسَحِ ٱللَّهُ لَكُمْ ۖ وَإِذَا قِيلَ ٱنشُزُوا۟ فَٱنشُزُوا۟ يَرْفَعِ ٱللَّهُ ٱلَّذِينَ ءَامَنُوا۟ مِنكُمْ وَٱلَّذِينَ أُوتُوا۟ ٱلْعِلْمَ دَرَجَـٰتٍ ۚ وَٱللَّهُ بِمَا تَعْمَلُونَ خَبِيرٌ",
+            "id": "Hai orang-orang beriman apabila dikatakan kepadamu: \"Berlapang-lapanglah dalam majlis\", maka lapangkanlah niscaya Allah akan memberi kelapangan untukmu. Dan apabila dikatakan: \"Berdirilah kamu\", maka berdirilah, niscaya Allah akan meninggikan orang-orang yang beriman di antaramu dan orang-orang yang diberi ilmu pengetahuan beberapa derajat. Dan Allah Maha Mengetahui apa yang kamu kerjakan.",
+            "en": "O you who have believed, when you are told, \"Space yourselves\" in assemblies, then make space; Allah will make space for you. And when you are told, \"Arise,\" then arise; Allah will raise those who have believed among you and those who were given knowledge, by degrees. And Allah is Acquainted with what you do.",
+            "ms": "Wahai orang-orang yang beriman! Apabila diminta kepada kamu memberi lapang dari tempat duduk kamu (untuk orang lain) maka lapangkanlah seboleh-bolehnya supaya Allah melapangkan (segala halnya) untuk kamu. Dan apabila diminta kamu bangun maka bangunlah, supaya Allah meninggikan darjat orang-orang yang beriman di antara kamu, dan orang-orang yang diberi ilmu pengetahuan ugama (dari kalangan kamu) - beberapa darjat. Dan (ingatlah), Allah Maha Mendalam PengetahuanNya tentang apa yang kamu lakukan."
+          }
+        },
+        {
+          "ref": "38:29",
+          "text": {
+            "ar": "كِتَـٰبٌ أَنزَلْنَـٰهُ إِلَيْكَ مُبَـٰرَكٌ لِّيَدَّبَّرُوٓا۟ ءَايَـٰتِهِۦ وَلِيَتَذَكَّرَ أُو۟لُوا۟ ٱلْأَلْبَـٰبِ",
+            "id": "Ini adalah sebuah kitab yang Kami turunkan kepadamu penuh dengan berkah supaya mereka memperhatikan ayat-ayatnya dan supaya mendapat pelajaran orang-orang yang mempunyai fikiran.",
+            "en": "[This is] a blessed Book which We have revealed to you, [O Muhammad], that they might reflect upon its verses and that those of understanding would be reminded.",
+            "ms": "(Al-Quran ini) sebuah Kitab yang Kami turunkan kepadamu (dan umatmu wahai Muhammad), -Kitab yang banyak faedah-faedah dan manfaatnya, untuk mereka memahami dengan teliti kandungan ayat-ayatnya, dan untuk orang-orang yang berakal sempurna beringat mengambil iktibar."
+          }
+        },
+        {
+          "ref": "47:24",
+          "text": {
+            "ar": "أَفَلَا يَتَدَبَّرُونَ ٱلْقُرْءَانَ أَمْ عَلَىٰ قُلُوبٍ أَقْفَالُهَآ",
+            "id": "Maka apakah mereka tidak memperhatikan Al Quran ataukah hati mereka terkunci?",
+            "en": "Then do they not reflect upon the Qur'an, or are there locks upon [their] hearts?",
+            "ms": "(Setelah diterangkan yang demikian) maka adakah mereka sengaja tidak berusaha memahami serta memikirkan isi Al-Quran? Atau telah ada di atas hati mereka kunci penutup (yang menghalangnya daripada menerima ajaran Al-Quran)?"
+          }
+        },
+        {
+          "ref": "2:269",
+          "text": {
+            "ar": "يُؤْتِى ٱلْحِكْمَةَ مَن يَشَآءُ ۚ وَمَن يُؤْتَ ٱلْحِكْمَةَ فَقَدْ أُوتِىَ خَيْرًا كَثِيرًا ۗ وَمَا يَذَّكَّرُ إِلَّآ أُو۟لُوا۟ ٱلْأَلْبَـٰبِ",
+            "id": "Allah menganugerahkan al hikmah (kefahaman yang dalam tentang Al Quran dan As Sunnah) kepada siapa yang dikehendaki-Nya. Dan barangsiapa yang dianugerahi hikmah, ia benar-benar telah dianugerahi karunia yang banyak. Dan hanya orang-orang yang berakallah yang dapat mengambil pelajaran (dari firman Allah).",
+            "en": "He gives wisdom to whom He wills, and whoever has been given wisdom has certainly been given much good. And none will remember except those of understanding.",
+            "ms": "Allah memberikan Hikmat kebijaksanaan (ilmu yang berguna) kepada sesiapa yang dikehendakiNya (menurut aturan yang ditentukanNya). Dan sesiapa yang diberikan hikmat itu maka sesungguhnya ia telah diberikan kebaikan yang banyak. Dan tiadalah yang dapat mengambil pengajaran (dan peringatan) melainkan orang-orang yang menggunakan akal fikirannya."
+          }
+        },
+        {
+          "ref": "35:28",
+          "text": {
+            "ar": "وَمِنَ ٱلنَّاسِ وَٱلدَّوَآبِّ وَٱلْأَنْعَـٰمِ مُخْتَلِفٌ أَلْوَٰنُهُۥ كَذَٰلِكَ ۗ إِنَّمَا يَخْشَى ٱللَّهَ مِنْ عِبَادِهِ ٱلْعُلَمَـٰٓؤُا۟ ۗ إِنَّ ٱللَّهَ عَزِيزٌ غَفُورٌ",
+            "id": "Dan demikian (pula) di antara manusia, binatang-binatang melata dan binatang-binatang ternak ada yang bermacam-macam warnanya (dan jenisnya). Sesungguhnya yang takut kepada Allah di antara hamba-hamba-Nya, hanyalah ulama. Sesungguhnya Allah Maha Perkasa lagi Maha Pengampun.",
+            "en": "And among people and moving creatures and grazing livestock are various colors similarly. Only those fear Allah, from among His servants, who have knowledge. Indeed, Allah is Exalted in Might and Forgiving.",
+            "ms": "Dan demikian pula di antara manusia dan binatang-binatang yang melata serta binatang-binatang ternak, ada yang berlainan jenis dan warnanya? Sebenarnya yang menaruh bimbang dan takut (melanggar perintah) Allah dari kalangan hamba-hambaNya hanyalah orang-orang yang berilmu. Sesungguhnya Allah Maha Kuasa, lagi Maha Pengampun."
+          }
+        }
+      ]
+    },
+    {
+      "id": "signs",
+      "why": {
+        "id": "Tentang tanda-tanda kebesaran Allah di alam semesta.",
+        "en": "On the signs of Allah in His creation.",
+        "ms": "Tentang tanda-tanda kebesaran Allah pada ciptaan-Nya.",
+        "ar": "عن آيات الله في خلقه."
+      },
+      "ayahs": [
+        {
+          "ref": "3:190",
+          "text": {
+            "ar": "إِنَّ فِى خَلْقِ ٱلسَّمَـٰوَٰتِ وَٱلْأَرْضِ وَٱخْتِلَـٰفِ ٱلَّيْلِ وَٱلنَّهَارِ لَـَٔايَـٰتٍ لِّأُو۟لِى ٱلْأَلْبَـٰبِ",
+            "id": "Sesungguhnya dalam penciptaan langit dan bumi, dan silih bergantinya malam dan siang terdapat tanda-tanda bagi orang-orang yang berakal,",
+            "en": "Indeed, in the creation of the heavens and the earth and the alternation of the night and the day are signs for those of understanding.",
+            "ms": "Sesungguhnya pada kejadian langit dan bumi, dan pada pertukaran malam dan siang, ada tanda-tanda (kekuasaan, kebijaksanaan, dan keluasan rahmat Allah) bagi orang-orang yang berakal;"
+          }
+        },
+        {
+          "ref": "30:22",
+          "text": {
+            "ar": "وَمِنْ ءَايَـٰتِهِۦ خَلْقُ ٱلسَّمَـٰوَٰتِ وَٱلْأَرْضِ وَٱخْتِلَـٰفُ أَلْسِنَتِكُمْ وَأَلْوَٰنِكُمْ ۚ إِنَّ فِى ذَٰلِكَ لَـَٔايَـٰتٍ لِّلْعَـٰلِمِينَ",
+            "id": "Dan di antara tanda-tanda kekuasaan-Nya ialah menciptakan langit dan bumi dan berlain-lainan bahasamu dan warna kulitmu. Sesungguhnya pada yang demikan itu benar-benar terdapat tanda-tanda bagi orang-orang yang mengetahui.",
+            "en": "And of His signs is the creation of the heavens and the earth and the diversity of your languages and your colors. Indeed in that are signs for those of knowledge.",
+            "ms": "Dan di antara tanda-tanda yang membuktikan kekuasaanNya dan kebijaksanaanNya ialah kejadian langit dan bumi, dan perbezaan bahasa kamu dan warna kulit kamu. Sesungguhnya yang demikian itu mengandungi keterangan-keterangan bagi orang-orang yang berpengetahuan."
+          }
+        },
+        {
+          "ref": "41:53",
+          "text": {
+            "ar": "سَنُرِيهِمْ ءَايَـٰتِنَا فِى ٱلْـَٔافَاقِ وَفِىٓ أَنفُسِهِمْ حَتَّىٰ يَتَبَيَّنَ لَهُمْ أَنَّهُ ٱلْحَقُّ ۗ أَوَلَمْ يَكْفِ بِرَبِّكَ أَنَّهُۥ عَلَىٰ كُلِّ شَىْءٍ شَهِيدٌ",
+            "id": "Kami akan memperlihatkan kepada mereka tanda-tanda (kekuasaan) Kami di segala wilayah bumi dan pada diri mereka sendiri, hingga jelas bagi mereka bahwa Al Quran itu adalah benar. Tiadakah cukup bahwa sesungguhnya Tuhanmu menjadi saksi atas segala sesuatu?",
+            "en": "We will show them Our signs in the horizons and within themselves until it becomes clear to them that it is the truth. But is it not sufficient concerning your Lord that He is, over all things, a Witness?",
+            "ms": "Kami akan perlihatkan kepada mereka tanda-tanda kekuasaan Kami di merata-rata tempat (dalam alam yang terbentang luas ini) dan pada diri mereka sendiri, sehingga ternyata jelas kepada mereka bahawa Al-Quran adalah benar. Belumkah ternyata kepada mereka kebenaran itu dan belumkah cukup (bagi mereka) bahawa Tuhanmu mengetahui dan menyaksikan tiap-tiap sesuatu?"
+          }
+        },
+        {
+          "ref": "67:3",
+          "text": {
+            "ar": "ٱلَّذِى خَلَقَ سَبْعَ سَمَـٰوَٰتٍ طِبَاقًا ۖ مَّا تَرَىٰ فِى خَلْقِ ٱلرَّحْمَـٰنِ مِن تَفَـٰوُتٍ ۖ فَٱرْجِعِ ٱلْبَصَرَ هَلْ تَرَىٰ مِن فُطُورٍ",
+            "id": "Yang telah menciptakan tujuh langit berlapis-lapis. Kamu sekali-kali tidak melihat pada ciptaan Tuhan Yang Maha Pemurah sesuatu yang tidak seimbang. Maka lihatlah berulang-ulang, adakah kamu lihat sesuatu yang tidak seimbang?",
+            "en": "[And] who created seven heavens in layers. You do not see in the creation of the Most Merciful any inconsistency. So return [your] vision [to the sky]; do you see any breaks?",
+            "ms": "Dia lah yang telah mengaturkan kejadian tujuh petala langit yang berlapis-lapis; engkau tidak dapat melihat pada ciptaan Allah Yang Maha Pemurah itu sebarang keadaan yang tidak seimbang dan tidak munasabah; (jika engkau ragu-ragu) maka ulangilah pandangan - (mu) - dapatkah engkau melihat sebarang kecacatan?"
+          }
+        },
+        {
+          "ref": "21:30",
+          "text": {
+            "ar": "أَوَلَمْ يَرَ ٱلَّذِينَ كَفَرُوٓا۟ أَنَّ ٱلسَّمَـٰوَٰتِ وَٱلْأَرْضَ كَانَتَا رَتْقًا فَفَتَقْنَـٰهُمَا ۖ وَجَعَلْنَا مِنَ ٱلْمَآءِ كُلَّ شَىْءٍ حَىٍّ ۖ أَفَلَا يُؤْمِنُونَ",
+            "id": "Dan apakah orang-orang yang kafir tidak mengetahui bahwasanya langit dan bumi itu keduanya dahulu adalah suatu yang padu, kemudian Kami pisahkan antara keduanya. Dan dari air Kami jadikan segala sesuatu yang hidup. Maka mengapakah mereka tiada juga beriman?",
+            "en": "Have those who disbelieved not considered that the heavens and the earth were a joined entity, and We separated them and made from water every living thing? Then will they not believe?",
+            "ms": "Dan tidakkah orang-orang kafir itu memikirkan dan mempercayai bahawa sesungguhnya langit dan bumi itu pada asal mulanya bercantum (sebagai benda yang satu), lalu Kami pisahkan antara keduanya? Dan Kami jadikan dari air, tiap-tiap benda yang hidup? Maka mengapa mereka tidak mahu beriman?"
+          }
+        },
+        {
+          "ref": "6:59",
+          "text": {
+            "ar": "۞ وَعِندَهُۥ مَفَاتِحُ ٱلْغَيْبِ لَا يَعْلَمُهَآ إِلَّا هُوَ ۚ وَيَعْلَمُ مَا فِى ٱلْبَرِّ وَٱلْبَحْرِ ۚ وَمَا تَسْقُطُ مِن وَرَقَةٍ إِلَّا يَعْلَمُهَا وَلَا حَبَّةٍ فِى ظُلُمَـٰتِ ٱلْأَرْضِ وَلَا رَطْبٍ وَلَا يَابِسٍ إِلَّا فِى كِتَـٰبٍ مُّبِينٍ",
+            "id": "Dan pada sisi Allah-lah kunci-kunci semua yang ghaib; tidak ada yang mengetahuinya kecuali Dia sendiri, dan Dia mengetahui apa yang di daratan dan di lautan, dan tiada sehelai daun pun yang gugur melainkan Dia mengetahuinya (pula), dan tidak jatuh sebutir biji-pun dalam kegelapan bumi, dan tidak sesuatu yang basah atau yang kering, melainkan tertulis dalam kitab yang nyata (Lauh Mahfudz)\"",
+            "en": "And with Him are the keys of the unseen; none knows them except Him. And He knows what is on the land and in the sea. Not a leaf falls but that He knows it. And no grain is there within the darknesses of the earth and no moist or dry [thing] but that it is [written] in a clear record.",
+            "ms": "Dan pada sisi Allah jualah anak kunci perbendaharaan segala yang ghaib, tiada sesiapa yang mengetahuinya melainkan Dia lah sahaja; dan Ia mengetahui apa yang ada di darat dan di laut; dan tidak gugur sehelai daun pun melainkan Ia mengetahuinya, dan tidak gugur sebutir bijipun dalam kegelapan bumi dan tidak gugur yang basah dan yang kering, melainkan (semuanya) ada tertulis di dalam kitab (Lauh Mahfuz) yang terang nyata."
+          }
+        },
+        {
+          "ref": "36:40",
+          "text": {
+            "ar": "لَا ٱلشَّمْسُ يَنۢبَغِى لَهَآ أَن تُدْرِكَ ٱلْقَمَرَ وَلَا ٱلَّيْلُ سَابِقُ ٱلنَّهَارِ ۚ وَكُلٌّ فِى فَلَكٍ يَسْبَحُونَ",
+            "id": "Tidaklah mungkin bagi matahari mendapatkan bulan dan malampun tidak dapat mendahului siang. Dan masing-masing beredar pada garis edarnya.",
+            "en": "It is not allowable for the sun to reach the moon, nor does the night overtake the day, but each, in an orbit, is swimming.",
+            "ms": "(Dengan ketentuan yang demikian), matahari tidak mudah baginya mengejar bulan, dan malam pula tidak dapat mendahului siang; kerana tiap-tiap satunya beredar terapung-apung di tempat edarannya masing-masing."
+          }
+        }
+      ]
+    },
+    {
+      "id": "hereafter",
+      "why": {
+        "id": "Tentang akhirat, untuk menimbang apa yang kita lakukan hari ini.",
+        "en": "On the Hereafter, to weigh what we spend today on.",
+        "ms": "Tentang akhirat, untuk menimbang apa yang kita lakukan hari ini.",
+        "ar": "عن الآخرة، لنزن ما نقضي فيه يومنا."
+      },
+      "ayahs": [
+        {
+          "ref": "3:185",
+          "text": {
+            "ar": "كُلُّ نَفْسٍ ذَآئِقَةُ ٱلْمَوْتِ ۗ وَإِنَّمَا تُوَفَّوْنَ أُجُورَكُمْ يَوْمَ ٱلْقِيَـٰمَةِ ۖ فَمَن زُحْزِحَ عَنِ ٱلنَّارِ وَأُدْخِلَ ٱلْجَنَّةَ فَقَدْ فَازَ ۗ وَمَا ٱلْحَيَوٰةُ ٱلدُّنْيَآ إِلَّا مَتَـٰعُ ٱلْغُرُورِ",
+            "id": "Tiap-tiap yang berjiwa akan merasakan mati. Dan sesungguhnya pada hari kiamat sajalah disempurnakan pahalamu. Barangsiapa dijauhkan dari neraka dan dimasukkan ke dalam surga, maka sungguh ia telah beruntung. Kehidupan dunia itu tidak lain hanyalah kesenangan yang memperdayakan.",
+            "en": "Every soul will taste death, and you will only be given your [full] compensation on the Day of Resurrection. So he who is drawn away from the Fire and admitted to Paradise has attained [his desire]. And what is the life of this world except the enjoyment of delusion.",
+            "ms": "Tiap-tiap yang bernyawa akan merasai mati, dan bahawasanya pada hari kiamat sahajalah akan disempurnakan balasan kamu. Ketika itu sesiapa yang dijauhkan dari neraka dan dimasukkan ke syurga maka sesungguhnya ia telah berjaya. Dan (ingatlah bahawa) kehidupan di dunia ini (meliputi segala kemewahannya dan pangkat kebesarannya) tidak lain hanyalah kesenangan bagi orang-orang yang terpedaya."
+          }
+        },
+        {
+          "ref": "99:7",
+          "text": {
+            "ar": "فَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ خَيْرًا يَرَهُۥ",
+            "id": "Barangsiapa yang mengerjakan kebaikan seberat dzarrahpun, niscaya dia akan melihat (balasan)nya.",
+            "en": "So whoever does an atom's weight of good will see it,",
+            "ms": "Maka sesiapa berbuat kebajikan seberat zarah, nescaya akan dilihatnya (dalam surat amalnya)!"
+          }
+        },
+        {
+          "ref": "29:57",
+          "text": {
+            "ar": "كُلُّ نَفْسٍ ذَآئِقَةُ ٱلْمَوْتِ ۖ ثُمَّ إِلَيْنَا تُرْجَعُونَ",
+            "id": "Tiap-tiap yang berjiwa akan merasakan mati. Kemudian hanyalah kepada Kami kamu dikembalikan.",
+            "en": "Every soul will taste death. Then to Us will you be returned.",
+            "ms": "Tiap-tiap diri (sudah tetap) akan merasai mati, kemudian kamu akan dikembalikan kepada Kami (untuk menerima balasan)."
+          }
+        },
+        {
+          "ref": "99:8",
+          "text": {
+            "ar": "وَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ شَرًّا يَرَهُۥ",
+            "id": "Dan barangsiapa yang mengerjakan kejahatan sebesar dzarrahpun, niscaya dia akan melihat (balasan)nya pula.",
+            "en": "And whoever does an atom's weight of evil will see it.",
+            "ms": "Dan sesiapa berbuat kejahatan seberat zarah, nescaya akan dilihatnya (dalam surat amalnya)!"
+          }
+        },
+        {
+          "ref": "87:17",
+          "text": {
+            "ar": "وَٱلْـَٔاخِرَةُ خَيْرٌ وَأَبْقَىٰٓ",
+            "id": "Sedang kehidupan akhirat adalah lebih baik dan lebih kekal.",
+            "en": "While the Hereafter is better and more enduring.",
+            "ms": "Padahal kehidupan akhirat lebih baik dan lebih kekal."
+          }
+        },
+        {
+          "ref": "93:4",
+          "text": {
+            "ar": "وَلَلْـَٔاخِرَةُ خَيْرٌ لَّكَ مِنَ ٱلْأُولَىٰ",
+            "id": "Dan sesungguhnya hari kemudian itu lebih baik bagimu daripada yang sekarang (permulaan).",
+            "en": "And the Hereafter is better for you than the first [life].",
+            "ms": "Dan sesungguhnya kesudahan keaadaanmu adalah lebih baik bagimu daripada permulaannya."
+          }
+        },
+        {
+          "ref": "2:281",
+          "text": {
+            "ar": "وَٱتَّقُوا۟ يَوْمًا تُرْجَعُونَ فِيهِ إِلَى ٱللَّهِ ۖ ثُمَّ تُوَفَّىٰ كُلُّ نَفْسٍ مَّا كَسَبَتْ وَهُمْ لَا يُظْلَمُونَ",
+            "id": "Dan peliharalah dirimu dari (azab yang terjadi pada) hari yang pada waktu itu kamu semua dikembalikan kepada Allah. Kemudian masing-masing diri diberi balasan yang sempurna terhadap apa yang telah dikerjakannya, sedang mereka sedikitpun tidak dianiaya (dirugikan).",
+            "en": "And fear a Day when you will be returned to Allah. Then every soul will be compensated for what it earned, and they will not be treated unjustly.",
+            "ms": "Dan peliharalah diri kamu dari huru-hara hari (kiamat) yang padanya kamu akan dikembalikan kepada Allah. Kemudian akan disempurnakan balasan tiap-tiap seorang menurut apa yang telah diusahakannya, sedang mereka tidak dikurangkan balasannya sedikitpun."
+          }
+        }
+      ]
+    }
+  ]
+}

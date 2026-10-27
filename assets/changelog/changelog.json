@@ -7,6 +7,15 @@
         {
           "type": "new",
           "text": {
+            "en": "A verse of the day under the prayer times and as a home screen widget, chosen for the day: Ramadan, Eid, Arafah, Fridays and other occasions get their own verses, other days a theme, and each says why it was picked. Tap it to read on in the Quran.",
+            "id": "Ayat hari ini di bawah jadwal salat dan sebagai widget layar utama, dipilih sesuai harinya: Ramadan, Idulfitri, Arafah, Jumat, dan momen lainnya punya ayatnya sendiri, hari lain bertema, dan masing-masing disertai alasan ayat itu dipilih. Ketuk untuk melanjutkan bacaan di Al-Qur'an.",
+            "ms": "Ayat hari ini di bawah waktu solat dan sebagai widget skrin utama, dipilih mengikut hari: Ramadan, Aidilfitri, Arafah, Jumaat dan peristiwa lain ada ayatnya sendiri, hari lain bertema, dan setiap satu disertakan sebab ayat itu dipilih. Ketik untuk menyambung bacaan dalam al-Quran.",
+            "ar": "آية اليوم تحت أوقات الصلاة وكأداة على الشاشة الرئيسية، مختارة بحسب اليوم: لرمضان والعيد وعرفة والجمعة وغيرها من المناسبات آياتها، ولسائر الأيام موضوع، ومع كل آية سبب اختيارها. انقر عليها لمتابعة القراءة في المصحف."
+          }
+        },
+        {
+          "type": "new",
+          "text": {
             "en": "A khatam planner in the Quran tab: choose 7, 15, 30 or 60 days, see how far to read today, and mark where you stopped from any verse.",
             "id": "Target khatam di tab Al-Qur'an: pilih 7, 15, 30, atau 60 hari, lihat sampai mana bacaan hari ini, dan tandai tempat berhenti dari ayat mana pun.",
             "ms": "Sasaran khatam dalam tab Al-Quran: pilih 7, 15, 30 atau 60 hari, lihat sejauh mana bacaan hari ini, dan tandakan tempat berhenti dari mana-mana ayat.",

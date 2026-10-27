@@ -26,6 +26,7 @@ import '../../core/services/extra_prayer_times.dart';
 import '../../core/providers/locale_provider.dart';
 import '../../core/providers/live_hijri_date_provider.dart';
 import '../../core/widgets/calculation_method_picker.dart';
+import '../quran/daily_ayah_card.dart';
 import 'widgets/prayer_day_picker.dart';
 
 bool get _isApple => PlatformCapabilities.isApple;
@@ -256,6 +257,7 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
         ),
       ),
       ..._buildPrayerCards(ctx, times, nextKey),
+      DailyAyahCard(day: day),
     ];
   }
 

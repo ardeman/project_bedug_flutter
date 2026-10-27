@@ -918,6 +918,21 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get dailyAyah => 'Verse of the day';
+
+  @override
+  String get dailyAyahOpen => 'Open in the Quran reader';
+
+  @override
+  String get dailyAyahWidgetRefresh =>
+      'Open Bedug to load the verse of the day';
+
+  @override
+  String quranReference(String surah, int number, int ayah) {
+    return '$surah $number:$ayah';
+  }
+
+  @override
   String get khatamPlanner => 'Khatam planner';
 
   @override

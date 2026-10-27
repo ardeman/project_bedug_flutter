@@ -789,5 +789,6 @@ struct BedugWidgets: WidgetBundle {
         BedugPrayerWidget()
         BedugScheduleWidget()
         BedugSkyStripWidget()
+        BedugAyahWidget()
     }
 }
