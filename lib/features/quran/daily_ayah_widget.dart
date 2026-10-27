@@ -35,13 +35,14 @@ Map<String, Object> buildDailyAyahWidgetData({
   required AppLocalizations l10n,
   required DateTime now,
   required int themeMode,
+  int hijriAdjustment = 0,
 }) {
   final language = l10n.localeName;
   return {
     'days': [
       for (var i = 0; i < dailyAyahWidgetDays; i++)
         if (DateTime(now.year, now.month, now.day + i) case final day)
-          if (ayahs.pick(day) case final pick)
+          if (ayahs.pick(day, hijriAdjustment) case final pick)
             {
               'date': _dateKey(day),
               'link': dailyAyahWidgetUri(pick.ayah.ref).toString(),
@@ -112,6 +113,9 @@ final dailyAyahWidgetSyncProvider = Provider<void>((ref) {
   final index = ref.watch(quranIndexProvider).value;
   final locale = ref.watch(localeProvider);
   final themeMode = ref.watch(settingsProvider.select((s) => s.themeMode));
+  final hijriAdjustment = ref.watch(
+    settingsProvider.select((s) => s.hijriAdjustment),
+  );
   if (ayahs == null || index == null) return;
   void sync() => unawaited(
     ref
@@ -123,6 +127,7 @@ final dailyAyahWidgetSyncProvider = Provider<void>((ref) {
             l10n: lookupAppLocalizations(locale),
             now: clock.now(),
             themeMode: themeMode,
+            hijriAdjustment: hijriAdjustment,
           ),
         ),
   );

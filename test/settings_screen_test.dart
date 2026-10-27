@@ -35,7 +35,7 @@ Future<ProviderContainer> _pumpSettings(
   final container = ProviderContainer(
     overrides: [
       sharedPreferencesProvider.overrideWithValue(prefs),
-      notificationSchedulerProvider.overrideWithValue((_, _, _) async {}),
+      notificationSchedulerProvider.overrideWithValue((_, _, _, _) async {}),
       // Asset loading never completes in the fake-async widget tests.
       dzikirCollectionsProvider.overrideWith((ref) async => [_dzikir]),
     ],
@@ -347,7 +347,8 @@ void main() {
 
     expect(find.byType(M3ESwitch), findsOneWidget);
     expect(find.byType(M3ESegmentedButton<bool>), findsOneWidget);
-    expect(find.byType(M3EDropdownMenu<int>), findsOneWidget);
+    // The Hijri date, then the theme.
+    expect(find.byType(M3EDropdownMenu<int>), findsNWidgets(2));
     expect(find.byType(LiquidGlassSwitch), findsNothing);
     final before = container.read(settingsProvider).useAutoLocation;
     await tester.tap(find.byType(M3ESwitch).last);
@@ -356,7 +357,12 @@ void main() {
     await tester.tap(find.text('Hanafi'));
     await tester.pumpAndSettle();
     expect(container.read(settingsProvider).isHanafi, isTrue);
-    await tester.tap(find.byType(M3EDropdownMenu<int>));
+    await tester.tap(find.byType(M3EDropdownMenu<int>).first);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('−1 day').last);
+    await tester.pumpAndSettle();
+    expect(container.read(settingsProvider).hijriAdjustment, -1);
+    await tester.tap(find.byType(M3EDropdownMenu<int>).last);
     await tester.pumpAndSettle();
     await tester.tap(find.text('Dark').last);
     await tester.pumpAndSettle();

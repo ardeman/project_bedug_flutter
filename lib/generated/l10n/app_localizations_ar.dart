@@ -138,6 +138,39 @@ class AppLocalizationsAr extends AppLocalizations {
   String get madhabHanafi => 'الحنفي';
 
   @override
+  String get hijriAdjustment => 'التاريخ الهجري';
+
+  @override
+  String get hijriAdjustmentSubtitle => 'حرّكه ليوافق الإعلان المحلي';
+
+  @override
+  String get hijriAdjustmentNone => 'كما هو محسوب';
+
+  @override
+  String hijriAdjustmentLater(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'أيام',
+      two: 'يوم',
+      one: 'يوم',
+    );
+    return '+$count $_temp0';
+  }
+
+  @override
+  String hijriAdjustmentEarlier(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'أيام',
+      two: 'يوم',
+      one: 'يوم',
+    );
+    return '−$count $_temp0';
+  }
+
+  @override
   String get notifications => 'الإشعارات';
 
   @override
@@ -1029,7 +1062,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get hijriEventsNote =>
-      'التواريخ وفق تقويم أم القرى المحسوب وقد تختلف بيوم عن الإعلان المحلي.';
+      'التواريخ وفق تقويم أم القرى المحسوب، مع تعديل التاريخ الهجري من الإعدادات، وقد تختلف بيوم عن الإعلان المحلي.';
 
   @override
   String get hijriEventReminder => 'تذكير بالمناسبات';

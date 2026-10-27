@@ -140,6 +140,26 @@ class AppLocalizationsId extends AppLocalizations {
   String get madhabHanafi => 'Hanafi';
 
   @override
+  String get hijriAdjustment => 'Tanggal Hijriah';
+
+  @override
+  String get hijriAdjustmentSubtitle =>
+      'Geser agar sesuai pengumuman setempat, seperti sidang isbat';
+
+  @override
+  String get hijriAdjustmentNone => 'Sesuai perhitungan';
+
+  @override
+  String hijriAdjustmentLater(num count) {
+    return '+$count hari';
+  }
+
+  @override
+  String hijriAdjustmentEarlier(num count) {
+    return '−$count hari';
+  }
+
+  @override
   String get notifications => 'Notifikasi';
 
   @override
@@ -1021,7 +1041,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get hijriEventsNote =>
-      'Tanggal mengikuti perhitungan kalender Ummul Qura dan bisa berbeda sehari dari pengumuman setempat, seperti sidang isbat.';
+      'Tanggal mengikuti perhitungan kalender Ummul Qura, digeser oleh pengaturan tanggal Hijriah, dan bisa berbeda sehari dari pengumuman setempat, seperti sidang isbat.';
 
   @override
   String get hijriEventReminder => 'Pengingat hari besar';

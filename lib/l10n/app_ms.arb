@@ -47,6 +47,11 @@
   "madhab": "Mazhab",
   "madhabShafi": "Syafi'i",
   "madhabHanafi": "Hanafi",
+  "hijriAdjustment": "Tarikh Hijrah",
+  "hijriAdjustmentSubtitle": "Anjakkan supaya sepadan dengan pengumuman tempatan",
+  "hijriAdjustmentNone": "Mengikut kiraan",
+  "hijriAdjustmentLater": "+{count} hari",
+  "hijriAdjustmentEarlier": "−{count} hari",
 
   "notifications": "Pemberitahuan",
   "allNotifications": "Semua pemberitahuan",
@@ -331,7 +336,7 @@
   "hijriEventsSubtitle": "Hari raya, hari kebesaran dan hari putih setahun ke hadapan",
   "hijriEventsLoadError": "Hari kebesaran Islam gagal dimuatkan.",
   "hijriEventsWhen": "{count, plural, =0{Hari ini} =1{Esok} other{{count} hari lagi}}",
-  "hijriEventsNote": "Tarikh mengikut kiraan takwim Ummul Qura dan mungkin berbeza sehari daripada pengumuman tempatan.",
+  "hijriEventsNote": "Tarikh mengikut kiraan takwim Ummul Qura, dianjakkan oleh tetapan tarikh Hijrah, dan mungkin berbeza sehari daripada pengumuman tempatan.",
   "hijriEventReminder": "Peringatan hari kebesaran",
   "hijriEventReminderSubtitle": "Waktu Maghrib, malam sebelum hari kebesaran dan hari putih",
   "notifHijriEventTomorrow": "Esok. Tarikh Hijrahnya bermula malam ini."

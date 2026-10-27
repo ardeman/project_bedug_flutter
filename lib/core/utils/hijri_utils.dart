@@ -15,10 +15,23 @@ List<HijriCalendar> buildHijriMonth(int hYear, int hMonth) {
   });
 }
 
-// hijriToGregorian adalah instance method: hijriToGregorian(year, month, day)
-DateTime hijriToGregorian(HijriCalendar h) {
-  final temp = HijriCalendar();
-  return temp.hijriToGregorian(h.hYear, h.hMonth, h.hDay);
+/// The choices for [hijriOf]'s adjustment, in days.
+const hijriAdjustmentOptions = [-2, -1, 0, 1, 2];
+
+/// The Hijri date of the Gregorian [date]: the Umm al-Qura conversion moved
+/// [adjustment] days, so it can follow a local announcement such as
+/// Indonesia's sidang isbat. Throws an [ArgumentError] outside the table.
+HijriCalendar hijriOf(DateTime date, [int adjustment = 0]) =>
+    HijriCalendar.fromDate(
+      DateTime(date.year, date.month, date.day + adjustment),
+    );
+
+/// The Gregorian date of [h], the inverse of [hijriOf] with the same
+/// [adjustment].
+DateTime hijriToGregorian(HijriCalendar h, [int adjustment = 0]) {
+  // hijriToGregorian is an instance method in hijri v3.
+  final date = HijriCalendar().hijriToGregorian(h.hYear, h.hMonth, h.hDay);
+  return DateTime(date.year, date.month, date.day - adjustment);
 }
 
 /// The localized name of Hijri [month] (1 is Muharram).

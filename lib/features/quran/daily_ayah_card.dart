@@ -3,6 +3,7 @@ import 'package:material_ui/material_ui.dart';
 
 import '../../core/constants/app_colors.dart';
 import '../../core/design/liquid_glass.dart';
+import '../../core/providers/locale_provider.dart';
 import '../../core/theme/app_tokens.dart';
 import '../../generated/l10n/app_localizations.dart';
 import 'daily_ayah.dart';
@@ -29,7 +30,10 @@ class DailyAyahCard extends ConsumerWidget {
     final theme = Theme.of(ctx);
     final accent = AppColors.accentOf(ctx);
     final languageCode = Localizations.localeOf(ctx).languageCode;
-    final pick = ayahs.pick(day);
+    final pick = ayahs.pick(
+      day,
+      ref.watch(settingsProvider.select((s) => s.hijriAdjustment)),
+    );
     final ayahRef = pick.ayah.ref;
     final translation = pick.ayah.translationFor(languageCode);
     final mq = MediaQuery.of(ctx);

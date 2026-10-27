@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hijri/hijri_calendar.dart';
 
+import '../../core/utils/hijri_utils.dart';
 import 'quran.dart';
 
 const dailyAyahsAsset = 'assets/content/quran/daily_ayahs.json';
@@ -109,8 +110,8 @@ class DailyAyahs {
 
   /// The ayah for the Gregorian [day]. An occasion that day comes first; on
   /// other days the themes rotate. Hijri dates use the standard conversion
-  /// of the daytime date, without local moon-sighting adjustments.
-  DailyAyahPick pick(DateTime day) {
+  /// of the daytime date moved [hijriAdjustment] days ([hijriOf]).
+  DailyAyahPick pick(DateTime day, [int hijriAdjustment = 0]) {
     // Counting days in UTC keeps daylight saving from skipping or repeating
     // an ayah.
     final index = DateTime.utc(
@@ -118,9 +119,7 @@ class DailyAyahs {
       day.month,
       day.day,
     ).difference(DateTime.utc(1970)).inDays;
-    final hijri = HijriCalendar.fromDate(
-      DateTime(day.year, day.month, day.day),
-    );
+    final hijri = hijriOf(day, hijriAdjustment);
     DailyAyahGroup? occasion;
     for (final group in occasions) {
       if (!group.matches(day, hijri)) continue;

@@ -80,9 +80,12 @@ class NotificationService {
   static Future<void> schedulePrayerNotifications(
     PrayerTimes? times,
     AppLocalizations l10n,
-    NotificationPreferences preferences,
-  ) {
-    final result = _queue.then((_) => _replace(times, l10n, preferences));
+    NotificationPreferences preferences, [
+    int hijriAdjustment = 0,
+  ]) {
+    final result = _queue.then(
+      (_) => _replace(times, l10n, preferences, hijriAdjustment),
+    );
     _queue = result.catchError((Object _) {});
     return result;
   }
@@ -91,6 +94,7 @@ class NotificationService {
     PrayerTimes? times,
     AppLocalizations l10n,
     NotificationPreferences preferences,
+    int hijriAdjustment,
   ) async {
     if (!supportsScheduling) return;
     if (!await init()) throw StateError(l10n.notificationSchedulingError);
@@ -101,6 +105,7 @@ class NotificationService {
       preferences,
       clock.now(),
       events: preferences.includesEvents ? await _loadEvents() : null,
+      hijriAdjustment: hijriAdjustment,
     );
     if (schedule.isEmpty) return;
     final android = _plugin

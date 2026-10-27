@@ -7,6 +7,15 @@
         {
           "type": "new",
           "text": {
+            "en": "Move the Hijri date a day or two in Settings to match your local announcement. The date, the calendar, Islamic events, their reminders and the verse of the day all follow it.",
+            "id": "Geser tanggal Hijriah satu atau dua hari di Pengaturan agar sesuai pengumuman setempat, seperti sidang isbat. Tanggal, kalender, hari besar Islam beserta pengingatnya, dan ayat hari ini ikut menyesuaikan.",
+            "ms": "Anjakkan tarikh Hijrah sehari atau dua dalam Tetapan supaya sepadan dengan pengumuman tempatan. Tarikh, takwim, hari kebesaran Islam beserta peringatannya, dan ayat hari ini turut mengikutinya.",
+            "ar": "حرّك التاريخ الهجري يومًا أو يومين من الإعدادات ليوافق الإعلان المحلي، فيتبعه التاريخ والتقويم والمناسبات الإسلامية وتذكيراتها وآية اليوم."
+          }
+        },
+        {
+          "type": "new",
+          "text": {
             "en": "Islamic events on the Hijri calendar: Eid al-Fitr, Eid al-Adha, Arafah, Ashura, Isra and Mi'raj, the Mawlid, the first day of Ramadan, the Islamic New Year and the white days are marked in the month grid and named under the picked date, listed for the year ahead in the Worship tab, and can remind you at Maghrib the evening before.",
             "id": "Hari besar Islam di kalender Hijriah: Idulfitri, Iduladha, Arafah, Asyura, Isra Mikraj, Maulid Nabi, awal Ramadan, Tahun Baru Hijriah, dan ayyamul bidh ditandai di kalender bulanan dan disebut di bawah tanggal yang dipilih, didaftar untuk setahun ke depan di tab Ibadah, dan bisa diingatkan saat Magrib pada malam sebelumnya.",
             "ms": "Hari kebesaran Islam dalam takwim Hijrah: Aidilfitri, Aidiladha, Arafah, Asyura, Israk dan Mikraj, Maulidur Rasul, awal Ramadan, Awal Muharam dan hari putih ditandakan dalam takwim bulanan dan dinamakan di bawah tarikh yang dipilih, disenaraikan untuk setahun ke hadapan dalam tab Ibadah, dan boleh diingatkan waktu Maghrib pada malam sebelumnya.",

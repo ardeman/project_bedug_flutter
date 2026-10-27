@@ -354,6 +354,36 @@ abstract class AppLocalizations {
   /// **'Hanafi'**
   String get madhabHanafi;
 
+  /// No description provided for @hijriAdjustment.
+  ///
+  /// In id, this message translates to:
+  /// **'Tanggal Hijriah'**
+  String get hijriAdjustment;
+
+  /// No description provided for @hijriAdjustmentSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Geser agar sesuai pengumuman setempat, seperti sidang isbat'**
+  String get hijriAdjustmentSubtitle;
+
+  /// No description provided for @hijriAdjustmentNone.
+  ///
+  /// In id, this message translates to:
+  /// **'Sesuai perhitungan'**
+  String get hijriAdjustmentNone;
+
+  /// No description provided for @hijriAdjustmentLater.
+  ///
+  /// In id, this message translates to:
+  /// **'+{count} hari'**
+  String hijriAdjustmentLater(num count);
+
+  /// No description provided for @hijriAdjustmentEarlier.
+  ///
+  /// In id, this message translates to:
+  /// **'−{count} hari'**
+  String hijriAdjustmentEarlier(num count);
+
   /// No description provided for @notifications.
   ///
   /// In id, this message translates to:
@@ -1923,7 +1953,7 @@ abstract class AppLocalizations {
   /// No description provided for @hijriEventsNote.
   ///
   /// In id, this message translates to:
-  /// **'Tanggal mengikuti perhitungan kalender Ummul Qura dan bisa berbeda sehari dari pengumuman setempat, seperti sidang isbat.'**
+  /// **'Tanggal mengikuti perhitungan kalender Ummul Qura, digeser oleh pengaturan tanggal Hijriah, dan bisa berbeda sehari dari pengumuman setempat, seperti sidang isbat.'**
   String get hijriEventsNote;
 
   /// No description provided for @hijriEventReminder.

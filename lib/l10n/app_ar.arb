@@ -47,6 +47,11 @@
   "madhab": "المذهب",
   "madhabShafi": "الشافعي",
   "madhabHanafi": "الحنفي",
+  "hijriAdjustment": "التاريخ الهجري",
+  "hijriAdjustmentSubtitle": "حرّكه ليوافق الإعلان المحلي",
+  "hijriAdjustmentNone": "كما هو محسوب",
+  "hijriAdjustmentLater": "+{count} {count, plural, =1{يوم} =2{يوم} other{أيام}}",
+  "hijriAdjustmentEarlier": "−{count} {count, plural, =1{يوم} =2{يوم} other{أيام}}",
 
   "notifications": "الإشعارات",
   "allNotifications": "كل الإشعارات",
@@ -331,7 +336,7 @@
   "hijriEventsSubtitle": "الأعياد والمناسبات والأيام البيض للعام القادم",
   "hijriEventsLoadError": "تعذّر تحميل المناسبات الإسلامية.",
   "hijriEventsWhen": "{count, plural, =0{اليوم} =1{غدًا} =2{بعد يومين} few{بعد {count} أيام} other{بعد {count} يومًا}}",
-  "hijriEventsNote": "التواريخ وفق تقويم أم القرى المحسوب وقد تختلف بيوم عن الإعلان المحلي.",
+  "hijriEventsNote": "التواريخ وفق تقويم أم القرى المحسوب، مع تعديل التاريخ الهجري من الإعدادات، وقد تختلف بيوم عن الإعلان المحلي.",
   "hijriEventReminder": "تذكير بالمناسبات",
   "hijriEventReminderSubtitle": "عند المغرب، مساء اليوم الذي يسبق المناسبات والأيام البيض",
   "notifHijriEventTomorrow": "غدًا. يبدأ يومه الهجري هذا المساء."

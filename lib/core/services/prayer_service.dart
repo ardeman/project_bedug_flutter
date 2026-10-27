@@ -22,6 +22,7 @@ final notificationSchedulerProvider =
         PrayerTimes?,
         AppLocalizations,
         NotificationPreferences,
+        int,
       )
     >((ref) => NotificationService.schedulePrayerNotifications);
 
@@ -126,7 +127,8 @@ class PrayerNotifier extends Notifier<PrayerState> {
           prev?.isHanafi != next.isHanafi ||
           prev?.useAutoLocation != next.useAutoLocation) {
         load();
-      } else if (prev?.notifications != next.notifications) {
+      } else if (prev?.notifications != next.notifications ||
+          prev?.hijriAdjustment != next.hijriAdjustment) {
         _scheduleNotifications();
       }
     });
@@ -226,6 +228,7 @@ class PrayerNotifier extends Notifier<PrayerState> {
         await _withoutUnusedDzikirReminders(
           ref.read(settingsProvider).notifications,
         ),
+        ref.read(settingsProvider).hijriAdjustment,
       );
       if (ref.mounted && request == _notificationRequest) {
         state = state.copyWith(notificationError: false, error: state.error);

@@ -47,6 +47,11 @@
   "madhab": "Madhab",
   "madhabShafi": "Shafi'i",
   "madhabHanafi": "Hanafi",
+  "hijriAdjustment": "Hijri date",
+  "hijriAdjustmentSubtitle": "Move it to match your local announcement",
+  "hijriAdjustmentNone": "As calculated",
+  "hijriAdjustmentLater": "+{count} {count, plural, =1{day} other{days}}",
+  "hijriAdjustmentEarlier": "−{count} {count, plural, =1{day} other{days}}",
 
   "notifications": "Notifications",
   "allNotifications": "All notifications",
@@ -332,7 +337,7 @@
   "hijriEventsSubtitle": "Eids, holy days and the white days for the year ahead",
   "hijriEventsLoadError": "Couldn't load the Islamic events.",
   "hijriEventsWhen": "{count, plural, =0{Today} =1{Tomorrow} other{In {count} days}}",
-  "hijriEventsNote": "Dates follow the calculated Umm al-Qura calendar and can be a day off local announcements.",
+  "hijriEventsNote": "Dates follow the calculated Umm al-Qura calendar, moved by the Hijri date setting, and can be a day off local announcements.",
   "hijriEventReminder": "Event reminders",
   "hijriEventReminderSubtitle": "At Maghrib, the evening before holy days and the white days",
   "notifHijriEventTomorrow": "Tomorrow. Its Hijri day begins this evening."

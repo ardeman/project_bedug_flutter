@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hijri/hijri_calendar.dart';
 
+import '../../core/utils/hijri_utils.dart';
+
 const hijriEventsAsset = 'assets/content/hijri_events.json';
 
 /// A day or a run of days on the Hijri calendar, such as Eid al-Fitr or the
@@ -50,12 +52,12 @@ class HijriEvents {
   const HijriEvents(this.events);
 
   /// The events on the Gregorian [day], in the file's order. Hijri dates use
-  /// the standard conversion of the daytime date, without local
-  /// moon-sighting adjustments; days outside the Umm al-Qura table have none.
-  List<HijriEvent> on(DateTime day) {
+  /// the standard conversion of the daytime date moved [adjustment] days
+  /// ([hijriOf]); days outside the Umm al-Qura table have none.
+  List<HijriEvent> on(DateTime day, [int adjustment = 0]) {
     final HijriCalendar hijri;
     try {
-      hijri = HijriCalendar.fromDate(DateTime(day.year, day.month, day.day));
+      hijri = hijriOf(day, adjustment);
     } on ArgumentError {
       return const [];
     }
@@ -74,12 +76,13 @@ class HijriEvents {
     DateTime from, {
     int? count,
     int days = 354,
+    int adjustment = 0,
   }) {
     final result = <({DateTime day, List<HijriEvent> events})>[];
     var previous = <HijriEvent>{};
     for (var i = 0; i < days && result.length < (count ?? days); i++) {
       final day = _addDays(from, i);
-      final today = on(day);
+      final today = on(day, adjustment);
       final starting = [
         for (final event in today)
           if (!previous.contains(event)) event,

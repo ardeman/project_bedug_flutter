@@ -23,6 +23,7 @@ import '../../core/services/phone_sound_picker.dart';
 import '../../core/services/prayer_service.dart';
 import '../../core/services/widget_appearance.dart';
 import '../../core/theme/app_tokens.dart';
+import '../../core/utils/hijri_utils.dart';
 import '../../core/widgets/calculation_method_picker.dart';
 import '../../core/widgets/city_picker.dart';
 import '../../core/widgets/glass_menu.dart';
@@ -94,6 +95,26 @@ class SettingsScreen extends ConsumerWidget {
                 ),
               ],
             ),
+          ),
+
+          // Hijri date adjustment
+          _ChoiceTile<int>(
+            icon: Icons.calendar_month_outlined,
+            title: l10n.hijriAdjustment,
+            subtitle: Text(l10n.hijriAdjustmentSubtitle),
+            value: settings.hijriAdjustment,
+            options: [
+              for (final days in hijriAdjustmentOptions)
+                GlassMenuOption(
+                  value: days,
+                  label: switch (days) {
+                    0 => l10n.hijriAdjustmentNone,
+                    > 0 => l10n.hijriAdjustmentLater(days),
+                    _ => l10n.hijriAdjustmentEarlier(-days),
+                  },
+                ),
+            ],
+            onChanged: notifier.setHijriAdjustment,
           ),
 
           // Notifikasi

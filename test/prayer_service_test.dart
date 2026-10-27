@@ -69,7 +69,9 @@ void main() {
           overrides: [
             sharedPreferencesProvider.overrideWithValue(prefs),
             reverseGeocoderProvider.overrideWithValue((_, _) => lookup.future),
-            notificationSchedulerProvider.overrideWithValue((_, _, _) async {}),
+            notificationSchedulerProvider.overrideWithValue(
+              (_, _, _, _) async {},
+            ),
           ],
         );
         if (outcome != 'disposed') addTearDown(container.dispose);
@@ -200,6 +202,7 @@ void main() {
             times,
             l10n,
             preferences,
+            _,
           ) async {
             scheduled.add(preferences);
             if (fail) throw Exception();
@@ -248,6 +251,7 @@ void main() {
           _,
           _,
           preferences,
+          _,
         ) async {
           scheduled.add(preferences);
         }),

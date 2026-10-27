@@ -45,6 +45,19 @@ void main() {
     );
   });
 
+  test('keeps a stored Hijri adjustment and drops an unknown one', () async {
+    var container = await _container({'hijri_adjustment': -1});
+    expect(container.read(settingsProvider).hijriAdjustment, -1);
+    await container.read(settingsProvider.notifier).setHijriAdjustment(2);
+    expect(container.read(settingsProvider).hijriAdjustment, 2);
+    expect(
+      container.read(sharedPreferencesProvider).getInt('hijri_adjustment'),
+      2,
+    );
+    container = await _container({'hijri_adjustment': 5});
+    expect(container.read(settingsProvider).hijriAdjustment, 0);
+  });
+
   test('clearing the selected city clears state and storage', () async {
     final container = await _container({'selected_city_id': 'jakarta'});
     final notifier = container.read(settingsProvider.notifier);

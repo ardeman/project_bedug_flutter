@@ -140,6 +140,38 @@ class AppLocalizationsEn extends AppLocalizations {
   String get madhabHanafi => 'Hanafi';
 
   @override
+  String get hijriAdjustment => 'Hijri date';
+
+  @override
+  String get hijriAdjustmentSubtitle =>
+      'Move it to match your local announcement';
+
+  @override
+  String get hijriAdjustmentNone => 'As calculated';
+
+  @override
+  String hijriAdjustmentLater(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'days',
+      one: 'day',
+    );
+    return '+$count $_temp0';
+  }
+
+  @override
+  String hijriAdjustmentEarlier(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'days',
+      one: 'day',
+    );
+    return '−$count $_temp0';
+  }
+
+  @override
   String get notifications => 'Notifications';
 
   @override
@@ -1019,7 +1051,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get hijriEventsNote =>
-      'Dates follow the calculated Umm al-Qura calendar and can be a day off local announcements.';
+      'Dates follow the calculated Umm al-Qura calendar, moved by the Hijri date setting, and can be a day off local announcements.';
 
   @override
   String get hijriEventReminder => 'Event reminders';

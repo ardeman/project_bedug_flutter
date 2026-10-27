@@ -103,6 +103,11 @@
   "@madhabShafi": {},
 
   "madhabHanafi": "Hanafi",
+  "hijriAdjustment": "Tanggal Hijriah",
+  "hijriAdjustmentSubtitle": "Geser agar sesuai pengumuman setempat, seperti sidang isbat",
+  "hijriAdjustmentNone": "Sesuai perhitungan",
+  "hijriAdjustmentLater": "+{count} hari",
+  "hijriAdjustmentEarlier": "−{count} hari",
   "@madhabHanafi": {},
 
   "notifications": "Notifikasi",
@@ -521,7 +526,7 @@
   "hijriEventsLoadError": "Hari besar Islam gagal dimuat.",
   "hijriEventsWhen": "{count, plural, =0{Hari ini} =1{Besok} other{{count} hari lagi}}",
   "@hijriEventsWhen": {"placeholders": {"count": {"type": "int"}}},
-  "hijriEventsNote": "Tanggal mengikuti perhitungan kalender Ummul Qura dan bisa berbeda sehari dari pengumuman setempat, seperti sidang isbat.",
+  "hijriEventsNote": "Tanggal mengikuti perhitungan kalender Ummul Qura, digeser oleh pengaturan tanggal Hijriah, dan bisa berbeda sehari dari pengumuman setempat, seperti sidang isbat.",
   "hijriEventReminder": "Pengingat hari besar",
   "hijriEventReminderSubtitle": "Saat Magrib, malam sebelum hari besar dan ayyamul bidh",
   "notifHijriEventTomorrow": "Besok. Dalam kalender Hijriah, harinya dimulai malam ini."

@@ -139,6 +139,26 @@ class AppLocalizationsMs extends AppLocalizations {
   String get madhabHanafi => 'Hanafi';
 
   @override
+  String get hijriAdjustment => 'Tarikh Hijrah';
+
+  @override
+  String get hijriAdjustmentSubtitle =>
+      'Anjakkan supaya sepadan dengan pengumuman tempatan';
+
+  @override
+  String get hijriAdjustmentNone => 'Mengikut kiraan';
+
+  @override
+  String hijriAdjustmentLater(num count) {
+    return '+$count hari';
+  }
+
+  @override
+  String hijriAdjustmentEarlier(num count) {
+    return '−$count hari';
+  }
+
+  @override
   String get notifications => 'Pemberitahuan';
 
   @override
@@ -1021,7 +1041,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get hijriEventsNote =>
-      'Tarikh mengikut kiraan takwim Ummul Qura dan mungkin berbeza sehari daripada pengumuman tempatan.';
+      'Tarikh mengikut kiraan takwim Ummul Qura, dianjakkan oleh tetapan tarikh Hijrah, dan mungkin berbeza sehari daripada pengumuman tempatan.';
 
   @override
   String get hijriEventReminder => 'Peringatan hari kebesaran';

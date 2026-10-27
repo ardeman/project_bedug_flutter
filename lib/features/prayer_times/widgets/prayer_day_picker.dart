@@ -45,6 +45,9 @@ class PrayerDayPicker extends StatefulWidget {
   final HijriEvents? events;
   final ValueChanged<DateTime> onSelected;
 
+  /// Days the Hijri dates move to follow a local announcement.
+  final int hijriAdjustment;
+
   const PrayerDayPicker({
     super.key,
     required this.today,
@@ -52,6 +55,7 @@ class PrayerDayPicker extends StatefulWidget {
     this.liveHijriDate,
     this.events,
     required this.onSelected,
+    this.hijriAdjustment = 0,
   });
 
   @override
@@ -229,8 +233,13 @@ class _PrayerDayPickerState extends State<PrayerDayPicker>
     final liveDate = offset == 0 ? widget.liveHijriDate : null;
     final afterMaghrib =
         liveDate != null && daysBetween(widget.selected, liveDate) > 0;
-    final hijriDate = hijriDateLabel(l10n, liveDate ?? widget.selected);
-    final events = widget.events?.on(widget.selected) ?? const [];
+    final hijriDate = hijriDateLabel(
+      l10n,
+      liveDate ?? widget.selected,
+      widget.hijriAdjustment,
+    );
+    final events =
+        widget.events?.on(widget.selected, widget.hijriAdjustment) ?? const [];
 
     final content = Padding(
       padding: const EdgeInsets.only(top: AppSpacing.sm),
@@ -258,6 +267,7 @@ class _PrayerDayPickerState extends State<PrayerDayPicker>
                     today: widget.today,
                     selected: widget.selected,
                     events: widget.events,
+                    hijriAdjustment: widget.hijriAdjustment,
                     onSelected: (date) =>
                         _pick(daysBetween(widget.today, date)),
                     onPagedAway: (away) =>

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants/city_catalog.dart';
+import '../utils/hijri_utils.dart';
 import '../services/kemenag_method.dart';
 import '../services/notification_preferences.dart';
 
@@ -57,6 +58,7 @@ const _kMadhab = 'madhab';
 const _kTheme = 'theme_mode';
 const _kUseAutoLocation = 'use_auto_location';
 const _kSelectedCityId = 'selected_city_id';
+const _kHijriAdjustment = 'hijri_adjustment';
 
 class AppSettings {
   final AppCalculationMethod method;
@@ -66,6 +68,10 @@ class AppSettings {
   final String? selectedCityId;
   final NotificationPreferences notifications;
 
+  /// Days the Hijri dates move from the calculated calendar to follow a
+  /// local announcement, one of [hijriAdjustmentOptions].
+  final int hijriAdjustment;
+
   const AppSettings({
     this.method = AppCalculationMethod.kemenag,
     this.isHanafi = false,
@@ -73,6 +79,7 @@ class AppSettings {
     this.useAutoLocation = true,
     this.selectedCityId,
     this.notifications = const NotificationPreferences(),
+    this.hijriAdjustment = 0,
   });
 
   AppSettings copyWith({
@@ -83,7 +90,9 @@ class AppSettings {
     String? selectedCityId,
     bool clearSelectedCity = false,
     NotificationPreferences? notifications,
+    int? hijriAdjustment,
   }) => AppSettings(
+    hijriAdjustment: hijriAdjustment ?? this.hijriAdjustment,
     notifications: notifications ?? this.notifications,
     method: method ?? this.method,
     isHanafi: isHanafi ?? this.isHanafi,
@@ -111,6 +120,10 @@ class SettingsNotifier extends Notifier<AppSettings> {
       themeMode: p.getInt(_kTheme) ?? 0,
       useAutoLocation: p.getBool(_kUseAutoLocation) ?? true,
       selectedCityId: p.getString(_kSelectedCityId),
+      hijriAdjustment: switch (p.getInt(_kHijriAdjustment)) {
+        final days? when hijriAdjustmentOptions.contains(days) => days,
+        _ => 0,
+      },
       notifications: NotificationPreferences(
         enabled: p.getBool('notifications_enabled') ?? true,
         alerts: Set.unmodifiable(_storedAlerts(p)),
@@ -230,6 +243,11 @@ class SettingsNotifier extends Notifier<AppSettings> {
   Future<void> setThemeMode(int mode) async {
     state = state.copyWith(themeMode: mode);
     await _prefs.setInt(_kTheme, mode);
+  }
+
+  Future<void> setHijriAdjustment(int days) async {
+    state = state.copyWith(hijriAdjustment: days);
+    await _prefs.setInt(_kHijriAdjustment, days);
   }
 
   Future<void> setUseAutoLocation(bool enabled) async {

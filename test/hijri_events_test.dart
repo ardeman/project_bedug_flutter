@@ -43,6 +43,18 @@ void main() {
     expect(idsOn(_hijri(12, 14)), ['ayyamul_bidh']);
   });
 
+  test('an adjustment moves events to follow a local announcement', () {
+    // Announced a day later than calculated: Eid comes the day after.
+    final eid = _hijri(10, 1);
+    final dayAfter = DateTime(eid.year, eid.month, eid.day + 1);
+    expect(events.on(eid, -1).map((e) => e.id), isEmpty);
+    expect(events.on(dayAfter, -1).map((e) => e.id), ['eid_al_fitr']);
+    final dayBefore = DateTime(eid.year, eid.month, eid.day - 1);
+    expect(events.on(dayBefore, 2).map((e) => e.id), isEmpty);
+    expect(events.on(dayBefore, 1).map((e) => e.id), ['eid_al_fitr']);
+    expect(events.upcoming(eid, count: 1, adjustment: -1).single.day, dayAfter);
+  });
+
   test('upcoming lists each run of days once, from its first day', () {
     final next = events.upcoming(_hijri(12, 9), count: 4);
     expect(
