@@ -721,6 +721,10 @@ class _ChoiceTileState<T> extends State<_ChoiceTile<T>> {
   /// names leave room for the title.
   static const _maxValueWidth = 160.0;
 
+  /// Largest share of the row the current choice takes in a narrow row,
+  /// such as beside iPhone Duo's side bar, so the title stays on one line.
+  static const _maxValueRowFraction = 1 / 3;
+
   Future<void> _openMenu() async {
     final anchorCtx = _trailingKey.currentContext;
     if (_isMenuOpen || anchorCtx == null) return;
@@ -837,31 +841,38 @@ class _ChoiceTileState<T> extends State<_ChoiceTile<T>> {
         .where((o) => o.value == widget.value)
         .firstOrNull;
     final muted = theme.colorScheme.onSurfaceVariant;
-    return PlatformListTile(
-      leading: leading,
-      title: title,
-      subtitle: widget.subtitle,
-      onTap: _openMenu,
-      trailing: Row(
-        key: _trailingKey,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: _maxValueWidth),
-            child: Text(
-              current?.label ?? '',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: theme.textTheme.bodyMedium?.copyWith(color: muted),
+    return LayoutBuilder(
+      builder: (ctx, constraints) => PlatformListTile(
+        leading: leading,
+        title: title,
+        subtitle: widget.subtitle,
+        onTap: _openMenu,
+        trailing: Row(
+          key: _trailingKey,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: math.min(
+                  _maxValueWidth,
+                  constraints.maxWidth * _maxValueRowFraction,
+                ),
+              ),
+              child: Text(
+                current?.label ?? '',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: theme.textTheme.bodyMedium?.copyWith(color: muted),
+              ),
             ),
-          ),
-          const SizedBox(width: AppSpacing.xxs),
-          Icon(
-            Icons.unfold_more,
-            size: AppControlSizes.toolbarIcon,
-            color: muted,
-          ),
-        ],
+            const SizedBox(width: AppSpacing.xxs),
+            Icon(
+              Icons.unfold_more,
+              size: AppControlSizes.toolbarIcon,
+              color: muted,
+            ),
+          ],
+        ),
       ),
     );
   }

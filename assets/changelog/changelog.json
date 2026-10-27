@@ -5,6 +5,15 @@
       "date": null,
       "changes": [
         {
+          "type": "fixed",
+          "text": {
+            "en": "In narrow windows, such as beside iPhone Duo's side bar, settings keep their names on one line and shorten long choices instead.",
+            "id": "Di jendela sempit, seperti di samping bilah sisi iPhone Duo, nama pengaturan tetap satu baris dan pilihan yang panjang dipendekkan.",
+            "ms": "Dalam tetingkap sempit, seperti di sebelah bar sisi iPhone Duo, nama tetapan kekal satu baris dan pilihan yang panjang dipendekkan.",
+            "ar": "في النوافذ الضيقة، مثل جوار الشريط الجانبي في iPhone Duo، تبقى أسماء الإعدادات في سطر واحد وتُختصر الخيارات الطويلة."
+          }
+        },
+        {
           "type": "improved",
           "text": {
             "en": "On iPhone Duo, the tabs sit on the right side of the screen next to the clock, within reach of your thumb.",
