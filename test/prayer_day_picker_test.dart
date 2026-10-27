@@ -259,6 +259,33 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text(title(month)), findsOneWidget);
 
+    // Mid-drag the next month follows the days in from the side.
+    final nextDay = find.bySemanticsLabel(
+      RegExp(r'H, Wednesday, November 25, 2026$'),
+    );
+    expect(nextDay, findsNothing);
+    final gesture = await tester.startGesture(tester.getCenter(days));
+    await gesture.moveBy(const Offset(-20, 0));
+    await gesture.moveBy(const Offset(-100, 0));
+    await tester.pump();
+    expect(nextDay, findsOneWidget);
+    await gesture.up();
+    await tester.pumpAndSettle();
+    expect(find.text(title(month)), findsOneWidget);
+
+    // The chevrons slide the months the same way.
+    await tester.tap(find.bySemanticsLabel('Next month'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+    expect(days, findsOneWidget);
+    expect(nextDay, findsOneWidget);
+    await tester.pumpAndSettle();
+    expect(find.text(title(next)), findsOneWidget);
+    expect(days, findsNothing);
+    await tester.tap(find.bySemanticsLabel('Previous month'));
+    await tester.pumpAndSettle();
+    expect(find.text(title(month)), findsOneWidget);
+
     // Leftward shows the next month, rightward the previous one.
     await tester.drag(days, const Offset(-400, 0));
     await tester.pumpAndSettle();
