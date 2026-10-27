@@ -186,7 +186,7 @@ void main() {
     final device = find.byKey(const ValueKey('qibla-device-marker'));
     expect(tester.getCenter(kaaba).dx, lessThan(tester.getCenter(device).dx));
     expect(tester.getCenter(kaaba).dy, lessThan(tester.getCenter(device).dy));
-    expect(find.text('295° from north (northwest)'), findsOneWidget);
+    expect(find.text('295° (65° from north toward west)'), findsOneWidget);
     expect(
       find.text('Point the top of the screen north, then follow the arrow.'),
       findsOneWidget,

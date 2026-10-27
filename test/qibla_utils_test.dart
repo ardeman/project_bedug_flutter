@@ -8,7 +8,7 @@ void main() {
   group('qiblaBearing', () {
     test('points northwest from Jakarta', () {
       expect(qiblaBearing(jakarta), closeTo(295.1, 0.5));
-      expect(compassPointIndex(qiblaBearing(jakarta)), 7); // NW
+      expect(angleFromNorth(qiblaBearing(jakarta)), -65); // toward west
     });
 
     test('points northeast from New York', () {
@@ -20,12 +20,14 @@ void main() {
     expect(distanceToKaabaKm(jakarta), closeTo(7920, 30));
   });
 
-  test('compassPointIndex wraps around north', () {
-    expect(compassPointIndex(0), 0);
-    expect(compassPointIndex(350), 0);
-    expect(compassPointIndex(-10), 0);
-    expect(compassPointIndex(44), 1);
-    expect(compassPointIndex(316), 7);
+  test('angleFromNorth takes the shorter way round', () {
+    expect(angleFromNorth(0), 0);
+    expect(angleFromNorth(58.5), 59);
+    expect(angleFromNorth(180), 180);
+    expect(angleFromNorth(180.6), -179);
+    expect(angleFromNorth(295.1), -65);
+    expect(angleFromNorth(359.6), 0);
+    expect(angleFromNorth(-10), -10);
   });
 
   test('relativeAngle is signed and takes the short way round', () {

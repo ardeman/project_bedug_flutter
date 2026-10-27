@@ -25,10 +25,13 @@ double distanceToKaabaKm(Coordinates from) {
   return 2 * _earthRadiusKm * math.asin(math.min(1, math.sqrt(a)));
 }
 
-/// Index (0 = N, 1 = NE, ... 7 = NW) of the 8-point compass direction
-/// nearest to [bearing].
-int compassPointIndex(double bearing) =>
-    ((_normalize360(bearing) + 22.5) ~/ 45) % 8;
+/// [bearing] rounded to whole degrees and measured from north the shorter
+/// way round: positive toward the east, negative toward the west, so 295°
+/// becomes -65 (65° from north toward the west).
+int angleFromNorth(double bearing) {
+  final rounded = _normalize360(bearing.roundToDouble()).toInt();
+  return rounded <= 180 ? rounded : rounded - 360;
+}
 
 /// Signed smallest angle from [from] to [to], in degrees (-180, 180].
 /// Positive means [to] is clockwise (to the right) of [from].

@@ -159,7 +159,14 @@ class _QiblaCardState extends ConsumerState<QiblaCard> {
         heading != null &&
         relativeAngle(heading, bearing).abs() <= _facingToleranceDeg;
 
-    final direction = _directionName(l10n, compassPointIndex(bearing));
+    final fromNorth = angleFromNorth(bearing);
+    // West of north, also give the compass bearing that phone compasses show.
+    final bearingLabel = fromNorth >= 0
+        ? l10n.qiblaBearingEast(fromNorth.toString())
+        : l10n.qiblaBearingWest(
+            (360 + fromNorth).toString(),
+            (-fromNorth).toString(),
+          );
     final km = NumberFormat.decimalPattern(localeName)
         .format(distanceToKaabaKm(coords).round());
     // Short windows need smaller secondary text and tighter card spacing.
@@ -217,7 +224,7 @@ class _QiblaCardState extends ConsumerState<QiblaCard> {
             ),
             const SizedBox(height: AppSpacing.xs),
             Text(
-              l10n.qiblaBearing(bearing.round().toString(), direction),
+              bearingLabel,
               style: theme.textTheme.titleSmall?.copyWith(color: accent),
               textAlign: TextAlign.center,
             ),
@@ -312,17 +319,6 @@ class _QiblaCardState extends ConsumerState<QiblaCard> {
       ),
     );
   }
-
-  String _directionName(AppLocalizations l10n, int index) => switch (index) {
-    0 => l10n.dirN,
-    1 => l10n.dirNE,
-    2 => l10n.dirE,
-    3 => l10n.dirSE,
-    4 => l10n.dirS,
-    5 => l10n.dirSW,
-    6 => l10n.dirW,
-    _ => l10n.dirNW,
-  };
 }
 
 /// One guide step: an icon beside text that may wrap over several lines.

@@ -416,8 +416,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get qibla => 'Qibla';
 
   @override
-  String qiblaBearing(String degrees, String direction) {
-    return '$degrees° from north ($direction)';
+  String qiblaBearingEast(String degrees) {
+    return '$degrees° from north toward east';
+  }
+
+  @override
+  String qiblaBearingWest(String bearing, String degrees) {
+    return '$bearing° ($degrees° from north toward west)';
   }
 
   @override
@@ -463,30 +468,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get qiblaNoLocation =>
       'Location isn\'t available yet. Set it in Settings.';
-
-  @override
-  String get dirN => 'north';
-
-  @override
-  String get dirNE => 'northeast';
-
-  @override
-  String get dirE => 'east';
-
-  @override
-  String get dirSE => 'southeast';
-
-  @override
-  String get dirS => 'south';
-
-  @override
-  String get dirSW => 'southwest';
-
-  @override
-  String get dirW => 'west';
-
-  @override
-  String get dirNW => 'northwest';
 
   @override
   String get whatsNew => 'What\'s New';

@@ -840,11 +840,17 @@ abstract class AppLocalizations {
   /// **'Kiblat'**
   String get qibla;
 
-  /// No description provided for @qiblaBearing.
+  /// No description provided for @qiblaBearingEast.
   ///
   /// In id, this message translates to:
-  /// **'{degrees}° dari utara ({direction})'**
-  String qiblaBearing(String degrees, String direction);
+  /// **'{degrees}° dari utara ke timur'**
+  String qiblaBearingEast(String degrees);
+
+  /// No description provided for @qiblaBearingWest.
+  ///
+  /// In id, this message translates to:
+  /// **'{bearing}° ({degrees}° dari utara ke barat)'**
+  String qiblaBearingWest(String bearing, String degrees);
 
   /// No description provided for @qiblaDistance.
   ///
@@ -911,54 +917,6 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Lokasi belum tersedia. Atur lokasi di Pengaturan.'**
   String get qiblaNoLocation;
-
-  /// No description provided for @dirN.
-  ///
-  /// In id, this message translates to:
-  /// **'utara'**
-  String get dirN;
-
-  /// No description provided for @dirNE.
-  ///
-  /// In id, this message translates to:
-  /// **'timur laut'**
-  String get dirNE;
-
-  /// No description provided for @dirE.
-  ///
-  /// In id, this message translates to:
-  /// **'timur'**
-  String get dirE;
-
-  /// No description provided for @dirSE.
-  ///
-  /// In id, this message translates to:
-  /// **'tenggara'**
-  String get dirSE;
-
-  /// No description provided for @dirS.
-  ///
-  /// In id, this message translates to:
-  /// **'selatan'**
-  String get dirS;
-
-  /// No description provided for @dirSW.
-  ///
-  /// In id, this message translates to:
-  /// **'barat daya'**
-  String get dirSW;
-
-  /// No description provided for @dirW.
-  ///
-  /// In id, this message translates to:
-  /// **'barat'**
-  String get dirW;
-
-  /// No description provided for @dirNW.
-  ///
-  /// In id, this message translates to:
-  /// **'barat laut'**
-  String get dirNW;
 
   /// No description provided for @whatsNew.
   ///

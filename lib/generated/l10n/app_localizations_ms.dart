@@ -403,8 +403,13 @@ class AppLocalizationsMs extends AppLocalizations {
   String get qibla => 'Kiblat';
 
   @override
-  String qiblaBearing(String degrees, String direction) {
-    return '$degrees° dari utara ($direction)';
+  String qiblaBearingEast(String degrees) {
+    return '$degrees° dari utara ke timur';
+  }
+
+  @override
+  String qiblaBearingWest(String bearing, String degrees) {
+    return '$bearing° ($degrees° dari utara ke barat)';
   }
 
   @override
@@ -450,30 +455,6 @@ class AppLocalizationsMs extends AppLocalizations {
   @override
   String get qiblaNoLocation =>
       'Lokasi belum tersedia. Tetapkan lokasi dalam Tetapan.';
-
-  @override
-  String get dirN => 'utara';
-
-  @override
-  String get dirNE => 'timur laut';
-
-  @override
-  String get dirE => 'timur';
-
-  @override
-  String get dirSE => 'tenggara';
-
-  @override
-  String get dirS => 'selatan';
-
-  @override
-  String get dirSW => 'barat daya';
-
-  @override
-  String get dirW => 'barat';
-
-  @override
-  String get dirNW => 'barat laut';
 
   @override
   String get whatsNew => 'Apa yang Baharu';

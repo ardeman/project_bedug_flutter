@@ -5,6 +5,15 @@
       "date": null,
       "changes": [
         {
+          "type": "improved",
+          "text": {
+            "en": "The Qibla direction also gives the shorter angle from north, such as 295° (65° from north toward west).",
+            "id": "Arah kiblat kini juga menampilkan sudut terdekat dari utara, misalnya 295° (65° dari utara ke barat).",
+            "ms": "Arah kiblat kini turut memaparkan sudut terdekat dari utara, contohnya 295° (65° dari utara ke barat).",
+            "ar": "يعرض اتجاه القبلة أيضًا الزاوية الأقصر من الشمال، مثل 295° (65° من الشمال باتجاه الغرب)."
+          }
+        },
+        {
           "type": "fixed",
           "text": {
             "en": "In narrow windows, such as beside iPhone Duo's side bar, settings keep their names on one line and shorten long choices instead.",
