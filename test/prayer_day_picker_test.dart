@@ -235,6 +235,63 @@ void main() {
     expect(find.text(shownTitle), findsNothing);
   });
 
+  testWidgets('fits the whole grid as months of five and six weeks page by', (
+    tester,
+  ) async {
+    await tester.pumpWidget(app());
+    double slotHeight() => tester
+        .getSize(
+          find.ancestor(
+            of: find.byType(HijriMonthGrid),
+            matching: find.byWidgetPredicate(
+              (w) => w.runtimeType.toString() == '_HeightBetween',
+            ),
+          ),
+        )
+        .height;
+    double gridHeight() => tester.getSize(find.byType(HijriMonthGrid)).height;
+    await tester.tap(find.bySemanticsLabel('Hijri Calendar'));
+    await tester.pumpAndSettle();
+    final heights = <double>{};
+    for (var i = 0; i < 6; i++) {
+      await tester.tap(find.bySemanticsLabel('Next month'));
+      await tester.pumpAndSettle();
+      heights.add(gridHeight());
+      expect(slotHeight(), gridHeight());
+    }
+    // Both week counts came by.
+    expect(heights.length, 2);
+  });
+
+  testWidgets('slides today\'s month in from a far month', (tester) async {
+    await tester.pumpWidget(app());
+    final month = hijriMonthOf(today);
+    final l10n = AppLocalizations.of(tester.element(find.byType(Scaffold)));
+    final shownTitle = '${hijriMonthName(l10n, month.month)} ${month.year} H';
+    await tester.tap(find.bySemanticsLabel('Hijri Calendar'));
+    await tester.pumpAndSettle();
+    for (var i = 0; i < 3; i++) {
+      await tester.tap(find.bySemanticsLabel('Next month'));
+      await tester.pumpAndSettle();
+    }
+    expect(find.text(shownTitle), findsNothing);
+
+    await tester.tap(find.text('Today'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+    // Midway, today's month is sliding in beside the one paged to.
+    final todayCell = find.bySemanticsLabel(
+      RegExp(r'H, Tuesday, October 20, 2026$'),
+    );
+    expect(todayCell, findsOneWidget);
+    final midway = tester.getCenter(todayCell).dx;
+    await tester.pumpAndSettle();
+    // It came in from the left, where earlier months lie.
+    expect(midway, lessThan(tester.getCenter(todayCell).dx));
+    expect(find.text(shownTitle), findsOneWidget);
+    expect(find.text('Today'), findsNothing);
+  });
+
   testWidgets('swipes the Hijri month grid between months', (tester) async {
     await tester.pumpWidget(app());
     final l10n = AppLocalizations.of(tester.element(find.byType(Scaffold)));

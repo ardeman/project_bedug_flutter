@@ -5,6 +5,8 @@ import 'package:material_ui/material_ui.dart';
 import '../../../core/design/material_controls.dart';
 
 import 'package:flutter/physics.dart';
+import 'package:flutter/rendering.dart'
+    show BoxHitTestResult, ClipRectLayer, LayerHandle, RenderProxyBox;
 import 'package:intl/intl.dart';
 
 import '../../../core/constants/app_colors.dart';
@@ -249,7 +251,6 @@ class _PrayerDayPickerState extends State<PrayerDayPicker>
         children: [
           _StripToGrid(
             progress: _calendar,
-            gridHeight: () => _gridHeight,
             strip: NotificationListener<ScrollNotification>(
               onNotification: _onScroll,
               child: _DateStrip(
@@ -457,23 +458,13 @@ class _CalendarToggle extends StatelessWidget {
 /// readers.
 class _StripToGrid extends StatelessWidget {
   final Animation<double> progress;
-  final double Function() gridHeight;
   final Widget strip;
   final Widget? grid;
   const _StripToGrid({
     required this.progress,
-    required this.gridHeight,
     required this.strip,
     required this.grid,
   });
-
-  /// Lays [child] out at its own height, whatever the slot's height.
-  static Widget _natural(Widget child) => OverflowBox(
-    alignment: Alignment.topCenter,
-    minHeight: 0,
-    maxHeight: double.infinity,
-    child: child,
-  );
 
   @override
   Widget build(BuildContext ctx) => AnimatedBuilder(
@@ -482,38 +473,112 @@ class _StripToGrid extends StatelessWidget {
       final t = progress.value;
       final isGridShown = t >= 0.5;
       final isMorphing = grid != null && t > 0;
-      return ClipRect(
-        child: SizedBox(
-          height: lerpDouble(_DateStrip._height, gridHeight(), t),
-          child: Stack(
-            children: [
-              // Kept (hidden) while the grid is open, so its scroll
-              // position survives.
-              _natural(
-                IgnorePointer(
-                  ignoring: isGridShown,
-                  child: ExcludeSemantics(
-                    excluding: isGridShown,
-                    child: Opacity(opacity: isMorphing ? 0 : 1, child: strip),
-                  ),
+      return _HeightBetween(
+        from: _DateStrip._height,
+        progress: t,
+        child: Stack(
+          children: [
+            // Kept (hidden) while the grid is open, so its scroll position
+            // survives.
+            IgnorePointer(
+              ignoring: isGridShown,
+              child: ExcludeSemantics(
+                excluding: isGridShown,
+                child: Opacity(opacity: isMorphing ? 0 : 1, child: strip),
+              ),
+            ),
+            if (grid case final grid?)
+              IgnorePointer(
+                ignoring: !isGridShown,
+                child: ExcludeSemantics(
+                  excluding: !isGridShown,
+                  child: Opacity(opacity: isMorphing ? 1 : 0, child: grid),
                 ),
               ),
-              if (grid case final grid?)
-                _natural(
-                  IgnorePointer(
-                    ignoring: !isGridShown,
-                    child: ExcludeSemantics(
-                      excluding: !isGridShown,
-                      child: Opacity(opacity: isMorphing ? 1 : 0, child: grid),
-                    ),
-                  ),
-                ),
-            ],
-          ),
+          ],
         ),
       );
     },
   );
+}
+
+/// Lays [child] out at its own height and takes the height [progress] of the
+/// way from [from] to it, clipping the rest. Measured in the same layout, so
+/// the slot follows the grid's height as months of five and six weeks swipe
+/// past.
+class _HeightBetween extends SingleChildRenderObjectWidget {
+  final double from;
+  final double progress;
+  const _HeightBetween({
+    required this.from,
+    required this.progress,
+    required super.child,
+  });
+
+  @override
+  _RenderHeightBetween createRenderObject(BuildContext ctx) =>
+      _RenderHeightBetween(from, progress);
+
+  @override
+  void updateRenderObject(BuildContext ctx, _RenderHeightBetween box) => box
+    ..from = from
+    ..progress = progress;
+}
+
+class _RenderHeightBetween extends RenderProxyBox {
+  _RenderHeightBetween(this._from, this._progress);
+
+  double _from;
+  set from(double value) {
+    if (value == _from) return;
+    _from = value;
+    markNeedsLayout();
+  }
+
+  double _progress;
+  set progress(double value) {
+    if (value == _progress) return;
+    _progress = value;
+    markNeedsLayout();
+  }
+
+  final _clip = LayerHandle<ClipRectLayer>();
+
+  @override
+  void performLayout() {
+    final child = this.child!;
+    child.layout(
+      BoxConstraints(
+        minWidth: constraints.minWidth,
+        maxWidth: constraints.maxWidth,
+      ),
+      parentUsesSize: true,
+    );
+    size = constraints.constrain(
+      Size(child.size.width, lerpDouble(_from, child.size.height, _progress)!),
+    );
+  }
+
+  @override
+  bool hitTest(BoxHitTestResult result, {required Offset position}) =>
+      size.contains(position) && super.hitTest(result, position: position);
+
+  @override
+  void paint(PaintingContext context, Offset offset) {
+    _clip.layer = context.pushClipRect(
+      needsCompositing,
+      offset,
+      Offset.zero & size,
+      super.paint,
+      oldLayer: _clip.layer,
+    );
+  }
+
+  @override
+  void dispose() {
+    _clip.layer = null;
+    super.dispose();
+  }
 }
 
 /// The grab bar under the date: pulled down it opens the Hijri month grid,

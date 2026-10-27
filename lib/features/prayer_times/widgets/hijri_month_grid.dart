@@ -145,9 +145,11 @@ class HijriMonthGridState extends State<HijriMonthGrid>
   /// Width of the days, measured while they are laid out.
   double _swipeWidth = 1;
 
-  /// The direction of a running page animation: 1 to the next month, -1 to
-  /// the previous one, 0 when none runs.
-  int _paging = 0;
+  /// The month a running page animation slides in, or null when none runs.
+  ({int year, int month})? _pagingTo;
+
+  /// Months counted from the calendar's start, to compare two months.
+  static int _ordinal(({int year, int month}) m) => m.year * 12 + m.month;
 
   /// The drag at which the next month fills the days. Months run with the
   /// reading direction, so it comes in from the right in left-to-right
@@ -158,24 +160,32 @@ class HijriMonthGridState extends State<HijriMonthGrid>
   /// Finishes a running page animation at once, keeping the days where they
   /// are on screen, so a new drag or press carries on from there.
   void _settlePaging() {
-    if (_paging == 0) return;
-    final forward = _paging > 0;
-    _paging = 0;
+    final to = _pagingTo;
+    if (to == null) return;
+    final forward = _ordinal(to) > _ordinal(_view);
+    _pagingTo = null;
     final dx = _swipe.value;
-    _show(forward ? _nextOf(_view) : _prevOf(_view));
+    _show(to);
     _swipe.value = dx - (forward ? _nextOffset : -_nextOffset);
   }
 
   /// Slides the next or previous month into view.
-  Future<void> _pageBy({required bool forward}) async {
+  void _pageBy({required bool forward}) {
     _settlePaging();
     if (!(forward ? _hasNext : _hasPrev)) return;
+    final month = forward ? _nextOf(_view) : _prevOf(_view);
     if (MediaQuery.of(context).disableAnimations) {
       _swipe.value = 0;
-      _show(forward ? _nextOf(_view) : _prevOf(_view));
+      _show(month);
       return;
     }
-    _paging = forward ? 1 : -1;
+    _slideTo(month);
+  }
+
+  /// Slides [month] in from the side it lies on, however far away it is.
+  Future<void> _slideTo(({int year, int month}) month) async {
+    final forward = _ordinal(month) > _ordinal(_view);
+    setState(() => _pagingTo = month);
     try {
       await _swipe
           .animateTo(
@@ -244,14 +254,24 @@ class HijriMonthGridState extends State<HijriMonthGrid>
   /// month alongside them. The height moves between the two months' week
   /// counts as one slides in.
   Widget _swipeable(BuildContext ctx, Widget days, int weekCount) {
-    final prev = _hasPrev ? _monthDays(_prevOf(_view)) : null;
-    final next = _hasNext ? _monthDays(_nextOf(_view)) : null;
+    // A month slid in from further away (see [showSelectedMonth]) takes its
+    // side's neighbour's place.
+    final to = _pagingTo;
+    final toNext = to != null && _ordinal(to) > _ordinal(_view);
+    final nextView = to != null && toNext
+        ? to
+        : (_hasNext ? _nextOf(_view) : null);
+    final prevView = to != null && !toNext
+        ? to
+        : (_hasPrev ? _prevOf(_view) : null);
+    final prev = prevView == null ? null : _monthDays(prevView);
+    final next = nextView == null ? null : _monthDays(nextView);
     Widget weeksOf(
       ({int year, int month}) view,
       ({List<HijriCalendar> days, List<DateTime> dates}) month,
     ) => _weeks(ctx, view, month.days, month.dates, showDays: true);
-    final prevDays = prev == null ? null : weeksOf(_prevOf(_view), prev);
-    final nextDays = next == null ? null : weeksOf(_nextOf(_view), next);
+    final prevDays = prev == null ? null : weeksOf(prevView!, prev);
+    final nextDays = next == null ? null : weeksOf(nextView!, next);
 
     return LayoutBuilder(
       builder: (ctx, constraints) {
@@ -306,11 +326,16 @@ class HijriMonthGridState extends State<HijriMonthGrid>
     );
   }
 
-  /// Pages back to the picked day's month.
+  /// Slides back to the picked day's month.
   void showSelectedMonth() {
-    _paging = 0;
-    _swipe.value = 0;
-    _show(_monthOf(widget.selected));
+    _settlePaging();
+    final month = _monthOf(widget.selected);
+    if (month == _view || MediaQuery.of(context).disableAnimations) {
+      _swipe.value = 0;
+      _show(month);
+      return;
+    }
+    _slideTo(month);
   }
 
   void _show(({int year, int month}) month) {
@@ -322,13 +347,24 @@ class HijriMonthGridState extends State<HijriMonthGrid>
   void didUpdateWidget(HijriMonthGrid oldWidget) {
     super.didUpdateWidget(oldWidget);
     // Any newly picked day (the grid, the strip, "Today") brings its month
-    // into view.
+    // into view, sliding it in while the grid is fully open.
     // Paging months alone leaves the picked day where it is.
-    if (!_sameDay(widget.selected, oldWidget.selected) ||
-        widget.hijriReckoning != oldWidget.hijriReckoning) {
-      _paging = 0;
+    final reckoned = widget.hijriReckoning != oldWidget.hijriReckoning;
+    if (!_sameDay(widget.selected, oldWidget.selected) || reckoned) {
+      final month = _monthOf(widget.selected);
+      _pagingTo = null;
+      _swipe.stop();
       _swipe.value = 0;
-      _view = _monthOf(widget.selected);
+      final slides =
+          !reckoned &&
+          month != _view &&
+          (widget.morph?.progress.value ?? 1) >= 1 &&
+          !MediaQuery.of(context).disableAnimations;
+      if (slides) {
+        _slideTo(month);
+      } else {
+        _view = month;
+      }
     }
   }
 

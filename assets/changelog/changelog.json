@@ -5,6 +5,15 @@
       "date": null,
       "changes": [
         {
+          "type": "fixed",
+          "text": {
+            "en": "The Hijri month calendar no longer cuts off its last week after moving between months of five and six weeks.",
+            "id": "Kalender bulan Hijriah tidak lagi memotong pekan terakhirnya setelah berpindah antara bulan lima dan enam pekan.",
+            "ms": "Takwim bulan Hijrah tidak lagi memotong minggu terakhirnya selepas beralih antara bulan lima dan enam minggu.",
+            "ar": "لم يعد تقويم الشهر الهجري يقطع أسبوعه الأخير بعد التنقل بين أشهر من خمسة وستة أسابيع."
+          }
+        },
+        {
           "type": "improved",
           "text": {
             "en": "On iPhone, iPad and Mac, glass buttons such as Back and Refresh squeeze under your finger and stretch as you drag, then spring back.",
@@ -34,10 +43,10 @@
         {
           "type": "improved",
           "text": {
-            "en": "Swipe the Hijri month calendar sideways to move between months.",
-            "id": "Geser kalender bulan Hijriah ke samping untuk berpindah bulan.",
-            "ms": "Leret takwim bulan Hijrah ke tepi untuk beralih bulan.",
-            "ar": "اسحب تقويم الشهر الهجري جانبًا للتنقل بين الأشهر."
+            "en": "Swipe the Hijri month calendar sideways to move between months; Today slides back to the current month.",
+            "id": "Geser kalender bulan Hijriah ke samping untuk berpindah bulan; Hari Ini menggesernya kembali ke bulan sekarang.",
+            "ms": "Leret takwim bulan Hijrah ke tepi untuk beralih bulan; Hari Ini meleretnya kembali ke bulan semasa.",
+            "ar": "اسحب تقويم الشهر الهجري جانبًا للتنقل بين الأشهر؛ ويعيدك زر اليوم إلى الشهر الحالي بالانزلاق."
           }
         },
         {
