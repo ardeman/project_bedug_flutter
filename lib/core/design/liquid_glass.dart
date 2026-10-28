@@ -171,60 +171,67 @@ class GlassNavBar extends StatelessWidget {
     final isRtl = direction == TextDirection.rtl;
     final visualItems = isRtl ? items.reversed : items;
     int visualIndex(int index) => isRtl ? items.length - 1 - index : index;
+    final barHeight = heightOf(ctx);
+    final center = Offset(
+      mq.size.width / 2,
+      mq.size.height - bottomGap - barHeight / 2,
+    );
     // The tab bar adds the bottom safe-area inset to its margin; drop the
     // inset so the gap is measured from the screen edge.
-    return MediaQuery.removePadding(
-      context: ctx,
-      removeBottom: true,
-      // The package measures taps, drags and pill offsets from the left.
-      // Reverse the items explicitly so its geometry also matches RTL labels.
-      child: Directionality(
-        textDirection: TextDirection.ltr,
-        child: LiquidGlassTabBar(
-          items: [
-            for (final item in visualItems)
-              LiquidGlassTabBarItem(
-                icon: item.icon,
-                selectedIcon: item.activeIcon,
-                label: item.label,
-                // Long translations would wrap and overflow the bar.
-                labelBuilder: (_, l) => Text(
-                  l.text ?? '',
-                  textDirection: direction,
-                  // The bar has no room for enlarged text; like the native
-                  // tab bar, its labels stop growing with Dynamic Type.
-                  textScaler: mq.textScaler.clamp(
-                    maxScaleFactor: _maxLabelTextScale,
+    return _withNavBackdrop(ctx, (backdrop) {
+      final colors = _navTabColorsOf(ctx, backdrop, center);
+      return MediaQuery.removePadding(
+        context: ctx,
+        removeBottom: true,
+        // The package measures taps, drags and pill offsets from the left.
+        // Reverse the items explicitly so its geometry also matches RTL labels.
+        child: Directionality(
+          textDirection: TextDirection.ltr,
+          child: LiquidGlassTabBar(
+            items: [
+              for (final item in visualItems)
+                LiquidGlassTabBarItem(
+                  icon: item.icon,
+                  selectedIcon: item.activeIcon,
+                  label: item.label,
+                  // Long translations would wrap and overflow the bar.
+                  labelBuilder: (_, l) => Text(
+                    l.text ?? '',
+                    textDirection: direction,
+                    // The bar has no room for enlarged text; like the native
+                    // tab bar, its labels stop growing with Dynamic Type.
+                    textScaler: mq.textScaler.clamp(
+                      maxScaleFactor: _maxLabelTextScale,
+                    ),
+                    style: theme.textTheme.labelSmall?.copyWith(
+                      color: l.textStyle.color,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  style: theme.textTheme.labelSmall?.copyWith(
-                    color: l.textStyle.color,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
                 ),
-              ),
-          ],
-          selectedIndex: visualIndex(currentIndex),
-          onChanged: (index) => onTap(visualIndex(index)),
-          width: width,
-          height: heightOf(ctx),
-          margin: EdgeInsets.only(bottom: bottomGap),
-          style: LiquidGlassTabBar.defaultStyle.copyWith(
-            color: glassTintOf(ctx),
-          ),
-          itemStyle: LiquidGlassTabItemStyle(
-            selectedColor: AppColors.accentOf(ctx),
-            unselectedColor: theme.colorScheme.onSurface.withValues(
-              alpha: 0.62,
+            ],
+            selectedIndex: visualIndex(currentIndex),
+            onChanged: (index) => onTap(visualIndex(index)),
+            width: width,
+            height: barHeight,
+            margin: EdgeInsets.only(bottom: bottomGap),
+            style: LiquidGlassTabBar.defaultStyle.copyWith(
+              color: glassTintOf(ctx),
             ),
-            iconSize: compact
-                ? AppControlSizes.toolbarIcon
-                : AppControlSizes.navigationIcon,
-            labelFontSize: theme.textTheme.labelSmall!.fontSize!,
+            itemStyle: LiquidGlassTabItemStyle(
+              selectedColor: colors.selected,
+              unselectedColor: colors.unselected,
+              iconSize: compact
+                  ? AppControlSizes.toolbarIcon
+                  : AppControlSizes.navigationIcon,
+              labelFontSize: theme.textTheme.labelSmall!.fontSize!,
+            ),
+            pillStyle: LiquidGlassTabPillStyle(color: colors.pill),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
 
@@ -290,7 +297,6 @@ class _GlassNavRail extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctx) {
-    final theme = Theme.of(ctx);
     final mq = MediaQuery.of(ctx);
     final barWidth = side == TextDirection.rtl
         ? mq.padding.right
@@ -303,7 +309,15 @@ class _GlassNavRail extends StatelessWidget {
       (maxHeight - _pillInset * 2) / items.length,
     );
     final height = extent * items.length + _pillInset * 2;
-    final rail = SizedBox(
+    // Matches the placement below.
+    final cameraBelow = side == TextDirection.rtl && compact;
+    final center = Offset(
+      side == TextDirection.rtl ? mq.size.width - barWidth / 2 : barWidth / 2,
+      cameraBelow
+          ? bottomGap + height / 2
+          : mq.size.height - bottomGap - height / 2,
+    );
+    Widget railFor(_NavTabColors colors) => SizedBox(
       width: _width,
       height: height,
       // The package's refracting, morphing selection pill is horizontal.
@@ -351,12 +365,11 @@ class _GlassNavRail extends StatelessWidget {
                 color: glassTintOf(ctx),
               ),
               itemStyle: LiquidGlassTabItemStyle(
-                selectedColor: AppColors.accentOf(ctx),
-                unselectedColor: theme.colorScheme.onSurface.withValues(
-                  alpha: 0.62,
-                ),
+                selectedColor: colors.selected,
+                unselectedColor: colors.unselected,
                 iconSize: AppControlSizes.navigationIcon,
               ),
+              pillStyle: LiquidGlassTabPillStyle(color: colors.pill),
             ),
           ),
         ),
@@ -369,14 +382,18 @@ class _GlassNavRail extends StatelessWidget {
     // status items and camera at the top of the bar either way, and is
     // never short. iOS doesn't report the cutout, so this follows from
     // where the bar is and the window's height.
-    final cameraBelow = side == TextDirection.rtl && compact;
     return Positioned(
       top: cameraBelow ? bottomGap : null,
       bottom: cameraBelow ? null : bottomGap,
       left: side == TextDirection.ltr ? 0 : null,
       right: side == TextDirection.rtl ? 0 : null,
       width: barWidth,
-      child: Center(child: rail),
+      child: Center(
+        child: _withNavBackdrop(
+          ctx,
+          (backdrop) => railFor(_navTabColorsOf(ctx, backdrop, center)),
+        ),
+      ),
     );
   }
 }
@@ -391,6 +408,183 @@ class GlassNavItem {
     required this.activeIcon,
     required this.label,
   });
+}
+
+/// A colored area of the page, such as the accent hero, that may sit under
+/// the floating [GlassNavBar], in the [GlassNavBackdropScope]'s coordinates.
+@immutable
+class GlassNavBackdrop {
+  final Rect rect;
+  final Color color;
+
+  const GlassNavBackdrop({required this.rect, required this.color});
+
+  @override
+  bool operator ==(Object other) =>
+      other is GlassNavBackdrop && other.rect == rect && other.color == color;
+
+  @override
+  int get hashCode => Object.hash(rect, color);
+}
+
+/// Lets a page under the floating [GlassNavBar] report its colored
+/// backdrop ([GlassNavBackdropRegion]), so the bar's tabs turn light over
+/// a dark one and back to the text color over the page. Wrap the [Stack]
+/// that holds the page and the bar.
+class GlassNavBackdropScope extends StatefulWidget {
+  final Widget child;
+
+  const GlassNavBackdropScope({super.key, required this.child});
+
+  static _GlassNavBackdropInherited? _of(BuildContext ctx) =>
+      ctx.getInheritedWidgetOfExactType<_GlassNavBackdropInherited>();
+
+  @override
+  State<GlassNavBackdropScope> createState() => _GlassNavBackdropScopeState();
+}
+
+class _GlassNavBackdropScopeState extends State<GlassNavBackdropScope> {
+  final _backdrop = ValueNotifier<GlassNavBackdrop?>(null);
+
+  @override
+  void dispose() {
+    _backdrop.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext ctx) => _GlassNavBackdropInherited(
+    backdrop: _backdrop,
+    scope: ctx,
+    child: widget.child,
+  );
+}
+
+class _GlassNavBackdropInherited extends InheritedWidget {
+  final ValueNotifier<GlassNavBackdrop?> backdrop;
+
+  /// The scope's context, whose box the backdrop rect is measured in.
+  final BuildContext scope;
+
+  const _GlassNavBackdropInherited({
+    required this.backdrop,
+    required this.scope,
+    required super.child,
+  });
+
+  @override
+  bool updateShouldNotify(_GlassNavBackdropInherited old) =>
+      old.backdrop != backdrop;
+}
+
+/// Reports [child]'s area as a [color] backdrop to the enclosing
+/// [GlassNavBackdropScope] while [active], measured after each build.
+class GlassNavBackdropRegion extends StatefulWidget {
+  final Color color;
+  final bool active;
+  final Widget child;
+
+  const GlassNavBackdropRegion({
+    super.key,
+    required this.color,
+    required this.active,
+    required this.child,
+  });
+
+  @override
+  State<GlassNavBackdropRegion> createState() => _GlassNavBackdropRegionState();
+}
+
+class _GlassNavBackdropRegionState extends State<GlassNavBackdropRegion> {
+  ValueNotifier<GlassNavBackdrop?>? _reported;
+
+  void _report() {
+    if (!mounted) return;
+    final scope = GlassNavBackdropScope._of(context);
+    if (scope == null) return;
+    final box = context.findRenderObject() as RenderBox?;
+    final scopeBox = scope.scope.findRenderObject() as RenderBox?;
+    if (!widget.active ||
+        box == null ||
+        scopeBox == null ||
+        !box.hasSize ||
+        !box.attached) {
+      if (_reported?.value != null) _reported!.value = null;
+      return;
+    }
+    final origin = box.localToGlobal(Offset.zero, ancestor: scopeBox);
+    _reported = scope.backdrop
+      ..value = GlassNavBackdrop(rect: origin & box.size, color: widget.color);
+  }
+
+  @override
+  void dispose() {
+    final reported = _reported;
+    // Cleared after the frame: listeners may not rebuild during unmount.
+    if (reported != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        try {
+          reported.value = null;
+        } on FlutterError {
+          // The scope went away too.
+        }
+      });
+    }
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext ctx) {
+    WidgetsBinding.instance.addPostFrameCallback((_) => _report());
+    return widget.child;
+  }
+}
+
+typedef _NavTabColors = ({Color selected, Color unselected, Color pill});
+
+/// The selected and unselected tab colors and the selection pill's fill of
+/// a [GlassNavBar] whose center is at [center] in the
+/// [GlassNavBackdropScope]: white over a dark backdrop, unless the glass is
+/// tinted enough to turn light (the system's Tinted style), else the
+/// accent, the text color and the package's grey pill.
+_NavTabColors _navTabColorsOf(
+  BuildContext ctx,
+  GlassNavBackdrop? backdrop,
+  Offset center,
+) {
+  final overDark =
+      backdrop != null &&
+      backdrop.rect.contains(center) &&
+      ThemeData.estimateBrightnessForColor(
+            Color.alphaBlend(glassTintOf(ctx), backdrop.color),
+          ) ==
+          Brightness.dark;
+  if (overDark) {
+    return (
+      selected: Colors.white,
+      unselected: Colors.white.withValues(alpha: 0.78),
+      // The package's own pill fill for a bar over a dark page.
+      pill: LiquidGlassTabPillStyle.defaultRestAdaptivity.glassColorOnDark,
+    );
+  }
+  return (
+    selected: AppColors.accentOf(ctx),
+    unselected: Theme.of(ctx).colorScheme.onSurface.withValues(alpha: 0.62),
+    pill: const LiquidGlassTabPillStyle().color,
+  );
+}
+
+/// Rebuilds [builder] with the scope's backdrop, or null without a scope.
+Widget _withNavBackdrop(
+  BuildContext ctx,
+  Widget Function(GlassNavBackdrop? backdrop) builder,
+) {
+  final scope = GlassNavBackdropScope._of(ctx);
+  if (scope == null) return builder(null);
+  return ValueListenableBuilder<GlassNavBackdrop?>(
+    valueListenable: scope.backdrop,
+    builder: (_, backdrop, _) => builder(backdrop),
+  );
 }
 
 /// Width of the macOS traffic lights, which sit in the window's top leading

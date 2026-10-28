@@ -7,6 +7,66 @@ import 'package:liquid_glass_easy/liquid_glass_easy.dart';
 import 'package:liquid_glass_easy/src/widgets/components/bottom_nav_bar/liquid_glass_nav_bar_motion_pill.dart';
 
 void main() {
+  testWidgets('glass tabs turn light over a dark backdrop only', (
+    tester,
+  ) async {
+    Future<void> pumpBackdrop(double height) => tester.pumpWidget(
+      MaterialApp(
+        theme: buildAppTheme(Brightness.light),
+        home: Scaffold(
+          body: GlassNavBackdropScope(
+            child: Stack(
+              children: [
+                GlassNavBackdropRegion(
+                  color: const Color(0xFF000000),
+                  active: true,
+                  child: SizedBox(width: double.infinity, height: height),
+                ),
+                GlassNavBar(
+                  currentIndex: 0,
+                  onTap: (_) {},
+                  items: const [
+                    GlassNavItem(
+                      icon: Icons.schedule,
+                      activeIcon: Icons.schedule,
+                      label: 'Prayers',
+                    ),
+                    GlassNavItem(
+                      icon: Icons.settings,
+                      activeIcon: Icons.settings,
+                      label: 'Settings',
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+    Color settingsColor() =>
+        tester.widget<Text>(find.text('Settings').first).style!.color!;
+    Color pillColor() => tester
+        .widget<LiquidGlassTabBar>(find.byType(LiquidGlassTabBar))
+        .pillStyle
+        .color;
+
+    // The backdrop covers the whole screen, so the bar sits on it.
+    await pumpBackdrop(600);
+    await tester.pumpAndSettle();
+    expect(settingsColor().computeLuminance(), greaterThan(0.5));
+    expect(
+      pillColor(),
+      LiquidGlassTabPillStyle.defaultRestAdaptivity.glassColorOnDark,
+    );
+
+    // The backdrop ends above the bar, which is over the page again.
+    await pumpBackdrop(100);
+    await tester.pumpAndSettle();
+    expect(settingsColor().computeLuminance(), lessThan(0.5));
+    expect(pillColor(), const LiquidGlassTabPillStyle().color);
+  });
+
   for (final direction in TextDirection.values) {
     testWidgets(
       'glass tabs match visible labels in $direction',

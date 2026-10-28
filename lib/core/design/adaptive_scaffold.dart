@@ -74,24 +74,27 @@ class AdaptiveScaffold extends StatelessWidget {
       // are Material-only.
       appBar: showAppBar ? GlassTopBar(title: title) : null,
       // The glass bar floats over the page so content refracts through it.
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          // Lists end clear of the floating bar.
-          MediaQuery(
-            data: mq.copyWith(
-              padding: mq.padding.copyWith(
-                bottom: GlassNavBar.occupiedHeight(ctx),
+      // The page reports its hero, so the bar's tabs turn light over it.
+      body: GlassNavBackdropScope(
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            // Lists end clear of the floating bar.
+            MediaQuery(
+              data: mq.copyWith(
+                padding: mq.padding.copyWith(
+                  bottom: GlassNavBar.occupiedHeight(ctx),
+                ),
               ),
+              child: child,
             ),
-            child: child,
-          ),
-          GlassNavBar(
-            currentIndex: selectedIndex,
-            onTap: onDestinationSelected,
-            items: navItems,
-          ),
-        ],
+            GlassNavBar(
+              currentIndex: selectedIndex,
+              onTap: onDestinationSelected,
+              items: navItems,
+            ),
+          ],
+        ),
       ),
     );
   }

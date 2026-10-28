@@ -5,6 +5,15 @@
       "date": null,
       "changes": [
         {
+          "type": "improved",
+          "text": {
+            "en": "On iPhone and Mac, the tab bar's icons, labels and selection turn white over the green prayer times header, and back as it scrolls away.",
+            "id": "Di iPhone dan Mac, ikon, label, dan penanda pilihan bilah tab kini berwarna putih di atas kepala jadwal salat yang hijau, lalu kembali saat digulir.",
+            "ms": "Di iPhone dan Mac, ikon, label dan penanda pilihan bar tab kini menjadi putih di atas pengepala waktu solat yang hijau, lalu kembali apabila ditatal.",
+            "ar": "على iPhone وMac، تصبح أيقونات شريط التبويبات وتسمياته ومؤشر التحديد بيضاء فوق رأس مواقيت الصلاة الأخضر، وتعود عند التمرير."
+          }
+        },
+        {
           "type": "fixed",
           "text": {
             "en": "On the unfolded iPhone Duo, the prayer times header no longer overflows when it collapses.",
