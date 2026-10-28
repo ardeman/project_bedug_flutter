@@ -1801,108 +1801,114 @@ class _LiquidGlassCard extends StatelessWidget {
         AppSpacing.md + sideInsetRight,
         AppSpacing.xxs,
       ),
-      child: Material(
-        color: Colors.transparent,
-        // Lite glass: frost, tint and the lit rim without the shader, since
-        // lenses inside a scrolling list fight the package's design.
-        child: LiquidGlassLite(
-          shape: const LiquidGlassShape.continuousRoundedRectangle(
-            cornerRadius: AppRadii.lg,
-          ),
-          blur: isNext ? 14 : 10,
-          color: isNext ? Colors.transparent : glassCardTintOf(ctx),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.md,
-              vertical: AppSpacing.sm,
+      // The floating nav bar's tabs turn light over the highlighted card,
+      // as over the hero.
+      child: GlassNavBackdropRegion(
+        color: AppColors.accentOf(ctx),
+        active: isNext,
+        child: Material(
+          color: Colors.transparent,
+          // Lite glass: frost, tint and the lit rim without the shader, since
+          // lenses inside a scrolling list fight the package's design.
+          child: LiquidGlassLite(
+            shape: const LiquidGlassShape.continuousRoundedRectangle(
+              cornerRadius: AppRadii.lg,
             ),
-            // Same continuous corners as the glass, which doesn't clip
-            // its child on every renderer.
-            decoration: ShapeDecoration(
-              shape: RoundedSuperellipseBorder(
-                borderRadius: BorderRadius.circular(AppRadii.lg),
+            blur: isNext ? 14 : 10,
+            color: isNext ? Colors.transparent : glassCardTintOf(ctx),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.md,
+                vertical: AppSpacing.sm,
               ),
-              gradient: isNext
-                  ? LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      // Nearly opaque, so the white text keeps its contrast
-                      // over a light background; a little glass shows through.
-                      colors: [
-                        AppColors.accentOf(ctx).withValues(alpha: 0.92),
-                        AppColors.secondaryOf(ctx).withValues(alpha: 0.85),
+              // Same continuous corners as the glass, which doesn't clip
+              // its child on every renderer.
+              decoration: ShapeDecoration(
+                shape: RoundedSuperellipseBorder(
+                  borderRadius: BorderRadius.circular(AppRadii.lg),
+                ),
+                gradient: isNext
+                    ? LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        // Nearly opaque, so the white text keeps its contrast
+                        // over a light background; a little glass shows through.
+                        colors: [
+                          AppColors.accentOf(ctx).withValues(alpha: 0.92),
+                          AppColors.secondaryOf(ctx).withValues(alpha: 0.85),
+                        ],
+                      )
+                    : null,
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    width: 42,
+                    height: 42,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: isNext
+                          ? Colors.white.withValues(alpha: 0.2)
+                          : categoryColor.withValues(alpha: 0.12),
+                    ),
+                    child: Icon(
+                      entry.icon,
+                      size: 20,
+                      color: isNext ? Colors.white : categoryColor,
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.md),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // The "up next" label leads, so it reads as a heading
+                        // for the prayer name below it.
+                        if (isNext)
+                          Text(
+                            l10n.upNext,
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: Colors.white.withValues(alpha: 0.75),
+                            ),
+                          ),
+                        _PrayerCategoryLabel(
+                          category: entry.category,
+                          l10n: l10n,
+                          color: isNext ? Colors.white : categoryColor,
+                        ),
+                        Text(
+                          entry.label,
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            color: isNext ? Colors.white : onSurface,
+                          ),
+                        ),
+                        if (entry.description case final description?)
+                          Text(
+                            description,
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: theme.colorScheme.onSurfaceVariant,
+                            ),
+                          ),
                       ],
-                    )
-                  : null,
-            ),
-            child: Row(
-              children: [
-                Container(
-                  width: 42,
-                  height: 42,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: isNext
-                        ? Colors.white.withValues(alpha: 0.2)
-                        : categoryColor.withValues(alpha: 0.12),
+                    ),
                   ),
-                  child: Icon(
-                    entry.icon,
-                    size: 20,
-                    color: isNext ? Colors.white : categoryColor,
+                  const SizedBox(width: AppSpacing.sm),
+                  Text(
+                    timeStr,
+                    // Already the card's largest text; at full accessibility
+                    // sizes it would push the row out of a narrow window.
+                    textScaler: MediaQuery.textScalerOf(ctx)
+                        .clamp(maxScaleFactor: 1.5),
+                    style: theme.textTheme.titleLarge?.copyWith(
+                      fontFeatures: const [FontFeature.tabularFigures()],
+                      color: isNext
+                          ? Colors.white
+                          : (isDark ? onSurface : AppColors.accentOf(ctx)),
+                    ),
                   ),
-                ),
-                const SizedBox(width: AppSpacing.md),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // The "up next" label leads, so it reads as a heading
-                      // for the prayer name below it.
-                      if (isNext)
-                        Text(
-                          l10n.upNext,
-                          style: theme.textTheme.bodySmall?.copyWith(
-                            color: Colors.white.withValues(alpha: 0.75),
-                          ),
-                        ),
-                      _PrayerCategoryLabel(
-                        category: entry.category,
-                        l10n: l10n,
-                        color: isNext ? Colors.white : categoryColor,
-                      ),
-                      Text(
-                        entry.label,
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          color: isNext ? Colors.white : onSurface,
-                        ),
-                      ),
-                      if (entry.description case final description?)
-                        Text(
-                          description,
-                          style: theme.textTheme.bodySmall?.copyWith(
-                            color: theme.colorScheme.onSurfaceVariant,
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.sm),
-                Text(
-                  timeStr,
-                  // Already the card's largest text; at full accessibility
-                  // sizes it would push the row out of a narrow window.
-                  textScaler: MediaQuery.textScalerOf(ctx)
-                      .clamp(maxScaleFactor: 1.5),
-                  style: theme.textTheme.titleLarge?.copyWith(
-                    fontFeatures: const [FontFeature.tabularFigures()],
-                    color: isNext
-                        ? Colors.white
-                        : (isDark ? onSurface : AppColors.accentOf(ctx)),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

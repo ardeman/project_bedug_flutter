@@ -67,6 +67,72 @@ void main() {
     expect(pillColor(), const LiquidGlassTabPillStyle().color);
   });
 
+  testWidgets('glass tabs follow a dark card as its list scrolls', (
+    tester,
+  ) async {
+    final controller = ScrollController();
+    addTearDown(controller.dispose);
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: buildAppTheme(Brightness.light),
+        home: Scaffold(
+          body: GlassNavBackdropScope(
+            child: Stack(
+              children: [
+                ListView(
+                  controller: controller,
+                  children: const [
+                    // An inactive region, like the faded hero, mustn't hide
+                    // the card's backdrop.
+                    GlassNavBackdropRegion(
+                      color: Color(0xFF000000),
+                      active: false,
+                      child: SizedBox(height: 100),
+                    ),
+                    // Puts the card at 520 to 580 on the 600 tall test
+                    // screen, across the bar's center at 560.
+                    SizedBox(height: 420),
+                    GlassNavBackdropRegion(
+                      color: Color(0xFF000000),
+                      active: true,
+                      child: SizedBox(height: 60),
+                    ),
+                    SizedBox(height: 1000),
+                  ],
+                ),
+                GlassNavBar(
+                  currentIndex: 0,
+                  onTap: (_) {},
+                  items: const [
+                    GlassNavItem(
+                      icon: Icons.schedule,
+                      activeIcon: Icons.schedule,
+                      label: 'Prayers',
+                    ),
+                    GlassNavItem(
+                      icon: Icons.settings,
+                      activeIcon: Icons.settings,
+                      label: 'Settings',
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    Color settingsColor() =>
+        tester.widget<Text>(find.text('Settings').first).style!.color!;
+    expect(settingsColor().computeLuminance(), greaterThan(0.5));
+
+    // Scrolled up past the bar, the card no longer sits under it.
+    controller.jumpTo(300);
+    await tester.pumpAndSettle();
+    expect(settingsColor().computeLuminance(), lessThan(0.5));
+  });
+
   for (final direction in TextDirection.values) {
     testWidgets(
       'glass tabs match visible labels in $direction',

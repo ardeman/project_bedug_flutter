@@ -428,9 +428,10 @@ class GlassNavBackdrop {
 }
 
 /// Lets a page under the floating [GlassNavBar] report its colored
-/// backdrop ([GlassNavBackdropRegion]), so the bar's tabs turn light over
-/// a dark one and back to the text color over the page. Wrap the [Stack]
-/// that holds the page and the bar.
+/// backdrops ([GlassNavBackdropRegion], such as the hero and the
+/// highlighted card), so the bar's tabs turn light over a dark one and back
+/// to the text color over the page. Wrap the [Stack] that holds the page
+/// and the bar.
 class GlassNavBackdropScope extends StatefulWidget {
   final Widget child;
 
@@ -444,41 +445,43 @@ class GlassNavBackdropScope extends StatefulWidget {
 }
 
 class _GlassNavBackdropScopeState extends State<GlassNavBackdropScope> {
-  final _backdrop = ValueNotifier<GlassNavBackdrop?>(null);
+  final _backdrops = ValueNotifier<Map<Object, GlassNavBackdrop>>(const {});
 
   @override
   void dispose() {
-    _backdrop.dispose();
+    _backdrops.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext ctx) => _GlassNavBackdropInherited(
-    backdrop: _backdrop,
+    backdrops: _backdrops,
     scope: ctx,
     child: widget.child,
   );
 }
 
 class _GlassNavBackdropInherited extends InheritedWidget {
-  final ValueNotifier<GlassNavBackdrop?> backdrop;
+  /// Each active region's backdrop, keyed by the region.
+  final ValueNotifier<Map<Object, GlassNavBackdrop>> backdrops;
 
   /// The scope's context, whose box the backdrop rect is measured in.
   final BuildContext scope;
 
   const _GlassNavBackdropInherited({
-    required this.backdrop,
+    required this.backdrops,
     required this.scope,
     required super.child,
   });
 
   @override
   bool updateShouldNotify(_GlassNavBackdropInherited old) =>
-      old.backdrop != backdrop;
+      old.backdrops != backdrops;
 }
 
 /// Reports [child]'s area as a [color] backdrop to the enclosing
-/// [GlassNavBackdropScope] while [active], measured after each build.
+/// [GlassNavBackdropScope] while [active], measured after each build and
+/// as the enclosing scrollable scrolls.
 class GlassNavBackdropRegion extends StatefulWidget {
   final Color color;
   final bool active;
@@ -496,7 +499,32 @@ class GlassNavBackdropRegion extends StatefulWidget {
 }
 
 class _GlassNavBackdropRegionState extends State<GlassNavBackdropRegion> {
-  ValueNotifier<GlassNavBackdrop?>? _reported;
+  ValueNotifier<Map<Object, GlassNavBackdrop>>? _reported;
+  ScrollPosition? _position;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // A list item isn't rebuilt as it scrolls, so it measures again on
+    // every scroll.
+    final position = Scrollable.maybeOf(context)?.position;
+    if (position != _position) {
+      _position?.removeListener(_onScroll);
+      _position = position?..addListener(_onScroll);
+    }
+  }
+
+  /// Measures after the frame, once the scroll has moved the layout.
+  void _onScroll() {
+    if (!widget.active && _reported == null) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) => _report());
+  }
+
+  void _clear() {
+    final reported = _reported;
+    if (reported == null || !reported.value.containsKey(this)) return;
+    reported.value = Map.of(reported.value)..remove(this);
+  }
 
   void _report() {
     if (!mounted) return;
@@ -509,22 +537,28 @@ class _GlassNavBackdropRegionState extends State<GlassNavBackdropRegion> {
         scopeBox == null ||
         !box.hasSize ||
         !box.attached) {
-      if (_reported?.value != null) _reported!.value = null;
+      _clear();
       return;
     }
     final origin = box.localToGlobal(Offset.zero, ancestor: scopeBox);
-    _reported = scope.backdrop
-      ..value = GlassNavBackdrop(rect: origin & box.size, color: widget.color);
+    final backdrop = GlassNavBackdrop(
+      rect: origin & box.size,
+      color: widget.color,
+    );
+    final backdrops = scope.backdrops;
+    if (backdrops.value[this] == backdrop) return;
+    _reported = backdrops;
+    backdrops.value = {...backdrops.value, this: backdrop};
   }
 
   @override
   void dispose() {
-    final reported = _reported;
+    _position?.removeListener(_onScroll);
     // Cleared after the frame: listeners may not rebuild during unmount.
-    if (reported != null) {
+    if (_reported != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         try {
-          reported.value = null;
+          _clear();
         } on FlutterError {
           // The scope went away too.
         }
@@ -544,21 +578,22 @@ typedef _NavTabColors = ({Color selected, Color unselected, Color pill});
 
 /// The selected and unselected tab colors and the selection pill's fill of
 /// a [GlassNavBar] whose center is at [center] in the
-/// [GlassNavBackdropScope]: white over a dark backdrop, unless the glass is
+/// [GlassNavBackdropScope]: white over any dark backdrop, unless the glass is
 /// tinted enough to turn light (the system's Tinted style), else the
 /// accent, the text color and the package's grey pill.
 _NavTabColors _navTabColorsOf(
   BuildContext ctx,
-  GlassNavBackdrop? backdrop,
+  Iterable<GlassNavBackdrop> backdrops,
   Offset center,
 ) {
-  final overDark =
-      backdrop != null &&
-      backdrop.rect.contains(center) &&
-      ThemeData.estimateBrightnessForColor(
-            Color.alphaBlend(glassTintOf(ctx), backdrop.color),
-          ) ==
-          Brightness.dark;
+  final overDark = backdrops.any(
+    (backdrop) =>
+        backdrop.rect.contains(center) &&
+        ThemeData.estimateBrightnessForColor(
+              Color.alphaBlend(glassTintOf(ctx), backdrop.color),
+            ) ==
+            Brightness.dark,
+  );
   if (overDark) {
     return (
       selected: Colors.white,
@@ -574,16 +609,16 @@ _NavTabColors _navTabColorsOf(
   );
 }
 
-/// Rebuilds [builder] with the scope's backdrop, or null without a scope.
+/// Rebuilds [builder] with the scope's backdrops, or none without a scope.
 Widget _withNavBackdrop(
   BuildContext ctx,
-  Widget Function(GlassNavBackdrop? backdrop) builder,
+  Widget Function(Iterable<GlassNavBackdrop> backdrops) builder,
 ) {
   final scope = GlassNavBackdropScope._of(ctx);
-  if (scope == null) return builder(null);
-  return ValueListenableBuilder<GlassNavBackdrop?>(
-    valueListenable: scope.backdrop,
-    builder: (_, backdrop, _) => builder(backdrop),
+  if (scope == null) return builder(const []);
+  return ValueListenableBuilder<Map<Object, GlassNavBackdrop>>(
+    valueListenable: scope.backdrops,
+    builder: (_, backdrops, _) => builder(backdrops.values),
   );
 }
 
