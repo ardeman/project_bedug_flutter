@@ -7,6 +7,15 @@
         {
           "type": "fixed",
           "text": {
+            "en": "On the unfolded iPhone Duo, the prayer times header no longer overflows when it collapses.",
+            "id": "Pada iPhone Duo yang terbuka, kepala jadwal salat tidak lagi meluap saat menciut.",
+            "ms": "Pada iPhone Duo yang dibuka, pengepala waktu solat tidak lagi melimpah apabila dikecilkan.",
+            "ar": "على iPhone Duo المفتوح، لم يعد رأس مواقيت الصلاة يفيض عند طيّه."
+          }
+        },
+        {
+          "type": "fixed",
+          "text": {
             "en": "With the iPhone Duo turned sideways, the side tab bar no longer hides its last tab under the camera.",
             "id": "Saat iPhone Duo dimiringkan, bilah tab samping tidak lagi menyembunyikan tab terakhirnya di bawah kamera.",
             "ms": "Apabila iPhone Duo dicondongkan ke sisi, bar tab sisi tidak lagi menyembunyikan tab terakhirnya di bawah kamera.",

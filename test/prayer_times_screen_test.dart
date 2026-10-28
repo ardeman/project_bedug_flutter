@@ -369,6 +369,60 @@ void main() {
     }, variant: const TargetPlatformVariant({TargetPlatform.android}));
   }
 
+  // A regular iPhone's top inset (59) and the taller one of the unfolded
+  // iPhone Duo in portrait (84): the collapsed bar must clear either.
+  for (final topInset in [59.0, 84.0]) {
+    testWidgets('the collapsed glass header fits below a $topInset inset', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues({});
+      final prefs = await SharedPreferences.getInstance();
+      tester.view.physicalSize = const Size(720, 1024);
+      tester.view.devicePixelRatio = 1;
+      tester.view.padding = FakeViewPadding(top: topInset);
+      addTearDown(tester.view.reset);
+
+      final times = PrayerTimes.today(
+        Coordinates(-6.2088, 106.8456),
+        CalculationMethod.singapore.getParameters(),
+      );
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            sharedPreferencesProvider.overrideWithValue(prefs),
+            prayerProvider.overrideWith(
+              () => _FakePrayerNotifier(
+                PrayerState(
+                  times: times,
+                  locationLabel: 'Jakarta',
+                  loading: false,
+                ),
+              ),
+            ),
+          ],
+          child: const MaterialApp(
+            locale: Locale('en'),
+            localizationsDelegates: [
+              GlobalMaterialLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+              ...AppLocalizations.localizationsDelegates,
+            ],
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: PrayerTimesScreen(),
+          ),
+        ),
+      );
+      await tester.pump();
+
+      final page = find.byWidgetPredicate(
+        (w) => w is Scrollable && w.axisDirection == AxisDirection.down,
+      );
+      await tester.fling(page.first, const Offset(0, -1500), 3000);
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
+    }, variant: TargetPlatformVariant.only(TargetPlatform.iOS));
+  }
+
   testWidgets('the pill, place, name and countdown move into the capsule', (
     tester,
   ) async {

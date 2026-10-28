@@ -93,7 +93,11 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
     final minCollapsedExtent =
         kToolbarHeight +
         (isIosPortrait
-            ? (topInset + 8).clamp(44.0, 62.0)
+            // Up to 62, the tallest phone inset, the bar tucks its row
+            // into the Dynamic Island's band. A taller inset, as on the
+            // unfolded iPhone Duo, is cleared in full, or the toolbar row
+            // overflows.
+            ? (topInset + 8).clamp(44.0, math.max(62.0, topInset))
             : isMacOS
             ? 0.0
             : 44.0);
