@@ -414,12 +414,23 @@ void main() {
       );
       await tester.pump();
 
+      // On the iPhone Duo the refresh button shares the status band,
+      // centered on the status items and just before them.
+      void expectRefreshInBand() {
+        if (topInset < 84) return;
+        final refresh = tester.getRect(find.byIcon(Icons.refresh).first);
+        expect(refresh.center.dy, closeTo(49, 4));
+        expect(refresh.right, lessThan(720 - 124));
+      }
+
+      expectRefreshInBand();
       final page = find.byWidgetPredicate(
         (w) => w is Scrollable && w.axisDirection == AxisDirection.down,
       );
       await tester.fling(page.first, const Offset(0, -1500), 3000);
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);
+      expectRefreshInBand();
     }, variant: TargetPlatformVariant.only(TargetPlatform.iOS));
   }
 

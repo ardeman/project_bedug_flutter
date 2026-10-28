@@ -7,6 +7,15 @@
         {
           "type": "improved",
           "text": {
+            "en": "On the unfolded iPhone Duo, the prayer times header shares the status bar's row, beside the time and the camera, so the next prayer gets more room.",
+            "id": "Pada iPhone Duo yang terbuka, kepala jadwal salat kini sebaris dengan bilah status, di samping jam dan kamera, sehingga salat berikutnya mendapat ruang lebih.",
+            "ms": "Pada iPhone Duo yang dibuka, pengepala waktu solat kini sebaris dengan bar status, di sebelah jam dan kamera, supaya solat seterusnya mendapat lebih ruang.",
+            "ar": "على iPhone Duo المفتوح، أصبح رأس مواقيت الصلاة في صف شريط الحالة بجانب الساعة والكاميرا، فتحصل الصلاة التالية على مساحة أكبر."
+          }
+        },
+        {
+          "type": "improved",
+          "text": {
             "en": "On iPhone and Mac, the tab bar's icons, labels and selection turn white over the green prayer times header, and back as it scrolls away.",
             "id": "Di iPhone dan Mac, ikon, label, dan penanda pilihan bilah tab kini berwarna putih di atas kepala jadwal salat yang hijau, lalu kembali saat digulir.",
             "ms": "Di iPhone dan Mac, ikon, label dan penanda pilihan bar tab kini menjadi putih di atas pengepala waktu solat yang hijau, lalu kembali apabila ditatal.",

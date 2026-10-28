@@ -90,17 +90,20 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
     // On macOS the collapsed bar is one toolbar row, so its capsule and
     // buttons center on the traffic lights (see MainFlutterWindow.swift).
     final isMacOS = PlatformCapabilities.isMacOS;
-    final minCollapsedExtent =
-        kToolbarHeight +
-        (isIosPortrait
-            // Up to 62, the tallest phone inset, the bar tucks its row
-            // into the Dynamic Island's band. A taller inset, as on the
-            // unfolded iPhone Duo, is cleared in full, or the toolbar row
-            // overflows.
-            ? (topInset + 8).clamp(44.0, math.max(62.0, topInset))
-            : isMacOS
-            ? 0.0
-            : 44.0);
+    final statusBandRowTop = _LiquidGlassAppBar.statusBandRowTopOf(
+      isIosPortrait: isIosPortrait,
+      topInset: topInset,
+    );
+    final minCollapsedExtent = statusBandRowTop != null
+        // The row shares the status band; the bar still covers the band.
+        ? math.max(topInset, statusBandRowTop + kToolbarHeight) + AppSpacing.xs
+        : kToolbarHeight +
+              (isIosPortrait
+                  // The bar tucks its row into the Dynamic Island's band.
+                  ? (topInset + 8).clamp(44.0, 62.0)
+                  : isMacOS
+                  ? 0.0
+                  : 44.0);
 
     final fold = _horizontalFoldOf(ctx);
     final bodySlivers = <Widget>[
@@ -957,6 +960,26 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
   /// Height of the collapsed title capsule: two text lines plus padding.
   static const _capsuleHeight = 48.0;
 
+  /// The tallest phone top inset, the Dynamic Island's band. A taller one,
+  /// as on the unfolded iPhone Duo, is a status band with the time and the
+  /// camera only at its right end.
+  static const _tallestPhoneInset = 62.0;
+
+  /// How far below the top of the screen the iPhone Duo's status items
+  /// center, and how much of the band's right end they take (the time and
+  /// the camera ring with its margin), measured on the simulator.
+  static const _statusBandRowCenter = 49.0;
+  static const _statusBandItemsWidth = 124.0;
+
+  /// The top of the toolbar row when it shares an iPhone Duo status band,
+  /// centered on the status items, or null on other screens.
+  static double? statusBandRowTopOf({
+    required bool isIosPortrait,
+    required double topInset,
+  }) => isIosPortrait && topInset > _tallestPhoneInset
+      ? _statusBandRowCenter - kToolbarHeight / 2
+      : null;
+
   @override
   double get minExtent => minCollapsedExtent;
   @override
@@ -988,8 +1011,18 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
     final progress = (shrinkOffset / (maxExtent - minExtent)).clamp(0.0, 1.0);
     final collapsedProgress = (progress * 2 - 1).clamp(0.0, 1.0);
     final expandedFade = (1 - progress * 2).clamp(0.0, 1.0);
-    final isLargeInsetIosPortrait = isIosPortrait && topInset >= 54;
-    final collapsedActionTop = isIosPortrait
+    final statusBandRowTop = statusBandRowTopOf(
+      isIosPortrait: isIosPortrait,
+      topInset: topInset,
+    );
+    final inStatusBand = statusBandRowTop != null;
+    // The rows start below the top inset, or inside the status band.
+    final rowsTop = statusBandRowTop ?? topInset;
+    final isLargeInsetIosPortrait =
+        isIosPortrait && topInset >= 54 && !inStatusBand;
+    final collapsedActionTop = inStatusBand
+        ? 0.0
+        : isIosPortrait
         ? (isLargeInsetIosPortrait ? 0.0 : 2.0)
         : ((minExtent - kToolbarHeight) / 2).clamp(0.0, 22.0);
     final iosPortraitLift = isLargeInsetIosPortrait
@@ -1000,9 +1033,13 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
     // Decided at full height, not as the header shrinks, so the hero's type
     // doesn't jump mid-collapse; the shrinking hero slides under its clip.
     final heroCompact =
-        maxExtent - topInset - kToolbarHeight < _compactHeroHeight;
+        maxExtent - rowsTop - kToolbarHeight < _compactHeroHeight;
+    // In a status band the refresh button sits just before the status items.
+    final actionRight = inStatusBand
+        ? _statusBandItemsWidth + AppSpacing.xs
+        : AppSpacing.sm;
     // The refresh button, the right inset and the gap to the title capsule.
-    const actionAreaWidth = _actionSize + AppSpacing.sm + AppSpacing.md;
+    final actionAreaWidth = _actionSize + actionRight + AppSpacing.md;
     // Over the accent hero, white unless the glass is tinted enough to turn
     // light (the system's Tinted style), then the text color; the text color
     // once the hero has faded.
@@ -1092,7 +1129,9 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
               ),
             ),
             SafeArea(
+              top: !inStatusBand,
               bottom: false,
+              minimum: EdgeInsets.only(top: inStatusBand ? rowsTop : 0),
               child: LayoutBuilder(
                 builder: (_, area) => Stack(
                   children: [
@@ -1272,7 +1311,7 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
                     // Actions, last so they stay on top and tappable
                     Positioned(
                       top: actionTop - iosPortraitLift,
-                      right: AppSpacing.sm,
+                      right: actionRight,
                       child: SizedBox(
                         height: kToolbarHeight,
                         child: Row(
