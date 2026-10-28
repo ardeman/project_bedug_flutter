@@ -156,6 +156,7 @@ class GlassNavBar extends StatelessWidget {
       return _GlassNavRail(
         side: railSide,
         bottomGap: _bottomGapOf(ctx),
+        compact: _isCompact(ctx),
         currentIndex: currentIndex,
         onTap: onTap,
         items: items,
@@ -254,13 +255,16 @@ class SideBarSafeArea extends StatelessWidget {
 }
 
 /// [GlassNavBar] as a vertical glass capsule in the system's side bar on
-/// iPhone Duo, below the status items and the Dynamic Island, like the
-/// system's own tab rail. Its selection pill can be tapped or dragged
+/// iPhone Duo, at the opposite end from the status items and the camera,
+/// like the system's own tab rail. Its selection pill can be tapped or dragged
 /// between tabs.
 class _GlassNavRail extends StatelessWidget {
   /// The bar's side: [TextDirection.rtl] for the right, else the left.
   final TextDirection side;
   final double bottomGap;
+
+  /// Whether the window is short, as on the folded screen turned sideways.
+  final bool compact;
   final int currentIndex;
   final ValueChanged<int> onTap;
   final List<GlassNavItem> items;
@@ -268,6 +272,7 @@ class _GlassNavRail extends StatelessWidget {
   const _GlassNavRail({
     required this.side,
     required this.bottomGap,
+    required this.compact,
     required this.currentIndex,
     required this.onTap,
     required this.items,
@@ -357,9 +362,17 @@ class _GlassNavRail extends StatelessWidget {
         ),
       ),
     );
-    // Centered in the side bar, at its bottom like the tab bar it replaces.
+    // Centered in the side bar, at its bottom like the tab bar it replaces,
+    // unless the camera is there. On the folded screen the cutout sits at
+    // the top of the bar in portrait, so turned sideways with the bar on
+    // the right it ends up at the bottom. The unfolded screen keeps the
+    // status items and camera at the top of the bar either way, and is
+    // never short. iOS doesn't report the cutout, so this follows from
+    // where the bar is and the window's height.
+    final cameraBelow = side == TextDirection.rtl && compact;
     return Positioned(
-      bottom: bottomGap,
+      top: cameraBelow ? bottomGap : null,
+      bottom: cameraBelow ? null : bottomGap,
       left: side == TextDirection.ltr ? 0 : null,
       right: side == TextDirection.rtl ? 0 : null,
       width: barWidth,

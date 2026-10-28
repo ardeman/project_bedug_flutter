@@ -336,6 +336,63 @@ void main() {
     );
   }
 
+  // iPhone Duo turned sideways. On the folded screen (678x466) the camera
+  // sits at the bottom of a right-hand side bar and at the top of a
+  // left-hand one; the larger unfolded screen keeps it, and the status
+  // items, at the top.
+  for (final (size, padding, cameraBelow) in [
+    (const Size(678, 466), const FakeViewPadding(right: 84), true),
+    (const Size(678, 466), const FakeViewPadding(left: 84), false),
+    (const Size(1024, 720), const FakeViewPadding(right: 84), false),
+  ]) {
+    testWidgets('side bar rail keeps clear of the camera in $size with '
+        'insets ${padding.left}/${padding.right}', (tester) async {
+      tester.view.physicalSize = size;
+      tester.view.devicePixelRatio = 1;
+      tester.view.padding = padding;
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: buildAppTheme(Brightness.light),
+          home: Scaffold(
+            body: Stack(
+              children: [
+                GlassNavBar(
+                  currentIndex: 0,
+                  onTap: (_) {},
+                  items: const [
+                    GlassNavItem(
+                      icon: Icons.schedule,
+                      activeIcon: Icons.schedule,
+                      label: 'Prayers',
+                    ),
+                    GlassNavItem(
+                      icon: Icons.settings,
+                      activeIcon: Icons.settings,
+                      label: 'Settings',
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      final rail = tester.getRect(find.byType(LiquidGlassTabBar));
+      expect(
+        rail.center.dx,
+        padding.right > 0 ? greaterThan(size.width - 84) : lessThan(84),
+      );
+      if (cameraBelow) {
+        expect(rail.bottom, lessThan(size.height / 2));
+      } else {
+        expect(rail.top, greaterThan(size.height / 2));
+      }
+      expect(tester.takeException(), isNull);
+    }, variant: TargetPlatformVariant.only(TargetPlatform.iOS));
+  }
+
   for (final brightness in Brightness.values) {
     for (final direction in TextDirection.values) {
       testWidgets(

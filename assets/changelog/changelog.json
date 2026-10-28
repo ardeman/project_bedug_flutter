@@ -7,6 +7,15 @@
         {
           "type": "fixed",
           "text": {
+            "en": "With the iPhone Duo turned sideways, the side tab bar no longer hides its last tab under the camera.",
+            "id": "Saat iPhone Duo dimiringkan, bilah tab samping tidak lagi menyembunyikan tab terakhirnya di bawah kamera.",
+            "ms": "Apabila iPhone Duo dicondongkan ke sisi, bar tab sisi tidak lagi menyembunyikan tab terakhirnya di bawah kamera.",
+            "ar": "عند تدوير iPhone Duo جانبيًا، لم يعد شريط التبويبات الجانبي يخفي آخر تبويب تحت الكاميرا."
+          }
+        },
+        {
+          "type": "fixed",
+          "text": {
             "en": "Holding the iPhone Duo side tab bar lifts the glass pill, and dragging follows your finger vertically without getting stuck on Settings.",
             "id": "Menahan bilah tab samping iPhone Duo kini mengangkat penanda kaca, dan menggesernya mengikuti jari secara vertikal tanpa tersangkut di Pengaturan.",
             "ms": "Menahan bar tab sisi iPhone Duo kini mengangkat penanda kaca, dan menyeretnya mengikut jari secara menegak tanpa tersekat pada Tetapan.",
