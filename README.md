@@ -154,6 +154,7 @@ assets/branding/     App icon sources (SVG) and their 1024px renders
 assets/fonts/        Bundled fonts (Plus Jakarta Sans, and Amiri Quran for the Quran text; both OFL)
 assets/changelog/    Release notes in every language, shared by the app and the site
 site/                Landing page (bedug.ardeman.com), see "Website" below
+vendor/              Patched Liquid Glass runtime (see vendor/liquid_glass_easy/README.bedug.md)
 scripts/             Git hook scripts, icon renderer, Quran content builder
 .githooks/           Versioned Git hooks
 test/                Widget tests

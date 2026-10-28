@@ -302,8 +302,8 @@ class _GlassNavRail extends StatelessWidget {
       width: _width,
       height: height,
       // The package's refracting, morphing selection pill is horizontal.
-      // Rotate its layout and gestures together, then turn each icon back
-      // upright. LTR keeps the tab order top-to-bottom in every locale.
+      // Rotate its layout, then turn each icon back upright. LTR keeps
+      // the tab order top-to-bottom in every locale.
       child: MediaQuery.removePadding(
         context: ctx,
         removeLeft: true,

@@ -5,6 +5,15 @@
       "date": null,
       "changes": [
         {
+          "type": "fixed",
+          "text": {
+            "en": "Holding the iPhone Duo side tab bar lifts the glass pill, and dragging follows your finger vertically without getting stuck on Settings.",
+            "id": "Menahan bilah tab samping iPhone Duo kini mengangkat penanda kaca, dan menggesernya mengikuti jari secara vertikal tanpa tersangkut di Pengaturan.",
+            "ms": "Menahan bar tab sisi iPhone Duo kini mengangkat penanda kaca, dan menyeretnya mengikut jari secara menegak tanpa tersekat pada Tetapan.",
+            "ar": "يؤدي الضغط المطول على شريط التبويبات الجانبي في iPhone Duo إلى رفع المؤشر الزجاجي، ويتبع السحب إصبعك عموديًا دون أن يعلق في الإعدادات."
+          }
+        },
+        {
           "type": "improved",
           "text": {
             "en": "On a half-folded iPhone Duo, the prayer summary stays above the fold while the schedule and controls scroll below it.",

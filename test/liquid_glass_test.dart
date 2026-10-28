@@ -4,6 +4,7 @@ import 'package:bedug/core/theme/app_theme_scope.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:liquid_glass_easy/liquid_glass_easy.dart';
+import 'package:liquid_glass_easy/src/widgets/components/bottom_nav_bar/liquid_glass_nav_bar_motion_pill.dart';
 
 void main() {
   for (final direction in TextDirection.values) {
@@ -181,6 +182,16 @@ void main() {
                             label: 'Prayers',
                           ),
                           GlassNavItem(
+                            icon: Icons.mosque,
+                            activeIcon: Icons.mosque,
+                            label: 'Worship',
+                          ),
+                          GlassNavItem(
+                            icon: Icons.menu_book,
+                            activeIcon: Icons.menu_book,
+                            label: 'Quran',
+                          ),
+                          GlassNavItem(
                             icon: Icons.settings,
                             activeIcon: Icons.settings,
                             label: 'Settings',
@@ -220,10 +231,104 @@ void main() {
         expect(GlassNavBar.occupiedHeight(barContext), 34);
         await tester.tap(settings);
         await tester.pumpAndSettle();
-        expect(selected, 1);
+        expect(selected, 3);
         await tester.tap(find.byIcon(Icons.schedule));
         await tester.pumpAndSettle();
         expect(selected, 0);
+        // Widget tests use Skia, where the standalone bar renders its
+        // tap-only fallback. Exercise the real glass-pill pipeline used
+        // by iPhone Duo explicitly, with the production rail configuration.
+        await tester.pumpWidget(
+          MaterialApp(
+            theme: buildAppTheme(Brightness.light),
+            home: StatefulBuilder(
+              builder: (context, setState) => Stack(
+                children: [
+                  Positioned(
+                    bottom: 21,
+                    left: padding.left > 0 ? 14 : null,
+                    right: padding.right > 0 ? 14 : null,
+                    width: bar.height,
+                    height: bar.width,
+                    child: RotatedBox(
+                      quarterTurns: 1,
+                      child:
+                          LiquidGlassTabBar(
+                            items: bar.items,
+                            selectedIndex: selected,
+                            onChanged: (index) =>
+                                setState(() => selected = index),
+                            width: bar.width,
+                            height: bar.height,
+                            margin: EdgeInsets.zero,
+                            itemPadding: bar.itemPadding,
+                            alignment: Alignment.center,
+                            style: bar.style,
+                            itemStyle: bar.itemStyle,
+                          ).buildGlassPillBar(
+                            body: const SizedBox.expand(),
+                            realTimeCapture: false,
+                          ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+        for (var frame = 0; frame < 60; frame++) {
+          await tester.pump(const Duration(milliseconds: 16));
+        }
+        // The package keeps the pill lifted under a held finger, then
+        // commits the tab on release. Both immediate and held drags must
+        // follow the vertical rail, including when reversing direction.
+        final icons = [
+          Icons.schedule,
+          Icons.mosque,
+          Icons.menu_book,
+          Icons.settings,
+        ];
+        Future<void> advanceHeldAnimation() async {
+          for (var frame = 0; frame < 30; frame++) {
+            await tester.pump(const Duration(milliseconds: 16));
+          }
+        }
+
+        for (final hold in [false, true]) {
+          final gesture = await tester.startGesture(
+            tester.getCenter(find.byIcon(icons.first).first),
+          );
+          final pillFinder = find.byType(LiquidGlassNavBarMotionPill);
+          if (hold) {
+            await advanceHeldAnimation();
+            expect(selected, 0);
+            final pill = tester.widget<LiquidGlassNavBarMotionPill>(pillFinder);
+            expect(pill.active, isTrue);
+            expect(pill.morphProgress, greaterThan(0.9));
+          }
+          for (final index in [1, 2, 3, 2, 1, 0, 1, 2, 3]) {
+            final target = tester.getCenter(find.byIcon(icons[index]).first);
+            await gesture.moveTo(target);
+            await advanceHeldAnimation();
+            final pill = tester.widget<LiquidGlassNavBarMotionPill>(pillFinder);
+            expect(pill.active, isTrue);
+            expect(pill.morphProgress, greaterThan(0.9));
+            final box = tester.renderObject<RenderBox>(pillFinder);
+            expect(box.localToGlobal(pill.center).dy, closeTo(target.dy, 3));
+            expect(selected, 0);
+          }
+          await gesture.up();
+          for (var frame = 0; frame < 60; frame++) {
+            await tester.pump(const Duration(milliseconds: 16));
+          }
+          expect(selected, 3);
+          expect(pillFinder, findsNothing);
+          await tester.tap(find.byIcon(icons.first).first);
+          for (var frame = 0; frame < 60; frame++) {
+            await tester.pump(const Duration(milliseconds: 16));
+          }
+          expect(selected, 0);
+        }
         semantics.dispose();
         expect(tester.takeException(), isNull);
       },

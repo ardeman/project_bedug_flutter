@@ -146,3 +146,5 @@ Record architectural choices here as one line each: date, decision, reason.
 - 2026-10-27: The Hijri date adjustment (±2 days) is one setting passed explicitly to every Hijri conversion (`hijriOf`, `hijriToGregorian`), not a global offset in the `hijri` package, so the label, calendar, events, reminders and ayah of the day can't disagree and tests stay free of shared state.
 
 - 2026-10-27: The MABIMS Hijri calendar is calculated on the device (Meeus positions, checked at Kemenag's Lhoknga observatory with refraction in the altitude) rather than bundled as a table, so it covers the same years as Umm al-Qura with no data to update; tests pin it to Kemenag's published dates.
+
+- 2026-10-28: Vendor `liquid_glass_easy` 5.0.0 with local-coordinate navigation gestures and immediate pan support, so the rotated iPhone Duo rail preserves the package’s held-glass effects without jumping to Settings; see `vendor/liquid_glass_easy/README.bedug.md`.
