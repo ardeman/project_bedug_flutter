@@ -187,10 +187,10 @@
         {
           "type": "improved",
           "text": {
-            "en": "Swipe the Hijri month calendar sideways to move between months; Today slides back to the current month.",
-            "id": "Geser kalender bulan Hijriah ke samping untuk berpindah bulan; Hari Ini menggesernya kembali ke bulan sekarang.",
-            "ms": "Leret takwim bulan Hijrah ke tepi untuk beralih bulan; Hari Ini meleretnya kembali ke bulan semasa.",
-            "ar": "اسحب تقويم الشهر الهجري جانبًا للتنقل بين الأشهر؛ ويعيدك زر اليوم إلى الشهر الحالي بالانزلاق."
+            "en": "Scroll the Hijri calendar up and down through one continuous run of weeks, or use the arrows to move a month at a time; Today scrolls back to the current month.",
+            "id": "Gulir kalender Hijriah ke atas dan ke bawah melalui pekan-pekan yang bersambung, atau gunakan panah untuk berpindah sebulan sekaligus; Hari Ini menggulirnya kembali ke bulan sekarang.",
+            "ms": "Tatal takwim Hijrah ke atas dan ke bawah melalui minggu-minggu yang bersambung, atau gunakan anak panah untuk beralih sebulan demi sebulan; Hari Ini menatalnya kembali ke bulan semasa.",
+            "ar": "مرّر التقويم الهجري لأعلى ولأسفل عبر أسابيع متصلة، أو استخدم السهمين للتنقل شهرًا بشهر؛ ويعيدك زر اليوم إلى الشهر الحالي بالتمرير."
           }
         },
         {

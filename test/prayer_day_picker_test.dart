@@ -235,9 +235,8 @@ void main() {
     expect(find.text(shownTitle), findsNothing);
   });
 
-  testWidgets('fits the whole grid as months of five and six weeks page by', (
-    tester,
-  ) async {
+  testWidgets('keeps the grid one height as months of five and six weeks '
+      'page by', (tester) async {
     await tester.pumpWidget(app());
     double slotHeight() => tester
         .getSize(
@@ -259,11 +258,10 @@ void main() {
       heights.add(gridHeight());
       expect(slotHeight(), gridHeight());
     }
-    // Both week counts came by.
-    expect(heights.length, 2);
+    expect(heights.length, 1);
   });
 
-  testWidgets('slides today\'s month in from a far month', (tester) async {
+  testWidgets('scrolls today\'s month in from a far month', (tester) async {
     await tester.pumpWidget(app());
     final month = hijriMonthOf(today);
     final l10n = AppLocalizations.of(tester.element(find.byType(Scaffold)));
@@ -278,21 +276,23 @@ void main() {
 
     await tester.tap(find.text('Today'));
     await tester.pump();
-    await tester.pump(const Duration(milliseconds: 100));
-    // Midway, today's month is sliding in beside the one paged to.
+    await tester.pump(const Duration(milliseconds: 150));
+    // Midway, today's week is scrolling in.
     final todayCell = find.bySemanticsLabel(
       RegExp(r'H, Tuesday, October 20, 2026$'),
     );
     expect(todayCell, findsOneWidget);
-    final midway = tester.getCenter(todayCell).dx;
+    final midway = tester.getCenter(todayCell).dy;
     await tester.pumpAndSettle();
-    // It came in from the left, where earlier months lie.
-    expect(midway, lessThan(tester.getCenter(todayCell).dx));
+    // It came down from above, where earlier months lie.
+    expect(midway, lessThan(tester.getCenter(todayCell).dy));
     expect(find.text(shownTitle), findsOneWidget);
     expect(find.text('Today'), findsNothing);
   });
 
-  testWidgets('swipes the Hijri month grid between months', (tester) async {
+  testWidgets('scrolls the Hijri month grid through continuous weeks', (
+    tester,
+  ) async {
     await tester.pumpWidget(app());
     final l10n = AppLocalizations.of(tester.element(find.byType(Scaffold)));
     String title(({int year, int month}) m) =>
@@ -307,53 +307,50 @@ void main() {
       RegExp(r'H, Wednesday, October 28, 2026$'),
     );
 
-    // A short, slow drag springs back.
+    // A short drag settles on a whole week, in the same month.
     await tester.timedDrag(
       days,
-      const Offset(-30, 0),
+      const Offset(0, -30),
       const Duration(milliseconds: 500),
     );
     await tester.pumpAndSettle();
     expect(find.text(title(month)), findsOneWidget);
 
-    // Mid-drag the next month follows the days in from the side.
+    // Mid-scroll the weeks run on into the next month.
     final nextDay = find.bySemanticsLabel(
       RegExp(r'H, Wednesday, November 25, 2026$'),
     );
     expect(nextDay, findsNothing);
     final gesture = await tester.startGesture(tester.getCenter(days));
-    await gesture.moveBy(const Offset(-20, 0));
-    await gesture.moveBy(const Offset(-100, 0));
+    await gesture.moveBy(const Offset(0, -20));
+    await gesture.moveBy(const Offset(0, -60));
     await tester.pump();
     expect(nextDay, findsOneWidget);
     await gesture.up();
     await tester.pumpAndSettle();
-    expect(find.text(title(month)), findsOneWidget);
 
-    // The chevrons slide the months the same way.
+    // The chevrons scroll the months the same way.
+    await tester.tap(find.bySemanticsLabel('Previous month'));
+    await tester.pumpAndSettle();
+    expect(find.text(title(month)), findsOneWidget);
     await tester.tap(find.bySemanticsLabel('Next month'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 100));
-    expect(days, findsOneWidget);
     expect(nextDay, findsOneWidget);
     await tester.pumpAndSettle();
     expect(find.text(title(next)), findsOneWidget);
-    expect(days, findsNothing);
     await tester.tap(find.bySemanticsLabel('Previous month'));
     await tester.pumpAndSettle();
     expect(find.text(title(month)), findsOneWidget);
 
-    // Leftward shows the next month, rightward the previous one.
-    await tester.drag(days, const Offset(-400, 0));
+    // Upward shows the next month, downward the previous one.
+    await tester.drag(days, const Offset(0, -200));
     await tester.pumpAndSettle();
     expect(find.text(title(next)), findsOneWidget);
-    await tester.drag(
-      find.bySemanticsLabel(RegExp(r'H, Wednesday, November 11, 2026$')),
-      const Offset(400, 0),
-    );
+    await tester.drag(nextDay, const Offset(0, 200));
     await tester.pumpAndSettle();
     expect(find.text(title(month)), findsOneWidget);
-    // Paging leaves the picked day alone.
+    // Scrolling leaves the picked day alone.
     expect(find.text('Tuesday, October 20'), findsOneWidget);
   });
 

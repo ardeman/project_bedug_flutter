@@ -98,8 +98,8 @@ class _PrayerDayPickerState extends State<PrayerDayPicker>
   bool _isGridPagedAway = false;
 
   /// The grid's height before its first layout: the month header, weekday
-  /// row and five weeks of day cells.
-  static const _gridHeightEstimate = 320.0;
+  /// row and six weeks of day cells.
+  static const _gridHeightEstimate = 356.0;
 
   /// A fling faster than this (logical px/s) opens or closes the grid
   /// whatever its position.
