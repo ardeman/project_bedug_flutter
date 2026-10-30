@@ -31,11 +31,16 @@ import UIKit
   }
 }
 
-/// Sends Reduce Transparency and Increase Contrast to Flutter
-/// (`lib/core/design/glass_accessibility.dart`) on listen and whenever either
-/// changes, so the app's glass follows them. iOS has no API for the Clear or
-/// Tinted Liquid Glass style.
+/// Sends Reduce Transparency, Increase Contrast and the Clear/Tinted Liquid
+/// Glass style to Flutter (`lib/core/design/glass_accessibility.dart`) on
+/// listen and whenever they may have changed, so the app's glass follows them.
 final class GlassAccessibilityStreamHandler: NSObject, FlutterStreamHandler {
+  /// The Clear (0) to Tinted (1) slider in Settings → Display & Brightness →
+  /// Liquid Glass. Undocumented: Apple has no API for it, so a missing or
+  /// unreadable value leaves the glass Clear.
+  private static let tintAmountSuite = "com.apple.UIKit"
+  private static let tintAmountKey = "UIViewGlassTintAmount"
+
   private var sink: FlutterEventSink?
   private var observers: [NSObjectProtocol] = []
 
@@ -47,6 +52,9 @@ final class GlassAccessibilityStreamHandler: NSObject, FlutterStreamHandler {
     observers = [
       UIAccessibility.reduceTransparencyStatusDidChangeNotification,
       UIAccessibility.darkerSystemColorsStatusDidChangeNotification,
+      // The tint has no change notification, and the slider lives in the
+      // Settings app; read it again when the user comes back.
+      UIApplication.didBecomeActiveNotification,
     ].map { name in
       NotificationCenter.default.addObserver(forName: name, object: nil, queue: .main) {
         [weak self] _ in self?.send()
@@ -64,10 +72,20 @@ final class GlassAccessibilityStreamHandler: NSObject, FlutterStreamHandler {
   }
 
   private func send() {
-    sink?([
+    var event: [String: Any] = [
       "reduceTransparency": UIAccessibility.isReduceTransparencyEnabled,
       "increaseContrast": UIAccessibility.isDarkerSystemColorsEnabled,
-    ])
+    ]
+    if let tintAmount { event["tintAmount"] = tintAmount }
+    sink?(event)
+  }
+
+  private var tintAmount: Double? {
+    switch UserDefaults(suiteName: Self.tintAmountSuite)?.object(forKey: Self.tintAmountKey) {
+    case let number as NSNumber: return number.doubleValue
+    case let text as String: return Double(text)
+    default: return nil
+    }
   }
 }
 

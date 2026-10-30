@@ -34,17 +34,23 @@ Color _adaptiveTint(
       : light.withValues(alpha: lerpDouble(lightAlpha, lightOpaqueAlpha, t));
 }
 
-/// Glass tint for bars and controls that float over content: a light
-/// veil when Clear, milky (light) or smoked (dark) when Tinted.
+/// Glass tint for bars and controls that float over content: a veil when
+/// Clear, milky (light) or solid grey (dark) when Tinted. Even Clear dims
+/// the page behind enough, like the system's glass, that labels on the glass
+/// stay readable over text.
 Color glassTintOf(BuildContext ctx) => _adaptiveTint(
   ctx,
   light: Colors.white,
-  dark: Colors.black,
-  lightAlpha: 0.08,
-  darkAlpha: 0.05,
+  dark: _tintedDarkGlass,
+  lightAlpha: 0.3,
+  darkAlpha: 0.4,
   lightOpaqueAlpha: 0.85,
-  darkOpaqueAlpha: 0.6,
+  darkOpaqueAlpha: 0.85,
 );
+
+/// The neutral grey of the system's Tinted glass in dark mode, a fifth of
+/// the way from black to white, so Tinted bars read as grey, not black.
+final _tintedDarkGlass = Color.lerp(Colors.black, Colors.white, 0.22)!;
 
 /// Glass tint for content cards that scroll with their list: a white frost
 /// that is faint when Clear and milky when Tinted.
@@ -69,6 +75,19 @@ Color glassSheetTintOf(BuildContext ctx) => _adaptiveTint(
   lightOpaqueAlpha: 0.94,
   darkOpaqueAlpha: 0.82,
 );
+
+/// The tab bar's glass, like the system's: the page stays sharp (no blur)
+/// and bends hard along the rim, and the system's Clear/Tinted style only
+/// moves the tint ([glassTintOf]).
+LiquidGlassStyle _navBarStyleOf(BuildContext ctx) =>
+    LiquidGlassTabBar.defaultStyle.copyWith(
+      color: glassTintOf(ctx),
+      blur: 0,
+      refractionIndex: 1.3,
+      // About a third of the bar's height, so the rim bends the page like
+      // system glass while the icons and labels sit over undistorted glass.
+      refractionWidth: 20,
+    );
 
 /// The floating Liquid Glass tab bar on iOS and macOS: a refracting
 /// capsule whose selection pill can be tapped or dragged between tabs.
@@ -203,8 +222,11 @@ class GlassNavBar extends StatelessWidget {
                     textScaler: mq.textScaler.clamp(
                       maxScaleFactor: _maxLabelTextScale,
                     ),
+                    // Semibold, like the system tab bar, so labels hold up
+                    // over the page seen through clear glass.
                     style: theme.textTheme.labelSmall?.copyWith(
                       color: l.textStyle.color,
+                      fontWeight: FontWeight.w600,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -216,9 +238,7 @@ class GlassNavBar extends StatelessWidget {
             width: width,
             height: barHeight,
             margin: EdgeInsets.only(bottom: bottomGap),
-            style: LiquidGlassTabBar.defaultStyle.copyWith(
-              color: glassTintOf(ctx),
-            ),
+            style: _navBarStyleOf(ctx),
             itemStyle: LiquidGlassTabItemStyle(
               selectedColor: colors.selected,
               unselectedColor: colors.unselected,
@@ -361,9 +381,7 @@ class _GlassNavRail extends StatelessWidget {
               margin: EdgeInsets.zero,
               itemPadding: _pillInset,
               alignment: Alignment.center,
-              style: LiquidGlassTabBar.defaultStyle.copyWith(
-                color: glassTintOf(ctx),
-              ),
+              style: _navBarStyleOf(ctx),
               itemStyle: LiquidGlassTabItemStyle(
                 selectedColor: colors.selected,
                 unselectedColor: colors.unselected,
@@ -580,7 +598,9 @@ typedef _NavTabColors = ({Color selected, Color unselected, Color pill});
 /// a [GlassNavBar] whose center is at [center] in the
 /// [GlassNavBackdropScope]: white over any dark backdrop, unless the glass is
 /// tinted enough to turn light (the system's Tinted style), else the
-/// accent, the text color and the package's grey pill.
+/// accent, the text color and the package's grey pill. Unselected tabs stay
+/// at full strength, like the system's, so they read over the page seen
+/// through the glass; the pill marks the selection.
 _NavTabColors _navTabColorsOf(
   BuildContext ctx,
   Iterable<GlassNavBackdrop> backdrops,
@@ -597,16 +617,27 @@ _NavTabColors _navTabColorsOf(
   if (overDark) {
     return (
       selected: Colors.white,
-      unselected: Colors.white.withValues(alpha: 0.78),
+      unselected: Colors.white,
       // The package's own pill fill for a bar over a dark page.
       pill: LiquidGlassTabPillStyle.defaultRestAdaptivity.glassColorOnDark,
     );
   }
   return (
-    selected: AppColors.accentOf(ctx),
-    unselected: Theme.of(ctx).colorScheme.onSurface.withValues(alpha: 0.62),
+    selected: _navSelectedAccentOf(ctx),
+    unselected: Theme.of(ctx).colorScheme.onSurface,
     pill: const LiquidGlassTabPillStyle().color,
   );
+}
+
+/// The selected tab's accent, moved away from the glass's brightness (a
+/// little over a third of the way to white in dark mode, a fifth to black in
+/// light) so it stands out from the grey pill and the page seen through the
+/// glass.
+Color _navSelectedAccentOf(BuildContext ctx) {
+  final accent = AppColors.accentOf(ctx);
+  return Theme.of(ctx).brightness == Brightness.dark
+      ? Color.lerp(accent, Colors.white, 0.35)!
+      : Color.lerp(accent, Colors.black, 0.2)!;
 }
 
 /// Rebuilds [builder] with the scope's backdrops, or none without a scope.

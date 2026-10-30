@@ -131,6 +131,8 @@ Record architectural choices here as one line each: date, decision, reason.
 
 - 2026-10-24: Glass follows the system's Clear/Tinted Liquid Glass amount by reading the undocumented `NSGlassTintAmount` global default (macOS; Clear when it is missing), plus Reduce Transparency and Increase Contrast, because Apple has no API for the style and an in-app switch would disagree with the system one.
 
+- 2026-10-30: On iOS the Clear/Tinted amount comes from the undocumented `UIViewGlassTintAmount` key in the `com.apple.UIKit` defaults (read again whenever the app becomes active; Clear when it is missing), the iPhone counterpart of `NSGlassTintAmount`, so iPhone glass follows the same system slider as the Mac.
+
 - 2026-10-27: Dzikir comes in selectable collections, each one JSON file under `assets/content/dzikir/` with the Arabic once and every translation inline, so users follow the collection they practise and a new one is data, not code.
 
 - 2026-10-27: Dzikir cards count recitations themselves (tap to count, long-press to reset, kept only while the screen is open) instead of a separate tasbih screen, back in scope after 2026-10-21, so counting follows the text being read and needs no stored worship data.

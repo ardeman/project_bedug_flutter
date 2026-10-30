@@ -7,6 +7,24 @@
         {
           "type": "improved",
           "text": {
+            "en": "On iPhone, the app's glass follows the Liquid Glass setting in Settings, from Clear to Tinted, as it already did on Mac.",
+            "id": "Di iPhone, kaca aplikasi kini mengikuti pengaturan Liquid Glass di Pengaturan, dari Bening hingga Berwarna, seperti di Mac.",
+            "ms": "Di iPhone, kaca aplikasi kini mengikut tetapan Liquid Glass dalam Tetapan, dari Jernih hingga Berwarna, seperti di Mac.",
+            "ar": "على iPhone، أصبح زجاج التطبيق يتبع إعداد Liquid Glass في الإعدادات، من الشفاف إلى الملوّن، كما على Mac."
+          }
+        },
+        {
+          "type": "improved",
+          "text": {
+            "en": "On iPhone and Mac, the tab bar is clear glass: the page shows through it sharp and bends at its edge, with no blur, while the Liquid Glass style sets how tinted it is.",
+            "id": "Di iPhone dan Mac, bilah tab kini berupa kaca bening: halaman tampak jelas di baliknya dan membias di tepinya tanpa buram, sementara gaya Liquid Glass mengatur seberapa pekat warnanya.",
+            "ms": "Di iPhone dan Mac, bar tab kini kaca jernih: halaman kelihatan jelas di sebaliknya dan membias di pinggirnya tanpa kabur, manakala gaya Liquid Glass menentukan tahap warnanya.",
+            "ar": "على iPhone وMac، أصبح شريط التبويبات زجاجًا شفافًا: تظهر الصفحة خلفه بوضوح وتنكسر عند حافته دون ضبابية، بينما يحدد نمط Liquid Glass مقدار تلوينه."
+          }
+        },
+        {
+          "type": "improved",
+          "text": {
             "en": "On the unfolded iPhone Duo, the prayer times header shares the status bar's row, beside the time and the camera, so the next prayer gets more room.",
             "id": "Pada iPhone Duo yang terbuka, kepala jadwal salat kini sebaris dengan bilah status, di samping jam dan kamera, sehingga salat berikutnya mendapat ruang lebih.",
             "ms": "Pada iPhone Duo yang dibuka, pengepala waktu solat kini sebaris dengan bar status, di sebelah jam dan kamera, supaya solat seterusnya mendapat lebih ruang.",
