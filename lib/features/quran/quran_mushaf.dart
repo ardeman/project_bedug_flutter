@@ -309,6 +309,7 @@ class _QuranMushafViewState extends State<QuranMushafView>
     BuildContext ctx,
     _Fold fold,
     double t, {
+    required Rect leaf,
     required List<Offset> uncovered,
     required List<Offset> flap,
     required double reach,
@@ -317,6 +318,7 @@ class _QuranMushafViewState extends State<QuranMushafView>
       child: CustomPaint(
         painter: _FoldShadowPainter(
           fold: fold,
+          leaf: leaf,
           uncovered: uncovered,
           flap: flap,
           reach: reach,
@@ -385,7 +387,8 @@ class _QuranMushafViewState extends State<QuranMushafView>
         ctx,
         fold,
         t,
-        uncovered: fold.clip(_cornersOf(_beyondEnds(leaf)), flat: false),
+        leaf: leaf,
+        uncovered: folded,
         flap: flap,
         reach: reach,
       ),
@@ -468,7 +471,8 @@ class _QuranMushafViewState extends State<QuranMushafView>
         ctx,
         fold,
         t,
-        uncovered: fold.clip(_cornersOf(_beyondEnds(leftLeaf)), flat: false),
+        leaf: leftLeaf,
+        uncovered: folded,
         flap: flap,
         reach: reach,
       ),
@@ -493,15 +497,6 @@ List<Offset> _cornersOf(Rect r) => [
   r.bottomRight,
   r.bottomLeft,
 ];
-
-/// [leaf] run on past its top and bottom, where it meets the background
-/// unseen, so the shadow it is given doesn't stop in a straight line there.
-Rect _beyondEnds(Rect leaf) => Rect.fromLTRB(
-  leaf.left,
-  leaf.top - leaf.height,
-  leaf.right,
-  leaf.bottom + leaf.height,
-);
 
 /// How faintly the page shows through its own back.
 const _backFade = 0.82;
@@ -582,6 +577,11 @@ class _PolygonClipper extends CustomClipper<Path> {
 
 class _FoldShadowPainter extends CustomPainter {
   final _Fold fold;
+
+  /// The page the shadow falls on; it fades out towards the page's top and
+  /// bottom, where the page meets the background unseen, rather than
+  /// stopping in a straight line or spilling onto the background.
+  final Rect leaf;
   final List<Offset> uncovered;
   final List<Offset> flap;
   final double reach;
@@ -592,6 +592,7 @@ class _FoldShadowPainter extends CustomPainter {
 
   const _FoldShadowPainter({
     required this.fold,
+    required this.leaf,
     required this.uncovered,
     required this.flap,
     required this.reach,
@@ -602,18 +603,39 @@ class _FoldShadowPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     if (uncovered.length > 2) {
-      canvas.drawPath(
-        _pathOf(uncovered),
-        Paint()
-          ..shader = ui.Gradient.linear(
-            fold.mid,
-            fold.mid - fold.normal * reach,
-            [
-              shadow.withValues(alpha: 0.3 * strength),
-              shadow.withValues(alpha: 0),
-            ],
-          ),
-      );
+      // The fade at each end is as long as the shadow reaches from the fold.
+      final fade = (reach / leaf.height).clamp(0.0, 0.5);
+      canvas
+        ..saveLayer(leaf, Paint())
+        ..drawPath(
+          _pathOf(uncovered),
+          Paint()
+            ..shader = ui.Gradient.linear(
+              fold.mid,
+              fold.mid - fold.normal * reach,
+              [
+                shadow.withValues(alpha: 0.3 * strength),
+                shadow.withValues(alpha: 0),
+              ],
+            ),
+        )
+        ..drawRect(
+          leaf,
+          Paint()
+            ..blendMode = BlendMode.dstIn
+            ..shader = ui.Gradient.linear(
+              leaf.topCenter,
+              leaf.bottomCenter,
+              [
+                Colors.transparent,
+                Colors.black,
+                Colors.black,
+                Colors.transparent,
+              ],
+              [0, fade, 1 - fade, 1],
+            ),
+        )
+        ..restore();
     }
     if (flap.length > 2) {
       canvas.drawShadow(
@@ -649,22 +671,20 @@ class _FlapShadingPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     if (flap.length < 3) return;
-    canvas
-      ..save()
-      ..clipPath(_pathOf(flap))
-      ..drawRect(
-        Offset.zero & size,
-        Paint()
-          ..shader = ui.Gradient.linear(
-            fold.mid,
-            fold.mid + fold.normal * reach,
-            [
-              shadow.withValues(alpha: 0.2 * strength),
-              shadow.withValues(alpha: 0),
-            ],
-          ),
-      )
-      ..restore();
+    // The flap itself, not the reader's rect: near a corner it swings past
+    // the reader's top or bottom, and the shading must follow it there.
+    canvas.drawPath(
+      _pathOf(flap),
+      Paint()
+        ..shader = ui.Gradient.linear(
+          fold.mid,
+          fold.mid + fold.normal * reach,
+          [
+            shadow.withValues(alpha: 0.2 * strength),
+            shadow.withValues(alpha: 0),
+          ],
+        ),
+    );
   }
 
   @override
