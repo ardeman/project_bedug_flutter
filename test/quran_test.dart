@@ -426,7 +426,11 @@ void main() {
       (w) => w is RichText && w.text.toPlainText().contains('\u06DD'),
     );
     final paragraph = tester.renderObject<RenderParagraph>(page);
-    final start = paragraph.text.toPlainText().indexOf(text.ayah(ayatAlKursi));
+    // Pause marks are drawn apart from the text, so only its first letters
+    // are matched.
+    final start = paragraph.text.toPlainText().indexOf(
+      text.ayah(ayatAlKursi).substring(0, 10),
+    );
     final letters = paragraph
         .getBoxesForSelection(
           TextSelection(baseOffset: start, extentOffset: start + 10),
@@ -469,42 +473,50 @@ void main() {
     expect(ayahSheetCovers(ctx, Offset(0, height * 0.7)), isTrue);
   });
 
-  test('fits opening text to an oval, narrowest at the top and bottom', () {
-    final widths = List.filled(40, 3.0);
-    final shaped = fitTextToOval(
-      widths: widths,
-      space: 1,
-      lineHeight: 2,
-      size: const Size(200, 300),
-    )!;
-    final lines = shaped.lines;
-    expect(lines.last.end, widths.length);
-    final widest = lines.map((l) => l.width).reduce(max);
-    expect(lines.first.width, lessThan(widest));
-    expect(lines.last.width, lessThan(widest));
-    expect(lines.last.justified, isFalse);
-
-    // A word can end its line, which is then centered.
-    final broken = fitTextToOval(
-      widths: widths,
-      breakAfter: {0},
-      space: 1,
-      lineHeight: 2,
-      size: const Size(200, 300),
-    )!.lines.firstWhere((l) => l.end > 0);
-    expect(broken.end, 1);
-    expect(broken.justified, isFalse);
-    // A larger size no longer fits.
-    expect(
-      fitTextToOval(
+  test(
+    'fits opening text to a rounded rectangle, narrowest at the corners',
+    () {
+      final widths = List.filled(40, 3.0);
+      final shaped = fitTextToRoundedRect(
         widths: widths,
         space: 1,
         lineHeight: 2,
-        size: Size(200 / 1.2, 300 / 1.2),
-      )!.fontSize,
-      lessThan(shaped.fontSize),
-    );
-  });
+        size: const Size(200, 300),
+        radius: 40,
+      )!;
+      final lines = shaped.lines;
+      expect(lines.last.end, widths.length);
+      final widest = lines.map((l) => l.width).reduce(max);
+      // Away from the corners, lines span the whole width.
+      expect(widest, 200);
+      expect(lines.first.width, lessThan(widest));
+      expect(lines.last.width, lessThan(widest));
+      expect(lines.last.justified, isFalse);
+
+      // A word can end its line, which is then centered.
+      final broken = fitTextToRoundedRect(
+        widths: widths,
+        breakAfter: {0},
+        space: 1,
+        lineHeight: 2,
+        size: const Size(200, 300),
+        radius: 40,
+      )!.lines.firstWhere((l) => l.end > 0);
+      expect(broken.end, 1);
+      expect(broken.justified, isFalse);
+      // A larger size no longer fits.
+      expect(
+        fitTextToRoundedRect(
+          widths: widths,
+          space: 1,
+          lineHeight: 2,
+          size: Size(200 / 1.2, 300 / 1.2),
+          radius: 40,
+        )!.fontSize,
+        lessThan(shaped.fontSize),
+      );
+    },
+  );
 
   testWidgets('sets Al-Fatihah in the opening page\'s medallion', (
     tester,
@@ -519,6 +531,22 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(find.text(english.ayah(const AyahRef(1, 2))), findsOneWidget);
+  });
+
+  testWidgets('lowers pause marks onto the words they follow', (tester) async {
+    await pump(
+      tester,
+      const QuranReaderScreen(surah: 2),
+      prefsValues: {'quran_page_mode': true},
+    );
+
+    // Al-Baqarah 2 pauses twice: لَا رَيْبَ ۛ فِيهِ ۛ. Each mark is set on a
+    // base of its own, not left as a word between spaces.
+    expect(find.text('\u00A0\u06DB'), findsNWidgets(2));
+    expect(
+      find.byWidgetPredicate((w) => w is Text && w.data == '\u06DB'),
+      findsNothing,
+    );
   });
 
   testWidgets('shows two facing pages in a wide window', (tester) async {

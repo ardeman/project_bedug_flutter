@@ -1,4 +1,4 @@
-import 'dart:math' show cos, max, pi, sin, sqrt;
+import 'dart:math' show cos, max, min, pi, sin, sqrt;
 import 'dart:ui' as ui;
 
 import 'package:flutter/gestures.dart';
@@ -910,8 +910,8 @@ class _MushafPageState extends ConsumerState<_MushafPage> {
     );
   }
 
-  /// The page's ayahs in lines that follow the medallion's oval, narrowing
-  /// towards its top and bottom, at the largest size that fits.
+  /// The page's ayahs in lines that follow the medallion's rounded
+  /// rectangle, narrowing at its corners, at the largest size that fits.
   Widget _shapedText(
     BuildContext ctx,
     List<AyahRef> ayahs,
@@ -939,7 +939,12 @@ class _MushafPageState extends ConsumerState<_MushafPage> {
         continue;
       }
       for (final word in _splitWords(ayahWithoutBasmala(widget.text, ayah))) {
-        words.add(_Word(word, ayah: ayah));
+        if (_isWaqf(word) && words.isNotEmpty && words.last.ayah == ayah) {
+          // A pause mark stays on the line of the word it follows.
+          words.last = words.last.withWaqf(word);
+        } else {
+          words.add(_Word(word, ayah: ayah));
+        }
       }
       words.add(_Word('', ayah: ayah, mark: mark));
     }
@@ -961,12 +966,14 @@ class _MushafPageState extends ConsumerState<_MushafPage> {
 
     final widths = [for (final w in words) widthOf(w.measured)];
     final space = widthOf(' ');
-    final shaped = fitTextToOval(
+    final shaped = fitTextToRoundedRect(
       widths: widths,
       breakAfter: breakAfter,
       space: space,
       lineHeight: _lineHeight,
       size: size,
+      // The text's corners follow the rim's, inside its ring.
+      radius: _medallionCorner - _medallionRing / 2,
     );
     if (shaped == null) return const SizedBox.shrink();
     final style = base.copyWith(fontSize: shaped.fontSize);
@@ -985,6 +992,10 @@ class _MushafPageState extends ConsumerState<_MushafPage> {
                     ? TextStyle(backgroundColor: accent.withValues(alpha: 0.16))
                     : null,
               ),
+            if (w.waqf case final waqf?) ...[
+              const TextSpan(text: ' '),
+              _waqfSpan(waqf, style),
+            ],
             if (w.text.isNotEmpty && mark != null) const TextSpan(text: ' '),
             if (mark != null)
               TextSpan(
@@ -1092,11 +1103,30 @@ class _MushafPageState extends ConsumerState<_MushafPage> {
       }
       final recognizer = _recognizerFor(ayah);
       final selected = ayah == _selected;
+      // Runs of words between pause marks, each taking taps itself, since a
+      // span's recognizer doesn't reach its children.
+      final parts = <InlineSpan>[];
+      var run = StringBuffer();
+      void endRun() {
+        if (run.isEmpty) return;
+        parts.add(TextSpan(text: '$run', recognizer: recognizer));
+        run = StringBuffer();
+      }
+
+      for (final word in _splitWords(ayahWithoutBasmala(widget.text, ayah))) {
+        if (_isWaqf(word)) {
+          endRun();
+          parts.add(_waqfSpan(word, style!));
+          run.write(' ');
+        } else {
+          run.write('$word ');
+        }
+      }
+      endRun();
       spans
         ..add(
           TextSpan(
-            text: '${ayahWithoutBasmala(widget.text, ayah)} ',
-            recognizer: recognizer,
+            children: parts,
             style: selected
                 ? TextStyle(backgroundColor: accent.withValues(alpha: 0.16))
                 : null,
@@ -1174,6 +1204,10 @@ const _illuminationBorder = 14.0;
 /// Room around the medallion's text for its scalloped rim.
 const _medallionRing = 18.0;
 
+/// Corner radius of the medallion's rim, measured along the scallops'
+/// centers.
+const _medallionCorner = AppRadii.xl + _medallionRing;
+
 /// Spacing of the star pattern on the opening pages' field.
 const _starTile = 28.0;
 
@@ -1186,7 +1220,7 @@ const _justifyFill = 0.75;
 /// Below this the opening text would be unreadable.
 const _minOpeningFontSize = 6.0;
 
-/// Lines fill a little less than the oval's width, so rounding in the
+/// Lines fill a little less than the medallion's width, so rounding in the
 /// measured widths never overflows them.
 const _fitSlack = 0.97;
 
@@ -1200,46 +1234,90 @@ class _Word {
 
   final String? mark;
 
-  const _Word(this.text, {required this.ayah, this.mark});
+  /// A pause mark after the word.
+  final String? waqf;
+
+  const _Word(this.text, {required this.ayah, this.mark, this.waqf});
+
+  _Word withWaqf(String waqf) =>
+      _Word(text, ayah: ayah, mark: mark, waqf: waqf);
 
   /// What takes up the word's room on its line.
-  String get measured => [text, ?mark].where((t) => t.isNotEmpty).join(' ');
+  String get measured => [
+    text,
+    if (waqf != null) '$_waqfBase$waqf',
+    ?mark,
+  ].where((t) => t.isNotEmpty).join(' ');
 }
+
+/// Whether [word] is only a pause mark (waqf sign), which Tanzil's text
+/// sets apart between spaces.
+bool _isWaqf(String word) =>
+    word.isNotEmpty && word.runes.every((c) => c >= 0x06D6 && c <= 0x06DC);
+
+/// What a pause mark sits on: alone, the font would draw nothing.
+const _waqfBase = '\u00A0';
+
+/// How far a pause mark is lowered, in text heights. Over a space the font
+/// raises it to clear the tallest letters, about a line above the words; in
+/// a mushaf it sits just above them.
+const _waqfDrop = 0.55;
+
+/// A pause mark [waqf] lowered to sit just above the words around it.
+InlineSpan _waqfSpan(String waqf, TextStyle style) => WidgetSpan(
+  alignment: PlaceholderAlignment.baseline,
+  baseline: TextBaseline.alphabetic,
+  child: Transform.translate(
+    offset: Offset(0, style.fontSize! * _waqfDrop),
+    child: Text(
+      '$_waqfBase$waqf',
+      textDirection: TextDirection.rtl,
+      textScaler: TextScaler.noScaling,
+      style: style.copyWith(backgroundColor: Colors.transparent),
+    ),
+  ),
+);
 
 Iterable<String> _splitWords(String text) =>
     text.split(' ').where((w) => w.isNotEmpty);
 
-/// A line of an oval page: the words from [start] up to [end], centered in
+/// A line of an opening page: the words from [start] up to [end], centered in
 /// [width] or, when it nearly fills it, spread across it.
-typedef OvalLine = ({int start, int end, double width, bool justified});
+typedef ShapedLine = ({int start, int end, double width, bool justified});
 
 /// Lays out words of [widths] (at a text size of 1, separated by [space])
-/// in lines whose length follows an oval filling [size], at the largest
-/// text size where they all fit. A word whose index is in [breakAfter] ends
-/// its line.
-/// Lines too short for the next word, near the oval's top, stay empty.
+/// in lines whose length follows a rectangle filling [size] with corners
+/// rounded by [radius], at the largest text size where they all fit. A word
+/// whose index is in [breakAfter] ends its line.
+/// Lines too short for the next word, in the top corners, stay empty.
 /// Null when not even the smallest size fits.
-({double fontSize, List<OvalLine> lines})? fitTextToOval({
+({double fontSize, List<ShapedLine> lines})? fitTextToRoundedRect({
   required List<double> widths,
   Set<int> breakAfter = const {},
   required double space,
   required double lineHeight,
   required Size size,
+  required double radius,
 }) {
-  List<OvalLine>? fill(double fontSize) {
+  final r = min(radius, min(size.width, size.height) / 2);
+  List<ShapedLine>? fill(double fontSize) {
     final height = fontSize * lineHeight;
     final count = (size.height / height).floor();
     final top = (size.height - count * height) / 2;
-    final a = size.width / 2;
     final b = size.height / 2;
-    final lines = <OvalLine>[];
+    final lines = <ShapedLine>[];
     var next = 0;
     for (var i = 0; i < count; i++) {
       // The line's narrower edge, the one further from the middle, has to
-      // stay inside the oval.
+      // stay inside the rounded corners.
       final above = top + i * height - b;
       final dy = max(above.abs(), (above + height).abs());
-      final chord = dy >= b ? 0.0 : 2 * a * sqrt(1 - (dy / b) * (dy / b));
+      final into = dy - (b - r);
+      final chord = into <= 0
+          ? size.width
+          : into >= r
+          ? 0.0
+          : size.width - 2 * (r - sqrt(r * r - into * into));
       final start = next;
       var used = 0.0;
       var words = 0;
@@ -1407,8 +1485,8 @@ class _IlluminationPainter extends CustomPainter {
       old.gold != gold || old.accent != accent || old.paper != paper;
 }
 
-/// The plain oval holding an opening page's text, with a scalloped gold
-/// rim.
+/// The plain rounded rectangle holding an opening page's text, with a
+/// scalloped gold rim.
 class _MedallionPainter extends CustomPainter {
   final Color gold;
   final Color paper;
@@ -1417,12 +1495,12 @@ class _MedallionPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final oval = (Offset.zero & size).deflate(_medallionRing / 2);
-    final a = oval.width / 2;
-    final b = oval.height / 2;
-    // Ramanujan's approximation of the oval's perimeter.
-    final perimeter = pi * (3 * (a + b) - sqrt((3 * a + b) * (a + 3 * b)));
-    final count = (perimeter / (_medallionRing * 0.9)).floor();
+    final panel = RRect.fromRectAndRadius(
+      (Offset.zero & size).deflate(_medallionRing / 2),
+      const Radius.circular(_medallionCorner),
+    );
+    final outline = (Path()..addRRect(panel)).computeMetrics().single;
+    final count = (outline.length / (_medallionRing * 0.9)).floor();
     const radius = _medallionRing * 0.45;
     final fill = Paint()
       ..color = Color.alphaBlend(gold.withValues(alpha: 0.3), paper);
@@ -1430,17 +1508,18 @@ class _MedallionPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..color = gold.withValues(alpha: 0.8);
     for (var i = 0; i < count; i++) {
-      final t = 2 * pi * i / count;
-      final c = oval.center + Offset(a * cos(t), b * sin(t));
+      final c = outline
+          .getTangentForOffset(outline.length * i / count)!
+          .position;
       canvas
         ..drawCircle(c, radius, fill)
         ..drawCircle(c, radius, rim);
     }
     canvas
-      ..drawOval(oval, Paint()..color = paper)
-      ..drawOval(oval, rim..strokeWidth = 1.5)
-      ..drawOval(
-        oval.deflate(AppSpacing.xs),
+      ..drawRRect(panel, Paint()..color = paper)
+      ..drawRRect(panel, rim..strokeWidth = 1.5)
+      ..drawRRect(
+        panel.deflate(AppSpacing.xs),
         Paint()
           ..style = PaintingStyle.stroke
           ..color = gold.withValues(alpha: 0.5),
