@@ -8,7 +8,6 @@ import 'dart:io';
 import 'package:bedug/core/providers/locale_provider.dart';
 import 'package:bedug/features/quran/khatam.dart';
 import 'package:bedug/features/quran/quran.dart';
-import 'package:bedug/features/quran/quran_ayah_sheet.dart';
 import 'package:bedug/features/quran/quran_mushaf.dart';
 import 'package:bedug/features/quran/quran_reader_screen.dart';
 import 'package:bedug/features/quran/quran_screen.dart';
@@ -454,23 +453,6 @@ void main() {
     await tester.pump();
     expect(container.read(quranReadingProvider).bookmarks, [ayatAlKursi]);
     expect(find.text('Remove bookmark'), findsOneWidget);
-  });
-
-  testWidgets('the ayah sheet covers taps in the lower half of the screen', (
-    tester,
-  ) async {
-    late BuildContext ctx;
-    await tester.pumpWidget(
-      Builder(
-        builder: (c) {
-          ctx = c;
-          return const SizedBox();
-        },
-      ),
-    );
-    final height = MediaQuery.sizeOf(ctx).height;
-    expect(ayahSheetCovers(ctx, Offset(0, height * 0.3)), isFalse);
-    expect(ayahSheetCovers(ctx, Offset(0, height * 0.7)), isTrue);
   });
 
   test(

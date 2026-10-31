@@ -18,22 +18,16 @@ import 'quran.dart';
 /// at half the screen.
 const _maxPanelHeight = 0.5;
 
-/// Whether the sheet would cover a tap at [position] on the screen, so the
-/// tapped ayah is out of view while it is open.
-bool ayahSheetCovers(BuildContext ctx, Offset position) =>
-    position.dy > MediaQuery.sizeOf(ctx).height * (1 - _maxPanelHeight);
-
-/// A sheet for an ayah tapped on a mushaf page: its translation, then its
-/// bookmark and khatam mark. On Apple platforms a glass panel that floats
-/// above the page and fits its content, so the page and the tapped ayah
-/// stay in view; an Expressive sheet on Material paths. Given [arabic], it
-/// also shows the ayah itself, for when the sheet covers it on the page.
+/// A sheet for an ayah tapped on a mushaf page: the ayah itself and its
+/// translation, then its bookmark and khatam mark. On Apple platforms a
+/// glass panel that floats above the page and fits its content, so the page
+/// stays in view; an Expressive sheet on Material paths.
 Future<void> showAyahSheet(
   BuildContext ctx, {
   required QuranIndex index,
   required AyahRef ayah,
   required QuranText? translation,
-  QuranText? arabic,
+  required QuranText arabic,
 }) {
   final content = _AyahSheet(
     index: index,
@@ -87,7 +81,7 @@ class _AyahSheet extends ConsumerWidget {
   final QuranIndex index;
   final AyahRef ayah;
   final QuranText? translation;
-  final QuranText? arabic;
+  final QuranText arabic;
 
   const _AyahSheet({
     required this.index,
@@ -107,7 +101,6 @@ class _AyahSheet extends ConsumerWidget {
     );
     final khatam = ref.watch(khatamProvider);
     final translation = this.translation;
-    final arabic = this.arabic;
     return ListView(
       shrinkWrap: true,
       padding: const EdgeInsets.fromLTRB(
@@ -128,19 +121,14 @@ class _AyahSheet extends ConsumerWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        if (arabic != null) ...[
-          const SizedBox(height: AppSpacing.sm),
-          Text(
-            ayahWithoutBasmala(arabic, ayah),
-            textDirection: TextDirection.rtl,
-            style: theme.textTheme.titleLarge
-                ?.copyWith(
-                  fontFamily: quranFontFamily,
-                  height: _arabicLineHeight,
-                )
-                .apply(fontSizeFactor: scale),
-          ),
-        ],
+        const SizedBox(height: AppSpacing.sm),
+        Text(
+          ayahWithoutBasmala(arabic, ayah),
+          textDirection: TextDirection.rtl,
+          style: theme.textTheme.titleLarge
+              ?.copyWith(fontFamily: quranFontFamily, height: _arabicLineHeight)
+              .apply(fontSizeFactor: scale),
+        ),
         if (translation != null) ...[
           const SizedBox(height: AppSpacing.sm),
           Text(

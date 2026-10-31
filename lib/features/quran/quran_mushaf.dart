@@ -756,13 +756,11 @@ class _MushafPageState extends ConsumerState<_MushafPage> {
 
   TapGestureRecognizer _recognizerFor(AyahRef ayah) => _recognizers.putIfAbsent(
     ayah,
-    () =>
-        TapGestureRecognizer()
-          ..onTapUp = (details) => _openAyah(ayah, details.globalPosition),
+    () => TapGestureRecognizer()..onTap = () => _openAyah(ayah),
   );
 
-  /// Opens the sheet for [ayah], tapped at [position] on the screen.
-  Future<void> _openAyah(AyahRef ayah, Offset position) async {
+  /// Opens the sheet for [ayah].
+  Future<void> _openAyah(AyahRef ayah) async {
     // A second tap while the sheet opens would stack another one.
     if (_selected != null) return;
     setState(() => _selected = ayah);
@@ -772,7 +770,7 @@ class _MushafPageState extends ConsumerState<_MushafPage> {
         index: widget.index,
         ayah: ayah,
         translation: widget.translation,
-        arabic: ayahSheetCovers(context, position) ? widget.text : null,
+        arabic: widget.text,
       );
     } finally {
       if (mounted) setState(() => _selected = null);
@@ -1058,7 +1056,7 @@ class _MushafPageState extends ConsumerState<_MushafPage> {
       );
       return GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onTapUp: (details) => _openAyah(ayah, details.globalPosition),
+        onTap: () => _openAyah(ayah),
         child: text,
       );
     }
