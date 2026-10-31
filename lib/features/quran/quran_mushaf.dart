@@ -205,13 +205,13 @@ class _QuranMushafViewState extends State<QuranMushafView>
                 onHorizontalDragEnd: _onDragEnd,
                 child: AnimatedBuilder(
                   animation: _turn,
-                  // A lifted corner stays below the top bar.
-                  builder: (ctx, _) => ClipRect(
-                    child: Stack(
-                      children: _spread
-                          ? _spreadLeaves(ctx, size)
-                          : _singleLeaves(ctx, size),
-                    ),
+                  // A lifted corner and its shadow pass under the top bar,
+                  // which the body extends behind on Apple.
+                  builder: (ctx, _) => Stack(
+                    clipBehavior: Clip.none,
+                    children: _spread
+                        ? _spreadLeaves(ctx, size)
+                        : _singleLeaves(ctx, size),
                   ),
                 ),
               ),
@@ -381,7 +381,14 @@ class _QuranMushafViewState extends State<QuranMushafView>
         padding: padding,
         clip: fold.clip(corners, flat: true),
       ),
-      _foldShadows(ctx, fold, t, uncovered: folded, flap: flap, reach: reach),
+      _foldShadows(
+        ctx,
+        fold,
+        t,
+        uncovered: fold.clip(_cornersOf(_beyondEnds(leaf)), flat: false),
+        flap: flap,
+        reach: reach,
+      ),
       _layer(
         ctx,
         page,
@@ -457,7 +464,14 @@ class _QuranMushafViewState extends State<QuranMushafView>
         padding: leftPad,
         clip: fold.clip(corners, flat: true),
       ),
-      _foldShadows(ctx, fold, t, uncovered: folded, flap: flap, reach: reach),
+      _foldShadows(
+        ctx,
+        fold,
+        t,
+        uncovered: fold.clip(_cornersOf(_beyondEnds(leftLeaf)), flat: false),
+        flap: flap,
+        reach: reach,
+      ),
       _layer(
         ctx,
         right + 2,
@@ -479,6 +493,15 @@ List<Offset> _cornersOf(Rect r) => [
   r.bottomRight,
   r.bottomLeft,
 ];
+
+/// [leaf] run on past its top and bottom, where it meets the background
+/// unseen, so the shadow it is given doesn't stop in a straight line there.
+Rect _beyondEnds(Rect leaf) => Rect.fromLTRB(
+  leaf.left,
+  leaf.top - leaf.height,
+  leaf.right,
+  leaf.bottom + leaf.height,
+);
 
 /// How faintly the page shows through its own back.
 const _backFade = 0.82;
@@ -579,22 +602,18 @@ class _FoldShadowPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     if (uncovered.length > 2) {
-      canvas
-        ..save()
-        ..clipPath(_pathOf(uncovered))
-        ..drawRect(
-          Offset.zero & size,
-          Paint()
-            ..shader = ui.Gradient.linear(
-              fold.mid,
-              fold.mid - fold.normal * reach,
-              [
-                shadow.withValues(alpha: 0.3 * strength),
-                shadow.withValues(alpha: 0),
-              ],
-            ),
-        )
-        ..restore();
+      canvas.drawPath(
+        _pathOf(uncovered),
+        Paint()
+          ..shader = ui.Gradient.linear(
+            fold.mid,
+            fold.mid - fold.normal * reach,
+            [
+              shadow.withValues(alpha: 0.3 * strength),
+              shadow.withValues(alpha: 0),
+            ],
+          ),
+      );
     }
     if (flap.length > 2) {
       canvas.drawShadow(
