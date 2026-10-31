@@ -1,6 +1,7 @@
 import 'package:bedug/core/design/liquid_glass.dart';
 import 'package:bedug/core/theme/app_theme.dart';
 import 'package:bedug/core/theme/app_theme_scope.dart';
+import 'package:bedug/core/theme/app_tokens.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:liquid_glass_easy/liquid_glass_easy.dart';
@@ -555,8 +556,13 @@ void main() {
           final buttonRect = tester.getRect(find.byType(GlassIconButton));
           expect(titleRect.overlaps(buttonRect), isFalse);
           expect(titleRect.left, greaterThanOrEqualTo(windowControlsInset));
-          expect(titleRect.right, lessThanOrEqualTo(320 - windowControlsInset));
-          expect(titleRect.center.dx, closeTo(160, 0.1));
+          expect(titleRect.right, lessThanOrEqualTo(320 - AppSpacing.md));
+          // Too long to center, it takes the room beside the back button
+          // instead of the narrower centered capsule.
+          const backSlot = AppControlSizes.toolbarButton + AppSpacing.xs;
+          final centered =
+              320 - 4 * AppSpacing.md - 2 * (windowControlsInset + backSlot);
+          expect(titleRect.width, greaterThan(centered));
           expect(tester.takeException(), isNull);
 
           await tester.tap(find.byType(GlassIconButton));

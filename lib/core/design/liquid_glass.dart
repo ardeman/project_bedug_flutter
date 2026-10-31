@@ -713,12 +713,9 @@ class GlassTopBar extends StatelessWidget implements PreferredSizeWidget {
     const buttonSlot = AppControlSizes.toolbarButton + AppSpacing.xs;
     final leadingWidth = windowControlsInset + (canPop ? buttonSlot : 0);
     final trailingWidth = actions.length * buttonSlot;
-    // Reserve the same space on both sides to keep the title centered and
-    // clear of the back button, the actions and macOS traffic lights,
-    // including in RTL.
-    final titleInset =
-        AppSpacing.md +
-        (leadingWidth > trailingWidth ? leadingWidth : trailingWidth);
+    final titleStyle = theme.textTheme.titleMedium?.copyWith(
+      color: theme.colorScheme.onSurface,
+    );
     return SizedBox(
       height: kToolbarHeight + MediaQuery.of(ctx).padding.top,
       child: Stack(
@@ -733,31 +730,39 @@ class GlassTopBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           SafeArea(
             bottom: false,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: titleInset),
-              child: Center(
-                child: SizedBox(
-                  height: _capsuleHeight,
-                  child: LiquidGlassLens(
-                    style: LiquidGlassStyle(
-                      shape: const LiquidGlassShape.continuousRoundedRectangle(
-                        cornerRadius: _capsuleHeight / 2,
+            child: LayoutBuilder(
+              builder: (ctx, box) => Padding(
+                padding: _titlePadding(
+                  ctx,
+                  title,
+                  box.maxWidth,
+                  style: titleStyle,
+                  leadingWidth: leadingWidth,
+                  trailingWidth: trailingWidth,
+                ),
+                child: Center(
+                  child: SizedBox(
+                    height: _capsuleHeight,
+                    child: LiquidGlassLens(
+                      style: LiquidGlassStyle(
+                        shape:
+                            const LiquidGlassShape.continuousRoundedRectangle(
+                              cornerRadius: _capsuleHeight / 2,
+                            ),
+                        color: glassTintOf(ctx),
+                        blur: 6,
                       ),
-                      color: glassTintOf(ctx),
-                      blur: 6,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: AppSpacing.md,
-                      ),
-                      child: Center(
-                        widthFactor: 1,
-                        child: Text(
-                          title,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: theme.textTheme.titleMedium?.copyWith(
-                            color: theme.colorScheme.onSurface,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppSpacing.md,
+                        ),
+                        child: Center(
+                          widthFactor: 1,
+                          child: Text(
+                            title,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: titleStyle,
                           ),
                         ),
                       ),
@@ -826,6 +831,42 @@ class GlassTopBar extends StatelessWidget implements PreferredSizeWidget {
       ),
     );
   }
+}
+
+/// Where [GlassTopBar]'s title capsule goes in a bar [width] wide: centered
+/// when the title fits between equal margins, as on iOS, otherwise in the
+/// room left between the back button and the actions, so a bar with several
+/// actions doesn't cut its title short. Either way it stays clear of the
+/// back button, the actions and the macOS traffic lights, also in RTL.
+EdgeInsetsGeometry _titlePadding(
+  BuildContext ctx,
+  String title,
+  double width, {
+  required TextStyle? style,
+  required double leadingWidth,
+  required double trailingWidth,
+}) {
+  final painter = TextPainter(
+    text: TextSpan(text: title, style: style),
+    maxLines: 1,
+    textDirection: Directionality.of(ctx),
+    textScaler: MediaQuery.textScalerOf(ctx),
+  )..layout();
+  final capsule = painter.width + 2 * AppSpacing.md;
+  painter.dispose();
+  final side = math.max(leadingWidth, trailingWidth);
+  if (capsule <= width - 2 * (AppSpacing.md + side)) {
+    return EdgeInsets.symmetric(horizontal: AppSpacing.md + side);
+  }
+  final start = AppSpacing.md + leadingWidth;
+  final end = AppSpacing.md + trailingWidth;
+  final rtl = Directionality.of(ctx) == TextDirection.rtl;
+  // The macOS traffic lights stay on the left in RTL too.
+  final lights = AppSpacing.md + windowControlsInset;
+  return EdgeInsets.only(
+    left: math.max(rtl ? end : start, lights),
+    right: rtl ? start : end,
+  );
 }
 
 /// A [GlassTopBar] button.
