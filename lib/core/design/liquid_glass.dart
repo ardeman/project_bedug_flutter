@@ -680,6 +680,9 @@ class GlassTopBar extends StatelessWidget implements PreferredSizeWidget {
   /// Height of the title capsule: one title line plus padding.
   static const _capsuleHeight = AppControlSizes.toolbarButton;
 
+  /// Width a round button takes on the bar, with the gap after it.
+  static const _buttonSlot = AppControlSizes.toolbarButton + AppSpacing.xs;
+
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
@@ -710,7 +713,7 @@ class GlassTopBar extends StatelessWidget implements PreferredSizeWidget {
     }
 
     final canPop = ModalRoute.of(ctx)?.impliesAppBarDismissal ?? false;
-    const buttonSlot = AppControlSizes.toolbarButton + AppSpacing.xs;
+    const buttonSlot = _buttonSlot;
     final leadingWidth = windowControlsInset + (canPop ? buttonSlot : 0);
     final trailingWidth = actions.length * buttonSlot;
     final titleStyle = theme.textTheme.titleMedium?.copyWith(
@@ -731,45 +734,51 @@ class GlassTopBar extends StatelessWidget implements PreferredSizeWidget {
           SafeArea(
             bottom: false,
             child: LayoutBuilder(
-              builder: (ctx, box) => Padding(
-                padding: _titlePadding(
+              builder: (ctx, box) {
+                final (:padding, :centered) = _titlePlacement(
                   ctx,
                   title,
                   box.maxWidth,
                   style: titleStyle,
                   leadingWidth: leadingWidth,
                   trailingWidth: trailingWidth,
-                ),
-                child: Center(
-                  child: SizedBox(
-                    height: _capsuleHeight,
-                    child: LiquidGlassLens(
-                      style: LiquidGlassStyle(
-                        shape:
-                            const LiquidGlassShape.continuousRoundedRectangle(
-                              cornerRadius: _capsuleHeight / 2,
-                            ),
-                        color: glassTintOf(ctx),
-                        blur: 6,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: AppSpacing.md,
+                );
+                return Padding(
+                  padding: padding,
+                  child: Align(
+                    alignment: centered
+                        ? Alignment.center
+                        : AlignmentDirectional.centerStart,
+                    child: SizedBox(
+                      height: _capsuleHeight,
+                      child: LiquidGlassLens(
+                        style: LiquidGlassStyle(
+                          shape:
+                              const LiquidGlassShape.continuousRoundedRectangle(
+                                cornerRadius: _capsuleHeight / 2,
+                              ),
+                          color: glassTintOf(ctx),
+                          blur: 6,
                         ),
-                        child: Center(
-                          widthFactor: 1,
-                          child: Text(
-                            title,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: titleStyle,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: AppSpacing.md,
+                          ),
+                          child: Center(
+                            widthFactor: 1,
+                            child: Text(
+                              title,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: titleStyle,
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ),
+                );
+              },
             ),
           ),
           if (canPop)
@@ -834,11 +843,13 @@ class GlassTopBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 /// Where [GlassTopBar]'s title capsule goes in a bar [width] wide: centered
-/// when the title fits between equal margins, as on iOS, otherwise in the
-/// room left between the back button and the actions, so a bar with several
-/// actions doesn't cut its title short. Either way it stays clear of the
-/// back button, the actions and the macOS traffic lights, also in RTL.
-EdgeInsetsGeometry _titlePadding(
+/// when the title fits between equal margins and the two sides hold about
+/// as many buttons, as on iOS, otherwise beside the back button in the room
+/// left before the actions, so a bar with several actions neither cuts its
+/// title short nor strands it away from the back button. Either way it stays
+/// clear of the back button, the actions and the macOS traffic lights, also
+/// in RTL.
+({EdgeInsetsGeometry padding, bool centered}) _titlePlacement(
   BuildContext ctx,
   String title,
   double width, {
@@ -855,17 +866,28 @@ EdgeInsetsGeometry _titlePadding(
   final capsule = painter.width + 2 * AppSpacing.md;
   painter.dispose();
   final side = math.max(leadingWidth, trailingWidth);
-  if (capsule <= width - 2 * (AppSpacing.md + side)) {
-    return EdgeInsets.symmetric(horizontal: AppSpacing.md + side);
+  // The traffic lights don't count as a button: they sit outside the bar's
+  // content on macOS.
+  final leadingButtons = leadingWidth - windowControlsInset;
+  final balanced =
+      (trailingWidth - leadingButtons).abs() <= GlassTopBar._buttonSlot;
+  if (balanced && capsule <= width - 2 * (AppSpacing.md + side)) {
+    return (
+      padding: EdgeInsets.symmetric(horizontal: AppSpacing.md + side),
+      centered: true,
+    );
   }
   final start = AppSpacing.md + leadingWidth;
   final end = AppSpacing.md + trailingWidth;
   final rtl = Directionality.of(ctx) == TextDirection.rtl;
   // The macOS traffic lights stay on the left in RTL too.
   final lights = AppSpacing.md + windowControlsInset;
-  return EdgeInsets.only(
-    left: math.max(rtl ? end : start, lights),
-    right: rtl ? start : end,
+  return (
+    padding: EdgeInsets.only(
+      left: math.max(rtl ? end : start, lights),
+      right: rtl ? start : end,
+    ),
+    centered: false,
   );
 }
 

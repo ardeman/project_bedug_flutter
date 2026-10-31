@@ -520,6 +520,64 @@ void main() {
     }, variant: TargetPlatformVariant.only(TargetPlatform.iOS));
   }
 
+  for (final direction in TextDirection.values) {
+    testWidgets(
+      'short title sits beside the back button before several actions in '
+      '$direction',
+      (tester) async {
+        tester.view.physicalSize = const Size(600, 700);
+        tester.view.devicePixelRatio = 1;
+        addTearDown(tester.view.reset);
+        final navigator = GlobalKey<NavigatorState>();
+        await tester.pumpWidget(
+          MaterialApp(
+            navigatorKey: navigator,
+            theme: buildAppTheme(Brightness.light),
+            builder: (context, child) => AppThemeScope(
+              child: Directionality(textDirection: direction, child: child!),
+            ),
+            home: const Scaffold(body: Text('Home')),
+          ),
+        );
+        navigator.currentState!.push(
+          PageRouteBuilder<void>(
+            pageBuilder: (context, animation, secondaryAnimation) => Scaffold(
+              extendBodyBehindAppBar: true,
+              appBar: GlassTopBar(
+                title: 'Al-Fatihah',
+                actions: [
+                  for (final icon in const [
+                    Icons.menu_book,
+                    Icons.text_decrease,
+                    Icons.text_increase,
+                  ])
+                    GlassTopBarAction(
+                      icon: icon,
+                      tooltip: '',
+                      onPressed: () {},
+                    ),
+                ],
+              ),
+              body: const SizedBox.expand(),
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+
+        final title = tester.getRect(find.text('Al-Fatihah'));
+        final back = tester.getRect(find.byIcon(Icons.arrow_back_ios_new));
+        // Only the back button's gap and the capsule's padding lie between.
+        final gap = direction == TextDirection.ltr
+            ? title.left - back.right
+            : back.left - title.right;
+        expect(gap, lessThan(AppControlSizes.toolbarButton));
+        expect(gap, greaterThan(0));
+        expect(tester.takeException(), isNull);
+      },
+      variant: TargetPlatformVariant.only(TargetPlatform.iOS),
+    );
+  }
+
   for (final brightness in Brightness.values) {
     for (final direction in TextDirection.values) {
       testWidgets(
