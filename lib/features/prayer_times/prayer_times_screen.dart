@@ -1125,6 +1125,7 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
                 child: LiquidGlassScrollEdge(
                   edge: LiquidGlassEdge.top,
                   color: theme.scaffoldBackgroundColor.withValues(alpha: 0.85),
+                  blur: topBarGlassBlur,
                 ),
               ),
             ),
@@ -1567,7 +1568,9 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
                         cornerRadius: pill.height / 2,
                       ),
                       color: pillTint,
-                      blur: 6 * (hasCountdown ? t : collapsedProgress),
+                      blur:
+                          topBarGlassBlur *
+                          (hasCountdown ? t : collapsedProgress),
                     ),
                     // The timer icon stays at the pill's start, fading out.
                     child: hasCountdown

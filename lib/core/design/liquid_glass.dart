@@ -34,6 +34,10 @@ Color _adaptiveTint(
       : light.withValues(alpha: lerpDouble(lightAlpha, lightOpaqueAlpha, t));
 }
 
+/// Blur sigma under the top bars' glass and scroll edges: light, as in the
+/// system's own bars, so what scrolls beneath stays recognisable.
+const topBarGlassBlur = 2.0;
+
 /// Glass tint for bars and controls that float over content: a veil when
 /// Clear, milky (light) or solid grey (dark) when Tinted. Even Clear dims
 /// the page behind enough, like the system's glass, that labels on the glass
@@ -729,6 +733,7 @@ class GlassTopBar extends StatelessWidget implements PreferredSizeWidget {
             child: LiquidGlassScrollEdge(
               edge: LiquidGlassEdge.top,
               color: theme.scaffoldBackgroundColor.withValues(alpha: 0.85),
+              blur: topBarGlassBlur,
             ),
           ),
           SafeArea(
@@ -758,7 +763,7 @@ class GlassTopBar extends StatelessWidget implements PreferredSizeWidget {
                                 cornerRadius: _capsuleHeight / 2,
                               ),
                           color: glassTintOf(ctx),
-                          blur: 6,
+                          blur: topBarGlassBlur,
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
