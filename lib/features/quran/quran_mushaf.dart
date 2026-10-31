@@ -205,10 +205,13 @@ class _QuranMushafViewState extends State<QuranMushafView>
                 onHorizontalDragEnd: _onDragEnd,
                 child: AnimatedBuilder(
                   animation: _turn,
-                  builder: (ctx, _) => Stack(
-                    children: _spread
-                        ? _spreadLeaves(ctx, size)
-                        : _singleLeaves(ctx, size),
+                  // A lifted corner stays below the top bar.
+                  builder: (ctx, _) => ClipRect(
+                    child: Stack(
+                      children: _spread
+                          ? _spreadLeaves(ctx, size)
+                          : _singleLeaves(ctx, size),
+                    ),
                   ),
                 ),
               ),
@@ -873,7 +876,7 @@ class _MushafPageState extends ConsumerState<_MushafPage> {
                 ),
                 background: paper,
               ),
-              if (hasBasmalaHeading(ayahs.first.surah))
+              if (hasBasmalaHeading(ayahs.first.surah)) ...[
                 Text(
                   widget.text.ayah(const AyahRef(1, 1)),
                   textAlign: TextAlign.center,
@@ -883,8 +886,10 @@ class _MushafPageState extends ConsumerState<_MushafPage> {
                     height: _lineHeight,
                     color: theme.colorScheme.onSurface,
                   ),
-                )
-              else
+                ),
+                // Clear of the medallion's scallops.
+                const SizedBox(height: AppSpacing.xs),
+              ] else
                 const SizedBox(height: AppSpacing.sm),
               Expanded(
                 child: CustomPaint(
@@ -1201,6 +1206,10 @@ const _openingPages = 2;
 /// Width of the opening pages' patterned border.
 const _illuminationBorder = 14.0;
 
+/// Corner radius of the opening pages' border: an arc around each corner's
+/// star, so the star sits inside the rule.
+const _illuminationCorner = _illuminationBorder / 2;
+
 /// Room around the medallion's text for its scalloped rim.
 const _medallionRing = 18.0;
 
@@ -1403,7 +1412,10 @@ class _IlluminationPainter extends CustomPainter {
     canvas
       ..save()
       ..clipRRect(
-        RRect.fromRectAndRadius(rect, const Radius.circular(AppRadii.sm)),
+        RRect.fromRectAndRadius(
+          rect,
+          const Radius.circular(_illuminationCorner),
+        ),
       )
       ..drawRect(
         rect,
@@ -1468,7 +1480,7 @@ class _IlluminationPainter extends CustomPainter {
           goldPaint,
         );
       }
-      canvas.drawPath(_star(from, half * 0.95), goldPaint);
+      canvas.drawPath(_star(from, half * 0.75), goldPaint);
     }
 
     final rule = Paint()
@@ -1476,7 +1488,13 @@ class _IlluminationPainter extends CustomPainter {
       ..color = gold.withValues(alpha: 0.8);
     canvas
       ..drawRect(field, rule)
-      ..drawRect(rect.deflate(1), rule..strokeWidth = 1.5)
+      ..drawRRect(
+        RRect.fromRectAndRadius(
+          rect.deflate(1),
+          const Radius.circular(_illuminationCorner - 1),
+        ),
+        rule..strokeWidth = 1.5,
+      )
       ..restore();
   }
 
