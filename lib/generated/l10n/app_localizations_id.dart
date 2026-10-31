@@ -937,6 +937,17 @@ class AppLocalizationsId extends AppLocalizations {
   String get quranTextLarger => 'Perbesar teks';
 
   @override
+  String get quranPageView => 'Tampilan halaman';
+
+  @override
+  String get quranListView => 'Tampilan daftar';
+
+  @override
+  String quranPageNumber(Object number) {
+    return 'Halaman $number';
+  }
+
+  @override
   String quranNextSurah(String name) {
     return 'Surah berikutnya: $name';
   }

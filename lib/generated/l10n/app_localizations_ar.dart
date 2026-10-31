@@ -945,6 +945,17 @@ class AppLocalizationsAr extends AppLocalizations {
   String get quranTextLarger => 'تكبير النص';
 
   @override
+  String get quranPageView => 'عرض الصفحات';
+
+  @override
+  String get quranListView => 'عرض القائمة';
+
+  @override
+  String quranPageNumber(Object number) {
+    return 'صفحة $number';
+  }
+
+  @override
   String quranNextSurah(String name) {
     return 'السورة التالية: $name';
   }

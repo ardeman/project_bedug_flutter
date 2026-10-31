@@ -81,7 +81,14 @@ class QuranIndex {
   /// Where each of the 30 juz starts.
   final List<AyahRef> juzStarts;
 
-  const QuranIndex({required this.surahs, required this.juzStarts});
+  /// Where each of the 604 pages of the Madinah mushaf starts.
+  final List<AyahRef> pageStarts;
+
+  const QuranIndex({
+    required this.surahs,
+    required this.juzStarts,
+    this.pageStarts = const [],
+  });
 
   Surah surah(int number) => surahs[number - 1];
 
@@ -94,6 +101,19 @@ class QuranIndex {
   /// The juz, 1 to 30, that [ref] is in.
   int juzOf(AyahRef ref) =>
       juzStarts.lastIndexWhere((start) => start.compareTo(ref) <= 0) + 1;
+
+  /// The mushaf page, 1 to 604, that [ref] is on.
+  int pageOf(AyahRef ref) =>
+      pageStarts.lastIndexWhere((start) => start.compareTo(ref) <= 0) + 1;
+
+  int get pageCount => pageStarts.length;
+
+  /// The ayahs on mushaf [page], in order.
+  List<AyahRef> ayahsOnPage(int page) {
+    final first = ordinalOf(pageStarts[page - 1]);
+    final end = page < pageCount ? ordinalOf(pageStarts[page]) : ayahCount;
+    return [for (var i = first; i < end; i++) ayahAt(i)];
+  }
 
   /// Every ayah in the Quran, 6236.
   int get ayahCount => surahs.fold(0, (sum, s) => sum + s.ayahCount);
@@ -150,6 +170,9 @@ QuranIndex parseQuranIndex(String source) {
     juzStarts: [
       for (final j in json['juz'] as List) AyahRef(j[0] as int, j[1] as int),
     ],
+    pageStarts: [
+      for (final p in json['pages'] as List) AyahRef(p[0] as int, p[1] as int),
+    ],
   );
 }
 
@@ -200,6 +223,7 @@ final quranTranslationProvider = FutureProvider<QuranText?>((ref) async {
 const _kLastRead = 'quran_last_read';
 const _kBookmarks = 'quran_bookmarks';
 const _kTextScale = 'quran_text_scale';
+const _kPageMode = 'quran_page_mode';
 
 /// Text sizes the reader steps through, as a factor of the default size.
 const quranTextScales = [0.8, 0.9, 1.0, 1.15, 1.3, 1.5, 1.75, 2.0];
@@ -214,11 +238,27 @@ class QuranReading {
   final List<AyahRef> bookmarks;
   final double textScale;
 
+  /// Whether the reader turns mushaf pages instead of scrolling a surah.
+  final bool pageMode;
+
   const QuranReading({
     this.lastRead,
     this.bookmarks = const [],
     this.textScale = 1.0,
+    this.pageMode = false,
   });
+
+  QuranReading copyWith({
+    AyahRef? lastRead,
+    List<AyahRef>? bookmarks,
+    double? textScale,
+    bool? pageMode,
+  }) => QuranReading(
+    lastRead: lastRead ?? this.lastRead,
+    bookmarks: bookmarks ?? this.bookmarks,
+    textScale: textScale ?? this.textScale,
+    pageMode: pageMode ?? this.pageMode,
+  );
 
   bool isBookmarked(AyahRef ref) => bookmarks.contains(ref);
 }
@@ -237,16 +277,13 @@ class QuranReadingNotifier extends Notifier<QuranReading> {
             .nonNulls,
       ),
       textScale: quranTextScales.contains(scale) ? scale! : 1.0,
+      pageMode: _prefs.getBool(_kPageMode) ?? false,
     );
   }
 
   Future<void> setLastRead(AyahRef ref) async {
     if (state.lastRead == ref) return;
-    state = QuranReading(
-      lastRead: ref,
-      bookmarks: state.bookmarks,
-      textScale: state.textScale,
-    );
+    state = state.copyWith(lastRead: ref);
     await _prefs.setString(_kLastRead, ref.toString());
   }
 
@@ -254,11 +291,7 @@ class QuranReadingNotifier extends Notifier<QuranReading> {
     final bookmarks = state.isBookmarked(ref)
         ? state.bookmarks.where((b) => b != ref).toList()
         : [ref, ...state.bookmarks];
-    state = QuranReading(
-      lastRead: state.lastRead,
-      bookmarks: List.unmodifiable(bookmarks),
-      textScale: state.textScale,
-    );
+    state = state.copyWith(bookmarks: List.unmodifiable(bookmarks));
     await _prefs.setStringList(
       _kBookmarks,
       bookmarks.map((b) => b.toString()).toList(),
@@ -266,12 +299,13 @@ class QuranReadingNotifier extends Notifier<QuranReading> {
   }
 
   Future<void> setTextScale(double scale) async {
-    state = QuranReading(
-      lastRead: state.lastRead,
-      bookmarks: state.bookmarks,
-      textScale: scale,
-    );
+    state = state.copyWith(textScale: scale);
     await _prefs.setDouble(_kTextScale, scale);
+  }
+
+  Future<void> setPageMode(bool pageMode) async {
+    state = state.copyWith(pageMode: pageMode);
+    await _prefs.setBool(_kPageMode, pageMode);
   }
 }
 

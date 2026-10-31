@@ -936,6 +936,17 @@ class AppLocalizationsMs extends AppLocalizations {
   String get quranTextLarger => 'Besarkan teks';
 
   @override
+  String get quranPageView => 'Paparan halaman';
+
+  @override
+  String get quranListView => 'Paparan senarai';
+
+  @override
+  String quranPageNumber(Object number) {
+    return 'Halaman $number';
+  }
+
+  @override
   String quranNextSurah(String name) {
     return 'Surah seterusnya: $name';
   }

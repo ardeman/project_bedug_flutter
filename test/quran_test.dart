@@ -6,9 +6,11 @@ import 'dart:io';
 import 'package:bedug/core/providers/locale_provider.dart';
 import 'package:bedug/features/quran/khatam.dart';
 import 'package:bedug/features/quran/quran.dart';
+import 'package:bedug/features/quran/quran_mushaf.dart';
 import 'package:bedug/features/quran/quran_reader_screen.dart';
 import 'package:bedug/features/quran/quran_screen.dart';
 import 'package:bedug/generated/l10n/app_localizations.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
@@ -80,6 +82,18 @@ void main() {
     expect(index.juzOf(const AyahRef(114, 6)), 30);
   });
 
+  test('splits the Quran into the 604 pages of the Madinah mushaf', () {
+    expect(index.pageCount, 604);
+    expect(index.ayahsOnPage(1), [for (var a = 1; a <= 7; a++) AyahRef(1, a)]);
+    expect(index.pageOf(const AyahRef(2, 255)), 42);
+    expect(index.ayahsOnPage(604).last, index.lastAyah);
+    var ayahs = 0;
+    for (var page = 1; page <= index.pageCount; page++) {
+      ayahs += index.ayahsOnPage(page).length;
+    }
+    expect(ayahs, index.ayahCount);
+  });
+
   test('parses ayah references and rejects malformed ones', () {
     expect(AyahRef.tryParse('2:255'), const AyahRef(2, 255));
     expect(AyahRef.tryParse('2'), isNull);
@@ -107,6 +121,7 @@ void main() {
     await notifier.toggleBookmark(const AyahRef(36, 1));
     await notifier.toggleBookmark(const AyahRef(2, 255));
     await notifier.setTextScale(1.3);
+    await notifier.setPageMode(true);
 
     final prefs = container.read(sharedPreferencesProvider);
     final restored = ProviderContainer(
@@ -117,6 +132,7 @@ void main() {
     expect(reading.lastRead, const AyahRef(18, 10));
     expect(reading.bookmarks, [const AyahRef(36, 1)]);
     expect(reading.textScale, 1.3);
+    expect(reading.pageMode, isTrue);
   });
 
   test('ignores a stored text size the reader no longer offers', () async {
@@ -218,10 +234,15 @@ void main() {
     expect(container.read(khatamProvider), isNull);
   });
 
-  Future<ProviderContainer> pump(WidgetTester tester, Widget home) async {
-    SharedPreferences.setMockInitialValues({});
+  Future<ProviderContainer> pump(
+    WidgetTester tester,
+    Widget home, {
+    Size size = const Size(800, 2000),
+    Map<String, Object> prefsValues = const {},
+  }) async {
+    SharedPreferences.setMockInitialValues(prefsValues);
     final prefs = await SharedPreferences.getInstance();
-    tester.view.physicalSize = const Size(800, 2000);
+    tester.view.physicalSize = size;
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
     final container = ProviderContainer(
@@ -333,6 +354,91 @@ void main() {
     );
     await tester.pump();
     expect(container.read(khatamProvider)!.reached, const AyahRef(1, 7));
+  });
+
+  testWidgets('switches to mushaf pages at the ayah being read', (
+    tester,
+  ) async {
+    final container = await pump(
+      tester,
+      const QuranReaderScreen(surah: 2, initialAyah: 255),
+    );
+
+    await tester.tap(find.byTooltip('Page view'));
+    await tester.pumpAndSettle();
+    expect(container.read(quranReadingProvider).pageMode, isTrue);
+    expect(find.text('42'), findsOneWidget);
+    // Pages fit their text, so the size buttons go.
+    expect(find.byTooltip('Larger text'), findsNothing);
+
+    // A short, slow drag lets the leaf fall back.
+    final pages = find.byType(QuranMushafView);
+    await tester.drag(pages, const Offset(100, 0));
+    await tester.pumpAndSettle();
+    expect(find.text('42'), findsOneWidget);
+    expect(find.text('43'), findsNothing);
+
+    // Dragging right lifts the leaf over the spine on the right and turns
+    // to the next page, as in the book.
+    await tester.fling(pages, const Offset(400, 0), 2000);
+    await tester.pumpAndSettle();
+    expect(find.text('43'), findsOneWidget);
+    expect(find.text('42'), findsNothing);
+    expect(container.read(quranReadingProvider).lastRead, index.pageStarts[42]);
+
+    await tester.tap(find.byTooltip('List view'));
+    await tester.pumpAndSettle();
+    expect(container.read(quranReadingProvider).pageMode, isFalse);
+    expect(find.text('2:${index.pageStarts[42].ayah}'), findsOneWidget);
+  });
+
+  testWidgets('shows a tapped ayah\'s translation and bookmarks it', (
+    tester,
+  ) async {
+    final container = await pump(
+      tester,
+      const QuranReaderScreen(surah: 2, initialAyah: 255),
+      prefsValues: {'quran_page_mode': true},
+    );
+
+    const ayatAlKursi = AyahRef(2, 255);
+    // Tap the ayah's first letters where the page lays them out.
+    final page = find.byWidgetPredicate(
+      (w) => w is RichText && w.text.toPlainText().contains('\u06DD'),
+    );
+    final paragraph = tester.renderObject<RenderParagraph>(page);
+    final start = paragraph.text.toPlainText().indexOf(text.ayah(ayatAlKursi));
+    final letters = paragraph
+        .getBoxesForSelection(
+          TextSelection(baseOffset: start, extentOffset: start + 10),
+        )
+        .first
+        .toRect();
+    await tester.tapAt(paragraph.localToGlobal(letters.center));
+    await tester.pumpAndSettle();
+    expect(find.text(english.ayah(ayatAlKursi)), findsOneWidget);
+
+    await tester.tap(find.text('Bookmark verse'));
+    await tester.pump();
+    expect(container.read(quranReadingProvider).bookmarks, [ayatAlKursi]);
+    expect(find.text('Remove bookmark'), findsOneWidget);
+  });
+
+  testWidgets('shows two facing pages in a wide window', (tester) async {
+    await pump(
+      tester,
+      const QuranReaderScreen(surah: 2, initialAyah: 255),
+      size: const Size(1600, 1000),
+      prefsValues: {'quran_page_mode': true},
+    );
+
+    expect(find.text('41'), findsOneWidget);
+    expect(find.text('42'), findsOneWidget);
+    // The odd page sits on the right.
+    expect(
+      tester.getCenter(find.text('41')).dx,
+      greaterThan(tester.getCenter(find.text('42')).dx),
+    );
   });
 
   testWidgets('steps the text size from the top bar', (tester) async {

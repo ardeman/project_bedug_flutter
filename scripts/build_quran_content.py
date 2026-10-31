@@ -4,7 +4,8 @@
 Downloads the Uthmani text, the translations and the surah metadata from
 tanzil.net and writes them as JSON:
 
-  surahs.json          surah names, ayah counts, revelation place, juz starts
+  surahs.json          surah names, ayah counts, revelation place, juz and
+                       mushaf page starts
   text.json            the Arabic text, one list of ayahs per surah
   translation_XX.json  each language's translation in the same shape
 
@@ -118,6 +119,10 @@ def main():
         "juz": [
             [int(j.get("sura")), int(j.get("aya"))]
             for j in metadata.findall("./juzs/juz")
+        ],
+        "pages": [
+            [int(p.get("sura")), int(p.get("aya"))]
+            for p in metadata.findall("./pages/page")
         ],
     })
 

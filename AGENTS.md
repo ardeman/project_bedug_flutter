@@ -150,3 +150,5 @@ Record architectural choices here as one line each: date, decision, reason.
 - 2026-10-27: The MABIMS Hijri calendar is calculated on the device (Meeus positions, checked at Kemenag's Lhoknga observatory with refraction in the altitude) rather than bundled as a table, so it covers the same years as Umm al-Qura with no data to update; tests pin it to Kemenag's published dates.
 
 - 2026-10-28: Vendor `liquid_glass_easy` 5.0.0 with local-coordinate navigation gestures and immediate pan support, so the rotated iPhone Duo rail preserves the package’s held-glass effects without jumping to Settings; see `vendor/liquid_glass_easy/README.bedug.md`.
+
+- 2026-10-31: The reader's page mode follows the Madinah mushaf's 604 page breaks from Tanzil's metadata (`pages` in `surahs.json`) but flows each page's text in the bundled font, sized to its 15 lines and shrunk to fit, with two facing pages in windows wider than tall and a leaf that folds over the spine as it turns (page changes without it under Reduce Motion), so it reads like the book without per-page fonts or images.

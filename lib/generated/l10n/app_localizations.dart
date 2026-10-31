@@ -1800,6 +1800,24 @@ abstract class AppLocalizations {
   /// **'Perbesar teks'**
   String get quranTextLarger;
 
+  /// No description provided for @quranPageView.
+  ///
+  /// In id, this message translates to:
+  /// **'Tampilan halaman'**
+  String get quranPageView;
+
+  /// No description provided for @quranListView.
+  ///
+  /// In id, this message translates to:
+  /// **'Tampilan daftar'**
+  String get quranListView;
+
+  /// No description provided for @quranPageNumber.
+  ///
+  /// In id, this message translates to:
+  /// **'Halaman {number}'**
+  String quranPageNumber(Object number);
+
   /// No description provided for @quranNextSurah.
   ///
   /// In id, this message translates to:

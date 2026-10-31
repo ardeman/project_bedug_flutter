@@ -9,10 +9,12 @@ import '../../core/theme/app_tokens.dart';
 import '../../generated/l10n/app_localizations.dart';
 import 'khatam.dart';
 import 'quran.dart';
+import 'quran_mushaf.dart';
 
 /// One surah's ayahs, the Arabic with the translation for the app language,
-/// opened at [initialAyah]. Remembers the ayah at the top of the screen as
-/// the last-read position.
+/// opened at [initialAyah], or in page mode the mushaf's pages. Remembers the
+/// ayah at the top of the screen, or the page's first ayah, as the last-read
+/// position.
 class QuranReaderScreen extends ConsumerStatefulWidget {
   final int surah;
   final int initialAyah;
@@ -35,12 +37,33 @@ class _QuranReaderScreenState extends ConsumerState<QuranReaderScreen> {
   /// The ayah tiles on screen, to find the one at the top.
   final _tiles = <int, BuildContext>{};
 
+  /// Where the list or the pages open; moves to the last-read ayah when the
+  /// reader switches between them.
+  late var _position = AyahRef(widget.surah, widget.initialAyah);
+
+  /// The surah of the page in view, for the title in page mode.
+  int? _pageSurah;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) _saveLastRead(AyahRef(widget.surah, widget.initialAyah));
+      if (mounted) _saveLastRead(_position);
     });
+  }
+
+  void _setPageMode(bool pageMode) {
+    final lastRead = ref.read(quranReadingProvider).lastRead;
+    setState(() {
+      if (lastRead != null) _position = lastRead;
+      _pageSurah = null;
+    });
+    ref.read(quranReadingProvider.notifier).setPageMode(pageMode);
+  }
+
+  void _showPage(AyahRef first) {
+    setState(() => _pageSurah = first.surah);
+    _saveLastRead(first);
   }
 
   void _saveLastRead(AyahRef ayah) =>
@@ -74,28 +97,40 @@ class _QuranReaderScreenState extends ConsumerState<QuranReaderScreen> {
     final text = ref.watch(quranTextProvider);
     final translation = ref.watch(quranTranslationProvider);
     final scale = ref.watch(quranReadingProvider.select((r) => r.textScale));
+    final pageMode = ref.watch(quranReadingProvider.select((r) => r.pageMode));
+    final titleSurah = pageMode
+        ? _pageSurah ?? _position.surah
+        : _position.surah;
 
     final failed = text.hasError || translation.hasError;
     final ready = index != null && text.hasValue && translation.hasValue;
     return Scaffold(
       extendBodyBehindAppBar: PlatformCapabilities.isApple,
       appBar: GlassTopBar(
-        title: index?.surah(widget.surah).nameFor(languageCode) ?? l10n.quran,
+        title: index?.surah(titleSurah).nameFor(languageCode) ?? l10n.quran,
         actions: [
           GlassTopBarAction(
-            icon: Icons.text_decrease,
-            tooltip: l10n.quranTextSmaller,
-            onPressed: scale == quranTextScales.first
-                ? null
-                : () => _stepTextScale(-1),
+            icon: pageMode ? Icons.view_agenda_outlined : Icons.auto_stories,
+            tooltip: pageMode ? l10n.quranListView : l10n.quranPageView,
+            onPressed: () => _setPageMode(!pageMode),
           ),
-          GlassTopBarAction(
-            icon: Icons.text_increase,
-            tooltip: l10n.quranTextLarger,
-            onPressed: scale == quranTextScales.last
-                ? null
-                : () => _stepTextScale(1),
-          ),
+          // Pages fit their text to the page instead.
+          if (!pageMode) ...[
+            GlassTopBarAction(
+              icon: Icons.text_decrease,
+              tooltip: l10n.quranTextSmaller,
+              onPressed: scale == quranTextScales.first
+                  ? null
+                  : () => _stepTextScale(-1),
+            ),
+            GlassTopBarAction(
+              icon: Icons.text_increase,
+              tooltip: l10n.quranTextLarger,
+              onPressed: scale == quranTextScales.last
+                  ? null
+                  : () => _stepTextScale(1),
+            ),
+          ],
         ],
       ),
       body: failed
@@ -107,9 +142,28 @@ class _QuranReaderScreenState extends ConsumerState<QuranReaderScreen> {
             )
           : !ready
           ? const Center(child: AdaptiveSpinner())
-          : _reader(ctx, index, text.requireValue, translation.value),
+          : pageMode
+          ? QuranMushafView(
+              key: ValueKey(_position),
+              index: index,
+              text: text.requireValue,
+              translation: translation.value,
+              initial: _position,
+              topInset: _topInset(ctx),
+              onPageShown: _showPage,
+            )
+          : KeyedSubtree(
+              key: ValueKey(_position),
+              child: _reader(ctx, index, text.requireValue, translation.value),
+            ),
     );
   }
+
+  /// Content goes under the glass bar on Apple; elsewhere the app bar sits
+  /// above the body.
+  double _topInset(BuildContext ctx) => PlatformCapabilities.isApple
+      ? MediaQuery.of(ctx).padding.top + kToolbarHeight
+      : 0.0;
 
   Widget _reader(
     BuildContext ctx,
@@ -117,14 +171,9 @@ class _QuranReaderScreenState extends ConsumerState<QuranReaderScreen> {
     QuranText text,
     QuranText? translation,
   ) {
-    final surah = index.surah(widget.surah);
-    final initial = widget.initialAyah.clamp(1, surah.ayahCount);
-    final media = MediaQuery.of(ctx);
-    // Content scrolls under the glass bar on Apple; elsewhere the app bar
-    // sits above the body.
-    final topInset = PlatformCapabilities.isApple
-        ? media.padding.top + kToolbarHeight
-        : 0.0;
+    final surah = index.surah(_position.surah);
+    final initial = _position.ayah.clamp(1, surah.ayahCount);
+    final topInset = _topInset(ctx);
 
     Widget tile(int ayah) => _AyahTile(
       key: ValueKey(ayah),
