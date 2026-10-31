@@ -1,10 +1,11 @@
-import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:liquid_glass_easy/liquid_glass_easy.dart';
 import 'package:material_3_expressive/material_3_expressive.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../core/constants/app_colors.dart';
 import '../../core/design/glass_controls.dart';
+import '../../core/design/liquid_glass.dart';
 import '../../core/design/platform_capabilities.dart';
 import '../../core/design/platform_design.dart';
 import '../../core/theme/app_tokens.dart';
@@ -12,34 +13,44 @@ import '../../generated/l10n/app_localizations.dart';
 import 'khatam.dart';
 import 'quran.dart';
 
+/// The most of the screen's height the sheet takes before its content
+/// scrolls, leaving the page above in view; the Expressive sheet also opens
+/// at half the screen.
+const _maxPanelHeight = 0.5;
+
+/// Whether the sheet would cover a tap at [position] on the screen, so the
+/// tapped ayah is out of view while it is open.
+bool ayahSheetCovers(BuildContext ctx, Offset position) =>
+    position.dy > MediaQuery.sizeOf(ctx).height * (1 - _maxPanelHeight);
+
 /// A sheet for an ayah tapped on a mushaf page: its translation, then its
-/// bookmark and khatam mark. A native sheet on Apple platforms and an
-/// Expressive one on Material paths.
+/// bookmark and khatam mark. On Apple platforms a glass panel that floats
+/// above the page and fits its content, so the page and the tapped ayah
+/// stay in view; an Expressive sheet on Material paths. Given [arabic], it
+/// also shows the ayah itself, for when the sheet covers it on the page.
 Future<void> showAyahSheet(
   BuildContext ctx, {
   required QuranIndex index,
   required AyahRef ayah,
   required QuranText? translation,
+  QuranText? arabic,
 }) {
-  Widget content(ScrollController? controller) => _AyahSheet(
+  final content = _AyahSheet(
     index: index,
     ayah: ayah,
     translation: translation,
-    controller: controller,
+    arabic: arabic,
   );
   if (PlatformCapabilities.isApple) {
-    return showCupertinoSheet<void>(
-      context: ctx,
-      showDragHandle: true,
-      // About half the screen, so the page stays in view above it.
-      topGap: 0.45,
-      scrollableBuilder: (_, controller) {
-        final colors = Theme.of(ctx).colorScheme;
-        return CupertinoPageScaffold(
-          backgroundColor: colors.surface,
-          child: SafeArea(top: false, child: content(controller)),
-        );
-      },
+    return Navigator.of(ctx).push(
+      PageRouteBuilder<void>(
+        opaque: false,
+        barrierColor: Colors.transparent,
+        transitionDuration: const Duration(milliseconds: 320),
+        reverseTransitionDuration: const Duration(milliseconds: 260),
+        pageBuilder: (_, animation, _) =>
+            _GlassAyahPanel(animation: animation, child: content),
+      ),
     );
   }
   final l10n = AppLocalizations.of(ctx);
@@ -58,28 +69,31 @@ Future<void> showAyahSheet(
         expanded: l10n.sheetExpanded,
         fullScreen: l10n.sheetFullScreen,
       ),
-      builder: (_) => content(null),
+      builder: (_) => content,
     );
   }
   return showModalBottomSheet<void>(
     context: ctx,
     showDragHandle: true,
     isScrollControlled: true,
-    builder: (_) => SafeArea(child: content(null)),
+    builder: (_) => SafeArea(child: content),
   );
 }
+
+/// Tall lines keep the harakat of adjacent lines apart, as on the page.
+const _arabicLineHeight = 1.9;
 
 class _AyahSheet extends ConsumerWidget {
   final QuranIndex index;
   final AyahRef ayah;
   final QuranText? translation;
-  final ScrollController? controller;
+  final QuranText? arabic;
 
   const _AyahSheet({
     required this.index,
     required this.ayah,
     required this.translation,
-    required this.controller,
+    required this.arabic,
   });
 
   @override
@@ -93,8 +107,8 @@ class _AyahSheet extends ConsumerWidget {
     );
     final khatam = ref.watch(khatamProvider);
     final translation = this.translation;
+    final arabic = this.arabic;
     return ListView(
-      controller: controller,
       shrinkWrap: true,
       padding: const EdgeInsets.fromLTRB(
         AppSpacing.lg,
@@ -114,6 +128,19 @@ class _AyahSheet extends ConsumerWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+        if (arabic != null) ...[
+          const SizedBox(height: AppSpacing.sm),
+          Text(
+            ayahWithoutBasmala(arabic, ayah),
+            textDirection: TextDirection.rtl,
+            style: theme.textTheme.titleLarge
+                ?.copyWith(
+                  fontFamily: quranFontFamily,
+                  height: _arabicLineHeight,
+                )
+                .apply(fontSizeFactor: scale),
+          ),
+        ],
         if (translation != null) ...[
           const SizedBox(height: AppSpacing.sm),
           Text(
@@ -151,6 +178,82 @@ class _AyahSheet extends ConsumerWidget {
           ],
         ),
       ],
+    );
+  }
+}
+
+/// The panel stays a comfortable reading width on wide windows.
+const _maxPanelWidth = 600.0;
+
+/// A downward fling faster than this dismisses the panel.
+const _dismissVelocity = 300.0;
+
+/// The Apple ayah panel: lite glass that slides up from the bottom and is
+/// dismissed by a tap outside it or a downward fling.
+class _GlassAyahPanel extends StatelessWidget {
+  final Animation<double> animation;
+  final Widget child;
+
+  const _GlassAyahPanel({required this.animation, required this.child});
+
+  @override
+  Widget build(BuildContext ctx) {
+    final media = MediaQuery.of(ctx);
+    final slide = CurvedAnimation(
+      parent: animation,
+      curve: Curves.easeOutCubic,
+      reverseCurve: Curves.easeInCubic,
+    );
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () => Navigator.pop(ctx),
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: SlideTransition(
+          position: Tween(
+            begin: const Offset(0, 1),
+            end: Offset.zero,
+          ).animate(slide),
+          child: GestureDetector(
+            // Taps inside the panel don't dismiss it.
+            onTap: () {},
+            onVerticalDragEnd: (details) {
+              if ((details.primaryVelocity ?? 0) > _dismissVelocity) {
+                Navigator.pop(ctx);
+              }
+            },
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(
+                AppSpacing.sm + media.padding.left,
+                0,
+                AppSpacing.sm + media.padding.right,
+                AppSpacing.sm + media.padding.bottom,
+              ),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: _maxPanelWidth,
+                  maxHeight: media.size.height * _maxPanelHeight,
+                ),
+                child: Material(
+                  color: Colors.transparent,
+                  child: LiquidGlassLite(
+                    shape: const LiquidGlassShape.continuousRoundedRectangle(
+                      cornerRadius: AppRadii.xl,
+                    ),
+                    blur: 28,
+                    color: glassSheetTintOf(ctx),
+                    child: MediaQuery.removePadding(
+                      context: ctx,
+                      removeBottom: true,
+                      child: child,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

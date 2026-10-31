@@ -238,14 +238,15 @@ class QuranReading {
   final List<AyahRef> bookmarks;
   final double textScale;
 
-  /// Whether the reader turns mushaf pages instead of scrolling a surah.
+  /// Whether the reader turns mushaf pages, the default, instead of
+  /// scrolling a surah.
   final bool pageMode;
 
   const QuranReading({
     this.lastRead,
     this.bookmarks = const [],
     this.textScale = 1.0,
-    this.pageMode = false,
+    this.pageMode = true,
   });
 
   QuranReading copyWith({
@@ -277,7 +278,7 @@ class QuranReadingNotifier extends Notifier<QuranReading> {
             .nonNulls,
       ),
       textScale: quranTextScales.contains(scale) ? scale! : 1.0,
-      pageMode: _prefs.getBool(_kPageMode) ?? false,
+      pageMode: _prefs.getBool(_kPageMode) ?? true,
     );
   }
 

@@ -1,3 +1,5 @@
+import 'dart:math' show max;
+
 import 'package:cupertino_ui/cupertino_ui.dart'
     show GlobalCupertinoLocalizations;
 
@@ -6,6 +8,7 @@ import 'dart:io';
 import 'package:bedug/core/providers/locale_provider.dart';
 import 'package:bedug/features/quran/khatam.dart';
 import 'package:bedug/features/quran/quran.dart';
+import 'package:bedug/features/quran/quran_ayah_sheet.dart';
 import 'package:bedug/features/quran/quran_mushaf.dart';
 import 'package:bedug/features/quran/quran_reader_screen.dart';
 import 'package:bedug/features/quran/quran_screen.dart';
@@ -238,7 +241,8 @@ void main() {
     WidgetTester tester,
     Widget home, {
     Size size = const Size(800, 2000),
-    Map<String, Object> prefsValues = const {},
+    // Most tests read the list; mushaf pages are the default.
+    Map<String, Object> prefsValues = const {'quran_page_mode': false},
   }) async {
     SharedPreferences.setMockInitialValues(prefsValues);
     final prefs = await SharedPreferences.getInstance();
@@ -378,6 +382,21 @@ void main() {
     expect(find.text('42'), findsOneWidget);
     expect(find.text('43'), findsNothing);
 
+    // Mid-drag the leaf folds back from a corner: the next page shows
+    // where it lifted, and the page itself also on its back.
+    final gesture = await tester.startGesture(
+      tester.getBottomLeft(pages) + const Offset(20, -20),
+    );
+    for (var i = 0; i < 6; i++) {
+      await gesture.moveBy(const Offset(30, -5));
+      await tester.pump();
+    }
+    expect(find.text('43'), findsOneWidget);
+    expect(find.text('42'), findsNWidgets(2));
+    await gesture.up();
+    await tester.pumpAndSettle();
+    expect(find.text('42'), findsOneWidget);
+
     // Dragging right lifts the leaf over the spine on the right and turns
     // to the next page, as in the book.
     await tester.fling(pages, const Offset(400, 0), 2000);
@@ -414,14 +433,92 @@ void main() {
         )
         .first
         .toRect();
-    await tester.tapAt(paragraph.localToGlobal(letters.center));
+    final tap = paragraph.localToGlobal(letters.center);
+    await tester.tapAt(tap);
     await tester.pumpAndSettle();
     expect(find.text(english.ayah(ayatAlKursi)), findsOneWidget);
+    // The sheet repeats the Arabic only when it covers the tapped ayah.
+    final covered =
+        tap.dy >
+        tester.view.physicalSize.height / tester.view.devicePixelRatio / 2;
+    expect(
+      find.text(text.ayah(ayatAlKursi)),
+      covered ? findsOneWidget : findsNothing,
+    );
 
     await tester.tap(find.text('Bookmark verse'));
     await tester.pump();
     expect(container.read(quranReadingProvider).bookmarks, [ayatAlKursi]);
     expect(find.text('Remove bookmark'), findsOneWidget);
+  });
+
+  testWidgets('the ayah sheet covers taps in the lower half of the screen', (
+    tester,
+  ) async {
+    late BuildContext ctx;
+    await tester.pumpWidget(
+      Builder(
+        builder: (c) {
+          ctx = c;
+          return const SizedBox();
+        },
+      ),
+    );
+    final height = MediaQuery.sizeOf(ctx).height;
+    expect(ayahSheetCovers(ctx, Offset(0, height * 0.3)), isFalse);
+    expect(ayahSheetCovers(ctx, Offset(0, height * 0.7)), isTrue);
+  });
+
+  test('fits opening text to an oval, narrowest at the top and bottom', () {
+    final widths = List.filled(40, 3.0);
+    final shaped = fitTextToOval(
+      widths: widths,
+      space: 1,
+      lineHeight: 2,
+      size: const Size(200, 300),
+    )!;
+    final lines = shaped.lines;
+    expect(lines.last.end, widths.length);
+    final widest = lines.map((l) => l.width).reduce(max);
+    expect(lines.first.width, lessThan(widest));
+    expect(lines.last.width, lessThan(widest));
+    expect(lines.last.justified, isFalse);
+
+    // A word can end its line, which is then centered.
+    final broken = fitTextToOval(
+      widths: widths,
+      breakAfter: {0},
+      space: 1,
+      lineHeight: 2,
+      size: const Size(200, 300),
+    )!.lines.firstWhere((l) => l.end > 0);
+    expect(broken.end, 1);
+    expect(broken.justified, isFalse);
+    // A larger size no longer fits.
+    expect(
+      fitTextToOval(
+        widths: widths,
+        space: 1,
+        lineHeight: 2,
+        size: Size(200 / 1.2, 300 / 1.2),
+      )!.fontSize,
+      lessThan(shaped.fontSize),
+    );
+  });
+
+  testWidgets('sets Al-Fatihah in the opening page\'s medallion', (
+    tester,
+  ) async {
+    // A fresh install opens the reader on mushaf pages.
+    await pump(tester, const QuranReaderScreen(surah: 1), prefsValues: {});
+
+    expect(find.text('1'), findsOneWidget);
+    expect(find.text('\u06DD\u0667'), findsOneWidget);
+    await tester.tap(
+      find.text(text.ayah(const AyahRef(1, 2)).split(' ').first),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text(english.ayah(const AyahRef(1, 2))), findsOneWidget);
   });
 
   testWidgets('shows two facing pages in a wide window', (tester) async {
