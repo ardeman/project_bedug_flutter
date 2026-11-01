@@ -2051,6 +2051,126 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Puasa Asyura'**
   String get sunnahFastAshura;
+
+  /// No description provided for @ramadanTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'{day} Ramadan'**
+  String ramadanTitle(Object day);
+
+  /// No description provided for @ramadanUntilImsak.
+  ///
+  /// In id, this message translates to:
+  /// **'Menuju imsak'**
+  String get ramadanUntilImsak;
+
+  /// No description provided for @ramadanUntilIftar.
+  ///
+  /// In id, this message translates to:
+  /// **'Menuju berbuka'**
+  String get ramadanUntilIftar;
+
+  /// No description provided for @ramadanOpenLog.
+  ///
+  /// In id, this message translates to:
+  /// **'Buka catatan puasa'**
+  String get ramadanOpenLog;
+
+  /// No description provided for @fastingLog.
+  ///
+  /// In id, this message translates to:
+  /// **'Catatan puasa'**
+  String get fastingLog;
+
+  /// No description provided for @fastingLogSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Puasa Ramadan dan puasa kada'**
+  String get fastingLogSubtitle;
+
+  /// No description provided for @fastingLogRamadan.
+  ///
+  /// In id, this message translates to:
+  /// **'Ramadan {year} H'**
+  String fastingLogRamadan(Object year);
+
+  /// No description provided for @fastingLogBegins.
+  ///
+  /// In id, this message translates to:
+  /// **'Ramadan {year} H dimulai pada {date}.'**
+  String fastingLogBegins(Object date, Object year);
+
+  /// No description provided for @fastingLogFasted.
+  ///
+  /// In id, this message translates to:
+  /// **'{count} dari {total} hari berpuasa'**
+  String fastingLogFasted(Object count, Object total);
+
+  /// No description provided for @fastingLogHint.
+  ///
+  /// In id, this message translates to:
+  /// **'Ketuk satu hari untuk mencatatnya. Hari tidak berpuasa dan berhalangan masuk ke utang puasa.'**
+  String get fastingLogHint;
+
+  /// No description provided for @fastStatusFasted.
+  ///
+  /// In id, this message translates to:
+  /// **'Berpuasa'**
+  String get fastStatusFasted;
+
+  /// No description provided for @fastStatusMissed.
+  ///
+  /// In id, this message translates to:
+  /// **'Tidak berpuasa'**
+  String get fastStatusMissed;
+
+  /// No description provided for @fastStatusExcused.
+  ///
+  /// In id, this message translates to:
+  /// **'Berhalangan'**
+  String get fastStatusExcused;
+
+  /// No description provided for @fastStatusExcusedNote.
+  ///
+  /// In id, this message translates to:
+  /// **'Sakit, bepergian, haid'**
+  String get fastStatusExcusedNote;
+
+  /// No description provided for @fastStatusQada.
+  ///
+  /// In id, this message translates to:
+  /// **'Puasa kada'**
+  String get fastStatusQada;
+
+  /// No description provided for @fastStatusNone.
+  ///
+  /// In id, this message translates to:
+  /// **'Belum dicatat'**
+  String get fastStatusNone;
+
+  /// No description provided for @qadaTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Puasa kada'**
+  String get qadaTitle;
+
+  /// No description provided for @qadaOwed.
+  ///
+  /// In id, this message translates to:
+  /// **'{count, plural, =0{Tidak ada utang puasa} other{Utang puasa {count} hari}}'**
+  String qadaOwed(num count);
+
+  /// No description provided for @qadaLogToday.
+  ///
+  /// In id, this message translates to:
+  /// **'Catat puasa kada hari ini'**
+  String get qadaLogToday;
+
+  /// No description provided for @qadaUndoToday.
+  ///
+  /// In id, this message translates to:
+  /// **'Hapus puasa kada hari ini'**
+  String get qadaUndoToday;
 }
 
 class _AppLocalizationsDelegate

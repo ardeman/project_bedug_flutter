@@ -1101,4 +1101,81 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get sunnahFastAshura => 'Puasa Asyura';
+
+  @override
+  String ramadanTitle(Object day) {
+    return '$day Ramadan';
+  }
+
+  @override
+  String get ramadanUntilImsak => 'Menuju imsak';
+
+  @override
+  String get ramadanUntilIftar => 'Menuju berbuka';
+
+  @override
+  String get ramadanOpenLog => 'Buka catatan puasa';
+
+  @override
+  String get fastingLog => 'Catatan puasa';
+
+  @override
+  String get fastingLogSubtitle => 'Puasa Ramadan dan puasa kada';
+
+  @override
+  String fastingLogRamadan(Object year) {
+    return 'Ramadan $year H';
+  }
+
+  @override
+  String fastingLogBegins(Object date, Object year) {
+    return 'Ramadan $year H dimulai pada $date.';
+  }
+
+  @override
+  String fastingLogFasted(Object count, Object total) {
+    return '$count dari $total hari berpuasa';
+  }
+
+  @override
+  String get fastingLogHint =>
+      'Ketuk satu hari untuk mencatatnya. Hari tidak berpuasa dan berhalangan masuk ke utang puasa.';
+
+  @override
+  String get fastStatusFasted => 'Berpuasa';
+
+  @override
+  String get fastStatusMissed => 'Tidak berpuasa';
+
+  @override
+  String get fastStatusExcused => 'Berhalangan';
+
+  @override
+  String get fastStatusExcusedNote => 'Sakit, bepergian, haid';
+
+  @override
+  String get fastStatusQada => 'Puasa kada';
+
+  @override
+  String get fastStatusNone => 'Belum dicatat';
+
+  @override
+  String get qadaTitle => 'Puasa kada';
+
+  @override
+  String qadaOwed(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Utang puasa $count hari',
+      zero: 'Tidak ada utang puasa',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get qadaLogToday => 'Catat puasa kada hari ini';
+
+  @override
+  String get qadaUndoToday => 'Hapus puasa kada hari ini';
 }

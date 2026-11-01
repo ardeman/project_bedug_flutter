@@ -1121,4 +1121,85 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get sunnahFastAshura => 'صيام عاشوراء';
+
+  @override
+  String ramadanTitle(Object day) {
+    return '$day رمضان';
+  }
+
+  @override
+  String get ramadanUntilImsak => 'حتى الإمساك';
+
+  @override
+  String get ramadanUntilIftar => 'حتى الإفطار';
+
+  @override
+  String get ramadanOpenLog => 'افتح سجل الصيام';
+
+  @override
+  String get fastingLog => 'سجل الصيام';
+
+  @override
+  String get fastingLogSubtitle => 'صيام رمضان وصيام القضاء';
+
+  @override
+  String fastingLogRamadan(Object year) {
+    return 'رمضان $year هـ';
+  }
+
+  @override
+  String fastingLogBegins(Object date, Object year) {
+    return 'يبدأ رمضان $year هـ في $date.';
+  }
+
+  @override
+  String fastingLogFasted(Object count, Object total) {
+    return 'صُمت $count من $total يومًا';
+  }
+
+  @override
+  String get fastingLogHint =>
+      'اضغط على يوم لتسجيله. تُضاف الأيام التي لم تصمها أو أفطرت فيها بعذر إلى ما عليك قضاؤه.';
+
+  @override
+  String get fastStatusFasted => 'صُمت';
+
+  @override
+  String get fastStatusMissed => 'لم أصم';
+
+  @override
+  String get fastStatusExcused => 'بعذر';
+
+  @override
+  String get fastStatusExcusedNote => 'مرض، سفر، حيض';
+
+  @override
+  String get fastStatusQada => 'صيام قضاء';
+
+  @override
+  String get fastStatusNone => 'غير مسجّل';
+
+  @override
+  String get qadaTitle => 'صيام القضاء';
+
+  @override
+  String qadaOwed(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count يوم للقضاء',
+      many: '$count يومًا للقضاء',
+      few: '$count أيام للقضاء',
+      two: 'يومان للقضاء',
+      one: 'يوم واحد للقضاء',
+      zero: 'لا صيام عليك قضاؤه',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get qadaLogToday => 'سجّل صيام قضاء اليوم';
+
+  @override
+  String get qadaUndoToday => 'احذف صيام قضاء اليوم';
 }

@@ -7,6 +7,15 @@
         {
           "type": "new",
           "text": {
+            "en": "Ramadan mode: in Ramadan, a card above the prayer times counts down to imsak while you eat sahur and to iftar while you fast, and the new fasting log in the Worship tab keeps each day as fasted, missed or excused and counts the fasts you still have to make up.",
+            "id": "Mode Ramadan: selama Ramadan, kartu di atas jadwal salat menghitung mundur ke imsak saat sahur dan ke waktu berbuka saat berpuasa, dan catatan puasa baru di tab Ibadah menyimpan setiap hari sebagai berpuasa, tidak berpuasa, atau berhalangan serta menghitung utang puasa yang masih harus dikada.",
+            "ms": "Mod Ramadan: dalam bulan Ramadan, kad di atas waktu solat mengira detik ke imsak semasa bersahur dan ke waktu berbuka semasa berpuasa, dan catatan puasa baharu dalam tab Ibadah menyimpan setiap hari sebagai berpuasa, tidak berpuasa atau uzur serta mengira puasa yang masih perlu diganti.",
+            "ar": "وضع رمضان: في رمضان، تعدّ بطاقة فوق مواقيت الصلاة تنازليًا إلى الإمساك وقت السحور وإلى الإفطار وقت الصيام، ويحفظ سجل الصيام الجديد في تبويب العبادة كل يوم صمته أو لم تصمه أو أفطرت فيه بعذر، ويعدّ ما بقي عليك قضاؤه."
+          }
+        },
+        {
+          "type": "new",
+          "text": {
             "en": "Sunnah fasting reminders: turn them on in Settings to be reminded at Maghrib the evening before the white days, Arafah, Tasu'a and Ashura, and, if you like, every Monday and Thursday, never in Ramadan or on the days fasting isn't allowed.",
             "id": "Pengingat puasa sunah: aktifkan di Pengaturan untuk diingatkan saat Magrib, malam sebelum ayyamul bidh, Arafah, Tasua, dan Asyura, serta bila ingin, setiap Senin dan Kamis, tidak pernah di bulan Ramadan atau pada hari yang dilarang berpuasa.",
             "ms": "Peringatan puasa sunat: hidupkan dalam Tetapan untuk diingatkan waktu Maghrib, malam sebelum hari putih, Arafah, Tasua dan Asyura, dan jika mahu, setiap Isnin dan Khamis, tidak sekali-kali dalam Ramadan atau pada hari yang dilarang berpuasa.",

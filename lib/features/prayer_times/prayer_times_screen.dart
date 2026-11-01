@@ -26,6 +26,8 @@ import '../../core/services/prayer_service.dart';
 import '../../core/services/extra_prayer_times.dart';
 import '../../core/providers/locale_provider.dart';
 import '../../core/providers/live_hijri_date_provider.dart';
+import '../../core/utils/time_format.dart';
+import '../fasting/ramadan_card.dart';
 import '../hijri_events/hijri_events.dart';
 import '../quran/daily_ayah_card.dart';
 import 'widgets/prayer_day_picker.dart';
@@ -78,8 +80,8 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
     final nextTimeLabel = nextTime == null
         ? null
         : daysBetween(clock.now(), nextTime) == 0
-        ? _formatClock(nextTime)
-        : '${DateFormat.MMMd(l10n.localeName).format(nextTime)} · ${_formatClock(nextTime)}';
+        ? formatClock(nextTime)
+        : '${DateFormat.MMMd(l10n.localeName).format(nextTime)} · ${formatClock(nextTime)}';
     final locationLabel = state.locationLabel ?? '--';
     final theme = Theme.of(ctx);
     final isDark = theme.brightness == Brightness.dark;
@@ -321,6 +323,8 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
           () => _pickedDay = daysBetween(today, picked) == 0 ? null : picked,
         ),
       ),
+      // The countdown is about now, so only today shows it.
+      if (_pickedDay == null) RamadanCard(times: todayTimes),
       ..._buildPrayerCards(ctx, times, nextKey),
       DailyAyahCard(day: day),
     ];
@@ -484,7 +488,7 @@ class _FoldedPrayerSummary extends StatelessWidget {
                         builder: (context, value, child) => value.isNegative
                             ? const SizedBox.shrink()
                             : Text(
-                                _formatCountdown(value),
+                                formatCountdown(value),
                                 key: const ValueKey('folded-prayer-countdown'),
                                 style: text.headlineSmall?.copyWith(
                                   color: Colors.white,
@@ -724,7 +728,7 @@ class _MaterialHeroAppBar extends SliverPersistentHeaderDelegate {
       valueListenable: remaining,
       builder: (_, value, _) {
         final hasCountdown = !value.isNegative;
-        final digits = hasCountdown ? _formatCountdown(value) : '';
+        final digits = hasCountdown ? formatCountdown(value) : '';
         final heroRoom = width - AppSpacing.md * 2;
 
         // The location shares the toolbar row with the actions. The prayer
@@ -1278,7 +1282,7 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
                                             value.isNegative
                                             ? const SizedBox()
                                             : Text(
-                                                _formatCountdown(value),
+                                                formatCountdown(value),
                                                 key: const ValueKey(
                                                   'countdown-capsule',
                                                 ),
@@ -1501,7 +1505,7 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
       valueListenable: remaining,
       builder: (_, value, _) {
         final hasCountdown = !value.isNegative;
-        final digits = hasCountdown ? _formatCountdown(value) : '';
+        final digits = hasCountdown ? formatCountdown(value) : '';
         final digitsStartSize = measure(digits, digitsStart, double.infinity);
         final digitsEndSize = measure(digits, digitsEnd, double.infinity);
 
@@ -1733,7 +1737,7 @@ class _LiquidGlassAppBar extends SliverPersistentHeaderDelegate {
                           ),
                           const SizedBox(width: AppSpacing.xs),
                           Text(
-                            _formatCountdown(value),
+                            formatCountdown(value),
                             key: const ValueKey('countdown-badge'),
                             style: _HeroBadge.textStyleOf(
                               ctx,
@@ -2063,14 +2067,6 @@ Color _fadeColor(Color color, double fade) =>
     color.withValues(alpha: color.a * fade);
 
 // ── Material Countdown Badge (non-Apple) ──────────────────────────────────────
-String _formatClock(DateTime t) =>
-    '${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}';
-
-String _formatCountdown(Duration d) {
-  String two(int n) => n.toString().padLeft(2, '0');
-  return '${two(d.inHours)}:${two(d.inMinutes % 60)}:${two(d.inSeconds % 60)}';
-}
-
 // ── Prayer Entry model ────────────────────────────────────────────────────────
 enum _PrayerCategory {
   obligatory,

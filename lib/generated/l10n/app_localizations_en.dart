@@ -1112,4 +1112,82 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sunnahFastAshura => 'Ashura fast';
+
+  @override
+  String ramadanTitle(Object day) {
+    return 'Ramadan $day';
+  }
+
+  @override
+  String get ramadanUntilImsak => 'Until imsak';
+
+  @override
+  String get ramadanUntilIftar => 'Until iftar';
+
+  @override
+  String get ramadanOpenLog => 'Open the fasting log';
+
+  @override
+  String get fastingLog => 'Fasting log';
+
+  @override
+  String get fastingLogSubtitle => 'Ramadan fasts and make-up fasts';
+
+  @override
+  String fastingLogRamadan(Object year) {
+    return 'Ramadan $year AH';
+  }
+
+  @override
+  String fastingLogBegins(Object date, Object year) {
+    return 'Ramadan $year AH begins on $date.';
+  }
+
+  @override
+  String fastingLogFasted(Object count, Object total) {
+    return '$count of $total days fasted';
+  }
+
+  @override
+  String get fastingLogHint =>
+      'Tap a day to log it. Missed and excused days are added to the fasts to make up.';
+
+  @override
+  String get fastStatusFasted => 'Fasted';
+
+  @override
+  String get fastStatusMissed => 'Missed';
+
+  @override
+  String get fastStatusExcused => 'Excused';
+
+  @override
+  String get fastStatusExcusedNote => 'Illness, travel, menstruation';
+
+  @override
+  String get fastStatusQada => 'Make-up fast';
+
+  @override
+  String get fastStatusNone => 'Not logged';
+
+  @override
+  String get qadaTitle => 'Make-up fasts';
+
+  @override
+  String qadaOwed(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count fasts to make up',
+      one: '1 fast to make up',
+      zero: 'No fasts to make up',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get qadaLogToday => 'Log a make-up fast today';
+
+  @override
+  String get qadaUndoToday => 'Remove today\'s make-up fast';
 }
