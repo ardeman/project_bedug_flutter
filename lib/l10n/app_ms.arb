@@ -339,5 +339,18 @@
   "hijriEventsNote": "Tarikh mengikut kiraan takwim {calendar}, dianjakkan oleh tetapan tarikh Hijrah, dan mungkin berbeza sehari daripada pengumuman tempatan.",
   "hijriEventReminder": "Peringatan hari kebesaran",
   "hijriEventReminderSubtitle": "Waktu Maghrib, malam sebelum hari kebesaran dan hari putih",
-  "notifHijriEventTomorrow": "Esok. Tarikh Hijrahnya bermula malam ini."
+  "notifHijriEventTomorrow": "Esok. Tarikh Hijrahnya bermula malam ini.",
+  "sunnahFasting": "Puasa sunat",
+  "sunnahFastReminder": "Peringatan puasa",
+  "sunnahFastReminderSubtitle": "Waktu Maghrib, malam sebelum hari putih, Arafah, Tasua dan Asyura",
+  "sunnahFastWeekly": "Isnin dan Khamis",
+  "sunnahFastWeeklySubtitle": "Ingatkan juga setiap malam sebelum hari Isnin dan Khamis",
+  "sunnahFastTomorrow": "Esok puasa sunat",
+  "notifSunnahFast": "{fasts}. Pasang niat malam ini dan rancang sahur anda.",
+  "sunnahFastMonday": "Puasa Isnin",
+  "sunnahFastThursday": "Puasa Khamis",
+  "sunnahFastWhiteDays": "Puasa hari putih",
+  "sunnahFastArafah": "Puasa Arafah",
+  "sunnahFastTasua": "Puasa Tasua",
+  "sunnahFastAshura": "Puasa Asyura"
 }

@@ -2,6 +2,7 @@ import 'package:adhan/adhan.dart';
 import 'package:bedug/core/services/extra_prayer_times.dart';
 import 'package:bedug/core/services/notification_preferences.dart';
 import 'package:bedug/core/services/notification_schedule.dart';
+import 'package:bedug/features/fasting/sunnah_fasting.dart';
 import 'package:bedug/features/hijri_events/hijri_events.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hijri/hijri_calendar.dart';
@@ -175,6 +176,72 @@ void main() {
         from,
         events: events,
       ).where((alert) => alert.events != null),
+      isEmpty,
+    );
+  });
+
+  test('fasting reminders come at Maghrib before each fasting day', () {
+    // Midnight of 11 Jumada al-Ula 1448, so the six evenings run up to the
+    // 17th.
+    final start = HijriCalendar().hijriToGregorian(1448, 5, 11);
+    final from = DateTime(start.year, start.month, start.day);
+    List<PrayerNotification> fasting(NotificationPreferences preferences) =>
+        buildNotificationSchedule(
+          times,
+          preferences,
+          from,
+          events: HijriEvents(const []),
+        ).where((alert) => alert.fasts != null).toList();
+    DateTime maghrib(int day) => PrayerTimes(
+      times.coordinates,
+      DateComponents(from.year, from.month, from.day + day),
+      times.calculationParameters,
+    ).maghrib;
+
+    // The white days, each announced the evening before.
+    final yearly = fasting(
+      const NotificationPreferences(
+        fastingReminders: true,
+        weeklyFastingReminders: false,
+      ),
+    );
+    expect(
+      [for (final r in yearly) r.time],
+      [maghrib(1), maghrib(2), maghrib(3)],
+    );
+    expect(
+      yearly.every((r) => r.fasts!.single == SunnahFast.whiteDays),
+      isTrue,
+    );
+
+    final all = buildNotificationSchedule(
+      times,
+      const NotificationPreferences(
+        fastingReminders: true,
+        eventReminders: true,
+        dzikirReminders: {DzikirReminder.morning, DzikirReminder.evening},
+      ),
+      from,
+      events: HijriEvents([
+        const HijriEvent(
+          id: 'ayyamul_bidh',
+          name: {'en': 'The White Days'},
+          hijriDays: (13, 15),
+        ),
+      ]),
+    );
+    expect(all.map((alert) => alert.id).toSet(), hasLength(all.length));
+    final weekly = all.where((alert) => alert.fasts != null);
+    expect(
+      weekly.where((r) => r.fasts!.any((fast) => fast.isWeekly)),
+      isNotEmpty,
+    );
+
+    expect(fasting(const NotificationPreferences()), isEmpty);
+    expect(
+      fasting(
+        const NotificationPreferences(enabled: false, fastingReminders: true),
+      ),
       isEmpty,
     );
   });

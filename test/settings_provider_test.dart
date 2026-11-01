@@ -172,11 +172,15 @@ void main() {
             title: 'Chime',
           ),
         },
+        fastingReminders: true,
+        weeklyFastingReminders: false,
       ),
     );
     container.invalidate(settingsProvider);
     final preferences = container.read(settingsProvider).notifications;
     expect(preferences.enabled, isFalse);
+    expect(preferences.fastingReminders, isTrue);
+    expect(preferences.weeklyFastingReminders, isFalse);
     expect(preferences.alerts, {PrayerAlert.imsak, PrayerAlert.dhuhr});
     expect(preferences.reminderOf(PrayerAlert.imsak), 5);
     expect(preferences.reminderOf(PrayerAlert.dhuhr), 15);

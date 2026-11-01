@@ -10,6 +10,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:adhan/adhan.dart';
 
+import '../../features/fasting/sunnah_fasting.dart';
 import '../../features/hijri_events/hijri_events.dart';
 import '../../generated/l10n/app_localizations.dart';
 import 'extra_prayer_times.dart';
@@ -130,7 +131,10 @@ class NotificationService {
       };
       final dzikir = alert.dzikir;
       final events = alert.events;
-      final title = events != null
+      final fasts = alert.fasts;
+      final title = fasts != null
+          ? l10n.sunnahFastTomorrow
+          : events != null
           ? events
                 .map((e) => e.nameFor(l10n.localeName.split('_').first))
                 .join(' · ')
@@ -139,7 +143,11 @@ class NotificationService {
               DzikirReminder.evening => l10n.dzikirEveningReminder,
               null => name,
             };
-      final body = events != null
+      final body = fasts != null
+          ? l10n.notifSunnahFast(
+              fasts.map((fast) => sunnahFastName(l10n, fast)).join(', '),
+            )
+          : events != null
           ? l10n.notifHijriEventTomorrow
           : dzikir != null
           ? switch (dzikir) {
@@ -164,9 +172,9 @@ class NotificationService {
               PrayerAlert.maghrib => l10n.notifMaghrib,
               PrayerAlert.isha => l10n.notifIsya,
             };
-      // Dzikir and event reminders play the system sound, not their
-      // prayer's.
-      final sound = dzikir != null || events != null
+      // Dzikir, event and fasting reminders play the system sound, not
+      // their prayer's.
+      final sound = dzikir != null || events != null || fasts != null
           ? PrayerNotificationSound.system
           : preferences.soundOf(alert.alert);
       final playSound = sound != PrayerNotificationSound.silent;

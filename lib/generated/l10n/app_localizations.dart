@@ -1973,6 +1973,84 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Besok. Dalam kalender Hijriah, harinya dimulai malam ini.'**
   String get notifHijriEventTomorrow;
+
+  /// No description provided for @sunnahFasting.
+  ///
+  /// In id, this message translates to:
+  /// **'Puasa sunah'**
+  String get sunnahFasting;
+
+  /// No description provided for @sunnahFastReminder.
+  ///
+  /// In id, this message translates to:
+  /// **'Pengingat puasa'**
+  String get sunnahFastReminder;
+
+  /// No description provided for @sunnahFastReminderSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Saat Magrib, malam sebelum ayyamul bidh, Arafah, Tasua, dan Asyura'**
+  String get sunnahFastReminderSubtitle;
+
+  /// No description provided for @sunnahFastWeekly.
+  ///
+  /// In id, this message translates to:
+  /// **'Senin dan Kamis'**
+  String get sunnahFastWeekly;
+
+  /// No description provided for @sunnahFastWeeklySubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Ingatkan juga setiap malam sebelum hari Senin dan Kamis'**
+  String get sunnahFastWeeklySubtitle;
+
+  /// No description provided for @sunnahFastTomorrow.
+  ///
+  /// In id, this message translates to:
+  /// **'Besok puasa sunah'**
+  String get sunnahFastTomorrow;
+
+  /// No description provided for @notifSunnahFast.
+  ///
+  /// In id, this message translates to:
+  /// **'{fasts}. Pasang niat malam ini dan rencanakan sahur.'**
+  String notifSunnahFast(String fasts);
+
+  /// No description provided for @sunnahFastMonday.
+  ///
+  /// In id, this message translates to:
+  /// **'Puasa Senin'**
+  String get sunnahFastMonday;
+
+  /// No description provided for @sunnahFastThursday.
+  ///
+  /// In id, this message translates to:
+  /// **'Puasa Kamis'**
+  String get sunnahFastThursday;
+
+  /// No description provided for @sunnahFastWhiteDays.
+  ///
+  /// In id, this message translates to:
+  /// **'Puasa ayyamul bidh'**
+  String get sunnahFastWhiteDays;
+
+  /// No description provided for @sunnahFastArafah.
+  ///
+  /// In id, this message translates to:
+  /// **'Puasa Arafah'**
+  String get sunnahFastArafah;
+
+  /// No description provided for @sunnahFastTasua.
+  ///
+  /// In id, this message translates to:
+  /// **'Puasa Tasua'**
+  String get sunnahFastTasua;
+
+  /// No description provided for @sunnahFastAshura.
+  ///
+  /// In id, this message translates to:
+  /// **'Puasa Asyura'**
+  String get sunnahFastAshura;
 }
 
 class _AppLocalizationsDelegate

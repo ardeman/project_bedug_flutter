@@ -1058,4 +1058,47 @@ class AppLocalizationsMs extends AppLocalizations {
   @override
   String get notifHijriEventTomorrow =>
       'Esok. Tarikh Hijrahnya bermula malam ini.';
+
+  @override
+  String get sunnahFasting => 'Puasa sunat';
+
+  @override
+  String get sunnahFastReminder => 'Peringatan puasa';
+
+  @override
+  String get sunnahFastReminderSubtitle =>
+      'Waktu Maghrib, malam sebelum hari putih, Arafah, Tasua dan Asyura';
+
+  @override
+  String get sunnahFastWeekly => 'Isnin dan Khamis';
+
+  @override
+  String get sunnahFastWeeklySubtitle =>
+      'Ingatkan juga setiap malam sebelum hari Isnin dan Khamis';
+
+  @override
+  String get sunnahFastTomorrow => 'Esok puasa sunat';
+
+  @override
+  String notifSunnahFast(String fasts) {
+    return '$fasts. Pasang niat malam ini dan rancang sahur anda.';
+  }
+
+  @override
+  String get sunnahFastMonday => 'Puasa Isnin';
+
+  @override
+  String get sunnahFastThursday => 'Puasa Khamis';
+
+  @override
+  String get sunnahFastWhiteDays => 'Puasa hari putih';
+
+  @override
+  String get sunnahFastArafah => 'Puasa Arafah';
+
+  @override
+  String get sunnahFastTasua => 'Puasa Tasua';
+
+  @override
+  String get sunnahFastAshura => 'Puasa Asyura';
 }

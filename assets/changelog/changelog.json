@@ -7,6 +7,15 @@
         {
           "type": "new",
           "text": {
+            "en": "Sunnah fasting reminders: turn them on in Settings to be reminded at Maghrib the evening before the white days, Arafah, Tasu'a and Ashura, and, if you like, every Monday and Thursday, never in Ramadan or on the days fasting isn't allowed.",
+            "id": "Pengingat puasa sunah: aktifkan di Pengaturan untuk diingatkan saat Magrib, malam sebelum ayyamul bidh, Arafah, Tasua, dan Asyura, serta bila ingin, setiap Senin dan Kamis, tidak pernah di bulan Ramadan atau pada hari yang dilarang berpuasa.",
+            "ms": "Peringatan puasa sunat: hidupkan dalam Tetapan untuk diingatkan waktu Maghrib, malam sebelum hari putih, Arafah, Tasua dan Asyura, dan jika mahu, setiap Isnin dan Khamis, tidak sekali-kali dalam Ramadan atau pada hari yang dilarang berpuasa.",
+            "ar": "تذكير بصيام التطوع: فعّله في الإعدادات ليصلك تذكير عند المغرب مساء اليوم الذي يسبق الأيام البيض وعرفة وتاسوعاء وعاشوراء، وإن شئت كل اثنين وخميس، ولا يصلك أبدًا في رمضان ولا في الأيام التي يحرم صيامها."
+          }
+        },
+        {
+          "type": "new",
+          "text": {
             "en": "Read the Quran page by page like a mushaf: the 604 pages of the Madinah mushaf, now how the reader opens, with Al-Fatihah and Al-Baqarah on illuminated opening pages, leaves you turn right to left that fold back from where you hold them, diagonally from a corner, and two facing pages on wide screens. Tap a verse to read it with its translation or bookmark it.",
             "id": "Baca Al-Qur'an halaman demi halaman seperti mushaf: 604 halaman Mushaf Madinah, kini tampilan awal pembaca, dengan Al-Fatihah dan Al-Baqarah di halaman pembuka berhias, lembarnya dibalik dari kanan ke kiri dan terlipat dari titik yang dipegang, menyerong bila dari sudutnya, dan dua halaman berhadapan di layar lebar. Ketuk ayat untuk membacanya beserta terjemahannya atau menandainya.",
             "ms": "Baca al-Quran halaman demi halaman seperti mushaf: 604 halaman Mushaf Madinah, kini paparan awal pembaca, dengan al-Fatihah dan al-Baqarah pada halaman pembuka berhias, helaiannya diselak dari kanan ke kiri dan terlipat dari titik yang dipegang, menyerong jika dari penjurunya, dan dua halaman bersebelahan pada skrin lebar. Ketik ayat untuk membacanya beserta terjemahannya atau menandakannya.",

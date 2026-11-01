@@ -151,6 +151,9 @@ class SettingsNotifier extends Notifier<AppSettings> {
           ),
         ),
         eventReminders: p.getBool('notification_events') ?? false,
+        fastingReminders: p.getBool('notification_fasting') ?? false,
+        weeklyFastingReminders:
+            p.getBool('notification_fasting_weekly') ?? true,
       ),
     );
   }
@@ -236,6 +239,11 @@ class SettingsNotifier extends Notifier<AppSettings> {
       value.dzikirReminders.map((reminder) => reminder.name).toList(),
     );
     await _prefs.setBool('notification_events', value.eventReminders);
+    await _prefs.setBool('notification_fasting', value.fastingReminders);
+    await _prefs.setBool(
+      'notification_fasting_weekly',
+      value.weeklyFastingReminders,
+    );
     for (final alert in PrayerAlert.values) {
       await _prefs.setInt(
         'notification_reminder_${alert.name}',

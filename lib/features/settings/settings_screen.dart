@@ -519,6 +519,50 @@ class NotificationSettingsScreen extends ConsumerWidget {
                 ),
               ],
             ),
+          if (preferences.enabled)
+            SettingsSection(
+              title: l10n.sunnahFasting,
+              children: [
+                PlatformListTile(
+                  key: const ValueKey('fasting-reminder-row'),
+                  title: Text(l10n.sunnahFastReminder),
+                  subtitle: Text(l10n.sunnahFastReminderSubtitle),
+                  trailing: _AdaptiveSwitch(
+                    key: const ValueKey('fasting-reminder'),
+                    value: preferences.includesFasting,
+                    onChanged: (value) => notifier.setNotifications(
+                      preferences.copyWith(fastingReminders: value),
+                    ),
+                  ),
+                  onTap: () => notifier.setNotifications(
+                    preferences.copyWith(
+                      fastingReminders: !preferences.fastingReminders,
+                    ),
+                  ),
+                ),
+                // Monday and Thursday come every week, so they can be
+                // left out of the yearly and monthly reminders.
+                if (preferences.includesFasting)
+                  PlatformListTile(
+                    key: const ValueKey('weekly-fasting-reminder-row'),
+                    title: Text(l10n.sunnahFastWeekly),
+                    subtitle: Text(l10n.sunnahFastWeeklySubtitle),
+                    trailing: _AdaptiveSwitch(
+                      key: const ValueKey('weekly-fasting-reminder'),
+                      value: preferences.weeklyFastingReminders,
+                      onChanged: (value) => notifier.setNotifications(
+                        preferences.copyWith(weeklyFastingReminders: value),
+                      ),
+                    ),
+                    onTap: () => notifier.setNotifications(
+                      preferences.copyWith(
+                        weeklyFastingReminders:
+                            !preferences.weeklyFastingReminders,
+                      ),
+                    ),
+                  ),
+              ],
+            ),
           if (NotificationService.supportsScheduling)
             SettingsSection(
               title: l10n.notificationSystemSection,

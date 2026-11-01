@@ -92,6 +92,15 @@ class NotificationPreferences {
   /// when its Hijri day begins; off until the user turns it on.
   final bool eventReminders;
 
+  /// A reminder at Maghrib the evening before each sunnah fast, so there is
+  /// time to set the intention and plan sahur; off until the user turns it
+  /// on.
+  final bool fastingReminders;
+
+  /// Whether [fastingReminders] include Monday and Thursday, which come
+  /// every week.
+  final bool weeklyFastingReminders;
+
   const NotificationPreferences({
     this.enabled = true,
     this.alerts = defaultPrayerAlerts,
@@ -100,6 +109,8 @@ class NotificationPreferences {
     this.phoneSounds = const {},
     this.dzikirReminders = const {},
     this.eventReminders = false,
+    this.fastingReminders = false,
+    this.weeklyFastingReminders = true,
   });
 
   bool includes(PrayerAlert alert) => enabled && alerts.contains(alert);
@@ -108,6 +119,8 @@ class NotificationPreferences {
       enabled && dzikirReminders.contains(reminder);
 
   bool get includesEvents => enabled && eventReminders;
+
+  bool get includesFasting => enabled && fastingReminders;
 
   int reminderOf(PrayerAlert alert) => reminders[alert] ?? 0;
 
@@ -127,6 +140,8 @@ class NotificationPreferences {
     Map<PrayerAlert, PhoneSound>? phoneSounds,
     Set<DzikirReminder>? dzikirReminders,
     bool? eventReminders,
+    bool? fastingReminders,
+    bool? weeklyFastingReminders,
   }) => NotificationPreferences(
     enabled: enabled ?? this.enabled,
     alerts: Set.unmodifiable(alerts ?? this.alerts),
@@ -135,5 +150,8 @@ class NotificationPreferences {
     phoneSounds: Map.unmodifiable(phoneSounds ?? this.phoneSounds),
     dzikirReminders: Set.unmodifiable(dzikirReminders ?? this.dzikirReminders),
     eventReminders: eventReminders ?? this.eventReminders,
+    fastingReminders: fastingReminders ?? this.fastingReminders,
+    weeklyFastingReminders:
+        weeklyFastingReminders ?? this.weeklyFastingReminders,
   );
 }

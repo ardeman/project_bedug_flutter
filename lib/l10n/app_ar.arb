@@ -339,5 +339,18 @@
   "hijriEventsNote": "التواريخ وفق تقويم {calendar} المحسوب، مع تعديل التاريخ الهجري من الإعدادات، وقد تختلف بيوم عن الإعلان المحلي.",
   "hijriEventReminder": "تذكير بالمناسبات",
   "hijriEventReminderSubtitle": "عند المغرب، مساء اليوم الذي يسبق المناسبات والأيام البيض",
-  "notifHijriEventTomorrow": "غدًا. يبدأ يومه الهجري هذا المساء."
+  "notifHijriEventTomorrow": "غدًا. يبدأ يومه الهجري هذا المساء.",
+  "sunnahFasting": "صيام التطوع",
+  "sunnahFastReminder": "تذكير بالصيام",
+  "sunnahFastReminderSubtitle": "عند المغرب، مساء اليوم الذي يسبق الأيام البيض وعرفة وتاسوعاء وعاشوراء",
+  "sunnahFastWeekly": "الاثنين والخميس",
+  "sunnahFastWeeklySubtitle": "ذكّرني أيضًا مساء كل أحد وأربعاء",
+  "sunnahFastTomorrow": "صيام سنة غدًا",
+  "notifSunnahFast": "{fasts}. انوِ الصيام الليلة وخطّط لسحورك.",
+  "sunnahFastMonday": "صيام الاثنين",
+  "sunnahFastThursday": "صيام الخميس",
+  "sunnahFastWhiteDays": "صيام الأيام البيض",
+  "sunnahFastArafah": "صيام عرفة",
+  "sunnahFastTasua": "صيام تاسوعاء",
+  "sunnahFastAshura": "صيام عاشوراء"
 }

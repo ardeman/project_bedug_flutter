@@ -340,5 +340,18 @@
   "hijriEventsNote": "Dates follow the calculated {calendar} calendar, moved by the Hijri date setting, and can be a day off local announcements.",
   "hijriEventReminder": "Event reminders",
   "hijriEventReminderSubtitle": "At Maghrib, the evening before holy days and the white days",
-  "notifHijriEventTomorrow": "Tomorrow. Its Hijri day begins this evening."
+  "notifHijriEventTomorrow": "Tomorrow. Its Hijri day begins this evening.",
+  "sunnahFasting": "Sunnah fasting",
+  "sunnahFastReminder": "Fasting reminders",
+  "sunnahFastReminderSubtitle": "At Maghrib, the evening before the white days, Arafah, Tasu'a and Ashura",
+  "sunnahFastWeekly": "Mondays and Thursdays",
+  "sunnahFastWeeklySubtitle": "Also remind me the evening before every Monday and Thursday",
+  "sunnahFastTomorrow": "Sunnah fast tomorrow",
+  "notifSunnahFast": "{fasts}. Set your intention tonight and plan your sahur.",
+  "sunnahFastMonday": "Monday fast",
+  "sunnahFastThursday": "Thursday fast",
+  "sunnahFastWhiteDays": "White days fast",
+  "sunnahFastArafah": "Arafah fast",
+  "sunnahFastTasua": "Tasu'a fast",
+  "sunnahFastAshura": "Ashura fast"
 }

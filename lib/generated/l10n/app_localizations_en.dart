@@ -1069,4 +1069,47 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get notifHijriEventTomorrow =>
       'Tomorrow. Its Hijri day begins this evening.';
+
+  @override
+  String get sunnahFasting => 'Sunnah fasting';
+
+  @override
+  String get sunnahFastReminder => 'Fasting reminders';
+
+  @override
+  String get sunnahFastReminderSubtitle =>
+      'At Maghrib, the evening before the white days, Arafah, Tasu\'a and Ashura';
+
+  @override
+  String get sunnahFastWeekly => 'Mondays and Thursdays';
+
+  @override
+  String get sunnahFastWeeklySubtitle =>
+      'Also remind me the evening before every Monday and Thursday';
+
+  @override
+  String get sunnahFastTomorrow => 'Sunnah fast tomorrow';
+
+  @override
+  String notifSunnahFast(String fasts) {
+    return '$fasts. Set your intention tonight and plan your sahur.';
+  }
+
+  @override
+  String get sunnahFastMonday => 'Monday fast';
+
+  @override
+  String get sunnahFastThursday => 'Thursday fast';
+
+  @override
+  String get sunnahFastWhiteDays => 'White days fast';
+
+  @override
+  String get sunnahFastArafah => 'Arafah fast';
+
+  @override
+  String get sunnahFastTasua => 'Tasu\'a fast';
+
+  @override
+  String get sunnahFastAshura => 'Ashura fast';
 }

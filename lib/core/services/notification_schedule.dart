@@ -2,6 +2,7 @@ import '../utils/hijri_utils.dart';
 
 import 'package:adhan/adhan.dart';
 
+import '../../features/fasting/sunnah_fasting.dart';
 import '../../features/hijri_events/hijri_events.dart';
 import 'extra_prayer_times.dart';
 import 'notification_preferences.dart';
@@ -19,6 +20,10 @@ class PrayerNotification {
   /// Maghrib ([alert]) when their Hijri day begins.
   final List<HijriEvent>? events;
 
+  /// Set on a fasting reminder: the sunnah fasts of the next day, announced
+  /// at Maghrib ([alert]) the evening before.
+  final List<SunnahFast>? fasts;
+
   const PrayerNotification(
     this.id,
     this.alert,
@@ -26,6 +31,7 @@ class PrayerNotification {
     this.isReminder = false,
     this.dzikir,
     this.events,
+    this.fasts,
   });
 }
 
@@ -34,7 +40,8 @@ const maxScheduledNotifications = 64;
 
 /// Up to six days of alerts, the soonest first, capped at Apple's limit.
 /// Each date is calculated separately; prayer times must not repeat daily.
-/// Event reminders need [events], dated with [hijriReckoning].
+/// Event reminders need [events]; they and fasting reminders are dated
+/// with [hijriReckoning].
 List<PrayerNotification> buildNotificationSchedule(
   PrayerTimes times,
   NotificationPreferences preferences,
@@ -125,6 +132,31 @@ List<PrayerNotification> buildNotificationSchedule(
             PrayerAlert.maghrib,
             daily.maghrib,
             events: starting,
+          ),
+        );
+      }
+    }
+    if (preferences.includesFasting && daily.maghrib.isAfter(now)) {
+      // Each fasting day gets its own reminder, even within a run such as
+      // the white days, since each needs its own intention and sahur.
+      final fasts = sunnahFastsOn(
+        DateTime(date.year, date.month, date.day + 1),
+        weekly: preferences.weeklyFastingReminders,
+        reckoning: hijriReckoning,
+      );
+      if (fasts.isNotEmpty) {
+        // Fasting IDs follow every day's event reminders.
+        final id =
+            days * alerts.length * 2 +
+            days * DzikirReminder.values.length +
+            days +
+            day;
+        result.add(
+          PrayerNotification(
+            id,
+            PrayerAlert.maghrib,
+            daily.maghrib,
+            fasts: fasts,
           ),
         );
       }

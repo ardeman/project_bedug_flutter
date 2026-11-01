@@ -1079,4 +1079,46 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get notifHijriEventTomorrow => 'غدًا. يبدأ يومه الهجري هذا المساء.';
+
+  @override
+  String get sunnahFasting => 'صيام التطوع';
+
+  @override
+  String get sunnahFastReminder => 'تذكير بالصيام';
+
+  @override
+  String get sunnahFastReminderSubtitle =>
+      'عند المغرب، مساء اليوم الذي يسبق الأيام البيض وعرفة وتاسوعاء وعاشوراء';
+
+  @override
+  String get sunnahFastWeekly => 'الاثنين والخميس';
+
+  @override
+  String get sunnahFastWeeklySubtitle => 'ذكّرني أيضًا مساء كل أحد وأربعاء';
+
+  @override
+  String get sunnahFastTomorrow => 'صيام سنة غدًا';
+
+  @override
+  String notifSunnahFast(String fasts) {
+    return '$fasts. انوِ الصيام الليلة وخطّط لسحورك.';
+  }
+
+  @override
+  String get sunnahFastMonday => 'صيام الاثنين';
+
+  @override
+  String get sunnahFastThursday => 'صيام الخميس';
+
+  @override
+  String get sunnahFastWhiteDays => 'صيام الأيام البيض';
+
+  @override
+  String get sunnahFastArafah => 'صيام عرفة';
+
+  @override
+  String get sunnahFastTasua => 'صيام تاسوعاء';
+
+  @override
+  String get sunnahFastAshura => 'صيام عاشوراء';
 }
