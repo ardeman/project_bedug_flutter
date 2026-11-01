@@ -106,6 +106,8 @@ Validation of the original layouts on 2026-10-21: on the connected iPhone 17 (iO
 flutter analyze && flutter test
 ```
 
+GitHub Actions runs them, with the format check, on every push to `master` and every pull request (`.github/workflows/checks.yml`), and builds the landing page. `desktop.yml` builds the Linux and Windows apps when their runners, `pubspec.lock` or `vendor/` change.
+
 ### Commit messages
 
 Commit subjects use Conventional Commits: `type(scope)!: description`, with optional scope and `!` for breaking changes. Allowed types are `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore` and `revert`. For example: `fix(theme): apply app-theme brightness immediately`.

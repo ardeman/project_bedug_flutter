@@ -1,0 +1,70 @@
+# Builds the Linux and Windows apps (release mode, not packaged or signed)
+# whenever their runners or the dependencies change, since neither is built
+# on the Mac day to day; a broken build then shows before a store upload.
+# The stores' packages (Flathub, Microsoft Store) are made elsewhere.
+name: Desktop builds
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'linux/**'
+      - 'windows/**'
+      - 'pubspec.lock'
+      - 'vendor/**'
+      - '.github/workflows/desktop.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: desktop-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install the Linux build tools
+        # GStreamer is for audioplayers (the selection tick and sound
+        # previews). The runner's LLVM brings libunwind-14-dev, which blocks
+        # libunwind-dev, a dependency of GStreamer's headers.
+        run: |
+          sudo apt-get update
+          sudo apt-get remove -y libunwind-14-dev || true
+          sudo apt-get install -y clang cmake ninja-build pkg-config \
+            libgtk-3-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.8'
+          channel: stable
+          cache: true
+
+      - name: Build
+        run: |
+          flutter pub get
+          flutter build linux --release
+
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.8'
+          channel: stable
+          cache: true
+
+      - name: Build
+        shell: pwsh
+        run: |
+          # Stop at the first failing command, flutter's included.
+          $ErrorActionPreference = 'Stop'
+          $PSNativeCommandUseErrorActionPreference = $true
+          flutter pub get
+          flutter build windows --release
