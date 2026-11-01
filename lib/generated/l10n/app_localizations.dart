@@ -1443,14 +1443,8 @@ abstract class AppLocalizations {
   /// No description provided for @infaqIntro.
   ///
   /// In id, this message translates to:
-  /// **'Bedug gratis. Infak Anda mendukung pengembangan Bedug dan mematikan iklan. Infak tidak disalurkan ke lembaga amal atau pihak lain.'**
-  String get infaqIntro;
-
-  /// No description provided for @infaqIntroNoAds.
-  ///
-  /// In id, this message translates to:
   /// **'Bedug gratis. Infak Anda mendukung pengembangan Bedug. Infak tidak disalurkan ke lembaga amal atau pihak lain.'**
-  String get infaqIntroNoAds;
+  String get infaqIntro;
 
   /// No description provided for @infaqSmall.
   ///
@@ -1487,12 +1481,6 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Terima kasih atas infak Anda. Jazakallahu khairan!'**
   String get infaqThanks;
-
-  /// No description provided for @infaqAdsOff.
-  ///
-  /// In id, this message translates to:
-  /// **'Iklan sudah dimatikan di perangkat ini.'**
-  String get infaqAdsOff;
 
   /// No description provided for @infaqPending.
   ///

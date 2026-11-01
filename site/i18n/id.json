@@ -105,11 +105,9 @@
   },
   "infaq": {
     "title": "Infak untuk Bedug",
-    "lead": "Bedug gratis dan akan tetap gratis. Di Android dan iOS, Bedug menampilkan banner kecil di beberapa layar. Infak mendukung pengembangan Bedug dan mematikan iklan.",
+    "lead": "Bedug gratis dan akan tetap gratis, tanpa iklan. Infak mendukung pengembangan Bedug.",
     "points": [
-      "Tidak ada iklan di layar jadwal salat dan kiblat, dan tidak ada iklan layar penuh.",
-      "Iklan judi, minuman keras dan kencan diblokir.",
-      "Infak berapa pun mematikan iklan. Infak bebas iklan juga kembali saat kamu memasang ulang aplikasi.",
+      "Tanpa iklan, di platform mana pun.",
       "Infakmu membiayai pengembangan Bedug, bukan untuk lembaga amal atau pihak ketiga."
     ],
     "in_app": "Di aplikasi Android dan Apple, berinfak dari Pengaturan melalui Google Play atau App Store. Di Windows dan Linux, gunakan tautan di sini.",
@@ -143,14 +141,14 @@
     "meta_title": "Kebijakan privasi · Bedug",
     "meta_description": "Cara Bedug menangani datamu: jadwal salat dihitung di perangkatmu, tidak ada akun, dan pengaturanmu tetap bersamamu.",
     "title": "Kebijakan privasi",
-    "updated": "Berlaku sejak 20 Oktober 2026",
+    "updated": "Berlaku sejak 1 November 2026",
     "intro": "Bedug adalah aplikasi jadwal salat yang diterbitkan oleh Ardeman. Kebijakan ini menjelaskan data apa yang digunakan aplikasi dan situs web ini, serta alasannya. Bedug tidak memiliki akun maupun server sendiri, sehingga datamu tetap berada di perangkatmu.",
     "summary_title": "Singkatnya",
     "summary": [
       "Tanpa akun, tanpa pendaftaran, tanpa server Bedug.",
       "Lokasimu digunakan di perangkatmu untuk menghitung jadwal salat dan arah kiblat.",
       "Pengaturanmu hanya disimpan di perangkatmu.",
-      "Di Android dan iOS, Google AdMob menampilkan iklan sampai kamu berinfak.",
+      "Bedug tidak menampilkan iklan dan tidak memakai SDK iklan atau analitik.",
       "Situs web ini tidak memakai cookie maupun analitik."
     ],
     "sections": [
@@ -164,17 +162,9 @@
         ]
       },
       {
-        "heading": "Iklan",
-        "body": [
-          "Bedug untuk Android dan iOS menampilkan iklan dari Google AdMob. Bedug untuk macOS, Windows dan Linux tidak menampilkan iklan. AdMob dapat mengumpulkan ID iklan perangkatmu, alamat IP dan interaksimu dengan iklan, untuk menampilkan dan mengukur iklan serta mencegah penipuan. Lihat <a href=\"{google_partners}\">cara Google menggunakan informasi dari aplikasi yang memakai layanannya</a>.",
-          "Jika diwajibkan hukum, misalnya di Kawasan Ekonomi Eropa dan Inggris, Bedug meminta persetujuanmu melalui formulir persetujuan Google sebelum menampilkan iklan yang dipersonalisasi. Di iOS, Bedug meminta izinmu untuk pelacakan. Jika kamu menolak, kamu hanya melihat iklan yang tidak dipersonalisasi, dan pilihanmu bisa diubah kapan saja di aplikasi.",
-          "Setelah kamu berinfak, Bedug berhenti menampilkan iklan."
-        ]
-      },
-      {
         "heading": "Infak",
         "body": [
-          "Di aplikasi Android dan Apple, infak adalah pembelian dalam aplikasi yang diproses oleh Google Play atau App Store. Kami tidak menerima detail pembayaranmu. Aplikasi hanya mengetahui apakah pembelian berhasil dan menyimpannya di perangkatmu untuk mematikan iklan.",
+          "Di aplikasi Android dan Apple, infak adalah pembelian dalam aplikasi yang diproses oleh Google Play atau App Store. Kami tidak menerima detail pembayaranmu. Aplikasi hanya mengetahui apakah pembelian berhasil dan menyimpannya di perangkatmu untuk mengucapkan terima kasih.",
           "Infak melalui <a href=\"{trakteer}\">Trakteer</a> atau <a href=\"{kofi}\">Ko-fi</a> diproses oleh layanan tersebut sesuai kebijakan privasinya masing-masing. Layanan itu hanya membagikan kepada kami apa yang kamu pilih untuk diberikan, seperti nama dan pesan."
         ]
       },
@@ -194,7 +184,7 @@
       {
         "heading": "Pilihanmu",
         "body": [
-          "Kamu bisa mematikan lokasi dan memilih kota, mematikan notifikasi, mengubah persetujuan iklan, dan menghapus semua data Bedug dengan menghapus aplikasi. Kami tidak menyimpan data tentangmu di server mana pun, jadi tidak ada yang perlu kami ekspor atau hapus."
+          "Kamu bisa mematikan lokasi dan memilih kota, mematikan notifikasi, dan menghapus semua data Bedug dengan menghapus aplikasi. Kami tidak menyimpan data tentangmu di server mana pun, jadi tidak ada yang perlu kami ekspor atau hapus."
         ]
       },
       {

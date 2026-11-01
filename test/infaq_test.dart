@@ -158,15 +158,6 @@ void main() {
       DistributionChannel.parse('fdroid', TargetPlatform.android),
       DistributionChannel.fdroid,
     );
-    expect(
-      DistributionChannel.fdroid.showsAdsOn(TargetPlatform.android),
-      isFalse,
-    );
-    expect(
-      DistributionChannel.appStore.showsAdsOn(TargetPlatform.macOS),
-      isFalse,
-    );
-    expect(DistributionChannel.appStore.showsAdsOn(TargetPlatform.iOS), isTrue);
   });
 
   test('loads products cheapest first', () async {
@@ -203,7 +194,7 @@ void main() {
     final state = container.read(infaqProvider);
     expect(state.pending, isFalse);
     expect(state.thanked, isTrue);
-    expect(state.adFree, isTrue);
+    expect(state.given, isTrue);
     expect(store.completed, [InfaqProducts.small]);
 
     final prefs = container.read(sharedPreferencesProvider);
@@ -214,7 +205,7 @@ void main() {
       ],
     );
     addTearDown(reopened.dispose);
-    expect(reopened.read(infaqProvider).adFree, isTrue);
+    expect(reopened.read(infaqProvider).given, isTrue);
   });
 
   test(
@@ -230,7 +221,7 @@ void main() {
       ]);
       await pumpEventQueue();
       expect(container.read(infaqProvider).pending, isFalse);
-      expect(container.read(infaqProvider).adFree, isFalse);
+      expect(container.read(infaqProvider).given, isFalse);
 
       await notifier.restore();
       expect(store.restores, 1);
@@ -238,7 +229,7 @@ void main() {
         _purchase(InfaqProducts.small, PurchaseStatus.restored),
       ]);
       await pumpEventQueue();
-      expect(container.read(infaqProvider).adFree, isTrue);
+      expect(container.read(infaqProvider).given, isTrue);
       expect(container.read(infaqProvider).thanked, isFalse);
     },
   );
@@ -253,7 +244,7 @@ void main() {
     final state = container.read(infaqProvider);
     expect(state.error, InfaqError.purchaseFailed);
     expect(state.pending, isFalse);
-    expect(state.adFree, isFalse);
+    expect(state.given, isFalse);
   });
 
   testWidgets('store builds list the tiers and buy on tap', (tester) async {

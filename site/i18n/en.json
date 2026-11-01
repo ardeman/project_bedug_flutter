@@ -105,11 +105,9 @@
   },
   "infaq": {
     "title": "Infaq for Bedug",
-    "lead": "Bedug is free and stays free. On Android and iOS it shows a small banner on a few screens. An infaq supports Bedug's development and turns the ads off.",
+    "lead": "Bedug is free and stays free, with no ads. An infaq supports Bedug's development.",
     "points": [
-      "No ads on the prayer times or Qibla screens, and no full-screen ads.",
-      "Ads for gambling, alcohol and dating are blocked.",
-      "Any infaq turns the ads off. The ad-free infaq also comes back when you reinstall.",
+      "No ads, on any platform.",
       "Your infaq funds Bedug's development. It doesn't go to a charity or a third party."
     ],
     "in_app": "In the Android and Apple apps, give an infaq from Settings through Google Play or the App Store. On Windows and Linux, use the links here.",
@@ -143,14 +141,14 @@
     "meta_title": "Privacy policy · Bedug",
     "meta_description": "How Bedug handles your data: prayer times are calculated on your device, there is no account, and your settings stay with you.",
     "title": "Privacy policy",
-    "updated": "Effective 20 October 2026",
+    "updated": "Effective 1 November 2026",
     "intro": "Bedug is a prayer-times app published by Ardeman. This policy explains what data the app and this website use, and why. Bedug has no account and no server of its own, so your data stays on your device.",
     "summary_title": "In short",
     "summary": [
       "No account, no sign-up, no Bedug server.",
       "Your location is used on your device to calculate prayer times and the Qibla.",
       "Your settings are stored only on your device.",
-      "On Android and iOS, Google AdMob shows ads until you give an infaq.",
+      "Bedug shows no ads and has no ad or analytics SDK.",
       "This website uses no cookies and no analytics."
     ],
     "sections": [
@@ -164,17 +162,9 @@
         ]
       },
       {
-        "heading": "Ads",
-        "body": [
-          "Bedug for Android and iOS shows ads from Google AdMob. Bedug for macOS, Windows and Linux shows no ads. AdMob may collect your device's advertising identifier, your IP address and how you interact with ads, to show and measure ads and to prevent fraud. See <a href=\"{google_partners}\">how Google uses information from apps that use its services</a>.",
-          "Where the law requires it, such as in the European Economic Area and the United Kingdom, Bedug asks for your consent with Google's consent form before showing personalized ads. On iOS, Bedug asks for your permission to track. If you decline, you see only non-personalized ads, and you can change your choice later in the app.",
-          "Once you give an infaq, Bedug stops showing ads."
-        ]
-      },
-      {
         "heading": "Infaq",
         "body": [
-          "In the Android and Apple apps, an infaq is an in-app purchase handled by Google Play or the App Store. We don't receive your payment details. The app only learns whether the purchase succeeded and stores that on your device to turn the ads off.",
+          "In the Android and Apple apps, an infaq is an in-app purchase handled by Google Play or the App Store. We don't receive your payment details. The app only learns whether the purchase succeeded and stores that on your device to thank you.",
           "An infaq through <a href=\"{trakteer}\">Trakteer</a> or <a href=\"{kofi}\">Ko-fi</a> is handled by that service under its own privacy policy. It shares with us only what you choose to give, such as a name and a message."
         ]
       },
@@ -194,7 +184,7 @@
       {
         "heading": "Your choices",
         "body": [
-          "You can turn location off and pick a city instead, turn notifications off, change your ad consent, and remove all of Bedug's data by uninstalling the app. We keep no data about you on any server, so there is nothing for us to export or delete."
+          "You can turn location off and pick a city instead, turn notifications off, and remove all of Bedug's data by uninstalling the app. We keep no data about you on any server, so there is nothing for us to export or delete."
         ]
       },
       {

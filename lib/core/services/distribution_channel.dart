@@ -1,14 +1,13 @@
 import 'package:flutter/foundation.dart';
 
 /// Where a build is distributed, passed as `--dart-define=CHANNEL=<name>`.
-/// Store billing only works inside its own store and some stores ban ad
-/// SDKs, so the infaq method and the ads follow the channel, not only the
-/// platform. See "Revenue: ads and infaq" in `README.md`.
+/// Store billing only works inside its own store, so the infaq method
+/// follows the channel, not only the platform. See "Revenue: infaq" in `README.md`.
 enum DistributionChannel {
-  /// Android on Google Play: AdMob and Play Billing.
+  /// Android on Google Play: Play Billing.
   play,
 
-  /// iOS and the Mac App Store: AdMob on iOS only, and StoreKit.
+  /// iOS and the Mac App Store: StoreKit.
   appStore,
 
   /// Windows, Linux and sideloaded builds: Trakteer and Ko-fi links.
@@ -38,11 +37,4 @@ enum DistributionChannel {
 
   /// Whether infaq is an in-app purchase rather than an external link.
   bool get usesStoreBilling => this == play || this == appStore;
-
-  /// Whether builds for [platform] show ads: AdMob only has Android and
-  /// iOS SDKs, and F-Droid bans it.
-  bool showsAdsOn(TargetPlatform platform) =>
-      !kIsWeb &&
-      this != fdroid &&
-      (platform == TargetPlatform.android || platform == TargetPlatform.iOS);
 }

@@ -261,7 +261,7 @@ class SettingsScreen extends ConsumerWidget {
             ),
             title: Text(l10n.infaq),
             subtitle: Text(
-              ref.watch(infaqProvider.select((s) => s.adFree))
+              ref.watch(infaqProvider.select((s) => s.given))
                   ? l10n.infaqThanksSubtitle
                   : l10n.infaqSubtitle,
             ),

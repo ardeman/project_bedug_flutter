@@ -218,13 +218,13 @@ Prayer tracking and prayer-progress features (completion logs, streaks and qada 
 
 **Phase 3: Quran**
 
-1. **Reader (done; device visual checks pending):** a Quran tab with surah, juz and bookmark lists and a "continue reading" row. The reader shows one surah, opens at any ayah, and has the Arabic in the bundled Amiri Quran face with the app language's translation under it (none for Arabic), a text-size control, a bookmark on each ayah and the next surah at the end; the ayah at the top of the screen is saved as the last-read position. `scripts/build_quran_content.py` writes `assets/content/quran/` from tanzil.net: the Uthmani text (CC BY 3.0, verbatim, with its notice), Kemenag's Indonesian, Saheeh International's English and Basmeih's Malay translations, and the surah and juz metadata, with Kemenag's transliterated surah names for Indonesian and Malay. Tanzil opens each first ayah with the basmala, so the reader moves it into the surah's heading. Last-read, bookmarks and text size live in `shared_preferences`. Unlike other content, the text and each translation are separate files, because together they are about 5 MB and only one translation is read at a time. **Open:** Tanzil marks its translations for non-commercial use, so each translator's or publisher's permission is needed before an ad-supported release.
+1. **Reader (done; device visual checks pending):** a Quran tab with surah, juz and bookmark lists and a "continue reading" row. The reader shows one surah, opens at any ayah, and has the Arabic in the bundled Amiri Quran face with the app language's translation under it (none for Arabic), a text-size control, a bookmark on each ayah and the next surah at the end; the ayah at the top of the screen is saved as the last-read position. `scripts/build_quran_content.py` writes `assets/content/quran/` from tanzil.net: the Uthmani text (CC BY 3.0, verbatim, with its notice), Kemenag's Indonesian, Saheeh International's English and Basmeih's Malay translations, and the surah and juz metadata, with Kemenag's transliterated surah names for Indonesian and Malay. Tanzil opens each first ayah with the basmala, so the reader moves it into the surah's heading. Last-read, bookmarks and text size live in `shared_preferences`. Unlike other content, the text and each translation are separate files, because together they are about 5 MB and only one translation is read at a time. **License:** Tanzil marks its translations for non-commercial use, which is why Bedug has no ads (see [Revenue: infaq](#revenue-infaq)); the voluntary infaq keeps the risk low, but the translator's or publisher's permission would settle it.
 2. **Khatam planner (done; device visual checks pending):** a card at the top of the Quran tab starts a plan of 7, 15, 30 or 60 days and then shows today's target ayah, the share read and the days left, with Continue (the ayah after the last one marked), Change (a new length that spreads what is left from today) and End. Progress is what the reader marks with the flag on an ayah, not the last-read position, so browsing and bookmarks never move it. Progress and targets are measured in juz, which are close to equal in length, and only within a juz by ayahs (`lib/features/quran/khatam.dart`). The plan lives in `shared_preferences`.
 3. **Ayah of the day (done; device visual checks pending):** a card under the picked day's prayer times and a home screen widget (small, medium and large on iOS; resizable on Android), both opening the reader at the ayah. `assets/content/quran/daily_ayahs.json` is curated by hand: occasions (Hijri dates such as Ramadan's last ten nights, Arafah and the two Eids, whole Hijri months such as Ramadan and Rabiulawal, and Fridays), then themes for other days, each with why it is shown in every language. The most specific occasion wins (a few Hijri days over a month over Friday) and ordinary days take the themes in turn (`lib/features/quran/daily_ayah.dart`). Hijri dates are the daytime date's in the chosen calendar source, moved by the Hijri date adjustment. `scripts/build_daily_ayahs.py` copies each ayah's text and translations from the reader's files into the same JSON, so the card and the widget never load the whole Quran. The app shares seven days with the widget, which changes at midnight; the selection and its reasons need the same qualified review as the dzikir before release.
 4. **Murattal (audio recitation; waiting on licenses):** the reader plays from any ayah, highlights and follows the ayah being recited (turning pages in page mode), repeats an ayah or a range for memorization, and keeps playing in the background with lock-screen controls; a reciter picker lives in Settings and each surah streams or downloads for offline listening, with a storage screen to remove downloads. A full Quran is roughly 0.7–1 GB per reciter at 64 kbps, so audio is never bundled, and streaming tells the host what is played, which the app states. Background playback needs the iOS background audio mode and an Android media-playback foreground service declared in Play Console.
    - **Several sources behind one interface:** each source is an adapter that turns a reciter, surah and ayah into an audio URL and optional timings, and the reciter list is data under `assets/content/`, so adding a reciter or source is mostly data. Features that only some sources have (word timings) fall back to ayah-level highlighting. Ship with one source and one or two reciters whose permission is confirmed, then add more.
    - **Candidate sources (checked 2026-10-31):** [EveryAyah](https://everyayah.com) (one file per ayah, many reciters; no site-wide license, only a backlink request, and recitation rights unclear), the [Quran Foundation API](https://api-docs.quran.foundation/docs/sdk/audio/) (per-surah and per-ayah audio with ayah and word timings; needs API credentials through a backend; its [developer terms](https://api-docs.quran.foundation/legal/developer-terms/) require a separate written license for commercial redistribution), and [alquran.cloud](https://alquran.cloud/terms-and-conditions) (recitations licensed by the reciters for free, non-commercial redistribution only). Kemenag publishes no audio API or license.
-   - **Open:** an ad-supported app is commercial use for every candidate, so each source and reciter needs written permission (Quran Foundation's commercial license, or the reciter or their estate) before it ships, and each one is credited in the app.
+   - **Open:** Bedug has no ads, but the paid infaq may still count as commercial use under a candidate's terms, so check each one, and where in doubt get written permission (Quran Foundation's commercial license, or the reciter or their estate) before it ships, and each one is credited in the app.
 
 **Phase 4: The Islamic year**
 
@@ -279,67 +279,57 @@ iPhone validation on 2026-10-27 (iPhone 17, iOS 27.0.1, profile build, portrait,
 
 Landscape on the same iPhone (a temporary build forcing landscape-left, screens switched by a launcher because Mirroring stopped forwarding taps after rotation, Indonesian dark mode): the expanded prayer header fits, with the location and refresh button clear of the Dynamic Island. **Failed:** the floating navigation covers the week strip on Prayer times and the compass-accuracy hint on the Kiblat card. Both lists end with room to scroll clear of it, and the bar is now compact in short windows (52 tall, 12 off the edge, covering 68 instead of 89 points); this still needs a look on the device. Touch interaction in landscape remains unverified.
 
-### Revenue: ads and infaq
+### Revenue: infaq
 
-Bedug stays free. It earns from ads on mobile, and users can give an **infaq** (in Indonesian: *infak*) that supports development and turns the ads off. The feature is always called "infaq", never "tip" or "donation". All copy says the infaq **supports Bedug's development**, because App Store guidelines 3.2.1(vi) and 3.2.2 reject apps that look like they collect money for charity.
+Bedug stays free and has no ads, on every platform and for good. It earns only from an **infaq** (in Indonesian: *infak*) that users can give to support development. Ads were planned and dropped on 2026-11-01: Tanzil's Quran translations are licensed for non-commercial use, ads would make the whole app commercial, and an app for worship reads better without them. The feature is always called "infaq", never "tip" or "donation". All copy says the infaq **supports Bedug's development**, because App Store guidelines 3.2.1(vi) and 3.2.2 reject apps that look like they collect money for charity.
 
-| Platform | Ads | Infaq |
-| --- | --- | --- |
-| Android | AdMob (`google_mobile_ads`) | In-app purchase (`in_app_purchase`, Play Billing, which in Indonesia supports e-wallets and carrier billing) |
-| iOS | AdMob | In-app purchase (StoreKit) |
-| macOS | None: AdMob has no macOS SDK | In-app purchase (StoreKit) |
-| Windows, Linux | None: AdMob has no desktop SDK | External links via `url_launcher`: [Trakteer](https://trakteer.id) (QRIS, e-wallets, bank transfer) listed first for the Indonesian locale, [Ko-fi](https://ko-fi.com) (PayPal, cards) listed first for other locales |
+| Platform | Infaq |
+| --- | --- |
+| Android | In-app purchase (`in_app_purchase`, Play Billing, which in Indonesia supports e-wallets and carrier billing) |
+| iOS, macOS | In-app purchase (StoreKit) |
+| Windows, Linux | External links via `url_launcher`: [Trakteer](https://trakteer.id) (QRIS, e-wallets, bank transfer) listed first for the Indonesian locale, [Ko-fi](https://ko-fi.com) (PayPal, cards) listed first for other locales |
 
 Store rules require developer support on iOS, macOS and Android to go through in-app purchase, so the external links appear only on Windows and Linux.
 
 **Distribution channels**
 
-The infaq method depends on where the build is distributed, not only on the platform. Store billing works only inside its own store, and some stores ban ad SDKs. Each build passes `--dart-define=CHANNEL=<channel>`, and `infaqProvider` and the ad code read it.
+The infaq method depends on where the build is distributed, not only on the platform, because store billing works only inside its own store. Each build passes `--dart-define=CHANNEL=<channel>`, and `infaqProvider` reads it.
 
-| Channel | Builds | Ads | Infaq |
-| --- | --- | --- | --- |
-| `play` | Android on Google Play | AdMob | Play Billing |
-| `appstore` | iOS App Store, Mac App Store | AdMob on iOS only | StoreKit |
-| `direct` | Windows (Microsoft Store), Linux (Flathub); later perhaps an Android APK and a macOS DMG | AdMob on an Android APK only (expect lower fill: app-ads.txt can't verify an app without a store listing) | Dahlunas infaq code (Phase 3), Trakteer / Ko-fi links until then |
-| `fdroid` (later) | Android on F-Droid | None | Trakteer / Ko-fi links, plus F-Droid's Donate metadata |
+| Channel | Builds | Infaq |
+| --- | --- | --- |
+| `play` | Android on Google Play | Play Billing |
+| `appstore` | iOS App Store, Mac App Store | StoreKit |
+| `direct` | Windows (Microsoft Store), Linux (Flathub); later perhaps an Android APK and a macOS DMG | Dahlunas infaq code (Phase 2), Trakteer / Ko-fi links until then |
+| `fdroid` (later) | Android on F-Droid | Trakteer / Ko-fi links, plus F-Droid's Donate metadata |
 
-- Rollout order: `play` and `appstore` (iOS and the Mac App Store) first, since that's where users and ad revenue are. Then `direct` for Windows on the Microsoft Store and Linux on Flathub. A direct Android APK, a macOS DMG, Snap, AppImage and `fdroid` are skipped for now.
-- F-Droid bans proprietary SDKs, so a define flag is not enough there. Its build recipe must remove `google_mobile_ads` and `in_app_purchase` from `pubspec.yaml` with a pre-build patch, and the code must compile without them.
+- Rollout order: `play` and `appstore` (iOS and the Mac App Store) first, since that's where the users are. Then `direct` for Windows on the Microsoft Store and Linux on Flathub. A direct Android APK, a macOS DMG, Snap, AppImage and `fdroid` are skipped for now.
+- F-Droid bans proprietary SDKs, so a define flag is not enough there. Its build recipe must remove `in_app_purchase` from `pubspec.yaml` with a pre-build patch, and the code must compile without it.
 - In-app purchase on macOS works only in a Mac App Store build. A DMG build uses the links.
-- Skipped for now: Huawei AppGallery (no Google services, so it would need Huawei's own IAP and ads SDK), Samsung Galaxy Store (check whether its policy requires Samsung IAP first), and EU alternative iOS marketplaces.
+- Skipped for now: Huawei AppGallery (no Google services, so it would need Huawei's own IAP), Samsung Galaxy Store (check whether its policy requires Samsung IAP first), and EU alternative iOS marketplaces.
 
 **Phase 1: Infaq (done in code; store products and device purchase checks pending)**
 
 1. **Store setup (manual):** paid-apps agreement, tax and bank details. Create the same product IDs in App Store Connect and Play Console:
-   - non-consumables `infaq_small`, `infaq_medium` and `infaq_large`, priced as in Coba Lagi: a US base price of $0.99, $2.99 and $4.99, with Indonesia set by hand to Rp 5,000, 19,000 and 49,000, the same in both stores. Any of them turns the ads off and is restored on a new device, so the small one is in effect the ad-free price. Keep the US base: with an Indonesian base, Apple rounds Rp 5,000 and Rp 19,000 both up to $0.99 elsewhere. Family Sharing, once on, can't be turned off again.
+   - non-consumables `infaq_small`, `infaq_medium` and `infaq_large`, priced as in Coba Lagi: a US base price of $0.99, $2.99 and $4.99, with Indonesia set by hand to Rp 5,000, 19,000 and 49,000, the same in both stores. Any of them is restored on a new device. Keep the US base: with an Indonesian base, Apple rounds Rp 5,000 and Rp 19,000 both up to $0.99 elsewhere. Family Sharing, once on, can't be turned off again.
    Create the Trakteer and Ko-fi pages. In the App Store review notes, explain: "Infaq is a voluntary in-app purchase that funds Bedug's development. No money goes to a charity or a third party."
-2. **`lib/features/infaq/` (done):** `infaqProvider` picks in-app purchase or links from the build channel (`DistributionChannel` in `lib/core/services/distribution_channel.dart`; without `CHANNEL`, a build gets its platform's store), listens for purchases from launch, loads the products, buys and completes purchases, restores earlier infaq, and handles cancellation and errors. It stores an `adFree` flag in `shared_preferences`, set by any infaq bought or restored; the page says Restore purchases brings it back after a reinstall.
+2. **`lib/features/infaq/` (done):** `infaqProvider` picks in-app purchase or links from the build channel (`DistributionChannel` in `lib/core/services/distribution_channel.dart`; without `CHANNEL`, a build gets its platform's store), listens for purchases from launch, loads the products, buys and completes purchases, restores earlier infaq, and handles cancellation and errors. It stores a `given` flag in `shared_preferences` (under the key `infaq_ad_free`, named when an infaq turned ads off), set by any infaq bought or restored, so the app keeps thanking the giver; the page says Restore purchases brings it back after a reinstall.
 3. **UI (done; device visual checks pending):** an "Infaq" row in Settings → About opens a page (`InfaqScreen`) with the tiers and their store prices, a restore row and a thank-you state after payment; on direct builds, Trakteer and Ko-fi rows. It is a pushed page like the other Settings pages rather than a sheet, so it uses the same grouped rows on every platform and needs no double-open guard. No nag pop-ups.
 4. **l10n keys (done)** (`infaq*`) in every ARB file, and tests (`test/infaq_test.dart`) for the provider with a fake `InAppPurchase` and for the page.
 
-**Phase 2: Ads (Android and iOS)**
-
-1. **Setup:** AdMob app and ad-unit IDs in `AndroidManifest.xml` and `Info.plist`. Test IDs in debug builds.
-2. **Consent:** the UMP consent form (GDPR and other regions) and App Tracking Transparency on iOS (`app_tracking_transparency`). When the user declines, serve non-personalized ads. Update the iOS privacy manifest, the App Store privacy labels and the Play Data Safety form, and tick **Contains ads** in Play Console.
-3. **Target audience 13+** in Play Console and App Store Connect. Including children under 13 brings in Google's Families policy and Apple's Kids rules: child-directed ads only, which earn less.
-4. **Placement:** one adaptive banner above the nav bar on the Calendar and Settings tabs, padded for the glass nav bar and the safe area. No ads on prayer times, qibla or (later) the Quran, dzikir and dua screens, and no interstitials. The banner carries a short "Your infaq turns off the ads" line that opens the infaq sheet. Hide every ad when `adFree` is set.
-5. **Content filter:** in the AdMob console, block gambling, alcohol, dating and other sensitive categories. This matters for a Muslim audience, and online gambling ads are a known problem in Indonesia.
-6. **Tests:** ads are hidden when `adFree` is set and are never built on macOS, Windows or Linux.
-
-**Phase 3: Infaq through Dahlunas on direct builds**
+**Phase 2: Infaq through Dahlunas on direct builds**
 
 [Dahlunas](https://github.com/ardeman/project-dahlunas-go), Ardeman's own shop, sells Bedug infaq codes (project 2) at the same Rp 5,000, 19,000 and 49,000, paid by QRIS through Midtrans. It is in Dahlunas's sandbox since 2026-10-26; Dahlunas's production shop opens after Midtrans approves the account. Only `direct` (and later `fdroid`) builds use it: store builds keep in-app purchase, as store rules require. A code is active on one device at a time and moves to another up to 3 times. The contract is Dahlunas's `docs/activation.md`, with the code format in `docs/code-format.md`.
 
 1. **Install ID:** on first launch, 16 random bytes in `shared_preferences`, as 32 lowercase hex characters; never a hardware or advertising ID.
-2. **Code entry:** a "Have a code?" row on the infaq page on direct builds. It posts the code, the install ID and `"move": true` to `https://dahlunas.ardeman.com/activations`, verifies the returned `DA1.` activation with Dahlunas's public key for Bedug (Ed25519, `cryptography` package or a small pure-Dart verifier), stores code and activation, and sets `adFree`. Show the moves left, and the support email on `move_limit`.
-3. **Checks:** verify the stored activation offline on every launch. About once a week while online, post with `"move": false`; on `moved`, clear the activation and `adFree` and offer to enter the code again. Network failures and `busy` keep the current state, so prayer times never depend on Dahlunas.
+2. **Code entry:** a "Have a code?" row on the infaq page on direct builds. It posts the code, the install ID and `"move": true` to `https://dahlunas.ardeman.com/activations`, verifies the returned `DA1.` activation with Dahlunas's public key for Bedug (Ed25519, `cryptography` package or a small pure-Dart verifier), stores code and activation, and sets `given`. Show the moves left, and the support email on `move_limit`.
+3. **Checks:** verify the stored activation offline on every launch. About once a week while online, post with `"move": false`; on `moved`, clear the activation and `given` and offer to enter the code again. Network failures and `busy` keep the current state, so prayer times never depend on Dahlunas.
 4. **Links:** a "Give infaq" row opening the Dahlunas shop in the browser, in place of Trakteer and Ko-fi once Dahlunas's production shop is open; until then keep the links.
 5. **Keys:** debug builds bundle the sandbox public key (key 1) `31267471750b709622d73dbf2dc88df415d67895609910fa967a0545b04f7e50` and use `https://dah-lunas-sandbox.web.app`; release builds bundle the production key, made when Dahlunas adds Bedug to production.
 6. **Privacy policy and l10n:** say that entering a code sends it and the random install ID to Dahlunas, which keeps the ID's hash to allow one device at a time; `infaqCode*` keys in every ARB file. Tests against the fixture in Dahlunas's `docs/activation.md`.
 
 **Owner setup (not code)**
 
-- Create the AdMob, Trakteer and Ko-fi accounts and put the handles in the code (`InfaqLinks` in `lib/features/infaq/infaq_provider.dart` assumes `trakteer.id/bedug` and `ko-fi.com/bedug`). Debug builds use AdMob test IDs, so coding doesn't wait on this.
+- Create the Trakteer and Ko-fi accounts and put the handles in the code (`InfaqLinks` in `lib/features/infaq/infaq_provider.dart` assumes `trakteer.id/bedug` and `ko-fi.com/bedug`).
 - Enroll in Apple's Small Business Program so the App Store takes 15% instead of 30% (Google applies 15% to the first US$1M a year automatically).
 
 ## Website

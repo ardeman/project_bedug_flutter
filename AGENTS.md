@@ -152,3 +152,5 @@ Record architectural choices here as one line each: date, decision, reason.
 - 2026-10-28: Vendor `liquid_glass_easy` 5.0.0 with local-coordinate navigation gestures and immediate pan support, so the rotated iPhone Duo rail preserves the package’s held-glass effects without jumping to Settings; see `vendor/liquid_glass_easy/README.bedug.md`.
 
 - 2026-10-31: The reader's page mode follows the Madinah mushaf's 604 page breaks from Tanzil's metadata (`pages` in `surahs.json`) but flows each page's text in the bundled font, sized to its 15 lines and shrunk to fit, with two facing pages in windows wider than tall and a leaf that folds back flat along a line following the finger, diagonal when held near a corner, its back showing the page faintly mirrored (or, on a spread, the page that lands on the right) (page changes without it under Reduce Motion), so it reads like the book without per-page fonts or images.
+
+- 2026-11-01: Bedug has no ads, for good, and earns only from the infaq, because Tanzil's Quran translations are licensed for non-commercial use and ads would make the whole app commercial; this supersedes the AdMob part of the 2026-10-19 revenue decision.

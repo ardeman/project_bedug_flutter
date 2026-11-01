@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:material_ui/material_ui.dart';
@@ -57,14 +56,9 @@ class _InfaqScreenState extends ConsumerState<InfaqScreen> {
         children: [
           Padding(
             padding: const EdgeInsets.all(AppSpacing.md),
-            child: Text(
-              channel.showsAdsOn(defaultTargetPlatform)
-                  ? l10n.infaqIntro
-                  : l10n.infaqIntroNoAds,
-              style: textTheme.bodyMedium,
-            ),
+            child: Text(l10n.infaqIntro, style: textTheme.bodyMedium),
           ),
-          if (infaq.thanked || infaq.adFree)
+          if (infaq.thanked || infaq.given)
             SettingsSection(
               children: [
                 PlatformListTile(
@@ -72,9 +66,6 @@ class _InfaqScreenState extends ConsumerState<InfaqScreen> {
                   title: Text(
                     infaq.thanked ? l10n.infaqThanks : l10n.infaqThanksSubtitle,
                   ),
-                  subtitle: channel.showsAdsOn(defaultTargetPlatform)
-                      ? Text(l10n.infaqAdsOff)
-                      : null,
                 ),
               ],
             ),

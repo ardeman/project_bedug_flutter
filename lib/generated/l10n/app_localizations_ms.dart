@@ -734,10 +734,6 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get infaqIntro =>
-      'Bedug percuma. Infak anda menyokong pembangunan Bedug dan mematikan iklan. Infak tidak disalurkan kepada badan amal atau pihak lain.';
-
-  @override
-  String get infaqIntroNoAds =>
       'Bedug percuma. Infak anda menyokong pembangunan Bedug. Infak tidak disalurkan kepada badan amal atau pihak lain.';
 
   @override
@@ -759,9 +755,6 @@ class AppLocalizationsMs extends AppLocalizations {
   @override
   String get infaqThanks =>
       'Terima kasih atas infak anda. Jazakallahu khairan!';
-
-  @override
-  String get infaqAdsOff => 'Iklan telah dimatikan pada peranti ini.';
 
   @override
   String get infaqPending => 'Menunggu pembayaran selesai…';

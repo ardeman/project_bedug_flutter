@@ -746,10 +746,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get infaqIntro =>
-      'Bedug is free. Your infaq supports Bedug\'s development and turns off the ads. It does not go to a charity or anyone else.';
-
-  @override
-  String get infaqIntroNoAds =>
       'Bedug is free. Your infaq supports Bedug\'s development. It does not go to a charity or anyone else.';
 
   @override
@@ -770,9 +766,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get infaqThanks => 'Thank you for your infaq. Jazakallahu khairan!';
-
-  @override
-  String get infaqAdsOff => 'Ads are off on this device.';
 
   @override
   String get infaqPending => 'Waiting for the payment to finish…';

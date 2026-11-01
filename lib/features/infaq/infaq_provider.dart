@@ -34,8 +34,8 @@ enum InfaqError {
 }
 
 class InfaqState {
-  /// Set by any infaq, bought or restored; hides the ads.
-  final bool adFree;
+  /// Set by any infaq, bought or restored; the app thanks the giver.
+  final bool given;
 
   /// The store's products, cheapest first; empty until [InfaqNotifier.load].
   final List<ProductDetails> products;
@@ -49,7 +49,7 @@ class InfaqState {
   final InfaqError? error;
 
   const InfaqState({
-    this.adFree = false,
+    this.given = false,
     this.products = const [],
     this.loading = false,
     this.pending = false,
@@ -58,14 +58,14 @@ class InfaqState {
   });
 
   InfaqState copyWith({
-    bool? adFree,
+    bool? given,
     List<ProductDetails>? products,
     bool? loading,
     bool? pending,
     bool? thanked,
     InfaqError? Function()? error,
   }) => InfaqState(
-    adFree: adFree ?? this.adFree,
+    given: given ?? this.given,
     products: products ?? this.products,
     loading: loading ?? this.loading,
     pending: pending ?? this.pending,
@@ -86,7 +86,8 @@ final infaqStoreProvider = Provider<InAppPurchase?>(
       : null,
 );
 
-const _adFreeKey = 'infaq_ad_free';
+// Named when an infaq turned ads off; kept so givers stay recognised.
+const _givenKey = 'infaq_ad_free';
 
 class InfaqNotifier extends Notifier<InfaqState> {
   StreamSubscription<List<PurchaseDetails>>? _purchases;
@@ -95,7 +96,7 @@ class InfaqNotifier extends Notifier<InfaqState> {
   InfaqState build() {
     ref.onDispose(() => _purchases?.cancel());
     return InfaqState(
-      adFree: ref.read(sharedPreferencesProvider).getBool(_adFreeKey) ?? false,
+      given: ref.read(sharedPreferencesProvider).getBool(_givenKey) ?? false,
     );
   }
 
@@ -183,10 +184,10 @@ class InfaqNotifier extends Notifier<InfaqState> {
         case PurchaseStatus.pending:
           state = state.copyWith(pending: true);
         case PurchaseStatus.purchased:
-          await _setAdFree();
+          await _setGiven();
           state = state.copyWith(pending: false, thanked: true);
         case PurchaseStatus.restored:
-          await _setAdFree();
+          await _setGiven();
           state = state.copyWith(pending: false);
         case PurchaseStatus.error:
           state = state.copyWith(
@@ -202,9 +203,9 @@ class InfaqNotifier extends Notifier<InfaqState> {
     }
   }
 
-  Future<void> _setAdFree() async {
-    state = state.copyWith(adFree: true);
-    await ref.read(sharedPreferencesProvider).setBool(_adFreeKey, true);
+  Future<void> _setGiven() async {
+    state = state.copyWith(given: true);
+    await ref.read(sharedPreferencesProvider).setBool(_givenKey, true);
   }
 }
 

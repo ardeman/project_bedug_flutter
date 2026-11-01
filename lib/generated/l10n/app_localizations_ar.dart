@@ -743,10 +743,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get infaqIntro =>
-      'بدوق مجاني. إنفاقك يدعم تطوير بدوق ويوقف الإعلانات، ولا يذهب إلى جمعية خيرية أو أي جهة أخرى.';
-
-  @override
-  String get infaqIntroNoAds =>
       'بدوق مجاني. إنفاقك يدعم تطوير بدوق، ولا يذهب إلى جمعية خيرية أو أي جهة أخرى.';
 
   @override
@@ -767,9 +763,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get infaqThanks => 'شكرًا على إنفاقك. جزاك الله خيرًا!';
-
-  @override
-  String get infaqAdsOff => 'الإعلانات متوقفة على هذا الجهاز.';
 
   @override
   String get infaqPending => 'بانتظار اكتمال الدفع…';
