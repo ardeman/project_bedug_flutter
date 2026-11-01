@@ -14,8 +14,8 @@
     "changelog": "Changelog"
   },
   "meta": {
-    "title": "Bedug · Prayer times, Qibla and Hijri calendar",
-    "description": "Bedug is a free prayer-times app with a live countdown, adhan reminders, a Hijri calendar and a Qibla compass. Private, offline and at home on iOS, Android, macOS, Windows and Linux."
+    "title": "Bedug · Prayer times, Quran, Qibla and Hijri calendar",
+    "description": "Bedug is a free prayer-times app with reminders, the Quran, dzikir and duas, a Hijri calendar, Ramadan countdowns, a zakat calculator and a Qibla compass. Private, offline and at home on iOS, Android, macOS, Windows and Linux."
   },
   "prayers": {
     "fajr": "Fajr",
@@ -38,13 +38,13 @@
   "hero": {
     "eyebrow": "Free · No account · Works offline",
     "title": "Every prayer, right on time.",
-    "lead": "Bedug calls you to prayer like the mosque drum it's named after. Accurate times for wherever you are, a live countdown, adhan reminders, a Hijri calendar and a Qibla compass, on your phone and your computer.",
+    "lead": "Bedug calls you to prayer like the mosque drum it's named after. Accurate times wherever you are, the Quran, dzikir and duas, a Hijri calendar, Ramadan countdowns and a Qibla compass, on your phone and your computer.",
     "cta_download": "Get Bedug",
     "cta_infaq": "Give an infaq",
     "badges": ["iPhone & iPad", "Android", "Mac", "Windows", "Linux"]
   },
   "features": {
-    "title": "Everything for the five daily prayers",
+    "title": "For your day, your week and your year",
     "lead": "Simple to use, careful with the details, and calm on the eyes.",
     "items": [
       {
@@ -54,13 +54,33 @@
       },
       {
         "icon": "bell",
-        "title": "Live countdown and adhan",
-        "body": "See how long until the next prayer at a glance, and get an adhan notification when it's time."
+        "title": "Reminders and widgets",
+        "body": "A notification for each prayer, with an early reminder and the sound you choose, from a bedug drum to a tone on your phone. Home screen widgets show the next prayer, the ayah of the day and a Ramadan countdown."
+      },
+      {
+        "icon": "book",
+        "title": "The Quran",
+        "body": "The Uthmani text with a translation, a page mode that follows the Madinah mushaf, bookmarks, a khatam planner and an ayah of the day chosen for the occasion."
+      },
+      {
+        "icon": "beads",
+        "title": "Dzikir and dua",
+        "body": "Morning and evening dzikir from the collection you follow, with a counter on each card, plus dzikir after prayer, daily duas and the Asmaul Husna."
       },
       {
         "icon": "calendar",
         "title": "Hijri calendar",
-        "body": "Today's Hijri date always in view, and a calendar to browse the Hijri months."
+        "body": "Umm al-Qura or MABIMS, adjustable by up to two days, with Islamic holidays and an optional reminder the evening before."
+      },
+      {
+        "icon": "moon",
+        "title": "Ramadan and fasting",
+        "body": "Countdowns to imsak and iftar, a sahur alarm, sunnah fasting reminders and a fasting log that keeps track of the qada you owe."
+      },
+      {
+        "icon": "coins",
+        "title": "Zakat calculator",
+        "body": "Zakat maal against the gold nisab, and zakat fitrah for your household. What you own is never stored."
       },
       {
         "icon": "compass",
@@ -85,7 +105,7 @@
       {
         "icon": "shield",
         "title": "Private and offline",
-        "body": "No account and no sign-up. Prayer times are calculated on your device, and your settings never leave it."
+        "body": "No account and no sign-up. Everything is calculated on your device, and your settings, bookmarks and fasting log never leave it."
       }
     ]
   },
@@ -119,14 +139,14 @@
   },
   "roadmap": {
     "title": "What's coming",
-    "lead": "Bedug is growing from a prayer-times app into a companion for your day, your week and your year.",
+    "lead": "What comes after the first release.",
     "items": [
-      { "phase": "Next", "title": "Prayer tracker", "body": "Mark each prayer as on time, late or missed, with streaks and a qada count." },
-      { "phase": "Next", "title": "Smarter reminders", "body": "Adhan on or off per prayer, a reminder before adhan, and a choice of adhan sound." },
-      { "phase": "Next", "title": "More times and widgets", "body": "Imsak, sunrise, dhuha and the last third of the night, plus home screen widgets." },
-      { "phase": "Later", "title": "Dzikir and dua", "body": "A tasbih counter, morning and evening dzikir, daily duas and the Asmaul Husna." },
-      { "phase": "Later", "title": "Quran", "body": "A reader with translation and bookmarks, and a khatam planner." },
-      { "phase": "Later", "title": "The Islamic year", "body": "Hijri events, a Ramadan mode with sahur and iftar countdowns, and sunnah fasting reminders." }
+      { "phase": "Next", "title": "Murattal", "body": "Listen to the Quran recited, follow along ayah by ayah, repeat a passage to memorize it, and download surahs for offline listening." },
+      { "phase": "Next", "title": "Gold price for zakat", "body": "The zakat nisab filled in from the current gold price, so you don't have to type it." },
+      { "phase": "Later", "title": "Nearby mosques", "body": "Find the mosques around you." },
+      { "phase": "Later", "title": "Backup and sync", "body": "Optional backup of your bookmarks and reading history across your devices." },
+      { "phase": "Later", "title": "More Hijri calendars", "body": "KHGT and Diyanet, next to Umm al-Qura and MABIMS." },
+      { "phase": "Later", "title": "Alerts on Windows and Linux", "body": "Prayer reminders on the desktop, as on phones and the Mac." }
     ],
     "follow": "Follow the work on <a href=\"{repo}\">GitHub</a>."
   },
@@ -147,7 +167,7 @@
     "summary": [
       "No account, no sign-up, no Bedug server.",
       "Your location is used on your device to calculate prayer times and the Qibla.",
-      "Your settings are stored only on your device.",
+      "Your settings, bookmarks, reading progress and fasting log are stored only on your device.",
       "Bedug shows no ads and has no ad or analytics SDK.",
       "This website uses no cookies and no analytics."
     ],
@@ -157,8 +177,9 @@
         "body": [
           "<strong>Location.</strong> With auto detect on, Bedug asks your device for its location to calculate prayer times and the Qibla direction. The coordinates are used on your device and are not sent to us. To show your city's name, Bedug uses your device's built-in geocoding service, which sends the coordinates to Apple (on iOS and macOS) or Google (on Android); see the <a href=\"{apple_privacy}\">Apple</a> and <a href=\"{google_privacy}\">Google</a> privacy policies. If you turn auto detect off and pick a city, Bedug doesn't use your location.",
           "<strong>Compass.</strong> The Qibla compass reads your device's heading sensor. The reading is used on your device only.",
-          "<strong>Settings.</strong> Your calculation method, city, language, theme and notification choices are stored on your device and are deleted when you uninstall the app.",
-          "<strong>Notifications.</strong> Adhan notifications are scheduled on your device. No server sends them."
+          "<strong>Settings and your worship data.</strong> Your calculation method, city, language, theme and notification choices, your Quran bookmarks, last-read position and khatam plan, and your fasting log are stored on your device and are deleted when you uninstall the app. The zakat calculator saves only the gold price and the fitrah amount you enter; what you own is never stored.",
+          "<strong>Notifications.</strong> Prayer, dzikir, fasting and Hijri event reminders are scheduled on your device. No server sends them.",
+          "<strong>Home screen widgets.</strong> The app passes the coming days' prayer times and ayahs to its widgets on your device. They stay on your device."
         ]
       },
       {

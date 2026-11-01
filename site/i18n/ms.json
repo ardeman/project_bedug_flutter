@@ -14,8 +14,8 @@
     "changelog": "Log perubahan"
   },
   "meta": {
-    "title": "Bedug · Waktu solat, kiblat dan kalendar Hijrah",
-    "description": "Bedug ialah aplikasi waktu solat percuma dengan kiraan detik, peringatan azan, kalendar Hijrah dan kompas kiblat. Peribadi, boleh luar talian dan serasi di iOS, Android, macOS, Windows dan Linux."
+    "title": "Bedug · Waktu solat, al-Quran, kiblat dan kalendar Hijrah",
+    "description": "Bedug ialah aplikasi waktu solat percuma dengan peringatan, al-Quran, zikir dan doa, kalendar Hijrah, kiraan detik Ramadan, kalkulator zakat dan kompas kiblat. Peribadi, boleh luar talian dan serasi di iOS, Android, macOS, Windows dan Linux."
   },
   "prayers": {
     "fajr": "Subuh",
@@ -38,13 +38,13 @@
   "hero": {
     "eyebrow": "Percuma · Tanpa akaun · Boleh luar talian",
     "title": "Setiap solat, tepat pada waktunya.",
-    "lead": "Bedug memanggil anda untuk solat, seperti beduk masjid yang menjadi namanya. Waktu yang tepat di mana jua anda berada, kiraan detik, peringatan azan, kalendar Hijrah dan kompas kiblat, di telefon dan komputer anda.",
+    "lead": "Bedug memanggil anda untuk solat seperti beduk masjid yang menjadi asal namanya. Waktu yang tepat di mana-mana sahaja, al-Quran, zikir dan doa, kalendar Hijrah, kiraan detik Ramadan dan kompas kiblat, di telefon dan komputer anda.",
     "cta_download": "Dapatkan Bedug",
     "cta_infaq": "Berinfak",
     "badges": ["iPhone & iPad", "Android", "Mac", "Windows", "Linux"]
   },
   "features": {
-    "title": "Semua untuk solat lima waktu",
+    "title": "Untuk hari, minggu dan tahun anda",
     "lead": "Mudah digunakan, teliti pada perincian, dan selesa di mata.",
     "items": [
       {
@@ -54,13 +54,33 @@
       },
       {
         "icon": "bell",
-        "title": "Kiraan detik dan azan",
-        "body": "Lihat sekilas berapa lama lagi ke solat seterusnya, dan terima pemberitahuan azan apabila tiba waktunya."
+        "title": "Peringatan dan widget",
+        "body": "Pemberitahuan untuk setiap waktu solat, dengan peringatan awal dan bunyi pilihan anda, daripada beduk hingga nada pada telefon anda. Widget skrin utama memaparkan solat seterusnya, ayat hari ini dan kiraan detik Ramadan."
+      },
+      {
+        "icon": "book",
+        "title": "Al-Quran",
+        "body": "Teks Uthmani dengan terjemahan, mod halaman mengikut mushaf Madinah, penanda, perancang khatam dan ayat hari ini yang dipilih mengikut peristiwa."
+      },
+      {
+        "icon": "beads",
+        "title": "Zikir dan doa",
+        "body": "Zikir pagi dan petang daripada himpunan yang anda amalkan, dengan pembilang pada setiap bacaan, serta zikir selepas solat, doa harian dan Asmaul Husna."
       },
       {
         "icon": "calendar",
         "title": "Kalendar Hijrah",
-        "body": "Tarikh Hijrah hari ini sentiasa kelihatan, dan kalendar untuk melihat bulan-bulan Hijrah."
+        "body": "Umm al-Qura atau MABIMS, boleh dilaraskan hingga dua hari, dengan hari kebesaran Islam dan peringatan pilihan pada petang sebelumnya."
+      },
+      {
+        "icon": "moon",
+        "title": "Ramadan dan puasa",
+        "body": "Kiraan detik ke imsak dan berbuka, penggera sahur, peringatan puasa sunat dan catatan puasa yang mengira puasa qada yang perlu diganti."
+      },
+      {
+        "icon": "coins",
+        "title": "Kalkulator zakat",
+        "body": "Zakat harta berdasarkan nisab emas, dan zakat fitrah untuk isi rumah anda. Harta anda tidak pernah disimpan."
       },
       {
         "icon": "compass",
@@ -85,7 +105,7 @@
       {
         "icon": "shield",
         "title": "Peribadi dan luar talian",
-        "body": "Tanpa akaun dan tanpa pendaftaran. Waktu solat dikira pada peranti anda, dan tetapan anda tidak pernah meninggalkannya."
+        "body": "Tanpa akaun dan tanpa pendaftaran. Semuanya dikira pada peranti anda, dan tetapan, penanda serta catatan puasa anda tidak pernah meninggalkannya."
       }
     ]
   },
@@ -119,14 +139,14 @@
   },
   "roadmap": {
     "title": "Akan datang",
-    "lead": "Bedug berkembang daripada aplikasi waktu solat menjadi teman ibadah harian, mingguan dan tahunan anda.",
+    "lead": "Apa yang datang selepas keluaran pertama.",
     "items": [
-      { "phase": "Seterusnya", "title": "Penjejak solat", "body": "Tandakan setiap solat sebagai tepat waktu, lewat atau tertinggal, dengan rentetan hari dan kiraan qada." },
-      { "phase": "Seterusnya", "title": "Peringatan lebih bijak", "body": "Azan dihidupkan atau dimatikan bagi setiap waktu, peringatan sebelum azan, dan pilihan bunyi azan." },
-      { "phase": "Seterusnya", "title": "Waktu tambahan dan widget", "body": "Imsak, syuruk, duha dan sepertiga malam terakhir, serta widget skrin utama." },
-      { "phase": "Kemudian", "title": "Zikir dan doa", "body": "Pembilang tasbih, zikir pagi dan petang, doa harian dan Asmaul Husna." },
-      { "phase": "Kemudian", "title": "Al-Quran", "body": "Pembaca dengan terjemahan dan penanda buku, serta perancang khatam." },
-      { "phase": "Kemudian", "title": "Tahun Hijrah", "body": "Hari kebesaran Islam, mod Ramadan dengan kiraan detik sahur dan berbuka, dan peringatan puasa sunat." }
+      { "phase": "Seterusnya", "title": "Murattal", "body": "Dengar bacaan al-Quran, ikut ayat demi ayat, ulang petikan untuk menghafal, dan muat turun surah untuk didengar luar talian." },
+      { "phase": "Seterusnya", "title": "Harga emas untuk zakat", "body": "Nisab zakat diisi daripada harga emas semasa, jadi anda tidak perlu menaipnya." },
+      { "phase": "Kemudian", "title": "Masjid berdekatan", "body": "Cari masjid di sekeliling anda." },
+      { "phase": "Kemudian", "title": "Sandaran dan penyegerakan", "body": "Sandaran pilihan untuk penanda dan sejarah bacaan anda merentas peranti." },
+      { "phase": "Kemudian", "title": "Lebih banyak kalendar Hijrah", "body": "KHGT dan Diyanet, di samping Umm al-Qura dan MABIMS." },
+      { "phase": "Kemudian", "title": "Peringatan di Windows dan Linux", "body": "Peringatan solat di desktop, seperti di telefon dan Mac." }
     ],
     "follow": "Ikuti perkembangannya di <a href=\"{repo}\">GitHub</a>."
   },
@@ -147,7 +167,7 @@
     "summary": [
       "Tanpa akaun, tanpa pendaftaran, tanpa pelayan Bedug.",
       "Lokasi anda digunakan pada peranti anda untuk mengira waktu solat dan arah kiblat.",
-      "Tetapan anda disimpan pada peranti anda sahaja.",
+      "Tetapan, penanda, kemajuan bacaan dan catatan puasa anda disimpan pada peranti anda sahaja.",
       "Bedug tidak memaparkan iklan dan tidak menggunakan SDK iklan atau analitik.",
       "Laman web ini tidak menggunakan kuki atau analitik."
     ],
@@ -157,8 +177,9 @@
         "body": [
           "<strong>Lokasi.</strong> Apabila pengesanan automatik dihidupkan, Bedug meminta lokasi daripada peranti anda untuk mengira waktu solat dan arah kiblat. Koordinat itu digunakan pada peranti anda dan tidak dihantar kepada kami. Untuk memaparkan nama bandar anda, Bedug menggunakan perkhidmatan geokod terbina dalam peranti, yang menghantar koordinat kepada Apple (di iOS dan macOS) atau Google (di Android); lihat dasar privasi <a href=\"{apple_privacy}\">Apple</a> dan <a href=\"{google_privacy}\">Google</a>. Jika anda mematikan pengesanan automatik dan memilih bandar, Bedug tidak menggunakan lokasi anda.",
           "<strong>Kompas.</strong> Kompas kiblat membaca penderia arah peranti anda. Bacaannya digunakan pada peranti anda sahaja.",
-          "<strong>Tetapan.</strong> Kaedah pengiraan, bandar, bahasa, tema dan pilihan pemberitahuan anda disimpan pada peranti anda dan dipadam apabila anda menyahpasang aplikasi.",
-          "<strong>Pemberitahuan.</strong> Pemberitahuan azan dijadualkan pada peranti anda. Tiada pelayan yang menghantarnya."
+          "<strong>Tetapan dan data ibadah anda.</strong> Kaedah pengiraan, bandar, bahasa, tema dan pilihan pemberitahuan anda, penanda al-Quran, kedudukan bacaan terakhir dan pelan khatam, serta catatan puasa anda disimpan pada peranti anda dan dipadam apabila anda menyahpasang aplikasi. Kalkulator zakat hanya menyimpan harga emas dan kadar fitrah yang anda masukkan; harta anda tidak pernah disimpan.",
+          "<strong>Pemberitahuan.</strong> Peringatan solat, zikir, puasa dan peristiwa Hijrah dijadualkan pada peranti anda. Tiada pelayan yang menghantarnya.",
+          "<strong>Widget skrin utama.</strong> Aplikasi menghantar waktu solat dan ayat untuk beberapa hari akan datang kepada widgetnya pada peranti anda. Data itu kekal pada peranti anda."
         ]
       },
       {
