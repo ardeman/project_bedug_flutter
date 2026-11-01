@@ -373,5 +373,10 @@
   "qadaTitle": "Make-up fasts",
   "qadaOwed": "{count, plural, =0{No fasts to make up} =1{1 fast to make up} other{{count} fasts to make up}}",
   "qadaLogToday": "Log a make-up fast today",
-  "qadaUndoToday": "Remove today's make-up fast"
+  "qadaUndoToday": "Remove today's make-up fast",
+  "ramadan": "Ramadan",
+  "sahurReminder": "Sahur reminder",
+  "sahurReminderSubtitle": "On each day of Ramadan, before imsak, with the imsak sound",
+  "notifSahurTitle": "Time for sahur",
+  "notifSahur": "Ramadan {day}. Imsak is at {time}."
 }

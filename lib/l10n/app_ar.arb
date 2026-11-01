@@ -372,5 +372,10 @@
   "qadaTitle": "صيام القضاء",
   "qadaOwed": "{count, plural, =0{لا صيام عليك قضاؤه} =1{يوم واحد للقضاء} =2{يومان للقضاء} few{{count} أيام للقضاء} many{{count} يومًا للقضاء} other{{count} يوم للقضاء}}",
   "qadaLogToday": "سجّل صيام قضاء اليوم",
-  "qadaUndoToday": "احذف صيام قضاء اليوم"
+  "qadaUndoToday": "احذف صيام قضاء اليوم",
+  "ramadan": "رمضان",
+  "sahurReminder": "تنبيه السحور",
+  "sahurReminderSubtitle": "كل يوم من رمضان قبل الإمساك، بصوت تنبيه الإمساك",
+  "notifSahurTitle": "حان وقت السحور",
+  "notifSahur": "{day} رمضان. الإمساك الساعة {time}."
 }

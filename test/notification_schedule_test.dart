@@ -246,6 +246,63 @@ void main() {
     );
   });
 
+  test('sahur reminders wake before imsak on each day of Ramadan', () {
+    // From 28 Sha'ban, so the six days hold two before Ramadan and four in
+    // it.
+    final start = HijriCalendar().hijriToGregorian(1448, 8, 28);
+    final from = DateTime(start.year, start.month, start.day);
+    List<PrayerNotification> sahur(NotificationPreferences preferences) =>
+        buildNotificationSchedule(
+          times,
+          preferences,
+          from,
+        ).where((alert) => alert.sahurDay != null).toList();
+    DateTime imsak(int day) => ExtraPrayerTimes(
+      PrayerTimes(
+        times.coordinates,
+        DateComponents(from.year, from.month, from.day + day),
+        times.calculationParameters,
+      ),
+    ).imsak;
+
+    final reminders = sahur(const NotificationPreferences(sahurReminder: 45));
+    final first = 6 - reminders.length;
+    expect(reminders, isNotEmpty);
+    expect(
+      [for (final r in reminders) r.sahurDay],
+      [for (var day = 1; day <= reminders.length; day++) day],
+    );
+    expect(
+      [for (final r in reminders) r.time],
+      [
+        for (var day = first; day < 6; day++)
+          imsak(day).subtract(const Duration(minutes: 45)),
+      ],
+    );
+    expect(reminders.every((r) => r.alert == PrayerAlert.imsak), isTrue);
+
+    final all = buildNotificationSchedule(
+      times,
+      const NotificationPreferences(
+        alerts: {...PrayerAlert.values},
+        reminders: {PrayerAlert.imsak: 30},
+        fastingReminders: true,
+        eventReminders: true,
+        dzikirReminders: {DzikirReminder.morning, DzikirReminder.evening},
+        sahurReminder: 60,
+      ),
+      from,
+      events: HijriEvents(const []),
+    );
+    expect(all.map((alert) => alert.id).toSet(), hasLength(all.length));
+
+    expect(sahur(const NotificationPreferences()), isEmpty);
+    expect(
+      sahur(const NotificationPreferences(enabled: false, sahurReminder: 45)),
+      isEmpty,
+    );
+  });
+
   test('dzikir reminders follow Subuh and Asar each day, only when on', () {
     final schedule = buildNotificationSchedule(
       times,

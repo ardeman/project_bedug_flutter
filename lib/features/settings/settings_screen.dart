@@ -563,6 +563,34 @@ class NotificationSettingsScreen extends ConsumerWidget {
                   ),
               ],
             ),
+          if (preferences.enabled)
+            SettingsSection(
+              title: l10n.ramadan,
+              children: [
+                _ChoiceTile<int>(
+                  key: const ValueKey('sahur-reminder'),
+                  icon: Icons.alarm_outlined,
+                  title: l10n.sahurReminder,
+                  subtitle: Text(l10n.sahurReminderSubtitle),
+                  value: preferences.sahurReminder,
+                  options: [
+                    for (final minutes in sahurReminderMinuteOptions)
+                      GlassMenuOption(
+                        value: minutes,
+                        label: minutes == 0
+                            ? l10n.reminderOff
+                            : l10n.minutesBeforePrayer(minutes),
+                      ),
+                  ],
+                  onChanged: (minutes) => notifier.setNotifications(
+                    ref
+                        .read(settingsProvider)
+                        .notifications
+                        .copyWith(sahurReminder: minutes),
+                  ),
+                ),
+              ],
+            ),
           if (NotificationService.supportsScheduling)
             SettingsSection(
               title: l10n.notificationSystemSection,

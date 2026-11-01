@@ -154,6 +154,11 @@ class SettingsNotifier extends Notifier<AppSettings> {
         fastingReminders: p.getBool('notification_fasting') ?? false,
         weeklyFastingReminders:
             p.getBool('notification_fasting_weekly') ?? true,
+        sahurReminder: switch (p.getInt('notification_sahur')) {
+          final minutes? when sahurReminderMinuteOptions.contains(minutes) =>
+            minutes,
+          _ => 0,
+        },
       ),
     );
   }
@@ -244,6 +249,7 @@ class SettingsNotifier extends Notifier<AppSettings> {
       'notification_fasting_weekly',
       value.weeklyFastingReminders,
     );
+    await _prefs.setInt('notification_sahur', value.sahurReminder);
     for (final alert in PrayerAlert.values) {
       await _prefs.setInt(
         'notification_reminder_${alert.name}',

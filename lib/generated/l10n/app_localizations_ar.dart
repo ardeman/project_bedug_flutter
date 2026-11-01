@@ -1202,4 +1202,19 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get qadaUndoToday => 'احذف صيام قضاء اليوم';
+
+  @override
+  String get sahurReminder => 'تنبيه السحور';
+
+  @override
+  String get sahurReminderSubtitle =>
+      'كل يوم من رمضان قبل الإمساك، بصوت تنبيه الإمساك';
+
+  @override
+  String get notifSahurTitle => 'حان وقت السحور';
+
+  @override
+  String notifSahur(Object day, Object time) {
+    return '$day رمضان. الإمساك الساعة $time.';
+  }
 }

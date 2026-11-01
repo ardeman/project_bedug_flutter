@@ -2171,6 +2171,30 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Hapus puasa kada hari ini'**
   String get qadaUndoToday;
+
+  /// No description provided for @sahurReminder.
+  ///
+  /// In id, this message translates to:
+  /// **'Pengingat sahur'**
+  String get sahurReminder;
+
+  /// No description provided for @sahurReminderSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Setiap hari Ramadan, sebelum imsak, dengan suara imsak'**
+  String get sahurReminderSubtitle;
+
+  /// No description provided for @notifSahurTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Waktunya sahur'**
+  String get notifSahurTitle;
+
+  /// No description provided for @notifSahur.
+  ///
+  /// In id, this message translates to:
+  /// **'{day} Ramadan. Imsak pukul {time}.'**
+  String notifSahur(Object day, Object time);
 }
 
 class _AppLocalizationsDelegate

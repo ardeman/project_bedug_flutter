@@ -174,6 +174,7 @@ void main() {
         },
         fastingReminders: true,
         weeklyFastingReminders: false,
+        sahurReminder: 45,
       ),
     );
     container.invalidate(settingsProvider);
@@ -181,6 +182,7 @@ void main() {
     expect(preferences.enabled, isFalse);
     expect(preferences.fastingReminders, isTrue);
     expect(preferences.weeklyFastingReminders, isFalse);
+    expect(preferences.sahurReminder, 45);
     expect(preferences.alerts, {PrayerAlert.imsak, PrayerAlert.dhuhr});
     expect(preferences.reminderOf(PrayerAlert.imsak), 5);
     expect(preferences.reminderOf(PrayerAlert.dhuhr), 15);

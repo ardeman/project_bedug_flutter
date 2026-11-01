@@ -1190,4 +1190,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get qadaUndoToday => 'Remove today\'s make-up fast';
+
+  @override
+  String get sahurReminder => 'Sahur reminder';
+
+  @override
+  String get sahurReminderSubtitle =>
+      'On each day of Ramadan, before imsak, with the imsak sound';
+
+  @override
+  String get notifSahurTitle => 'Time for sahur';
+
+  @override
+  String notifSahur(Object day, Object time) {
+    return 'Ramadan $day. Imsak is at $time.';
+  }
 }

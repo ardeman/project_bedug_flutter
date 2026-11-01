@@ -1178,4 +1178,19 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get qadaUndoToday => 'Hapus puasa kada hari ini';
+
+  @override
+  String get sahurReminder => 'Pengingat sahur';
+
+  @override
+  String get sahurReminderSubtitle =>
+      'Setiap hari Ramadan, sebelum imsak, dengan suara imsak';
+
+  @override
+  String get notifSahurTitle => 'Waktunya sahur';
+
+  @override
+  String notifSahur(Object day, Object time) {
+    return '$day Ramadan. Imsak pukul $time.';
+  }
 }

@@ -34,6 +34,9 @@ const defaultPrayerAlerts = {
 
 const reminderMinuteOptions = [0, 5, 10, 15, 30];
 
+/// How long before imsak the sahur reminder wakes the user; 0 is off.
+const sahurReminderMinuteOptions = [0, 30, 45, 60, 90];
+
 /// Reminders to read the morning dzikir after Subuh and the evening dzikir
 /// after Asar; names are stable storage keys.
 enum DzikirReminder { morning, evening }
@@ -101,6 +104,10 @@ class NotificationPreferences {
   /// every week.
   final bool weeklyFastingReminders;
 
+  /// Minutes before imsak to wake for sahur on each day of Ramadan, one of
+  /// [sahurReminderMinuteOptions]; 0, the default, is off.
+  final int sahurReminder;
+
   const NotificationPreferences({
     this.enabled = true,
     this.alerts = defaultPrayerAlerts,
@@ -111,6 +118,7 @@ class NotificationPreferences {
     this.eventReminders = false,
     this.fastingReminders = false,
     this.weeklyFastingReminders = true,
+    this.sahurReminder = 0,
   });
 
   bool includes(PrayerAlert alert) => enabled && alerts.contains(alert);
@@ -121,6 +129,8 @@ class NotificationPreferences {
   bool get includesEvents => enabled && eventReminders;
 
   bool get includesFasting => enabled && fastingReminders;
+
+  bool get includesSahur => enabled && sahurReminder > 0;
 
   int reminderOf(PrayerAlert alert) => reminders[alert] ?? 0;
 
@@ -142,6 +152,7 @@ class NotificationPreferences {
     bool? eventReminders,
     bool? fastingReminders,
     bool? weeklyFastingReminders,
+    int? sahurReminder,
   }) => NotificationPreferences(
     enabled: enabled ?? this.enabled,
     alerts: Set.unmodifiable(alerts ?? this.alerts),
@@ -153,5 +164,6 @@ class NotificationPreferences {
     fastingReminders: fastingReminders ?? this.fastingReminders,
     weeklyFastingReminders:
         weeklyFastingReminders ?? this.weeklyFastingReminders,
+    sahurReminder: sahurReminder ?? this.sahurReminder,
   );
 }

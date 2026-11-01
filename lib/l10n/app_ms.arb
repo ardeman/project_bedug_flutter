@@ -372,5 +372,10 @@
   "qadaTitle": "Puasa ganti",
   "qadaOwed": "{count, plural, =0{Tiada puasa untuk diganti} other{{count} hari puasa untuk diganti}}",
   "qadaLogToday": "Catat puasa ganti hari ini",
-  "qadaUndoToday": "Padam puasa ganti hari ini"
+  "qadaUndoToday": "Padam puasa ganti hari ini",
+  "ramadan": "Ramadan",
+  "sahurReminder": "Peringatan sahur",
+  "sahurReminderSubtitle": "Setiap hari Ramadan, sebelum imsak, dengan bunyi imsak",
+  "notifSahurTitle": "Masa untuk bersahur",
+  "notifSahur": "{day} Ramadan. Imsak pada pukul {time}."
 }

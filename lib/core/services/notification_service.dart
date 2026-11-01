@@ -1,4 +1,5 @@
 import '../utils/hijri_utils.dart';
+import '../utils/time_format.dart';
 
 import 'dart:ui';
 
@@ -132,7 +133,10 @@ class NotificationService {
       final dzikir = alert.dzikir;
       final events = alert.events;
       final fasts = alert.fasts;
-      final title = fasts != null
+      final sahurDay = alert.sahurDay;
+      final title = sahurDay != null
+          ? l10n.notifSahurTitle
+          : fasts != null
           ? l10n.sunnahFastTomorrow
           : events != null
           ? events
@@ -143,7 +147,14 @@ class NotificationService {
               DzikirReminder.evening => l10n.dzikirEveningReminder,
               null => name,
             };
-      final body = fasts != null
+      final body = sahurDay != null
+          ? l10n.notifSahur(
+              sahurDay,
+              formatClock(
+                alert.time.add(Duration(minutes: preferences.sahurReminder)),
+              ),
+            )
+          : fasts != null
           ? l10n.notifSunnahFast(
               fasts.map((fast) => sunnahFastName(l10n, fast)).join(', '),
             )
@@ -173,7 +184,7 @@ class NotificationService {
               PrayerAlert.isha => l10n.notifIsya,
             };
       // Dzikir, event and fasting reminders play the system sound, not
-      // their prayer's.
+      // their prayer's; the sahur reminder plays imsak's, its [alert].
       final sound = dzikir != null || events != null || fasts != null
           ? PrayerNotificationSound.system
           : preferences.soundOf(alert.alert);

@@ -2,6 +2,7 @@ import '../utils/hijri_utils.dart';
 
 import 'package:adhan/adhan.dart';
 
+import '../../features/fasting/ramadan.dart';
 import '../../features/fasting/sunnah_fasting.dart';
 import '../../features/hijri_events/hijri_events.dart';
 import 'extra_prayer_times.dart';
@@ -24,6 +25,10 @@ class PrayerNotification {
   /// at Maghrib ([alert]) the evening before.
   final List<SunnahFast>? fasts;
 
+  /// Set on a sahur reminder, whose [alert] is imsak: the day of Ramadan
+  /// whose fast it wakes the user for.
+  final int? sahurDay;
+
   const PrayerNotification(
     this.id,
     this.alert,
@@ -32,6 +37,7 @@ class PrayerNotification {
     this.dzikir,
     this.events,
     this.fasts,
+    this.sahurDay,
   });
 }
 
@@ -40,8 +46,8 @@ const maxScheduledNotifications = 64;
 
 /// Up to six days of alerts, the soonest first, capped at Apple's limit.
 /// Each date is calculated separately; prayer times must not repeat daily.
-/// Event reminders need [events]; they and fasting reminders are dated
-/// with [hijriReckoning].
+/// Event reminders need [events]; they, fasting and sahur reminders are
+/// dated with [hijriReckoning].
 List<PrayerNotification> buildNotificationSchedule(
   PrayerTimes times,
   NotificationPreferences preferences,
@@ -158,6 +164,25 @@ List<PrayerNotification> buildNotificationSchedule(
             daily.maghrib,
             fasts: fasts,
           ),
+        );
+      }
+    }
+    final ramadanDay = preferences.includesSahur
+        ? ramadanDayOf(date, hijriReckoning)
+        : null;
+    if (ramadanDay != null) {
+      final time = extra.imsak.subtract(
+        Duration(minutes: preferences.sahurReminder),
+      );
+      if (time.isAfter(now)) {
+        // Sahur IDs follow every day's fasting reminders.
+        final id =
+            days * alerts.length * 2 +
+            days * DzikirReminder.values.length +
+            days * 2 +
+            day;
+        result.add(
+          PrayerNotification(id, PrayerAlert.imsak, time, sahurDay: ramadanDay),
         );
       }
     }

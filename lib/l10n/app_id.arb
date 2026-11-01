@@ -562,5 +562,10 @@
   "qadaTitle": "Puasa kada",
   "qadaOwed": "{count, plural, =0{Tidak ada utang puasa} other{Utang puasa {count} hari}}",
   "qadaLogToday": "Catat puasa kada hari ini",
-  "qadaUndoToday": "Hapus puasa kada hari ini"
+  "qadaUndoToday": "Hapus puasa kada hari ini",
+  "ramadan": "Ramadan",
+  "sahurReminder": "Pengingat sahur",
+  "sahurReminderSubtitle": "Setiap hari Ramadan, sebelum imsak, dengan suara imsak",
+  "notifSahurTitle": "Waktunya sahur",
+  "notifSahur": "{day} Ramadan. Imsak pukul {time}."
 }

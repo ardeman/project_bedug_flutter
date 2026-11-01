@@ -7,6 +7,15 @@
         {
           "type": "new",
           "text": {
+            "en": "Sahur reminder: choose in Settings how long before imsak to be woken on each day of Ramadan, with the sound you picked for imsak.",
+            "id": "Pengingat sahur: pilih di Pengaturan berapa lama sebelum imsak Anda ingin dibangunkan setiap hari Ramadan, dengan suara yang Anda pilih untuk imsak.",
+            "ms": "Peringatan sahur: pilih dalam Tetapan berapa lama sebelum imsak anda mahu dikejutkan setiap hari Ramadan, dengan bunyi yang anda pilih untuk imsak.",
+            "ar": "تنبيه السحور: اختر في الإعدادات كم قبل الإمساك تريد أن نوقظك في كل يوم من رمضان، بالصوت الذي اخترته للإمساك."
+          }
+        },
+        {
+          "type": "new",
+          "text": {
             "en": "Ramadan mode: in Ramadan, a card above the prayer times counts down to imsak while you eat sahur and to iftar while you fast, and the new fasting log in the Worship tab keeps each day as fasted, missed or excused and counts the fasts you still have to make up.",
             "id": "Mode Ramadan: selama Ramadan, kartu di atas jadwal salat menghitung mundur ke imsak saat sahur dan ke waktu berbuka saat berpuasa, dan catatan puasa baru di tab Ibadah menyimpan setiap hari sebagai berpuasa, tidak berpuasa, atau berhalangan serta menghitung utang puasa yang masih harus dikada.",
             "ms": "Mod Ramadan: dalam bulan Ramadan, kad di atas waktu solat mengira detik ke imsak semasa bersahur dan ke waktu berbuka semasa berpuasa, dan catatan puasa baharu dalam tab Ibadah menyimpan setiap hari sebagai berpuasa, tidak berpuasa atau uzur serta mengira puasa yang masih perlu diganti.",
