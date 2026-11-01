@@ -12,6 +12,7 @@ import 'package:bedug/generated/l10n/app_localizations.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hijri/hijri_calendar.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -245,6 +246,39 @@ void main() {
     },
   );
 
+  test('the Ramadan block lists the week\'s fasts or the next Ramadan', () {
+    // Two days before 1 Ramadan 1448, so the week holds five fasts.
+    final start = HijriCalendar().hijriToGregorian(1448, 9, 1);
+    final first = DateTime(start.year, start.month, start.day);
+    final now = DateTime(first.year, first.month, first.day - 2, 12);
+    final ramadan = build(schedule: times, now: now)['ramadan']! as Map;
+    final fasts = (ramadan['fasts'] as List).cast<Map>();
+    expect(fasts, hasLength(5));
+    expect(fasts.first['title'], 'Ramadan 1');
+    final day = prayerTimesOn(times, first);
+    final eve = prayerTimesOn(
+      times,
+      DateTime(first.year, first.month, first.day - 1),
+    );
+    expect(fasts.first['since'], eve.maghrib.millisecondsSinceEpoch);
+    expect(fasts.first['fajr'], day.fajr.millisecondsSinceEpoch);
+    expect(fasts.first['iftar'], day.maghrib.millisecondsSinceEpoch);
+    expect(
+      fasts.first['imsak'],
+      day.fajr.subtract(const Duration(minutes: 10)).millisecondsSinceEpoch,
+    );
+    expect(ramadan['next'], 'Ramadan 1448 AH begins on {date}.');
+    expect(ramadan['nextStart'], first.millisecondsSinceEpoch);
+
+    // In Ramadan, `next` already names the following year's.
+    final inside = build(schedule: times, now: first)['ramadan']! as Map;
+    expect(inside['next'], startsWith('Ramadan 1449 AH'));
+
+    // Without times there are no fasts to count down to.
+    final empty = build(now: now)['ramadan']! as Map;
+    expect(empty['fasts'], isEmpty);
+  });
+
   test(
     'native writes are serialized and recover after a plugin failure',
     () async {
@@ -278,11 +312,14 @@ void main() {
         'saveWidgetData',
         'updateWidget',
         'updateWidget',
+        'updateWidget',
       ]);
       expect(calls[3].arguments['data'], jsonEncode({'location': 'new'}));
-      // Home screen and lock screen schedule widgets are separate kinds.
+      // Home screen, lock screen schedule and Ramadan widgets are separate
+      // kinds.
       expect(calls[4].arguments['ios'], 'BedugPrayerWidget');
-      expect(calls.last.arguments['ios'], 'BedugScheduleWidget');
+      expect(calls[5].arguments['ios'], 'BedugScheduleWidget');
+      expect(calls.last.arguments['ios'], 'BedugRamadanWidget');
     },
   );
 }

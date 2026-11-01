@@ -11,4 +11,7 @@
     <!-- Keep in sync with dailyAyah in lib/l10n/. -->
     <string name="ayah_widget_title">Ayat hari ini</string>
     <string name="ayah_widget_description">Satu ayat al-Quran setiap hari, berserta sebab ayat itu dipilih</string>
+    <!-- Keep in sync with ramadan in lib/l10n/. -->
+    <string name="ramadan_widget_title">Ramadan</string>
+    <string name="ramadan_widget_description">Kiraan detik ke imsak semasa bersahur dan ke waktu berbuka semasa berpuasa</string>
 </resources>

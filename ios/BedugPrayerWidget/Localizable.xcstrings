@@ -319,6 +319,64 @@
         }
       },
       "extractionState": "manual"
+    },
+    "Ramadan": {
+      "localizations": {
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ramadan"
+          }
+        },
+        "ms": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ramadan"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "رمضان"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ramadan"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "Counts down to imsak while you eat sahur and to iftar while you fast.": {
+      "localizations": {
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hitung mundur ke imsak saat sahur dan ke waktu berbuka saat berpuasa."
+          }
+        },
+        "ms": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kiraan detik ke imsak semasa bersahur dan ke waktu berbuka semasa berpuasa."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عدّ تنازلي إلى الإمساك وقت السحور وإلى الإفطار وقت الصيام."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Counts down to imsak while you eat sahur and to iftar while you fast."
+          }
+        }
+      },
+      "extractionState": "manual"
     }
   },
   "version": "1.0"

@@ -11,4 +11,7 @@
     <!-- Keep in sync with dailyAyah in lib/l10n/. -->
     <string name="ayah_widget_title">Verse of the day</string>
     <string name="ayah_widget_description">A verse from the Quran each day, with why it was picked</string>
+    <!-- Keep in sync with ramadan in lib/l10n/. -->
+    <string name="ramadan_widget_title">Ramadan</string>
+    <string name="ramadan_widget_description">Counts down to imsak while you eat sahur and to iftar while you fast</string>
 </resources>

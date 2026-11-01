@@ -7,6 +7,15 @@
         {
           "type": "new",
           "text": {
+            "en": "Ramadan widget: the countdown to imsak and to iftar on your home screen, and on iPhone on the lock screen too, with the day of Ramadan and the times.",
+            "id": "Widget Ramadan: hitung mundur ke imsak dan ke waktu berbuka di layar utama, dan di iPhone juga di layar kunci, lengkap dengan hari Ramadan dan waktunya.",
+            "ms": "Widget Ramadan: kiraan detik ke imsak dan ke waktu berbuka pada skrin utama, dan pada iPhone juga pada skrin kunci, lengkap dengan hari Ramadan dan waktunya.",
+            "ar": "أداة رمضان: العدّ التنازلي إلى الإمساك وإلى الإفطار على الشاشة الرئيسية، وعلى iPhone على شاشة القفل أيضًا، مع يوم رمضان والمواقيت."
+          }
+        },
+        {
+          "type": "new",
+          "text": {
             "en": "Sahur reminder: choose in Settings how long before imsak to be woken on each day of Ramadan, with the sound you picked for imsak.",
             "id": "Pengingat sahur: pilih di Pengaturan berapa lama sebelum imsak Anda ingin dibangunkan setiap hari Ramadan, dengan suara yang Anda pilih untuk imsak.",
             "ms": "Peringatan sahur: pilih dalam Tetapan berapa lama sebelum imsak anda mahu dikejutkan setiap hari Ramadan, dengan bunyi yang anda pilih untuk imsak.",

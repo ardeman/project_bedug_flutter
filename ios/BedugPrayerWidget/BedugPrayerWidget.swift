@@ -137,6 +137,8 @@ struct PrayerWidgetData: Decodable {
     let showAnalog: Bool?
     let showSchedule: Bool?
     let showCurrent: Bool?
+    /// Missing in data written before Ramadan mode.
+    let ramadan: RamadanWidgetData?
     let location: String
     let locale: String
     let title: String
@@ -789,6 +791,7 @@ struct BedugWidgets: WidgetBundle {
         BedugPrayerWidget()
         BedugScheduleWidget()
         BedugSkyStripWidget()
+        BedugRamadanWidget()
         BedugAyahWidget()
     }
 }

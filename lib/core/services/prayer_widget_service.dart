@@ -7,9 +7,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:home_widget/home_widget.dart';
 
+import '../../features/fasting/ramadan.dart';
 import '../../generated/l10n/app_localizations.dart';
 import '../constants/app_colors.dart';
 import '../providers/locale_provider.dart';
+import '../utils/hijri_utils.dart';
+import 'extra_prayer_times.dart';
 import 'notification_preferences.dart';
 import 'prayer_service.dart';
 import 'widget_appearance.dart';
@@ -23,6 +26,7 @@ Map<String, Object> buildPrayerWidgetData({
   required DateTime now,
   required int themeMode,
   WidgetAppearance appearance = const WidgetAppearance(),
+  HijriReckoning hijriReckoning = const HijriReckoning(),
 }) {
   final prayers = <Map<String, Object>>[];
   // Today's passed prayers let the lock screen schedule show the whole day,
@@ -88,7 +92,75 @@ Map<String, Object> buildPrayerWidgetData({
     'showAnalog': appearance.showAnalog,
     'showSchedule': appearance.showSchedule,
     'showCurrent': appearance.showCurrent,
+    'ramadan': buildRamadanWidgetData(
+      times: times,
+      l10n: l10n,
+      now: now,
+      reckoning: hijriReckoning,
+    ),
     ...widgetPalette(),
+  };
+}
+
+/// Stands in for the next Ramadan's first day in `next`.
+const nextDateToken = '{date}';
+
+/// The Ramadan countdown's week: each fast in the seven days from [now],
+/// with when its sahur begins (Maghrib the evening before), imsak, Fajr and
+/// iftar, so the widgets switch between counting to imsak and to iftar on
+/// their own. Outside Ramadan, `next` says when the next one begins, at
+/// `nextStart`.
+Map<String, Object> buildRamadanWidgetData({
+  required PrayerTimes? times,
+  required AppLocalizations l10n,
+  required DateTime now,
+  HijriReckoning reckoning = const HijriReckoning(),
+}) {
+  final today = DateTime(now.year, now.month, now.day);
+  final fasts = <Map<String, Object>>[];
+  if (times != null) {
+    for (var offset = 0; offset < 7; offset++) {
+      final day = DateTime(today.year, today.month, today.day + offset);
+      final ramadanDay = ramadanDayOf(day, reckoning);
+      if (ramadanDay == null) continue;
+      final daily = prayerTimesOn(times, day);
+      final eve = prayerTimesOn(
+        times,
+        DateTime(day.year, day.month, day.day - 1),
+      );
+      fasts.add({
+        'title': l10n.ramadanTitle(ramadanDay),
+        'since': eve.maghrib.millisecondsSinceEpoch,
+        'imsak': ExtraPrayerTimes(daily).imsak.millisecondsSinceEpoch,
+        'fajr': daily.fajr.millisecondsSinceEpoch,
+        'iftar': daily.maghrib.millisecondsSinceEpoch,
+      });
+    }
+  }
+  var upcoming = currentOrNextRamadan(today, reckoning);
+  if (upcoming != null && upcoming.contains(today)) {
+    upcoming = ramadanOf(upcoming.hijriYear + 1, reckoning);
+  }
+  return {
+    'fasts': fasts,
+    // Past the week, the fasts are unknown until the app runs again.
+    'until': DateTime(
+      today.year,
+      today.month,
+      today.day + 7,
+    ).millisecondsSinceEpoch,
+    'title': l10n.ramadan,
+    'untilImsak': l10n.ramadanUntilImsak,
+    'untilIftar': l10n.ramadanUntilIftar,
+    'imsak': l10n.imsak,
+    'fajr': l10n.fajr,
+    'maghrib': l10n.maghrib,
+    if (upcoming != null) ...{
+      // Native widgets format the date in place of the token, so Flutter
+      // needs no date symbols here.
+      'next': l10n.fastingLogBegins(nextDateToken, upcoming.hijriYear),
+      'nextStart': upcoming.start.millisecondsSinceEpoch,
+    },
   };
 }
 
@@ -121,9 +193,14 @@ class PrayerWidgetService {
           androidName: 'PrayerWidgetProvider',
           iOSName: 'BedugPrayerWidget',
         );
+        if (defaultTargetPlatform == TargetPlatform.android) {
+          await HomeWidget.updateWidget(androidName: 'RamadanWidgetProvider');
+        }
         if (defaultTargetPlatform == TargetPlatform.iOS) {
-          // The lock screen schedule is a separate WidgetKit kind.
+          // The lock screen schedule and the Ramadan countdown are separate
+          // WidgetKit kinds.
           await HomeWidget.updateWidget(iOSName: 'BedugScheduleWidget');
+          await HomeWidget.updateWidget(iOSName: 'BedugRamadanWidget');
         }
       } catch (error) {
         // A widget failure must not prevent prayer times from loading.
@@ -156,6 +233,7 @@ final prayerWidgetSyncProvider = Provider<void>((ref) {
               now: clock.now(),
               themeMode: ref.read(settingsProvider).themeMode,
               appearance: ref.read(widgetAppearanceProvider),
+              hijriReckoning: ref.read(settingsProvider).hijriReckoning,
             ),
           ),
     );
@@ -172,5 +250,9 @@ final prayerWidgetSyncProvider = Provider<void>((ref) {
   ref.listen(localeProvider, (_, _) => sync());
   ref.listen(widgetAppearanceProvider, (_, _) => sync());
   ref.listen(settingsProvider.select((s) => s.themeMode), (_, _) => sync());
+  ref.listen(
+    settingsProvider.select((s) => s.hijriReckoning),
+    (_, _) => sync(),
+  );
   sync();
 });

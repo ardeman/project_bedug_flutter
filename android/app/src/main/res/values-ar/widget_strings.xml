@@ -11,4 +11,7 @@
     <!-- Keep in sync with dailyAyah in lib/l10n/. -->
     <string name="ayah_widget_title">آية اليوم</string>
     <string name="ayah_widget_description">آية من القرآن كل يوم، مع سبب اختيارها</string>
+    <!-- Keep in sync with ramadan in lib/l10n/. -->
+    <string name="ramadan_widget_title">رمضان</string>
+    <string name="ramadan_widget_description">عدّ تنازلي إلى الإمساك وقت السحور وإلى الإفطار وقت الصيام</string>
 </resources>
