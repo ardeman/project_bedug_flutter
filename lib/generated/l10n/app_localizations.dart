@@ -936,6 +936,18 @@ abstract class AppLocalizations {
   /// **'Perubahan di setiap versi'**
   String get whatsNewSubtitle;
 
+  /// No description provided for @privacyPolicy.
+  ///
+  /// In id, this message translates to:
+  /// **'Kebijakan privasi'**
+  String get privacyPolicy;
+
+  /// No description provided for @privacyPolicySubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Cara Bedug menangani datamu'**
+  String get privacyPolicySubtitle;
+
   /// No description provided for @changelogUnreleased.
   ///
   /// In id, this message translates to:

@@ -479,6 +479,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get whatsNewSubtitle => 'Changes in each version';
 
   @override
+  String get privacyPolicy => 'Privacy policy';
+
+  @override
+  String get privacyPolicySubtitle => 'How Bedug handles your data';
+
+  @override
   String get changelogUnreleased => 'Not released yet';
 
   @override

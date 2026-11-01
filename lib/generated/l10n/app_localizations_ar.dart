@@ -476,6 +476,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get whatsNewSubtitle => 'التغييرات في كل إصدار';
 
   @override
+  String get privacyPolicy => 'سياسة الخصوصية';
+
+  @override
+  String get privacyPolicySubtitle => 'كيف يتعامل بدوق مع بياناتك';
+
+  @override
   String get changelogUnreleased => 'لم يصدر بعد';
 
   @override

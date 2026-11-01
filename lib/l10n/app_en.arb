@@ -138,6 +138,8 @@
   "qiblaNoLocation": "Location isn't available yet. Set it in Settings.",
   "whatsNew": "What's New",
   "whatsNewSubtitle": "Changes in each version",
+  "privacyPolicy": "Privacy policy",
+  "privacyPolicySubtitle": "How Bedug handles your data",
   "changelogUnreleased": "Not released yet",
   "changelogNew": "New",
   "changelogImproved": "Improved",

@@ -74,6 +74,19 @@ Future<ProviderContainer> _pumpSettings(
 }
 
 void main() {
+  test('privacy policy links to the page in the app language', () {
+    expect(
+      privacyPolicyUrl(const Locale('id')).toString(),
+      'https://bedug.ardeman.com/privacy/',
+    );
+    for (final code in ['en', 'ar', 'ms']) {
+      expect(
+        privacyPolicyUrl(Locale(code)).toString(),
+        'https://bedug.ardeman.com/$code/privacy/',
+      );
+    }
+  });
+
   for (final platform in [
     TargetPlatform.iOS,
     TargetPlatform.macOS,

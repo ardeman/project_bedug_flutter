@@ -467,6 +467,12 @@ class AppLocalizationsId extends AppLocalizations {
   String get whatsNewSubtitle => 'Perubahan di setiap versi';
 
   @override
+  String get privacyPolicy => 'Kebijakan privasi';
+
+  @override
+  String get privacyPolicySubtitle => 'Cara Bedug menangani datamu';
+
+  @override
   String get changelogUnreleased => 'Belum dirilis';
 
   @override

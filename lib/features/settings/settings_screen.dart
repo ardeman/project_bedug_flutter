@@ -10,6 +10,7 @@ import '../../core/design/platform_design.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:liquid_glass_easy/liquid_glass_easy.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/constants/app_colors.dart';
 import '../../core/design/liquid_glass.dart';
@@ -301,6 +302,19 @@ class SettingsScreen extends ConsumerWidget {
             ),
           ),
           PlatformListTile(
+            leading: Icon(
+              Icons.privacy_tip_outlined,
+              color: AppColors.accentOf(ctx),
+            ),
+            title: Text(l10n.privacyPolicy),
+            subtitle: Text(l10n.privacyPolicySubtitle),
+            trailing: const Icon(Icons.open_in_new),
+            onTap: () => launchUrl(
+              privacyPolicyUrl(locale),
+              mode: LaunchMode.externalApplication,
+            ),
+          ),
+          PlatformListTile(
             leading: Icon(Icons.info_outline, color: AppColors.accentOf(ctx)),
             title: Text(l10n.about),
             subtitle: Text(l10n.version('1.0.0')),
@@ -326,6 +340,14 @@ class SettingsScreen extends ConsumerWidget {
       ),
     );
   }
+}
+
+/// The website's privacy policy in [locale]'s language: Indonesian at the
+/// root, the other languages under their code (see `site/config.json`).
+Uri privacyPolicyUrl(Locale locale) {
+  final code = locale.languageCode;
+  final prefix = const {'en', 'ar', 'ms'}.contains(code) ? '$code/' : '';
+  return Uri.parse('https://bedug.ardeman.com/${prefix}privacy/');
 }
 
 String _alertName(AppLocalizations l10n, PrayerAlert alert) => switch (alert) {

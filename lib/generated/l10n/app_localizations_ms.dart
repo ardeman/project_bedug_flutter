@@ -466,6 +466,12 @@ class AppLocalizationsMs extends AppLocalizations {
   String get whatsNewSubtitle => 'Perubahan dalam setiap versi';
 
   @override
+  String get privacyPolicy => 'Dasar privasi';
+
+  @override
+  String get privacyPolicySubtitle => 'Cara Bedug mengendalikan data anda';
+
+  @override
   String get changelogUnreleased => 'Belum dikeluarkan';
 
   @override

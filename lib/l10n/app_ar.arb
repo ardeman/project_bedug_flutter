@@ -138,6 +138,8 @@
   "qiblaNoLocation": "الموقع غير متاح بعد. حدّده في الإعدادات.",
   "whatsNew": "ما الجديد",
   "whatsNewSubtitle": "التغييرات في كل إصدار",
+  "privacyPolicy": "سياسة الخصوصية",
+  "privacyPolicySubtitle": "كيف يتعامل بدوق مع بياناتك",
   "changelogUnreleased": "لم يصدر بعد",
   "changelogNew": "جديد",
   "changelogImproved": "تحسين",
