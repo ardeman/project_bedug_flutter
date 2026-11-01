@@ -1,8 +1,8 @@
 # Runs the Checks from README.md (plus the format check from AGENTS.md) on
-# every push to master and every pull request, and builds the landing page
-# so a broken site/ shows before Cloudflare deploys it. The vendored
-# liquid_glass_easy keeps its upstream formatting, so only our own folders
-# are format-checked.
+# every push to master and every pull request. The landing page isn't built
+# here: Cloudflare's own build runs site/build.py and never deploys a failed
+# one. The vendored liquid_glass_easy keeps its upstream formatting, so only
+# our own folders are format-checked.
 name: Checks
 
 on:
@@ -40,11 +40,3 @@ jobs:
           dart format --output=none --set-exit-if-changed lib test tool
           flutter analyze
           flutter test
-
-  site:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-
-      - name: Build the landing page
-        run: python3 site/build.py

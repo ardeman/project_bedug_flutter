@@ -106,7 +106,7 @@ Validation of the original layouts on 2026-10-21: on the connected iPhone 17 (iO
 flutter analyze && flutter test
 ```
 
-GitHub Actions runs them, with the format check, on every push to `master` and every pull request (`.github/workflows/checks.yml`), and builds the landing page. `desktop.yml` builds the Linux and Windows apps when their runners, `pubspec.lock` or `vendor/` change.
+GitHub Actions runs them, with the format check, on every push to `master` and every pull request (`.github/workflows/checks.yml`); the landing page is built by Cloudflare (see "Website"). `desktop.yml` builds the Linux and Windows apps when their runners, `pubspec.lock` or `vendor/` change.
 
 ### Commit messages
 
