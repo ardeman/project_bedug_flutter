@@ -24,112 +24,137 @@
     "maghrib": "Maghrib",
     "isha": "Isyak"
   },
-  "next_prayer": "Solat seterusnya",
+  "next_prayer": "Solat Seterusnya",
   "mock": {
     "label": "Bedug memaparkan waktu solat hari ini di {place}, dengan {next} sebagai solat seterusnya",
     "place": "Jakarta",
-    "hijri": "9 Jamadil Awal 1448",
-    "times": ["04:38", "11:52", "15:13", "17:52", "19:03"]
+    "times": ["04:05", "11:36", "14:54", "17:47", "18:59"],
+    "up_next": "Seterusnya",
+    "obligatory": "Solat wajib",
+    "tabs": ["Waktu Solat", "Ibadah", "Al-Quran", "Tetapan"],
+    "weekdays_short": ["Ahd", "Isn", "Sel", "Rab", "Kha", "Jum", "Sab"],
+    "weekdays": ["Ahad", "Isnin", "Selasa", "Rabu", "Khamis", "Jumaat", "Sabtu"],
+    "months": ["Januari", "Februari", "Mac", "April", "Mei", "Jun", "Julai", "Ogos", "September", "Oktober", "November", "Disember"],
+    "months_short": ["Jan", "Feb", "Mac", "Apr", "Mei", "Jun", "Jul", "Ogo", "Sep", "Okt", "Nov", "Dis"],
+    "date_format": "{weekday}, {day} {month}",
+    "hijri_format": "{day} {month} {year} H"
   },
   "hijri_months": [
-    "Muharram", "Safar", "Rabi'ul Awal", "Rabi'ul Akhir", "Jamadil Awal", "Jamadil Akhir",
-    "Rejab", "Syaaban", "Ramadan", "Syawal", "Zulkaedah", "Zulhijjah"
+    "Muharram",
+    "Safar",
+    "Rabi'ul Awal",
+    "Rabi'ul Akhir",
+    "Jamadil Awal",
+    "Jamadil Akhir",
+    "Rejab",
+    "Syaaban",
+    "Ramadan",
+    "Syawal",
+    "Zulkaedah",
+    "Zulhijjah"
   ],
   "hero": {
-    "eyebrow": "Percuma · Tanpa akaun · Boleh luar talian",
-    "title": "Setiap solat, tepat pada waktunya.",
-    "lead": "Bedug memanggil anda untuk solat seperti beduk masjid yang menjadi asal namanya. Waktu yang tepat di mana-mana sahaja, al-Quran, zikir dan doa, kalendar Hijrah, kiraan detik Ramadan dan kompas kiblat, di telefon dan komputer anda.",
-    "cta_download": "Dapatkan Bedug",
+    "title": "Beduk masjid, dalam poket anda.",
+    "lead": "Sebelum azan, masjid di seluruh Nusantara memukul beduk. Aplikasi ini melakukan tugas yang sama: memberitahu bila solat seterusnya di mana-mana sahaja anda berada, dan menyimpan al-Quran, zikir dan arah kiblat dekat dengan anda untuk waktu di antaranya.",
+    "cta_download": "Muat turun",
     "cta_infaq": "Berinfak",
-    "badges": ["iPhone & iPad", "Android", "Mac", "Windows", "Linux"]
+    "note": "Percuma di iPhone, iPad, Android, Mac, Windows dan Linux. Tanpa iklan, tanpa akaun, dan boleh digunakan tanpa internet."
   },
   "features": {
-    "title": "Untuk hari, minggu dan tahun anda",
-    "lead": "Mudah digunakan, teliti pada perincian, dan selesa di mata.",
-    "items": [
+    "showcase": [
       {
-        "icon": "clock",
-        "title": "Waktu solat yang tepat",
-        "body": "Kemenag RI secara lalai, atau salah satu daripada sembilan kaedah antarabangsa seperti Muslim World League, ISNA dan Umm al-Qura, dengan Asar mazhab Syafie atau Hanafi. Termasuk imsak, syuruk, anggaran mula Duha dan sepertiga malam terakhir."
+        "screen": "quran",
+        "alt": "Pembaca al-Quran memaparkan halaman pertama al-Baqarah",
+        "title": "Al-Quran, tersusun seperti mushaf",
+        "body": "Mod halaman mengikut 604 halaman mushaf Madinah, dan halaman diselak seperti kertas di bawah jari anda. Atau baca ayat demi ayat dengan terjemahan, tandakan tempat anda berhenti, dan biar perancang khatam membahagikan bakinya kepada bahagian harian mengikut juzuk."
       },
       {
-        "icon": "bell",
+        "screen": "dzikir",
+        "alt": "Kad zikir pagi dengan Ayat Kursi, transliterasinya dan kiraan satu",
+        "title": "Zikir dengan kiraan pada kadnya",
+        "body": "Zikir pagi dan petang daripada Hisnul Muslim, Al-Ma'thurat atau Ratib Siribee, lengkap dengan teks Arab, transliterasi dan terjemahan. Ketik kad untuk setiap bacaan, dan tekan lama untuk bermula semula."
+      },
+      {
+        "screen": "qibla",
+        "alt": "Kompas kiblat di Jakarta, menghala 295 darjah, 7,920 km dari Kaabah",
+        "title": "Kiblat, dengan atau tanpa kompas",
+        "body": "Di telefon, pusingkan sehingga Kaabah berada di atas dail. Komputer tiada kompas, jadi Bedug memaparkan arah, jarak ke Makkah dan kedudukan kiblat dari matahari."
+      },
+      {
+        "screen": "fasting",
+        "alt": "Catatan puasa Ramadan dengan 8 daripada 29 hari berpuasa dan 2 puasa untuk diganti",
+        "title": "Catatan puasa yang mengira qada",
+        "body": "Tandakan setiap hari Ramadan sebagai berpuasa, terlepas atau uzur. Hari yang perlu diganti dibawa dari tahun ke tahun sehingga anda menggantinya. Juga ada penggera sahur, kiraan detik ke imsak dan berbuka, dan peringatan pada malam sebelum puasa Isnin dan Khamis, hari-hari putih, Arafah dan Asyura."
+      }
+    ],
+    "more_title": "Juga dalam Bedug",
+    "more": [
+      {
+        "title": "Waktu solat",
+        "body": "Kemenag RI secara lalai, atau salah satu daripada sembilan kaedah lain seperti Muslim World League, ISNA dan Umm al-Qura, dengan Asar Syafie atau Hanafi. Juga imsak, syuruk, Duha dan sepertiga malam terakhir."
+      },
+      {
         "title": "Peringatan dan widget",
-        "body": "Pemberitahuan untuk setiap waktu solat, dengan peringatan awal dan bunyi pilihan anda, daripada beduk hingga nada pada telefon anda. Widget skrin utama memaparkan solat seterusnya, ayat hari ini dan kiraan detik Ramadan."
+        "body": "Pemberitahuan untuk setiap solat, boleh lebih awal, dengan bunyi beduk atau nada daripada telefon anda. Widget skrin utama untuk solat seterusnya, ayat hari ini dan Ramadan."
       },
       {
-        "icon": "book",
-        "title": "Al-Quran",
-        "body": "Teks Uthmani dengan terjemahan, mod halaman mengikut mushaf Madinah, penanda, perancang khatam dan ayat hari ini yang dipilih mengikut peristiwa."
-      },
-      {
-        "icon": "beads",
-        "title": "Zikir dan doa",
-        "body": "Zikir pagi dan petang daripada himpunan yang anda amalkan, dengan pembilang pada setiap bacaan, serta zikir selepas solat, doa harian dan Asmaul Husna."
-      },
-      {
-        "icon": "calendar",
         "title": "Kalendar Hijrah",
-        "body": "Umm al-Qura atau MABIMS, boleh dilaraskan hingga dua hari, dengan hari kebesaran Islam dan peringatan pilihan pada petang sebelumnya."
+        "body": "Umm al-Qura atau MABIMS, boleh dilaraskan hingga dua hari, dengan hari kebesaran Islam dan peringatan pada waktu Maghrib sehari sebelumnya."
       },
       {
-        "icon": "moon",
-        "title": "Ramadan dan puasa",
-        "body": "Kiraan detik ke imsak dan berbuka, penggera sahur, peringatan puasa sunat dan catatan puasa yang mengira puasa qada yang perlu diganti."
+        "title": "Doa dan Asmaul Husna",
+        "body": "Zikir selepas solat, doa harian untuk bangun tidur, makan dan bermusafir, serta 99 nama Allah."
       },
       {
-        "icon": "coins",
-        "title": "Kalkulator zakat",
+        "title": "Zakat",
         "body": "Zakat harta berdasarkan nisab emas, dan zakat fitrah untuk isi rumah anda. Harta anda tidak pernah disimpan."
       },
       {
-        "icon": "compass",
-        "title": "Kompas kiblat",
-        "body": "Halakan telefon anda ke arah Kaabah. Di komputer, Bedug memaparkan arah, jarak ke Makkah dan sudut kiblat dari matahari."
+        "title": "Lokasi",
+        "body": "Gunakan GPS, atau pilih bandar anda dan biarkan lokasi dimatikan. Yang dipaparkan sentiasa nama bandar, bukan koordinat."
       },
       {
-        "icon": "pin",
-        "title": "Lokasi, pilihan anda",
-        "body": "Biarkan GPS mencari anda, atau pilih bandar sendiri dan matikan lokasi. Bedug sentiasa memaparkan nama bandar, bukan koordinat mentah."
-      },
-      {
-        "icon": "globe",
-        "title": "Empat bahasa",
+        "title": "Bahasa",
         "body": "Bahasa Indonesia, Inggeris, Arab dan Melayu, dengan susun atur kanan ke kiri sepenuhnya dalam bahasa Arab."
       },
       {
-        "icon": "devices",
-        "title": "Serasi di setiap peranti",
-        "body": "Liquid Glass di iPhone dan Mac, Material You di Android, Fluent di Windows, dan rupa Adwaita atau Breeze di Linux."
-      },
-      {
-        "icon": "shield",
-        "title": "Peribadi dan luar talian",
-        "body": "Tanpa akaun dan tanpa pendaftaran. Semuanya dikira pada peranti anda, dan tetapan, penanda serta catatan puasa anda tidak pernah meninggalkannya."
+        "title": "Serasi dengan platformnya",
+        "body": "Liquid Glass di iPhone dan Mac, Material You di Android, Fluent di Windows, dan Adwaita atau Breeze di Linux."
       }
     ]
   },
   "download": {
-    "title": "Dapatkan Bedug",
-    "lead": "Percuma di semua platform.",
+    "title": "Muat turun",
     "note": "Bedug sedang dibangunkan. Pautan gedung akan muncul di sini apabila setiap versi dikeluarkan.",
     "get": "Dapatkan",
     "coming_soon": "Akan datang"
   },
   "stores": {
-    "appstore": { "name": "App Store", "devices": "iPhone dan iPad · iOS 26 ke atas" },
-    "play": { "name": "Google Play", "devices": "Telefon dan tablet Android" },
-    "macappstore": { "name": "Mac App Store", "devices": "Mac · macOS 26 ke atas" },
-    "msstore": { "name": "Microsoft Store", "devices": "Windows 10 dan 11" },
-    "flathub": { "name": "Flathub", "devices": "Linux" }
+    "appstore": {
+      "name": "App Store",
+      "devices": "iPhone dan iPad · iOS 26 ke atas"
+    },
+    "play": {
+      "name": "Google Play",
+      "devices": "Telefon dan tablet Android"
+    },
+    "macappstore": {
+      "name": "Mac App Store",
+      "devices": "Mac · macOS 26 ke atas"
+    },
+    "msstore": {
+      "name": "Microsoft Store",
+      "devices": "Windows 10 dan 11"
+    },
+    "flathub": {
+      "name": "Flathub",
+      "devices": "Linux"
+    }
   },
   "infaq": {
-    "title": "Infak untuk Bedug",
-    "lead": "Bedug percuma dan akan kekal percuma, tanpa iklan. Infak menyokong pembangunan Bedug.",
-    "points": [
-      "Tiada iklan, di mana-mana platform.",
-      "Infak anda membiayai pembangunan Bedug, bukan untuk badan amal atau pihak ketiga."
-    ],
+    "title": "Tanpa iklan, tanpa akaun, tanpa pelayan",
+    "body": "Waktu solat dikira pada peranti anda. Penanda, kedudukan bacaan dan catatan puasa anda kekal di situ, dan laman ini juga tidak menggunakan kuki. Bedug dibiayai oleh infak daripada penggunanya, dan setiap infak digunakan untuk pembangunannya, bukan disalurkan kepada badan amal atau pihak lain.",
+    "privacy_link": "Baca dasar privasi",
     "in_app": "Dalam aplikasi Android dan Apple, berinfak dari Tetapan melalui Google Play atau App Store. Di Windows dan Linux, gunakan pautan di sini.",
     "links_soon": "Pautan infak dibuka bersama keluaran pertama.",
     "via": {
@@ -138,15 +163,36 @@
     }
   },
   "roadmap": {
-    "title": "Akan datang",
-    "lead": "Apa yang datang selepas keluaran pertama.",
-    "items": [
-      { "phase": "Seterusnya", "title": "Murattal", "body": "Dengar bacaan al-Quran, ikut ayat demi ayat, ulang petikan untuk menghafal, dan muat turun surah untuk didengar luar talian." },
-      { "phase": "Seterusnya", "title": "Harga emas untuk zakat", "body": "Nisab zakat diisi daripada harga emas semasa, jadi anda tidak perlu menaipnya." },
-      { "phase": "Kemudian", "title": "Masjid berdekatan", "body": "Cari masjid di sekeliling anda." },
-      { "phase": "Kemudian", "title": "Sandaran dan penyegerakan", "body": "Sandaran pilihan untuk penanda dan sejarah bacaan anda merentas peranti." },
-      { "phase": "Kemudian", "title": "Lebih banyak kalendar Hijrah", "body": "KHGT dan Diyanet, di samping Umm al-Qura dan MABIMS." },
-      { "phase": "Kemudian", "title": "Peringatan di Windows dan Linux", "body": "Peringatan solat di desktop, seperti di telefon dan Mac." }
+    "title": "Apa yang akan datang",
+    "next": "Seterusnya",
+    "later": "Kemudian",
+    "items_next": [
+      {
+        "title": "Murattal",
+        "body": "Dengar bacaan al-Quran, ikut ayat demi ayat, ulang petikan untuk menghafal, dan muat turun surah untuk didengar luar talian."
+      },
+      {
+        "title": "Harga emas untuk zakat",
+        "body": "Nisab zakat diisi daripada harga emas semasa, jadi anda tidak perlu menaipnya."
+      }
+    ],
+    "items_later": [
+      {
+        "title": "Masjid berdekatan",
+        "body": "Cari masjid di sekeliling anda."
+      },
+      {
+        "title": "Sandaran dan penyegerakan",
+        "body": "Sandaran pilihan untuk penanda dan sejarah bacaan anda merentas peranti."
+      },
+      {
+        "title": "Lebih banyak kalendar Hijrah",
+        "body": "KHGT dan Diyanet, di samping Umm al-Qura dan MABIMS."
+      },
+      {
+        "title": "Peringatan di Windows dan Linux",
+        "body": "Peringatan solat di desktop, seperti di telefon dan Mac."
+      }
     ],
     "follow": "Ikuti perkembangannya di <a href=\"{repo}\">GitHub</a>."
   },
@@ -210,15 +256,11 @@
       },
       {
         "heading": "Perubahan",
-        "body": [
-          "Jika dasar ini berubah, kami akan mengemas kini halaman ini dan tarikh berkuat kuasa di bahagian atas."
-        ]
+        "body": ["Jika dasar ini berubah, kami akan mengemas kini halaman ini dan tarikh berkuat kuasa di bahagian atas."]
       },
       {
         "heading": "Hubungi",
-        "body": [
-          "Ada soalan tentang dasar ini? Buka isu di <a href=\"{issues}\">GitHub</a>."
-        ]
+        "body": ["Ada soalan tentang dasar ini? Buka isu di <a href=\"{issues}\">GitHub</a>."]
       }
     ]
   },
@@ -230,10 +272,11 @@
     "version": "Versi {version}",
     "unreleased": "Belum dikeluarkan",
     "date_format": "{day} {month} {year}",
-    "types": { "new": "Baharu", "improved": "Ditambah baik", "fixed": "Dibaiki" },
-    "months": [
-      "Januari", "Februari", "Mac", "April", "Mei", "Jun",
-      "Julai", "Ogos", "September", "Oktober", "November", "Disember"
-    ]
+    "types": {
+      "new": "Baharu",
+      "improved": "Ditambah baik",
+      "fixed": "Dibaiki"
+    },
+    "months": ["Januari", "Februari", "Mac", "April", "Mei", "Jun", "Julai", "Ogos", "September", "Oktober", "November", "Disember"]
   }
 }

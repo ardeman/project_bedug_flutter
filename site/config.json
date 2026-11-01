@@ -12,11 +12,11 @@
     "kofi": "https://ko-fi.com"
   },
   "stores": [
-    { "id": "appstore", "icon": "phone", "url": null },
-    { "id": "play", "icon": "phone", "url": null },
-    { "id": "macappstore", "icon": "laptop", "url": null },
-    { "id": "msstore", "icon": "monitor", "url": null },
-    { "id": "flathub", "icon": "monitor", "url": null }
+    { "id": "appstore", "url": null },
+    { "id": "play", "url": null },
+    { "id": "macappstore", "url": null },
+    { "id": "msstore", "url": null },
+    { "id": "flathub", "url": null }
   ],
   "infaq": {
     "trakteer": null,

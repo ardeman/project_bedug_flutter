@@ -156,3 +156,5 @@ Record architectural choices here as one line each: date, decision, reason.
 - 2026-11-01: Bedug has no ads, for good, and earns only from the infaq, because Tanzil's Quran translations are licensed for non-commercial use and ads would make the whole app commercial; this supersedes the AdMob part of the 2026-10-19 revenue decision.
 
 - 2026-11-01: The fasting log stores each day by its Gregorian date, not its day of Ramadan, and counts make-up fasts owed across every year, so changing the Hijri calendar source or adjustment never moves a day someone fasted and qada carries over until it is made up.
+
+- 2026-11-01: The landing page shows the app as it is: the hero mock copies the prayer-times screen in HTML (kept live by `live.js`) and the features use real screens exported from the store renders by `site/screens.sh`, replacing a generic dark mock and a grid of icon cards, so the site can't drift into a stock template look.

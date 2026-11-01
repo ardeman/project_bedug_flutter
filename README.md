@@ -367,7 +367,7 @@ store/render.sh                                          # slides, feature graph
 
 ## Website
 
-The landing page at [bedug.ardeman.com](https://bedug.ardeman.com) is a static site built by `site/build.py` (Python standard library only) and served by a Cloudflare Worker (`wrangler.jsonc`). Its only script makes the home page's phone mock live: the Worker adds the visitor's approximate location from Cloudflare to the home pages, and `live.js` shows that place's prayer times, Hijri date and countdown. It has a home page, a changelog and a privacy policy in Indonesian (at `/`), English (`/en/`), Arabic (`/ar/`, right to left) and Malay (`/ms/`).
+The landing page at [bedug.ardeman.com](https://bedug.ardeman.com) is a static site built by `site/build.py` (Python standard library only) and served by a Cloudflare Worker (`wrangler.jsonc`). The home page's phone mock is a copy of the app's prayer-times screen, and its only script makes it live: the Worker adds the visitor's approximate location from Cloudflare to the home pages, and `live.js` shows that place's prayer times, day strip, Hijri date and countdown (Jakarta's when the location is unknown). Below it, the features are shown with real app screens. It has a home page, a changelog and a privacy policy in Indonesian (at `/`), English (`/en/`), Arabic (`/ar/`, right to left) and Malay (`/ms/`).
 
 | Path | Holds |
 | --- | --- |
@@ -375,6 +375,7 @@ The landing page at [bedug.ardeman.com](https://bedug.ardeman.com) is a static s
 | `assets/changelog/changelog.json` | The changelog page's releases, shared with the app's What's New screen |
 | `site/config.json` | Site URL, locales, links, and the store and infaq URLs (`null` shows "coming soon") |
 | `site/static/` | Stylesheet, the phone mock's `live.js` with the vendored `adhan` JS library (`vendor/`, MIT), Cloudflare `_headers`, `robots.txt`, and a 512px copy of `assets/branding/icon.png` for social previews (refresh it with `sips -Z 512` when the icon changes) |
+| `site/static/screens/` | The app screens on the home page, WebP copies of the iPhone renders in Indonesian and English; refresh them with `site/screens.sh` after `flutter test tool/screenshots --update-goldens` |
 | `site/dist/` | Build output, not committed |
 | `wrangler.jsonc` | Cloudflare Worker config that serves `site/dist/` |
 | `site/worker.js` | The Worker script: serves `site/dist/` and adds the visitor's location to the home pages |

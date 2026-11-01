@@ -24,112 +24,137 @@
     "maghrib": "Maghrib",
     "isha": "Isha"
   },
-  "next_prayer": "Next prayer",
+  "next_prayer": "Next Prayer",
   "mock": {
     "label": "Bedug showing today's prayer times in {place}, with {next} up next",
     "place": "Jakarta",
-    "hijri": "9 Jumada al-Ula 1448",
-    "times": ["04:38", "11:52", "15:13", "17:52", "19:03"]
+    "times": ["04:05", "11:36", "14:54", "17:47", "18:59"],
+    "up_next": "Up next",
+    "obligatory": "Obligatory prayer",
+    "tabs": ["Prayer Times", "Worship", "Quran", "Settings"],
+    "weekdays_short": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    "weekdays": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+    "months_short": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    "date_format": "{weekday}, {month} {day}",
+    "hijri_format": "{day} {month} {year} H"
   },
   "hijri_months": [
-    "Muharram", "Safar", "Rabi' al-Awwal", "Rabi' al-Thani", "Jumada al-Ula", "Jumada al-Akhirah",
-    "Rajab", "Sha'ban", "Ramadan", "Shawwal", "Dhu al-Qi'dah", "Dhu al-Hijjah"
+    "Muharram",
+    "Safar",
+    "Rabi' al-Awwal",
+    "Rabi' al-Thani",
+    "Jumada al-Ula",
+    "Jumada al-Akhirah",
+    "Rajab",
+    "Sha'ban",
+    "Ramadan",
+    "Shawwal",
+    "Dhu al-Qi'dah",
+    "Dhu al-Hijjah"
   ],
   "hero": {
-    "eyebrow": "Free · No account · Works offline",
-    "title": "Every prayer, right on time.",
-    "lead": "Bedug calls you to prayer like the mosque drum it's named after. Accurate times wherever you are, the Quran, dzikir and duas, a Hijri calendar, Ramadan countdowns and a Qibla compass, on your phone and your computer.",
-    "cta_download": "Get Bedug",
+    "title": "The mosque drum, in your pocket.",
+    "lead": "Before the adhan, mosques across Indonesia beat the bedug. This app does the same job: it tells you when the next prayer is, wherever you are, and keeps the Quran, dzikir and the Qibla close for the time in between.",
+    "cta_download": "Download",
     "cta_infaq": "Give an infaq",
-    "badges": ["iPhone & iPad", "Android", "Mac", "Windows", "Linux"]
+    "note": "Free on iPhone, iPad, Android, Mac, Windows and Linux. No ads, no account, and it works offline."
   },
   "features": {
-    "title": "For your day, your week and your year",
-    "lead": "Simple to use, careful with the details, and calm on the eyes.",
-    "items": [
+    "showcase": [
       {
-        "icon": "clock",
-        "title": "Accurate prayer times",
-        "body": "Kemenag RI by default, or one of nine global methods such as Muslim World League, ISNA and Umm al-Qura, with the Shafi'i or Hanafi Asr. Includes imsak, sunrise, an estimated Dhuha start and the last third of the night."
+        "screen": "quran",
+        "alt": "The Quran reader showing the first page of Al-Baqara",
+        "title": "The Quran, laid out like the mushaf",
+        "body": "Page mode follows the 604 pages of the Madinah mushaf, and a page turns like paper under your finger. Or read ayah by ayah with a translation, bookmark where you stop, and let the khatam planner split what's left into daily portions by juz."
       },
       {
-        "icon": "bell",
+        "screen": "dzikir",
+        "alt": "A morning dzikir card with Ayat al-Kursi, its transliteration and a count of one",
+        "title": "Dzikir with the count on the card",
+        "body": "Morning and evening dzikir from Hisnul Muslim, Al-Ma'thurat or Ratib Siribee, with the Arabic, a transliteration and a translation. Tap the card for each recitation, and long-press to start again."
+      },
+      {
+        "screen": "qibla",
+        "alt": "The Qibla compass in Jakarta, pointing 295 degrees, 7,920 km from the Kaaba",
+        "title": "The Qibla, with or without a compass",
+        "body": "On a phone, turn until the Kaaba sits at the top of the dial. A computer has no compass, so Bedug gives the bearing, the distance to Makkah and where the Qibla lies from the sun."
+      },
+      {
+        "screen": "fasting",
+        "alt": "The Ramadan fasting log with 8 of 29 days fasted and 2 fasts to make up",
+        "title": "A fasting log that keeps count of qada",
+        "body": "Mark each day of Ramadan as fasted, missed or excused. The days you owe carry over from year to year until you make them up. Around it: a sahur alarm, countdowns to imsak and iftar, and reminders the evening before Monday and Thursday fasts, the White Days, Arafah and Ashura."
+      }
+    ],
+    "more_title": "Also in Bedug",
+    "more": [
+      {
+        "title": "Prayer times",
+        "body": "Kemenag RI by default, or one of nine other methods such as Muslim World League, ISNA and Umm al-Qura, with Shafi'i or Hanafi Asr. Imsak, sunrise, Dhuha and the last third of the night too."
+      },
+      {
         "title": "Reminders and widgets",
-        "body": "A notification for each prayer, with an early reminder and the sound you choose, from a bedug drum to a tone on your phone. Home screen widgets show the next prayer, the ayah of the day and a Ramadan countdown."
+        "body": "A notification for each prayer, early if you like, with the bedug drum or a tone from your phone. Home screen widgets for the next prayer, the ayah of the day and Ramadan."
       },
       {
-        "icon": "book",
-        "title": "The Quran",
-        "body": "The Uthmani text with a translation, a page mode that follows the Madinah mushaf, bookmarks, a khatam planner and an ayah of the day chosen for the occasion."
-      },
-      {
-        "icon": "beads",
-        "title": "Dzikir and dua",
-        "body": "Morning and evening dzikir from the collection you follow, with a counter on each card, plus dzikir after prayer, daily duas and the Asmaul Husna."
-      },
-      {
-        "icon": "calendar",
         "title": "Hijri calendar",
-        "body": "Umm al-Qura or MABIMS, adjustable by up to two days, with Islamic holidays and an optional reminder the evening before."
+        "body": "Umm al-Qura or MABIMS, adjustable by up to two days, with Islamic holidays and a reminder at Maghrib the evening before."
       },
       {
-        "icon": "moon",
-        "title": "Ramadan and fasting",
-        "body": "Countdowns to imsak and iftar, a sahur alarm, sunnah fasting reminders and a fasting log that keeps track of the qada you owe."
+        "title": "Duas and Asmaul Husna",
+        "body": "Dzikir after prayer, daily duas for waking, eating and travel, and the 99 names of Allah."
       },
       {
-        "icon": "coins",
-        "title": "Zakat calculator",
-        "body": "Zakat maal against the gold nisab, and zakat fitrah for your household. What you own is never stored."
+        "title": "Zakat",
+        "body": "Zakat maal against the gold nisab, and zakat fitrah for your household. What you own is never saved."
       },
       {
-        "icon": "compass",
-        "title": "Qibla compass",
-        "body": "Turn your phone toward the Kaaba. On a computer, Bedug shows the bearing, the distance to Makkah and the Qibla's angle from the sun."
+        "title": "Location",
+        "body": "Use GPS, or pick your city and leave location off. You always see a city name, never coordinates."
       },
       {
-        "icon": "pin",
-        "title": "Your location, your choice",
-        "body": "Let GPS find you, or pick your city by hand and keep location off. Bedug always shows a city name, never raw coordinates."
-      },
-      {
-        "icon": "globe",
-        "title": "Four languages",
+        "title": "Languages",
         "body": "Indonesian, English, Arabic and Malay, with a full right-to-left layout in Arabic."
       },
       {
-        "icon": "devices",
-        "title": "At home on every device",
-        "body": "Liquid Glass on iPhone and Mac, Material You on Android, Fluent on Windows, and the Adwaita or Breeze look on Linux."
-      },
-      {
-        "icon": "shield",
-        "title": "Private and offline",
-        "body": "No account and no sign-up. Everything is calculated on your device, and your settings, bookmarks and fasting log never leave it."
+        "title": "Made for each platform",
+        "body": "Liquid Glass on iPhone and Mac, Material You on Android, Fluent on Windows, and Adwaita or Breeze on Linux."
       }
     ]
   },
   "download": {
-    "title": "Get Bedug",
-    "lead": "Free on every platform.",
+    "title": "Download",
     "note": "Bedug is in development. The store links appear here as each version is released.",
     "get": "Get it",
     "coming_soon": "Coming soon"
   },
   "stores": {
-    "appstore": { "name": "App Store", "devices": "iPhone and iPad · iOS 26 or later" },
-    "play": { "name": "Google Play", "devices": "Android phones and tablets" },
-    "macappstore": { "name": "Mac App Store", "devices": "Mac · macOS 26 or later" },
-    "msstore": { "name": "Microsoft Store", "devices": "Windows 10 and 11" },
-    "flathub": { "name": "Flathub", "devices": "Linux" }
+    "appstore": {
+      "name": "App Store",
+      "devices": "iPhone and iPad · iOS 26 or later"
+    },
+    "play": {
+      "name": "Google Play",
+      "devices": "Android phones and tablets"
+    },
+    "macappstore": {
+      "name": "Mac App Store",
+      "devices": "Mac · macOS 26 or later"
+    },
+    "msstore": {
+      "name": "Microsoft Store",
+      "devices": "Windows 10 and 11"
+    },
+    "flathub": {
+      "name": "Flathub",
+      "devices": "Linux"
+    }
   },
   "infaq": {
-    "title": "Infaq for Bedug",
-    "lead": "Bedug is free and stays free, with no ads. An infaq supports Bedug's development.",
-    "points": [
-      "No ads, on any platform.",
-      "Your infaq funds Bedug's development. It doesn't go to a charity or a third party."
-    ],
+    "title": "No ads, no account, no server",
+    "body": "Prayer times are calculated on your device. Your bookmarks, reading position and fasting log stay on it, and this website sets no cookies. Bedug is paid for by infaq from the people who use it, and every infaq goes to its development, not to a charity or anyone else.",
+    "privacy_link": "Read the privacy policy",
     "in_app": "In the Android and Apple apps, give an infaq from Settings through Google Play or the App Store. On Windows and Linux, use the links here.",
     "links_soon": "The infaq links open with the first release.",
     "via": {
@@ -138,15 +163,36 @@
     }
   },
   "roadmap": {
-    "title": "What's coming",
-    "lead": "What comes after the first release.",
-    "items": [
-      { "phase": "Next", "title": "Murattal", "body": "Listen to the Quran recited, follow along ayah by ayah, repeat a passage to memorize it, and download surahs for offline listening." },
-      { "phase": "Next", "title": "Gold price for zakat", "body": "The zakat nisab filled in from the current gold price, so you don't have to type it." },
-      { "phase": "Later", "title": "Nearby mosques", "body": "Find the mosques around you." },
-      { "phase": "Later", "title": "Backup and sync", "body": "Optional backup of your bookmarks and reading history across your devices." },
-      { "phase": "Later", "title": "More Hijri calendars", "body": "KHGT and Diyanet, next to Umm al-Qura and MABIMS." },
-      { "phase": "Later", "title": "Alerts on Windows and Linux", "body": "Prayer reminders on the desktop, as on phones and the Mac." }
+    "title": "What's next",
+    "next": "Next",
+    "later": "Later",
+    "items_next": [
+      {
+        "title": "Murattal",
+        "body": "Listen to the Quran recited, follow along ayah by ayah, repeat a passage to memorize it, and download surahs for offline listening."
+      },
+      {
+        "title": "Gold price for zakat",
+        "body": "The zakat nisab filled in from the current gold price, so you don't have to type it."
+      }
+    ],
+    "items_later": [
+      {
+        "title": "Nearby mosques",
+        "body": "Find the mosques around you."
+      },
+      {
+        "title": "Backup and sync",
+        "body": "Optional backup of your bookmarks and reading history across your devices."
+      },
+      {
+        "title": "More Hijri calendars",
+        "body": "KHGT and Diyanet, next to Umm al-Qura and MABIMS."
+      },
+      {
+        "title": "Alerts on Windows and Linux",
+        "body": "Prayer reminders on the desktop, as on phones and the Mac."
+      }
     ],
     "follow": "Follow the work on <a href=\"{repo}\">GitHub</a>."
   },
@@ -198,9 +244,7 @@
       },
       {
         "heading": "Children",
-        "body": [
-          "Bedug is not directed at children under 13, and we don't knowingly collect data from them."
-        ]
+        "body": ["Bedug is not directed at children under 13, and we don't knowingly collect data from them."]
       },
       {
         "heading": "Your choices",
@@ -210,15 +254,11 @@
       },
       {
         "heading": "Changes",
-        "body": [
-          "If this policy changes, we'll update this page and the effective date at the top."
-        ]
+        "body": ["If this policy changes, we'll update this page and the effective date at the top."]
       },
       {
         "heading": "Contact",
-        "body": [
-          "Questions about this policy? Open an issue on <a href=\"{issues}\">GitHub</a>."
-        ]
+        "body": ["Questions about this policy? Open an issue on <a href=\"{issues}\">GitHub</a>."]
       }
     ]
   },
@@ -230,10 +270,11 @@
     "version": "Version {version}",
     "unreleased": "Not released yet",
     "date_format": "{month} {day}, {year}",
-    "types": { "new": "New", "improved": "Improved", "fixed": "Fixed" },
-    "months": [
-      "January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"
-    ]
+    "types": {
+      "new": "New",
+      "improved": "Improved",
+      "fixed": "Fixed"
+    },
+    "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
   }
 }

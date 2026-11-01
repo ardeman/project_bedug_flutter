@@ -2,8 +2,9 @@
 """Builds the Bedug landing page into site/dist.
 
 Content lives in site/i18n/<locale>.json, links in site/config.json and the
-styles and the home page's one script in site/static/. The fonts, the icon and the changelog come from the
-app's own assets so each has one source. Standard library only, so Cloudflare
+styles, the home page's one script and the app screens in site/static/. The
+fonts, the icon and the changelog come from the app's own assets so each has
+one source. Standard library only, so Cloudflare
 can run it as the build command: `python3 site/build.py`.
 """
 
@@ -27,29 +28,40 @@ FONT_FILES = (
     "PlusJakartaSans-ExtraBold.ttf",
 )
 
-# 24×24 stroke icons drawn with currentColor.
+# 24×24 stroke icons drawn with currentColor. The mock's prayer and tab icons
+# stand in for the Material icons the app uses.
 ICONS = {
     "clock": '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
-    "bell": '<path d="M6 16v-5a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/>',
-    "calendar": '<rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M3 10h18M8 3v4M16 3v4"/>',
-    "compass": '<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>',
+    "timer": '<circle cx="12" cy="13.5" r="7.5"/><path d="M12 9.5v4M9.5 2.5h5"/>',
+    "refresh": '<path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3M19.5 4v4.5H15"/>',
     "pin": '<path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>',
     "globe": '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
-    "devices": '<rect x="2" y="4" width="14" height="10" rx="1.5"/><path d="M6 18h6M9 14v4"/><rect x="17" y="8" width="5" height="12" rx="1.5"/>',
-    "shield": '<path d="M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/>',
     "book": '<path d="M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5z"/><path d="M12 6.5v13"/>',
-    "beads": '<circle cx="12" cy="4.5" r="1.5"/><circle cx="17.3" cy="6.7" r="1.5"/><circle cx="19.5" cy="12" r="1.5"/><circle cx="17.3" cy="17.3" r="1.5"/><circle cx="6.7" cy="6.7" r="1.5"/><circle cx="4.5" cy="12" r="1.5"/><circle cx="6.7" cy="17.3" r="1.5"/><path d="M12 17v4"/><circle cx="12" cy="17" r="1.5"/>',
-    "moon": '<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/><path d="M17 3l.6 1.4L19 5l-1.4.6L17 7l-.6-1.4L15 5l1.4-.6z"/>',
-    "coins": '<ellipse cx="9" cy="7" rx="6" ry="2.5"/><path d="M3 7v4c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5V7"/><path d="M9 13.5v4c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-4c0-1.4-2.7-2.5-6-2.5"/>',
+    "mosque": '<path d="M4 21V11h16v10M2 21h20M12 3c-3 2-5 4-5 6.5V11h10V9.5C17 7 15 5 12 3zM10 21v-4a2 2 0 0 1 4 0v4"/>',
+    "gear": '<circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/>',
+    "sun": '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+    "cloud": '<path d="M7 18.5a4.5 4.5 0 0 1-.4-9A6 6 0 0 1 18 10a4.3 4.3 0 0 1-.5 8.5z"/>',
+    "sunset": '<path d="M5 18a7 7 0 0 1 14 0M2 18h20M12 3v5M9 6l3 3 3-3"/>',
+    "moon": '<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>',
+    "bed": '<path d="M3 18V7M3 14h18v4M21 14v-2a3 3 0 0 0-3-3h-7v5"/><circle cx="7" cy="11" r="1.8"/>',
     "heart": '<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>',
-    "phone": '<rect x="6" y="2" width="12" height="20" rx="3"/><path d="M10.5 18.5h3"/>',
-    "laptop": '<rect x="4" y="4" width="16" height="11" rx="1.5"/><path d="M2 19h20"/>',
-    "monitor": '<rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/>',
     "check": '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
     "github": '<path d="M9 19c-4 1.3-4-2-6-2.5M15 21v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 0 0-6.2 0C6.6 2.8 5.6 3.1 5.6 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4.2 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/>',
 }
 
 PRAYERS = ("fajr", "dhuhr", "asr", "maghrib", "isha")
+
+# The icon beside each prayer in the app's list.
+PRAYER_ICONS = {
+    "fajr": "bed",
+    "dhuhr": "sun",
+    "asr": "cloud",
+    "maghrib": "sunset",
+    "isha": "moon",
+}
+
+# The iPhone renders (1206 × 2622) scaled to 600 px wide by site/screens.sh.
+SHOT_SIZE = (600, 1305)
 
 PAGES = ("home", "privacy", "changelog")
 
@@ -149,7 +161,7 @@ class Site:
         anchor = "" if page == "home" else home
         nav = "".join(
             f'<a href="{anchor}#{key}">{s["nav"][key]}</a>'
-            for key in ("features", "download", "infaq", "roadmap")
+            for key in ("features", "infaq", "download", "roadmap")
         )
         return f"""<header class="top">
 <div class="wrap top-inner">
@@ -185,43 +197,90 @@ class Site:
 
     def mock(self, s):
         m = s["mock"]
-        # The mock shows Jakarta with Asr as the next prayer. live.js replaces
-        # it with the visitor's place and time when the Worker knows them.
+        # The static mock is the store screenshot's day: Jakarta on Thursday
+        # 5 November 2026 (25 Jumada al-Ula 1448), with Asr next at 14:54.
+        # live.js turns it into today for the visitor's place.
+        day, weekday, month = 5, 4, 10
+        next_index = PRAYERS.index("asr")
+        strip = "".join(
+            ('<li class="today">' if d == day else "<li>")
+            + f"<span>{m['weekdays_short'][(weekday + d - day) % 7]}</span><b>{d}</b>"
+            + (f"<small>{m['months_short'][month]}</small>" if d == day else "")
+            + "</li>"
+            for d in range(day - 2, day + 3)
+        )
+        date = m["date_format"].format(
+            weekday=m["weekdays"][weekday], month=m["months"][month], day=day
+        )
+        hijri = m["hijri_format"].format(
+            day=25, month=s["hijri_months"][4], year=1448
+        )
         rows = "".join(
-            ('<li class="now">' if key == "asr" else "<li>")
-            + f"<span>{s['prayers'][key]}</span><time>{m['times'][i]}</time></li>"
+            ('<li class="next">' if i == next_index else "<li>")
+            + f'<span class="app-ico">{icon(PRAYER_ICONS[key])}</span>'
+            + f'<span class="app-text"><small class="app-upnext">{m["up_next"]}</small>'
+            + f'<small class="app-cat">{m["obligatory"]}</small>'
+            + f'<span class="app-pname">{s["prayers"][key]}</span></span>'
+            + f'<time dir="ltr">{m["times"][i]}</time></li>'
             for i, key in enumerate(PRAYERS)
+        )
+        tabs = "".join(
+            ('<li class="on">' if i == 0 else "<li>")
+            + f"{icon(name)}<span>{label}</span></li>"
+            for i, (name, label) in enumerate(
+                zip(("clock", "mosque", "book", "gear"), m["tabs"])
+            )
         )
         label = m["label"]
         static_label = label.replace("{place}", m["place"]).replace(
             "{next}", s["prayers"]["asr"]
         )
-        months = json.dumps(s["hijri_months"], ensure_ascii=False)
-        return f"""<div class="phone" role="img" aria-label="{attr(static_label)}" data-label="{attr(label)}">
-<div class="phone-screen">
-<div class="phone-hero">
-<p class="phone-place">{icon('pin')}{m['place']}</p>
-<p class="phone-hijri" data-months="{attr(months)}">{m['hijri']}</p>
-<p class="phone-next">{s['next_prayer']}</p>
-<p class="phone-name">{s['prayers']['asr']}</p>
-<p class="phone-count" dir="ltr">01:24:37</p>
+        strings = json.dumps(
+            {
+                key: m[key]
+                for key in (
+                    "weekdays_short",
+                    "weekdays",
+                    "months",
+                    "months_short",
+                    "date_format",
+                    "hijri_format",
+                )
+            }
+            | {"hijri_months": s["hijri_months"]},
+            ensure_ascii=False,
+        )
+        return f"""<div class="phone" role="img" aria-label="{attr(static_label)}" data-label="{attr(label)}" data-strings="{attr(strings)}">
+<div class="screen" aria-hidden="true">
+<div class="app-hero">
+<img class="app-drum" src="/assets/drum.svg" alt="" width="1024" height="1024">
+<div class="app-top"><p class="app-place">{icon('pin')}<span>{m['place']}</span></p><span class="app-refresh">{icon('refresh')}</span></div>
+<p class="app-next">{s['next_prayer']} · <time dir="ltr">{m['times'][next_index]}</time></p>
+<p class="app-name">{s['prayers']['asr']}</p>
+<p class="app-count">{icon('timer')}<span dir="ltr">00:14:00</span></p>
 </div>
-<ul class="phone-list">{rows}</ul>
+<div class="app-days">
+<ol class="app-strip">{strip}</ol>
+<p class="app-date"><strong>{date}</strong><span>{hijri}</span></p>
+</div>
+<ul class="app-list">{rows}</ul>
+<ul class="app-tabs">{tabs}</ul>
 </div>
 </div>"""
 
-    def store_card(self, loc, store):
+    def store_row(self, loc, store):
         s = self.strings[loc]
         label = s["stores"][store["id"]]
         url = store.get("url")
-        inner = (
-            f'{icon(store["icon"], "icon store-icon")}'
-            f'<span class="store-text"><strong>{label["name"]}</strong>'
-            f'<span>{label["devices"]}</span></span>'
+        status = (
+            f'<a href="{url}">{s["download"]["get"]}</a>'
+            if url
+            else s["download"]["coming_soon"]
         )
-        if url:
-            return f'<a class="store" href="{url}">{inner}<span class="chip chip-go">{s["download"]["get"]}</span></a>'
-        return f'<div class="store is-soon">{inner}<span class="chip">{s["download"]["coming_soon"]}</span></div>'
+        return (
+            f'<li><strong>{label["name"]}</strong><span>{label["devices"]}</span>'
+            f'<span class="store-status">{status}</span></li>'
+        )
 
     def infaq_links(self, loc):
         s = self.strings[loc]
@@ -237,21 +296,36 @@ class Site:
             return f'<p class="note">{s["infaq"]["links_soon"]}</p>'
         return f'<div class="btn-row">{"".join(buttons)}</div>'
 
+    def showcase(self, loc):
+        s = self.strings[loc]
+        # Screens exist in Indonesian and English (site/screens.sh).
+        suffix = "-id" if loc == "id" else ""
+        return "".join(
+            f'<article class="feature">'
+            f'<img class="shot" src="/assets/screens/{f["screen"]}{suffix}.webp" '
+            f'alt="{attr(f["alt"])}" width="{SHOT_SIZE[0]}" height="{SHOT_SIZE[1]}" loading="lazy">'
+            f'<div class="feature-text"><h2>{f["title"]}</h2><p>{f["body"]}</p></div>'
+            f"</article>"
+            for f in s["features"]["showcase"]
+        )
+
     def home(self, loc):
         s = self.strings[loc]
-        features = "".join(
-            f'<li class="card">{icon(f["icon"], "icon card-icon")}<h3>{f["title"]}</h3><p>{f["body"]}</p></li>'
-            for f in s["features"]["items"]
+        more = "".join(
+            f'<div><dt>{f["title"]}</dt><dd>{f["body"]}</dd></div>'
+            for f in s["features"]["more"]
         )
-        stores = "".join(self.store_card(loc, st) for st in self.config["stores"])
-        infaq_points = "".join(
-            f"<li>{icon('check')}<span>{p}</span></li>" for p in s["infaq"]["points"]
+        stores = "".join(self.store_row(loc, st) for st in self.config["stores"])
+        r = s["roadmap"]
+        plan = "".join(
+            f'<div><h3>{r[phase]}</h3><ul>'
+            + "".join(
+                f'<li><strong>{i["title"]}</strong> {i["body"]}</li>'
+                for i in r[f"items_{phase}"]
+            )
+            + "</ul></div>"
+            for phase in ("next", "later")
         )
-        roadmap = "".join(
-            f'<li><span class="phase">{r["phase"]}</span><h3>{r["title"]}</h3><p>{r["body"]}</p></li>'
-            for r in s["roadmap"]["items"]
-        )
-        badges = "".join(f"<li>{b}</li>" for b in s["hero"]["badges"])
         return (
             self.head(
                 loc,
@@ -266,55 +340,53 @@ class Site:
 <section class="hero">
 <div class="wrap hero-inner">
 <div class="hero-copy">
-<p class="eyebrow">{s['hero']['eyebrow']}</p>
 <h1>{s['hero']['title']}</h1>
 <p class="lead">{s['hero']['lead']}</p>
 <div class="btn-row">
 <a class="btn btn-primary" href="#download">{s['hero']['cta_download']}</a>
 <a class="btn btn-ghost" href="#infaq">{icon('heart')}{s['hero']['cta_infaq']}</a>
 </div>
-<ul class="badges">{badges}</ul>
+<p class="hero-note">{s['hero']['note']}</p>
 </div>
 {self.mock(s)}
 </div>
 </section>
 
-<section id="features" class="section">
+<section id="features" class="features">
+<div class="wrap">{self.showcase(loc)}</div>
+</section>
+
+<section class="section more">
 <div class="wrap">
-<h2>{s['features']['title']}</h2>
-<p class="section-lead">{s['features']['lead']}</p>
-<ul class="grid">{features}</ul>
+<h2>{s['features']['more_title']}</h2>
+<dl class="facts">{more}</dl>
 </div>
 </section>
 
-<section id="download" class="section section-alt">
-<div class="wrap">
-<h2>{s['download']['title']}</h2>
-<p class="section-lead">{s['download']['lead']}</p>
-<div class="stores">{stores}</div>
-<p class="note">{s['download']['note']}</p>
-</div>
-</section>
-
-<section id="infaq" class="section">
-<div class="wrap infaq">
-<div class="infaq-mark">{icon('heart', 'icon infaq-icon')}</div>
-<div>
+<section id="infaq" class="pledge">
+<div class="wrap pledge-inner">
+<img class="pledge-drum" src="/assets/drum.svg" alt="" width="1024" height="1024">
 <h2>{s['infaq']['title']}</h2>
-<p class="section-lead">{s['infaq']['lead']}</p>
-<ul class="ticks">{infaq_points}</ul>
+<p class="pledge-body">{s['infaq']['body']}</p>
+<p><a href="{self.url(loc, 'privacy')}">{s['infaq']['privacy_link']}</a></p>
 <p class="note">{s['infaq']['in_app']}</p>
 {self.infaq_links(loc)}
 </div>
+</section>
+
+<section id="download" class="section">
+<div class="wrap">
+<h2>{s['download']['title']}</h2>
+<ul class="stores">{stores}</ul>
+<p class="note">{s['download']['note']}</p>
 </div>
 </section>
 
 <section id="roadmap" class="section section-alt">
 <div class="wrap">
-<h2>{s['roadmap']['title']}</h2>
-<p class="section-lead">{s['roadmap']['lead']}</p>
-<ol class="roadmap">{roadmap}</ol>
-<p class="note">{self.fill(s['roadmap']['follow'])}</p>
+<h2>{r['title']}</h2>
+<div class="plan">{plan}</div>
+<p class="note">{self.fill(r['follow'])}</p>
 </div>
 </section>
 </main>
@@ -458,6 +530,9 @@ class Site:
             shutil.copy(FONTS / name, assets / "fonts" / name)
         shutil.copy(FONTS / "OFL.txt", assets / "fonts" / "OFL.txt")
         shutil.copy(BRANDING / "icon.svg", assets / "icon.svg")
+        # The faint drum behind the mock's hero, as in the app.
+        shutil.copy(BRANDING / "icon_monochrome.svg", assets / "drum.svg")
+        shutil.copytree(SITE / "static" / "screens", assets / "screens")
         shutil.copy(SITE / "static" / "icon-512.png", assets / "icon.png")
         shutil.copy(SITE / "static" / "live.js", assets / "live.js")
         shutil.copytree(SITE / "static" / "vendor", assets / "vendor")
