@@ -61,7 +61,18 @@ class _FastingLogScreenState extends ConsumerState<FastingLogScreen> {
           // Keep the grid compact on wide desktop windows.
           constraints: const BoxConstraints(maxWidth: 560),
           child: ListView(
-            padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+            // The system's padding too: on Apple the list runs under the
+            // glass top bar and the floating nav bar. This context is above
+            // the Scaffold, so its padding lacks the top bar's height.
+            padding:
+                MediaQuery.paddingOf(ctx) +
+                EdgeInsets.only(
+                  top: PlatformCapabilities.isApple ? kToolbarHeight : 0,
+                ) +
+                const EdgeInsets.only(
+                  top: AppSpacing.md,
+                  bottom: AppSpacing.sm,
+                ),
             children: [
               if (shown != null)
                 _RamadanLogCard(
