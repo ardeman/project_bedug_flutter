@@ -144,18 +144,18 @@ set_of() {
 }
 
 # duo_set <suffix> <out dir> captions...: the iPhone Duo in every way it is
-# held: open upright, half folded on a table and like a book, open sideways,
-# closed upright, open again, closed sideways, and open for the pair.
+# held: open upright, half folded like a book, closed upright, open sideways,
+# half folded on a table, open again, closed sideways, and open for the pair.
 duo_set() {
   local s="$1" dir="$2" w=2007 h=2853 f=120
   shift 2
   mkdir -p "$dir"
   rm -f "${dir:?}/"*.png "${dir:?}/"*.jpg
   one "$w" "$h" "$f" duo                 prayer         "$s" "$1" "$dir/1-prayer.png"
-  one "$w" "$h" "$f" duo-table           quran          "$s" "$2" "$dir/2-quran.png"
-  one "$w" "$h" "$f" duo-book            qibla          "$s" "$3" "$dir/3-qibla.png"
+  one "$w" "$h" "$f" duo-book            quran          "$s" "$2" "$dir/2-quran.png"
+  one "$w" "$h" "$f" duo-outer           qibla          "$s" "$3" "$dir/3-qibla.png"
   one "$w" "$h" "$f" duo-landscape       dzikir         "$s" "$4" "$dir/4-dzikir.png"
-  one "$w" "$h" "$f" duo-outer           events         "$s" "$5" "$dir/5-events.png"
+  one "$w" "$h" "$f" duo-table           events         "$s" "$5" "$dir/5-events.png"
   one "$w" "$h" "$f" duo                 fasting        "$s" "$6" "$dir/6-fasting.png"
   one "$w" "$h" "$f" duo-outer-landscape zakat          "$s" "$7" "$dir/7-zakat.png"
   pair "$w" "$h" "$f" duo duas asmaul "$s" "$8" "$dir/8-duas.png"

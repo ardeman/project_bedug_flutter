@@ -186,7 +186,7 @@ const List<_Device> _devices = [
     ratio: 3,
     insets: EdgeInsets.only(right: 62, bottom: 21),
     fold: null,
-    screens: ['events'],
+    screens: ['qibla'],
   ),
   (
     name: 'duo-outer-landscape',
@@ -204,7 +204,7 @@ const List<_Device> _devices = [
     ratio: 3,
     insets: EdgeInsets.only(right: 62, bottom: 21),
     fold: Rect.fromLTWH(0, 475.5, 669, 0),
-    screens: ['quran'],
+    screens: ['events'],
   ),
   (
     name: 'duo-book',
@@ -213,7 +213,7 @@ const List<_Device> _devices = [
     ratio: 3,
     insets: EdgeInsets.only(right: 62, bottom: 21),
     fold: Rect.fromLTWH(475.5, 0, 0, 669),
-    screens: ['qibla'],
+    screens: ['quran'],
   ),
 ];
 
