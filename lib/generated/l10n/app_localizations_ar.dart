@@ -1217,4 +1217,88 @@ class AppLocalizationsAr extends AppLocalizations {
   String notifSahur(Object day, Object time) {
     return '$day رمضان. الإمساك الساعة $time.';
   }
+
+  @override
+  String get zakat => 'حاسبة الزكاة';
+
+  @override
+  String get zakatSubtitle => 'زكاة المال وزكاة الفطر';
+
+  @override
+  String get zakatMaal => 'المال';
+
+  @override
+  String get zakatFitrah => 'الفطر';
+
+  @override
+  String get zakatMaalHint =>
+      'أدخل ما تملكه اليوم. تجب زكاة المال إذا بلغ المال النصاب وحال عليه حول هجري كامل.';
+
+  @override
+  String get zakatGoldPrice => 'سعر غرام الذهب';
+
+  @override
+  String zakatNisab(Object amount, Object grams) {
+    return 'النصاب ($grams غرامًا من الذهب): $amount';
+  }
+
+  @override
+  String get zakatWealth => 'الأموال';
+
+  @override
+  String get zakatCash => 'النقد والمدخرات';
+
+  @override
+  String get zakatGold => 'الذهب والفضة';
+
+  @override
+  String get zakatInvestments => 'الاستثمارات والأسهم';
+
+  @override
+  String get zakatTradeGoods => 'عروض التجارة';
+
+  @override
+  String get zakatReceivables => 'ديون مرجوّة لك';
+
+  @override
+  String get zakatDebtsTitle => 'الديون';
+
+  @override
+  String get zakatDebts => 'الديون الحالّة';
+
+  @override
+  String zakatNetWealth(Object amount) {
+    return 'صافي المال: $amount';
+  }
+
+  @override
+  String get zakatMaalDue => 'زكاة المال (2.5%)';
+
+  @override
+  String get zakatNeedsGoldPrice => 'أدخل سعر الذهب لمعرفة النصاب.';
+
+  @override
+  String get zakatBelowNisab => 'مالك لم يبلغ النصاب، فلا تجب عليك زكاة المال.';
+
+  @override
+  String get zakatFitrahHint =>
+      'تُخرج زكاة الفطر عن كل فرد من أهل البيت قبل صلاة العيد: صاع من غالب قوت البلد (نحو 2.5 كغ) عن كل شخص، أو قيمته كما تحددها جهة الزكاة المحلية.';
+
+  @override
+  String get zakatPeople => 'عدد الأشخاص';
+
+  @override
+  String get zakatFitrahPerPerson => 'المبلغ عن الشخص';
+
+  @override
+  String get zakatFitrahDue => 'زكاة الفطر';
+
+  @override
+  String zakatFitrahInKind(Object kg) {
+    return 'أو $kg كغ من القوت';
+  }
+
+  @override
+  String get zakatPrivacyNote =>
+      'المبالغ التي تدخلها تبقى في هذه الشاشة ولا تُحفظ أبدًا.';
 }

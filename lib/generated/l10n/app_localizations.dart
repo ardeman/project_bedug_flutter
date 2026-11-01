@@ -2195,6 +2195,156 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'{day} Ramadan. Imsak pukul {time}.'**
   String notifSahur(Object day, Object time);
+
+  /// No description provided for @zakat.
+  ///
+  /// In id, this message translates to:
+  /// **'Kalkulator zakat'**
+  String get zakat;
+
+  /// No description provided for @zakatSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Zakat mal dan zakat fitrah'**
+  String get zakatSubtitle;
+
+  /// No description provided for @zakatMaal.
+  ///
+  /// In id, this message translates to:
+  /// **'Mal'**
+  String get zakatMaal;
+
+  /// No description provided for @zakatFitrah.
+  ///
+  /// In id, this message translates to:
+  /// **'Fitrah'**
+  String get zakatFitrah;
+
+  /// No description provided for @zakatMaalHint.
+  ///
+  /// In id, this message translates to:
+  /// **'Isi harta yang Anda miliki hari ini. Zakat mal wajib bila harta mencapai nisab dan telah dimiliki selama satu tahun Hijriah (haul).'**
+  String get zakatMaalHint;
+
+  /// No description provided for @zakatGoldPrice.
+  ///
+  /// In id, this message translates to:
+  /// **'Harga emas per gram'**
+  String get zakatGoldPrice;
+
+  /// No description provided for @zakatNisab.
+  ///
+  /// In id, this message translates to:
+  /// **'Nisab ({grams} g emas): {amount}'**
+  String zakatNisab(Object amount, Object grams);
+
+  /// No description provided for @zakatWealth.
+  ///
+  /// In id, this message translates to:
+  /// **'Harta'**
+  String get zakatWealth;
+
+  /// No description provided for @zakatCash.
+  ///
+  /// In id, this message translates to:
+  /// **'Uang tunai dan tabungan'**
+  String get zakatCash;
+
+  /// No description provided for @zakatGold.
+  ///
+  /// In id, this message translates to:
+  /// **'Emas dan perak'**
+  String get zakatGold;
+
+  /// No description provided for @zakatInvestments.
+  ///
+  /// In id, this message translates to:
+  /// **'Investasi dan saham'**
+  String get zakatInvestments;
+
+  /// No description provided for @zakatTradeGoods.
+  ///
+  /// In id, this message translates to:
+  /// **'Barang dagangan'**
+  String get zakatTradeGoods;
+
+  /// No description provided for @zakatReceivables.
+  ///
+  /// In id, this message translates to:
+  /// **'Piutang'**
+  String get zakatReceivables;
+
+  /// No description provided for @zakatDebtsTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Utang'**
+  String get zakatDebtsTitle;
+
+  /// No description provided for @zakatDebts.
+  ///
+  /// In id, this message translates to:
+  /// **'Utang jatuh tempo'**
+  String get zakatDebts;
+
+  /// No description provided for @zakatNetWealth.
+  ///
+  /// In id, this message translates to:
+  /// **'Harta bersih: {amount}'**
+  String zakatNetWealth(Object amount);
+
+  /// No description provided for @zakatMaalDue.
+  ///
+  /// In id, this message translates to:
+  /// **'Zakat mal (2,5%)'**
+  String get zakatMaalDue;
+
+  /// No description provided for @zakatNeedsGoldPrice.
+  ///
+  /// In id, this message translates to:
+  /// **'Isi harga emas untuk menghitung nisab.'**
+  String get zakatNeedsGoldPrice;
+
+  /// No description provided for @zakatBelowNisab.
+  ///
+  /// In id, this message translates to:
+  /// **'Harta Anda belum mencapai nisab, jadi belum wajib zakat mal.'**
+  String get zakatBelowNisab;
+
+  /// No description provided for @zakatFitrahHint.
+  ///
+  /// In id, this message translates to:
+  /// **'Zakat fitrah dibayar untuk setiap anggota keluarga sebelum salat Id: 2,5 kg makanan pokok per orang, atau nilainya sesuai ketetapan lembaga zakat setempat.'**
+  String get zakatFitrahHint;
+
+  /// No description provided for @zakatPeople.
+  ///
+  /// In id, this message translates to:
+  /// **'Jumlah orang'**
+  String get zakatPeople;
+
+  /// No description provided for @zakatFitrahPerPerson.
+  ///
+  /// In id, this message translates to:
+  /// **'Nilai per orang'**
+  String get zakatFitrahPerPerson;
+
+  /// No description provided for @zakatFitrahDue.
+  ///
+  /// In id, this message translates to:
+  /// **'Zakat fitrah'**
+  String get zakatFitrahDue;
+
+  /// No description provided for @zakatFitrahInKind.
+  ///
+  /// In id, this message translates to:
+  /// **'Atau {kg} kg makanan pokok'**
+  String zakatFitrahInKind(Object kg);
+
+  /// No description provided for @zakatPrivacyNote.
+  ///
+  /// In id, this message translates to:
+  /// **'Jumlah yang Anda isi hanya ada di layar ini dan tidak pernah disimpan.'**
+  String get zakatPrivacyNote;
 }
 
 class _AppLocalizationsDelegate

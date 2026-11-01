@@ -7,6 +7,15 @@
         {
           "type": "new",
           "text": {
+            "en": "Zakat calculator: in the Worship tab, work out zakat maal from what you own against the nisab of 85 g of gold, and zakat fitrah for your household. Only the gold price and the fitrah amount are remembered, never what you own.",
+            "id": "Kalkulator zakat: di tab Ibadah, hitung zakat mal dari harta yang Anda miliki terhadap nisab 85 g emas, serta zakat fitrah untuk keluarga Anda. Hanya harga emas dan nilai fitrah yang diingat, tidak pernah harta Anda.",
+            "ms": "Kalkulator zakat: dalam tab Ibadah, kira zakat harta daripada apa yang anda miliki berbanding nisab 85 g emas, serta zakat fitrah untuk keluarga anda. Hanya harga emas dan kadar fitrah yang diingat, tidak sekali-kali harta anda.",
+            "ar": "حاسبة الزكاة: في تبويب العبادة، احسب زكاة المال مما تملكه مقارنةً بنصاب 85 غرامًا من الذهب، وزكاة الفطر عن أهل بيتك. لا يُحفظ إلا سعر الذهب ومبلغ الفطر، ولا يُحفظ ما تملكه أبدًا."
+          }
+        },
+        {
+          "type": "new",
+          "text": {
             "en": "Ramadan widget: the countdown to imsak and to iftar on your home screen, and on iPhone on the lock screen too, with the day of Ramadan and the times.",
             "id": "Widget Ramadan: hitung mundur ke imsak dan ke waktu berbuka di layar utama, dan di iPhone juga di layar kunci, lengkap dengan hari Ramadan dan waktunya.",
             "ms": "Widget Ramadan: kiraan detik ke imsak dan ke waktu berbuka pada skrin utama, dan pada iPhone juga pada skrin kunci, lengkap dengan hari Ramadan dan waktunya.",

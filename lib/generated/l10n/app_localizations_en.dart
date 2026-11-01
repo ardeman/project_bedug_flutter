@@ -1205,4 +1205,89 @@ class AppLocalizationsEn extends AppLocalizations {
   String notifSahur(Object day, Object time) {
     return 'Ramadan $day. Imsak is at $time.';
   }
+
+  @override
+  String get zakat => 'Zakat calculator';
+
+  @override
+  String get zakatSubtitle => 'Zakat maal and zakat fitrah';
+
+  @override
+  String get zakatMaal => 'Maal';
+
+  @override
+  String get zakatFitrah => 'Fitrah';
+
+  @override
+  String get zakatMaalHint =>
+      'Enter what you own today. Zakat maal is due when your wealth reaches the nisab and has been held for one Hijri year (haul).';
+
+  @override
+  String get zakatGoldPrice => 'Gold price per gram';
+
+  @override
+  String zakatNisab(Object amount, Object grams) {
+    return 'Nisab ($grams g of gold): $amount';
+  }
+
+  @override
+  String get zakatWealth => 'Wealth';
+
+  @override
+  String get zakatCash => 'Cash and savings';
+
+  @override
+  String get zakatGold => 'Gold and silver';
+
+  @override
+  String get zakatInvestments => 'Investments and shares';
+
+  @override
+  String get zakatTradeGoods => 'Trade goods';
+
+  @override
+  String get zakatReceivables => 'Money owed to you';
+
+  @override
+  String get zakatDebtsTitle => 'Debts';
+
+  @override
+  String get zakatDebts => 'Debts due now';
+
+  @override
+  String zakatNetWealth(Object amount) {
+    return 'Net wealth: $amount';
+  }
+
+  @override
+  String get zakatMaalDue => 'Zakat maal (2.5%)';
+
+  @override
+  String get zakatNeedsGoldPrice => 'Enter the gold price to find the nisab.';
+
+  @override
+  String get zakatBelowNisab =>
+      'Your wealth is below the nisab, so no zakat maal is due.';
+
+  @override
+  String get zakatFitrahHint =>
+      'Zakat fitrah is paid for every member of the household before the Eid prayer: 2.5 kg of the staple food each, or its value as set by your local zakat body.';
+
+  @override
+  String get zakatPeople => 'Number of people';
+
+  @override
+  String get zakatFitrahPerPerson => 'Amount per person';
+
+  @override
+  String get zakatFitrahDue => 'Zakat fitrah';
+
+  @override
+  String zakatFitrahInKind(Object kg) {
+    return 'Or $kg kg of staple food';
+  }
+
+  @override
+  String get zakatPrivacyNote =>
+      'The amounts you enter stay on this screen and are never saved.';
 }
