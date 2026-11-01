@@ -188,6 +188,32 @@ The app ships in Indonesian (template), English, Arabic and Malay. To add a lang
 
 ## Roadmap
 
+### Before release
+
+The first store release ships when everything here is done. What is already built is described in the sections below; this list tracks only what is left.
+
+1. **Build:** Ramadan mode and Sunnah fasting reminders (Phase 4, items 4 and 5 under [Features](#features-support-daily-muslim-activity)).
+2. **Device checks:** every item marked "checks pending" below: scheduled notification delivery at a real prayer time and the bundled sounds on iOS and macOS (Phase 1, item 2), the remaining [home screen widget](#home-screen-widgets) checks, the Quran reader, khatam planner and ayah of the day (Phase 3), the Hijri events, date adjustment, calendar source and their reminders (Phase 4), the re-themed screens and the liquid glass on iOS and macOS ([Design](#design-re-theme-the-app)), the Linux theme on real GNOME and KDE machines ([Linux](#linux-follow-the-desktop-environment)), and the infaq page and purchases ([Revenue](#revenue-infaq)).
+3. **Content review:** someone qualified reviews the dzikir collections, daily duas, Asmaul Husna meanings and after-prayer dzikir (Phase 2), and the ayah-of-the-day selection and its reasons (Phase 3, item 3).
+4. **Licenses:** permission for the Quran translations (Kemenag, Saheeh International, Basmeih) and the dua and dzikir sources (see Open decisions).
+5. **Store setup:** the infaq products and agreements, the Trakteer and Ko-fi pages and the Small Business Program ([Revenue: infaq](#revenue-infaq), Phase 1 and Owner setup).
+
+### After release
+
+Updates after the first release, roughly in this order. None of them blocks it.
+
+1. **Murattal (audio recitation; waiting on licenses):** the reader plays from any ayah, highlights and follows the ayah being recited (turning pages in page mode), repeats an ayah or a range for memorization, and keeps playing in the background with lock-screen controls; a reciter picker lives in Settings and each surah streams or downloads for offline listening, with a storage screen to remove downloads. A full Quran is roughly 0.7–1 GB per reciter at 64 kbps, so audio is never bundled, and streaming tells the host what is played, which the app states. Background playback needs the iOS background audio mode and an Android media-playback foreground service declared in Play Console.
+   - **Several sources behind one interface:** each source is an adapter that turns a reciter, surah and ayah into an audio URL and optional timings, and the reciter list is data under `assets/content/`, so adding a reciter or source is mostly data. Features that only some sources have (word timings) fall back to ayah-level highlighting. Ship with one source and one or two reciters whose permission is confirmed, then add more.
+   - **Candidate sources (checked 2026-10-31):** [EveryAyah](https://everyayah.com) (one file per ayah, many reciters; no site-wide license, only a backlink request, and recitation rights unclear), the [Quran Foundation API](https://api-docs.quran.foundation/docs/sdk/audio/) (per-surah and per-ayah audio with ayah and word timings; needs API credentials through a backend; its [developer terms](https://api-docs.quran.foundation/legal/developer-terms/) require a separate written license for commercial redistribution), and [alquran.cloud](https://alquran.cloud/terms-and-conditions) (recitations licensed by the reciters for free, non-commercial redistribution only). Kemenag publishes no audio API or license.
+   - **Open:** Bedug has no ads, but the paid infaq may still count as commercial use under a candidate's terms, so check each one, and where in doubt get written permission (Quran Foundation's commercial license, or the reciter or their estate) before it ships, and each one is credited in the app.
+2. **Zakat calculator:** zakat maal and fitrah, with the nisab entered manually first and a gold-price source added later.
+3. **Nearby mosques:** needs a maps or places provider, so it waits on a cost and privacy review.
+4. **Optional backup and sync** of bookmarks and reading history across devices.
+5. **More Hijri calendar sources** (KHGT, Diyanet), next to Umm al-Qura and MABIMS (Phase 4, item 3).
+6. **Scheduled alerts on Windows and Linux** (Phase 1, item 2).
+7. **A Calendar tab**, the fifth tab (see Navigation).
+8. **Native Linux chrome** ([Linux](#linux-follow-the-desktop-environment), step 2).
+9. **Infaq through Dahlunas on direct builds** ([Revenue: infaq](#revenue-infaq), Phase 2); Trakteer and Ko-fi links until then.
 ### Features: support daily Muslim activity
 
 Bedug grows from a prayer-times app into a companion for a Muslim's day, week and year. Phases ship in order; each one is usable on its own.
@@ -199,7 +225,7 @@ Bedug grows from a prayer-times app into a companion for a Muslim's day, week an
 - **Content is data, not UI strings.** Religious texts ship as JSON under `assets/content/`, one file per collection with the Arabic once and every translation inline, like the changelog. Only UI labels go through `AppLocalizations`.
 - **Every feature on every platform design** (Liquid Glass, Material 3 Expressive, Fluent), in all four languages, including right-to-left Arabic.
 
-**Phase 1: Daily prayer (next)**
+**Phase 1: Daily prayer**
 
 1. **Qibla direction (done):** compass card in the new Worship tab, using `adhan`'s `Qibla` bearing and the device heading from `flutter_compass` on iOS and Android. Desktop has no compass, so the dial stays north-up and shows the bearing, the distance and the Qibla's angle from the sun while it is up.
 2. **Notification control (done; device delivery checks pending):** a master switch, and for each time an on/off switch with its own early reminder (5, 10, 15 or 30 minutes before) and sound: the system sound, a bundled bedug drum or siren (previewed when picked), on Android any tone already on the phone (the system picker, opened from `MainActivity.kt`, with one channel per tone), or silent. No recorded azan. The sounds ship as `.wav` in `android/app/src/main/res/raw/` (one Android channel per sound) and `assets/sounds/` (previews), and as `.caf` in `ios/Runner/Sounds/` and `macos/Runner/Sounds/`. Android, iOS and macOS queue six days of alerts, refreshed on opening/resuming the app, at midnight while running, and when preferences change. Android falls back to inexact alarms without exact-alarm access; Settings links to system notification settings and exact-alarm permission. Scheduled alerts are not available on Windows or Linux yet.
@@ -221,10 +247,6 @@ Prayer tracking and prayer-progress features (completion logs, streaks and qada 
 1. **Reader (done; device visual checks pending):** a Quran tab with surah, juz and bookmark lists and a "continue reading" row. The reader shows one surah, opens at any ayah, and has the Arabic in the bundled Amiri Quran face with the app language's translation under it (none for Arabic), a text-size control, a bookmark on each ayah and the next surah at the end; the ayah at the top of the screen is saved as the last-read position. `scripts/build_quran_content.py` writes `assets/content/quran/` from tanzil.net: the Uthmani text (CC BY 3.0, verbatim, with its notice), Kemenag's Indonesian, Saheeh International's English and Basmeih's Malay translations, and the surah and juz metadata, with Kemenag's transliterated surah names for Indonesian and Malay. Tanzil opens each first ayah with the basmala, so the reader moves it into the surah's heading. Last-read, bookmarks and text size live in `shared_preferences`. Unlike other content, the text and each translation are separate files, because together they are about 5 MB and only one translation is read at a time. **License:** Tanzil marks its translations for non-commercial use, which is why Bedug has no ads (see [Revenue: infaq](#revenue-infaq)); the voluntary infaq keeps the risk low, but the translator's or publisher's permission would settle it.
 2. **Khatam planner (done; device visual checks pending):** a card at the top of the Quran tab starts a plan of 7, 15, 30 or 60 days and then shows today's target ayah, the share read and the days left, with Continue (the ayah after the last one marked), Change (a new length that spreads what is left from today) and End. Progress is what the reader marks with the flag on an ayah, not the last-read position, so browsing and bookmarks never move it. Progress and targets are measured in juz, which are close to equal in length, and only within a juz by ayahs (`lib/features/quran/khatam.dart`). The plan lives in `shared_preferences`.
 3. **Ayah of the day (done; device visual checks pending):** a card under the picked day's prayer times and a home screen widget (small, medium and large on iOS; resizable on Android), both opening the reader at the ayah. `assets/content/quran/daily_ayahs.json` is curated by hand: occasions (Hijri dates such as Ramadan's last ten nights, Arafah and the two Eids, whole Hijri months such as Ramadan and Rabiulawal, and Fridays), then themes for other days, each with why it is shown in every language. The most specific occasion wins (a few Hijri days over a month over Friday) and ordinary days take the themes in turn (`lib/features/quran/daily_ayah.dart`). Hijri dates are the daytime date's in the chosen calendar source, moved by the Hijri date adjustment. `scripts/build_daily_ayahs.py` copies each ayah's text and translations from the reader's files into the same JSON, so the card and the widget never load the whole Quran. The app shares seven days with the widget, which changes at midnight; the selection and its reasons need the same qualified review as the dzikir before release.
-4. **Murattal (audio recitation; waiting on licenses):** the reader plays from any ayah, highlights and follows the ayah being recited (turning pages in page mode), repeats an ayah or a range for memorization, and keeps playing in the background with lock-screen controls; a reciter picker lives in Settings and each surah streams or downloads for offline listening, with a storage screen to remove downloads. A full Quran is roughly 0.7–1 GB per reciter at 64 kbps, so audio is never bundled, and streaming tells the host what is played, which the app states. Background playback needs the iOS background audio mode and an Android media-playback foreground service declared in Play Console.
-   - **Several sources behind one interface:** each source is an adapter that turns a reciter, surah and ayah into an audio URL and optional timings, and the reciter list is data under `assets/content/`, so adding a reciter or source is mostly data. Features that only some sources have (word timings) fall back to ayah-level highlighting. Ship with one source and one or two reciters whose permission is confirmed, then add more.
-   - **Candidate sources (checked 2026-10-31):** [EveryAyah](https://everyayah.com) (one file per ayah, many reciters; no site-wide license, only a backlink request, and recitation rights unclear), the [Quran Foundation API](https://api-docs.quran.foundation/docs/sdk/audio/) (per-surah and per-ayah audio with ayah and word timings; needs API credentials through a backend; its [developer terms](https://api-docs.quran.foundation/legal/developer-terms/) require a separate written license for commercial redistribution), and [alquran.cloud](https://alquran.cloud/terms-and-conditions) (recitations licensed by the reciters for free, non-commercial redistribution only). Kemenag publishes no audio API or license.
-   - **Open:** Bedug has no ads, but the paid infaq may still count as commercial use under a candidate's terms, so check each one, and where in doubt get written permission (Quran Foundation's commercial license, or the reciter or their estate) before it ships, and each one is credited in the app.
 
 **Phase 4: The Islamic year**
 
@@ -234,19 +256,12 @@ Prayer tracking and prayer-progress features (completion logs, streaks and qada 
 4. **Ramadan mode:** sahur and iftar countdown and a fasting log.
 5. **Sunnah fasting reminders:** Monday and Thursday, Ayyamul Bidh, Arafah, Ashura.
 
-**Phase 5: Beyond the device (later)**
-
-1. **Zakat calculator:** zakat maal and fitrah, with the nisab entered manually first and a gold-price source added later.
-2. **Nearby mosques:** needs a maps or places provider, so it waits on a cost and privacy review.
-3. **Optional backup and sync** of bookmarks and reading history across devices.
-
 **Navigation.** Three tabs can't hold this. Phase 1 adds a **Worship** tab (Qibla, and later dzikir and dua); Phase 3 adds a **Quran** tab (done), giving four: Prayer times, Worship, Quran, Settings, and a Calendar tab later makes five.
 
 **Open decisions**
 
 - Licenses for each language's Quran translation (Kemenag, Saheeh International, Basmeih), duas and dzikir.
-- Licenses for murattal audio: which source and reciters to ask first (see Phase 3, item 4).
-- Whether Phase 1 ships as one release or feature by feature.
+- Licenses for murattal audio: which source and reciters to ask first (see [After release](#after-release)).
 
 ### Linux: follow the desktop environment
 
