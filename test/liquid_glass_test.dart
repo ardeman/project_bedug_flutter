@@ -1,3 +1,5 @@
+import 'dart:ui' show DisplayFeature, DisplayFeatureState, DisplayFeatureType;
+
 import 'package:bedug/core/design/liquid_glass.dart';
 import 'package:bedug/core/theme/app_theme.dart';
 import 'package:bedug/core/theme/app_theme_scope.dart';
@@ -635,4 +637,34 @@ void main() {
       );
     }
   }
+
+  testWidgets('a fold only splits the screen while half open', (tester) async {
+    Rect? found;
+    Future<void> pumpFold(DisplayFeatureState state) {
+      tester.view.displayFeatures = [
+        DisplayFeature(
+          bounds: const Rect.fromLTWH(400, 0, 0, 600),
+          type: DisplayFeatureType.fold,
+          state: state,
+        ),
+      ];
+      return tester.pumpWidget(
+        Builder(
+          builder: (ctx) {
+            found = verticalFoldOf(ctx);
+            return const SizedBox();
+          },
+        ),
+      );
+    }
+
+    tester.view.physicalSize = const Size(800, 600);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+
+    await pumpFold(DisplayFeatureState.postureHalfOpened);
+    expect(found, const Rect.fromLTWH(400, 0, 0, 600));
+    await pumpFold(DisplayFeatureState.postureFlat);
+    expect(found, isNull);
+  });
 }

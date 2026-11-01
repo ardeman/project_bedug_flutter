@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../core/constants/app_colors.dart';
+import '../../core/design/liquid_glass.dart';
 import '../../core/theme/app_tokens.dart';
 import '../../generated/l10n/app_localizations.dart';
 import 'quran.dart';
@@ -46,6 +47,10 @@ class QuranMushafView extends StatefulWidget {
 
   /// Below this width two pages would be too small to read.
   static const spreadMinWidth = 600.0;
+
+  /// How far down iPhone Duo's side bar its status items reach (the clock
+  /// over the battery ring), measured on the simulator.
+  static const _sideBarStatusBottom = 74.0;
 
   /// Whether a window of [size] shows two facing pages.
   static bool showsSpread(Size size) =>
@@ -167,12 +172,27 @@ class _QuranMushafViewState extends State<QuranMushafView>
   Widget build(BuildContext ctx) {
     final l10n = AppLocalizations.of(ctx);
     final media = MediaQuery.of(ctx);
+    // iPhone Duo's side bar holds the status items only at its top, so the
+    // pages start below them and run under the bar's empty rest.
+    final sideBar = GlassNavBar.railSideOf(ctx) != null;
+    var left = sideBar ? 0.0 : media.padding.left;
+    var right = sideBar ? 0.0 : media.padding.right;
+    // Held like a book, the spine lies along the fold, each page on its own
+    // half, with equal margins wherever the insets are uneven.
+    final fold = verticalFoldOf(ctx);
+    if (fold != null && media.size.width > media.size.height) {
+      final half = min(fold.left - left, media.size.width - right - fold.right);
+      left = fold.left - half;
+      right = media.size.width - fold.right - half;
+    }
     return Padding(
       padding: EdgeInsets.only(
-        top: widget.topInset,
+        top: sideBar
+            ? max(widget.topInset, QuranMushafView._sideBarStatusBottom)
+            : widget.topInset,
         bottom: media.padding.bottom,
-        left: media.padding.left,
-        right: media.padding.right,
+        left: left,
+        right: right,
       ),
       child: LayoutBuilder(
         builder: (ctx, constraints) {

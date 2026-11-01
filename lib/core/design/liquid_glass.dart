@@ -1,5 +1,5 @@
 import 'dart:math' as math;
-import 'dart:ui' show lerpDouble;
+import 'dart:ui' show DisplayFeatureState, lerpDouble;
 
 import 'package:material_ui/material_ui.dart';
 import 'package:liquid_glass_easy/liquid_glass_easy.dart';
@@ -257,6 +257,24 @@ class GlassNavBar extends StatelessWidget {
       );
     });
   }
+}
+
+/// The fold or hinge running down the screen, in the view's coordinates, or
+/// null when there is none. Like [DisplayFeatureSubScreen], a fold only
+/// counts while the screen is half open, held like a book; flat, it is just
+/// part of the screen.
+Rect? verticalFoldOf(BuildContext ctx) {
+  final size = MediaQuery.sizeOf(ctx);
+  for (final feature in MediaQuery.displayFeaturesOf(ctx)) {
+    final bounds = feature.bounds;
+    final splits =
+        bounds.shortestSide > 0 ||
+        feature.state == DisplayFeatureState.postureHalfOpened;
+    if (splits && bounds.top <= 0 && bounds.bottom >= size.height) {
+      return bounds;
+    }
+  }
+  return null;
 }
 
 /// Keeps [child] clear of the system's vertical bar on iPhone Duo (see
@@ -723,6 +741,11 @@ class GlassTopBar extends StatelessWidget implements PreferredSizeWidget {
     final titleStyle = theme.textTheme.titleMedium?.copyWith(
       color: theme.colorScheme.onSurface,
     );
+    // Half folded like a book, the title stays off the fold, over the half
+    // that holds the back button.
+    final fold = verticalFoldOf(ctx);
+    final leftInset = MediaQuery.paddingOf(ctx).left;
+    final rtl = Directionality.of(ctx) == TextDirection.rtl;
     return SizedBox(
       height: kToolbarHeight + MediaQuery.of(ctx).padding.top,
       child: Stack(
@@ -740,16 +763,24 @@ class GlassTopBar extends StatelessWidget implements PreferredSizeWidget {
             bottom: false,
             child: LayoutBuilder(
               builder: (ctx, box) {
+                final otherHalf = fold == null
+                    ? EdgeInsets.zero
+                    : rtl
+                    ? EdgeInsets.only(left: fold.right - leftInset)
+                    : EdgeInsets.only(
+                        right: box.maxWidth - (fold.left - leftInset),
+                      );
                 final (:padding, :centered) = _titlePlacement(
                   ctx,
                   title,
-                  box.maxWidth,
+                  box.maxWidth - otherHalf.horizontal,
                   style: titleStyle,
                   leadingWidth: leadingWidth,
-                  trailingWidth: trailingWidth,
+                  // The actions sit over the other half.
+                  trailingWidth: fold == null ? trailingWidth : 0,
                 );
                 return Padding(
-                  padding: padding,
+                  padding: otherHalf.add(padding),
                   child: Align(
                     alignment: centered
                         ? Alignment.center
