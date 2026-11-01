@@ -21,6 +21,10 @@ concurrency:
 jobs:
   flutter:
     runs-on: ubuntu-latest
+    # The tests' expected times are written for Jakarta (WIB), as on the
+    # developer's machine.
+    env:
+      TZ: Asia/Jakarta
     steps:
       - uses: actions/checkout@v7
 

@@ -427,28 +427,25 @@ final nextPrayerProvider = Provider<({String key, DateTime? time})>((ref) {
   if (times == null) return (key: '--', time: null);
 
   final now = clock.now();
-  final currentTimes = prayerTimesOn(times, now);
-  final schedule = {
-    'fajr': currentTimes.fajr,
-    'dhuhr': currentTimes.dhuhr,
-    'asr': currentTimes.asr,
-    'maghrib': currentTimes.maghrib,
-    'isha': currentTimes.isha,
-  };
-
-  // After Isha, count down to the next day's Fajr so it never goes negative.
-  final next =
-      schedule.entries
-          .where((e) => e.value.isAfter(now))
-          .map((e) => (key: e.key, time: e.value))
-          .firstOrNull ??
-      (
-        key: 'fajr',
-        time: prayerTimesOn(
-          times,
-          DateTime(now.year, now.month, now.day + 1),
-        ).fajr,
-      );
+  // The device's date can differ from the location's (a city picked in
+  // another time zone), so look at the days either side and take the
+  // earliest time still ahead. This also counts down to the next day's Fajr
+  // after Isha, and never returns `now`, which would re-fire the timer below
+  // forever.
+  final next = [
+    for (final offset in const [-1, 0, 1])
+      for (final day in [
+        prayerTimesOn(times, DateTime(now.year, now.month, now.day + offset)),
+      ])
+        for (final e in {
+          'fajr': day.fajr,
+          'dhuhr': day.dhuhr,
+          'asr': day.asr,
+          'maghrib': day.maghrib,
+          'isha': day.isha,
+        }.entries)
+          if (e.value.isAfter(now)) (key: e.key, time: e.value),
+  ].reduce((a, b) => b.time.isBefore(a.time) ? b : a);
 
   // Move on to the following prayer once this one's time arrives.
   final timer = Timer(next.time.difference(now), ref.invalidateSelf);
