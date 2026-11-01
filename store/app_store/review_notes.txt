@@ -1,0 +1,7 @@
+Bedug is a free prayer-times app. There are no accounts, no ads, no analytics and no tracking. Prayer times, the Hijri calendar and the Qibla are calculated on the device; the Quran, dzikir and duas are bundled, so the app works offline. Location is optional (a city can be picked by hand instead) and is used only on the device to calculate prayer times; it is never sent anywhere.
+
+To try it: allow location or pick a city in Settings → Prayer times. The Worship tab holds the Qibla, dzikir, duas, the Hijri events, the fasting log and the zakat calculator; the Quran tab holds the reader.
+
+In-app purchases: Settings → About → Infaq offers three non-consumable in-app purchases (infaq_small, infaq_medium, infaq_large). Infaq is a voluntary in-app purchase that funds Bedug's development. No money goes to a charity or a third party. It unlocks no features; the app only thanks the giver. Restore purchases is on the same screen.
+
+Privacy policy: https://bedug.ardeman.com/en/privacy/

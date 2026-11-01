@@ -353,6 +353,18 @@ The infaq method depends on where the build is distributed, not only on the plat
 - Create the Trakteer and Ko-fi accounts and put the handles in the code (`InfaqLinks` in `lib/features/infaq/infaq_provider.dart` assumes `trakteer.id/bedug` and `ko-fi.com/bedug`).
 - Enroll in Apple's Small Business Program so the App Store takes 15% instead of 30% (Google applies 15% to the first US$1M a year automatically).
 
+## Store screenshots
+
+The App Store and Google Play slides are made from the real app with sample data (Jakarta, Kemenag, a fixed clock), in Indonesian and English, on every store device (`_devices` in `tool/screenshots/screenshots_test.dart`):
+
+```sh
+tool/fetch_bezels.sh                                     # once per machine: device frames into store/bezels/ (git-ignored)
+flutter test tool/screenshots --update-goldens           # screens → tool/screenshots/out/devices/ (git-ignored)
+store/render.sh                                          # slides, feature graphic, header and search result
+```
+
+`store/render.sh` writes `store/google_play/<locale>/{feature_graphic.png,screenshots,phone_screenshots}` and `store/app_store/<locale>/{header.png,search_result.png,screenshots/{iphone,ipad,mac,duo}}` for `id` and `en-US`, eight slides each, with the captions in the script. Headless Chrome is sometimes killed mid-render (exit 137): run it again. The frames include Apple's, whose license forbids sharing them, so they stay out of the repo. These renders draw plain blurs, not liquid-glass shaders. Not part of the Checks.
+
 ## Website
 
 The landing page at [bedug.ardeman.com](https://bedug.ardeman.com) is a static site built by `site/build.py` (Python standard library only) and served by a Cloudflare Worker (`wrangler.jsonc`). Its only script makes the home page's phone mock live: the Worker adds the visitor's approximate location from Cloudflare to the home pages, and `live.js` shows that place's prayer times, Hijri date and countdown. It has a home page, a changelog and a privacy policy in Indonesian (at `/`), English (`/en/`), Arabic (`/ar/`, right to left) and Malay (`/ms/`).
@@ -398,7 +410,28 @@ The store listing follows KBBI ("salat") in the name and subtitle, and reaches p
 - **Subtitle:** `Azan, Kiblat & Imsakiyah`
 - **Keywords:** `sholat,shalat,solat,adzan,waktu,muslim,ramadan,imsak,doa,masjid,kalender,hijriah,puasa`
 
-macOS uses the same bundle ID; add it in App Store Connect with **+** next to the iOS app. A Mac App Store build also needs the App Sandbox and Apple Distribution plus installer certificates.
+The listing text for every language is in `store/app_store/<locale>/` (and the review notes in `store/app_store/review_notes.txt`); the screenshots come from `store/render.sh` (see Store screenshots).
+
+macOS uses the same bundle ID and has its own version in App Store Connect. Build, archive and export it, then upload the `.pkg`:
+
+```sh
+flutter build macos --release --build-number=<n>
+xcodebuild -workspace macos/Runner.xcworkspace -scheme Runner -configuration Release -archivePath build/macos/Bedug.xcarchive archive
+xcodebuild -exportArchive -archivePath build/macos/Bedug.xcarchive -exportPath build/macos/export -exportOptionsPlist <plist> -allowProvisioningUpdates
+xcrun altool --upload-app --type macos -f build/macos/export/Bedug.pkg --apiKey "$ASC_KEY_ID" --apiIssuer "$ASC_ISSUER_ID"
+```
+
+The export plist sets `method` `app-store-connect`, `signingStyle` `automatic` and `teamID` `B36A8H9S8E`. The Mac `Info.plist` needs `LSApplicationCategoryType`, or App Store Connect rejects the package.
+
+## Android release (Google Play)
+
+The Play app is **Bedug: Jadwal Salat** (`com.ardeman.bedug`, default language Indonesian). Release builds are signed with the upload key named in `android/key.properties` (git-ignored); without that file they are debug-signed, which Play rejects. The key lives outside the repo, under `/Volumes/ardeman.com/assets/advanced-data/bedug/`; keep a backup off this Mac, since updates can't be published without it.
+
+```sh
+flutter build appbundle --release --build-number=<n>   # → build/app/outputs/bundle/release/app-release.aab
+```
+
+Use the same build number as the Apple builds. The listing text is in `store/google_play/<locale>/` and the graphics come from `store/render.sh`. A new developer account must run a closed test with at least 12 testers for 14 days before it can apply for production access.
 
 ## macOS
 

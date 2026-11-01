@@ -49,3 +49,7 @@ app.*.map.json
 
 # Local `wrangler dev` state
 .wrangler/
+
+# Store screenshot renders (tool/screenshots) and device frames (tool/fetch_bezels.sh); Apple's frames may not be shared.
+/tool/screenshots/out/
+/store/bezels/
