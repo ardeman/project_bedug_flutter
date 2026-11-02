@@ -54,6 +54,7 @@
     "Zulhijjah"
   ],
   "hero": {
+    "eyebrow": "Rentak yang lebih tenang, setiap hari",
     "title": "Beduk masjid, dalam poket anda.",
     "lead": "Sebelum azan, masjid di seluruh Nusantara memukul beduk. Aplikasi ini melakukan tugas yang sama: memberitahu bila solat seterusnya di mana-mana sahaja anda berada, dan menyimpan al-Quran, zikir dan arah kiblat dekat dengan anda untuk waktu di antaranya.",
     "cta_download": "Muat turun",
@@ -61,6 +62,7 @@
     "note": "Percuma di iPhone, iPad, Android, Mac, Windows dan Linux. Tanpa iklan, tanpa akaun, dan boleh digunakan tanpa internet."
   },
   "features": {
+    "title": "Untuk waktu antara solat",
     "showcase": [
       {
         "screen": "quran",

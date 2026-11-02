@@ -2,7 +2,7 @@
 """Builds the Bedug landing page into site/dist.
 
 Content lives in site/i18n/<locale>.json, links in site/config.json and the
-styles, the home page's one script and the app screens in site/static/. The
+styles, the home page's scripts and the app screens in site/static/. The
 fonts, the icon and the changelog come from the app's own assets so each has
 one source. Standard library only, so Cloudflare
 can run it as the build command: `python3 site/build.py`.
@@ -301,12 +301,12 @@ class Site:
         # Screens exist in Indonesian and English (site/screens.sh).
         suffix = "-id" if loc == "id" else ""
         return "".join(
-            f'<article class="feature">'
-            f'<img class="shot" src="/assets/screens/{f["screen"]}{suffix}.webp" '
-            f'alt="{attr(f["alt"])}" width="{SHOT_SIZE[0]}" height="{SHOT_SIZE[1]}" loading="lazy">'
-            f'<div class="feature-text"><h2>{f["title"]}</h2><p>{f["body"]}</p></div>'
+            f'<article class="feature" id="feature-{f["screen"]}">'
+            f'<div class="shot-stage"><img class="shot" src="/assets/screens/{f["screen"]}{suffix}.webp" '
+            f'alt="{attr(f["alt"])}" width="{SHOT_SIZE[0]}" height="{SHOT_SIZE[1]}" loading="lazy"></div>'
+            f'<div class="feature-text"><span class="feature-number" aria-hidden="true">0{i + 1}</span><h2>{f["title"]}</h2><p>{f["body"]}</p></div>'
             f"</article>"
-            for f in s["features"]["showcase"]
+            for i, f in enumerate(s["features"]["showcase"])
         )
 
     def home(self, loc):
@@ -314,6 +314,10 @@ class Site:
         more = "".join(
             f'<div><dt>{f["title"]}</dt><dd>{f["body"]}</dd></div>'
             for f in s["features"]["more"]
+        )
+        feature_links = "".join(
+            f'<a href="#feature-{f["screen"]}">{f["title"]}</a>'
+            for f in s["features"]["showcase"]
         )
         stores = "".join(self.store_row(loc, st) for st in self.config["stores"])
         r = s["roadmap"]
@@ -340,6 +344,7 @@ class Site:
 <section class="hero">
 <div class="wrap hero-inner">
 <div class="hero-copy">
+<p class="eyebrow">{s['hero']['eyebrow']}</p>
 <h1>{s['hero']['title']}</h1>
 <p class="lead">{s['hero']['lead']}</p>
 <div class="btn-row">
@@ -348,12 +353,15 @@ class Site:
 </div>
 <p class="hero-note">{s['hero']['note']}</p>
 </div>
-{self.mock(s)}
+<div class="hero-stage">{self.mock(s)}</div>
 </div>
 </section>
 
 <section id="features" class="features">
-<div class="wrap">{self.showcase(loc)}</div>
+<div class="wrap">
+<div class="features-intro"><h2>{s['features']['title']}</h2>
+<nav class="feature-links" aria-label="{attr(s['nav']['features'])}">{feature_links}</nav></div>
+{self.showcase(loc)}</div>
 </section>
 
 <section class="section more">
@@ -534,7 +542,8 @@ class Site:
         shutil.copy(BRANDING / "icon_monochrome.svg", assets / "drum.svg")
         shutil.copytree(SITE / "static" / "screens", assets / "screens")
         shutil.copy(SITE / "static" / "icon-512.png", assets / "icon.png")
-        shutil.copy(SITE / "static" / "live.js", assets / "live.js")
+        for name in ("live.js", "experience.js"):
+            shutil.copy(SITE / "static" / name, assets / name)
         shutil.copytree(SITE / "static" / "vendor", assets / "vendor")
         for name in ("_headers", "robots.txt"):
             shutil.copy(SITE / "static" / name, DIST / name)

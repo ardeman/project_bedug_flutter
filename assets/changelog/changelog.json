@@ -5,6 +5,15 @@
       "date": null,
       "changes": [
         {
+          "type": "improved",
+          "text": {
+            "en": "A refreshed landing page with gentle transitions, clearer feature previews and easier navigation on phones.",
+            "id": "Halaman web diperbarui dengan transisi lembut, pratinjau fitur yang lebih jelas, dan navigasi yang lebih mudah di ponsel.",
+            "ms": "Halaman web diperbaharui dengan peralihan lembut, pratonton ciri yang lebih jelas dan navigasi yang lebih mudah pada telefon.",
+            "ar": "صفحة تعريفية مجددة بانتقالات هادئة ومعاينات أوضح للميزات وتنقل أسهل على الهواتف."
+          }
+        },
+        {
           "type": "new",
           "text": {
             "en": "Privacy policy: open it from Settings → About, in your language.",

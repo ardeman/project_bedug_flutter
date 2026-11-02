@@ -54,6 +54,7 @@
     "Dhu al-Hijjah"
   ],
   "hero": {
+    "eyebrow": "A quieter rhythm, every day",
     "title": "The mosque drum, in your pocket.",
     "lead": "Before the adhan, mosques across Indonesia beat the bedug. This app does the same job: it tells you when the next prayer is, wherever you are, and keeps the Quran, dzikir and the Qibla close for the time in between.",
     "cta_download": "Download",
@@ -61,6 +62,7 @@
     "note": "Free on iPhone, iPad, Android, Mac, Windows and Linux. No ads, no account, and it works offline."
   },
   "features": {
+    "title": "For the moments between prayers",
     "showcase": [
       {
         "screen": "quran",

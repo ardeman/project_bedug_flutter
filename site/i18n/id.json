@@ -54,6 +54,7 @@
     "Zulhijah"
   ],
   "hero": {
+    "eyebrow": "Ritme yang lebih tenang, setiap hari",
     "title": "Bedug masjid, di sakumu.",
     "lead": "Sebelum azan, masjid di seluruh Nusantara menabuh bedug. Aplikasi ini melakukan tugas yang sama: memberi tahu kapan salat berikutnya di mana pun kamu berada, dan menyimpan Al-Qur'an, dzikir, dan arah kiblat di dekatmu untuk waktu di antaranya.",
     "cta_download": "Unduh",
@@ -61,6 +62,7 @@
     "note": "Gratis di iPhone, iPad, Android, Mac, Windows, dan Linux. Tanpa iklan, tanpa akun, dan bisa dipakai tanpa internet."
   },
   "features": {
+    "title": "Untuk waktu di antara salat",
     "showcase": [
       {
         "screen": "quran",

@@ -5,6 +5,8 @@
 // (Kemenag RI with the adhan library, Umm al-Qura Hijri dates). Without
 // scripts, the static Jakarta mock stays.
 
+import "./experience.js";
+
 import { CalculationMethod, Coordinates, Madhab, PrayerTimes } from "./vendor/adhan.esm.min.js";
 
 // Monas, central Jakarta: the place the static mock shows.

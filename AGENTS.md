@@ -31,7 +31,7 @@ A change is done only when the **Checks** command in `README.md` passes. If you 
 - Text styles come from `Theme.of(ctx).textTheme` (font: bundled Plus Jakarta Sans), spacing from `AppSpacing` and corner radii from `AppRadii` (`lib/core/theme/app_tokens.dart`). Override a text style with `copyWith` instead of building a new `TextStyle` with a raw `fontSize`.
 - Code comments are in English.
 - Release notes live in `assets/changelog/changelog.json`, newest release first, each change typed `new`, `improved` or `fixed` and written in all four languages. The app's What's New screen and the website's changelog page both read it, so it is the one place user-facing text skips the ARB files. When a commit changes what users see, add a line to the top release. The top release's version must match `version:` in `pubspec.yaml` (a test checks this); its `date` stays `null` until it ships.
-- Landing page text lives in `site/i18n/*.json`, with every key in all four languages; the site's only script is the home page's live phone mock (`site/static/live.js` with the vendored `adhan` library), and its CSP allows same-origin scripts only, with inline scripts and styles blocked. See "Website" in `README.md`.
+- Landing page text lives in `site/i18n/*.json`, with every key in all four languages; the home page's scripts are the live phone mock (`site/static/live.js` with the vendored `adhan` library) and its progressive page interactions (`site/static/experience.js`), and its CSP allows same-origin scripts only, with inline scripts and styles blocked. See "Website" in `README.md`.
 
 ## Platform design
 

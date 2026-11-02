@@ -1,5 +1,5 @@
 # Cloudflare response headers. The only scripts are the home page's live
-# phone mock (assets/live.js and the adhan library it imports), from this
+# phone mock and page interactions (assets/live.js, experience.js and adhan), from this
 # origin; inline scripts and styles stay blocked.
 /*
   Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
