@@ -336,9 +336,30 @@ img {
 /* Hero --------------------------------------------------------------- */
 
 .hero {
+  --accent: #4fbf8f; /* emeraldDark against the night-green hero */
+  --accent-strong: #6fd3a7;
+  --on-accent: #08130e;
+  --text: #e8efeb;
+  --muted: #b9cbc0;
+  --surface: #17201c;
+  --line: rgba(232, 239, 235, 0.2);
+  --tint: rgba(79, 191, 143, 0.12);
   position: relative;
+  isolation: isolate;
+  overflow: clip;
   padding-block: 48px 72px;
-  background: radial-gradient(ellipse at 85% 35%, var(--tint), transparent 60%);
+  background: #0e1512;
+  color: var(--text);
+}
+
+.hero-atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 85% 35%, rgba(31, 122, 90, 0.65), transparent 60%),
+    radial-gradient(ellipse at 10% 100%, rgba(201, 154, 59, 0.12), transparent 55%);
 }
 
 .eyebrow {
@@ -380,7 +401,7 @@ img {
   inset: 0;
   border-radius: 220px 220px 40px 40px;
   border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
-  background: linear-gradient(155deg, var(--tint), var(--bg-alt));
+  background: linear-gradient(155deg, var(--tint), transparent);
 }
 
 .hero-stage::after {
@@ -402,7 +423,8 @@ img {
 
 @media (min-width: 900px) {
   .hero {
-    padding-block: 72px 96px;
+    padding-block: 64px 96px;
+    min-height: calc(100svh - 64px);
   }
 
   .hero-inner {
@@ -772,10 +794,9 @@ img {
   display: grid;
   gap: 32px;
   align-items: center;
-  padding: 28px;
-  border: 1px solid var(--line);
-  border-radius: 32px;
-  background: var(--surface);
+  position: relative;
+  padding: 48px 0;
+  border-top: 1px solid var(--line);
 }
 
 .feature + .feature {
@@ -784,14 +805,15 @@ img {
 
 @media (min-width: 760px) {
   .feature {
-    grid-template-columns: 300px minmax(0, 1fr);
-    gap: 64px;
-    padding: 48px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 80px;
+    min-height: 88svh;
+    padding: 72px 0;
   }
 
   /* Every other screen sits on the far side. */
   .feature:nth-of-type(even) {
-    grid-template-columns: minmax(0, 1fr) 300px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
 
   .feature:nth-of-type(even) .shot-stage {
@@ -801,7 +823,7 @@ img {
 
 .shot {
   justify-self: center;
-  width: min(250px, 100%);
+  width: min(280px, 100%);
   height: auto;
   border-radius: 28px;
   border: 1px solid var(--line);
@@ -814,7 +836,7 @@ img {
 }
 
 .feature h2 {
-  font-size: clamp(26px, 3.2vw, 36px);
+  font-size: clamp(30px, 4vw, 52px);
   font-weight: 800;
   letter-spacing: -0.02em;
 }
@@ -1284,7 +1306,8 @@ img {
 }
 
 .top-nav a[aria-current="location"],
-.feature-links a:hover {
+.feature-links a:hover,
+.feature-links a[aria-current="location"] {
   color: var(--accent);
   background: var(--tint);
 }
@@ -1342,7 +1365,7 @@ img {
   }
 
   .feature {
-    padding: 24px;
+    padding: 40px 0;
   }
 
   .feature-text {
@@ -1378,4 +1401,119 @@ img {
   .btn:active {
     transform: none;
   }
+}
+
+/* Immersive chapters. Scroll timelines remain a progressive enhancement:
+   browsers without them retain the complete, static composition. */
+.hero-explore {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  width: min(220px, calc(100% - 32px));
+  margin: 40px auto 0;
+  padding-block: 12px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.hero-explore span { font-size: 24px; color: var(--accent); }
+
+.prayer-orbit {
+  position: absolute;
+  z-index: -1;
+  width: 155%;
+  aspect-ratio: 1;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  pointer-events: none;
+  box-shadow: 0 0 0 42px rgba(79, 191, 143, 0.035),
+    0 0 0 84px rgba(79, 191, 143, 0.025);
+}
+
+.prayer-orbit i {
+  position: absolute;
+  inset: calc(50% - 4px);
+  border-radius: 50%;
+  background: var(--gold);
+  transform: rotate(var(--angle)) translateY(-290px);
+  box-shadow: 0 0 16px rgba(201, 154, 59, 0.3);
+}
+.prayer-orbit i:nth-child(1) { --angle: -60deg; }
+.prayer-orbit i:nth-child(2) { --angle: 0deg; }
+.prayer-orbit i:nth-child(3) { --angle: 60deg; }
+.prayer-orbit i:nth-child(4) { --angle: 120deg; }
+.prayer-orbit i:nth-child(5) { --angle: 240deg; }
+
+.hero-stage .phone {
+  transform: rotate(-4deg);
+  box-shadow: 0 48px 80px -24px rgba(0, 0, 0, 0.65);
+}
+
+.feature-number {
+  width: fit-content;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--gold);
+  font-size: 18px;
+}
+
+.shot-stage {
+  position: relative;
+  isolation: isolate;
+  padding-block: 48px;
+  border-radius: 220px 220px 36px 36px;
+}
+
+.shot-stage::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 20px;
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.feature:nth-of-type(even) .shot-stage { border-radius: 36px 36px 220px 220px; }
+
+@media (min-width: 900px) {
+  .hero-inner { grid-template-columns: minmax(0, 1fr) 390px; }
+  .features-intro { padding-block: 88px 48px; }
+  .feature-text { position: sticky; top: 160px; align-self: center; }
+}
+
+@media (max-width: 759px) {
+  .hero-stage .phone { transform: none; }
+  .prayer-orbit { width: 120%; }
+  .prayer-orbit i { display: none; }
+  .hero { padding-top: 40px; }
+  .hero h1 { font-size: clamp(40px, 9vw, 64px); }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 900px) {
+    .hero { view-timeline-name: --hero; }
+    .hero-atmosphere {
+      animation: atmosphere-shift linear both;
+      animation-timeline: --hero;
+      animation-range: exit 0% exit 100%;
+    }
+    .feature { view-timeline-name: --chapter; }
+    .shot {
+      animation: chapter-depth linear both;
+      animation-timeline: --chapter;
+      animation-range: entry 0% exit 100%;
+    }
+  }
+}
+
+@keyframes atmosphere-shift {
+  to { transform: translateY(18%) scale(1.12); opacity: 0.35; }
+}
+@keyframes chapter-depth {
+  from { transform: translateY(32px) rotate(-3deg); }
+  50% { transform: translateY(0) rotate(0); }
+  to { transform: translateY(-32px) rotate(3deg); }
 }

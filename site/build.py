@@ -342,6 +342,7 @@ class Site:
             + f"""
 <main id="main">
 <section class="hero">
+<div class="hero-atmosphere" aria-hidden="true"></div>
 <div class="wrap hero-inner">
 <div class="hero-copy">
 <p class="eyebrow">{s['hero']['eyebrow']}</p>
@@ -353,8 +354,9 @@ class Site:
 </div>
 <p class="hero-note">{s['hero']['note']}</p>
 </div>
-<div class="hero-stage">{self.mock(s)}</div>
+<div class="hero-stage"><div class="prayer-orbit" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>{self.mock(s)}</div>
 </div>
+<a class="hero-explore" href="#features">{s["nav"]["features"]}<span aria-hidden="true">↓</span></a>
 </section>
 
 <section id="features" class="features">

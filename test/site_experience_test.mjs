@@ -26,16 +26,19 @@ function setup({ reduced = false, observers = true, hash = '' } = {}) {
   const feature = element('features');
   const download = element('download');
   const links = [element('features'), element('download')];
+  const chapterLinks = [element('feature-quran'), element('feature-dzikir')];
+  const chapters = { 'feature-quran': element('feature-quran'), 'feature-dzikir': element('feature-dzikir') };
   const summary = { focused: false, focus() { this.focused = true; } };
   const language = { open: true, contains: target => target === summary, querySelector: () => summary };
   const document = {
     querySelectorAll(selector) {
       if (selector.startsWith('.hero-copy')) return [hero];
       if (selector.startsWith('.top-nav')) return links;
+      if (selector.startsWith('.feature-links')) return chapterLinks;
       return [feature];
     },
     querySelector: () => language,
-    getElementById: id => ({ features: feature, download })[id],
+    getElementById: id => ({ features: feature, download, ...chapters })[id],
     addEventListener: (name, fn) => { events[name] = fn; },
   };
   class Observer {
@@ -46,7 +49,7 @@ function setup({ reduced = false, observers = true, hash = '' } = {}) {
   const window = { matchMedia: () => motion, location: { hash }, scrollY: 0 };
   if (observers) window.IntersectionObserver = Observer;
   runInNewContext(source, { window, document, IntersectionObserver: Observer });
-  return { events, motion, animations, observersCreated, hero, feature, download, links, language, summary };
+  return { events, motion, animations, observersCreated, hero, feature, download, links, chapterLinks, chapters, language, summary };
 }
 
 test('reduced motion skips entrances and scroll animations', () => {
@@ -100,4 +103,22 @@ test('older browsers and deep links retain navigation without entrance motion', 
   assert.equal(s.observersCreated.length, 0);
   s.events.keydown({ key: 'Escape' });
   assert.equal(s.language.open, false);
+});
+
+
+test('chapter navigation tracks the visible app screen independently of main navigation', () => {
+  const s = setup();
+  s.observersCreated[1].callback([{ target: s.feature, isIntersecting: true }]);
+  const observer = s.observersCreated[2];
+  const quran = s.chapters['feature-quran'];
+  const dzikir = s.chapters['feature-dzikir'];
+  assert.equal(observer.targets.size, 2);
+  observer.callback([{ target: quran, isIntersecting: true }]);
+  assert.equal(s.chapterLinks[0].attributes['aria-current'], 'location');
+  observer.callback([{ target: quran, isIntersecting: false }, { target: dzikir, isIntersecting: true }]);
+  assert.equal(s.chapterLinks[0].attributes['aria-current'], undefined);
+  assert.equal(s.chapterLinks[1].attributes['aria-current'], 'location');
+  assert.equal(s.links[0].attributes['aria-current'], 'location');
+  observer.callback([{ target: dzikir, isIntersecting: false }]);
+  assert.equal(s.chapterLinks[1].attributes['aria-current'], undefined);
 });

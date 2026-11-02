@@ -41,23 +41,27 @@ if ("IntersectionObserver" in window) {
   document.querySelectorAll(".features-intro, .feature, .facts > div, .pledge-inner, .stores > li, .plan > div")
     .forEach((element) => reveals.observe(element));
 
-  const links = [...document.querySelectorAll('.top-nav a[href^="#"]')];
-  const visible = new Set();
-  const sections = new IntersectionObserver((entries) => {
-    for (const entry of entries) {
-      if (entry.isIntersecting) visible.add(entry.target.id);
-      else visible.delete(entry.target.id);
-    }
-    const current = links.find((link) => visible.has(link.hash.slice(1)));
+  function trackSections(selector) {
+    const links = [...document.querySelectorAll(selector)];
+    const visible = new Set();
+    const sections = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) visible.add(entry.target.id);
+        else visible.delete(entry.target.id);
+      }
+      const current = links.find((link) => visible.has(link.hash.slice(1)));
+      for (const link of links) {
+        if (link === current) link.setAttribute("aria-current", "location");
+        else link.removeAttribute("aria-current");
+      }
+    }, { rootMargin: "-20% 0px -45% 0px", threshold: 0 });
     for (const link of links) {
-      if (link === current) link.setAttribute("aria-current", "location");
-      else link.removeAttribute("aria-current");
+      const section = document.getElementById(link.hash.slice(1));
+      if (section) sections.observe(section);
     }
-  }, { rootMargin: "-20% 0px -45% 0px", threshold: 0 });
-  for (const link of links) {
-    const section = document.getElementById(link.hash.slice(1));
-    if (section) sections.observe(section);
   }
+  trackSections('.top-nav a[href^="#"]');
+  trackSections('.feature-links a[href^="#"]');
 }
 
 const language = document.querySelector(".lang");

@@ -7,6 +7,15 @@
         {
           "type": "improved",
           "text": {
+            "en": "A more immersive website with an emerald opening, spacious app previews and gentle scroll-driven depth.",
+            "id": "Halaman web lebih imersif dengan pembuka bernuansa zamrud, pratinjau aplikasi yang lapang, dan efek kedalaman lembut saat menggulir.",
+            "ms": "Laman web lebih imersif dengan pembukaan bernuansa zamrud, pratonton aplikasi yang lapang dan kesan kedalaman lembut semasa menatal.",
+            "ar": "تجربة موقع أكثر تفاعلاً مع افتتاحية زمردية ومعاينات واسعة للتطبيق وعمق بصري لطيف أثناء التمرير."
+          }
+        },
+        {
+          "type": "improved",
+          "text": {
             "en": "More compact download cards make better use of space on the website.",
             "id": "Kartu unduhan yang lebih ringkas memanfaatkan ruang halaman web dengan lebih baik.",
             "ms": "Kad muat turun yang lebih ringkas menggunakan ruang laman web dengan lebih baik.",
