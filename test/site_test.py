@@ -59,6 +59,17 @@ class LandingPageTest(unittest.TestCase):
                 self.assertEqual(sum(tag == "h1" for tag, _ in page.elements), 1)
                 self.assertEqual(sum(tag == "script" for tag, _ in page.elements), 1)
 
+    def test_hero_shows_the_existing_app_icon_before_the_headline(self):
+        for locale in self.site.locales:
+            with self.subTest(locale=locale):
+                source = self.site.home(locale)
+                hero = source.split('<div class="hero-copy">', 1)[1].split('<h1>', 1)[0]
+                icons = [attrs for tag, attrs in Page(hero).elements
+                         if tag == 'img' and attrs.get('class') == 'hero-icon']
+                self.assertEqual(len(icons), 1)
+                self.assertEqual(icons[0]['src'], '/assets/icon.svg')
+                self.assertEqual(icons[0]['alt'], 'Bedug')
+
     def test_feature_menu_has_an_accessible_link_to_every_chapter(self):
         for locale in self.site.locales:
             with self.subTest(locale=locale):

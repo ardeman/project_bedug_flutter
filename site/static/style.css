@@ -1594,12 +1594,20 @@ img {
   zoom: min(1, calc((100cqh - 48px) / 740px), calc((100cqw - 48px) / 340px));
 }
 .hero-copy { padding-block: 12px; }
+.hero-icon {
+  display: block;
+  width: 72px;
+  height: 72px;
+  margin-bottom: 20px;
+  border-radius: 22%;
+}
 .hero h1 { font-size: clamp(36px, 5vw, 64px); }
 .hero .lead { font-size: clamp(16px, 1.5vw, 19px); }
 
 @media (max-width: 899px) {
   .hero-inner { grid-template-rows: auto minmax(0, 1fr); gap: 16px; }
   .hero-copy { align-self: center; }
+  .hero-icon { width: 64px; height: 64px; margin-bottom: 16px; }
   .hero h1 { font-size: clamp(32px, 8vw, 52px); }
   .hero .eyebrow { margin-bottom: 12px; }
   .hero .lead { margin-top: 16px; font-size: 15px; line-height: 1.6; }
@@ -1617,6 +1625,7 @@ img {
 
 @media (max-height: 580px) {
   .hero { padding-block: 16px 8px; }
+  .hero-icon { width: 48px; height: 48px; margin-bottom: 12px; }
   .hero h1 { font-size: 32px; }
   .hero .eyebrow { margin-bottom: 8px; }
   .hero .lead { margin-top: 12px; font-size: 14px; line-height: 1.4; }

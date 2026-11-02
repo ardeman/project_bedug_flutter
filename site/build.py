@@ -344,6 +344,7 @@ class Site:
 <div class="hero-atmosphere" aria-hidden="true"></div>
 <div class="wrap hero-inner">
 <div class="hero-copy">
+<img class="hero-icon" src="/assets/icon.svg" alt="Bedug" width="72" height="72">
 <p class="eyebrow">{s['hero']['eyebrow']}</p>
 <h1>{s['hero']['title']}</h1>
 <p class="lead">{s['hero']['lead']}</p>

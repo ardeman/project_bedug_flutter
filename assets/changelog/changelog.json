@@ -7,6 +7,15 @@
         {
           "type": "improved",
           "text": {
+            "en": "The website opening now shows the Bedug app icon above the headline.",
+            "id": "Bagian pembuka halaman web kini menampilkan ikon aplikasi Bedug di atas judul.",
+            "ms": "Bahagian pembukaan laman web kini memaparkan ikon aplikasi Bedug di atas tajuk.",
+            "ar": "تظهر أيقونة تطبيق Bedug الآن فوق العنوان في مقدمة الموقع."
+          }
+        },
+        {
+          "type": "improved",
+          "text": {
             "en": "Better spacing in the website footer, with the language selector beside the links when space allows.",
             "id": "Jarak di bagian bawah halaman web lebih nyaman, dengan pilihan bahasa di samping tautan saat ruang mencukupi.",
             "ms": "Jarak pengaki laman web lebih selesa, dengan pemilih bahasa di sebelah pautan apabila ruang mencukupi.",
