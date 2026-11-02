@@ -7,6 +7,24 @@
         {
           "type": "improved",
           "text": {
+            "en": "More compact download cards make better use of space on the website.",
+            "id": "Kartu unduhan yang lebih ringkas memanfaatkan ruang halaman web dengan lebih baik.",
+            "ms": "Kad muat turun yang lebih ringkas menggunakan ruang laman web dengan lebih baik.",
+            "ar": "بطاقات تنزيل أكثر إحكامًا تستفيد من مساحة الموقع بشكل أفضل."
+          }
+        },
+        {
+          "type": "fixed",
+          "text": {
+            "en": "Landing-page navigation labels now align vertically with the language selector.",
+            "id": "Teks navigasi halaman web kini sejajar secara vertikal dengan pilihan bahasa.",
+            "ms": "Teks navigasi halaman web kini sejajar secara menegak dengan pemilih bahasa.",
+            "ar": "أصبحت تسميات التنقل في الصفحة التعريفية محاذية عموديًا لمحدد اللغة."
+          }
+        },
+        {
+          "type": "improved",
+          "text": {
             "en": "A refreshed landing page with gentle transitions, clearer feature previews and easier navigation on phones.",
             "id": "Halaman web diperbarui dengan transisi lembut, pratinjau fitur yang lebih jelas, dan navigasi yang lebih mudah di ponsel.",
             "ms": "Halaman web diperbaharui dengan peralihan lembut, pratonton ciri yang lebih jelas dan navigasi yang lebih mudah pada telefon.",

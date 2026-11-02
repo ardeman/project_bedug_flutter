@@ -202,6 +202,8 @@ img {
 }
 
 .top-nav a {
+  display: inline-flex;
+  align-items: center;
   padding: 6px 12px;
   border-radius: 999px;
   color: var(--muted);
@@ -918,8 +920,8 @@ img {
 /* Download ----------------------------------------------------------- */
 
 .stores {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 16px;
   margin: 32px 0 0;
   padding: 0;
@@ -928,10 +930,12 @@ img {
 
 .stores li {
   display: flex;
+  flex: 1 1 180px;
+  min-width: 0;
   flex-direction: column;
   align-items: flex-start;
   gap: 8px;
-  padding: 28px;
+  padding: 20px;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   background: var(--surface);
@@ -948,7 +952,7 @@ img {
 
 .store-status {
   margin-top: auto;
-  padding-top: 20px;
+  padding-top: 8px;
   color: var(--muted);
   font-size: 14px;
 }
@@ -1321,8 +1325,6 @@ img {
   }
 
   .top-nav a {
-    display: inline-flex;
-    align-items: center;
     flex: none;
     padding-inline: 10px;
     font-size: 13px;
