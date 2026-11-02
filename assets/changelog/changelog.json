@@ -5,6 +5,15 @@
       "date": null,
       "changes": [
         {
+          "type": "fixed",
+          "text": {
+            "en": "Android skips reminders missed while the phone was off instead of delivering them all after a restart.",
+            "id": "Android melewati pengingat yang terlewat saat ponsel mati agar tidak muncul sekaligus setelah dinyalakan kembali.",
+            "ms": "Android melangkau peringatan yang terlepas semasa telefon dimatikan supaya tidak muncul serentak selepas dihidupkan semula.",
+            "ar": "يتجاوز أندرويد التذكيرات الفائتة أثناء إيقاف الهاتف بدلاً من إرسالها جميعاً بعد إعادة تشغيله."
+          }
+        },
+        {
           "type": "improved",
           "text": {
             "en": "Subuh uses a bedtime icon and Maghrib a sunset icon consistently in the app, website, home screen widgets and lock screen widgets.",
