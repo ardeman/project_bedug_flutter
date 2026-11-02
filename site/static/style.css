@@ -1253,13 +1253,37 @@ img {
 }
 
 .feature-links {
+  position: sticky;
+  /* Clear the two-row mobile header, plus a small floating gap. */
+  top: 126px;
+  z-index: 5;
   display: flex;
-  flex-wrap: wrap;
   gap: 8px;
-  margin-top: 24px;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto 32px;
+  padding: 8px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg) 90%, transparent);
+  backdrop-filter: saturate(1.6) blur(16px);
+  -webkit-backdrop-filter: saturate(1.6) blur(16px);
+  box-shadow: var(--shadow);
+  scrollbar-width: thin;
+}
+
+/* Anchor destinations must also clear the floating feature links. */
+.feature { scroll-margin-top: 88px; }
+
+@media (min-width: 860px) {
+  .feature-links { top: 80px; }
 }
 
 .feature-links a {
+  flex: none;
+  white-space: nowrap;
   display: inline-flex;
   align-items: center;
   min-height: 44px;

@@ -59,6 +59,20 @@ class LandingPageTest(unittest.TestCase):
                 self.assertEqual(sum(tag == "h1" for tag, _ in page.elements), 1)
                 self.assertEqual(sum(tag == "script" for tag, _ in page.elements), 1)
 
+    def test_feature_menu_has_an_accessible_link_to_every_chapter(self):
+        for locale in self.site.locales:
+            with self.subTest(locale=locale):
+                source = self.site.home(locale)
+                menu = source.split('<nav class="feature-links"', 1)[1].split('</nav>', 1)[0]
+                page = Page('<nav' + menu + '</nav>')
+                nav = next(attrs for tag, attrs in page.elements if tag == 'nav')
+                self.assertEqual(nav['aria-label'], self.site.strings[locale]['nav']['features'])
+                targets = [attrs['href'] for tag, attrs in page.elements if tag == 'a']
+                self.assertEqual(targets, [
+                    '#feature-' + feature['screen']
+                    for feature in self.site.strings[locale]['features']['showcase']
+                ])
+
     def test_unreleased_notes_keep_all_languages(self):
         latest = json.loads(BUILD.CHANGELOG.read_text())["releases"][0]
         self.assertIsNone(latest["date"])

@@ -7,6 +7,15 @@
         {
           "type": "improved",
           "text": {
+            "en": "Website feature navigation now floats below the header while you explore the app previews.",
+            "id": "Navigasi fitur halaman web kini mengambang di bawah tajuk saat Anda menjelajahi pratinjau aplikasi.",
+            "ms": "Navigasi ciri laman web kini terapung di bawah pengepala semasa anda meneroka pratonton aplikasi.",
+            "ar": "أصبح التنقل بين ميزات الموقع عائمًا أسفل الترويسة أثناء استكشاف معاينات التطبيق."
+          }
+        },
+        {
+          "type": "improved",
+          "text": {
             "en": "A more immersive website with an emerald opening, spacious app previews and gentle scroll-driven depth.",
             "id": "Halaman web lebih imersif dengan pembuka bernuansa zamrud, pratinjau aplikasi yang lapang, dan efek kedalaman lembut saat menggulir.",
             "ms": "Laman web lebih imersif dengan pembukaan bernuansa zamrud, pratonton aplikasi yang lapang dan kesan kedalaman lembut semasa menatal.",

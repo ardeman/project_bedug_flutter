@@ -361,8 +361,8 @@ class Site:
 
 <section id="features" class="features">
 <div class="wrap">
-<div class="features-intro"><h2>{s['features']['title']}</h2>
-<nav class="feature-links" aria-label="{attr(s['nav']['features'])}">{feature_links}</nav></div>
+<div class="features-intro"><h2>{s['features']['title']}</h2></div>
+<nav class="feature-links" aria-label="{attr(s['nav']['features'])}">{feature_links}</nav>
 {self.showcase(loc)}</div>
 </section>
 
