@@ -1225,7 +1225,7 @@ img {
   gap: 8px 24px;
 }
 
-.foot-links .lang { flex-basis: 100%; margin: 0; }
+.foot-links .lang { margin: 0; }
 
 .foot-links a {
   display: inline-flex;
@@ -1241,8 +1241,9 @@ img {
 }
 
 @media (max-width: 759px) {
-  .foot-links { position: relative; gap: 8px; font-size: 14px; }
-  .foot-links .lang { position: static; flex-basis: auto; }
+  .foot-links { position: relative; gap: 12px 20px; font-size: 14px; }
+  .foot-links > a { min-height: 44px; }
+  .foot-links .lang { position: static; }
   .foot-github span,
   .foot-links .lang summary span { display: none; }
   .foot-links .foot-github,

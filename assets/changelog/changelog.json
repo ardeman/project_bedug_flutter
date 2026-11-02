@@ -7,6 +7,15 @@
         {
           "type": "improved",
           "text": {
+            "en": "Better spacing in the website footer, with the language selector beside the links when space allows.",
+            "id": "Jarak di bagian bawah halaman web lebih nyaman, dengan pilihan bahasa di samping tautan saat ruang mencukupi.",
+            "ms": "Jarak pengaki laman web lebih selesa, dengan pemilih bahasa di sebelah pautan apabila ruang mencukupi.",
+            "ar": "مسافات أفضل في تذييل الموقع، مع محدد اللغة بجانب الروابط عند توفر المساحة."
+          }
+        },
+        {
+          "type": "improved",
+          "text": {
             "en": "A simpler website footer with GitHub and language icons on phones.",
             "id": "Bagian bawah halaman web lebih ringkas dengan ikon GitHub dan bahasa di ponsel.",
             "ms": "Pengaki laman web lebih ringkas dengan ikon GitHub dan bahasa pada telefon.",
