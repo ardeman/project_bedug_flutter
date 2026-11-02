@@ -386,6 +386,8 @@ The landing page at [bedug.ardeman.com](https://bedug.ardeman.com) is a static s
 
 The build copies the font and `icon.svg` from `assets/`, so the brand has one source, and builds the changelog page from `assets/changelog/changelog.json`. When a store listing or the Trakteer and Ko-fi pages go live, put the URL in `site/config.json`. When the app gains or changes a feature that the home page or the privacy policy describes, update every `site/i18n/*.json`.
 
+The phone preview uses exact Material glyph outlines from Flutter, stored with their license in `site/static/vendor/material-icons/`. After changing its icons, regenerate them on macOS with `swift scripts/export_site_icons.swift /path/to/flutter`.
+
 Edit page markup in `site/templates/`; `${name}` inserts a value supplied by `site/build.py`. The builder prepares localized data, assembles repeated rows and composes the templates. Missing values fail the build; use `$$` for a literal dollar sign in a template. Substitution does not escape HTML: callers escape attributes with `attr()` and plain changelog text with `html.escape()`, while trusted localized copy can contain markup. Keep user-facing copy in the content files above. The build command and dependency-free setup stay the same.
 
 **Cloudflare setup (once):**

@@ -28,6 +28,30 @@ class LandingPageTest(unittest.TestCase):
         self.site = BUILD.Site()
         self.site.css_name = "style.test.css"
 
+    def test_phone_preview_uses_app_material_icons(self):
+        expected = {
+            "bedtime_outlined", "wb_sunny_outlined", "wb_cloudy_outlined",
+            "nights_stay_outlined", "dark_mode_outlined", "access_time_filled",
+            "mosque_outlined", "menu_book_outlined", "settings_outlined",
+            "location_on_outlined", "refresh", "timer_outlined",
+        }
+        app_sources = "\n".join(
+            (ROOT / path).read_text() for path in (
+                "lib/features/prayer_times/prayer_times_screen.dart",
+                "lib/home/home_screen.dart",
+            )
+        )
+        for name in expected:
+            self.assertIn("Icons." + name, app_sources)
+            self.assertTrue(BUILD.MATERIAL_ICONS[name].startswith("M"))
+        for locale in self.site.locales:
+            page = Page(self.site.home(locale))
+            glyphs = [attrs for tag, attrs in page.elements
+                      if tag == "svg" and "data-material-icon" in attrs]
+            self.assertEqual({item["data-material-icon"] for item in glyphs}, expected)
+            self.assertEqual(len(glyphs), len(expected))
+            self.assertTrue(all(item["fill"] == "currentColor" for item in glyphs))
+
     def test_templates_substitute_once_and_reject_missing_values(self):
         with tempfile.TemporaryDirectory() as directory:
             templates = Path(directory)

@@ -30,22 +30,9 @@ FONT_FILES = (
     "PlusJakartaSans-ExtraBold.ttf",
 )
 
-# 24×24 stroke icons drawn with currentColor. The mock's prayer and tab icons
-# stand in for the Material icons the app uses.
+# Stroke icons for the website's own controls.
 ICONS = {
-    "clock": '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
-    "timer": '<circle cx="12" cy="13.5" r="7.5"/><path d="M12 9.5v4M9.5 2.5h5"/>',
-    "refresh": '<path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3M19.5 4v4.5H15"/>',
-    "pin": '<path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>',
     "globe": '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
-    "book": '<path d="M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5z"/><path d="M12 6.5v13"/>',
-    "mosque": '<path d="M4 21V11h16v10M2 21h20M12 3c-3 2-5 4-5 6.5V11h10V9.5C17 7 15 5 12 3zM10 21v-4a2 2 0 0 1 4 0v4"/>',
-    "gear": '<circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/>',
-    "sun": '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
-    "cloud": '<path d="M7 18.5a4.5 4.5 0 0 1-.4-9A6 6 0 0 1 18 10a4.3 4.3 0 0 1-.5 8.5z"/>',
-    "sunset": '<path d="M5 18a7 7 0 0 1 14 0M2 18h20M12 3v5M9 6l3 3 3-3"/>',
-    "moon": '<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>',
-    "bed": '<path d="M3 18V7M3 14h18v4M21 14v-2a3 3 0 0 0-3-3h-7v5"/><circle cx="7" cy="11" r="1.8"/>',
     "heart": '<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>',
     "check": '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
     "github": '<path d="M9 19c-4 1.3-4-2-6-2.5M15 21v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 0 0-6.2 0C6.6 2.8 5.6 3.1 5.6 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4.2 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/>',
@@ -55,12 +42,26 @@ PRAYERS = ("fajr", "dhuhr", "asr", "maghrib", "isha")
 
 # The icon beside each prayer in the app's list.
 PRAYER_ICONS = {
-    "fajr": "bed",
-    "dhuhr": "sun",
-    "asr": "cloud",
-    "maghrib": "sunset",
-    "isha": "moon",
+    "fajr": "bedtime_outlined",
+    "dhuhr": "wb_sunny_outlined",
+    "asr": "wb_cloudy_outlined",
+    "maghrib": "nights_stay_outlined",
+    "isha": "dark_mode_outlined",
 }
+
+# Exact glyph outlines exported by scripts/export_site_icons.swift.
+MATERIAL_ICONS = json.loads(
+    (SITE / "static/vendor/material-icons/paths.json").read_text(encoding="utf-8")
+)
+
+
+def material_icon(name):
+    return (
+        '<svg class="icon" viewBox="0 0 24 24" fill="currentColor" '
+        f'aria-hidden="true" data-material-icon="{name}">'
+        f'<path d="{MATERIAL_ICONS[name]}"/></svg>'
+    )
+
 
 # The iPhone renders (1206 × 2622) scaled to 600 px wide by site/screens.sh.
 SHOT_SIZE = (600, 1305)
@@ -211,7 +212,7 @@ class Site:
         )
         rows = "".join(
             ('<li class="next">' if i == next_index else "<li>")
-            + f'<span class="app-ico">{icon(PRAYER_ICONS[key])}</span>'
+            + f'<span class="app-ico">{material_icon(PRAYER_ICONS[key])}</span>'
             + f'<span class="app-text"><small class="app-upnext">{m["up_next"]}</small>'
             + f'<small class="app-cat">{m["obligatory"]}</small>'
             + f'<span class="app-pname">{s["prayers"][key]}</span></span>'
@@ -220,9 +221,10 @@ class Site:
         )
         tabs = "".join(
             ('<li class="on">' if i == 0 else "<li>")
-            + f"{icon(name)}<span>{label}</span></li>"
+            + f"{material_icon(name)}<span>{label}</span></li>"
             for i, (name, label) in enumerate(
-                zip(("clock", "mosque", "book", "gear"), m["tabs"])
+                zip(("access_time_filled", "mosque_outlined", "menu_book_outlined",
+                     "settings_outlined"), m["tabs"])
             )
         )
         label = m["label"]
@@ -249,13 +251,13 @@ class Site:
             static_label_attr=attr(static_label),
             label_attr=attr(label),
             strings_attr=attr(strings),
-            pin_icon=icon('pin'),
+            pin_icon=material_icon('location_on_outlined'),
             place=m['place'],
-            refresh_icon=icon('refresh'),
+            refresh_icon=material_icon('refresh'),
             next_prayer=s['next_prayer'],
             next_time=m['times'][next_index],
             next_name=s['prayers']['asr'],
-            timer_icon=icon('timer'),
+            timer_icon=material_icon('timer_outlined'),
             strip=strip,
             date=date,
             hijri=hijri,

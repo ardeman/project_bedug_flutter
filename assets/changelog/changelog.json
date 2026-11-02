@@ -5,6 +5,15 @@
       "date": null,
       "changes": [
         {
+          "type": "fixed",
+          "text": {
+            "en": "The website phone preview now uses the same prayer and navigation icons as the app.",
+            "id": "Pratinjau ponsel di situs web kini menggunakan ikon salat dan navigasi yang sama dengan aplikasi.",
+            "ms": "Pratonton telefon di laman web kini menggunakan ikon solat dan navigasi yang sama seperti aplikasi.",
+            "ar": "تستخدم معاينة الهاتف على الموقع الآن أيقونات الصلاة والتنقل نفسها الموجودة في التطبيق."
+          }
+        },
+        {
           "type": "improved",
           "text": {
             "en": "The website opening now shows the Bedug app icon above the headline.",
