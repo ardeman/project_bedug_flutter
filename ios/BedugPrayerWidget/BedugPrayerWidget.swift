@@ -14,7 +14,8 @@ struct Prayer: Decodable {
     // The sky at this prayer's time, shown in the countdown dial.
     var symbol: String {
         switch key {
-        case "fajr": "moon"
+        case "fajr": "moon.zzz"
+        case "maghrib": "sunset"
         case "dhuhr": "sun.max"
         case "asr": "cloud"
         case "isha": "moon"
@@ -23,37 +24,37 @@ struct Prayer: Decodable {
     }
 }
 
-// Google Material Icons nights_stay_outlined (CC BY 4.0).
+// Google Material Icons wb_twilight (CC BY 4.0).
 // https://github.com/google/material-design-icons
 // https://creativecommons.org/licenses/by/4.0/
 // Glyph coordinates normalized from the same MaterialIcons font used by Flutter.
 private struct MaghribIcon: Shape {
     func path(in rect: CGRect) -> Path {
         var path = Path()
-        path.move(to: CGPoint(x: 0.82422, y: 0.73047))
-        path.addCurve(to: CGPoint(x: 0.46289, y: 0.50391), control1: CGPoint(x: 0.72070, y: 0.73047), control2: CGPoint(x: 0.55078, y: 0.67383))
-        path.addCurve(to: CGPoint(x: 0.48438, y: 0.08398), control1: CGPoint(x: 0.36523, y: 0.31445), control2: CGPoint(x: 0.44141, y: 0.15039))
-        path.addCurve(to: CGPoint(x: 0.08203, y: 0.50000), control1: CGPoint(x: 0.26172, y: 0.09180), control2: CGPoint(x: 0.08203, y: 0.27539))
-        path.addCurve(to: CGPoint(x: 0.08398, y: 0.51758), control1: CGPoint(x: 0.08203, y: 0.50586), control2: CGPoint(x: 0.08398, y: 0.51172))
-        path.addCurve(to: CGPoint(x: 0.16602, y: 0.50000), control1: CGPoint(x: 0.10938, y: 0.50586), control2: CGPoint(x: 0.13672, y: 0.50000))
-        path.addCurve(to: CGPoint(x: 0.34570, y: 0.20508), control1: CGPoint(x: 0.16602, y: 0.37109), control2: CGPoint(x: 0.23828, y: 0.25977))
-        path.addCurve(to: CGPoint(x: 0.38867, y: 0.54102), control1: CGPoint(x: 0.32422, y: 0.29492), control2: CGPoint(x: 0.32227, y: 0.41406))
-        path.addCurve(to: CGPoint(x: 0.67188, y: 0.78516), control1: CGPoint(x: 0.45312, y: 0.66797), control2: CGPoint(x: 0.56250, y: 0.74805))
-        path.addCurve(to: CGPoint(x: 0.50000, y: 0.83398), control1: CGPoint(x: 0.62109, y: 0.81641), control2: CGPoint(x: 0.56055, y: 0.83398))
-        path.addCurve(to: CGPoint(x: 0.43750, y: 0.82812), control1: CGPoint(x: 0.47852, y: 0.83398), control2: CGPoint(x: 0.45703, y: 0.83203))
-        path.addCurve(to: CGPoint(x: 0.36914, y: 0.89648), control1: CGPoint(x: 0.42188, y: 0.85742), control2: CGPoint(x: 0.39844, y: 0.88086))
-        path.addCurve(to: CGPoint(x: 0.50000, y: 0.91797), control1: CGPoint(x: 0.41016, y: 0.91016), control2: CGPoint(x: 0.45508, y: 0.91797))
-        path.addCurve(to: CGPoint(x: 0.84766, y: 0.72852), control1: CGPoint(x: 0.64453, y: 0.91797), control2: CGPoint(x: 0.77344, y: 0.84180))
-        path.addCurve(to: CGPoint(x: 0.82422, y: 0.73047), control1: CGPoint(x: 0.84180, y: 0.72852), control2: CGPoint(x: 0.83203, y: 0.73047))
+        path.move(to: CGPoint(x: 0.707033, y: 0.361329))
+        path.addLine(to: CGPoint(x: 0.794921, y: 0.273438))
+        path.addLine(to: CGPoint(x: 0.853517, y: 0.332033))
+        path.addLine(to: CGPoint(x: 0.765625, y: 0.419921))
         path.closeSubpath()
-        path.move(to: CGPoint(x: 0.29102, y: 0.66602))
-        path.addLine(to: CGPoint(x: 0.28320, y: 0.66602))
-        path.addCurve(to: CGPoint(x: 0.16602, y: 0.58398), control1: CGPoint(x: 0.26758, y: 0.61914), control2: CGPoint(x: 0.22070, y: 0.58398))
-        path.addCurve(to: CGPoint(x: 0.04102, y: 0.70898), control1: CGPoint(x: 0.09766, y: 0.58398), control2: CGPoint(x: 0.04102, y: 0.63867))
-        path.addCurve(to: CGPoint(x: 0.16602, y: 0.83398), control1: CGPoint(x: 0.04102, y: 0.77734), control2: CGPoint(x: 0.09766, y: 0.83398))
-        path.addCurve(to: CGPoint(x: 0.29102, y: 0.83398), control1: CGPoint(x: 0.19336, y: 0.83398), control2: CGPoint(x: 0.26953, y: 0.83398))
-        path.addCurve(to: CGPoint(x: 0.37500, y: 0.75000), control1: CGPoint(x: 0.33789, y: 0.83398), control2: CGPoint(x: 0.37500, y: 0.79492))
-        path.addCurve(to: CGPoint(x: 0.29102, y: 0.66602), control1: CGPoint(x: 0.37500, y: 0.70508), control2: CGPoint(x: 0.33789, y: 0.66602))
+        path.move(to: CGPoint(x: 0.083983, y: 0.750000))
+        path.addLine(to: CGPoint(x: 0.916017, y: 0.750000))
+        path.addLine(to: CGPoint(x: 0.916017, y: 0.833983))
+        path.addLine(to: CGPoint(x: 0.083983, y: 0.833983))
+        path.closeSubpath()
+        path.move(to: CGPoint(x: 0.458983, y: 0.166017))
+        path.addLine(to: CGPoint(x: 0.541017, y: 0.166017))
+        path.addLine(to: CGPoint(x: 0.541017, y: 0.291017))
+        path.addLine(to: CGPoint(x: 0.458983, y: 0.291017))
+        path.closeSubpath()
+        path.move(to: CGPoint(x: 0.148438, y: 0.330079))
+        path.addLine(to: CGPoint(x: 0.207033, y: 0.271483))
+        path.addLine(to: CGPoint(x: 0.294921, y: 0.359375))
+        path.addLine(to: CGPoint(x: 0.236329, y: 0.417967))
+        path.closeSubpath()
+        path.move(to: CGPoint(x: 0.208983, y: 0.666017))
+        path.addCurve(to: CGPoint(x: 0.500000, y: 0.375000), control1: CGPoint(x: 0.208983, y: 0.505858), control2: CGPoint(x: 0.337892, y: 0.375000))
+        path.addCurve(to: CGPoint(x: 0.791017, y: 0.666017), control1: CGPoint(x: 0.662108, y: 0.375000), control2: CGPoint(x: 0.791017, y: 0.505858))
+        path.addLine(to: CGPoint(x: 0.208983, y: 0.666017))
         path.closeSubpath()
         return path.applying(CGAffineTransform(scaleX: rect.width, y: rect.height)
             .concatenating(CGAffineTransform(translationX: rect.minX, y: rect.minY)))

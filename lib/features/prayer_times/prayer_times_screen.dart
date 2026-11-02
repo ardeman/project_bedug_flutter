@@ -377,12 +377,7 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
             : null,
       ),
       _PrayerEntry('asr', l10n.asr, Icons.wb_cloudy_outlined, times.asr),
-      _PrayerEntry(
-        'maghrib',
-        l10n.maghrib,
-        Icons.nights_stay_outlined,
-        times.maghrib,
-      ),
+      _PrayerEntry('maghrib', l10n.maghrib, Icons.wb_twilight, times.maghrib),
       _PrayerEntry('isha', l10n.isha, Icons.dark_mode_outlined, times.isha),
     ];
     return prayers

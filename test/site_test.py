@@ -28,10 +28,14 @@ class LandingPageTest(unittest.TestCase):
         self.site = BUILD.Site()
         self.site.css_name = "style.test.css"
 
+    def test_prayer_icons_use_bedtime_for_fajr_and_sunset_for_maghrib(self):
+        self.assertEqual(BUILD.PRAYER_ICONS["fajr"], "bedtime_outlined")
+        self.assertEqual(BUILD.PRAYER_ICONS["maghrib"], "wb_twilight")
+
     def test_phone_preview_uses_app_material_icons(self):
         expected = {
             "bedtime_outlined", "wb_sunny_outlined", "wb_cloudy_outlined",
-            "nights_stay_outlined", "dark_mode_outlined", "access_time_filled",
+            "wb_twilight", "dark_mode_outlined", "access_time_filled",
             "mosque_outlined", "menu_book_outlined", "settings_outlined",
             "location_on_outlined", "refresh", "timer_outlined",
         }

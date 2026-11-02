@@ -235,7 +235,7 @@ class PrayerWidgetProvider : HomeWidgetProvider() {
         return bitmap
     }
 
-    /** Match Prayer Times: moon, sun, cloud, moon with cloud, moon. */
+    /** Match Prayer Times: bedtime, sun, cloud, sunset, moon. */
     private fun drawSky(canvas: Canvas, key: String, paint: Paint) {
         when (key) {
             "dhuhr" -> drawSun(canvas, paint, core = 5.5f, rays = 8.5f..11.5f)
@@ -250,35 +250,35 @@ class PrayerWidgetProvider : HomeWidgetProvider() {
         }
     }
 
-    // Google Material Icons nights_stay_outlined, CC BY 4.0; normalized to the dial.
+    // Google Material Icons wb_twilight, CC BY 4.0; normalized to the dial.
     // https://github.com/google/material-design-icons
     // https://creativecommons.org/licenses/by/4.0/
     private fun drawMaghrib(canvas: Canvas, paint: Paint) {
         val path = Path().apply {
-            moveTo(45.78128f, 43.53128f)
-            cubicTo(43.29680f, 43.53128f, 39.21872f, 42.17192f, 37.10936f, 38.09384f)
-            cubicTo(34.76552f, 33.54680f, 36.59384f, 29.60936f, 37.62512f, 28.01552f)
-            cubicTo(32.28128f, 28.20320f, 27.96872f, 32.60936f, 27.96872f, 38.00000f)
-            cubicTo(27.96872f, 38.14064f, 28.01552f, 38.28128f, 28.01552f, 38.42192f)
-            cubicTo(28.62512f, 38.14064f, 29.28128f, 38.00000f, 29.98448f, 38.00000f)
-            cubicTo(29.98448f, 34.90616f, 31.71872f, 32.23448f, 34.29680f, 30.92192f)
-            cubicTo(33.78128f, 33.07808f, 33.73448f, 35.93744f, 35.32808f, 38.98448f)
-            cubicTo(36.87488f, 42.03128f, 39.50000f, 43.95320f, 42.12512f, 44.84384f)
-            cubicTo(40.90616f, 45.59384f, 39.45320f, 46.01552f, 38.00000f, 46.01552f)
-            cubicTo(37.48448f, 46.01552f, 36.96872f, 45.96872f, 36.50000f, 45.87488f)
-            cubicTo(36.12512f, 46.57808f, 35.56256f, 47.14064f, 34.85936f, 47.51552f)
-            cubicTo(35.84384f, 47.84384f, 36.92192f, 48.03128f, 38.00000f, 48.03128f)
-            cubicTo(41.46872f, 48.03128f, 44.56256f, 46.20320f, 46.34384f, 43.48448f)
-            cubicTo(46.20320f, 43.48448f, 45.96872f, 43.53128f, 45.78128f, 43.53128f)
+            moveTo(42.96880f, 34.67190f)
+            lineTo(45.07810f, 32.56250f)
+            lineTo(46.48440f, 33.96880f)
+            lineTo(44.37500f, 36.07810f)
             close()
-            moveTo(32.98448f, 41.98448f)
-            lineTo(32.79680f, 41.98448f)
-            cubicTo(32.42192f, 40.85936f, 31.29680f, 40.01552f, 29.98448f, 40.01552f)
-            cubicTo(28.34384f, 40.01552f, 26.98448f, 41.32808f, 26.98448f, 43.01552f)
-            cubicTo(26.98448f, 44.65616f, 28.34384f, 46.01552f, 29.98448f, 46.01552f)
-            cubicTo(30.64064f, 46.01552f, 32.46872f, 46.01552f, 32.98448f, 46.01552f)
-            cubicTo(34.10936f, 46.01552f, 35.00000f, 45.07808f, 35.00000f, 44.00000f)
-            cubicTo(35.00000f, 42.92192f, 34.10936f, 41.98448f, 32.98448f, 41.98448f)
+            moveTo(28.01560f, 44.00000f)
+            lineTo(47.98440f, 44.00000f)
+            lineTo(47.98440f, 46.01560f)
+            lineTo(28.01560f, 46.01560f)
+            close()
+            moveTo(37.01560f, 29.98440f)
+            lineTo(38.98440f, 29.98440f)
+            lineTo(38.98440f, 32.98440f)
+            lineTo(37.01560f, 32.98440f)
+            close()
+            moveTo(29.56250f, 33.92190f)
+            lineTo(30.96880f, 32.51560f)
+            lineTo(33.07810f, 34.62500f)
+            lineTo(31.67190f, 36.03120f)
+            close()
+            moveTo(31.01560f, 41.98440f)
+            cubicTo(31.01560f, 38.14060f, 34.10940f, 35.00000f, 38.00000f, 35.00000f)
+            cubicTo(41.89060f, 35.00000f, 44.98440f, 38.14060f, 44.98440f, 41.98440f)
+            lineTo(31.01560f, 41.98440f)
             close()
         }
         paint.style = Paint.Style.FILL

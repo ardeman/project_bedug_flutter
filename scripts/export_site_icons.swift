@@ -7,7 +7,7 @@ let sdk = URL(fileURLWithPath: CommandLine.arguments[1])
 let root = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
 let names = [
     "bedtime_outlined", "wb_sunny_outlined", "wb_cloudy_outlined",
-    "nights_stay_outlined", "dark_mode_outlined", "access_time_filled",
+    "wb_twilight", "dark_mode_outlined", "access_time_filled",
     "mosque_outlined", "menu_book_outlined", "settings_outlined",
     "location_on_outlined", "refresh", "timer_outlined",
 ]

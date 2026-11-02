@@ -253,7 +253,7 @@ void main() {
       for (final size in [1, 2]) {
         for (final icon in [
           Icons.wb_cloudy_outlined,
-          Icons.nights_stay_outlined,
+          Icons.wb_twilight,
           Icons.dark_mode_outlined,
           Icons.bedtime_outlined,
         ]) {

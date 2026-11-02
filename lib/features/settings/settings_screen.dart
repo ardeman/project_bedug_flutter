@@ -977,7 +977,7 @@ IconData _widgetPreviewPrayerIcon(int index, {bool showCurrent = false}) {
   const icons = [
     Icons.wb_sunny_outlined,
     Icons.wb_cloudy_outlined,
-    Icons.nights_stay_outlined,
+    Icons.wb_twilight,
     Icons.dark_mode_outlined,
     Icons.bedtime_outlined,
   ];

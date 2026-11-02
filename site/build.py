@@ -45,7 +45,7 @@ PRAYER_ICONS = {
     "fajr": "bedtime_outlined",
     "dhuhr": "wb_sunny_outlined",
     "asr": "wb_cloudy_outlined",
-    "maghrib": "nights_stay_outlined",
+    "maghrib": "wb_twilight",
     "isha": "dark_mode_outlined",
 }
 
