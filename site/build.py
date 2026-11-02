@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Builds the Bedug landing page into site/dist.
 
-Content lives in site/i18n/<locale>.json, links in site/config.json and the
-styles, the home page's scripts and the app screens in site/static/. The
+HTML layouts live in site/templates/, content in site/i18n/<locale>.json,
+links in site/config.json, and styles, scripts and app screens in site/static/. The
 fonts, the icon and the changelog come from the app's own assets so each has
 one source. Standard library only, so Cloudflare
 can run it as the build command: `python3 site/build.py`.
@@ -13,10 +13,12 @@ import html
 import json
 import shutil
 from pathlib import Path
+from string import Template
 
 SITE = Path(__file__).resolve().parent
 ROOT = SITE.parent
 DIST = SITE / "dist"
+TEMPLATES = SITE / "templates"
 FONTS = ROOT / "assets" / "fonts" / "plus_jakarta_sans"
 BRANDING = ROOT / "assets" / "branding"
 CHANGELOG = ROOT / "assets" / "changelog" / "changelog.json"
@@ -67,15 +69,20 @@ PAGES = ("home", "privacy", "changelog")
 
 
 def icon(name, cls="icon"):
-    return (
-        f'<svg class="{cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
-        f'stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" '
-        f'aria-hidden="true">{ICONS[name]}</svg>'
-    )
+    return render_template("icon.html", cls=cls, paths=ICONS[name])
 
 
 def attr(text):
     return html.escape(text, quote=True)
+
+
+def render_template(name, **values):
+    """Render trusted markup; callers escape attributes and plain-text content.
+
+    Localized copy may contain intentional HTML. Substitution is strict and
+    single-pass, so missing values fail the build and content is never evaluated.
+    """
+    return Template((TEMPLATES / name).read_text(encoding="utf-8")).substitute(values)
 
 
 class Site:
@@ -114,32 +121,21 @@ class Site:
             f'<link rel="alternate" hreflang="{other}" href="{base}{self.url(other, page)}">'
             for other in self.locales
         )
-        return f"""<!doctype html>
-<html lang="{loc}" dir="{s['dir']}">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{attr(title)}</title>
-<meta name="description" content="{attr(description)}">
-<meta name="theme-color" content="#f7f4ee" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0e1512" media="(prefers-color-scheme: dark)">
-<link rel="canonical" href="{base}{self.url(loc, page)}">
-{alternates}
-<link rel="alternate" hreflang="x-default" href="{base}{self.url(self.default, page)}">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Bedug">
-<meta property="og:title" content="{attr(title)}">
-<meta property="og:description" content="{attr(description)}">
-<meta property="og:url" content="{base}{self.url(loc, page)}">
-<meta property="og:image" content="{base}/assets/icon.png">
-<meta property="og:locale" content="{s['og_locale']}">
-<link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/assets/icon.png">
-<link rel="preload" href="/assets/fonts/PlusJakartaSans-ExtraBold.ttf" as="font" type="font/ttf" crossorigin>
-<link rel="stylesheet" href="/assets/{self.css_name}">
-{scripts}</head>
-<body>
-<a class="skip" href="#main">{s['skip']}</a>"""
+        return render_template(
+            'head.html',
+            loc=loc,
+            dir=s['dir'],
+            title_attr=attr(title),
+            description_attr=attr(description),
+            base=base,
+            canonical_path=self.url(loc, page),
+            alternates=alternates,
+            default_path=self.url(self.default, page),
+            og_locale=s['og_locale'],
+            css_name=self.css_name,
+            scripts=scripts,
+            skip=s['skip'],
+        )
 
     def language_menu(self, loc, page):
         s = self.strings[loc]
@@ -149,10 +145,13 @@ class Site:
             + f">{self.strings[other]['lang_name']}</a></li>"
             for other in self.locales
         )
-        return f"""<details class="lang">
-<summary aria-label="{attr(s['language'])}">{icon('globe')}<span>{s['lang_name']}</span></summary>
-<ul>{items}</ul>
-</details>"""
+        return render_template(
+            "language-menu.html",
+            label=attr(s["language"]),
+            globe_icon=icon("globe"),
+            language=s["lang_name"],
+            items=items,
+        )
 
     def header(self, loc, page):
         s = self.strings[loc]
@@ -163,34 +162,30 @@ class Site:
             f'<a href="{anchor}#{key}">{s["nav"][key]}</a>'
             for key in ("features", "infaq", "download", "roadmap")
         )
-        return f"""<header class="top{' top-home' if page == 'home' else ''}">
-<div class="wrap top-inner">
-<a class="brand" href="{home}" aria-label="Bedug"><img src="/assets/icon.svg" alt="" width="32" height="32"><span>Bedug</span></a>
-<nav class="top-nav" aria-label="{attr(s['nav_label'])}">{nav}</nav>
-</div>
-</header>"""
+        return render_template(
+            'header.html',
+            home_class=' top-home' if page == 'home' else '',
+            home=home,
+            nav_label_attr=attr(s['nav_label']),
+            nav=nav,
+        )
 
     def footer(self, loc, page):
         s = self.strings[loc]
         links = self.config["links"]
-        return f"""<footer class="foot">
-<div class="wrap foot-inner">
-<div class="foot-brand">
-<a class="brand" href="{self.prefix(loc)}"><img src="/assets/icon.svg" alt="" width="28" height="28"><span>Bedug</span></a>
-<p>{s['footer_tagline']}</p>
-</div>
-<nav class="foot-links" aria-label="{attr(s['footer_label'])}">
-<a href="{self.url(loc, 'changelog')}">{s['nav']['changelog']}</a>
-<a href="{self.url(loc, 'privacy')}">{s['nav']['privacy']}</a>
-<a class="foot-github" href="{links['repo']}" aria-label="GitHub">{icon('github')}<span>GitHub</span></a>
-{self.language_menu(loc, page)}
-</nav>
-<p class="foot-copy">© 2026 Ardeman</p>
-</div>
-</footer>
-</body>
-</html>
-"""
+        return render_template(
+            'footer.html',
+            home_url=self.prefix(loc),
+            footer_tagline=s['footer_tagline'],
+            footer_label_attr=attr(s['footer_label']),
+            changelog_url=self.url(loc, 'changelog'),
+            nav_changelog=s['nav']['changelog'],
+            privacy_url=self.url(loc, 'privacy'),
+            nav_privacy=s['nav']['privacy'],
+            links_repo=links['repo'],
+            github_icon=icon('github'),
+            language_menu=self.language_menu(loc, page),
+        )
 
     # Home ---------------------------------------------------------------
 
@@ -249,23 +244,24 @@ class Site:
             | {"hijri_months": s["hijri_months"]},
             ensure_ascii=False,
         )
-        return f"""<div class="phone" role="img" aria-label="{attr(static_label)}" data-label="{attr(label)}" data-strings="{attr(strings)}">
-<div class="screen" aria-hidden="true">
-<div class="app-hero">
-<img class="app-drum" src="/assets/drum.svg" alt="" width="1024" height="1024">
-<div class="app-top"><p class="app-place">{icon('pin')}<span>{m['place']}</span></p><span class="app-refresh">{icon('refresh')}</span></div>
-<p class="app-next">{s['next_prayer']} · <time dir="ltr">{m['times'][next_index]}</time></p>
-<p class="app-name">{s['prayers']['asr']}</p>
-<p class="app-count">{icon('timer')}<span dir="ltr">00:14:00</span></p>
-</div>
-<div class="app-days">
-<ol class="app-strip">{strip}</ol>
-<p class="app-date"><strong>{date}</strong><span>{hijri}</span></p>
-</div>
-<ul class="app-list">{rows}</ul>
-<ul class="app-tabs">{tabs}</ul>
-</div>
-</div>"""
+        return render_template(
+            'mock.html',
+            static_label_attr=attr(static_label),
+            label_attr=attr(label),
+            strings_attr=attr(strings),
+            pin_icon=icon('pin'),
+            place=m['place'],
+            refresh_icon=icon('refresh'),
+            next_prayer=s['next_prayer'],
+            next_time=m['times'][next_index],
+            next_name=s['prayers']['asr'],
+            timer_icon=icon('timer'),
+            strip=strip,
+            date=date,
+            hijri=hijri,
+            rows=rows,
+            tabs=tabs,
+        )
 
     def store_row(self, loc, store):
         s = self.strings[loc]
@@ -300,11 +296,17 @@ class Site:
         # Screens exist in Indonesian and English (site/screens.sh).
         suffix = "-id" if loc == "id" else ""
         return "".join(
-            f'<article class="feature" id="feature-{f["screen"]}">'
-            f'<div class="shot-stage"><img class="shot" src="/assets/screens/{f["screen"]}{suffix}.webp" '
-            f'alt="{attr(f["alt"])}" width="{SHOT_SIZE[0]}" height="{SHOT_SIZE[1]}" loading="lazy"></div>'
-            f'<div class="feature-text"><span class="feature-number" aria-hidden="true">0{i + 1}</span><h2>{f["title"]}</h2><p>{f["body"]}</p></div>'
-            f"</article>"
+            render_template(
+                'showcase.html',
+                screen=f['screen'],
+                suffix=suffix,
+                alt_attr=attr(f['alt']),
+                width=SHOT_SIZE[0],
+                height=SHOT_SIZE[1],
+                number=i + 1,
+                title=f['title'],
+                body=f['body'],
+            )
             for i, f in enumerate(s["features"]["showcase"])
         )
 
@@ -338,69 +340,36 @@ class Site:
                 '<script type="module" src="/assets/live.js"></script>\n',
             )
             + self.header(loc, "home")
-            + f"""
-<main id="main">
-<section class="hero">
-<div class="hero-atmosphere" aria-hidden="true"></div>
-<div class="wrap hero-inner">
-<div class="hero-copy">
-<img class="hero-icon" src="/assets/icon.svg" alt="Bedug" width="72" height="72">
-<p class="eyebrow">{s['hero']['eyebrow']}</p>
-<h1>{s['hero']['title']}</h1>
-<p class="lead">{s['hero']['lead']}</p>
-<div class="btn-row">
-<a class="btn btn-primary" href="#download">{s['hero']['cta_download']}</a>
-<a class="btn btn-ghost" href="#infaq">{icon('heart')}{s['hero']['cta_infaq']}</a>
-</div>
-<p class="hero-note">{s['hero']['note']}</p>
-</div>
-<div class="hero-stage"><div class="prayer-orbit" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>{self.mock(s)}</div>
-</div>
-<a class="hero-explore" href="#features">{s["nav"]["features"]}<span aria-hidden="true">↓</span></a>
-</section>
-
-<section id="features" class="features">
-<div class="wrap">
-<div class="features-intro"><h2>{s['features']['title']}</h2></div>
-<nav class="feature-links" aria-label="{attr(s['nav']['features'])}">{feature_links}</nav>
-{self.showcase(loc)}</div>
-</section>
-
-<section class="section more">
-<div class="wrap">
-<h2>{s['features']['more_title']}</h2>
-<dl class="facts">{more}</dl>
-</div>
-</section>
-
-<section id="infaq" class="pledge">
-<div class="wrap pledge-inner">
-<img class="pledge-drum" src="/assets/drum.svg" alt="" width="1024" height="1024">
-<h2>{s['infaq']['title']}</h2>
-<p class="pledge-body">{s['infaq']['body']}</p>
-<p><a href="{self.url(loc, 'privacy')}">{s['infaq']['privacy_link']}</a></p>
-<p class="note">{s['infaq']['in_app']}</p>
-{self.infaq_links(loc)}
-</div>
-</section>
-
-<section id="download" class="section">
-<div class="wrap">
-<h2>{s['download']['title']}</h2>
-<ul class="stores">{stores}</ul>
-<p class="note">{s['download']['note']}</p>
-</div>
-</section>
-
-<section id="roadmap" class="section section-alt">
-<div class="wrap">
-<h2>{r['title']}</h2>
-<div class="plan">{plan}</div>
-<p class="note">{self.fill(r['follow'])}</p>
-</div>
-</section>
-</main>
-"""
+            + render_template(
+                'home.html',
+                hero_eyebrow=s['hero']['eyebrow'],
+                hero_title=s['hero']['title'],
+                hero_lead=s['hero']['lead'],
+                hero_cta_download=s['hero']['cta_download'],
+                heart_icon=icon('heart'),
+                hero_cta_infaq=s['hero']['cta_infaq'],
+                hero_note=s['hero']['note'],
+                mock=self.mock(s),
+                nav_features=s['nav']['features'],
+                features_title=s['features']['title'],
+                nav_features_attr=attr(s['nav']['features']),
+                feature_links=feature_links,
+                showcase=self.showcase(loc),
+                features_more_title=s['features']['more_title'],
+                more=more,
+                infaq_title=s['infaq']['title'],
+                infaq_body=s['infaq']['body'],
+                privacy_url=self.url(loc, 'privacy'),
+                infaq_privacy_link=s['infaq']['privacy_link'],
+                infaq_in_app=s['infaq']['in_app'],
+                infaq_links=self.infaq_links(loc),
+                download_title=s['download']['title'],
+                stores=stores,
+                download_note=s['download']['note'],
+                roadmap_title=r['title'],
+                plan=plan,
+                roadmap_follow=self.fill(r['follow']),
+            )
             + self.footer(loc, "home")
         )
 
@@ -415,23 +384,22 @@ class Site:
             + "</section>"
             for sec in p["sections"]
         )
+        summary_items = "".join(
+            f"<li>{icon('check')}<span>{item}</span></li>"
+            for item in p["summary"]
+        )
         return (
             self.head(loc, "privacy", p["meta_title"], p["meta_description"])
             + self.header(loc, "privacy")
-            + f"""
-<main id="main" class="section">
-<article class="wrap prose">
-<h1>{p['title']}</h1>
-<p class="updated">{p['updated']}</p>
-<p class="lead">{p['intro']}</p>
-<div class="summary">
-<h2>{p['summary_title']}</h2>
-<ul class="ticks">{''.join(f"<li>{icon('check')}<span>{x}</span></li>" for x in p['summary'])}</ul>
-</div>
-{sections}
-</article>
-</main>
-"""
+            + render_template(
+                'privacy.html',
+                title=p['title'],
+                updated=p['updated'],
+                intro=p['intro'],
+                summary_title=p['summary_title'],
+                summary_items=summary_items,
+                sections=sections,
+            )
             + self.footer(loc, "privacy")
         )
 
@@ -467,15 +435,12 @@ class Site:
         return (
             self.head(loc, "changelog", c["meta_title"], c["meta_description"])
             + self.header(loc, "changelog")
-            + f"""
-<main id="main" class="section">
-<article class="wrap prose">
-<h1>{c['title']}</h1>
-<p class="lead">{c['lead']}</p>
-<ol class="releases">{releases}</ol>
-</article>
-</main>
-"""
+            + render_template(
+                'changelog.html',
+                title=c['title'],
+                lead=c['lead'],
+                releases=releases,
+            )
             + self.footer(loc, "changelog")
         )
 
@@ -494,8 +459,7 @@ class Site:
         )
         return (
             self.head(loc, "home", "404 · Bedug", s["meta"]["description"])
-            + f'<main id="main" class="section"><div class="wrap not-found">'
-            + f'<img src="/assets/icon.svg" alt="" width="96" height="96">{messages}</div></main>\n</body>\n</html>\n'
+            + render_template("not-found.html", messages=messages)
         )
 
     # Output -------------------------------------------------------------

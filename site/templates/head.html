@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="${loc}" dir="${dir}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${title_attr}</title>
+<meta name="description" content="${description_attr}">
+<meta name="theme-color" content="#f7f4ee" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e1512" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="${base}${canonical_path}">
+${alternates}
+<link rel="alternate" hreflang="x-default" href="${base}${default_path}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Bedug">
+<meta property="og:title" content="${title_attr}">
+<meta property="og:description" content="${description_attr}">
+<meta property="og:url" content="${base}${canonical_path}">
+<meta property="og:image" content="${base}/assets/icon.png">
+<meta property="og:locale" content="${og_locale}">
+<link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/icon.png">
+<link rel="preload" href="/assets/fonts/PlusJakartaSans-ExtraBold.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="stylesheet" href="/assets/${css_name}">
+${scripts}</head>
+<body>
+<a class="skip" href="#main">${skip}</a>

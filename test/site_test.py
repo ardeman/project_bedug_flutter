@@ -1,9 +1,11 @@
 """Generated page contracts; run from the repository root with unittest."""
 import importlib.util
 import json
+import tempfile
 import unittest
 from html.parser import HTMLParser
 from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location("bedug_site", ROOT / "site/build.py")
@@ -25,6 +27,46 @@ class LandingPageTest(unittest.TestCase):
     def setUp(self):
         self.site = BUILD.Site()
         self.site.css_name = "style.test.css"
+
+    def test_templates_substitute_once_and_reject_missing_values(self):
+        with tempfile.TemporaryDirectory() as directory:
+            templates = Path(directory)
+            (templates / "example.html").write_text(
+                '<p title="${label}">${body}</p>', encoding="utf-8"
+            )
+            with patch.object(BUILD, "TEMPLATES", templates):
+                self.assertEqual(
+                    BUILD.render_template(
+                        "example.html", label=BUILD.attr('A "quote"'),
+                        body="<strong>${label} — العربية</strong>",
+                    ),
+                    '<p title="A &quot;quote&quot;">'
+                    '<strong>${label} — العربية</strong></p>',
+                )
+                with self.assertRaises(KeyError):
+                    BUILD.render_template("example.html", label="missing body")
+
+    def test_inner_page_templates_render_for_every_locale(self):
+        for locale in self.site.locales:
+            for name in ("privacy", "changelog"):
+                with self.subTest(locale=locale, page=name):
+                    source = getattr(self.site, name)(locale)
+                    page = Page(source)
+                    self.assertIn(self.site.strings[locale][name]["title"], source)
+                    self.assertEqual(sum(tag == "h1" for tag, _ in page.elements), 1)
+                    self.assertNotIn("${", source)
+                    self.assertTrue(source.endswith("</html>\n"))
+        missing = self.site.not_found()
+        for locale in self.site.locales:
+            self.assertIn(self.site.strings[locale]["not_found"]["title"], missing)
+        self.assertNotIn("${", missing)
+
+    def test_changelog_plain_text_stays_escaped_in_templates(self):
+        change = self.site.releases[0]["changes"][0]
+        change["text"]["en"] = '<script>alert("test")</script> & text'
+        source = self.site.changelog("en")
+        self.assertIn('&lt;script&gt;alert("test")&lt;/script&gt; &amp; text', source)
+        self.assertNotIn('<script>alert("test")</script>', source)
 
     def test_every_language_has_matching_keys(self):
         def keys(value, prefix=""):
