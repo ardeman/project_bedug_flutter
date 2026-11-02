@@ -163,11 +163,10 @@ class Site:
             f'<a href="{anchor}#{key}">{s["nav"][key]}</a>'
             for key in ("features", "infaq", "download", "roadmap")
         )
-        return f"""<header class="top">
+        return f"""<header class="top{' top-home' if page == 'home' else ''}">
 <div class="wrap top-inner">
-<a class="brand" href="{home}"><img src="/assets/icon.svg" alt="" width="32" height="32"><span>Bedug</span></a>
+<a class="brand" href="{home}" aria-label="Bedug"><img src="/assets/icon.svg" alt="" width="32" height="32"><span>Bedug</span></a>
 <nav class="top-nav" aria-label="{attr(s['nav_label'])}">{nav}</nav>
-{self.language_menu(loc, page)}
 </div>
 </header>"""
 
@@ -183,8 +182,8 @@ class Site:
 <nav class="foot-links" aria-label="{attr(s['footer_label'])}">
 <a href="{self.url(loc, 'changelog')}">{s['nav']['changelog']}</a>
 <a href="{self.url(loc, 'privacy')}">{s['nav']['privacy']}</a>
-<a href="{links['repo']}">{icon('github')}GitHub</a>
-<a href="{links['issues']}">{s['footer_contact']}</a>
+<a class="foot-github" href="{links['repo']}" aria-label="GitHub">{icon('github')}<span>GitHub</span></a>
+{self.language_menu(loc, page)}
 </nav>
 <p class="foot-copy">© 2026 Ardeman</p>
 </div>

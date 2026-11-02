@@ -7,10 +7,37 @@
         {
           "type": "improved",
           "text": {
-            "en": "Website feature navigation now floats below the header while you explore the app previews.",
-            "id": "Navigasi fitur halaman web kini mengambang di bawah tajuk saat Anda menjelajahi pratinjau aplikasi.",
-            "ms": "Navigasi ciri laman web kini terapung di bawah pengepala semasa anda meneroka pratonton aplikasi.",
-            "ar": "أصبح التنقل بين ميزات الموقع عائمًا أسفل الترويسة أثناء استكشاف معاينات التطبيق."
+            "en": "A simpler website footer with GitHub and language icons on phones.",
+            "id": "Bagian bawah halaman web lebih ringkas dengan ikon GitHub dan bahasa di ponsel.",
+            "ms": "Pengaki laman web lebih ringkas dengan ikon GitHub dan bahasa pada telefon.",
+            "ar": "تذييل أبسط للموقع مع أيقونتي GitHub واللغة على الهواتف."
+          }
+        },
+        {
+          "type": "improved",
+          "text": {
+            "en": "The website language selector is now in the footer, keeping the top navigation on a single row without horizontal scrolling.",
+            "id": "Pilihan bahasa halaman web kini berada di bagian bawah, sehingga navigasi atas tetap dalam satu baris tanpa perlu menggulir ke samping.",
+            "ms": "Pemilih bahasa laman web kini berada di pengaki, supaya navigasi atas kekal dalam satu baris tanpa perlu menatal ke sisi.",
+            "ar": "أصبح محدد لغة الموقع في التذييل لتبقى عناصر التنقل العلوية في صف واحد دون تمرير أفقي."
+          }
+        },
+        {
+          "type": "improved",
+          "text": {
+            "en": "The website opens with a hero that fits the screen, and the main navigation appears after scrolling.",
+            "id": "Bagian pembuka halaman web kini pas di layar, dan navigasi utama muncul setelah menggulir.",
+            "ms": "Bahagian pembukaan laman web kini muat pada skrin, dan navigasi utama muncul selepas menatal.",
+            "ar": "تظهر مقدمة الموقع ضمن شاشة واحدة، ويظهر شريط التنقل الرئيسي بعد التمرير."
+          }
+        },
+        {
+          "type": "improved",
+          "text": {
+            "en": "Website feature navigation now floats below the header and scrolls to keep the active chapter visible.",
+            "id": "Navigasi fitur halaman web kini mengambang di bawah tajuk dan bergulir agar bab aktif tetap terlihat.",
+            "ms": "Navigasi ciri laman web kini terapung di bawah pengepala dan menatal agar bab aktif kekal kelihatan.",
+            "ar": "أصبح التنقل بين ميزات الموقع عائمًا أسفل الترويسة ويتم تمريره لإبقاء القسم النشط ظاهرًا."
           }
         },
         {

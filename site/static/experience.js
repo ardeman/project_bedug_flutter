@@ -1,5 +1,5 @@
 // Progressive enhancement: content is visible before scripts run and when
-// observers or animation APIs are unavailable. No scroll work runs per frame.
+// observers or animation APIs are unavailable. Scroll only toggles header state.
 const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const animations = new Set();
 
@@ -41,9 +41,10 @@ if ("IntersectionObserver" in window) {
   document.querySelectorAll(".features-intro, .feature, .facts > div, .pledge-inner, .stores > li, .plan > div")
     .forEach((element) => reveals.observe(element));
 
-  function trackSections(selector) {
+  function trackSections(selector, followTab = false) {
     const links = [...document.querySelectorAll(selector)];
     const visible = new Set();
+    let previous;
     const sections = new IntersectionObserver((entries) => {
       for (const entry of entries) {
         if (entry.isIntersecting) visible.add(entry.target.id);
@@ -54,6 +55,20 @@ if ("IntersectionObserver" in window) {
         if (link === current) link.setAttribute("aria-current", "location");
         else link.removeAttribute("aria-current");
       }
+      if (followTab && current && current !== previous) {
+        const menu = current.parentElement;
+        const bounds = menu.getBoundingClientRect();
+        const tab = current.getBoundingClientRect();
+        if (tab.left < bounds.left || tab.right > bounds.right) {
+          // Scroll only the menu. scrollIntoView can also move the page;
+          // physical rectangle offsets work in both LTR and RTL layouts.
+          menu.scrollBy({
+            left: tab.left - bounds.left - (bounds.width - tab.width) / 2,
+            behavior: motion.matches ? "instant" : "smooth",
+          });
+        }
+      }
+      previous = current;
     }, { rootMargin: "-20% 0px -45% 0px", threshold: 0 });
     for (const link of links) {
       const section = document.getElementById(link.hash.slice(1));
@@ -61,7 +76,7 @@ if ("IntersectionObserver" in window) {
     }
   }
   trackSections('.top-nav a[href^="#"]');
-  trackSections('.feature-links a[href^="#"]');
+  trackSections('.feature-links a[href^="#"]', true);
 }
 
 const language = document.querySelector(".lang");
@@ -75,4 +90,16 @@ if (language) {
       language.querySelector("summary").focus();
     }
   });
+}
+
+// The home hero owns the first screen; inner pages keep their regular header.
+const homeHeader = document.querySelector('.top-home');
+if (homeHeader) {
+  function updateHeader() {
+    const atTop = window.scrollY <= 16;
+    homeHeader.classList.toggle('is-at-top', atTop);
+    homeHeader.inert = atTop;
+  }
+  updateHeader();
+  window.addEventListener('scroll', updateHeader, { passive: true });
 }

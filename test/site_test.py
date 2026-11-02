@@ -73,6 +73,33 @@ class LandingPageTest(unittest.TestCase):
                     for feature in self.site.strings[locale]['features']['showcase']
                 ])
 
+    def test_language_selector_is_in_footer_on_every_page(self):
+        for locale in self.site.locales:
+            for render in (self.site.home, self.site.privacy, self.site.changelog):
+                with self.subTest(locale=locale, page=render.__name__):
+                    source = render(locale)
+                    header = source.split('<header', 1)[1].split('</header>', 1)[0]
+                    footer = source.split('<footer', 1)[1].split('</footer>', 1)[0]
+                    brand = next(attrs for tag, attrs in Page('<header' + header).elements
+                                 if tag == 'a' and attrs.get('class') == 'brand')
+                    self.assertEqual(brand['aria-label'], 'Bedug')
+                    self.assertNotIn('class="lang"', header)
+                    self.assertEqual(footer.count('class="lang"'), 1)
+                    footer_elements = Page(footer).elements
+                    github = next(attrs for tag, attrs in footer_elements
+                                  if attrs.get('class') == 'foot-github')
+                    self.assertEqual(github['aria-label'], 'GitHub')
+                    self.assertEqual(github['href'], self.site.config['links']['repo'])
+                    self.assertNotIn(self.site.config['links']['issues'],
+                                     [attrs.get('href') for tag, attrs in footer_elements])
+                    summary = next(attrs for tag, attrs in footer_elements if tag == 'summary')
+                    self.assertEqual(summary['aria-label'], self.site.strings[locale]['language'])
+                    menu = footer.split('<details class="lang">', 1)[1].split('</details>', 1)[0]
+                    links = [attrs for tag, attrs in Page(menu).elements if tag == 'a']
+                    self.assertEqual({a['hreflang'] for a in links}, set(self.site.locales))
+                    for link in links:
+                        self.assertEqual(link['href'], self.site.url(link['hreflang'], render.__name__))
+
     def test_unreleased_notes_keep_all_languages(self):
         latest = json.loads(BUILD.CHANGELOG.read_text())["releases"][0]
         self.assertIsNone(latest["date"])
