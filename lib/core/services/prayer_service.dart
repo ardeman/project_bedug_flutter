@@ -315,11 +315,7 @@ class PrayerNotifier extends Notifier<PrayerState> {
       : _l10n.locationPermissionDeniedForeverAndroid;
 
   Future<LocationPermission> _requestLocationPermission() async {
-    final prefs = ref.read(sharedPreferencesProvider);
-    final acknowledged = await ref.read(permissionAcknowledgementProvider)(
-      AppPermission.location,
-    );
-    await prefs.setBool('location_permission_acknowledged', acknowledged);
+    final acknowledged = await ref.read(locationConsentProvider)();
     if (!acknowledged) return LocationPermission.denied;
     return Geolocator.requestPermission();
   }
@@ -337,8 +333,7 @@ class PrayerNotifier extends Notifier<PrayerState> {
         await (_locationPermissionRequest ?? Geolocator.checkPermission());
     if (perm == LocationPermission.denied) {
       final prefs = ref.read(sharedPreferencesProvider);
-      if (requestPermission ||
-          !prefs.containsKey('location_permission_acknowledged')) {
+      if (requestPermission || !prefs.containsKey(locationAcknowledgementKey)) {
         final pending = _locationPermissionRequest ??=
             _requestLocationPermission();
         try {

@@ -15,6 +15,20 @@ final permissionAcknowledgementProvider =
     );
 
 const notificationAcknowledgementKey = 'notification_permission_acknowledged';
+const locationAcknowledgementKey = 'location_permission_acknowledged';
+
+/// Record the location rationale before the service requests system access.
+final locationConsentProvider = Provider<Future<bool> Function()>((ref) {
+  return () async {
+    final acknowledged = await ref.read(permissionAcknowledgementProvider)(
+      AppPermission.location,
+    );
+    await ref
+        .read(sharedPreferencesProvider)
+        .setBool(locationAcknowledgementKey, acknowledged);
+    return acknowledged;
+  };
+});
 
 /// Ask once automatically; a deferred request remains available in Settings.
 final notificationConsentProvider = FutureProvider<void>((ref) async {

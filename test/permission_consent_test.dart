@@ -164,6 +164,12 @@ void main() {
     await container.read(prayerProvider.notifier).load();
     expect(explanations, 1);
     expect(calls, isNot(contains('requestPermission')));
+    expect(
+      container
+          .read(sharedPreferencesProvider)
+          .getBool(locationAcknowledgementKey),
+      isFalse,
+    );
     await container.read(prayerProvider.notifier).load(requestPermission: true);
     expect(explanations, 2);
     expect(calls, isNot(contains('requestPermission')));
