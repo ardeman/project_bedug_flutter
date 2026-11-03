@@ -401,6 +401,10 @@ String _soundLabel(
   PrayerNotificationSound.silent => l10n.silentNotificationSound,
 };
 
+/// Bumped to rebuild the notifications switch from its saved value after a
+/// tap that did not change the setting.
+final _notificationSwitchReset = ValueNotifier<int>(0);
+
 /// One row per time: its switch, and when it's on, a summary of its sound
 /// and reminder that opens [_NotificationTimeScreen]. Each alert plays the
 /// system sound, a bundled bedug or siren, a phone tone, or nothing; never
@@ -447,45 +451,53 @@ class NotificationSettingsScreen extends ConsumerWidget {
             children: [
               PlatformListTile(
                 title: Text(l10n.allNotifications),
-                trailing: _AdaptiveSwitch(
+                trailing: ValueListenableBuilder<int>(
                   key: const ValueKey('notifications-enabled'),
-                  value: enabled,
-                  onChanged: (value) async {
-                    if (value &&
-                        !await ref.read(notificationAccessProvider.future)) {
-                      final acknowledged = await ref.read(
-                        permissionAcknowledgementProvider,
-                      )(AppPermission.notifications);
-                      if (!acknowledged) {
-                        final settings = ref.read(settingsProvider);
-                        await notifier.setNotifications(
-                          settings.notifications.copyWith(enabled: false),
+                  valueListenable: _notificationSwitchReset,
+                  builder: (_, reset, _) => _AdaptiveSwitch(
+                    key: ValueKey(reset),
+                    value: enabled,
+                    onChanged: (value) async {
+                      if (value &&
+                          !await ref.read(notificationAccessProvider.future)) {
+                        final acknowledged = await ref.read(
+                          permissionAcknowledgementProvider,
+                        )(AppPermission.notifications);
+                        if (!acknowledged) {
+                          final settings = ref.read(settingsProvider);
+                          await notifier.setNotifications(
+                            settings.notifications.copyWith(enabled: false),
+                          );
+                          _notificationSwitchReset.value++;
+                          return;
+                        }
+                        if (!ctx.mounted) return;
+                        await ref
+                            .read(sharedPreferencesProvider)
+                            .setBool(notificationAcknowledgementKey, true);
+                        await NotificationService.requestPermissions();
+                        if (!ctx.mounted) return;
+                        ref.invalidate(notificationAccessProvider);
+                        final allowed = await ref.read(
+                          notificationAccessProvider.future,
                         );
-                        return;
+                        if (!ctx.mounted) return;
+                        if (!allowed) {
+                          // The tapped switch has flipped by itself; rebuild it
+                          // from the saved (off) value before leaving.
+                          _notificationSwitchReset.value++;
+                          await NotificationService.openSystemSettings();
+                          return;
+                        }
                       }
-                      if (!ctx.mounted) return;
-                      await ref
-                          .read(sharedPreferencesProvider)
-                          .setBool(notificationAcknowledgementKey, true);
-                      await NotificationService.requestPermissions();
-                      if (!ctx.mounted) return;
-                      ref.invalidate(notificationAccessProvider);
-                      final allowed = await ref.read(
-                        notificationAccessProvider.future,
+                      await notifier.setNotifications(
+                        ref
+                            .read(settingsProvider)
+                            .notifications
+                            .copyWith(enabled: value),
                       );
-                      if (!ctx.mounted) return;
-                      if (!allowed) {
-                        await NotificationService.openSystemSettings();
-                        return;
-                      }
-                    }
-                    await notifier.setNotifications(
-                      ref
-                          .read(settingsProvider)
-                          .notifications
-                          .copyWith(enabled: value),
-                    );
-                  },
+                    },
+                  ),
                 ),
               ),
             ],

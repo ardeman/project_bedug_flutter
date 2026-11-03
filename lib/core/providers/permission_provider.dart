@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../services/notification_service.dart';
 import 'locale_provider.dart';
 
-enum AppPermission { location, notifications, preciseAlarms }
+enum AppPermission { location, locationSettings, notifications, preciseAlarms }
 
 /// System prompts require an explicit acknowledgement from the UI.
 /// Tests and headless consumers default to declining the request.

@@ -7,6 +7,15 @@
         {
           "type": "fixed",
           "text": {
+            "en": "If location access was permanently denied, turning automatic location back on now offers to open Bedug's app settings.",
+            "id": "Jika izin lokasi ditolak permanen, mengaktifkan kembali deteksi lokasi otomatis kini menawarkan untuk membuka pengaturan aplikasi Bedug.",
+            "ms": "Jika kebenaran lokasi ditolak secara kekal, mengaktifkan semula pengesanan lokasi automatik kini menawarkan untuk membuka tetapan aplikasi Bedug.",
+            "ar": "إذا رُفض إذن الموقع نهائياً، يعرض تفعيل اكتشاف الموقع تلقائياً مجدداً الآن فتح إعدادات تطبيق Bedug."
+          }
+        },
+        {
+          "type": "fixed",
+          "text": {
             "en": "If notifications are disabled in system settings, choosing Continue now opens Bedug's notification settings.",
             "id": "Jika notifikasi dinonaktifkan di pengaturan sistem, memilih Lanjutkan kini membuka pengaturan notifikasi Bedug.",
             "ms": "Jika pemberitahuan dimatikan dalam tetapan sistem, memilih Teruskan kini membuka tetapan pemberitahuan Bedug.",

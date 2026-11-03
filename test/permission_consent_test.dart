@@ -39,6 +39,7 @@ void main() {
               ? 3
               : 0,
         'requestPermission' => (granted = true) ? 3 : 1,
+        'openAppSettings' => true,
         'getCurrentPosition' => {
           'latitude': -6.2,
           'longitude': 106.8,
@@ -155,8 +156,8 @@ void main() {
 
   test('Not now defers location; only an explicit retry asks again', () async {
     var explanations = 0;
-    final container = await containerFor((_) async {
-      explanations++;
+    final container = await containerFor((permission) async {
+      if (permission == AppPermission.location) explanations++;
       return false;
     });
     container.listen(prayerProvider, (_, _) {});
@@ -170,9 +171,15 @@ void main() {
           .getBool(locationAcknowledgementKey),
       isFalse,
     );
-    await container.read(prayerProvider.notifier).load(requestPermission: true);
+    final settings = container.read(settingsProvider.notifier);
+    await settings.setUseAutoLocation(false);
+    await pumpEventQueue();
+    await settings.setUseAutoLocation(true);
+    await pumpEventQueue();
     expect(explanations, 2);
     expect(calls, isNot(contains('requestPermission')));
+    // Declining an explicit request puts the toggle back off.
+    expect(container.read(settingsProvider).useAutoLocation, isFalse);
   });
 
   test('permanent denial never opens Settings automatically', () async {
@@ -184,6 +191,34 @@ void main() {
     expect(calls, isNot(contains('requestPermission')));
     expect(container.read(prayerProvider).error, isNotNull);
   });
+
+  test(
+    'explicit retry asks before opening Settings after permanent denial',
+    () async {
+      permanentlyDenied = true;
+      final prompts = <AppPermission>[];
+      final container = await containerFor((permission) async {
+        prompts.add(permission);
+        return true;
+      });
+      container.listen(prayerProvider, (_, _) {});
+      await pumpEventQueue();
+      expect(prompts, isEmpty);
+      expect(calls, isNot(contains('openAppSettings')));
+
+      await container
+          .read(prayerProvider.notifier)
+          .load(requestPermission: true);
+
+      expect(prompts, [AppPermission.locationSettings]);
+      expect(calls, contains('openAppSettings'));
+      expect(calls, isNot(contains('requestPermission')));
+
+      // Back from Settings with location still denied: the toggle goes off.
+      await container.read(prayerProvider.notifier).load();
+      expect(container.read(settingsProvider).useAutoLocation, isFalse);
+    },
+  );
 
   test(
     'permission work waiting on the tour is released by skip and replay',

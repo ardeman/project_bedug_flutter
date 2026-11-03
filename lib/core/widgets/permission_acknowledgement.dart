@@ -31,6 +31,12 @@ Future<bool> _show(AppPermission permission) async {
       l10n.permissionLocationTitle,
       l10n.permissionLocationBody,
     ),
+    AppPermission.locationSettings => (
+      l10n.permissionLocationTitle,
+      PlatformCapabilities.isApple
+          ? l10n.locationPermissionDeniedForeverApple
+          : l10n.locationPermissionDeniedForeverAndroid,
+    ),
     AppPermission.notifications => (
       l10n.notifications,
       l10n.permissionNotificationBody,

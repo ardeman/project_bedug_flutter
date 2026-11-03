@@ -108,6 +108,10 @@ class PrayerNotifier extends Notifier<PrayerState> {
   Position? _position;
   Future<LocationPermission>? _locationPermissionRequest;
 
+  /// Set when we sent the user to Settings to allow location, so the next
+  /// resume can tell whether they did.
+  bool _openedLocationSettings = false;
+
   @override
   PrayerState build() {
     final observer = _PrayerLifecycleObserver(() => load());
@@ -320,6 +324,11 @@ class PrayerNotifier extends Notifier<PrayerState> {
     return Geolocator.requestPermission();
   }
 
+  /// A declined request puts the toggle back off; the settings change
+  /// starts a new load that supersedes the failing one.
+  Future<void> _turnOffAutoLocation() =>
+      ref.read(settingsProvider.notifier).setUseAutoLocation(false);
+
   Future<Position> _getPosition({required bool requestPermission}) async {
     final enabled = await Geolocator.isLocationServiceEnabled();
     if (!enabled) {
@@ -345,10 +354,30 @@ class PrayerNotifier extends Notifier<PrayerState> {
         }
       }
       if (perm == LocationPermission.denied) {
+        if (requestPermission) await _turnOffAutoLocation();
         throw PrayerLoadException(_l10n.locationPermissionDenied);
       }
     }
+    if (perm != LocationPermission.deniedForever) {
+      _openedLocationSettings = false;
+    } else if (!requestPermission && _openedLocationSettings) {
+      // Back from Settings without allowing location: undo the toggle.
+      _openedLocationSettings = false;
+      await _turnOffAutoLocation();
+      throw PrayerLoadException(_locationPermissionDeniedForeverMessage);
+    }
     if (perm == LocationPermission.deniedForever) {
+      if (requestPermission) {
+        final openSettings = await ref.read(permissionAcknowledgementProvider)(
+          AppPermission.locationSettings,
+        );
+        if (openSettings) {
+          _openedLocationSettings = true;
+          await Geolocator.openAppSettings();
+        } else {
+          await _turnOffAutoLocation();
+        }
+      }
       // One actionable message; the separate location guide would repeat it.
       throw PrayerLoadException(_locationPermissionDeniedForeverMessage);
     }
