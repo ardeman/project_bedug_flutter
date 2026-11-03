@@ -22,6 +22,7 @@
   "chat.tools.terminal.autoApprove": {
     "dart": true,
     "flutter": true,
-    "xcrun": true
+    "xcrun": true,
+    "xcodebuild": true
   }
 }
