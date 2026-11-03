@@ -8,11 +8,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   const channel = MethodChannel('flutter.baseflow.com/geolocator');
+  const notificationChannel = MethodChannel(
+    'dexterous.com/flutter/local_notifications',
+  );
   final messenger =
       TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
   final calls = <String>[];
@@ -80,7 +84,9 @@ void main() {
         explanations++;
         return false;
       });
+      expect(container.read(settingsProvider).notifications.enabled, isTrue);
       await container.read(notificationConsentProvider.future);
+      expect(container.read(settingsProvider).notifications.enabled, isFalse);
       container.invalidate(notificationConsentProvider);
       await container.read(notificationConsentProvider.future);
       expect(explanations, 1);
@@ -89,6 +95,42 @@ void main() {
             .read(sharedPreferencesProvider)
             .getBool(notificationAcknowledgementKey),
         isFalse,
+      );
+    },
+  );
+
+  test(
+    'accepted notification consent opens system settings when access stays off',
+    () async {
+      debugDefaultTargetPlatformOverride = TargetPlatform.android;
+      AndroidFlutterLocalNotificationsPlugin.registerWith();
+      addTearDown(() => debugDefaultTargetPlatformOverride = null);
+      final notificationCalls = <String>[];
+      messenger.setMockMethodCallHandler(notificationChannel, (call) async {
+        notificationCalls.add(call.method);
+        return switch (call.method) {
+          'areNotificationsEnabled' => false,
+          'requestNotificationsPermission' => false,
+          _ => true,
+        };
+      });
+      addTearDown(
+        () => messenger.setMockMethodCallHandler(notificationChannel, null),
+      );
+      final container = await containerFor((permission) async {
+        expect(permission, AppPermission.notifications);
+        return true;
+      });
+
+      await container.read(notificationConsentProvider.future);
+
+      expect(
+        notificationCalls,
+        containsAll([
+          'requestNotificationsPermission',
+          'areNotificationsEnabled',
+          'openAppNotificationSettings',
+        ]),
       );
     },
   );

@@ -456,15 +456,26 @@ class NotificationSettingsScreen extends ConsumerWidget {
                       final acknowledged = await ref.read(
                         permissionAcknowledgementProvider,
                       )(AppPermission.notifications);
-                      if (!acknowledged || !ctx.mounted) return;
+                      if (!acknowledged) {
+                        final settings = ref.read(settingsProvider);
+                        await notifier.setNotifications(
+                          settings.notifications.copyWith(enabled: false),
+                        );
+                        return;
+                      }
+                      if (!ctx.mounted) return;
                       await ref
                           .read(sharedPreferencesProvider)
                           .setBool(notificationAcknowledgementKey, true);
                       await NotificationService.requestPermissions();
                       if (!ctx.mounted) return;
                       ref.invalidate(notificationAccessProvider);
-                      if (!await ref.read(notificationAccessProvider.future) ||
-                          !ctx.mounted) {
+                      final allowed = await ref.read(
+                        notificationAccessProvider.future,
+                      );
+                      if (!ctx.mounted) return;
+                      if (!allowed) {
+                        await NotificationService.openSystemSettings();
                         return;
                       }
                     }

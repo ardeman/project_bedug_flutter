@@ -21,7 +21,9 @@ import 'package:material_3_expressive/material_3_expressive.dart';
 import 'package:cupertino_ui/cupertino_ui.dart'
     show GlobalCupertinoLocalizations;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:liquid_glass_easy/liquid_glass_easy.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -35,7 +37,10 @@ Future<ProviderContainer> _pumpSettings(
   Future<bool> Function()? notificationAccess,
   Future<bool> Function(AppPermission)? acknowledge,
 }) async {
-  SharedPreferences.setMockInitialValues({'use_auto_location': false});
+  SharedPreferences.setMockInitialValues({
+    'use_auto_location': false,
+    notificationAcknowledgementKey: true,
+  });
   final prefs = await SharedPreferences.getInstance();
   final container = ProviderContainer(
     overrides: [
@@ -84,6 +89,39 @@ Future<ProviderContainer> _pumpSettings(
 }
 
 void main() {
+  testWidgets(
+    'Continue opens system notification settings when access stays off',
+    (tester) async {
+      AndroidFlutterLocalNotificationsPlugin.registerWith();
+      const channel = MethodChannel(
+        'dexterous.com/flutter/local_notifications',
+      );
+      final calls = <String>[];
+      final messenger =
+          TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
+      messenger.setMockMethodCallHandler(channel, (call) async {
+        calls.add(call.method);
+        return false;
+      });
+      addTearDown(() => messenger.setMockMethodCallHandler(channel, null));
+      final container = await _pumpSettings(
+        tester,
+        home: const NotificationSettingsScreen(),
+        notificationAccess: () async => false,
+        acknowledge: (_) async => true,
+      );
+
+      await tester.tap(find.byKey(const ValueKey('notifications-enabled')));
+      await tester.pumpAndSettle();
+
+      expect(calls, contains('requestNotificationsPermission'));
+      expect(calls, contains('openAppNotificationSettings'));
+      await tester.pumpWidget(const SizedBox.shrink());
+      container.invalidate(prayerProvider);
+    },
+    variant: TargetPlatformVariant.only(TargetPlatform.android),
+  );
+
   testWidgets('Not now leaves notifications off when system access is denied', (
     tester,
   ) async {
@@ -104,7 +142,8 @@ void main() {
     expect(explanations, previousExplanations + 1);
     expect(find.byKey(const ValueKey('notification-fajr')), findsNothing);
     expect(container.read(notificationsEnabledProvider), isFalse);
-    // Individual reminder choices survive a missing system permission.
+    expect(container.read(settingsProvider).notifications.enabled, isFalse);
+    // Individual alert choices survive a missing system permission.
     expect(
       container.read(settingsProvider).notifications.alerts,
       contains(PrayerAlert.fajr),

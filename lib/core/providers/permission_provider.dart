@@ -25,7 +25,18 @@ final notificationConsentProvider = FutureProvider<void>((ref) async {
     AppPermission.notifications,
   );
   await prefs.setBool(notificationAcknowledgementKey, acknowledged);
-  if (acknowledged) await NotificationService.requestPermissions();
+  if (acknowledged) {
+    await NotificationService.requestPermissions();
+    if (!await NotificationService.notificationsAllowed()) {
+      await NotificationService.openSystemSettings();
+    }
+  }
+  if (!acknowledged) {
+    final settings = ref.read(settingsProvider);
+    await ref
+        .read(settingsProvider.notifier)
+        .setNotifications(settings.notifications.copyWith(enabled: false));
+  }
   ref.invalidate(notificationAccessProvider);
 });
 

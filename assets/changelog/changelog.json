@@ -7,6 +7,15 @@
         {
           "type": "fixed",
           "text": {
+            "en": "If notifications are disabled in system settings, choosing Continue now opens Bedug's notification settings.",
+            "id": "Jika notifikasi dinonaktifkan di pengaturan sistem, memilih Lanjutkan kini membuka pengaturan notifikasi Bedug.",
+            "ms": "Jika pemberitahuan dimatikan dalam tetapan sistem, memilih Teruskan kini membuka tetapan pemberitahuan Bedug.",
+            "ar": "إذا كانت الإشعارات متوقفة في إعدادات النظام، يؤدي اختيار متابعة الآن إلى فتح إعدادات إشعارات Bedug."
+          }
+        },
+        {
+          "type": "fixed",
+          "text": {
             "en": "Notification switches now reflect system permission, including after choosing Not now or returning from system settings.",
             "id": "Sakelar notifikasi kini mengikuti izin sistem, termasuk setelah memilih Nanti saja atau kembali dari pengaturan sistem.",
             "ms": "Suis pemberitahuan kini mengikut kebenaran sistem, termasuk selepas memilih Nanti sahaja atau kembali daripada tetapan sistem.",
