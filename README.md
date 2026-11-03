@@ -110,7 +110,7 @@ Validation of the original layouts on 2026-10-21: on the connected iPhone 17 (iO
 flutter analyze && flutter test
 ```
 
-GitHub Actions runs them, with the format check, on every push to `master` and every pull request (`.github/workflows/checks.yml`); the landing page is built by Cloudflare (see "Website"). `desktop.yml` builds the Linux and Windows apps when their runners, `pubspec.lock` or `vendor/` change.
+GitHub Actions runs them, with the format check, on every push to `master` and every pull request (`.github/workflows/checks.yml`); the landing page is built by Cloudflare (see "Website"). `desktop.yml` builds Android, macOS, Linux and Windows release apps when app code, platform files or dependencies change, and uploads downloadable artifacts. The macOS job uses Flutter 3.47.9 for its Dart AOT fix; other build jobs use 3.47.8. The Android APK is debug-signed and the macOS app is unsigned; neither is ready for store distribution.
 
 ### Commit messages
 

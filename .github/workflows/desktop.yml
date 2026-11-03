@@ -1,14 +1,30 @@
-# Builds the Linux and Windows apps (release mode, not packaged or signed)
-# whenever their runners or the dependencies change, since neither is built
-# on the Mac day to day; a broken build then shows before a store upload.
-# The stores' packages (Flathub, Microsoft Store) are made elsewhere.
-name: Desktop builds
+# Builds release-mode apps for Android, macOS, Linux and Windows, then uploads
+# downloadable artifacts. Android is debug-signed and macOS is not codesigned;
+# neither artifact is ready for store distribution.
+name: Builds
 
 on:
   push:
     branches: [master]
     paths:
+      - 'android/**'
+      - 'assets/**'
+      - 'lib/**'
       - 'linux/**'
+      - 'macos/**'
+      - 'pubspec.yaml'
+      - 'windows/**'
+      - 'pubspec.lock'
+      - 'vendor/**'
+      - '.github/workflows/desktop.yml'
+  pull_request:
+    paths:
+      - 'android/**'
+      - 'assets/**'
+      - 'lib/**'
+      - 'linux/**'
+      - 'macos/**'
+      - 'pubspec.yaml'
       - 'windows/**'
       - 'pubspec.lock'
       - 'vendor/**'
@@ -23,6 +39,54 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.8'
+          channel: stable
+          cache: true
+
+      - name: Build
+        run: |
+          flutter pub get
+          flutter build apk --release
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: android-apk-debug-signed
+          path: build/app/outputs/flutter-apk/app-release.apk
+          if-no-files-found: error
+
+  macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: subosito/flutter-action@v2
+        with:
+          # 3.47.9 includes the Dart AOT fix for Flutter issue #191575.
+          flutter-version: '3.47.9'
+          channel: stable
+          cache: true
+
+      - name: Build
+        run: |
+          flutter pub get
+          FLUTTER_XCODE_CODE_SIGNING_ALLOWED=NO flutter build macos --release
+          ditto -c -k --sequesterRsrc --keepParent \
+            build/macos/Build/Products/Release/bedug.app \
+            build/bedug-macos.zip
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macos-app-unsigned
+          path: build/bedug-macos.zip
+          if-no-files-found: error
+
   linux:
     runs-on: ubuntu-latest
     steps:
@@ -48,6 +112,14 @@ jobs:
         run: |
           flutter pub get
           flutter build linux --release
+          tar -czf build/bedug-linux.tar.gz \
+            -C build/linux/x64/release bundle
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux-release
+          path: build/bedug-linux.tar.gz
+          if-no-files-found: error
 
   windows:
     runs-on: windows-latest
@@ -68,3 +140,12 @@ jobs:
           $PSNativeCommandUseErrorActionPreference = $true
           flutter pub get
           flutter build windows --release
+          Compress-Archive `
+            -Path build/windows/x64/runner/Release/* `
+            -DestinationPath build/bedug-windows.zip
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-release
+          path: build/bedug-windows.zip
+          if-no-files-found: error
