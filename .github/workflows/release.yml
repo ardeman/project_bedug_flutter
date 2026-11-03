@@ -1,0 +1,101 @@
+# Publishes a GitHub Release with the Android, macOS, Linux and Windows builds
+# whenever the version in pubspec.yaml changes on master (or on demand). The
+# builds come from desktop.yml. Android is debug-signed and macOS is unsigned,
+# so the release is marked a pre-release unless it is run by hand with
+# "latest" ticked.
+name: Release
+
+on:
+  push:
+    branches: [master]
+    paths: ['pubspec.yaml']
+  workflow_dispatch:
+    inputs:
+      latest:
+        description: 'Publish as the latest full release (not a pre-release)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  # pubspec.yaml also changes for dependencies: release only versions that
+  # have no release yet.
+  version:
+    runs-on: ubuntu-latest
+    outputs:
+      new: ${{ steps.version.outputs.new }}
+      tag: ${{ steps.version.outputs.tag }}
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Check for a new version
+        id: version
+        run: |
+          version="$(sed -n 's/^version: *//p' pubspec.yaml | cut -d+ -f1)"
+          echo "tag=v$version" >> "$GITHUB_OUTPUT"
+          if gh release view "v$version" >/dev/null 2>&1; then
+            echo "v$version is already released; nothing to do."
+            echo "new=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "new=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  checks:
+    needs: version
+    if: needs.version.outputs.new == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.8'
+          channel: stable
+          cache: true
+
+      - name: Run the checks
+        run: |
+          flutter pub get
+          dart format --set-exit-if-changed .
+          flutter analyze
+          flutter test
+
+  builds:
+    needs: version
+    if: needs.version.outputs.new == 'true'
+    uses: ./.github/workflows/desktop.yml
+
+  release:
+    needs: [version, checks, builds]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TAG: ${{ needs.version.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: build/release
+          merge-multiple: true
+
+      - name: Publish
+        run: |
+          flags="--prerelease"
+          if [ "${{ inputs.latest }}" = "true" ]; then
+            flags="--latest"
+          fi
+          cp build/release/app-release.apk build/release/bedug-android.apk
+          rm build/release/app-release.apk
+          gh release create "$TAG" build/release/* \
+            --target "$GITHUB_SHA" --title "Bedug $TAG" --generate-notes $flags

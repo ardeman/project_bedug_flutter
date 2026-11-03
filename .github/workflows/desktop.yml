@@ -30,12 +30,14 @@ on:
       - 'vendor/**'
       - '.github/workflows/desktop.yml'
   workflow_dispatch:
+  workflow_call:
 
 permissions:
   contents: read
 
 concurrency:
-  group: desktop-${{ github.ref }}
+  # The workflow name keeps a release run from cancelling the push run.
+  group: desktop-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
