@@ -51,22 +51,7 @@ jobs:
   checks:
     needs: version
     if: needs.version.outputs.new == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.47.8'
-          channel: stable
-          cache: true
-
-      - name: Run the checks
-        run: |
-          flutter pub get
-          dart format --set-exit-if-changed .
-          flutter analyze
-          flutter test
+    uses: ./.github/workflows/checks.yml
 
   builds:
     needs: version
