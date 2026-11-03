@@ -1284,4 +1284,122 @@ class AppLocalizationsMs extends AppLocalizations {
   @override
   String get zakatPrivacyNote =>
       'Jumlah yang anda masukkan hanya ada pada skrin ini dan tidak disimpan.';
+
+  @override
+  String get appTour => 'Panduan aplikasi';
+
+  @override
+  String get tourSubtitle => 'Kenali Bedug dan ciri utamanya.';
+
+  @override
+  String get tourWelcomeTitle => 'Selamat datang ke Bedug';
+
+  @override
+  String get tourWelcomeBody =>
+      'Teman untuk solat dan ibadah harian. Gunakan empat tab untuk mencari waktu solat, alat ibadah, al-Quran dan Tetapan. Panduan ringkas ini membantu anda bermula.';
+
+  @override
+  String get tourPrayerBody =>
+      'Lihat waktu solat hari ini dan kira detik ke solat seterusnya. Layari tarikh lain dan kalendar Hijrah. Dalam Tetapan, gunakan lokasi anda atau pilih bandar, kemudian semak kaedah pengiraan dan pilihan pemberitahuan.';
+
+  @override
+  String get tourWorshipBody =>
+      'Buka Ibadah untuk arah kiblat, zikir, doa harian dan Asmaul Husna. Ketik kad zikir untuk mengira bacaan dan tekan lama untuk menetapkan semula. Peristiwa Islam, catatan puasa dan kalkulator zakat juga tersedia di sini.';
+
+  @override
+  String get tourQuranBody =>
+      'Layari surah atau juzuk, atau kembali ke penanda buku. Baca di luar talian dengan terjemahan, laraskan saiz teks dan beralih ke mod halaman. Gunakan perancang khatam untuk menetapkan sasaran dan tandakan ayat yang telah dibaca.';
+
+  @override
+  String get tourSettingsBody =>
+      'Pilih bahasa, penampilan, bandar, kaedah pengiraan solat dan peringatan dalam Tetapan. Anda juga boleh melaraskan kalendar Hijrah dan gaya widget skrin utama. Buka semula Panduan aplikasi di sini pada bila-bila masa.';
+
+  @override
+  String get tourSkip => 'Langkau panduan';
+
+  @override
+  String get tourBack => 'Kembali';
+
+  @override
+  String get tourNext => 'Seterusnya';
+
+  @override
+  String get tourStart => 'Mula menggunakan Bedug';
+
+  @override
+  String tourProgress(int current, int total) {
+    return 'Langkah $current daripada $total';
+  }
+
+  @override
+  String get permissionLocationTitle => 'Gunakan lokasi anda?';
+
+  @override
+  String get permissionLocationBody =>
+      'Bedug menggunakan lokasi anda untuk mengira waktu solat dan arah kiblat. Teruskan ke permintaan kebenaran sistem, atau pilih bandar dalam Tetapan.';
+
+  @override
+  String get permissionNotificationBody =>
+      'Bedug boleh menghantar pemberitahuan solat dan peringatan pilihan anda. Teruskan ke permintaan kebenaran sistem. Anda boleh terus menggunakan aplikasi tanpa pemberitahuan dan mengaktifkannya kemudian dalam Tetapan.';
+
+  @override
+  String get permissionAlarmBody =>
+      'Android memerlukan akses khas untuk menghantar pemberitahuan solat tepat pada waktunya. Teruskan ke tetapan sistem untuk menyemak akses ini. Tanpanya, pemberitahuan mungkin lewat.';
+
+  @override
+  String get permissionNotNow => 'Bukan sekarang';
+
+  @override
+  String get permissionContinue => 'Teruskan';
+
+  @override
+  String get guideNavigation =>
+      'Tab ini membuka waktu solat, Ibadah, al-Quran dan Tetapan. Mari kenali kawalan utamanya.';
+
+  @override
+  String get guideCalendar =>
+      'Pilih hari di sini. Buka paparan bulan untuk melihat kalendar Hijrah dan peristiwa Islam.';
+
+  @override
+  String get guideQibla =>
+      'Kompas ini menunjukkan arah kiblat. Putar telefon sehingga arahnya sejajar.';
+
+  @override
+  String get guideDzikir =>
+      'Buka koleksi zikir di sini. Semasa membaca, ketik kad untuk mengira bacaan dan tekan lama untuk menetapkan semula.';
+
+  @override
+  String get guideFasting =>
+      'Catat hari puasa dan pantau puasa yang perlu diqada di sini.';
+
+  @override
+  String get guideQuranPlan =>
+      'Tetapkan sasaran khatam di sini. Tandakan ayat yang telah dibaca untuk mengemas kini kemajuan.';
+
+  @override
+  String get guideQuranBrowse =>
+      'Beralih antara surah, juzuk dan penanda buku di sini, kemudian pilih bahagian untuk dibaca.';
+
+  @override
+  String get guideCalculation =>
+      'Pilih kaedah pengiraan solat yang digunakan di kawasan anda di sini.';
+
+  @override
+  String get guideNotifications =>
+      'Pilih pemberitahuan solat dan peringatan di sini. Kebenaran sistem hanya diminta selepas anda bersetuju dengan penjelasannya.';
+
+  @override
+  String get guideLocation =>
+      'Gunakan lokasi automatik, atau matikannya dan pilih bandar pada baris di bawah.';
+
+  @override
+  String get guideLanguage =>
+      'Tukar bahasa aplikasi di sini. Bahasa Arab juga menukar susun atur dari kanan ke kiri.';
+
+  @override
+  String get guideReplay =>
+      'Buka Panduan aplikasi di sini pada bila-bila masa untuk mengenali semula kawalan ini.';
+
+  @override
+  String get tourDone => 'Selesai';
 }

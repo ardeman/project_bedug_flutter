@@ -26,7 +26,8 @@ Future<ProviderContainer> _pump(
   WidgetTester tester, {
   Widget home = const FastingLogScreen(),
 }) async {
-  SharedPreferences.setMockInitialValues({});
+  // The dates above come from the Umm al-Qura table, so the app follows it.
+  SharedPreferences.setMockInitialValues({'hijri_source': 'ummAlQura'});
   final prefs = await SharedPreferences.getInstance();
   final container = ProviderContainer(
     overrides: [sharedPreferencesProvider.overrideWithValue(prefs)],

@@ -1307,4 +1307,121 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get zakatPrivacyNote =>
       'المبالغ التي تدخلها تبقى في هذه الشاشة ولا تُحفظ أبدًا.';
+
+  @override
+  String get appTour => 'جولة في التطبيق';
+
+  @override
+  String get tourSubtitle => 'تعرّف على بدوغ وميزاته الأساسية.';
+
+  @override
+  String get tourWelcomeTitle => 'مرحباً بك في بدوغ';
+
+  @override
+  String get tourWelcomeBody =>
+      'رفيقك للصلاة والعبادة اليومية. استخدم علامات التبويب الأربع للوصول إلى مواقيت الصلاة وأدوات العبادة والقرآن والإعدادات. تساعدك هذه الجولة القصيرة على البدء.';
+
+  @override
+  String get tourPrayerBody =>
+      'اطّلع على مواقيت الصلاة اليوم والعد التنازلي للصلاة القادمة، وتصفّح التواريخ الأخرى والتقويم الهجري. في الإعدادات، استخدم موقعك أو اختر مدينة، ثم راجع طريقة الحساب وتفضيلات الإشعارات.';
+
+  @override
+  String get tourWorshipBody =>
+      'افتح تبويب العبادة لاتجاه القبلة والأذكار والأدعية اليومية وأسماء الله الحسنى. انقر على بطاقة الذكر لعدّ التكرارات واضغط مطولاً لتصفير العدّاد. ستجد هنا أيضاً المناسبات الإسلامية وسجل الصيام وحاسبة الزكاة.';
+
+  @override
+  String get tourQuranBody =>
+      'تصفّح السور أو الأجزاء، أو عد إلى علامة مرجعية. اقرأ دون اتصال مع الترجمات، واضبط حجم النص وانتقل إلى وضع الصفحات. استخدم مخطط الختمة لتحديد هدف القراءة، وعلّم الآيات عند الانتهاء منها.';
+
+  @override
+  String get tourSettingsBody =>
+      'اختر اللغة والمظهر والمدينة وطريقة حساب الصلاة والتذكيرات في الإعدادات. يمكنك أيضاً ضبط التقويم الهجري ومظهر أدوات الشاشة الرئيسية. يمكنك العودة إلى جولة التطبيق هنا في أي وقت.';
+
+  @override
+  String get tourSkip => 'تخطي الجولة';
+
+  @override
+  String get tourBack => 'السابق';
+
+  @override
+  String get tourNext => 'التالي';
+
+  @override
+  String get tourStart => 'ابدأ استخدام بدوغ';
+
+  @override
+  String tourProgress(int current, int total) {
+    return 'الخطوة $current من $total';
+  }
+
+  @override
+  String get permissionLocationTitle => 'استخدام موقعك؟';
+
+  @override
+  String get permissionLocationBody =>
+      'يستخدم بدوغ موقعك لحساب مواقيت الصلاة واتجاه القبلة. تابع لعرض طلب إذن النظام، أو اختر مدينة من الإعدادات بدلاً من ذلك.';
+
+  @override
+  String get permissionNotificationBody =>
+      'يمكن لبدوغ إرسال تنبيهات الصلاة والتذكيرات التي تختارها. تابع لعرض طلب إذن النظام. يمكنك استخدام التطبيق دون إشعارات وتفعيلها لاحقاً من الإعدادات.';
+
+  @override
+  String get permissionAlarmBody =>
+      'يحتاج أندرويد إلى وصول خاص لإرسال تنبيهات الصلاة في وقتها الدقيق. تابع إلى إعدادات النظام لمراجعة هذا الوصول. قد تتأخر التنبيهات بدونه.';
+
+  @override
+  String get permissionNotNow => 'ليس الآن';
+
+  @override
+  String get permissionContinue => 'متابعة';
+
+  @override
+  String get guideNavigation =>
+      'تفتح علامات التبويب مواقيت الصلاة والعبادة والقرآن والإعدادات. لنتعرّف على عناصر التحكم الأساسية.';
+
+  @override
+  String get guideCalendar =>
+      'اختر يوماً هنا، وافتح عرض الشهر لتصفّح التقويم الهجري والمناسبات الإسلامية.';
+
+  @override
+  String get guideQibla =>
+      'تشير هذه البوصلة إلى القبلة. أدر هاتفك حتى يتوافق الاتجاه.';
+
+  @override
+  String get guideDzikir =>
+      'افتح مجموعة أذكار هنا. أثناء القراءة، انقر على البطاقة لعدّ التكرارات واضغط مطولاً لتصفير العدّاد.';
+
+  @override
+  String get guideFasting => 'سجّل أيام صيامك وتابع ما عليك من قضاء هنا.';
+
+  @override
+  String get guideQuranPlan =>
+      'حدّد هدف الختمة هنا، وعلّم الآيات التي تقرؤها لتحديث تقدّمك.';
+
+  @override
+  String get guideQuranBrowse =>
+      'انتقل بين السور والأجزاء والعلامات المرجعية هنا، ثم اختر موضع القراءة.';
+
+  @override
+  String get guideCalculation =>
+      'اختر طريقة حساب الصلاة المتّبعة في منطقتك هنا.';
+
+  @override
+  String get guideNotifications =>
+      'اختر تنبيهات الصلاة والتذكيرات هنا. لا يُطلب إذن النظام إلا بعد موافقتك على الشرح.';
+
+  @override
+  String get guideLocation =>
+      'استخدم الموقع التلقائي، أو أوقفه واختر مدينة من الصف التالي.';
+
+  @override
+  String get guideLanguage =>
+      'غيّر لغة التطبيق هنا. تغيّر العربية أيضاً اتجاه الواجهة من اليمين إلى اليسار.';
+
+  @override
+  String get guideReplay =>
+      'افتح جولة التطبيق هنا متى أردت التعرّف على هذه العناصر مجدداً.';
+
+  @override
+  String get tourDone => 'تم';
 }

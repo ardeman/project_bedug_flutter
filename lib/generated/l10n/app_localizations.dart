@@ -2357,6 +2357,198 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Jumlah yang Anda isi hanya ada di layar ini dan tidak pernah disimpan.'**
   String get zakatPrivacyNote;
+
+  /// No description provided for @appTour.
+  ///
+  /// In id, this message translates to:
+  /// **'Panduan aplikasi'**
+  String get appTour;
+
+  /// No description provided for @tourSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Kenali Bedug dan fitur utamanya.'**
+  String get tourSubtitle;
+
+  /// No description provided for @tourWelcomeTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Selamat datang di Bedug'**
+  String get tourWelcomeTitle;
+
+  /// No description provided for @tourWelcomeBody.
+  ///
+  /// In id, this message translates to:
+  /// **'Teman untuk salat dan ibadah sehari-hari. Gunakan empat tab untuk menemukan jadwal salat, sarana ibadah, Al-Qur’an, dan Pengaturan. Panduan singkat ini membantu Anda memulai.'**
+  String get tourWelcomeBody;
+
+  /// No description provided for @tourPrayerBody.
+  ///
+  /// In id, this message translates to:
+  /// **'Lihat jadwal salat hari ini dan hitung mundur menuju salat berikutnya. Jelajahi tanggal lain dan kalender Hijriah. Di Pengaturan, gunakan lokasi Anda atau pilih kota, lalu periksa metode perhitungan dan pilihan notifikasi.'**
+  String get tourPrayerBody;
+
+  /// No description provided for @tourWorshipBody.
+  ///
+  /// In id, this message translates to:
+  /// **'Buka Ibadah untuk arah kiblat, zikir, doa harian, dan Asmaulhusna. Ketuk kartu zikir untuk menghitung bacaan dan tekan lama untuk mengatur ulang. Peristiwa Islam, catatan puasa, dan kalkulator zakat juga tersedia di sini.'**
+  String get tourWorshipBody;
+
+  /// No description provided for @tourQuranBody.
+  ///
+  /// In id, this message translates to:
+  /// **'Jelajahi surah atau juz, atau kembali ke penanda. Baca secara luring dengan terjemahan, sesuaikan ukuran teks, dan beralih ke mode halaman. Gunakan rencana khatam untuk menetapkan target dan tandai ayat yang sudah dibaca.'**
+  String get tourQuranBody;
+
+  /// No description provided for @tourSettingsBody.
+  ///
+  /// In id, this message translates to:
+  /// **'Pilih bahasa, tampilan, kota, metode perhitungan salat, dan pengingat di Pengaturan. Anda juga dapat menyesuaikan kalender Hijriah dan tampilan widget layar utama. Buka kembali Panduan aplikasi di sini kapan saja.'**
+  String get tourSettingsBody;
+
+  /// No description provided for @tourSkip.
+  ///
+  /// In id, this message translates to:
+  /// **'Lewati panduan'**
+  String get tourSkip;
+
+  /// No description provided for @tourBack.
+  ///
+  /// In id, this message translates to:
+  /// **'Kembali'**
+  String get tourBack;
+
+  /// No description provided for @tourNext.
+  ///
+  /// In id, this message translates to:
+  /// **'Lanjut'**
+  String get tourNext;
+
+  /// No description provided for @tourStart.
+  ///
+  /// In id, this message translates to:
+  /// **'Mulai menggunakan Bedug'**
+  String get tourStart;
+
+  /// No description provided for @tourProgress.
+  ///
+  /// In id, this message translates to:
+  /// **'Langkah {current} dari {total}'**
+  String tourProgress(int current, int total);
+
+  /// No description provided for @permissionLocationTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Gunakan lokasi Anda?'**
+  String get permissionLocationTitle;
+
+  /// No description provided for @permissionLocationBody.
+  ///
+  /// In id, this message translates to:
+  /// **'Bedug menggunakan lokasi untuk menghitung jadwal salat dan arah kiblat. Lanjutkan ke permintaan izin sistem, atau pilih kota di Pengaturan.'**
+  String get permissionLocationBody;
+
+  /// No description provided for @permissionNotificationBody.
+  ///
+  /// In id, this message translates to:
+  /// **'Bedug dapat mengirim notifikasi salat dan pengingat pilihan Anda. Lanjutkan ke permintaan izin sistem. Anda tetap dapat menggunakan aplikasi tanpa notifikasi dan mengaktifkannya nanti di Pengaturan.'**
+  String get permissionNotificationBody;
+
+  /// No description provided for @permissionAlarmBody.
+  ///
+  /// In id, this message translates to:
+  /// **'Android memerlukan akses khusus agar notifikasi salat tepat waktu. Lanjutkan ke pengaturan sistem untuk meninjau akses ini. Tanpanya, notifikasi mungkin terlambat.'**
+  String get permissionAlarmBody;
+
+  /// No description provided for @permissionNotNow.
+  ///
+  /// In id, this message translates to:
+  /// **'Nanti saja'**
+  String get permissionNotNow;
+
+  /// No description provided for @permissionContinue.
+  ///
+  /// In id, this message translates to:
+  /// **'Lanjutkan'**
+  String get permissionContinue;
+
+  /// No description provided for @guideNavigation.
+  ///
+  /// In id, this message translates to:
+  /// **'Tab ini membuka jadwal salat, Ibadah, Al-Qur’an, dan Pengaturan. Mari kenali kontrol utamanya.'**
+  String get guideNavigation;
+
+  /// No description provided for @guideCalendar.
+  ///
+  /// In id, this message translates to:
+  /// **'Pilih hari di sini. Buka tampilan bulan untuk melihat kalender Hijriah dan peristiwa Islam.'**
+  String get guideCalendar;
+
+  /// No description provided for @guideQibla.
+  ///
+  /// In id, this message translates to:
+  /// **'Kompas ini menunjukkan arah kiblat. Putar ponsel hingga arahnya sejajar.'**
+  String get guideQibla;
+
+  /// No description provided for @guideDzikir.
+  ///
+  /// In id, this message translates to:
+  /// **'Buka koleksi zikir di sini. Saat membaca, ketuk kartu untuk menghitung bacaan dan tekan lama untuk mengatur ulang.'**
+  String get guideDzikir;
+
+  /// No description provided for @guideFasting.
+  ///
+  /// In id, this message translates to:
+  /// **'Catat hari puasa dan pantau utang puasa yang perlu diqada di sini.'**
+  String get guideFasting;
+
+  /// No description provided for @guideQuranPlan.
+  ///
+  /// In id, this message translates to:
+  /// **'Tetapkan target khatam di sini. Tandai ayat yang sudah dibaca untuk memperbarui kemajuan.'**
+  String get guideQuranPlan;
+
+  /// No description provided for @guideQuranBrowse.
+  ///
+  /// In id, this message translates to:
+  /// **'Beralih antara surah, juz, dan penanda di sini, lalu pilih bagian yang ingin dibaca.'**
+  String get guideQuranBrowse;
+
+  /// No description provided for @guideCalculation.
+  ///
+  /// In id, this message translates to:
+  /// **'Pilih metode perhitungan salat yang digunakan di daerah Anda di sini.'**
+  String get guideCalculation;
+
+  /// No description provided for @guideNotifications.
+  ///
+  /// In id, this message translates to:
+  /// **'Pilih notifikasi salat dan pengingat di sini. Izin sistem hanya diminta setelah Anda menyetujui penjelasannya.'**
+  String get guideNotifications;
+
+  /// No description provided for @guideLocation.
+  ///
+  /// In id, this message translates to:
+  /// **'Gunakan lokasi otomatis, atau nonaktifkan lalu pilih kota pada baris di bawahnya.'**
+  String get guideLocation;
+
+  /// No description provided for @guideLanguage.
+  ///
+  /// In id, this message translates to:
+  /// **'Ubah bahasa aplikasi di sini. Bahasa Arab juga mengubah tata letak menjadi dari kanan ke kiri.'**
+  String get guideLanguage;
+
+  /// No description provided for @guideReplay.
+  ///
+  /// In id, this message translates to:
+  /// **'Buka Panduan aplikasi di sini kapan saja untuk mengenali kembali kontrol ini.'**
+  String get guideReplay;
+
+  /// No description provided for @tourDone.
+  ///
+  /// In id, this message translates to:
+  /// **'Selesai'**
+  String get tourDone;
 }
 
 class _AppLocalizationsDelegate

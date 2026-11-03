@@ -406,5 +406,47 @@
   "zakatFitrahPerPerson": "Amount per person",
   "zakatFitrahDue": "Zakat fitrah",
   "zakatFitrahInKind": "Or {kg} kg of staple food",
-  "zakatPrivacyNote": "The amounts you enter stay on this screen and are never saved."
+  "zakatPrivacyNote": "The amounts you enter stay on this screen and are never saved.",
+  "appTour": "App tour",
+  "tourSubtitle": "Get to know Bedug and its main features.",
+  "tourWelcomeTitle": "Welcome to Bedug",
+  "tourWelcomeBody": "Your companion for prayer and daily worship. Use the four tabs to find prayer times, worship tools, the Quran and Settings. This short tour shows you where to begin.",
+  "tourPrayerBody": "See today’s prayer times and the countdown to the next prayer. Browse other dates and the Hijri calendar. In Settings, use your location or choose a city, then check the calculation method and notification preferences.",
+  "tourWorshipBody": "Open Worship for the Qibla direction, dzikir, daily duas and the names of Allah. Tap a dzikir card to count recitations and hold it to reset. You can also find Islamic events, your fasting log and the zakat calculator here.",
+  "tourQuranBody": "Browse by surah or juz, or return to a bookmark. Read offline with translations, adjust the text size and switch to page mode. Use the khatam planner to set a reading goal and mark ayahs as you finish them.",
+  "tourSettingsBody": "Choose your language, appearance, city, prayer calculation method and reminders in Settings. You can also adjust the Hijri calendar and home screen widget style. Return to App tour here any time.",
+  "tourSkip": "Skip tour",
+  "tourBack": "Back",
+  "tourNext": "Next",
+  "tourStart": "Start using Bedug",
+  "tourProgress": "Step {current} of {total}",
+  "@tourProgress": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "permissionLocationTitle": "Use your location?",
+  "permissionLocationBody": "Bedug uses your location to calculate prayer times and the Qibla direction. Continue to the system permission prompt, or choose a city in Settings instead.",
+  "permissionNotificationBody": "Bedug can send prayer alerts and the reminders you select. Continue to the system permission prompt. You can keep using the app without notifications and enable them later in Settings.",
+  "permissionAlarmBody": "Android needs special access to deliver prayer alerts at precise times. Continue to the system settings to review this access. Without it, alerts may arrive late.",
+  "permissionNotNow": "Not now",
+  "permissionContinue": "Continue",
+  "guideNavigation": "These tabs take you to prayer times, Worship, the Quran and Settings. Let’s look at the main controls.",
+  "guideCalendar": "Choose a day here. Open the month view to browse the Hijri calendar and Islamic events.",
+  "guideQibla": "This compass points towards the Qibla. Turn your phone until the direction lines up.",
+  "guideDzikir": "Open a dzikir collection here. In the reader, tap a card to count recitations and hold it to reset.",
+  "guideFasting": "Record the days you fast and keep track of make-up fasts owed here.",
+  "guideQuranPlan": "Set a khatam goal here. Mark ayahs as you read to update your progress.",
+  "guideQuranBrowse": "Switch between surahs, juz and bookmarks here, then choose where to read.",
+  "guideCalculation": "Choose the prayer calculation method used in your area here.",
+  "guideNotifications": "Choose which prayer alerts and reminders you want here. System access is requested only after you acknowledge its explanation.",
+  "guideLocation": "Use automatic location, or turn it off and choose a city in the row below.",
+  "guideLanguage": "Change the app language here. Arabic also switches the layout to right-to-left.",
+  "guideReplay": "Open App tour here whenever you want to see these controls again.",
+  "tourDone": "Done"
 }

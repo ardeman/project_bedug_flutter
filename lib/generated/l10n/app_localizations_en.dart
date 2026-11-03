@@ -1296,4 +1296,122 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get zakatPrivacyNote =>
       'The amounts you enter stay on this screen and are never saved.';
+
+  @override
+  String get appTour => 'App tour';
+
+  @override
+  String get tourSubtitle => 'Get to know Bedug and its main features.';
+
+  @override
+  String get tourWelcomeTitle => 'Welcome to Bedug';
+
+  @override
+  String get tourWelcomeBody =>
+      'Your companion for prayer and daily worship. Use the four tabs to find prayer times, worship tools, the Quran and Settings. This short tour shows you where to begin.';
+
+  @override
+  String get tourPrayerBody =>
+      'See today’s prayer times and the countdown to the next prayer. Browse other dates and the Hijri calendar. In Settings, use your location or choose a city, then check the calculation method and notification preferences.';
+
+  @override
+  String get tourWorshipBody =>
+      'Open Worship for the Qibla direction, dzikir, daily duas and the names of Allah. Tap a dzikir card to count recitations and hold it to reset. You can also find Islamic events, your fasting log and the zakat calculator here.';
+
+  @override
+  String get tourQuranBody =>
+      'Browse by surah or juz, or return to a bookmark. Read offline with translations, adjust the text size and switch to page mode. Use the khatam planner to set a reading goal and mark ayahs as you finish them.';
+
+  @override
+  String get tourSettingsBody =>
+      'Choose your language, appearance, city, prayer calculation method and reminders in Settings. You can also adjust the Hijri calendar and home screen widget style. Return to App tour here any time.';
+
+  @override
+  String get tourSkip => 'Skip tour';
+
+  @override
+  String get tourBack => 'Back';
+
+  @override
+  String get tourNext => 'Next';
+
+  @override
+  String get tourStart => 'Start using Bedug';
+
+  @override
+  String tourProgress(int current, int total) {
+    return 'Step $current of $total';
+  }
+
+  @override
+  String get permissionLocationTitle => 'Use your location?';
+
+  @override
+  String get permissionLocationBody =>
+      'Bedug uses your location to calculate prayer times and the Qibla direction. Continue to the system permission prompt, or choose a city in Settings instead.';
+
+  @override
+  String get permissionNotificationBody =>
+      'Bedug can send prayer alerts and the reminders you select. Continue to the system permission prompt. You can keep using the app without notifications and enable them later in Settings.';
+
+  @override
+  String get permissionAlarmBody =>
+      'Android needs special access to deliver prayer alerts at precise times. Continue to the system settings to review this access. Without it, alerts may arrive late.';
+
+  @override
+  String get permissionNotNow => 'Not now';
+
+  @override
+  String get permissionContinue => 'Continue';
+
+  @override
+  String get guideNavigation =>
+      'These tabs take you to prayer times, Worship, the Quran and Settings. Let’s look at the main controls.';
+
+  @override
+  String get guideCalendar =>
+      'Choose a day here. Open the month view to browse the Hijri calendar and Islamic events.';
+
+  @override
+  String get guideQibla =>
+      'This compass points towards the Qibla. Turn your phone until the direction lines up.';
+
+  @override
+  String get guideDzikir =>
+      'Open a dzikir collection here. In the reader, tap a card to count recitations and hold it to reset.';
+
+  @override
+  String get guideFasting =>
+      'Record the days you fast and keep track of make-up fasts owed here.';
+
+  @override
+  String get guideQuranPlan =>
+      'Set a khatam goal here. Mark ayahs as you read to update your progress.';
+
+  @override
+  String get guideQuranBrowse =>
+      'Switch between surahs, juz and bookmarks here, then choose where to read.';
+
+  @override
+  String get guideCalculation =>
+      'Choose the prayer calculation method used in your area here.';
+
+  @override
+  String get guideNotifications =>
+      'Choose which prayer alerts and reminders you want here. System access is requested only after you acknowledge its explanation.';
+
+  @override
+  String get guideLocation =>
+      'Use automatic location, or turn it off and choose a city in the row below.';
+
+  @override
+  String get guideLanguage =>
+      'Change the app language here. Arabic also switches the layout to right-to-left.';
+
+  @override
+  String get guideReplay =>
+      'Open App tour here whenever you want to see these controls again.';
+
+  @override
+  String get tourDone => 'Done';
 }

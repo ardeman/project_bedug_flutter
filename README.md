@@ -9,6 +9,8 @@ A cross-platform Muslim prayer times app with a Hijri calendar, in Indonesian, E
 
 ## Features
 
+- A skippable first-launch tour spotlights individual controls with a small explanation beside each, scrolling them into view and skipping unavailable features; replay it from **Settings → App tour**. Permission prompts wait until the tour ends and require acknowledging an explanation. “Not now” defers access; retry location or enable notifications in Settings later.
+
 - Live next-prayer countdown and adhan notifications.
 - Location source:
   - Auto detect from device GPS, or

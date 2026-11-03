@@ -17,6 +17,7 @@ import '../../core/design/liquid_glass.dart';
 import '../../core/design/glass_controls.dart';
 import '../../core/design/platform_capabilities.dart';
 import '../../core/providers/locale_provider.dart';
+import '../../core/providers/permission_provider.dart';
 import '../../core/services/notification_preferences.dart';
 import '../../core/services/notification_service.dart';
 import '../../core/services/notification_sound_preview.dart';
@@ -29,7 +30,9 @@ import '../../core/widgets/calculation_method_picker.dart';
 import '../../core/widgets/city_picker.dart';
 import '../../core/widgets/glass_menu.dart';
 import '../../generated/l10n/app_localizations.dart';
+import '../tour/tour_targets.dart';
 import '../changelog/changelog_screen.dart';
+import '../tour/app_tour_provider.dart';
 import '../dzikir/dzikir.dart';
 import '../infaq/infaq_provider.dart';
 import '../infaq/infaq_screen.dart';
@@ -55,6 +58,7 @@ class SettingsScreen extends ConsumerWidget {
         children: [
           // Metode Hisab
           PlatformListTile(
+            key: TourAnchorScope.maybeOf(ctx)?.keys[TourControl.calculation],
             leading: Icon(
               Icons.calculate_outlined,
               color: AppColors.accentOf(ctx),
@@ -136,13 +140,14 @@ class SettingsScreen extends ConsumerWidget {
 
           // Notifikasi
           PlatformListTile(
+            key: TourAnchorScope.maybeOf(ctx)?.keys[TourControl.notifications],
             leading: Icon(
               Icons.notifications_outlined,
               color: AppColors.accentOf(ctx),
             ),
             title: Text(l10n.notifications),
             subtitle: Text(
-              settings.notifications.enabled
+              ref.watch(notificationsEnabledProvider)
                   ? l10n.notificationPreferences
                   : l10n.notificationsOff,
             ),
@@ -155,6 +160,7 @@ class SettingsScreen extends ConsumerWidget {
           ),
 
           PlatformListTile(
+            key: TourAnchorScope.maybeOf(ctx)?.keys[TourControl.location],
             leading: Icon(
               Icons.my_location_outlined,
               color: AppColors.accentOf(ctx),
@@ -233,20 +239,24 @@ class SettingsScreen extends ConsumerWidget {
       SettingsSection(
         title: l10n.language,
         children: [
-          _ChoiceTile<String>(
-            icon: Icons.language_outlined,
-            title: l10n.language,
-            value: locale.languageCode,
-            options: [
-              for (final loc in supportedLocales)
-                GlassMenuOption(
-                  value: loc.languageCode,
-                  label:
-                      localeDisplayNames[loc.languageCode] ?? loc.languageCode,
-                ),
-            ],
-            onChanged: (code) =>
-                ref.read(localeProvider.notifier).setLocale(Locale(code)),
+          TourTarget(
+            control: TourControl.language,
+            child: _ChoiceTile<String>(
+              icon: Icons.language_outlined,
+              title: l10n.language,
+              value: locale.languageCode,
+              options: [
+                for (final loc in supportedLocales)
+                  GlassMenuOption(
+                    value: loc.languageCode,
+                    label:
+                        localeDisplayNames[loc.languageCode] ??
+                        loc.languageCode,
+                  ),
+              ],
+              onChanged: (code) =>
+                  ref.read(localeProvider.notifier).setLocale(Locale(code)),
+            ),
           ),
         ],
       ),
@@ -255,6 +265,17 @@ class SettingsScreen extends ConsumerWidget {
       SettingsSection(
         title: l10n.about,
         children: [
+          PlatformListTile(
+            key: TourAnchorScope.maybeOf(ctx)?.keys[TourControl.replay],
+            leading: Icon(
+              Icons.explore_outlined,
+              color: AppColors.accentOf(ctx),
+            ),
+            title: Text(l10n.appTour),
+            subtitle: Text(l10n.tourSubtitle),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => ref.read(appTourControllerProvider.notifier).start(),
+          ),
           PlatformListTile(
             leading: Icon(
               Icons.volunteer_activism_outlined,
@@ -328,6 +349,7 @@ class SettingsScreen extends ConsumerWidget {
       extendBodyBehindAppBar: isApple,
       appBar: GlassTopBar(title: l10n.settings),
       body: ListView(
+        controller: TourAnchorScope.maybeOf(ctx)?.scrollControllers[3],
         children: [
           for (final (i, section) in sections.indexed) ...[
             // Glass sections are separate cards; Material ones need a rule.
@@ -390,6 +412,7 @@ class NotificationSettingsScreen extends ConsumerWidget {
   Widget build(BuildContext ctx, WidgetRef ref) {
     final l10n = AppLocalizations.of(ctx);
     final preferences = ref.watch(settingsProvider).notifications;
+    final enabled = ref.watch(notificationsEnabledProvider);
     final notifier = ref.read(settingsProvider.notifier);
     final failed = ref.watch(prayerProvider.select((s) => s.notificationError));
     final muted = Theme.of(ctx).colorScheme.onSurfaceVariant;
@@ -426,10 +449,32 @@ class NotificationSettingsScreen extends ConsumerWidget {
                 title: Text(l10n.allNotifications),
                 trailing: _AdaptiveSwitch(
                   key: const ValueKey('notifications-enabled'),
-                  value: preferences.enabled,
-                  onChanged: (value) => notifier.setNotifications(
-                    preferences.copyWith(enabled: value),
-                  ),
+                  value: enabled,
+                  onChanged: (value) async {
+                    if (value &&
+                        !await ref.read(notificationAccessProvider.future)) {
+                      final acknowledged = await ref.read(
+                        permissionAcknowledgementProvider,
+                      )(AppPermission.notifications);
+                      if (!acknowledged || !ctx.mounted) return;
+                      await ref
+                          .read(sharedPreferencesProvider)
+                          .setBool(notificationAcknowledgementKey, true);
+                      await NotificationService.requestPermissions();
+                      if (!ctx.mounted) return;
+                      ref.invalidate(notificationAccessProvider);
+                      if (!await ref.read(notificationAccessProvider.future) ||
+                          !ctx.mounted) {
+                        return;
+                      }
+                    }
+                    await notifier.setNotifications(
+                      ref
+                          .read(settingsProvider)
+                          .notifications
+                          .copyWith(enabled: value),
+                    );
+                  },
                 ),
               ),
             ],
@@ -439,7 +484,7 @@ class NotificationSettingsScreen extends ConsumerWidget {
               padding: const EdgeInsets.all(AppSpacing.md),
               child: Text(l10n.notificationSchedulingError),
             ),
-          if (preferences.enabled)
+          if (enabled)
             SettingsSection(
               title: l10n.notificationTimes,
               children: [
@@ -484,7 +529,7 @@ class NotificationSettingsScreen extends ConsumerWidget {
             ),
           // Collections without morning and evening sessions get no
           // reminders.
-          if (preferences.enabled &&
+          if (enabled &&
               (ref.watch(selectedDzikirCollectionProvider).value?.hasSessions ??
                   false))
             SettingsSection(
@@ -518,7 +563,7 @@ class NotificationSettingsScreen extends ConsumerWidget {
                   ),
               ],
             ),
-          if (preferences.enabled)
+          if (enabled)
             SettingsSection(
               title: l10n.hijriEvents,
               children: [
@@ -541,7 +586,7 @@ class NotificationSettingsScreen extends ConsumerWidget {
                 ),
               ],
             ),
-          if (preferences.enabled)
+          if (enabled)
             SettingsSection(
               title: l10n.sunnahFasting,
               children: [
@@ -585,7 +630,7 @@ class NotificationSettingsScreen extends ConsumerWidget {
                   ),
               ],
             ),
-          if (preferences.enabled)
+          if (enabled)
             SettingsSection(
               title: l10n.ramadan,
               children: [
@@ -635,6 +680,10 @@ class NotificationSettingsScreen extends ConsumerWidget {
                     subtitle: Text(l10n.precisePrayerAlertsDescription),
                     trailing: const Icon(Icons.open_in_new),
                     onTap: () async {
+                      final acknowledged = await ref.read(
+                        permissionAcknowledgementProvider,
+                      )(AppPermission.preciseAlarms);
+                      if (!acknowledged || !ctx.mounted) return;
                       await NotificationService.requestPreciseAlarms();
                       if (ctx.mounted) {
                         await ref

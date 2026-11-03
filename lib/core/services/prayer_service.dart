@@ -14,6 +14,7 @@ import '../../features/dzikir/dzikir.dart';
 import '../../generated/l10n/app_localizations.dart';
 import '../constants/city_catalog.dart';
 import '../providers/locale_provider.dart';
+import '../providers/permission_provider.dart';
 import 'kemenag_method.dart';
 import 'notification_service.dart';
 import 'notification_preferences.dart';
@@ -105,6 +106,7 @@ class PrayerNotifier extends Notifier<PrayerState> {
   /// The latest GPS fix, so a language change can ask for the address again
   /// in the new language without waiting for a new fix.
   Position? _position;
+  Future<LocationPermission>? _locationPermissionRequest;
 
   @override
   PrayerState build() {
@@ -132,7 +134,10 @@ class PrayerNotifier extends Notifier<PrayerState> {
       if (prev?.method != next.method ||
           prev?.isHanafi != next.isHanafi ||
           prev?.useAutoLocation != next.useAutoLocation) {
-        load();
+        load(
+          requestPermission:
+              prev?.useAutoLocation == false && next.useAutoLocation,
+        );
       } else if (prev?.notifications != next.notifications ||
           prev?.hijriReckoning != next.hijriReckoning) {
         _scheduleNotifications();
@@ -172,7 +177,7 @@ class PrayerNotifier extends Notifier<PrayerState> {
     return const PrayerState(loading: true);
   }
 
-  Future<void> load() async {
+  Future<void> load({bool requestPermission = false}) async {
     final loadId = ++_loadId;
     state = state.copyWith(
       loading: true,
@@ -187,7 +192,7 @@ class PrayerNotifier extends Notifier<PrayerState> {
       _position = null;
 
       if (settings.useAutoLocation) {
-        final pos = await _getPosition();
+        final pos = await _getPosition(requestPermission: requestPermission);
         coords = Coordinates(pos.latitude, pos.longitude);
         position = pos;
         locationLabel = _fallbackLocationLabel(pos);
@@ -236,6 +241,10 @@ class PrayerNotifier extends Notifier<PrayerState> {
     final times = state.times;
     final request = ++_notificationRequest;
     try {
+      if (ref.read(settingsProvider).notifications.enabled && times != null) {
+        await ref.read(notificationConsentProvider.future);
+      }
+      if (!ref.mounted || request != _notificationRequest) return;
       await ref.read(notificationSchedulerProvider)(
         times,
         _l10n,
@@ -305,7 +314,17 @@ class PrayerNotifier extends Notifier<PrayerState> {
       ? _l10n.locationPermissionDeniedForeverApple
       : _l10n.locationPermissionDeniedForeverAndroid;
 
-  Future<Position> _getPosition() async {
+  Future<LocationPermission> _requestLocationPermission() async {
+    final prefs = ref.read(sharedPreferencesProvider);
+    final acknowledged = await ref.read(permissionAcknowledgementProvider)(
+      AppPermission.location,
+    );
+    await prefs.setBool('location_permission_acknowledged', acknowledged);
+    if (!acknowledged) return LocationPermission.denied;
+    return Geolocator.requestPermission();
+  }
+
+  Future<Position> _getPosition({required bool requestPermission}) async {
     final enabled = await Geolocator.isLocationServiceEnabled();
     if (!enabled) {
       throw PrayerLoadException(
@@ -314,15 +333,27 @@ class PrayerNotifier extends Notifier<PrayerState> {
       );
     }
 
-    var perm = await Geolocator.checkPermission();
+    var perm =
+        await (_locationPermissionRequest ?? Geolocator.checkPermission());
     if (perm == LocationPermission.denied) {
-      perm = await Geolocator.requestPermission();
+      final prefs = ref.read(sharedPreferencesProvider);
+      if (requestPermission ||
+          !prefs.containsKey('location_permission_acknowledged')) {
+        final pending = _locationPermissionRequest ??=
+            _requestLocationPermission();
+        try {
+          perm = await pending;
+        } finally {
+          if (identical(_locationPermissionRequest, pending)) {
+            _locationPermissionRequest = null;
+          }
+        }
+      }
       if (perm == LocationPermission.denied) {
         throw PrayerLoadException(_l10n.locationPermissionDenied);
       }
     }
     if (perm == LocationPermission.deniedForever) {
-      await Geolocator.openAppSettings();
       // One actionable message; the separate location guide would repeat it.
       throw PrayerLoadException(_locationPermissionDeniedForeverMessage);
     }

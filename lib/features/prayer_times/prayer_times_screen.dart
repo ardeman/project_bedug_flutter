@@ -18,6 +18,7 @@ import 'package:liquid_glass_easy/liquid_glass_easy.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../generated/l10n/app_localizations.dart';
+import '../tour/tour_targets.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/design/glass_controls.dart';
 import '../../core/design/liquid_glass.dart';
@@ -158,14 +159,18 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                       style: LiquidGlassButton.defaultStyle.copyWith(
                         color: glassTintOf(ctx),
                       ),
-                      onPressed: () => ref.read(prayerProvider.notifier).load(),
+                      onPressed: () => ref
+                          .read(prayerProvider.notifier)
+                          .load(requestPermission: true),
                     )
                   else
                     MaterialLabelButton(
                       filled: true,
                       icon: const Icon(Icons.refresh),
                       label: Text(l10n.retry),
-                      onPressed: () => ref.read(prayerProvider.notifier).load(),
+                      onPressed: () => ref
+                          .read(prayerProvider.notifier)
+                          .load(requestPermission: true),
                     ),
                 ],
               ),
@@ -207,7 +212,9 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                     isIosPortrait: isIosPortrait,
                     topInset: topInset,
                     isDark: isDark,
-                    onRefresh: () => ref.read(prayerProvider.notifier).load(),
+                    onRefresh: () => ref
+                        .read(prayerProvider.notifier)
+                        .load(requestPermission: true),
                   ),
                 )
               : SliverPersistentHeader(
@@ -219,7 +226,9 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                     locationLabel: locationLabel,
                     remaining: _remaining,
                     topInset: topInset,
-                    onRefresh: () => ref.read(prayerProvider.notifier).load(),
+                    onRefresh: () => ref
+                        .read(prayerProvider.notifier)
+                        .load(requestPermission: true),
                   ),
                 ),
         ] else
@@ -232,7 +241,9 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
                   child: GlassPillButton(
                     icon: Icons.refresh,
                     label: l10n.refresh,
-                    onPressed: () => ref.read(prayerProvider.notifier).load(),
+                    onPressed: () => ref
+                        .read(prayerProvider.notifier)
+                        .load(requestPermission: true),
                   ),
                 ),
               ),
@@ -311,16 +322,19 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen> {
         ? next.key
         : null;
     return [
-      PrayerDayPicker(
-        today: today,
-        selected: day,
-        liveHijriDate: ref.watch(liveHijriDateProvider),
-        events: ref.watch(hijriEventsProvider).value,
-        hijriReckoning: ref.watch(
-          settingsProvider.select((s) => s.hijriReckoning),
-        ),
-        onSelected: (picked) => setState(
-          () => _pickedDay = daysBetween(today, picked) == 0 ? null : picked,
+      TourTarget(
+        control: TourControl.calendar,
+        child: PrayerDayPicker(
+          today: today,
+          selected: day,
+          liveHijriDate: ref.watch(liveHijriDateProvider),
+          events: ref.watch(hijriEventsProvider).value,
+          hijriReckoning: ref.watch(
+            settingsProvider.select((s) => s.hijriReckoning),
+          ),
+          onSelected: (picked) => setState(
+            () => _pickedDay = daysBetween(today, picked) == 0 ? null : picked,
+          ),
         ),
       ),
       // The countdown is about now, so only today shows it.

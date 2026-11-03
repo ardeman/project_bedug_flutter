@@ -1,5 +1,7 @@
 import 'package:bedug/core/providers/locale_provider.dart';
+import 'package:bedug/core/providers/permission_provider.dart';
 import 'package:bedug/features/dzikir/dzikir.dart';
+import 'package:bedug/features/tour/app_tour_provider.dart';
 import 'package:bedug/core/design/liquid_glass.dart';
 import 'package:bedug/core/design/platform_capabilities.dart';
 import 'package:bedug/core/services/kemenag_method.dart';
@@ -30,12 +32,20 @@ Future<ProviderContainer> _pumpSettings(
   double textScale = 1,
   Brightness brightness = Brightness.light,
   Widget home = const SettingsScreen(),
+  Future<bool> Function()? notificationAccess,
+  Future<bool> Function(AppPermission)? acknowledge,
 }) async {
   SharedPreferences.setMockInitialValues({'use_auto_location': false});
   final prefs = await SharedPreferences.getInstance();
   final container = ProviderContainer(
     overrides: [
       sharedPreferencesProvider.overrideWithValue(prefs),
+      notificationAccessProvider.overrideWith(
+        (_) async =>
+            notificationAccess == null ? true : await notificationAccess(),
+      ),
+      if (acknowledge != null)
+        permissionAcknowledgementProvider.overrideWithValue(acknowledge),
       notificationSchedulerProvider.overrideWithValue((_, _, _, _) async {}),
       // Asset loading never completes in the fake-async widget tests.
       dzikirCollectionsProvider.overrideWith((ref) async => [_dzikir]),
@@ -74,6 +84,35 @@ Future<ProviderContainer> _pumpSettings(
 }
 
 void main() {
+  testWidgets('Not now leaves notifications off when system access is denied', (
+    tester,
+  ) async {
+    var explanations = 0;
+    final container = await _pumpSettings(
+      tester,
+      home: const NotificationSettingsScreen(),
+      notificationAccess: () async => false,
+      acknowledge: (_) async {
+        explanations++;
+        return false;
+      },
+    );
+    expect(find.byKey(const ValueKey('notification-fajr')), findsNothing);
+    final previousExplanations = explanations;
+    await tester.tap(find.byKey(const ValueKey('notifications-enabled')));
+    await tester.pumpAndSettle();
+    expect(explanations, previousExplanations + 1);
+    expect(find.byKey(const ValueKey('notification-fajr')), findsNothing);
+    expect(container.read(notificationsEnabledProvider), isFalse);
+    // Individual reminder choices survive a missing system permission.
+    expect(
+      container.read(settingsProvider).notifications.alerts,
+      contains(PrayerAlert.fajr),
+    );
+    await tester.pumpWidget(const SizedBox.shrink());
+    container.invalidate(prayerProvider);
+  });
+
   test('privacy policy links to the page in the app language', () {
     expect(
       privacyPolicyUrl(const Locale('id')).toString(),
@@ -85,6 +124,16 @@ void main() {
         'https://bedug.ardeman.com/$code/privacy/',
       );
     }
+  });
+
+  testWidgets('app tour entry restarts the in-app tour', (tester) async {
+    final container = await _pumpSettings(tester);
+    await container.read(appTourControllerProvider.notifier).finish();
+    expect(container.read(appTourControllerProvider), isNull);
+    await tester.ensureVisible(find.text('App tour'));
+    await tester.tap(find.text('App tour'));
+    await tester.pumpAndSettle();
+    expect(container.read(appTourControllerProvider), 0);
   });
 
   for (final platform in [
@@ -376,12 +425,12 @@ void main() {
     await tester.tap(find.text('−1 day').last);
     await tester.pumpAndSettle();
     expect(container.read(settingsProvider).hijriAdjustment, -1);
-    expect(find.text("Saudi Arabia's official calendar"), findsOneWidget);
+    expect(find.textContaining('Calculated with the MABIMS'), findsOneWidget);
     await tester.tap(find.byType(M3EDropdownMenu<HijriSource>));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('MABIMS').last);
+    await tester.tap(find.text('Umm al-Qura').last);
     await tester.pumpAndSettle();
-    expect(container.read(settingsProvider).hijriSource, HijriSource.mabims);
+    expect(container.read(settingsProvider).hijriSource, HijriSource.ummAlQura);
     await tester.tap(find.byType(M3EDropdownMenu<int>).last);
     await tester.pumpAndSettle();
     await tester.tap(find.text('Dark').last);

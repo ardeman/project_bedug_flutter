@@ -42,9 +42,9 @@ class NotificationService {
     final l10n = _resolveL10n();
     const androidSettings = AndroidInitializationSettings('ic_stat_bedug');
     const darwin = DarwinInitializationSettings(
-      requestAlertPermission: true,
-      requestBadgePermission: true,
-      requestSoundPermission: true,
+      requestAlertPermission: false,
+      requestBadgePermission: false,
+      requestSoundPermission: false,
     );
     final linux = LinuxInitializationSettings(
       defaultActionName: l10n.openAction,
@@ -63,13 +63,55 @@ class NotificationService {
         .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin
         >();
-    await android?.requestNotificationsPermission();
     // Channels from builds with one sound for every alert.
     for (final legacy in const ['system', 'silent']) {
       await android?.deleteNotificationChannel(
         channelId: 'bedug_prayer_v2_$legacy',
       );
     }
+  }
+
+  /// Called only after the user accepts the in-app explanation.
+  static Future<void> requestPermissions() async {
+    if (!await init()) return;
+    await _plugin
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >()
+        ?.requestNotificationsPermission();
+    await _plugin
+        .resolvePlatformSpecificImplementation<
+          IOSFlutterLocalNotificationsPlugin
+        >()
+        ?.requestPermissions(alert: true, badge: true, sound: true);
+    await _plugin
+        .resolvePlatformSpecificImplementation<
+          MacOSFlutterLocalNotificationsPlugin
+        >()
+        ?.requestPermissions(alert: true, badge: true, sound: true);
+  }
+
+  /// Reads system authorization without showing a permission prompt.
+  static Future<bool> notificationsAllowed() async {
+    if (!supportsScheduling) return true;
+    if (!await init()) return false;
+    final android = _plugin
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >();
+    if (android != null) {
+      return await android.areNotificationsEnabled() ?? false;
+    }
+    final ios = _plugin
+        .resolvePlatformSpecificImplementation<
+          IOSFlutterLocalNotificationsPlugin
+        >();
+    if (ios != null) return (await ios.checkPermissions())?.isEnabled ?? false;
+    final macos = _plugin
+        .resolvePlatformSpecificImplementation<
+          MacOSFlutterLocalNotificationsPlugin
+        >();
+    return (await macos?.checkPermissions())?.isEnabled ?? false;
   }
 
   static bool get supportsScheduling =>

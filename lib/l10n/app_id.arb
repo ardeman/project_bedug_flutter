@@ -595,5 +595,47 @@
   "zakatFitrahPerPerson": "Nilai per orang",
   "zakatFitrahDue": "Zakat fitrah",
   "zakatFitrahInKind": "Atau {kg} kg makanan pokok",
-  "zakatPrivacyNote": "Jumlah yang Anda isi hanya ada di layar ini dan tidak pernah disimpan."
+  "zakatPrivacyNote": "Jumlah yang Anda isi hanya ada di layar ini dan tidak pernah disimpan.",
+  "appTour": "Panduan aplikasi",
+  "tourSubtitle": "Kenali Bedug dan fitur utamanya.",
+  "tourWelcomeTitle": "Selamat datang di Bedug",
+  "tourWelcomeBody": "Teman untuk salat dan ibadah sehari-hari. Gunakan empat tab untuk menemukan jadwal salat, sarana ibadah, Al-Qur’an, dan Pengaturan. Panduan singkat ini membantu Anda memulai.",
+  "tourPrayerBody": "Lihat jadwal salat hari ini dan hitung mundur menuju salat berikutnya. Jelajahi tanggal lain dan kalender Hijriah. Di Pengaturan, gunakan lokasi Anda atau pilih kota, lalu periksa metode perhitungan dan pilihan notifikasi.",
+  "tourWorshipBody": "Buka Ibadah untuk arah kiblat, zikir, doa harian, dan Asmaulhusna. Ketuk kartu zikir untuk menghitung bacaan dan tekan lama untuk mengatur ulang. Peristiwa Islam, catatan puasa, dan kalkulator zakat juga tersedia di sini.",
+  "tourQuranBody": "Jelajahi surah atau juz, atau kembali ke penanda. Baca secara luring dengan terjemahan, sesuaikan ukuran teks, dan beralih ke mode halaman. Gunakan rencana khatam untuk menetapkan target dan tandai ayat yang sudah dibaca.",
+  "tourSettingsBody": "Pilih bahasa, tampilan, kota, metode perhitungan salat, dan pengingat di Pengaturan. Anda juga dapat menyesuaikan kalender Hijriah dan tampilan widget layar utama. Buka kembali Panduan aplikasi di sini kapan saja.",
+  "tourSkip": "Lewati panduan",
+  "tourBack": "Kembali",
+  "tourNext": "Lanjut",
+  "tourStart": "Mulai menggunakan Bedug",
+  "tourProgress": "Langkah {current} dari {total}",
+  "@tourProgress": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "permissionLocationTitle": "Gunakan lokasi Anda?",
+  "permissionLocationBody": "Bedug menggunakan lokasi untuk menghitung jadwal salat dan arah kiblat. Lanjutkan ke permintaan izin sistem, atau pilih kota di Pengaturan.",
+  "permissionNotificationBody": "Bedug dapat mengirim notifikasi salat dan pengingat pilihan Anda. Lanjutkan ke permintaan izin sistem. Anda tetap dapat menggunakan aplikasi tanpa notifikasi dan mengaktifkannya nanti di Pengaturan.",
+  "permissionAlarmBody": "Android memerlukan akses khusus agar notifikasi salat tepat waktu. Lanjutkan ke pengaturan sistem untuk meninjau akses ini. Tanpanya, notifikasi mungkin terlambat.",
+  "permissionNotNow": "Nanti saja",
+  "permissionContinue": "Lanjutkan",
+  "guideNavigation": "Tab ini membuka jadwal salat, Ibadah, Al-Qur’an, dan Pengaturan. Mari kenali kontrol utamanya.",
+  "guideCalendar": "Pilih hari di sini. Buka tampilan bulan untuk melihat kalender Hijriah dan peristiwa Islam.",
+  "guideQibla": "Kompas ini menunjukkan arah kiblat. Putar ponsel hingga arahnya sejajar.",
+  "guideDzikir": "Buka koleksi zikir di sini. Saat membaca, ketuk kartu untuk menghitung bacaan dan tekan lama untuk mengatur ulang.",
+  "guideFasting": "Catat hari puasa dan pantau utang puasa yang perlu diqada di sini.",
+  "guideQuranPlan": "Tetapkan target khatam di sini. Tandai ayat yang sudah dibaca untuk memperbarui kemajuan.",
+  "guideQuranBrowse": "Beralih antara surah, juz, dan penanda di sini, lalu pilih bagian yang ingin dibaca.",
+  "guideCalculation": "Pilih metode perhitungan salat yang digunakan di daerah Anda di sini.",
+  "guideNotifications": "Pilih notifikasi salat dan pengingat di sini. Izin sistem hanya diminta setelah Anda menyetujui penjelasannya.",
+  "guideLocation": "Gunakan lokasi otomatis, atau nonaktifkan lalu pilih kota pada baris di bawahnya.",
+  "guideLanguage": "Ubah bahasa aplikasi di sini. Bahasa Arab juga mengubah tata letak menjadi dari kanan ke kiri.",
+  "guideReplay": "Buka Panduan aplikasi di sini kapan saja untuk mengenali kembali kontrol ini.",
+  "tourDone": "Selesai"
 }

@@ -87,7 +87,7 @@ class AppSettings {
     this.selectedCityId,
     this.notifications = const NotificationPreferences(),
     this.hijriAdjustment = 0,
-    this.hijriSource = HijriSource.ummAlQura,
+    this.hijriSource = HijriSource.mabims,
   });
 
   /// How every Hijri date in the app is reckoned.
@@ -136,7 +136,7 @@ class SettingsNotifier extends Notifier<AppSettings> {
       },
       hijriSource: HijriSource.values.firstWhere(
         (source) => source.name == p.getString(_kHijriSource),
-        orElse: () => HijriSource.ummAlQura,
+        orElse: () => HijriSource.mabims,
       ),
       notifications: NotificationPreferences(
         enabled: p.getBool('notifications_enabled') ?? true,

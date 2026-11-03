@@ -69,14 +69,14 @@ void main() {
     var container = await _container({});
     await container
         .read(settingsProvider.notifier)
-        .setHijriSource(HijriSource.mabims);
+        .setHijriSource(HijriSource.ummAlQura);
     final saved = container
         .read(sharedPreferencesProvider)
         .getString('hijri_source');
     container = await _container({'hijri_source': saved!});
-    expect(container.read(settingsProvider).hijriSource, HijriSource.mabims);
-    container = await _container({'hijri_source': 'gone'});
     expect(container.read(settingsProvider).hijriSource, HijriSource.ummAlQura);
+    container = await _container({'hijri_source': 'gone'});
+    expect(container.read(settingsProvider).hijriSource, HijriSource.mabims);
   });
 
   test('keeps a stored Hijri adjustment and drops an unknown one', () async {
@@ -94,22 +94,22 @@ void main() {
 
   test('keeps a stored Hijri source and drops an unknown one', () async {
     var container = await _container({});
-    expect(container.read(settingsProvider).hijriSource, HijriSource.ummAlQura);
+    expect(container.read(settingsProvider).hijriSource, HijriSource.mabims);
     await container
         .read(settingsProvider.notifier)
-        .setHijriSource(HijriSource.mabims);
+        .setHijriSource(HijriSource.ummAlQura);
     expect(
       container.read(settingsProvider).hijriReckoning,
-      const HijriReckoning(source: HijriSource.mabims),
+      const HijriReckoning(),
     );
     expect(
       container.read(sharedPreferencesProvider).getString('hijri_source'),
-      'mabims',
+      'ummAlQura',
     );
-    container = await _container({'hijri_source': 'mabims'});
-    expect(container.read(settingsProvider).hijriSource, HijriSource.mabims);
-    container = await _container({'hijri_source': 'unknown'});
+    container = await _container({'hijri_source': 'ummAlQura'});
     expect(container.read(settingsProvider).hijriSource, HijriSource.ummAlQura);
+    container = await _container({'hijri_source': 'unknown'});
+    expect(container.read(settingsProvider).hijriSource, HijriSource.mabims);
   });
 
   test('clearing the selected city clears state and storage', () async {

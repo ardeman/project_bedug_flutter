@@ -7,6 +7,7 @@ import '../../core/design/liquid_glass.dart';
 import '../../core/design/platform_capabilities.dart';
 import '../../core/theme/app_tokens.dart';
 import '../../generated/l10n/app_localizations.dart';
+import '../tour/tour_targets.dart';
 import 'khatam_card.dart';
 import 'quran.dart';
 import 'quran_reader_screen.dart';
@@ -75,8 +76,12 @@ class _QuranScreenState extends ConsumerState<QuranScreen> {
       ],
     };
     return ListView(
+      controller: TourAnchorScope.maybeOf(ctx)?.scrollControllers[2],
       children: [
-        KhatamCard(index: index, margin: _rowMargin),
+        TourTarget(
+          control: TourControl.quranPlan,
+          child: KhatamCard(index: index, margin: _rowMargin),
+        ),
         Padding(
           padding: const EdgeInsets.fromLTRB(
             AppSpacing.md,
@@ -84,14 +89,17 @@ class _QuranScreenState extends ConsumerState<QuranScreen> {
             AppSpacing.md,
             AppSpacing.sm,
           ),
-          child: PlatformSegmentedControl<_QuranView>(
-            segments: {
-              _QuranView.surahs: l10n.quranSurahs,
-              _QuranView.juz: l10n.quranJuz,
-              _QuranView.bookmarks: l10n.quranBookmarks,
-            },
-            value: _view,
-            onChanged: (view) => setState(() => _view = view),
+          child: TourTarget(
+            control: TourControl.quranBrowse,
+            child: PlatformSegmentedControl<_QuranView>(
+              segments: {
+                _QuranView.surahs: l10n.quranSurahs,
+                _QuranView.juz: l10n.quranJuz,
+                _QuranView.bookmarks: l10n.quranBookmarks,
+              },
+              value: _view,
+              onChanged: (view) => setState(() => _view = view),
+            ),
           ),
         ),
         if (lastRead != null && index.contains(lastRead))

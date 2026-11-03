@@ -63,6 +63,10 @@ void main() {
         (call) => call.method == 'initialize',
       );
       expect((initialization.arguments as Map)['defaultIcon'], 'ic_stat_bedug');
+      expect(
+        calls.where((call) => call.method == 'requestNotificationsPermission'),
+        isEmpty,
+      );
       final scheduled = calls.where((call) => call.method == 'zonedSchedule');
       expect(scheduled, isNotEmpty);
       final details =
@@ -74,6 +78,14 @@ void main() {
       expect(details['scheduleMode'], 'inexactAllowWhileIdle');
     },
   );
+
+  test('notification permission has a separate explicit request', () async {
+    await NotificationService.requestPermissions();
+    expect(
+      calls.where((call) => call.method == 'requestNotificationsPermission'),
+      hasLength(1),
+    );
+  });
 
   test('system sound and exact alarms are used when authorized', () async {
     allowExact = true;

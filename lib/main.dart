@@ -11,6 +11,9 @@ import 'package:timezone/data/latest_10y.dart' as tz;
 
 import 'core/design/platform_capabilities.dart';
 import 'core/providers/locale_provider.dart';
+import 'core/providers/permission_provider.dart';
+import 'core/widgets/permission_acknowledgement.dart';
+import 'features/tour/app_tour_provider.dart';
 import 'core/services/notification_service.dart';
 import 'app.dart';
 
@@ -31,7 +34,16 @@ void main() async {
   final prefs = await SharedPreferences.getInstance();
   runApp(
     ProviderScope(
-      overrides: [sharedPreferencesProvider.overrideWithValue(prefs)],
+      overrides: [
+        sharedPreferencesProvider.overrideWithValue(prefs),
+        permissionAcknowledgementProvider.overrideWith(
+          (ref) => (permission) async {
+            // The user explores first; no system prompt interrupts the tour.
+            await ref.read(appTourControllerProvider.notifier).finished;
+            return showPermissionAcknowledgement(permission);
+          },
+        ),
+      ],
       child: const BedugApp(),
     ),
   );

@@ -7,6 +7,33 @@
         {
           "type": "fixed",
           "text": {
+            "en": "Notification switches now reflect system permission, including after choosing Not now or returning from system settings.",
+            "id": "Sakelar notifikasi kini mengikuti izin sistem, termasuk setelah memilih Nanti saja atau kembali dari pengaturan sistem.",
+            "ms": "Suis pemberitahuan kini mengikut kebenaran sistem, termasuk selepas memilih Nanti sahaja atau kembali daripada tetapan sistem.",
+            "ar": "تعكس مفاتيح الإشعارات الآن إذن النظام، بما في ذلك بعد اختيار ليس الآن أو العودة من إعدادات النظام."
+          }
+        },
+        {
+          "type": "new",
+          "text": {
+            "en": "A control-by-control app tour highlights each feature, scrolls it into view and explains it in a small nearby bubble. Permission requests still wait for your acknowledgement.",
+            "id": "Panduan aplikasi menyorot setiap kontrol, menggulirnya agar terlihat, dan menjelaskannya dalam gelembung kecil di dekatnya. Permintaan izin tetap menunggu persetujuan Anda.",
+            "ms": "Panduan aplikasi menyerlahkan setiap kawalan, menatalnya ke paparan dan menerangkannya dalam gelembung kecil berhampiran. Permintaan kebenaran tetap menunggu persetujuan anda.",
+            "ar": "جولة في التطبيق تبرز كل عنصر تحكم وتمرّر إليه وتشرحه في فقاعة صغيرة بجواره، مع استمرار طلب موافقتك قبل أذونات النظام."
+          }
+        },
+        {
+          "type": "improved",
+          "text": {
+            "en": "Hijri dates follow the MABIMS calendar by default, as Indonesia, Malaysia, Brunei and Singapore reckon them. Umm al-Qura stays available in Settings.",
+            "id": "Tanggal Hijriah kini mengikuti kalender MABIMS secara bawaan, seperti yang dipakai Indonesia, Malaysia, Brunei, dan Singapura. Umm al-Qura tetap tersedia di Pengaturan.",
+            "ms": "Tarikh Hijrah kini mengikut kalendar MABIMS secara lalai, seperti yang digunakan di Malaysia, Brunei, Indonesia dan Singapura. Umm al-Qura masih tersedia dalam Tetapan.",
+            "ar": "تتبع التواريخ الهجرية تقويم MABIMS افتراضياً كما تعتمده إندونيسيا وماليزيا وبروناي وسنغافورة، ويبقى تقويم أم القرى متاحاً في الإعدادات."
+          }
+        },
+        {
+          "type": "fixed",
+          "text": {
             "en": "Android skips reminders missed while the phone was off instead of delivering them all after a restart.",
             "id": "Android melewati pengingat yang terlewat saat ponsel mati agar tidak muncul sekaligus setelah dinyalakan kembali.",
             "ms": "Android melangkau peringatan yang terlepas semasa telefon dimatikan supaya tidak muncul serentak selepas dihidupkan semula.",

@@ -7,6 +7,7 @@ import '../../core/design/liquid_glass.dart';
 import '../../core/design/platform_capabilities.dart';
 import '../../core/theme/app_tokens.dart';
 import '../../generated/l10n/app_localizations.dart';
+import '../tour/tour_targets.dart';
 import '../asmaul_husna/asmaul_husna_screen.dart';
 import '../duas/duas_screen.dart';
 import '../dzikir/dzikir.dart';
@@ -36,9 +37,16 @@ class WorshipScreen extends StatelessWidget {
           // Keep the card readable on wide desktop windows.
           constraints: const BoxConstraints(maxWidth: 560),
           child: ListView(
+            controller: TourAnchorScope.maybeOf(ctx)?.scrollControllers[1],
             children: [
-              QiblaCard(feedbackEnabled: isActive),
-              const _DzikirEntry(),
+              TourTarget(
+                control: TourControl.qibla,
+                child: QiblaCard(feedbackEnabled: isActive),
+              ),
+              const TourTarget(
+                control: TourControl.dzikir,
+                child: _DzikirEntry(),
+              ),
               _WorshipEntry(
                 icon: Icons.mosque,
                 title: l10n.afterPrayerDzikir,
@@ -63,11 +71,14 @@ class WorshipScreen extends StatelessWidget {
                 subtitle: l10n.hijriEventsSubtitle,
                 builder: (_) => const HijriEventsScreen(),
               ),
-              _WorshipEntry(
-                icon: Icons.nights_stay_outlined,
-                title: l10n.fastingLog,
-                subtitle: l10n.fastingLogSubtitle,
-                builder: (_) => const FastingLogScreen(),
+              TourTarget(
+                control: TourControl.fasting,
+                child: _WorshipEntry(
+                  icon: Icons.nights_stay_outlined,
+                  title: l10n.fastingLog,
+                  subtitle: l10n.fastingLogSubtitle,
+                  builder: (_) => const FastingLogScreen(),
+                ),
               ),
               _WorshipEntry(
                 icon: Icons.savings_outlined,

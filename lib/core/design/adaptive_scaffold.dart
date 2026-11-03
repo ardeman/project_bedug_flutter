@@ -29,6 +29,7 @@ class AdaptiveScaffold extends StatelessWidget {
   final List<Widget>? appBarActions;
   final Widget? leading;
   final bool showAppBar;
+  final GlobalKey? navigationKey;
 
   const AdaptiveScaffold({
     super.key,
@@ -40,6 +41,7 @@ class AdaptiveScaffold extends StatelessWidget {
     this.appBarActions,
     this.leading,
     this.showAppBar = true,
+    this.navigationKey,
   });
 
   @override
@@ -89,6 +91,7 @@ class AdaptiveScaffold extends StatelessWidget {
               child: child,
             ),
             GlassNavBar(
+              key: navigationKey,
               currentIndex: selectedIndex,
               onTap: onDestinationSelected,
               items: navItems,
@@ -107,6 +110,7 @@ class AdaptiveScaffold extends StatelessWidget {
       body: child,
       bottomNavigationBar: PlatformDesign.usesExpressive
           ? M3ENavigationBar(
+              key: navigationKey,
               selectedIndex: selectedIndex,
               onDestinationSelected: onDestinationSelected,
               // Side-by-side icon and label items need room for the longest
@@ -128,6 +132,7 @@ class AdaptiveScaffold extends StatelessWidget {
               ],
             )
           : NavigationBar(
+              key: navigationKey,
               selectedIndex: selectedIndex,
               onDestinationSelected: onDestinationSelected,
               destinations: destinations
@@ -169,6 +174,7 @@ class AdaptiveScaffold extends StatelessWidget {
       body: Row(
         children: [
           NavigationRail(
+            key: navigationKey,
             selectedIndex: selectedIndex,
             onDestinationSelected: onDestinationSelected,
             backgroundColor: isDark ? const Color(0xFF2C2C2C) : Colors.white,
