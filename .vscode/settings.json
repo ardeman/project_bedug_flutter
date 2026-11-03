@@ -18,5 +18,10 @@
     "isha",
     "maghrib",
     "magnifyingglass"
-  ]
+  ],
+  "chat.tools.terminal.autoApprove": {
+    "dart": true,
+    "flutter": true,
+    "xcrun": true
+  }
 }
