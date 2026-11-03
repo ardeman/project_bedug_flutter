@@ -46,6 +46,13 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      # The runner's default Java is too new for this Gradle version.
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.47.8'
@@ -70,10 +77,18 @@ jobs:
 
       - uses: subosito/flutter-action@v2
         with:
-          # 3.47.9 includes the Dart AOT fix for Flutter issue #191575.
-          flutter-version: '3.47.9'
+          flutter-version: '3.47.8'
           channel: stable
           cache: true
+
+      # Flutter 3.47 crashes gen_snapshot on the unused experimental macOS
+      # windowing code (flutter/flutter#191575, 3.47.9 included). Making the
+      # flag a constant lets the compiler drop that code. Remove once fixed.
+      - name: Work around the AOT crash
+        run: |
+          file="$FLUTTER_ROOT/packages/flutter/lib/src/foundation/_features.dart"
+          sed -i '' "s/^bool isWindowingEnabled = .*/bool isWindowingEnabled = false;/" "$file"
+          grep -q '^bool isWindowingEnabled = false;' "$file"
 
       - name: Build
         run: |
