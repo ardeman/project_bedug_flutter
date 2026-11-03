@@ -80,7 +80,10 @@ jobs:
           if [ "${{ inputs.latest }}" = "true" ]; then
             flags="--latest"
           fi
-          cp build/release/app-release.apk build/release/bedug-android.apk
-          rm build/release/app-release.apk
+          mv build/release/app-release.apk build/release/bedug-android.apk
+          (cd build/release && shasum -a 256 bedug-* > SHA256SUMS.txt)
+          version="${TAG#v}"
+          scripts/release_notes.py "$version" "$GITHUB_REPOSITORY" "$TAG" > build/notes.md
           gh release create "$TAG" build/release/* \
-            --target "$GITHUB_SHA" --title "Bedug $TAG" --generate-notes $flags
+            --target "$GITHUB_SHA" --title "Bedug $TAG" \
+            --notes-file build/notes.md $flags
