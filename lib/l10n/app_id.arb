@@ -155,6 +155,24 @@
       "version": { "type": "Object" }
     }
   },
+  "checkForUpdates": "Periksa pembaruan",
+  "@checkForUpdates": {},
+  "checkForUpdatesSubtitle": "Ketuk untuk memeriksa versi terbaru",
+  "@checkForUpdatesSubtitle": {},
+  "checkingForUpdates": "Memeriksa pembaruan…",
+  "@checkingForUpdates": {},
+  "updateAvailable": "Versi {version} tersedia. Ketuk untuk membuka rilis.",
+  "@updateAvailable": {
+    "placeholders": {
+      "version": { "type": "Object" }
+    }
+  },
+  "upToDate": "Anda menggunakan versi terbaru.",
+  "@upToDate": {},
+  "updateCheckFailed": "Pembaruan tidak dapat diperiksa. Ketuk untuk mencoba lagi.",
+  "@updateCheckFailed": {},
+  "updateOpenFailed": "Halaman rilis tidak dapat dibuka. Ketuk untuk mencoba lagi.",
+  "@updateOpenFailed": {},
 
   "locationError": "Gagal mendapatkan lokasi. Pastikan GPS aktif.",
   "@locationError": {},

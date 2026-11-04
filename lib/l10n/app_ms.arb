@@ -73,6 +73,13 @@
   "widgetCompact": "Padat",
   "about": "Tentang",
   "version": "Versi {version}",
+  "checkForUpdates": "Semak kemas kini",
+  "checkForUpdatesSubtitle": "Ketik untuk menyemak versi terkini",
+  "checkingForUpdates": "Sedang menyemak kemas kini…",
+  "updateAvailable": "Versi {version} tersedia. Ketik untuk membuka keluaran.",
+  "upToDate": "Anda menggunakan versi terkini.",
+  "updateCheckFailed": "Tidak dapat menyemak kemas kini. Ketik untuk cuba lagi.",
+  "updateOpenFailed": "Tidak dapat membuka halaman keluaran. Ketik untuk cuba lagi.",
 
   "locationError": "Gagal mendapatkan lokasi. Sila aktifkan GPS.",
   "locationGuide": "System Settings → Privacy & Security → Location Services → bedug → Allow",

@@ -73,6 +73,13 @@
   "widgetCompact": "Compact",
   "about": "About",
   "version": "Version {version}",
+  "checkForUpdates": "Check for updates",
+  "checkForUpdatesSubtitle": "Tap to check for the latest version",
+  "checkingForUpdates": "Checking for updates…",
+  "updateAvailable": "Version {version} is available. Tap to open the release.",
+  "upToDate": "You're using the latest version.",
+  "updateCheckFailed": "Couldn't check for updates. Tap to try again.",
+  "updateOpenFailed": "Couldn't open the release page. Tap to try again.",
 
   "locationError": "Failed to get location. Please enable GPS.",
   "locationGuide": "System Settings → Privacy & Security → Location Services → bedug → Allow",

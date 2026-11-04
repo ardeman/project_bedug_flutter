@@ -73,6 +73,13 @@
   "widgetCompact": "مضغوط",
   "about": "حول التطبيق",
   "version": "الإصدار {version}",
+  "checkForUpdates": "التحقق من التحديثات",
+  "checkForUpdatesSubtitle": "اضغط للتحقق من أحدث إصدار",
+  "checkingForUpdates": "جارٍ التحقق من التحديثات…",
+  "updateAvailable": "الإصدار {version} متاح. اضغط لفتح صفحة الإصدار.",
+  "upToDate": "أنت تستخدم أحدث إصدار.",
+  "updateCheckFailed": "تعذر التحقق من التحديثات. اضغط للمحاولة مجدداً.",
+  "updateOpenFailed": "تعذر فتح صفحة الإصدار. اضغط للمحاولة مجدداً.",
 
   "locationError": "فشل في الحصول على الموقع. يرجى تفعيل GPS.",
   "locationGuide": "إعدادات النظام ← الخصوصية والأمان ← خدمات الموقع ← bedug ← سماح",

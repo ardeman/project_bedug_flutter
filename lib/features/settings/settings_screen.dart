@@ -31,11 +31,13 @@ import '../../core/widgets/city_picker.dart';
 import '../../core/widgets/glass_menu.dart';
 import '../../generated/l10n/app_localizations.dart';
 import '../tour/tour_targets.dart';
+import '../changelog/changelog.dart';
 import '../changelog/changelog_screen.dart';
 import '../tour/app_tour_provider.dart';
 import '../dzikir/dzikir.dart';
 import '../infaq/infaq_provider.dart';
 import '../infaq/infaq_screen.dart';
+import '../update/update_checker.dart';
 import 'settings_section.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -50,6 +52,7 @@ class SettingsScreen extends ConsumerWidget {
     final notifier = ref.read(settingsProvider.notifier);
     final isApple = PlatformCapabilities.isApple;
     final dzikirCollections = ref.watch(dzikirCollectionsProvider).value;
+    final releases = ref.watch(changelogProvider).value;
 
     final sections = [
       // ── Section: Salat ─────────────────────────────────────────────────
@@ -265,6 +268,7 @@ class SettingsScreen extends ConsumerWidget {
       SettingsSection(
         title: l10n.about,
         children: [
+          const _UpdateCheckTile(),
           PlatformListTile(
             key: TourAnchorScope.maybeOf(ctx)?.keys[TourControl.replay],
             leading: Icon(
@@ -338,7 +342,9 @@ class SettingsScreen extends ConsumerWidget {
           PlatformListTile(
             leading: Icon(Icons.info_outline, color: AppColors.accentOf(ctx)),
             title: Text(l10n.about),
-            subtitle: Text(l10n.version('1.0.0')),
+            subtitle: releases != null && releases.isNotEmpty
+                ? Text(l10n.version(releases.first.version))
+                : null,
             onTap: () {},
           ),
         ],
@@ -400,6 +406,121 @@ String _soundLabel(
         : l10n.phoneNotificationSound,
   PrayerNotificationSound.silent => l10n.silentNotificationSound,
 };
+
+enum _UpdateCheckStatus {
+  idle,
+  checking,
+  upToDate,
+  updateAvailable,
+  failed,
+  openFailed,
+}
+
+class _UpdateCheckTile extends ConsumerStatefulWidget {
+  const _UpdateCheckTile();
+
+  @override
+  ConsumerState<_UpdateCheckTile> createState() => _UpdateCheckTileState();
+}
+
+class _UpdateCheckTileState extends ConsumerState<_UpdateCheckTile> {
+  _UpdateCheckStatus _status = _UpdateCheckStatus.idle;
+  String? _latestVersion;
+  Uri? _releaseUrl;
+
+  Future<void> _onTap() async {
+    if (_status == _UpdateCheckStatus.checking) return;
+
+    if (_releaseUrl != null &&
+        (_status == _UpdateCheckStatus.updateAvailable ||
+            _status == _UpdateCheckStatus.openFailed)) {
+      try {
+        final opened = await launchUrl(
+          _releaseUrl!,
+          mode: LaunchMode.externalApplication,
+        );
+        if (!opened) {
+          FlutterError.reportError(
+            FlutterErrorDetails(
+              exception: StateError('The release page could not be opened.'),
+              library: 'update check',
+            ),
+          );
+          if (mounted) setState(() => _status = _UpdateCheckStatus.openFailed);
+        }
+      } catch (error, stackTrace) {
+        FlutterError.reportError(
+          FlutterErrorDetails(
+            exception: error,
+            stack: stackTrace,
+            library: 'update check',
+          ),
+        );
+        if (mounted) setState(() => _status = _UpdateCheckStatus.openFailed);
+      }
+      return;
+    }
+
+    setState(() => _status = _UpdateCheckStatus.checking);
+    try {
+      final releases = await ref.read(changelogProvider.future);
+      if (releases.isEmpty) throw StateError('The changelog is empty.');
+      final result = await ref.read(updateCheckerProvider)(
+        releases.first.version,
+      );
+      if (!mounted) return;
+      setState(() {
+        _latestVersion = result.latestVersion;
+        _releaseUrl = result.releaseUrl;
+        _status = result.updateAvailable
+            ? _UpdateCheckStatus.updateAvailable
+            : _UpdateCheckStatus.upToDate;
+      });
+    } catch (error, stackTrace) {
+      FlutterError.reportError(
+        FlutterErrorDetails(
+          exception: error,
+          stack: stackTrace,
+          library: 'update check',
+        ),
+      );
+      if (mounted) setState(() => _status = _UpdateCheckStatus.failed);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final subtitle = switch (_status) {
+      _UpdateCheckStatus.idle => l10n.checkForUpdatesSubtitle,
+      _UpdateCheckStatus.checking => l10n.checkingForUpdates,
+      _UpdateCheckStatus.upToDate => l10n.upToDate,
+      _UpdateCheckStatus.updateAvailable => l10n.updateAvailable(
+        _latestVersion!,
+      ),
+      _UpdateCheckStatus.failed => l10n.updateCheckFailed,
+      _UpdateCheckStatus.openFailed => l10n.updateOpenFailed,
+    };
+
+    return PlatformListTile(
+      leading: Icon(
+        Icons.system_update_alt,
+        color: AppColors.accentOf(context),
+      ),
+      title: Text(l10n.checkForUpdates),
+      subtitle: Text(subtitle),
+      trailing: _status == _UpdateCheckStatus.checking
+          ? const AdaptiveSpinner()
+          : Icon(
+              _status == _UpdateCheckStatus.updateAvailable ||
+                      _status == _UpdateCheckStatus.openFailed
+                  ? Icons.open_in_new
+                  : Icons.chevron_right,
+            ),
+      onTap: _onTap,
+    );
+  }
+}
 
 /// Bumped to rebuild the notifications switch from its saved value after a
 /// tap that did not change the setting.

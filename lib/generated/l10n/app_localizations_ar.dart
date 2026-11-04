@@ -235,6 +235,30 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get checkForUpdates => 'التحقق من التحديثات';
+
+  @override
+  String get checkForUpdatesSubtitle => 'اضغط للتحقق من أحدث إصدار';
+
+  @override
+  String get checkingForUpdates => 'جارٍ التحقق من التحديثات…';
+
+  @override
+  String updateAvailable(Object version) {
+    return 'الإصدار $version متاح. اضغط لفتح صفحة الإصدار.';
+  }
+
+  @override
+  String get upToDate => 'أنت تستخدم أحدث إصدار.';
+
+  @override
+  String get updateCheckFailed =>
+      'تعذر التحقق من التحديثات. اضغط للمحاولة مجدداً.';
+
+  @override
+  String get updateOpenFailed => 'تعذر فتح صفحة الإصدار. اضغط للمحاولة مجدداً.';
+
+  @override
   String get locationError => 'فشل في الحصول على الموقع. يرجى تفعيل GPS.';
 
   @override

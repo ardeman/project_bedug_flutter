@@ -222,6 +222,31 @@ class AppLocalizationsMs extends AppLocalizations {
   }
 
   @override
+  String get checkForUpdates => 'Semak kemas kini';
+
+  @override
+  String get checkForUpdatesSubtitle => 'Ketik untuk menyemak versi terkini';
+
+  @override
+  String get checkingForUpdates => 'Sedang menyemak kemas kini…';
+
+  @override
+  String updateAvailable(Object version) {
+    return 'Versi $version tersedia. Ketik untuk membuka keluaran.';
+  }
+
+  @override
+  String get upToDate => 'Anda menggunakan versi terkini.';
+
+  @override
+  String get updateCheckFailed =>
+      'Tidak dapat menyemak kemas kini. Ketik untuk cuba lagi.';
+
+  @override
+  String get updateOpenFailed =>
+      'Tidak dapat membuka halaman keluaran. Ketik untuk cuba lagi.';
+
+  @override
   String get locationError => 'Gagal mendapatkan lokasi. Sila aktifkan GPS.';
 
   @override

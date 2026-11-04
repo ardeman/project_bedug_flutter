@@ -236,6 +236,31 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get checkForUpdates => 'Check for updates';
+
+  @override
+  String get checkForUpdatesSubtitle => 'Tap to check for the latest version';
+
+  @override
+  String get checkingForUpdates => 'Checking for updates…';
+
+  @override
+  String updateAvailable(Object version) {
+    return 'Version $version is available. Tap to open the release.';
+  }
+
+  @override
+  String get upToDate => 'You\'re using the latest version.';
+
+  @override
+  String get updateCheckFailed =>
+      'Couldn\'t check for updates. Tap to try again.';
+
+  @override
+  String get updateOpenFailed =>
+      'Couldn\'t open the release page. Tap to try again.';
+
+  @override
   String get locationError => 'Failed to get location. Please enable GPS.';
 
   @override

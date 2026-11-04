@@ -504,6 +504,48 @@ abstract class AppLocalizations {
   /// **'Versi {version}'**
   String version(Object version);
 
+  /// No description provided for @checkForUpdates.
+  ///
+  /// In id, this message translates to:
+  /// **'Periksa pembaruan'**
+  String get checkForUpdates;
+
+  /// No description provided for @checkForUpdatesSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Ketuk untuk memeriksa versi terbaru'**
+  String get checkForUpdatesSubtitle;
+
+  /// No description provided for @checkingForUpdates.
+  ///
+  /// In id, this message translates to:
+  /// **'Memeriksa pembaruan…'**
+  String get checkingForUpdates;
+
+  /// No description provided for @updateAvailable.
+  ///
+  /// In id, this message translates to:
+  /// **'Versi {version} tersedia. Ketuk untuk membuka rilis.'**
+  String updateAvailable(Object version);
+
+  /// No description provided for @upToDate.
+  ///
+  /// In id, this message translates to:
+  /// **'Anda menggunakan versi terbaru.'**
+  String get upToDate;
+
+  /// No description provided for @updateCheckFailed.
+  ///
+  /// In id, this message translates to:
+  /// **'Pembaruan tidak dapat diperiksa. Ketuk untuk mencoba lagi.'**
+  String get updateCheckFailed;
+
+  /// No description provided for @updateOpenFailed.
+  ///
+  /// In id, this message translates to:
+  /// **'Halaman rilis tidak dapat dibuka. Ketuk untuk mencoba lagi.'**
+  String get updateOpenFailed;
+
   /// No description provided for @locationError.
   ///
   /// In id, this message translates to:

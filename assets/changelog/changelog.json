@@ -5,6 +5,15 @@
       "date": null,
       "changes": [
         {
+          "type": "new",
+          "text": {
+            "en": "You can now check for app updates from Settings.",
+            "id": "Kini Anda dapat memeriksa pembaruan aplikasi dari Pengaturan.",
+            "ms": "Kini anda boleh menyemak kemas kini aplikasi melalui Tetapan.",
+            "ar": "يمكنك الآن التحقق من تحديثات التطبيق من الإعدادات."
+          }
+        },
+        {
           "type": "fixed",
           "text": {
             "en": "If location access was permanently denied, turning automatic location back on now offers to open Bedug's app settings.",

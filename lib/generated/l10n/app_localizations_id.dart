@@ -223,6 +223,31 @@ class AppLocalizationsId extends AppLocalizations {
   }
 
   @override
+  String get checkForUpdates => 'Periksa pembaruan';
+
+  @override
+  String get checkForUpdatesSubtitle => 'Ketuk untuk memeriksa versi terbaru';
+
+  @override
+  String get checkingForUpdates => 'Memeriksa pembaruan…';
+
+  @override
+  String updateAvailable(Object version) {
+    return 'Versi $version tersedia. Ketuk untuk membuka rilis.';
+  }
+
+  @override
+  String get upToDate => 'Anda menggunakan versi terbaru.';
+
+  @override
+  String get updateCheckFailed =>
+      'Pembaruan tidak dapat diperiksa. Ketuk untuk mencoba lagi.';
+
+  @override
+  String get updateOpenFailed =>
+      'Halaman rilis tidak dapat dibuka. Ketuk untuk mencoba lagi.';
+
+  @override
   String get locationError => 'Gagal mendapatkan lokasi. Pastikan GPS aktif.';
 
   @override
