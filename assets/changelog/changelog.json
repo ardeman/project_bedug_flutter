@@ -7,18 +7,12 @@
         {
           "type": "new",
           "text": {
-            "en": "You can now check for app updates from Settings.",
-            "id": "Kini Anda dapat memeriksa pembaruan aplikasi dari Pengaturan.",
-            "ms": "Kini anda boleh menyemak kemas kini aplikasi melalui Tetapan.",
-            "ar": "يمكنك الآن التحقق من تحديثات التطبيق من الإعدادات."
+            "en": "On Windows and Linux, you can now check for app updates from Settings.",
+            "id": "Di Windows dan Linux, kini Anda dapat memeriksa pembaruan aplikasi dari Pengaturan.",
+            "ms": "Di Windows dan Linux, kini anda boleh menyemak kemas kini aplikasi melalui Tetapan.",
+            "ar": "على Windows وLinux، يمكنك الآن التحقق من تحديثات التطبيق من الإعدادات."
           }
-        }
-      ]
-    },
-    {
-      "version": "1.0.0",
-      "date": "2026-11-03",
-      "changes": [
+        },
         {
           "type": "fixed",
           "text": {
@@ -181,6 +175,30 @@
             "ar": "صفحة تعريفية مجددة بانتقالات هادئة ومعاينات أوضح للميزات وتنقل أسهل على الهواتف."
           }
         },
+        {
+          "type": "fixed",
+          "text": {
+            "en": "The next-prayer countdown no longer restarts over and over after you travel to another time zone.",
+            "id": "Hitung mundur salat berikutnya tidak lagi terus berulang setelah Anda berpindah zona waktu.",
+            "ms": "Kiraan detik solat seterusnya tidak lagi berulang-ulang selepas anda berpindah zon waktu.",
+            "ar": "لم يعد العد التنازلي للصلاة التالية يبدأ من جديد مراراً بعد انتقالك إلى منطقة زمنية أخرى."
+          }
+        },
+        {
+          "type": "improved",
+          "text": {
+            "en": "On a half-folded iPhone Duo, the Quran's mushaf pages fill the screen.",
+            "id": "Pada iPhone Duo yang setengah terlipat, halaman mushaf Al-Qur'an kini memenuhi layar.",
+            "ms": "Pada iPhone Duo yang separuh terlipat, halaman mushaf al-Quran kini memenuhi skrin.",
+            "ar": "على iPhone Duo المطوي جزئياً، تملأ صفحات المصحف الشاشة الآن."
+          }
+        }
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-11-03",
+      "changes": [
         {
           "type": "new",
           "text": {

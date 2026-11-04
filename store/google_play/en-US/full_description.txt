@@ -26,7 +26,7 @@ DHIKR AND DUA
 • Dhikr after prayer, daily duas and the 99 Names of Allah
 
 ISLAMIC CALENDAR
-• Hijri dates from Umm al-Qura or MABIMS, with a ±2 day adjustment
+• Hijri dates from MABIMS by default, or Umm al-Qura, with a ±2 day adjustment
 • Islamic holidays and how many days away they are
 
 RAMADAN AND ZAKAT
