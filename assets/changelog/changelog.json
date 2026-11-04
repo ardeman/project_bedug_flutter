@@ -1,7 +1,7 @@
 {
   "releases": [
     {
-      "version": "1.0.0",
+      "version": "1.0.1",
       "date": null,
       "changes": [
         {
@@ -12,7 +12,13 @@
             "ms": "Kini anda boleh menyemak kemas kini aplikasi melalui Tetapan.",
             "ar": "يمكنك الآن التحقق من تحديثات التطبيق من الإعدادات."
           }
-        },
+        }
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-11-03",
+      "changes": [
         {
           "type": "fixed",
           "text": {
