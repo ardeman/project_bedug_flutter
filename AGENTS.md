@@ -99,7 +99,7 @@ These come from real crashes and broken UI.
 
 - When you change a command, the layout or the setup, update `README.md`. When you change a convention or rule, update this file.
 - Never copy content between docs. Link to the owning file instead (see the documentation map in `README.md`).
-- `CLAUDE.md` and `GEMINI.md` must contain only the import of this file.
+- `CLAUDE.md` and `GEMINI.md` must contain only the import of this file, and `.github/copilot-instructions.md` only a pointer to it.
 
 ## Decisions
 

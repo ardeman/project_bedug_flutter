@@ -475,6 +475,7 @@ Each topic has one home. Update that file instead of copying its content somewhe
 | `README.md` | Everyone | Overview, setup, commands, layout |
 | `AGENTS.md` | AI coding agents (and humans who want the rules) | Conventions, platform UI rules, guardrails, definition of done |
 | `CLAUDE.md`, `GEMINI.md` | Claude Code, Gemini CLI | Only an import of `AGENTS.md` |
+| `.github/copilot-instructions.md` | GitHub Copilot (chat, code review) | Only a pointer to `AGENTS.md`; `copilot-setup-steps.yml` installs Flutter for its coding agent |
 | `CONTRIBUTING.md` | Human contributors | Branches, bug reports, feature requests, pull requests |
 | `site/i18n/*.json` | Website visitors | Landing page copy, the privacy policy and the terms of use |
 | `assets/changelog/changelog.json` | App users and website visitors | What changed in each release |
