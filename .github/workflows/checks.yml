@@ -10,6 +10,11 @@ on:
     branches: [master]
   pull_request:
   workflow_call:
+    inputs:
+      release_pipeline:
+        description: The caller is the release workflow, so always run checks.
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -20,7 +25,25 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  gate:
+    runs-on: ubuntu-latest
+    outputs:
+      run: ${{ steps.gate.outputs.run }}
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GITHUB_EVENT_BEFORE: ${{ github.event.before }}
+      RELEASE_PIPELINE: ${{ inputs.release_pipeline || false }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - id: gate
+        run: bash scripts/ci_release_gate.sh
+
   flutter:
+    needs: gate
+    if: needs.gate.outputs.run == 'true'
     runs-on: ubuntu-latest
     # The tests' expected times are written for Jakarta (WIB), as on the
     # developer's machine.

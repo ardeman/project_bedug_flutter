@@ -52,11 +52,15 @@ jobs:
     needs: version
     if: needs.version.outputs.new == 'true'
     uses: ./.github/workflows/checks.yml
+    with:
+      release_pipeline: true
 
   builds:
     needs: version
     if: needs.version.outputs.new == 'true'
     uses: ./.github/workflows/desktop.yml
+    with:
+      release_pipeline: true
 
   release:
     needs: [version, checks, builds]
