@@ -66,7 +66,7 @@ def material_icon(name):
 # The iPhone renders (1206 × 2622) scaled to 600 px wide by site/screens.sh.
 SHOT_SIZE = (600, 1305)
 
-PAGES = ("home", "privacy", "changelog")
+PAGES = ("home", "privacy", "terms", "changelog")
 
 
 def icon(name, cls="icon"):
@@ -183,6 +183,8 @@ class Site:
             nav_changelog=s['nav']['changelog'],
             privacy_url=self.url(loc, 'privacy'),
             nav_privacy=s['nav']['privacy'],
+            terms_url=self.url(loc, 'terms'),
+            nav_terms=s['nav']['terms'],
             links_repo=links['repo'],
             github_icon=icon('github'),
             language_menu=self.language_menu(loc, page),
@@ -375,11 +377,11 @@ class Site:
             + self.footer(loc, "home")
         )
 
-    # Privacy ------------------------------------------------------------
+    # Privacy policy and terms of use ------------------------------------
 
-    def privacy(self, loc):
-        s = self.strings[loc]
-        p = s["privacy"]
+    def legal(self, loc, page):
+        """A policy page: title, summary list and sections from strings[page]."""
+        p = self.strings[loc][page]
         sections = "".join(
             f'<section><h2>{sec["heading"]}</h2>'
             + "".join(f"<p>{self.fill(par)}</p>" for par in sec["body"])
@@ -391,10 +393,10 @@ class Site:
             for item in p["summary"]
         )
         return (
-            self.head(loc, "privacy", p["meta_title"], p["meta_description"])
-            + self.header(loc, "privacy")
+            self.head(loc, page, p["meta_title"], p["meta_description"])
+            + self.header(loc, page)
             + render_template(
-                'privacy.html',
+                'legal.html',
                 title=p['title'],
                 updated=p['updated'],
                 intro=p['intro'],
@@ -402,8 +404,14 @@ class Site:
                 summary_items=summary_items,
                 sections=sections,
             )
-            + self.footer(loc, "privacy")
+            + self.footer(loc, page)
         )
+
+    def privacy(self, loc):
+        return self.legal(loc, "privacy")
+
+    def terms(self, loc):
+        return self.legal(loc, "terms")
 
     # Changelog ----------------------------------------------------------
 
@@ -520,6 +528,7 @@ class Site:
             base = "" if loc == self.default else f"{loc}/"
             self.write(f"{base}index.html", self.home(loc))
             self.write(f"{base}privacy/index.html", self.privacy(loc))
+            self.write(f"{base}terms/index.html", self.terms(loc))
             self.write(f"{base}changelog/index.html", self.changelog(loc))
         self.write("404.html", self.not_found())
         self.write("sitemap.xml", self.sitemap())

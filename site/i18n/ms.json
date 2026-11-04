@@ -11,6 +11,7 @@
     "infaq": "Infak",
     "roadmap": "Pelan",
     "privacy": "Privasi",
+    "terms": "Terma",
     "changelog": "Log perubahan"
   },
   "meta": {
@@ -263,6 +264,74 @@
       {
         "heading": "Hubungi",
         "body": ["Ada soalan tentang dasar ini? Buka isu di <a href=\"{issues}\">GitHub</a>."]
+      }
+    ]
+  },
+  "terms": {
+    "meta_title": "Terma penggunaan · Bedug",
+    "meta_description": "Terma penggunaan Bedug: percuma tanpa iklan, waktu solat ialah hasil kiraan, dan infaq adalah sukarela.",
+    "title": "Terma penggunaan",
+    "updated": "Berkuat kuasa 4 November 2026",
+    "intro": "Terma ini terpakai pada aplikasi Bedug dan laman web ini, yang diterbitkan oleh Ardeman. Dengan menggunakan Bedug, anda bersetuju dengannya. Cara Bedug mengendalikan data anda diterangkan dalam dasar privasi.",
+    "summary_title": "Ringkasnya",
+    "summary": [
+      "Bedug percuma, tanpa iklan dan tanpa akaun.",
+      "Waktu solat, arah kiblat dan tarikh Hijrah ialah hasil kiraan. Ikut masjid setempat atau pihak berkuasa agama jika berbeza.",
+      "Infaq adalah sukarela, menyokong pembangunan Bedug dan tidak membuka sebarang ciri.",
+      "Teks al-Quran, terjemahan dan kandungan lain kekal di bawah lesen masing-masing.",
+      "Kod sumber Bedug terbuka di bawah Lesen MIT."
+    ],
+    "sections": [
+      {
+        "heading": "Menggunakan Bedug",
+        "body": [
+          "Bedug percuma digunakan pada mana-mana peranti anda, dan anda tidak memerlukan akaun. Sila jangan gunakannya dengan cara yang melanggar undang-undang atau memudaratkan orang lain."
+        ]
+      },
+      {
+        "heading": "Waktu solat dan kiraan",
+        "body": [
+          "Bedug mengira waktu solat, arah kiblat, tarikh Hijrah dan hari-hari penting daripada lokasi anda dan kaedah yang anda pilih dalam Tetapan. Hasilnya ialah anggaran. Ia boleh berbeza daripada jadual masjid setempat, kalendar kerajaan atau rukyah, dan bergantung pada ketepatan lokasi, jam dan kompas peranti anda.",
+          "Untuk ibadah, ikut waktu dan tarikh yang ditetapkan oleh masjid setempat atau pihak berkuasa agama negeri anda jika berbeza daripada Bedug. Kalkulator zakat hanyalah panduan; untuk kewajipan anda, rujuk ulama atau pusat zakat.",
+          "Peringatan dan widget berjalan pada peranti anda dan bergantung pada tetapannya, seperti kebenaran pemberitahuan dan penjimat bateri, jadi kami tidak dapat menjamin setiap peringatan tiba tepat pada masanya."
+        ]
+      },
+      {
+        "heading": "Infaq",
+        "body": [
+          "Infaq adalah sukarela. Ia menyokong pembangunan Bedug dan tidak disalurkan kepada badan amal atau pihak lain. Ia tidak membuka sebarang ciri: Bedug berfungsi sama dengan atau tanpanya.",
+          "Dalam aplikasi Android dan Apple, infaq ialah pembelian dalam aplikasi yang dijual oleh Google Play atau App Store di bawah terma mereka, dan merekalah yang mengendalikan pembayaran dan bayaran balik. Infaq melalui <a href=\"{trakteer}\">Trakteer</a> atau <a href=\"{kofi}\">Ko-fi</a> mengikut terma perkhidmatan tersebut."
+        ]
+      },
+      {
+        "heading": "Teks al-Quran dan kandungan lain",
+        "body": [
+          "Teks al-Quran ialah teks Uthmani daripada <a href=\"{tanzil}\">Tanzil</a>, dipaparkan tanpa diubah di bawah lesen Creative Commons Attribution 3.0. Terjemahannya daripada Tanzil untuk kegunaan bukan komersial, dan zikir, doa serta kandungan lain daripada sumber yang dinyatakan dalam aplikasi. Setiap satu kekal di bawah lesennya sendiri, jadi jangan salin daripada Bedug untuk tujuan komersial."
+        ]
+      },
+      {
+        "heading": "Kod sumber dan nama",
+        "body": [
+          "Kod sumber Bedug terbuka di <a href=\"{repo}\">GitHub</a> di bawah Lesen MIT, yang menetapkan apa yang boleh anda lakukan dengannya. Nama Bedug dan ikonnya mengenal pasti aplikasi ini; sila jangan gunakannya untuk aplikasi lain."
+        ]
+      },
+      {
+        "heading": "Tiada jaminan",
+        "body": [
+          "Bedug disediakan seadanya, tanpa sebarang jaminan. Setakat yang dibenarkan undang-undang, Ardeman tidak bertanggungjawab atas sebarang kerugian akibat menggunakan Bedug atau bergantung pada waktu, tarikh atau kiraannya. Tiada apa-apa dalam terma ini yang mengehadkan hak anda di bawah undang-undang perlindungan pengguna negara anda."
+        ]
+      },
+      {
+        "heading": "Perubahan",
+        "body": [
+          "Dari semasa ke semasa, Bedug mungkin berubah, mendapat atau kehilangan ciri, atau berhenti menyokong sesetengah peranti. Jika terma ini berubah, kami akan mengemas kini halaman ini dan tarikh berkuat kuasa di bahagian atas."
+        ]
+      },
+      {
+        "heading": "Hubungi",
+        "body": [
+          "Ada soalan tentang terma ini? Buka isu di <a href=\"{issues}\">GitHub</a>."
+        ]
       }
     ]
   },

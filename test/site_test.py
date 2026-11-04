@@ -76,7 +76,7 @@ class LandingPageTest(unittest.TestCase):
 
     def test_inner_page_templates_render_for_every_locale(self):
         for locale in self.site.locales:
-            for name in ("privacy", "changelog"):
+            for name in ("privacy", "terms", "changelog"):
                 with self.subTest(locale=locale, page=name):
                     source = getattr(self.site, name)(locale)
                     page = Page(source)
@@ -156,7 +156,7 @@ class LandingPageTest(unittest.TestCase):
 
     def test_language_selector_is_in_footer_on_every_page(self):
         for locale in self.site.locales:
-            for render in (self.site.home, self.site.privacy, self.site.changelog):
+            for render in (self.site.home, self.site.privacy, self.site.terms, self.site.changelog):
                 with self.subTest(locale=locale, page=render.__name__):
                     source = render(locale)
                     header = source.split('<header', 1)[1].split('</header>', 1)[0]

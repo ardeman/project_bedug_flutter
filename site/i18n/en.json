@@ -11,6 +11,7 @@
     "infaq": "Infaq",
     "roadmap": "Roadmap",
     "privacy": "Privacy",
+    "terms": "Terms",
     "changelog": "Changelog"
   },
   "meta": {
@@ -261,6 +262,74 @@
       {
         "heading": "Contact",
         "body": ["Questions about this policy? Open an issue on <a href=\"{issues}\">GitHub</a>."]
+      }
+    ]
+  },
+  "terms": {
+    "meta_title": "Terms of use · Bedug",
+    "meta_description": "The terms for using Bedug: free with no ads, prayer times are calculated estimates, and an infaq is voluntary.",
+    "title": "Terms of use",
+    "updated": "Effective 4 November 2026",
+    "intro": "These terms apply to the Bedug app and this website, published by Ardeman. By using Bedug, you agree to them. How Bedug handles your data is set out in the privacy policy.",
+    "summary_title": "In short",
+    "summary": [
+      "Bedug is free, with no ads and no account.",
+      "Prayer times, the Qibla and Hijri dates are calculations. Follow your local mosque or religious authority when they differ.",
+      "An infaq is voluntary, supports Bedug's development and unlocks nothing.",
+      "The Quran text, translations and other content keep their own licenses.",
+      "Bedug's source code is open under the MIT License."
+    ],
+    "sections": [
+      {
+        "heading": "Using Bedug",
+        "body": [
+          "Bedug is free to use on any of your devices, and you don't need an account. Please don't use it in a way that breaks the law or harms others."
+        ]
+      },
+      {
+        "heading": "Prayer times and calculations",
+        "body": [
+          "Bedug calculates prayer times, the Qibla direction, Hijri dates and calendar events from your location and the methods you choose in Settings. These are estimates. They can differ from your local mosque's schedule, your government's calendar or a moon sighting, and they depend on your device's location, clock and compass being right.",
+          "For worship, follow the times and dates set by your local mosque or religious authority when they differ from Bedug's. The zakat calculator is a guide; for what you owe, ask a scholar or a zakat institution.",
+          "Reminders and widgets run on your device and depend on its settings, such as notification permissions and battery saving, so we can't promise that every reminder arrives on time."
+        ]
+      },
+      {
+        "heading": "Infaq",
+        "body": [
+          "An infaq is voluntary. It supports Bedug's development and doesn't go to a charity or anyone else. It unlocks nothing: Bedug works the same with or without it.",
+          "In the Android and Apple apps, an infaq is an in-app purchase sold by Google Play or the App Store under their terms, and they handle payment and refunds. An infaq through <a href=\"{trakteer}\">Trakteer</a> or <a href=\"{kofi}\">Ko-fi</a> follows that service's terms."
+        ]
+      },
+      {
+        "heading": "Quran text and other content",
+        "body": [
+          "The Quran text is the Uthmani text from <a href=\"{tanzil}\">Tanzil</a>, shown verbatim under the Creative Commons Attribution 3.0 license. The translations come from Tanzil for non-commercial use, and the dzikir, duas and other content come from the sources credited in the app. Each keeps its own license, so don't copy it out of Bedug for commercial use."
+        ]
+      },
+      {
+        "heading": "Source code and name",
+        "body": [
+          "Bedug's source code is open on <a href=\"{repo}\">GitHub</a> under the MIT License, which sets out what you may do with it. The name Bedug and its icon identify this app; please don't use them for another app."
+        ]
+      },
+      {
+        "heading": "No warranty",
+        "body": [
+          "Bedug is provided as it is, without warranty of any kind. To the extent the law allows, Ardeman is not liable for any loss that comes from using Bedug or relying on its times, dates or calculations. Nothing in these terms limits the rights you have under the consumer protection laws of your country."
+        ]
+      },
+      {
+        "heading": "Changes",
+        "body": [
+          "Bedug may change, gain or lose features, or stop supporting some devices over time. If these terms change, we'll update this page and the effective date at the top."
+        ]
+      },
+      {
+        "heading": "Contact",
+        "body": [
+          "Questions about these terms? Open an issue on <a href=\"{issues}\">GitHub</a>."
+        ]
       }
     ]
   },

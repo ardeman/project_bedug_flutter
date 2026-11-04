@@ -9,7 +9,8 @@
     "google_privacy": "https://policies.google.com/privacy",
     "cloudflare_privacy": "https://www.cloudflare.com/privacypolicy/",
     "trakteer": "https://trakteer.id",
-    "kofi": "https://ko-fi.com"
+    "kofi": "https://ko-fi.com",
+    "tanzil": "https://tanzil.net"
   },
   "stores": [
     { "id": "appstore", "url": null },
