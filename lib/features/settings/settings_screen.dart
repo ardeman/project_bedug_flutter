@@ -268,7 +268,8 @@ class SettingsScreen extends ConsumerWidget {
       SettingsSection(
         title: l10n.about,
         children: [
-          const _UpdateCheckTile(),
+          if (!PlatformCapabilities.updatesThroughStore)
+            const _UpdateCheckTile(),
           PlatformListTile(
             key: TourAnchorScope.maybeOf(ctx)?.keys[TourControl.replay],
             leading: Icon(

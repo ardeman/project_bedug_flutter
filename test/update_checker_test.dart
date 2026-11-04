@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:bedug/core/design/platform_capabilities.dart';
 import 'package:bedug/features/update/update_checker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -46,5 +48,24 @@ void main() {
       () => parseUpdateCheckResponse(response(), 'not-a-version'),
       throwsA(isA<UpdateCheckException>()),
     );
+  });
+
+  test('offers the manual update check only outside the app stores', () {
+    addTearDown(() => debugDefaultTargetPlatformOverride = null);
+    const expected = {
+      TargetPlatform.iOS: true,
+      TargetPlatform.macOS: true,
+      TargetPlatform.android: true,
+      TargetPlatform.windows: false,
+      TargetPlatform.linux: false,
+    };
+    for (final MapEntry(key: platform, value: viaStore) in expected.entries) {
+      debugDefaultTargetPlatformOverride = platform;
+      expect(
+        PlatformCapabilities.updatesThroughStore,
+        viaStore,
+        reason: platform.name,
+      );
+    }
   });
 }

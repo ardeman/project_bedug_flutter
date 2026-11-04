@@ -18,4 +18,18 @@ class PlatformCapabilities {
     return defaultTargetPlatform == TargetPlatform.iOS ||
         defaultTargetPlatform == TargetPlatform.macOS;
   }
+
+  /// Whether the app is installed from a store that delivers its updates
+  /// (App Store on iOS and macOS, Google Play on Android). Store policies
+  /// forbid pointing those users to downloads elsewhere, so the manual
+  /// update check only appears on Windows and Linux.
+  static bool get updatesThroughStore {
+    if (kIsWeb) return true;
+    return switch (defaultTargetPlatform) {
+      TargetPlatform.iOS ||
+      TargetPlatform.macOS ||
+      TargetPlatform.android => true,
+      _ => false,
+    };
+  }
 }
