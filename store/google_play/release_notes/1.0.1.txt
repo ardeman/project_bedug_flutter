@@ -18,7 +18,7 @@
 • Reminders missed while the phone was off no longer pile up.
 • The countdown no longer restarts after a time zone change.
 </en-US>
-<ms>
+<ms-MY>
 • Panduan yang menerangkan setiap kawalan.
 • Tarikh Hijrah menggunakan MABIMS secara lalai.
 • Ikon Subuh dan Maghrib seragam dalam aplikasi dan widget.
@@ -27,7 +27,7 @@
 • Suis pemberitahuan mengikut kebenaran sistem.
 • Peringatan yang terlepas semasa telefon dimatikan tidak lagi bertimbun.
 • Kiraan detik tidak lagi berulang selepas bertukar zon waktu.
-</ms>
+</ms-MY>
 <ar>
 • جولة تشرح كل عنصر تحكم.
 • التواريخ الهجرية تتبع MABIMS افتراضياً.

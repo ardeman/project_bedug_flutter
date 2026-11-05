@@ -26,6 +26,8 @@ CHANGELOG = ROOT / "assets/changelog/changelog.json"
 
 # Changelog language → store locale, default listing language first.
 LOCALES = {"id": "id", "en": "en-US", "ms": "ms", "ar": "ar"}
+# Play Console names some languages by region (Malay is ms-MY).
+PLAY_TAGS = {**LOCALES, "ms": "ms-MY"}
 ORDER = ("new", "improved", "fixed")
 PLAY_LIMIT = 500
 APP_STORE_LIMIT = 4000
@@ -64,7 +66,8 @@ def notes(r):
     play = []
     for lang, locale in LOCALES.items():
         body = bullets(play_changes, lang, "store", PLAY_LIMIT, "Google Play")
-        play.append(f"<{locale}>\n{body}\n</{locale}>")
+        tag = PLAY_TAGS[lang]
+        play.append(f"<{tag}>\n{body}\n</{tag}>")
         apple = bullets(apple_changes, lang, "text", APP_STORE_LIMIT, "App Store")
         files[f"store/app_store/{locale}/release_notes.txt"] = apple + "\n"
     files[f"store/google_play/release_notes/{r['version']}.txt"] = "\n".join(play) + "\n"
