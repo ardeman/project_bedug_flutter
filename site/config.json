@@ -10,12 +10,13 @@
     "cloudflare_privacy": "https://www.cloudflare.com/privacypolicy/",
     "trakteer": "https://trakteer.id",
     "kofi": "https://ko-fi.com",
-    "tanzil": "https://tanzil.net"
+    "tanzil": "https://tanzil.net",
+    "publisher": "https://ardeman.com"
   },
   "stores": [
-    { "id": "appstore", "url": null },
+    { "id": "appstore", "url": "https://apps.apple.com/app/id6824662589" },
     { "id": "play", "url": null },
-    { "id": "macappstore", "url": null },
+    { "id": "macappstore", "url": "https://apps.apple.com/app/id6824662589" },
     { "id": "msstore", "url": null },
     { "id": "flathub", "url": null }
   ],

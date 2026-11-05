@@ -1264,6 +1264,10 @@ img {
   font-size: 14px;
 }
 
+.foot-copy a {
+  color: inherit;
+}
+
 /* Navigation, feature framing and restrained motion ------------------ */
 
 .features-intro {

@@ -186,6 +186,7 @@ class Site:
             terms_url=self.url(loc, 'terms'),
             nav_terms=s['nav']['terms'],
             links_repo=links['repo'],
+            links_publisher=links['publisher'],
             github_icon=icon('github'),
             language_menu=self.language_menu(loc, page),
         )
