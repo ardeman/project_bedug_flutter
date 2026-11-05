@@ -87,7 +87,10 @@ jobs:
           mv build/release/app-release.apk build/release/bedug-android.apk
           (cd build/release && shasum -a 256 bedug-* > SHA256SUMS.txt)
           version="${TAG#v}"
+          # The builds take their build number from pubspec.yaml too.
+          build="$(sed -n 's/^version: *//p' pubspec.yaml | cut -s -d+ -f2)"
+          title="Bedug $TAG${build:+ (build $build)}"
           scripts/release_notes.py "$version" "$GITHUB_REPOSITORY" "$TAG" > build/notes.md
           gh release create "$TAG" build/release/* \
-            --target "$GITHUB_SHA" --title "Bedug $TAG" \
+            --target "$GITHUB_SHA" --title "$title" \
             --notes-file build/notes.md $flags

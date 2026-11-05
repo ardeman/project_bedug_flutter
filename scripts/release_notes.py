@@ -5,6 +5,7 @@ Usage: scripts/release_notes.py <version> <repo> <tag> > notes.md
 
 The changes come from the release with that version in
 assets/changelog/changelog.json; a table tells users which file to download.
+The build number comes from `version:` in pubspec.yaml, which the builds use.
 """
 import json
 import sys
@@ -55,6 +56,15 @@ TEXT = {
 }
 
 
+def build_number(version):
+    """The build number in pubspec.yaml when it holds this version."""
+    for line in (ROOT / "pubspec.yaml").read_text().splitlines():
+        if line.startswith("version:"):
+            name, _, build = line.split(":", 1)[1].strip().partition("+")
+            return build if name == version and build else None
+    return None
+
+
 def release_changes(version):
     data = json.loads((ROOT / "assets/changelog/changelog.json").read_text())
     for release in data["releases"]:
@@ -63,9 +73,13 @@ def release_changes(version):
     sys.exit(f"No release {version} in assets/changelog/changelog.json.")
 
 
-def language_notes(lang, changes, download):
+def language_notes(lang, version, build, changes, download):
     text = TEXT[lang]
-    out = [text["new"], ""]
+    out = []
+    if build:
+        label = "Version" if lang == "en" else "Versi"
+        out += [f"{label} {version} (build {build})", ""]
+    out += [text["new"], ""]
     for kind in ("new", "improved", "fixed"):
         items = [c["text"][lang] for c in changes if c["type"] == kind]
         if items:
@@ -88,12 +102,13 @@ def language_notes(lang, changes, download):
 def main():
     version, repo, tag = sys.argv[1:4]
     changes = release_changes(version)
+    build = build_number(version)
     download = f"https://github.com/{repo}/releases/download/{tag}"
     # The blank lines around the Markdown inside <details> are required.
     lines = ['<details open><summary><b>English</b></summary>', ""]
-    lines += language_notes("en", changes, download)
+    lines += language_notes("en", version, build, changes, download)
     lines += ["", "</details>", "<details><summary><b>Bahasa Indonesia</b></summary>", ""]
-    lines += language_notes("id", changes, download)
+    lines += language_notes("id", version, build, changes, download)
     lines += ["", "</details>"]
     print("\n".join(lines))
 
