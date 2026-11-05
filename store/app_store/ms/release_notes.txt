@@ -1,0 +1,8 @@
+• Panduan aplikasi menyerlahkan setiap kawalan, menatalnya ke paparan dan menerangkannya dalam gelembung kecil berhampiran. Permintaan kebenaran tetap menunggu persetujuan anda.
+• Tarikh Hijrah kini mengikut kalendar MABIMS secara lalai, seperti yang digunakan di Malaysia, Brunei, Indonesia dan Singapura. Umm al-Qura masih tersedia dalam Tetapan.
+• Ikon Subuh menggunakan simbol tidur dan Maghrib simbol matahari terbenam secara konsisten dalam aplikasi, laman web, widget skrin utama dan widget skrin kunci.
+• Pada iPhone Duo yang separuh terlipat, halaman mushaf al-Quran kini memenuhi skrin.
+• Jika kebenaran lokasi ditolak secara kekal, mengaktifkan semula pengesanan lokasi automatik kini menawarkan untuk membuka tetapan aplikasi Bedug.
+• Jika pemberitahuan dimatikan dalam tetapan sistem, memilih Teruskan kini membuka tetapan pemberitahuan Bedug.
+• Suis pemberitahuan kini mengikut kebenaran sistem, termasuk selepas memilih Nanti sahaja atau kembali daripada tetapan sistem.
+• Kiraan detik solat seterusnya tidak lagi berulang-ulang selepas anda berpindah zon waktu.

@@ -110,7 +110,7 @@ Validation of the original layouts on 2026-10-21: on the connected iPhone 17 (iO
 flutter analyze && flutter test
 ```
 
-GitHub Actions runs them, with the format check, on every push to `master` and every pull request (`.github/workflows/checks.yml`); the landing page is built by Cloudflare (see "Website"). `desktop.yml` builds Android, macOS, Linux and Windows release apps when app code, platform files or dependencies change, and uploads downloadable artifacts. On a new version bump, its standalone run and the standalone Checks run are skipped because `release.yml` runs both once before publishing; `scripts/ci_release_gate.sh` keeps ordinary pushes and already-released versions on the normal CI path. The macOS job patches Flutter's windowing flag to work around an AOT crash (flutter/flutter#191575); all build jobs use 3.47.8, and the Android job pins Java 17. The Android APK is debug-signed and the macOS app is unsigned; neither is ready for store distribution. `release.yml` publishes those builds as a GitHub pre-release (tag `v<version>`) when `version:` in `pubspec.yaml` changes on `master` and that tag has no release yet, after the checks pass; run it by hand with "latest" ticked for a full release. The release notes (English and Indonesian, with a table of which file to download) are written by `scripts/release_notes.py` from the matching release in `assets/changelog/changelog.json`.
+GitHub Actions runs them, with the format check, on every push to `master` and every pull request (`.github/workflows/checks.yml`); the landing page is built by Cloudflare (see "Website"). `desktop.yml` builds Android, macOS, Linux and Windows release apps when app code, platform files or dependencies change, and uploads downloadable artifacts. On a new version bump, its standalone run and the standalone Checks run are skipped because `release.yml` runs both once before publishing; `scripts/ci_release_gate.sh` keeps ordinary pushes and already-released versions on the normal CI path. The macOS job patches Flutter's windowing flag to work around an AOT crash (flutter/flutter#191575); all build jobs use 3.47.8, and the Android job pins Java 17. The Android APK is debug-signed and the macOS app is unsigned; neither is ready for store distribution. `release.yml` publishes those builds as a GitHub pre-release (tag `v<version>`) when `version:` in `pubspec.yaml` changes on `master` and that tag has no release yet, after the checks pass; run it by hand with "latest" ticked for a full release. The release notes (English and Indonesian, with a table of which file to download) are written by `scripts/release_notes.py` from the matching release in `assets/changelog/changelog.json`. The store release notes come from the same file: `scripts/store_release_notes.py [version]` writes them (newest release by default) for the platforms each change reaches, and `--check`, run in CI, fails when they are out of date.
 
 ### Commit messages
 
@@ -424,7 +424,7 @@ The store listing follows KBBI ("salat") in the name and subtitle, and reaches p
 - **Subtitle:** `Azan, Kiblat & Imsakiyah`
 - **Keywords:** `sholat,shalat,solat,adzan,waktu,muslim,ramadan,imsak,doa,masjid,kalender,hijriah,puasa`
 
-The listing text for every language is in `store/app_store/<locale>/` (and the review notes in `store/app_store/review_notes.txt`); the screenshots come from `store/render.sh` (see Store screenshots).
+The listing text for every language is in `store/app_store/<locale>/` (and the review notes in `store/app_store/review_notes.txt`); paste each language's `release_notes.txt` into What's New; the screenshots come from `store/render.sh` (see Store screenshots).
 
 macOS uses the same bundle ID and has its own version in App Store Connect. Build, archive and export it, then upload the `.pkg`:
 
@@ -445,7 +445,7 @@ The Play app is **Bedug: Jadwal Salat** (`com.ardeman.bedug`, default language I
 flutter build appbundle --release --build-number=<n>   # → build/app/outputs/bundle/release/app-release.aab
 ```
 
-Use the same build number as the Apple builds. The listing text is in `store/google_play/<locale>/` and the graphics come from `store/render.sh`. A new developer account must run a closed test with at least 12 testers for 14 days before it can apply for production access.
+Use the same build number as the Apple builds. The listing text is in `store/google_play/<locale>/`, the release notes for every language in one file to paste, `store/google_play/release_notes/<version>.txt`, and the graphics come from `store/render.sh`. A new developer account must run a closed test with at least 12 testers for 14 days before it can apply for production access.
 
 ## macOS
 

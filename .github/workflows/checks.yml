@@ -64,3 +64,4 @@ jobs:
           dart format --output=none --set-exit-if-changed lib test tool
           flutter analyze
           flutter test
+          python3 scripts/store_release_notes.py --check

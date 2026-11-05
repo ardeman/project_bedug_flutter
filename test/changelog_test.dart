@@ -1,6 +1,7 @@
 import 'package:cupertino_ui/cupertino_ui.dart'
     show GlobalCupertinoLocalizations;
 
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:bedug/features/changelog/changelog.dart';
@@ -38,6 +39,32 @@ void main() {
       releases.length,
       reason: 'versions are unique',
     );
+  });
+
+  test('platforms and store text are valid', () {
+    // Read raw: the app ignores these fields, which only steer the store
+    // notes written by scripts/store_release_notes.py.
+    const platforms = {'android', 'ios', 'macos', 'windows', 'linux', 'web'};
+    final languages = AppLocalizations.supportedLocales
+        .map((l) => l.languageCode)
+        .toSet();
+    final json = jsonDecode(
+      File(changelogAsset).readAsStringSync(),
+    ) as Map<String, dynamic>;
+    for (final release in json['releases'] as List) {
+      for (final change in release['changes'] as List) {
+        final listed = change['platforms'] as List?;
+        if (listed != null) {
+          expect(listed, isNotEmpty, reason: release['version'] as String);
+          expect(platforms.containsAll(listed), isTrue, reason: '$listed');
+        }
+        final store = change['store'] as Map?;
+        if (store != null) {
+          expect(store.keys.toSet(), languages, reason: '$store');
+          expect(store.values.every((t) => '$t'.trim().isNotEmpty), isTrue);
+        }
+      }
+    }
   });
 
   test('only the newest release may be undated', () {

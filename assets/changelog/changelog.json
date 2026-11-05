@@ -6,6 +6,10 @@
       "changes": [
         {
           "type": "new",
+          "platforms": [
+            "windows",
+            "linux"
+          ],
           "text": {
             "en": "On Windows and Linux, you can now check for app updates from Settings.",
             "id": "Di Windows dan Linux, kini Anda dapat memeriksa pembaruan aplikasi dari Pengaturan.",
@@ -20,6 +24,12 @@
             "id": "Jika izin lokasi ditolak permanen, mengaktifkan kembali deteksi lokasi otomatis kini menawarkan untuk membuka pengaturan aplikasi Bedug.",
             "ms": "Jika kebenaran lokasi ditolak secara kekal, mengaktifkan semula pengesanan lokasi automatik kini menawarkan untuk membuka tetapan aplikasi Bedug.",
             "ar": "إذا رُفض إذن الموقع نهائياً، يعرض تفعيل اكتشاف الموقع تلقائياً مجدداً الآن فتح إعدادات تطبيق Bedug."
+          },
+          "store": {
+            "en": "If location was denied, turning auto location on offers app settings.",
+            "id": "Jika izin lokasi ditolak, lokasi otomatis menawarkan pengaturan aplikasi.",
+            "ms": "Jika lokasi ditolak, lokasi automatik menawarkan tetapan aplikasi.",
+            "ar": "إذا رُفض إذن الموقع، يعرض الموقع التلقائي فتح إعدادات التطبيق."
           }
         },
         {
@@ -29,6 +39,12 @@
             "id": "Jika notifikasi dinonaktifkan di pengaturan sistem, memilih Lanjutkan kini membuka pengaturan notifikasi Bedug.",
             "ms": "Jika pemberitahuan dimatikan dalam tetapan sistem, memilih Teruskan kini membuka tetapan pemberitahuan Bedug.",
             "ar": "إذا كانت الإشعارات متوقفة في إعدادات النظام، يؤدي اختيار متابعة الآن إلى فتح إعدادات إشعارات Bedug."
+          },
+          "store": {
+            "en": "Continue opens notification settings when notifications are off.",
+            "id": "Lanjutkan membuka pengaturan notifikasi saat notifikasi nonaktif.",
+            "ms": "Teruskan membuka tetapan pemberitahuan apabila ia dimatikan.",
+            "ar": "يفتح زر متابعة إعدادات الإشعارات عند إيقافها."
           }
         },
         {
@@ -38,6 +54,12 @@
             "id": "Sakelar notifikasi kini mengikuti izin sistem, termasuk setelah memilih Nanti saja atau kembali dari pengaturan sistem.",
             "ms": "Suis pemberitahuan kini mengikut kebenaran sistem, termasuk selepas memilih Nanti sahaja atau kembali daripada tetapan sistem.",
             "ar": "تعكس مفاتيح الإشعارات الآن إذن النظام، بما في ذلك بعد اختيار ليس الآن أو العودة من إعدادات النظام."
+          },
+          "store": {
+            "en": "Notification switches match system permission.",
+            "id": "Sakelar notifikasi mengikuti izin sistem.",
+            "ms": "Suis pemberitahuan mengikut kebenaran sistem.",
+            "ar": "مفاتيح الإشعارات تطابق إذن النظام."
           }
         },
         {
@@ -47,6 +69,12 @@
             "id": "Panduan aplikasi menyorot setiap kontrol, menggulirnya agar terlihat, dan menjelaskannya dalam gelembung kecil di dekatnya. Permintaan izin tetap menunggu persetujuan Anda.",
             "ms": "Panduan aplikasi menyerlahkan setiap kawalan, menatalnya ke paparan dan menerangkannya dalam gelembung kecil berhampiran. Permintaan kebenaran tetap menunggu persetujuan anda.",
             "ar": "جولة في التطبيق تبرز كل عنصر تحكم وتمرّر إليه وتشرحه في فقاعة صغيرة بجواره، مع استمرار طلب موافقتك قبل أذونات النظام."
+          },
+          "store": {
+            "en": "A tour explains each control.",
+            "id": "Panduan yang menjelaskan setiap kontrol.",
+            "ms": "Panduan yang menerangkan setiap kawalan.",
+            "ar": "جولة تشرح كل عنصر تحكم."
           }
         },
         {
@@ -56,15 +84,30 @@
             "id": "Tanggal Hijriah kini mengikuti kalender MABIMS secara bawaan, seperti yang dipakai Indonesia, Malaysia, Brunei, dan Singapura. Umm al-Qura tetap tersedia di Pengaturan.",
             "ms": "Tarikh Hijrah kini mengikut kalendar MABIMS secara lalai, seperti yang digunakan di Malaysia, Brunei, Indonesia dan Singapura. Umm al-Qura masih tersedia dalam Tetapan.",
             "ar": "تتبع التواريخ الهجرية تقويم MABIMS افتراضياً كما تعتمده إندونيسيا وماليزيا وبروناي وسنغافورة، ويبقى تقويم أم القرى متاحاً في الإعدادات."
+          },
+          "store": {
+            "en": "Hijri dates use MABIMS by default.",
+            "id": "Tanggal Hijriah memakai MABIMS secara bawaan.",
+            "ms": "Tarikh Hijrah menggunakan MABIMS secara lalai.",
+            "ar": "التواريخ الهجرية تتبع MABIMS افتراضياً."
           }
         },
         {
           "type": "fixed",
+          "platforms": [
+            "android"
+          ],
           "text": {
             "en": "Android skips reminders missed while the phone was off instead of delivering them all after a restart.",
             "id": "Android melewati pengingat yang terlewat saat ponsel mati agar tidak muncul sekaligus setelah dinyalakan kembali.",
             "ms": "Android melangkau peringatan yang terlepas semasa telefon dimatikan supaya tidak muncul serentak selepas dihidupkan semula.",
             "ar": "يتجاوز أندرويد التذكيرات الفائتة أثناء إيقاف الهاتف بدلاً من إرسالها جميعاً بعد إعادة تشغيله."
+          },
+          "store": {
+            "en": "Reminders missed while the phone was off no longer pile up.",
+            "id": "Pengingat yang terlewat saat ponsel mati tidak lagi menumpuk.",
+            "ms": "Peringatan yang terlepas semasa telefon dimatikan tidak lagi bertimbun.",
+            "ar": "لم تعد التذكيرات الفائتة أثناء إيقاف الهاتف تتراكم."
           }
         },
         {
@@ -74,10 +117,19 @@
             "id": "Ikon Subuh menggunakan simbol tidur dan Magrib simbol matahari terbenam secara konsisten di aplikasi, situs web, widget layar utama, dan widget layar kunci.",
             "ms": "Ikon Subuh menggunakan simbol tidur dan Maghrib simbol matahari terbenam secara konsisten dalam aplikasi, laman web, widget skrin utama dan widget skrin kunci.",
             "ar": "تستخدم صلاة الفجر أيقونة النوم والمغرب أيقونة الغروب بشكل موحد في التطبيق والموقع وأدوات الشاشة الرئيسية وشاشة القفل."
+          },
+          "store": {
+            "en": "Matching Subuh and Maghrib icons in the app and widgets.",
+            "id": "Ikon Subuh dan Magrib seragam di aplikasi dan widget.",
+            "ms": "Ikon Subuh dan Maghrib seragam dalam aplikasi dan widget.",
+            "ar": "أيقونات موحدة للفجر والمغرب في التطبيق والأدوات."
           }
         },
         {
           "type": "fixed",
+          "platforms": [
+            "web"
+          ],
           "text": {
             "en": "The website phone preview now uses the same prayer and navigation icons as the app.",
             "id": "Pratinjau ponsel di situs web kini menggunakan ikon salat dan navigasi yang sama dengan aplikasi.",
@@ -87,6 +139,9 @@
         },
         {
           "type": "improved",
+          "platforms": [
+            "web"
+          ],
           "text": {
             "en": "The website opening now shows the Bedug app icon above the headline.",
             "id": "Bagian pembuka halaman web kini menampilkan ikon aplikasi Bedug di atas judul.",
@@ -96,6 +151,9 @@
         },
         {
           "type": "improved",
+          "platforms": [
+            "web"
+          ],
           "text": {
             "en": "Better spacing in the website footer, with the language selector beside the links when space allows.",
             "id": "Jarak di bagian bawah halaman web lebih nyaman, dengan pilihan bahasa di samping tautan saat ruang mencukupi.",
@@ -105,6 +163,9 @@
         },
         {
           "type": "improved",
+          "platforms": [
+            "web"
+          ],
           "text": {
             "en": "A simpler website footer with GitHub and language icons on phones.",
             "id": "Bagian bawah halaman web lebih ringkas dengan ikon GitHub dan bahasa di ponsel.",
@@ -114,6 +175,9 @@
         },
         {
           "type": "improved",
+          "platforms": [
+            "web"
+          ],
           "text": {
             "en": "The website language selector is now in the footer, keeping the top navigation on a single row without horizontal scrolling.",
             "id": "Pilihan bahasa halaman web kini berada di bagian bawah, sehingga navigasi atas tetap dalam satu baris tanpa perlu menggulir ke samping.",
@@ -123,6 +187,9 @@
         },
         {
           "type": "improved",
+          "platforms": [
+            "web"
+          ],
           "text": {
             "en": "The website opens with a hero that fits the screen, and the main navigation appears after scrolling.",
             "id": "Bagian pembuka halaman web kini pas di layar, dan navigasi utama muncul setelah menggulir.",
@@ -132,6 +199,9 @@
         },
         {
           "type": "improved",
+          "platforms": [
+            "web"
+          ],
           "text": {
             "en": "Website feature navigation now floats below the header and scrolls to keep the active chapter visible.",
             "id": "Navigasi fitur halaman web kini mengambang di bawah tajuk dan bergulir agar bab aktif tetap terlihat.",
@@ -141,6 +211,9 @@
         },
         {
           "type": "improved",
+          "platforms": [
+            "web"
+          ],
           "text": {
             "en": "A more immersive website with an emerald opening, spacious app previews and gentle scroll-driven depth.",
             "id": "Halaman web lebih imersif dengan pembuka bernuansa zamrud, pratinjau aplikasi yang lapang, dan efek kedalaman lembut saat menggulir.",
@@ -150,6 +223,9 @@
         },
         {
           "type": "improved",
+          "platforms": [
+            "web"
+          ],
           "text": {
             "en": "More compact download cards make better use of space on the website.",
             "id": "Kartu unduhan yang lebih ringkas memanfaatkan ruang halaman web dengan lebih baik.",
@@ -159,6 +235,9 @@
         },
         {
           "type": "fixed",
+          "platforms": [
+            "web"
+          ],
           "text": {
             "en": "Landing-page navigation labels now align vertically with the language selector.",
             "id": "Teks navigasi halaman web kini sejajar secara vertikal dengan pilihan bahasa.",
@@ -168,6 +247,9 @@
         },
         {
           "type": "improved",
+          "platforms": [
+            "web"
+          ],
           "text": {
             "en": "A refreshed landing page with gentle transitions, clearer feature previews and easier navigation on phones.",
             "id": "Halaman web diperbarui dengan transisi lembut, pratinjau fitur yang lebih jelas, dan navigasi yang lebih mudah di ponsel.",
@@ -182,10 +264,19 @@
             "id": "Hitung mundur salat berikutnya tidak lagi terus berulang setelah Anda berpindah zona waktu.",
             "ms": "Kiraan detik solat seterusnya tidak lagi berulang-ulang selepas anda berpindah zon waktu.",
             "ar": "لم يعد العد التنازلي للصلاة التالية يبدأ من جديد مراراً بعد انتقالك إلى منطقة زمنية أخرى."
+          },
+          "store": {
+            "en": "The countdown no longer restarts after a time zone change.",
+            "id": "Hitung mundur tidak lagi berulang setelah pindah zona waktu.",
+            "ms": "Kiraan detik tidak lagi berulang selepas bertukar zon waktu.",
+            "ar": "لم يعد العد التنازلي يبدأ من جديد بعد تغيير المنطقة الزمنية."
           }
         },
         {
           "type": "improved",
+          "platforms": [
+            "ios"
+          ],
           "text": {
             "en": "On a half-folded iPhone Duo, the Quran's mushaf pages fill the screen.",
             "id": "Pada iPhone Duo yang setengah terlipat, halaman mushaf Al-Qur'an kini memenuhi layar.",
