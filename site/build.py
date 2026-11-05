@@ -293,8 +293,13 @@ class Site:
             status = f'<a href="{url}">{s["download"]["get"]}</a>'
         else:
             status = s["download"]["coming_soon"]
+        # A list of device lines (GitHub: desktops first, then the apps that
+        # also have a store) is shown one line each.
+        devices = label["devices"]
+        if isinstance(devices, list):
+            devices = "<br>".join(devices)
         return (
-            f'<li><strong>{label["name"]}</strong><span>{label["devices"]}</span>'
+            f'<li><strong>{label["name"]}</strong><span>{devices}</span>'
             f'<span class="store-status">{status}</span></li>'
         )
 

@@ -144,7 +144,7 @@
     },
     "github": {
       "name": "GitHub",
-      "devices": "Android APK · Mac with Apple silicon · Windows 10 and 11 · Linux"
+      "devices": ["Windows 10 and 11 · Linux", "Android APK · Mac with Apple silicon"]
     }
   },
   "infaq": {
