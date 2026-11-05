@@ -328,10 +328,10 @@ The infaq method depends on where the build is distributed, not only on the plat
 | --- | --- | --- |
 | `play` | Android on Google Play | Play Billing |
 | `appstore` | iOS App Store, Mac App Store | StoreKit |
-| `direct` | Windows (Microsoft Store), Linux (Flathub); later perhaps an Android APK and a macOS DMG | Dahlunas infaq code (Phase 2), Trakteer / Ko-fi links until then |
+| `direct` | Windows and Linux from the GitHub releases; later perhaps an Android APK and a macOS DMG | Dahlunas infaq code (Phase 2), Trakteer / Ko-fi links until then |
 | `fdroid` (later) | Android on F-Droid | Trakteer / Ko-fi links, plus F-Droid's Donate metadata |
 
-- Rollout order: `play` and `appstore` (iOS and the Mac App Store) first, since that's where the users are. Then `direct` for Windows on the Microsoft Store and Linux on Flathub. A direct Android APK, a macOS DMG, Snap, AppImage and `fdroid` are skipped for now.
+- Rollout order: `play` and `appstore` (iOS and the Mac App Store) first, since that's where the users are. Windows and Linux ship as `direct` builds on the GitHub releases, not the Microsoft Store or Flathub. A direct Android APK, a macOS DMG, Snap, AppImage and `fdroid` are skipped for now.
 - F-Droid bans proprietary SDKs, so a define flag is not enough there. Its build recipe must remove `in_app_purchase` from `pubspec.yaml` with a pre-build patch, and the code must compile without it.
 - In-app purchase on macOS works only in a Mac App Store build. A DMG build uses the links.
 - Skipped for now: Huawei AppGallery (no Google services, so it would need Huawei's own IAP), Samsung Galaxy Store (check whether its policy requires Samsung IAP first), and EU alternative iOS marketplaces.

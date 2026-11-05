@@ -981,6 +981,21 @@ img {
   font-size: 14px;
 }
 
+.store-status a.store-badge {
+  /* Apple's badge is the whole control; it keeps its own shape and colors. */
+  display: inline-block;
+  min-height: 0;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+}
+
+.store-badge img {
+  display: block;
+  width: auto;
+  height: 44px;
+}
+
 .store-status a {
   display: inline-flex;
   align-items: center;

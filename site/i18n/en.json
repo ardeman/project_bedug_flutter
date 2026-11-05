@@ -135,7 +135,8 @@
   "stores": {
     "appstore": {
       "name": "App Store",
-      "devices": "iPhone and iPad · iOS 26 or later"
+      "devices": "iPhone and iPad · iOS 26 or later",
+      "badge": "Download on the App Store"
     },
     "play": {
       "name": "Google Play",
@@ -143,15 +144,12 @@
     },
     "macappstore": {
       "name": "Mac App Store",
-      "devices": "Mac · macOS 26 or later"
+      "devices": "Mac · macOS 26 or later",
+      "badge": "Download on the Mac App Store"
     },
-    "msstore": {
-      "name": "Microsoft Store",
-      "devices": "Windows 10 and 11"
-    },
-    "flathub": {
-      "name": "Flathub",
-      "devices": "Linux"
+    "github": {
+      "name": "GitHub",
+      "devices": "Windows 10 and 11 · Linux"
     }
   },
   "infaq": {

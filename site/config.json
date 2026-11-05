@@ -17,8 +17,7 @@
     { "id": "appstore", "url": "https://apps.apple.com/app/id6824662589" },
     { "id": "play", "url": null },
     { "id": "macappstore", "url": "https://apps.apple.com/app/id6824662589" },
-    { "id": "msstore", "url": null },
-    { "id": "flathub", "url": null }
+    { "id": "github", "url": "https://github.com/ardeman/project_bedug_flutter/releases" }
   ],
   "infaq": {
     "trakteer": null,

@@ -38,6 +38,11 @@ ICONS = {
     "github": '<path d="M9 19c-4 1.3-4-2-6-2.5M15 21v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 0 0-6.2 0C6.6 2.8 5.6 3.1 5.6 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4.2 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/>',
 }
 
+# Official store badges in site/static/badges/, by store and by the
+# region Apple localizes them for.
+STORE_BADGES = {"appstore": "app-store", "macappstore": "mac-app-store"}
+BADGE_REGIONS = {"id": "id-id", "en": "en-us", "ms": "ms-my"}
+
 PRAYERS = ("fajr", "dhuhr", "asr", "maghrib", "isha")
 
 # The icon beside each prayer in the app's list.
@@ -272,11 +277,22 @@ class Site:
         s = self.strings[loc]
         label = s["stores"][store["id"]]
         url = store.get("url")
-        status = (
-            f'<a href="{url}">{s["download"]["get"]}</a>'
-            if url
-            else s["download"]["coming_soon"]
-        )
+        badge = STORE_BADGES.get(store["id"])
+        if url and badge:
+            # Apple's official badge, black on light pages and white on dark.
+            # Apple publishes no Arabic badge, so Arabic uses the English one.
+            region = BADGE_REGIONS.get(loc, "en-us")
+            src = f"/assets/badges/{badge}-{{}}-{region}.svg"
+            status = (
+                f'<a class="store-badge" href="{url}"><picture>'
+                f'<source srcset="{src.format("white")}" media="(prefers-color-scheme: dark)">'
+                f'<img src="{src.format("black")}" alt="{attr(label["badge"])}" height="44">'
+                f"</picture></a>"
+            )
+        elif url:
+            status = f'<a href="{url}">{s["download"]["get"]}</a>'
+        else:
+            status = s["download"]["coming_soon"]
         return (
             f'<li><strong>{label["name"]}</strong><span>{label["devices"]}</span>'
             f'<span class="store-status">{status}</span></li>'
@@ -522,6 +538,7 @@ class Site:
         for name in ("live.js", "experience.js"):
             shutil.copy(SITE / "static" / name, assets / name)
         shutil.copytree(SITE / "static" / "vendor", assets / "vendor")
+        shutil.copytree(SITE / "static" / "badges", assets / "badges")
         for name in ("_headers", "robots.txt"):
             shutil.copy(SITE / "static" / name, DIST / name)
 

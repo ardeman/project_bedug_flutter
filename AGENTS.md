@@ -162,4 +162,6 @@ Record architectural choices here as one line each: date, decision, reason.
 
 - 2026-11-05: The build number after the `+` in `pubspec.yaml` is the only one, used by Play, the App Store and the GitHub release (no `--build-number` overrides), so a build number means the same build everywhere.
 
+- 2026-11-06: Windows and Linux are downloaded from the GitHub releases rather than the Microsoft Store or Flathub, since the release workflow already publishes those builds; the landing page links Apple's official badges for the App Store rows.
+
 - 2026-11-03: The Hijri calendar defaults to MABIMS (Umm al-Qura stays a choice in Settings), because most of Bedug's users are in Indonesia, Malaysia, Brunei and Singapore, which reckon their dates by it.

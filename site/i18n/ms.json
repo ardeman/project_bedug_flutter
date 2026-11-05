@@ -135,7 +135,8 @@
   "stores": {
     "appstore": {
       "name": "App Store",
-      "devices": "iPhone dan iPad · iOS 26 ke atas"
+      "devices": "iPhone dan iPad · iOS 26 ke atas",
+      "badge": "Muat turun di App Store"
     },
     "play": {
       "name": "Google Play",
@@ -143,15 +144,12 @@
     },
     "macappstore": {
       "name": "Mac App Store",
-      "devices": "Mac · macOS 26 ke atas"
+      "devices": "Mac · macOS 26 ke atas",
+      "badge": "Muat turun di Mac App Store"
     },
-    "msstore": {
-      "name": "Microsoft Store",
-      "devices": "Windows 10 dan 11"
-    },
-    "flathub": {
-      "name": "Flathub",
-      "devices": "Linux"
+    "github": {
+      "name": "GitHub",
+      "devices": "Windows 10 dan 11 · Linux"
     }
   },
   "infaq": {
