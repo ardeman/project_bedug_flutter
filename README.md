@@ -408,7 +408,7 @@ Every push to `master` deploys, and other branches get preview URLs.
 
 The App Store Connect record is **Bedug: Jadwal Salat** (bundle ID `com.ardeman.bedug`, SKU `bedug`, primary language Indonesian), signed by team `B36A8H9S8E` with automatic signing. To ship a build to TestFlight:
 
-1. `flutter build ipa --build-number=<n>`, where `<n>` is higher than the last uploaded build (Xcode's Organizer lists uploaded archives under **Archives**, and App Store Connect lists every build under **TestFlight**). This leaves `version:` in `pubspec.yaml` alone.
+1. Set the build number after the `+` in `version:` in `pubspec.yaml` higher than the last build uploaded to any store (App Store Connect lists every build under **TestFlight**, Play Console under **App bundle explorer**), and commit it. Then `flutter build ipa`. Every store and the GitHub release take the build number from `pubspec.yaml`, so never pass `--build-number`.
 2. Upload with an App Store Connect API key (App Manager role):
 
    ```sh
@@ -429,7 +429,7 @@ The listing text for every language is in `store/app_store/<locale>/` (and the r
 macOS uses the same bundle ID and has its own version in App Store Connect. Build, archive and export it, then upload the `.pkg`:
 
 ```sh
-flutter build macos --release --build-number=<n>
+flutter build macos --release
 xcodebuild -workspace macos/Runner.xcworkspace -scheme Runner -configuration Release -archivePath build/macos/Bedug.xcarchive archive
 xcodebuild -exportArchive -archivePath build/macos/Bedug.xcarchive -exportPath build/macos/export -exportOptionsPlist <plist> -allowProvisioningUpdates
 xcrun altool --upload-app --type macos -f build/macos/export/Bedug.pkg --apiKey "$ASC_KEY_ID" --apiIssuer "$ASC_ISSUER_ID"
@@ -442,10 +442,10 @@ The export plist sets `method` `app-store-connect`, `signingStyle` `automatic` a
 The Play app is **Bedug: Jadwal Salat** (`com.ardeman.bedug`, default language Indonesian). Release builds are signed with the upload key named in `android/key.properties` (git-ignored); without that file they are debug-signed, which Play rejects. The key lives outside the repo, under `/Volumes/ardeman.com/assets/advanced-data/bedug/`; keep a backup off this Mac, since updates can't be published without it.
 
 ```sh
-flutter build appbundle --release --build-number=<n>   # → build/app/outputs/bundle/release/app-release.aab
+flutter build appbundle --release   # → build/app/outputs/bundle/release/app-release.aab
 ```
 
-Use the same build number as the Apple builds. The listing text is in `store/google_play/<locale>/`, the release notes for every language in one file to paste, `store/google_play/release_notes/<version>.txt`, and the graphics come from `store/render.sh`. A new developer account must run a closed test with at least 12 testers for 14 days before it can apply for production access.
+The build number comes from `pubspec.yaml`, as for the Apple builds. The listing text is in `store/google_play/<locale>/`, the release notes for every language in one file to paste, `store/google_play/release_notes/<version>.txt`, and the graphics come from `store/render.sh`. A new developer account must run a closed test with at least 12 testers for 14 days before it can apply for production access.
 
 ## macOS
 

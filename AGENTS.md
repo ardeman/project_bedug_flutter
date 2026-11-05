@@ -93,7 +93,7 @@ These come from real crashes and broken UI.
 - **Platform folders** (`android/`, `ios/`, `macos/`, etc.) are mostly generated. Edit them only for platform config (window chrome, permissions, deployment targets, app ID). Never edit `**/GeneratedPluginRegistrant.*`, `ios/Flutter/Generated.xcconfig` or anything under `build/` or `.dart_tool/`.
 - **App identity:** don't change the package name `bedug` or the ID `com.ardeman.bedug` without being asked. The display name is `Bedug` and the publisher is `Ardeman` on every platform.
 - **App icons:** edit the SVGs in `assets/branding/`, never the generated platform icons. iOS and macOS use `assets/branding/AppIcon.icon`, edited in Icon Composer and referenced by both Xcode projects; keep `ios: false` and `macos: generate: false` for `flutter_launcher_icons`, and keep the flat layers in `assets/branding/layers/` in sync with what you import into it.
-- **Version:** bump `version:` in `pubspec.yaml` only when asked.
+- **Version:** bump `version:` in `pubspec.yaml` only when asked. Its build number (after the `+`) is the one every store and the GitHub release use: raise it there before a store build and never pass `--build-number`.
 
 ## Keeping docs current
 
@@ -159,5 +159,7 @@ Record architectural choices here as one line each: date, decision, reason.
 - 2026-11-01: The fasting log stores each day by its Gregorian date, not its day of Ramadan, and counts make-up fasts owed across every year, so changing the Hijri calendar source or adjustment never moves a day someone fasted and qada carries over until it is made up.
 
 - 2026-11-01: The landing page shows the app as it is: the hero mock copies the prayer-times screen in HTML (kept live by `live.js`) and the features use real screens exported from the store renders by `site/screens.sh`, replacing a generic dark mock and a grid of icon cards, so the site can't drift into a stock template look.
+
+- 2026-11-05: The build number after the `+` in `pubspec.yaml` is the only one, used by Play, the App Store and the GitHub release (no `--build-number` overrides), so a build number means the same build everywhere.
 
 - 2026-11-03: The Hijri calendar defaults to MABIMS (Umm al-Qura stays a choice in Settings), because most of Bedug's users are in Indonesia, Malaysia, Brunei and Singapore, which reckon their dates by it.
