@@ -135,17 +135,12 @@
   "stores": {
     "appstore": {
       "name": "App Store",
-      "devices": "iPhone و iPad · iOS 26 أو أحدث",
+      "devices": "iPhone و iPad و Mac · iOS و macOS 26 أو أحدث",
       "badge": "تنزيل من App Store"
     },
     "play": {
       "name": "Google Play",
       "devices": "هواتف وأجهزة Android اللوحية"
-    },
-    "macappstore": {
-      "name": "Mac App Store",
-      "devices": "Mac · macOS 26 أو أحدث",
-      "badge": "تنزيل من Mac App Store"
     },
     "github": {
       "name": "GitHub",

@@ -135,17 +135,12 @@
   "stores": {
     "appstore": {
       "name": "App Store",
-      "devices": "iPhone dan iPad · iOS 26 ke atas",
+      "devices": "iPhone, iPad dan Mac · iOS dan macOS 26 ke atas",
       "badge": "Muat turun di App Store"
     },
     "play": {
       "name": "Google Play",
       "devices": "Telefon dan tablet Android"
-    },
-    "macappstore": {
-      "name": "Mac App Store",
-      "devices": "Mac · macOS 26 ke atas",
-      "badge": "Muat turun di Mac App Store"
     },
     "github": {
       "name": "GitHub",

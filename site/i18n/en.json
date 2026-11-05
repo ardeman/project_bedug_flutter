@@ -135,17 +135,12 @@
   "stores": {
     "appstore": {
       "name": "App Store",
-      "devices": "iPhone and iPad · iOS 26 or later",
+      "devices": "iPhone, iPad and Mac · iOS and macOS 26 or later",
       "badge": "Download on the App Store"
     },
     "play": {
       "name": "Google Play",
       "devices": "Android phones and tablets"
-    },
-    "macappstore": {
-      "name": "Mac App Store",
-      "devices": "Mac · macOS 26 or later",
-      "badge": "Download on the Mac App Store"
     },
     "github": {
       "name": "GitHub",

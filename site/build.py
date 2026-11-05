@@ -40,7 +40,7 @@ ICONS = {
 
 # Official store badges in site/static/badges/, by store and by the
 # region Apple localizes them for.
-STORE_BADGES = {"appstore": "app-store", "macappstore": "mac-app-store"}
+STORE_BADGES = {"appstore": "app-store"}
 BADGE_REGIONS = {"id": "id-id", "en": "en-us", "ms": "ms-my"}
 
 PRAYERS = ("fajr", "dhuhr", "asr", "maghrib", "isha")
