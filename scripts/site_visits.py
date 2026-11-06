@@ -5,8 +5,10 @@ The site's Worker (site/worker.js) counts each home-page visit in the Workers
 Analytics Engine dataset `bedug_site_visits`, labelled with its `utm_source`
 or, without one, the referrer (Instagram, Facebook, ...) or "direct".
 
-Needs CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN (a token with the
+Needs CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_ANALYTICS_TOKEN (a token with the
 "Account Analytics: Read" permission) in the environment.
+The token has its own name because wrangler reads CLOUDFLARE_API_TOKEN, and a
+read-only token there would break `wrangler dev` and deploys.
 
     python3 scripts/site_visits.py              # last 30 days, by source
     python3 scripts/site_visits.py --days 7 --by country --source instagram
@@ -41,9 +43,9 @@ def main() -> int:
     args = parser.parse_args()
 
     account = os.environ.get("CLOUDFLARE_ACCOUNT_ID")
-    token = os.environ.get("CLOUDFLARE_API_TOKEN")
+    token = os.environ.get("CLOUDFLARE_ANALYTICS_TOKEN")
     if not account or not token:
-        print("Set CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN (Account Analytics: Read).", file=sys.stderr)
+        print("Set CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_ANALYTICS_TOKEN (Account Analytics: Read).", file=sys.stderr)
         return 1
 
     where = f"blob1 = '{HOST}' AND timestamp > NOW() - INTERVAL '{max(1, args.days)}' DAY"
