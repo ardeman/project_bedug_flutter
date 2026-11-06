@@ -1,3 +1,4 @@
+• Bedug memeriksa pembaruan saat dibuka (bisa dimatikan di Pengaturan), dan Pengaturan punya tombol Periksa pembaruan. Versi dari GitHub mengunduh, memverifikasi, dan memasang pembaruan setelah Anda setuju; versi toko diperbarui lewat Google Play atau App Store.
 • Panduan aplikasi menyorot setiap kontrol, menggulirnya agar terlihat, dan menjelaskannya dalam gelembung kecil di dekatnya. Permintaan izin tetap menunggu persetujuan Anda.
 • Tanggal Hijriah kini mengikuti kalender MABIMS secara bawaan, seperti yang dipakai Indonesia, Malaysia, Brunei, dan Singapura. Umm al-Qura tetap tersedia di Pengaturan.
 • Ikon Subuh menggunakan simbol tidur dan Magrib simbol matahari terbenam secara konsisten di aplikasi, situs web, widget layar utama, dan widget layar kunci.

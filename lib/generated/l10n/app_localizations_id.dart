@@ -233,7 +233,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String updateAvailable(Object version) {
-    return 'Versi $version tersedia. Ketuk untuk membuka rilis.';
+    return 'Versi $version tersedia. Ketuk untuk memperbarui.';
   }
 
   @override
@@ -244,8 +244,55 @@ class AppLocalizationsId extends AppLocalizations {
       'Pembaruan tidak dapat diperiksa. Ketuk untuk mencoba lagi.';
 
   @override
-  String get updateOpenFailed =>
-      'Halaman rilis tidak dapat dibuka. Ketuk untuk mencoba lagi.';
+  String get checkUpdatesOnLaunch => 'Periksa saat dibuka';
+
+  @override
+  String get checkUpdatesOnLaunchSubtitle =>
+      'Cari versi baru setiap kali Bedug dibuka';
+
+  @override
+  String get updateDialogTitle => 'Pembaruan tersedia';
+
+  @override
+  String updateDialogBody(Object version) {
+    return 'Bedug $version sudah tersedia. Unduh dan pasang sekarang? Bedug akan dimulai ulang.';
+  }
+
+  @override
+  String updateDialogBodyStore(Object version) {
+    return 'Bedug $version sudah tersedia di App Store.';
+  }
+
+  @override
+  String get updateLater => 'Nanti';
+
+  @override
+  String get updateNow => 'Perbarui';
+
+  @override
+  String get updateDownloading => 'Mengunduh pembaruan…';
+
+  @override
+  String get updateFailedTitle => 'Gagal memperbarui';
+
+  @override
+  String get updateDownloadFailed =>
+      'Unduhan gagal. Periksa koneksi lalu coba lagi, atau unduh dari halaman rilis.';
+
+  @override
+  String get updateChecksumFailed =>
+      'File yang diunduh tidak cocok dengan checksum-nya, jadi tidak dipasang.';
+
+  @override
+  String get updateInstallFailed =>
+      'Bedug tidak dapat memasang pembaruan di foldernya. Anda dapat mengunduhnya dari halaman rilis.';
+
+  @override
+  String get updateNeedsInstallPermission =>
+      'Izinkan Bedug memasang aplikasi di pengaturan yang baru terbuka, lalu ketuk Perbarui lagi.';
+
+  @override
+  String get openReleasePage => 'Buka halaman rilis';
 
   @override
   String get locationError => 'Gagal mendapatkan lokasi. Pastikan GPS aktif.';

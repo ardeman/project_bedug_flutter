@@ -1,3 +1,4 @@
+• Bedug checks for updates when it opens (you can turn this off in Settings), and Settings has a Check for updates button. Copies from GitHub download, verify and install the update once you confirm; store copies update through Google Play or the App Store.
 • A control-by-control app tour highlights each feature, scrolls it into view and explains it in a small nearby bubble. Permission requests still wait for your acknowledgement.
 • Hijri dates follow the MABIMS calendar by default, as Indonesia, Malaysia, Brunei and Singapore reckon them. Umm al-Qura stays available in Settings.
 • Subuh uses a bedtime icon and Maghrib a sunset icon consistently in the app, website, home screen widgets and lock screen widgets.

@@ -37,7 +37,8 @@ import '../tour/app_tour_provider.dart';
 import '../dzikir/dzikir.dart';
 import '../infaq/infaq_provider.dart';
 import '../infaq/infaq_screen.dart';
-import '../update/update_checker.dart';
+import '../update/update_channel.dart';
+import '../update/update_flow.dart';
 import 'settings_section.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -268,8 +269,10 @@ class SettingsScreen extends ConsumerWidget {
       SettingsSection(
         title: l10n.about,
         children: [
-          if (!PlatformCapabilities.updatesThroughStore)
+          if (ref.watch(updateChannelProvider) != UpdateChannel.none) ...[
             const _UpdateCheckTile(),
+            const _UpdateOnLaunchTile(),
+          ],
           PlatformListTile(
             key: TourAnchorScope.maybeOf(ctx)?.keys[TourControl.replay],
             leading: Icon(
@@ -408,15 +411,9 @@ String _soundLabel(
   PrayerNotificationSound.silent => l10n.silentNotificationSound,
 };
 
-enum _UpdateCheckStatus {
-  idle,
-  checking,
-  upToDate,
-  updateAvailable,
-  failed,
-  openFailed,
-}
+enum _UpdateCheckStatus { idle, checking, upToDate, updateAvailable, failed }
 
+/// Checks for an update on tap and offers to install it.
 class _UpdateCheckTile extends ConsumerStatefulWidget {
   const _UpdateCheckTile();
 
@@ -427,66 +424,23 @@ class _UpdateCheckTile extends ConsumerStatefulWidget {
 class _UpdateCheckTileState extends ConsumerState<_UpdateCheckTile> {
   _UpdateCheckStatus _status = _UpdateCheckStatus.idle;
   String? _latestVersion;
-  Uri? _releaseUrl;
 
   Future<void> _onTap() async {
     if (_status == _UpdateCheckStatus.checking) return;
-
-    if (_releaseUrl != null &&
-        (_status == _UpdateCheckStatus.updateAvailable ||
-            _status == _UpdateCheckStatus.openFailed)) {
-      try {
-        final opened = await launchUrl(
-          _releaseUrl!,
-          mode: LaunchMode.externalApplication,
-        );
-        if (!opened) {
-          FlutterError.reportError(
-            FlutterErrorDetails(
-              exception: StateError('The release page could not be opened.'),
-              library: 'update check',
-            ),
-          );
-          if (mounted) setState(() => _status = _UpdateCheckStatus.openFailed);
-        }
-      } catch (error, stackTrace) {
-        FlutterError.reportError(
-          FlutterErrorDetails(
-            exception: error,
-            stack: stackTrace,
-            library: 'update check',
-          ),
-        );
-        if (mounted) setState(() => _status = _UpdateCheckStatus.openFailed);
-      }
-      return;
-    }
-
     setState(() => _status = _UpdateCheckStatus.checking);
-    try {
-      final releases = await ref.read(changelogProvider.future);
-      if (releases.isEmpty) throw StateError('The changelog is empty.');
-      final result = await ref.read(updateCheckerProvider)(
-        releases.first.version,
-      );
-      if (!mounted) return;
-      setState(() {
-        _latestVersion = result.latestVersion;
-        _releaseUrl = result.releaseUrl;
-        _status = result.updateAvailable
-            ? _UpdateCheckStatus.updateAvailable
-            : _UpdateCheckStatus.upToDate;
-      });
-    } catch (error, stackTrace) {
-      FlutterError.reportError(
-        FlutterErrorDetails(
-          exception: error,
-          stack: stackTrace,
-          library: 'update check',
-        ),
-      );
-      if (mounted) setState(() => _status = _UpdateCheckStatus.failed);
-    }
+    final (outcome, version) = await runUpdateCheck(ref.read, quiet: false);
+    if (!mounted) return;
+    setState(() {
+      _latestVersion = version;
+      _status = switch (outcome) {
+        UpdateOutcome.upToDate => _UpdateCheckStatus.upToDate,
+        UpdateOutcome.available || UpdateOutcome.started =>
+          version == null
+              ? _UpdateCheckStatus.idle
+              : _UpdateCheckStatus.updateAvailable,
+        UpdateOutcome.failed => _UpdateCheckStatus.failed,
+      };
+    });
   }
 
   @override
@@ -500,7 +454,6 @@ class _UpdateCheckTileState extends ConsumerState<_UpdateCheckTile> {
         _latestVersion!,
       ),
       _UpdateCheckStatus.failed => l10n.updateCheckFailed,
-      _UpdateCheckStatus.openFailed => l10n.updateOpenFailed,
     };
 
     return PlatformListTile(
@@ -512,13 +465,26 @@ class _UpdateCheckTileState extends ConsumerState<_UpdateCheckTile> {
       subtitle: Text(subtitle),
       trailing: _status == _UpdateCheckStatus.checking
           ? const AdaptiveSpinner()
-          : Icon(
-              _status == _UpdateCheckStatus.updateAvailable ||
-                      _status == _UpdateCheckStatus.openFailed
-                  ? Icons.open_in_new
-                  : Icons.chevron_right,
-            ),
+          : const Icon(Icons.chevron_right),
       onTap: _onTap,
+    );
+  }
+}
+
+class _UpdateOnLaunchTile extends ConsumerWidget {
+  const _UpdateOnLaunchTile();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    return PlatformListTile(
+      leading: Icon(Icons.update, color: AppColors.accentOf(context)),
+      title: Text(l10n.checkUpdatesOnLaunch),
+      subtitle: Text(l10n.checkUpdatesOnLaunchSubtitle),
+      trailing: _AdaptiveSwitch(
+        value: ref.watch(updateOnLaunchProvider),
+        onChanged: ref.read(updateOnLaunchProvider.notifier).set,
+      ),
     );
   }
 }

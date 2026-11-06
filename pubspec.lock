@@ -146,13 +146,13 @@ packages:
     source: hosted
     version: "1.19.1"
   crypto:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: crypto
-      sha256: c8ea0233063ba03258fbcf2ca4d6dadfefe14f02fab57702265467a19f27fadf
+      sha256: e3626ae6270383c9e3a549f34c9e4cd26c09ae6a9adaab2bf4737a00340efdc4
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.7"
+    version: "3.0.8"
   cupertino_ui:
     dependency: "direct main"
     description:
@@ -501,6 +501,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.4.15"
+  in_app_update:
+    dependency: "direct main"
+    description:
+      name: in_app_update
+      sha256: c55b4da41baf34b440ba627843932aa6f1689b5c499cfac98aec156b3113d89e
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.0"
   intl:
     dependency: "direct main"
     description:

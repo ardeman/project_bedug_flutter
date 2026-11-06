@@ -525,7 +525,7 @@ abstract class AppLocalizations {
   /// No description provided for @updateAvailable.
   ///
   /// In id, this message translates to:
-  /// **'Versi {version} tersedia. Ketuk untuk membuka rilis.'**
+  /// **'Versi {version} tersedia. Ketuk untuk memperbarui.'**
   String updateAvailable(Object version);
 
   /// No description provided for @upToDate.
@@ -540,11 +540,89 @@ abstract class AppLocalizations {
   /// **'Pembaruan tidak dapat diperiksa. Ketuk untuk mencoba lagi.'**
   String get updateCheckFailed;
 
-  /// No description provided for @updateOpenFailed.
+  /// No description provided for @checkUpdatesOnLaunch.
   ///
   /// In id, this message translates to:
-  /// **'Halaman rilis tidak dapat dibuka. Ketuk untuk mencoba lagi.'**
-  String get updateOpenFailed;
+  /// **'Periksa saat dibuka'**
+  String get checkUpdatesOnLaunch;
+
+  /// No description provided for @checkUpdatesOnLaunchSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Cari versi baru setiap kali Bedug dibuka'**
+  String get checkUpdatesOnLaunchSubtitle;
+
+  /// No description provided for @updateDialogTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Pembaruan tersedia'**
+  String get updateDialogTitle;
+
+  /// No description provided for @updateDialogBody.
+  ///
+  /// In id, this message translates to:
+  /// **'Bedug {version} sudah tersedia. Unduh dan pasang sekarang? Bedug akan dimulai ulang.'**
+  String updateDialogBody(Object version);
+
+  /// No description provided for @updateDialogBodyStore.
+  ///
+  /// In id, this message translates to:
+  /// **'Bedug {version} sudah tersedia di App Store.'**
+  String updateDialogBodyStore(Object version);
+
+  /// No description provided for @updateLater.
+  ///
+  /// In id, this message translates to:
+  /// **'Nanti'**
+  String get updateLater;
+
+  /// No description provided for @updateNow.
+  ///
+  /// In id, this message translates to:
+  /// **'Perbarui'**
+  String get updateNow;
+
+  /// No description provided for @updateDownloading.
+  ///
+  /// In id, this message translates to:
+  /// **'Mengunduh pembaruan…'**
+  String get updateDownloading;
+
+  /// No description provided for @updateFailedTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Gagal memperbarui'**
+  String get updateFailedTitle;
+
+  /// No description provided for @updateDownloadFailed.
+  ///
+  /// In id, this message translates to:
+  /// **'Unduhan gagal. Periksa koneksi lalu coba lagi, atau unduh dari halaman rilis.'**
+  String get updateDownloadFailed;
+
+  /// No description provided for @updateChecksumFailed.
+  ///
+  /// In id, this message translates to:
+  /// **'File yang diunduh tidak cocok dengan checksum-nya, jadi tidak dipasang.'**
+  String get updateChecksumFailed;
+
+  /// No description provided for @updateInstallFailed.
+  ///
+  /// In id, this message translates to:
+  /// **'Bedug tidak dapat memasang pembaruan di foldernya. Anda dapat mengunduhnya dari halaman rilis.'**
+  String get updateInstallFailed;
+
+  /// No description provided for @updateNeedsInstallPermission.
+  ///
+  /// In id, this message translates to:
+  /// **'Izinkan Bedug memasang aplikasi di pengaturan yang baru terbuka, lalu ketuk Perbarui lagi.'**
+  String get updateNeedsInstallPermission;
+
+  /// No description provided for @openReleasePage.
+  ///
+  /// In id, this message translates to:
+  /// **'Buka halaman rilis'**
+  String get openReleasePage;
 
   /// No description provided for @locationError.
   ///

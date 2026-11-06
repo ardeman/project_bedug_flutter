@@ -161,7 +161,7 @@
   "@checkForUpdatesSubtitle": {},
   "checkingForUpdates": "Memeriksa pembaruan…",
   "@checkingForUpdates": {},
-  "updateAvailable": "Versi {version} tersedia. Ketuk untuk membuka rilis.",
+  "updateAvailable": "Versi {version} tersedia. Ketuk untuk memperbarui.",
   "@updateAvailable": {
     "placeholders": {
       "version": { "type": "Object" }
@@ -171,8 +171,42 @@
   "@upToDate": {},
   "updateCheckFailed": "Pembaruan tidak dapat diperiksa. Ketuk untuk mencoba lagi.",
   "@updateCheckFailed": {},
-  "updateOpenFailed": "Halaman rilis tidak dapat dibuka. Ketuk untuk mencoba lagi.",
-  "@updateOpenFailed": {},
+  "checkUpdatesOnLaunch": "Periksa saat dibuka",
+  "@checkUpdatesOnLaunch": {},
+  "checkUpdatesOnLaunchSubtitle": "Cari versi baru setiap kali Bedug dibuka",
+  "@checkUpdatesOnLaunchSubtitle": {},
+  "updateDialogTitle": "Pembaruan tersedia",
+  "@updateDialogTitle": {},
+  "updateDialogBody": "Bedug {version} sudah tersedia. Unduh dan pasang sekarang? Bedug akan dimulai ulang.",
+  "@updateDialogBody": {
+    "placeholders": {
+      "version": { "type": "Object" }
+    }
+  },
+  "updateDialogBodyStore": "Bedug {version} sudah tersedia di App Store.",
+  "@updateDialogBodyStore": {
+    "placeholders": {
+      "version": { "type": "Object" }
+    }
+  },
+  "updateLater": "Nanti",
+  "@updateLater": {},
+  "updateNow": "Perbarui",
+  "@updateNow": {},
+  "updateDownloading": "Mengunduh pembaruan…",
+  "@updateDownloading": {},
+  "updateFailedTitle": "Gagal memperbarui",
+  "@updateFailedTitle": {},
+  "updateDownloadFailed": "Unduhan gagal. Periksa koneksi lalu coba lagi, atau unduh dari halaman rilis.",
+  "@updateDownloadFailed": {},
+  "updateChecksumFailed": "File yang diunduh tidak cocok dengan checksum-nya, jadi tidak dipasang.",
+  "@updateChecksumFailed": {},
+  "updateInstallFailed": "Bedug tidak dapat memasang pembaruan di foldernya. Anda dapat mengunduhnya dari halaman rilis.",
+  "@updateInstallFailed": {},
+  "updateNeedsInstallPermission": "Izinkan Bedug memasang aplikasi di pengaturan yang baru terbuka, lalu ketuk Perbarui lagi.",
+  "@updateNeedsInstallPermission": {},
+  "openReleasePage": "Buka halaman rilis",
+  "@openReleasePage": {},
 
   "locationError": "Gagal mendapatkan lokasi. Pastikan GPS aktif.",
   "@locationError": {},

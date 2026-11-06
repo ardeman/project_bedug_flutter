@@ -232,7 +232,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String updateAvailable(Object version) {
-    return 'Versi $version tersedia. Ketik untuk membuka keluaran.';
+    return 'Versi $version tersedia. Ketik untuk mengemas kini.';
   }
 
   @override
@@ -243,8 +243,55 @@ class AppLocalizationsMs extends AppLocalizations {
       'Tidak dapat menyemak kemas kini. Ketik untuk cuba lagi.';
 
   @override
-  String get updateOpenFailed =>
-      'Tidak dapat membuka halaman keluaran. Ketik untuk cuba lagi.';
+  String get checkUpdatesOnLaunch => 'Semak semasa dibuka';
+
+  @override
+  String get checkUpdatesOnLaunchSubtitle =>
+      'Cari versi baharu setiap kali Bedug dibuka';
+
+  @override
+  String get updateDialogTitle => 'Kemas kini tersedia';
+
+  @override
+  String updateDialogBody(Object version) {
+    return 'Bedug $version sudah tersedia. Muat turun dan pasang sekarang? Bedug akan dimulakan semula.';
+  }
+
+  @override
+  String updateDialogBodyStore(Object version) {
+    return 'Bedug $version sudah tersedia di App Store.';
+  }
+
+  @override
+  String get updateLater => 'Nanti';
+
+  @override
+  String get updateNow => 'Kemas kini';
+
+  @override
+  String get updateDownloading => 'Memuat turun kemas kini…';
+
+  @override
+  String get updateFailedTitle => 'Gagal mengemas kini';
+
+  @override
+  String get updateDownloadFailed =>
+      'Muat turun gagal. Semak sambungan dan cuba lagi, atau muat turun dari halaman keluaran.';
+
+  @override
+  String get updateChecksumFailed =>
+      'Fail yang dimuat turun tidak sepadan dengan checksumnya, jadi ia tidak dipasang.';
+
+  @override
+  String get updateInstallFailed =>
+      'Bedug tidak dapat memasang kemas kini dalam foldernya. Anda boleh memuat turunnya dari halaman keluaran.';
+
+  @override
+  String get updateNeedsInstallPermission =>
+      'Benarkan Bedug memasang apl dalam tetapan yang baru dibuka, kemudian ketik Kemas kini sekali lagi.';
+
+  @override
+  String get openReleasePage => 'Buka halaman keluaran';
 
   @override
   String get locationError => 'Gagal mendapatkan lokasi. Sila aktifkan GPS.';

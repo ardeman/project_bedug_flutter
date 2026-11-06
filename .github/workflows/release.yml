@@ -59,6 +59,8 @@ jobs:
     needs: version
     if: needs.version.outputs.new == 'true'
     uses: ./.github/workflows/desktop.yml
+    # The Android job signs the APK with the upload key from the secrets.
+    secrets: inherit
     with:
       release_pipeline: true
 

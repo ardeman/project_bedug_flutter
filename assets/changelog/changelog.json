@@ -7,14 +7,23 @@
         {
           "type": "new",
           "platforms": [
+            "android",
+            "ios",
+            "macos",
             "windows",
             "linux"
           ],
           "text": {
-            "en": "On Windows and Linux, you can now check for app updates from Settings.",
-            "id": "Di Windows dan Linux, kini Anda dapat memeriksa pembaruan aplikasi dari Pengaturan.",
-            "ms": "Di Windows dan Linux, kini anda boleh menyemak kemas kini aplikasi melalui Tetapan.",
-            "ar": "على Windows وLinux، يمكنك الآن التحقق من تحديثات التطبيق من الإعدادات."
+            "en": "Bedug checks for updates when it opens (you can turn this off in Settings), and Settings has a Check for updates button. Copies from GitHub download, verify and install the update once you confirm; store copies update through Google Play or the App Store.",
+            "id": "Bedug memeriksa pembaruan saat dibuka (bisa dimatikan di Pengaturan), dan Pengaturan punya tombol Periksa pembaruan. Versi dari GitHub mengunduh, memverifikasi, dan memasang pembaruan setelah Anda setuju; versi toko diperbarui lewat Google Play atau App Store.",
+            "ms": "Bedug menyemak kemas kini semasa dibuka (boleh dimatikan dalam Tetapan), dan Tetapan mempunyai butang Semak kemas kini. Versi dari GitHub memuat turun, mengesahkan dan memasang kemas kini selepas anda bersetuju; versi kedai dikemas kini melalui Google Play atau App Store.",
+            "ar": "يتحقق Bedug من التحديثات عند فتحه (يمكنك إيقاف ذلك من الإعدادات)، وفي الإعدادات زر للتحقق من التحديثات. تنزّل نسخ GitHub التحديث وتتحقق منه وتثبّته بعد موافقتك، بينما تتحدّث نسخ المتجر عبر Google Play أو App Store."
+          },
+          "store": {
+            "en": "Checks for updates when Bedug opens.",
+            "id": "Memeriksa pembaruan saat dibuka.",
+            "ms": "Semak kemas kini bila dibuka.",
+            "ar": "يتحقق من التحديثات عند فتحه."
           }
         },
         {

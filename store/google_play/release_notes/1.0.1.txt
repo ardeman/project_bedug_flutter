@@ -1,4 +1,5 @@
 <id>
+• Memeriksa pembaruan saat dibuka.
 • Panduan yang menjelaskan setiap kontrol.
 • Tanggal Hijriah memakai MABIMS secara bawaan.
 • Ikon Subuh dan Magrib seragam di aplikasi dan widget.
@@ -9,6 +10,7 @@
 • Hitung mundur tidak lagi berulang setelah pindah zona waktu.
 </id>
 <en-US>
+• Checks for updates when Bedug opens.
 • A tour explains each control.
 • Hijri dates use MABIMS by default.
 • Matching Subuh and Maghrib icons in the app and widgets.
@@ -19,6 +21,7 @@
 • The countdown no longer restarts after a time zone change.
 </en-US>
 <ms-MY>
+• Semak kemas kini bila dibuka.
 • Panduan yang menerangkan setiap kawalan.
 • Tarikh Hijrah menggunakan MABIMS secara lalai.
 • Ikon Subuh dan Maghrib seragam dalam aplikasi dan widget.
@@ -29,6 +32,7 @@
 • Kiraan detik tidak lagi berulang selepas bertukar zon waktu.
 </ms-MY>
 <ar>
+• يتحقق من التحديثات عند فتحه.
 • جولة تشرح كل عنصر تحكم.
 • التواريخ الهجرية تتبع MABIMS افتراضياً.
 • أيقونات موحدة للفجر والمغرب في التطبيق والأدوات.

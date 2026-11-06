@@ -4,6 +4,9 @@ import android.content.Intent
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
+import android.provider.Settings
+import androidx.core.content.FileProvider
+import java.io.File
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -21,6 +24,38 @@ class MainActivity : FlutterActivity() {
                     else -> result.notImplemented()
                 }
             }
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, UPDATE_CHANNEL)
+            .setMethodCallHandler { call, result ->
+                when (call.method) {
+                    "updateDir" -> result.success(File(cacheDir, "updates").path)
+                    "installApk" -> result.success(installApk(call.argument<String>("path")))
+                    else -> result.notImplemented()
+                }
+            }
+    }
+
+    /// Hands a downloaded update to the system installer, which asks the user
+    /// to confirm. Only GitHub builds declare the install permission and the
+    /// file provider (src/github), so store builds answer "unsupported".
+    private fun installApk(path: String?): String {
+        val authority = "$packageName.updates"
+        if (path == null || packageManager.resolveContentProvider(authority, 0) == null) {
+            return "unsupported"
+        }
+        if (!packageManager.canRequestPackageInstalls()) {
+            startActivity(
+                Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:$packageName")),
+            )
+            return "needsPermission"
+        }
+        val uri = FileProvider.getUriForFile(this, authority, File(path))
+        startActivity(
+            Intent(Intent.ACTION_VIEW).apply {
+                setDataAndType(uri, "application/vnd.android.package-archive")
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK)
+            },
+        )
+        return "started"
     }
 
     private fun pickSound(current: String?, result: MethodChannel.Result) {
@@ -64,6 +99,7 @@ class MainActivity : FlutterActivity() {
 
     private companion object {
         const val CHANNEL = "com.ardeman.bedug/phone_sound"
+        const val UPDATE_CHANNEL = "com.ardeman.bedug/update"
         const val PICK_REQUEST = 4201
     }
 }

@@ -33,7 +33,8 @@ TEXT = {
         "head": "| File | For |",
         "before": "### Before you install",
         "notes": [
-            "- **Test build:** this is not the store version. The Android APK is signed with a debug key and the macOS app is not signed, so Android may ask you to allow installs from this source and macOS may warn you.",
+            "- **Updates:** once installed, Bedug checks for new releases when it opens and can download, verify and install them for you (Settings → Check for updates).
+- **Not the store version:** the macOS app is not signed and Android may ask you to allow installs from this source, so macOS may warn you the first time.",
             "- **Android:** open the APK and allow the install. An APK signed differently (such as a store copy) can't be installed over this one.",
             "- **Windows:** extract the zip (right-click → Extract All) and open `bedug.exe`. If Windows says it protected your PC, choose More info → Run anyway.",
             "- **Mac:** open the zip and drag Bedug into Applications. The first time, Control-click it and choose Open, or run `xattr -dr com.apple.quarantine /Applications/bedug.app`.",
@@ -46,7 +47,8 @@ TEXT = {
         "head": "| File | Untuk |",
         "before": "### Sebelum memasang",
         "notes": [
-            "- **Versi uji:** ini bukan versi toko. APK Android ditandatangani dengan kunci debug dan aplikasi macOS belum ditandatangani, jadi Android mungkin meminta izin memasang dari sumber ini dan macOS mungkin memberi peringatan.",
+            "- **Pembaruan:** setelah terpasang, Bedug memeriksa rilis baru saat dibuka dan dapat mengunduh, memverifikasi, serta memasangnya untuk Anda (Pengaturan → Periksa pembaruan).
+- **Bukan versi toko:** aplikasi macOS belum ditandatangani dan Android mungkin meminta izin memasang dari sumber ini, jadi macOS mungkin memberi peringatan saat pertama dibuka.",
             "- **Android:** buka APK lalu izinkan pemasangan. APK yang ditandatangani berbeda (misalnya salinan dari toko) tidak bisa dipasang di atas yang ini.",
             "- **Windows:** ekstrak zip-nya (klik kanan → Extract All) lalu buka `bedug.exe`. Jika Windows bilang telah melindungi PC kamu, pilih More info → Run anyway.",
             "- **Mac:** buka zip-nya lalu seret Bedug ke Applications. Pertama kali, klik sambil menahan Control lalu pilih Open, atau jalankan `xattr -dr com.apple.quarantine /Applications/bedug.app`.",

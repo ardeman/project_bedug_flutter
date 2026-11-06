@@ -246,7 +246,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String updateAvailable(Object version) {
-    return 'Version $version is available. Tap to open the release.';
+    return 'Version $version is available. Tap to update.';
   }
 
   @override
@@ -257,8 +257,55 @@ class AppLocalizationsEn extends AppLocalizations {
       'Couldn\'t check for updates. Tap to try again.';
 
   @override
-  String get updateOpenFailed =>
-      'Couldn\'t open the release page. Tap to try again.';
+  String get checkUpdatesOnLaunch => 'Check on launch';
+
+  @override
+  String get checkUpdatesOnLaunchSubtitle =>
+      'Look for a new version each time Bedug opens';
+
+  @override
+  String get updateDialogTitle => 'Update available';
+
+  @override
+  String updateDialogBody(Object version) {
+    return 'Bedug $version is available. Download and install it now? Bedug will restart.';
+  }
+
+  @override
+  String updateDialogBodyStore(Object version) {
+    return 'Bedug $version is available in the App Store.';
+  }
+
+  @override
+  String get updateLater => 'Later';
+
+  @override
+  String get updateNow => 'Update';
+
+  @override
+  String get updateDownloading => 'Downloading the update…';
+
+  @override
+  String get updateFailedTitle => 'Couldn\'t update';
+
+  @override
+  String get updateDownloadFailed =>
+      'The download failed. Check your connection and try again, or download it from the release page.';
+
+  @override
+  String get updateChecksumFailed =>
+      'The downloaded file didn\'t match its checksum, so it wasn\'t installed.';
+
+  @override
+  String get updateInstallFailed =>
+      'Bedug couldn\'t install the update in its folder. You can download it from the release page instead.';
+
+  @override
+  String get updateNeedsInstallPermission =>
+      'Allow Bedug to install apps in the settings that just opened, then tap Update again.';
+
+  @override
+  String get openReleasePage => 'Open release page';
 
   @override
   String get locationError => 'Failed to get location. Please enable GPS.';

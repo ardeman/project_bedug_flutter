@@ -245,7 +245,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String updateAvailable(Object version) {
-    return 'الإصدار $version متاح. اضغط لفتح صفحة الإصدار.';
+    return 'الإصدار $version متاح. اضغط للتحديث.';
   }
 
   @override
@@ -256,7 +256,55 @@ class AppLocalizationsAr extends AppLocalizations {
       'تعذر التحقق من التحديثات. اضغط للمحاولة مجدداً.';
 
   @override
-  String get updateOpenFailed => 'تعذر فتح صفحة الإصدار. اضغط للمحاولة مجدداً.';
+  String get checkUpdatesOnLaunch => 'التحقق عند الفتح';
+
+  @override
+  String get checkUpdatesOnLaunchSubtitle =>
+      'البحث عن إصدار جديد في كل مرة يُفتح فيها Bedug';
+
+  @override
+  String get updateDialogTitle => 'يتوفر تحديث';
+
+  @override
+  String updateDialogBody(Object version) {
+    return 'Bedug $version متاح. هل تريد تنزيله وتثبيته الآن؟ ستتم إعادة تشغيل Bedug.';
+  }
+
+  @override
+  String updateDialogBodyStore(Object version) {
+    return 'Bedug $version متاح في App Store.';
+  }
+
+  @override
+  String get updateLater => 'لاحقًا';
+
+  @override
+  String get updateNow => 'تحديث';
+
+  @override
+  String get updateDownloading => 'جارٍ تنزيل التحديث…';
+
+  @override
+  String get updateFailedTitle => 'تعذّر التحديث';
+
+  @override
+  String get updateDownloadFailed =>
+      'فشل التنزيل. تحقق من الاتصال وحاول مرة أخرى، أو نزّله من صفحة الإصدار.';
+
+  @override
+  String get updateChecksumFailed =>
+      'الملف الذي تم تنزيله لا يطابق المجموع الاختباري، لذا لم يُثبَّت.';
+
+  @override
+  String get updateInstallFailed =>
+      'تعذّر على Bedug تثبيت التحديث في مجلده. يمكنك تنزيله من صفحة الإصدار بدلًا من ذلك.';
+
+  @override
+  String get updateNeedsInstallPermission =>
+      'اسمح لـ Bedug بتثبيت التطبيقات في الإعدادات التي فُتحت للتو، ثم اضغط تحديث مرة أخرى.';
+
+  @override
+  String get openReleasePage => 'فتح صفحة الإصدار';
 
   @override
   String get locationError => 'فشل في الحصول على الموقع. يرجى تفعيل GPS.';

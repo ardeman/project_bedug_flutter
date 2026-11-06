@@ -82,14 +82,38 @@ jobs:
           channel: stable
           cache: true
 
+      # GitHub APKs are signed with the Play upload key so each release can
+      # update the one before it (a debug key differs on every runner).
+      # Without the secrets (forks) the build falls back to the debug key.
+      - name: Set up signing
+        env:
+          KEYSTORE: ${{ secrets.ANDROID_UPLOAD_KEYSTORE_BASE64 }}
+          STORE_PASSWORD: ${{ secrets.ANDROID_UPLOAD_STORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_UPLOAD_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_UPLOAD_KEY_PASSWORD }}
+        run: |
+          if [ -z "$KEYSTORE" ]; then
+            echo "No upload key secrets; signing with the debug key."
+            exit 0
+          fi
+          echo "$KEYSTORE" | base64 -d > "$RUNNER_TEMP/upload.jks"
+          {
+            echo "storeFile=$RUNNER_TEMP/upload.jks"
+            echo "storePassword=$STORE_PASSWORD"
+            echo "keyAlias=$KEY_ALIAS"
+            echo "keyPassword=$KEY_PASSWORD"
+          } > android/key.properties
+
       - name: Build
         run: |
           flutter pub get
-          flutter build apk --release
+          flutter build apk --release \
+            --dart-define=BEDUG_DISTRIBUTION=github \
+            --android-project-arg=bedug.distribution=github
 
       - uses: actions/upload-artifact@v4
         with:
-          name: android-apk-debug-signed
+          name: android-apk
           path: build/app/outputs/flutter-apk/app-release.apk
           if-no-files-found: error
 
@@ -118,7 +142,8 @@ jobs:
       - name: Build
         run: |
           flutter pub get
-          FLUTTER_XCODE_CODE_SIGNING_ALLOWED=NO flutter build macos --release
+          FLUTTER_XCODE_CODE_SIGNING_ALLOWED=NO flutter build macos --release \
+            --dart-define=BEDUG_DISTRIBUTION=github
           ditto -c -k --sequesterRsrc --keepParent \
             build/macos/Build/Products/Release/bedug.app \
             build/bedug-macos.zip
@@ -155,7 +180,7 @@ jobs:
       - name: Build
         run: |
           flutter pub get
-          flutter build linux --release
+          flutter build linux --release --dart-define=BEDUG_DISTRIBUTION=github
           tar -czf build/bedug-linux.tar.gz \
             -C build/linux/x64/release bundle
 
@@ -185,7 +210,7 @@ jobs:
           $ErrorActionPreference = 'Stop'
           $PSNativeCommandUseErrorActionPreference = $true
           flutter pub get
-          flutter build windows --release
+          flutter build windows --release --dart-define=BEDUG_DISTRIBUTION=github
           Compress-Archive `
             -Path build/windows/x64/runner/Release/* `
             -DestinationPath build/bedug-windows.zip

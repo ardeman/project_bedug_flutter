@@ -18,6 +18,7 @@ import 'core/widgets/permission_acknowledgement.dart';
 import 'core/services/prayer_widget_service.dart';
 import 'features/infaq/infaq_provider.dart';
 import 'features/quran/daily_ayah_widget.dart';
+import 'features/update/update_flow.dart';
 
 class BedugApp extends ConsumerWidget {
   const BedugApp({super.key});
@@ -28,6 +29,7 @@ class BedugApp extends ConsumerWidget {
     ref.watch(infaqListenerProvider);
     ref.watch(dailyAyahWidgetSyncProvider);
     ref.watch(dailyAyahWidgetTapProvider(appNavigatorKey));
+    ref.watch(launchUpdateCheckProvider);
     final locale = ref.watch(localeProvider);
     final settings = ref.watch(settingsProvider);
     final accent = ref.watch(systemAccentProvider).value;
