@@ -52,6 +52,8 @@ flutter gen-l10n
 flutter run -d macos   # or: iphone, android, windows, linux
 ```
 
+Separate projects (the promo media project) are found through `external-projects.json`: copy `external-projects.example.json` to it and point each section's `folder`, `readme` and `rules` at your checkouts. Like `.env`, the copy is not committed. Promo videos and the bundled notification sounds are made in the promo media project (`video_marketing`); no promo scripts or generated media source files go in this repository.
+
 iOS and macOS builds use CocoaPods only: Swift Package Manager is turned off in `pubspec.yaml`. It was turned off for `cupertino_native`, which has since been removed; turning SPM back on is a separate change. Warnings from plugin code are silenced in `ios/Podfile` and `macos/Podfile`. Flutter still prints a "plugins do not support Swift Package Manager" notice on every Apple build; it's expected and harmless.
 
 Today's live Hijri label advances at Maghrib calculated for the prayer location and shows an "After Maghrib" note until midnight. At midnight the Gregorian date catches up without advancing the Hijri label again. Prayer schedules and browsed calendar dates retain their Gregorian-day mapping. Without a prayer location/schedule, the label falls back to the standard calendar conversion. The Hijri date setting (below) moves every Hijri date the app shows.
@@ -479,6 +481,7 @@ Each topic has one home. Update that file instead of copying its content somewhe
 | `CONTRIBUTING.md` | Human contributors | Branches, bug reports, feature requests, pull requests |
 | `site/i18n/*.json` | Website visitors | Landing page copy, the privacy policy and the terms of use |
 | `assets/changelog/changelog.json` | App users and website visitors | What changed in each release |
+| `video_marketing.readme` in `external-projects.json` (separate repo) | Whoever makes the promo videos or the notification sounds | Promo videos, their scripts and uploads, and the sound sources |
 
 Codex, Cursor, GitHub Copilot, Windsurf, Jules, Aider, Zed and other agents that follow the [AGENTS.md](https://agents.md) convention read `AGENTS.md` directly.
 

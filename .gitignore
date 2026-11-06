@@ -1,3 +1,6 @@
+# Where separate projects are on this machine (see external-projects.example.json)
+external-projects.json
+
 # Miscellaneous
 *.class
 *.log
