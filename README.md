@@ -102,7 +102,7 @@ Validation of the original layouts on 2026-10-21: on the connected iPhone 17 (iO
 | Fill the ayah of the day's text after editing its refs | `python3 scripts/build_daily_ayahs.py` |
 | Edit the iOS and macOS icon (re-import any changed layer from `assets/branding/layers/`) | `open -a "Icon Composer" assets/branding/AppIcon.icon` |
 | Release build | `flutter build <apk\|appbundle\|ipa\|macos\|windows\|linux>` |
-| Check landing-page output and interactions | `python3 -m unittest discover -s test -p 'site_test.py' && node --test test/site_experience_test.mjs` |
+| Check landing-page output and interactions | `python3 -m unittest discover -s test -p 'site_test.py' && node --test test/site_experience_test.mjs test/site_worker_test.mjs` |
 | Build the landing page into `site/dist/` | `python3 site/build.py` |
 | Preview the landing page (with the Worker, so the phone mock is live) | `python3 site/build.py && npx wrangler dev` |
 
@@ -389,7 +389,7 @@ The landing page at [bedug.ardeman.com](https://bedug.ardeman.com) is a static s
 | `site/static/screens/` | The app screens on the home page, WebP copies of the iPhone renders in Indonesian and English; refresh them with `site/screens.sh` after `flutter test tool/screenshots --update-goldens` |
 | `site/dist/` | Build output, not committed |
 | `wrangler.jsonc` | Cloudflare Worker config that serves `site/dist/` |
-| `site/worker.js` | The Worker script: serves `site/dist/` and adds the visitor's location to the home pages |
+| `site/worker.js` | The Worker script: serves `site/dist/`, adds the visitor's location to the home pages and counts home-page visits by source |
 
 The build copies the font and `icon.svg` from `assets/`, so the brand has one source, and builds the changelog page from `assets/changelog/changelog.json`. When a store listing or the Trakteer and Ko-fi pages go live, put the URL in `site/config.json`. When the app gains or changes a feature that the home page, the privacy policy or the terms of use describe, update every `site/i18n/*.json`.
 
@@ -405,6 +405,8 @@ Edit page markup in `site/templates/`; `${name}` inserts a value supplied by `si
 4. Under **Settings → Domains & Routes**, add the custom domain `bedug.ardeman.com`. This needs `ardeman.com` as a zone in the same Cloudflare account.
 
 Every push to `master` deploys, and other branches get preview URLs.
+
+**Visits by source:** the Worker counts each home-page visit in the Workers Analytics Engine dataset `bedug_site_visits` (binding `VISITS` in `wrangler.jsonc`, created on the first write) with its host, path, country, the link's `utm_medium` and `utm_campaign`, and its source: the link's `utm_source`, or else a name for a known referrer (Instagram, Threads, Facebook, X), the referring host, `internal` or `direct`. No IP address or identifier is stored, as the privacy policy says. Tag links you post with a source, as Catat Saja does, e.g. `https://bedug.ardeman.com/?utm_source=instagram&utm_medium=social&utm_campaign=bio` in the Instagram bio. To read the counts, create an API token with **Account Analytics: Read** and run `CLOUDFLARE_ACCOUNT_ID=… CLOUDFLARE_API_TOKEN=… python3 scripts/site_visits.py` (`--days 7`, `--by day|country|path|source|medium|campaign`, `--source instagram`); Analytics Engine keeps 90 days.
 
 ## iOS release (TestFlight)
 

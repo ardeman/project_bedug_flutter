@@ -203,7 +203,7 @@
     "meta_title": "Kebijakan privasi · Bedug",
     "meta_description": "Cara Bedug menangani datamu: jadwal salat dihitung di perangkatmu, tidak ada akun, dan pengaturanmu tetap bersamamu.",
     "title": "Kebijakan privasi",
-    "updated": "Berlaku sejak 1 November 2026",
+    "updated": "Berlaku sejak 6 November 2026",
     "intro": "Bedug adalah aplikasi jadwal salat yang diterbitkan oleh Ardeman. Kebijakan ini menjelaskan data apa yang digunakan aplikasi dan situs web ini, serta alasannya. Bedug tidak memiliki akun maupun server sendiri, sehingga datamu tetap berada di perangkatmu.",
     "summary_title": "Singkatnya",
     "summary": [
@@ -211,7 +211,7 @@
       "Lokasimu digunakan di perangkatmu untuk menghitung jadwal salat dan arah kiblat.",
       "Pengaturan, penanda, kemajuan bacaan dan catatan puasamu hanya disimpan di perangkatmu.",
       "Bedug tidak menampilkan iklan dan tidak memakai SDK iklan atau analitik.",
-      "Situs web ini tidak memakai cookie maupun analitik."
+      "Situs web ini tidak memakai cookie maupun pelacakan; situs ini hanya menghitung kunjungan ke beranda menurut asalnya."
     ],
     "sections": [
       {
@@ -234,7 +234,7 @@
       {
         "heading": "Situs web ini",
         "body": [
-          "bedug.ardeman.com tidak memakai cookie, analitik maupun skrip pihak ketiga, dan menyajikan font-nya sendiri. Situs ini di-hosting di Cloudflare, dan Cloudflare memproses alamat IP serta detail permintaanmu untuk mengirim dan melindungi situs; lihat <a href=\"{cloudflare_privacy}\">kebijakan privasi Cloudflare</a>.",
+          "bedug.ardeman.com tidak memakai cookie, pelacakan maupun skrip pihak ketiga, dan menyajikan font-nya sendiri. Situs ini menghitung kunjungan ke beranda menurut halaman, asal kunjungan (penanda sumber pada tautan, seperti Instagram, atau situs perujuk), dan negara, tanpa alamat IP atau penanda apa pun, sehingga tidak ada kunjungan yang bisa dikaitkan denganmu atau dengan kunjungan lain. Situs ini di-hosting di Cloudflare, dan Cloudflare memproses alamat IP serta detail permintaanmu untuk mengirim dan melindungi situs; lihat <a href=\"{cloudflare_privacy}\">kebijakan privasi Cloudflare</a>.",
           "Untuk menampilkan pratinjau jadwal salat di beranda, situs ini memakai perkiraan lokasi (kota, koordinat, dan zona waktu) yang diperkirakan Cloudflare dari alamat IP Anda. Browser Anda menghitung jadwal dari lokasi itu, dan lokasi tersebut tidak disimpan atau dikirim ke mana pun."
         ]
       },

@@ -203,7 +203,7 @@
     "meta_title": "Dasar privasi · Bedug",
     "meta_description": "Cara Bedug mengendalikan data anda: waktu solat dikira pada peranti anda, tiada akaun, dan tetapan anda kekal bersama anda.",
     "title": "Dasar privasi",
-    "updated": "Berkuat kuasa 1 November 2026",
+    "updated": "Berkuat kuasa 6 November 2026",
     "intro": "Bedug ialah aplikasi waktu solat yang diterbitkan oleh Ardeman. Dasar ini menerangkan data yang digunakan oleh aplikasi dan laman web ini, serta sebabnya. Bedug tidak mempunyai akaun atau pelayan sendiri, jadi data anda kekal pada peranti anda.",
     "summary_title": "Ringkasnya",
     "summary": [
@@ -211,7 +211,7 @@
       "Lokasi anda digunakan pada peranti anda untuk mengira waktu solat dan arah kiblat.",
       "Tetapan, penanda, kemajuan bacaan dan catatan puasa anda disimpan pada peranti anda sahaja.",
       "Bedug tidak memaparkan iklan dan tidak menggunakan SDK iklan atau analitik.",
-      "Laman web ini tidak menggunakan kuki atau analitik."
+      "Laman web ini tidak menggunakan kuki atau penjejakan; ia hanya mengira lawatan ke halaman utama mengikut asalnya."
     ],
     "sections": [
       {
@@ -234,7 +234,7 @@
       {
         "heading": "Laman web ini",
         "body": [
-          "bedug.ardeman.com tidak menggunakan kuki, analitik atau skrip pihak ketiga, dan menyajikan fonnya sendiri. Laman ini dihoskan di Cloudflare, dan Cloudflare memproses alamat IP serta butiran permintaan anda untuk menghantar dan melindungi laman; lihat <a href=\"{cloudflare_privacy}\">dasar privasi Cloudflare</a>.",
+          "bedug.ardeman.com tidak menggunakan kuki, penjejakan atau skrip pihak ketiga, dan menyajikan fonnya sendiri. Laman ini mengira lawatan ke halaman utama mengikut halaman, asal lawatan (tanda sumber pada pautan, seperti Instagram, atau laman perujuk) dan negara, tanpa alamat IP atau sebarang pengecam, jadi tiada lawatan boleh dikaitkan dengan anda atau dengan lawatan lain. Laman ini dihoskan di Cloudflare, dan Cloudflare memproses alamat IP serta butiran permintaan anda untuk menghantar dan melindungi laman; lihat <a href=\"{cloudflare_privacy}\">dasar privasi Cloudflare</a>.",
           "Untuk memaparkan pratonton waktu solat di halaman utama, laman ini menggunakan anggaran lokasi (bandar, koordinat dan zon waktu) yang dianggarkan oleh Cloudflare daripada alamat IP anda. Pelayar anda mengira waktu solat daripadanya, dan lokasi itu tidak disimpan atau dihantar ke mana-mana."
         ]
       },

@@ -13,6 +13,9 @@
   // Branch builds deploy with `npx wrangler preview`, which needs this block
   // even when empty; previews then inherit the settings above.
   "previews": {},
+  // Home-page visits counted by source (Instagram, direct, ...) and country,
+  // with no IP or identifier; scripts/site_visits.py queries them.
+  "analytics_engine_datasets": [{ "binding": "VISITS", "dataset": "bedug_site_visits" }],
   "assets": {
     "directory": "./site/dist",
     "binding": "ASSETS",

@@ -203,7 +203,7 @@
     "meta_title": "Privacy policy · Bedug",
     "meta_description": "How Bedug handles your data: prayer times are calculated on your device, there is no account, and your settings stay with you.",
     "title": "Privacy policy",
-    "updated": "Effective 1 November 2026",
+    "updated": "Effective 6 November 2026",
     "intro": "Bedug is a prayer-times app published by Ardeman. This policy explains what data the app and this website use, and why. Bedug has no account and no server of its own, so your data stays on your device.",
     "summary_title": "In short",
     "summary": [
@@ -211,7 +211,7 @@
       "Your location is used on your device to calculate prayer times and the Qibla.",
       "Your settings, bookmarks, reading progress and fasting log are stored only on your device.",
       "Bedug shows no ads and has no ad or analytics SDK.",
-      "This website uses no cookies and no analytics."
+      "This website uses no cookies and no tracking; it only counts home-page visits by where they came from."
     ],
     "sections": [
       {
@@ -234,7 +234,7 @@
       {
         "heading": "This website",
         "body": [
-          "bedug.ardeman.com uses no cookies, no analytics and no third-party scripts, and serves its fonts itself. It is hosted on Cloudflare, and Cloudflare processes your IP address and request details to deliver and protect the site; see the <a href=\"{cloudflare_privacy}\">Cloudflare privacy policy</a>.",
+          "bedug.ardeman.com uses no cookies, no tracking and no third-party scripts, and serves its fonts itself. It counts visits to the home page by page, by where they came from (a link's source tag, such as Instagram, or the referring site) and by country, without your IP address or any identifier, so no visit can be linked to you or to another visit. It is hosted on Cloudflare, and Cloudflare processes your IP address and request details to deliver and protect the site; see the <a href=\"{cloudflare_privacy}\">Cloudflare privacy policy</a>.",
           "To preview prayer times on the home page, the site uses the approximate location (city, coordinates and time zone) that Cloudflare estimates from your IP address. Your browser calculates the times from it, and it is not stored or sent anywhere else."
         ]
       },
