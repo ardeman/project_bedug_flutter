@@ -484,4 +484,10 @@ Codex, Cursor, GitHub Copilot, Windsurf, Jules, Aider, Zed and other agents that
 
 ## License
 
-MIT License.
+Bedug's own code is under the [MIT License](LICENSE). Bundled third-party files keep their own licenses:
+
+- Quran text (`assets/content/quran/text.json`): Tanzil, CC BY 3.0, verbatim with its notice in the file.
+- Quran translations (`assets/content/quran/translation_*.json`): from Tanzil, for non-commercial use only; they are not covered by the MIT License (see [Revenue: infaq](#revenue-infaq)).
+- Fonts: Plus Jakarta Sans and Amiri Quran, SIL Open Font License 1.1 (`OFL.txt` beside each font in `assets/fonts/`).
+- `vendor/liquid_glass_easy/`: MIT, see its `LICENSE`.
+- Website: the `adhan` JS port (`site/static/vendor/adhan.LICENSE`) and Material icon outlines (`site/static/vendor/material-icons/LICENSE`).
