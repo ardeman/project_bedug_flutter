@@ -11,7 +11,7 @@ WAKTU SOLAT
 
 PERINGATAN
 • Pemberitahuan untuk setiap waktu, dengan peringatan awal 5 hingga 30 minit sebelumnya
-• Bunyi beduk, siren, bunyi sistem atau (di Android) mana-mana nada pada telefon anda
+• Bunyi beduk, siren, atau bunyi sistem
 • Peringatan sahur, puasa sunat (Isnin dan Khamis, Ayyamul Bidh, Arafah, Asyura) dan hari kebesaran Islam, semuanya pilihan
 • Widget skrin utama: solat seterusnya, ayat hari ini dan kiraan detik Ramadan
 

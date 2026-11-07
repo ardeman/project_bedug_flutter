@@ -12,8 +12,10 @@ The version defaults to the newest release. A change's optional "platforms"
 list (android, ios, macos, windows, linux, web) keeps it out of stores it
 doesn't reach; without it, the change applies to every app platform. Play
 uses a change's optional short "store" text, since it allows only 500
-characters per language; the App Store gets the full text. A language over
-its store's limit fails the run rather than dropping changes.
+characters per language; the App Store gets the full text, or a change's
+optional "apple" text when the full text names other platforms or download
+sources, which Apple rejects (Guideline 2.3.10). A language over its store's
+limit fails the run rather than dropping changes.
 
 --check writes nothing and fails if a file is missing or out of date.
 """
@@ -68,7 +70,7 @@ def notes(r):
         body = bullets(play_changes, lang, "store", PLAY_LIMIT, "Google Play")
         tag = PLAY_TAGS[lang]
         play.append(f"<{tag}>\n{body}\n</{tag}>")
-        apple = bullets(apple_changes, lang, "text", APP_STORE_LIMIT, "App Store")
+        apple = bullets(apple_changes, lang, "apple", APP_STORE_LIMIT, "App Store")
         files[f"store/app_store/{locale}/release_notes.txt"] = apple + "\n"
     files[f"store/google_play/release_notes/{r['version']}.txt"] = "\n".join(play) + "\n"
     return files

@@ -11,7 +11,7 @@ JADWAL SALAT
 
 PENGINGAT
 • Notifikasi untuk tiap waktu, dengan pengingat 5 sampai 30 menit sebelumnya
-• Suara bedug, sirene, suara sistem, atau nada dari ponsel Anda (Android)
+• Suara bedug, sirene, atau suara sistem
 • Pengingat sahur, puasa sunah (Senin–Kamis, Ayyamul Bidh, Arafah, Asyura), dan hari besar Islam, semuanya bisa dimatikan
 • Widget layar utama: salat berikutnya, ayat hari ini, dan hitung mundur Ramadan
 

@@ -58,10 +58,12 @@ void main() {
           expect(listed, isNotEmpty, reason: release['version'] as String);
           expect(platforms.containsAll(listed), isTrue, reason: '$listed');
         }
-        final store = change['store'] as Map?;
-        if (store != null) {
-          expect(store.keys.toSet(), languages, reason: '$store');
-          expect(store.values.every((t) => '$t'.trim().isNotEmpty), isTrue);
+        for (final key in ['store', 'apple']) {
+          final text = change[key] as Map?;
+          if (text != null) {
+            expect(text.keys.toSet(), languages, reason: '$text');
+            expect(text.values.every((t) => '$t'.trim().isNotEmpty), isTrue);
+          }
         }
       }
     }

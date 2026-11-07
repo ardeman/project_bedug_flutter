@@ -11,7 +11,7 @@ PRAYER TIMES
 
 REMINDERS
 • A notification for each prayer, with an early reminder 5 to 30 minutes before
-• A bedug drum, a siren, the system sound, or (on Android) any tone on your phone
+• A bedug drum, a siren, or the system sound
 • Sahur, sunnah fasts (Monday and Thursday, Ayyamul Bidh, Arafah, Ashura) and Islamic holidays, each optional
 • Home screen widgets: the next prayer, the ayah of the day and a Ramadan countdown
 

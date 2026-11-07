@@ -19,6 +19,12 @@
             "ms": "Bedug menyemak kemas kini semasa dibuka (boleh dimatikan dalam Tetapan), dan Tetapan mempunyai butang Semak kemas kini. Versi dari GitHub memuat turun, mengesahkan dan memasang kemas kini selepas anda bersetuju; versi kedai dikemas kini melalui Google Play atau App Store.",
             "ar": "يتحقق Bedug من التحديثات عند فتحه (يمكنك إيقاف ذلك من الإعدادات)، وفي الإعدادات زر للتحقق من التحديثات. تنزّل نسخ GitHub التحديث وتتحقق منه وتثبّته بعد موافقتك، بينما تتحدّث نسخ المتجر عبر Google Play أو App Store."
           },
+          "apple": {
+            "en": "Bedug checks for updates when it opens (you can turn this off in Settings), and Settings has a Check for updates button that opens the App Store when a new version is out.",
+            "id": "Bedug memeriksa pembaruan saat dibuka (bisa dimatikan di Pengaturan), dan Pengaturan punya tombol Periksa pembaruan yang membuka App Store saat ada versi baru.",
+            "ms": "Bedug menyemak kemas kini semasa dibuka (boleh dimatikan dalam Tetapan), dan Tetapan mempunyai butang Semak kemas kini yang membuka App Store apabila ada versi baharu.",
+            "ar": "يتحقق Bedug من التحديثات عند فتحه (يمكنك إيقاف ذلك من الإعدادات)، وفي الإعدادات زر للتحقق من التحديثات يفتح App Store عند صدور إصدار جديد."
+          },
           "store": {
             "en": "Checks for updates when Bedug opens.",
             "id": "Memeriksa pembaruan saat dibuka.",
