@@ -3,7 +3,7 @@
 Thank you for your interest in contributing!
 
 - [README.md](./README.md) covers setup, commands, the Checks to run and the commit message format.
-- [AGENTS.md](./AGENTS.md) holds the code rules (platform design, liquid glass, localization, guardrails). They apply to humans too.
+- [AGENTS.md](./AGENTS.md) holds the code rules (platform design, localization, guardrails), with details in [docs/](./docs/) (Apple UI, releasing, website, decisions). They apply to humans too.
 - Check existing issues before opening a new one, and open an issue first for large changes.
 
 ---

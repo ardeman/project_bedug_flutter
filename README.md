@@ -295,7 +295,7 @@ The current look needs a redesign on every platform. Screens read the accent fro
 1. **Re-theme:** "refined emerald": a deep emerald on warm sand (light) or green-black (dark), gold as the highlight, Plus Jakarta Sans, flat cards with large radii and pill-shaped controls.
    1. **Tokens and theme (done):** palette in `AppColors`, `AppSpacing` / `AppRadii` and the component themes in `lib/core/theme/`.
    2. **Screen migration (done; device visual checks pending):** move each screen's inline styles (sizes, colors, radii, paddings) onto the text theme and tokens, one screen per commit: prayer times (done), liquid glass (done; device visual checks pending), method picker (done; device visual checks pending), calendar (done; device visual checks pending), settings (done; device visual checks pending), worship (done; device visual checks pending). Check each on Apple, Android, Windows and Linux in light and dark.
-2. **Liquid glass package (done; check on iOS and macOS devices):** replace our `BackdropFilter` glass (nav bar, cards, sheets) on iOS and macOS with [`liquid_glass_easy`](https://pub.dev/packages/liquid_glass_easy), a shader lens with real refraction. Keep the `IgnorePointer`, double-open and safe-area rules from `AGENTS.md`.
+2. **Liquid glass package (done; check on iOS and macOS devices):** replace our `BackdropFilter` glass (nav bar, cards, sheets) on iOS and macOS with [`liquid_glass_easy`](https://pub.dev/packages/liquid_glass_easy), a shader lens with real refraction. Keep the `IgnorePointer`, double-open and safe-area rules from `docs/apple-ui.md`.
 3. **Apple app icon (done):** a layered Icon Composer icon (`assets/branding/AppIcon.icon`) gives iOS and macOS a Liquid Glass icon with Default, Dark, Clear and Tinted modes; Android and Windows keep the flat icon.
 4. **Home screen widget (implemented; iPhone visual checks passed, see [validation status](#home-screen-widgets)):** a native WidgetKit extension with next prayer and countdown, shared Flutter data, and system rendering for full-color, tinted and clear modes.
 
@@ -477,9 +477,13 @@ Each topic has one home. Update that file instead of copying its content somewhe
 | File | Audience | Owns |
 | --- | --- | --- |
 | `README.md` | Everyone | Overview, setup, commands, layout |
-| `AGENTS.md` | AI coding agents (and humans who want the rules) | Conventions, platform UI rules, guardrails, definition of done |
+| `AGENTS.md` | AI coding agents (and humans who want the rules) | Conventions, platform UI overview, guardrails, definition of done |
 | `CLAUDE.md`, `GEMINI.md` | Claude Code, Gemini CLI | Only an import of `AGENTS.md` |
 | `.github/copilot-instructions.md` | GitHub Copilot (chat, code review) | Only a pointer to `AGENTS.md`; `copilot-setup-steps.yml` installs Flutter for its coding agent |
+| `docs/apple-ui.md` | AI coding agents and contributors | Liquid Glass, macOS window and nav bar, and sheet rules for iOS and macOS |
+| `docs/releasing.md` | AI coding agents and contributors | Release notes and store notes, release builds, iPhone delivery, app icons, version and build number |
+| `docs/website.md` | AI coding agents and contributors | Landing page rules and the external projects file |
+| `docs/decisions.md` | Everyone | Architectural decisions, one line each |
 | `CONTRIBUTING.md` | Human contributors | Branches, bug reports, feature requests, pull requests |
 | `site/i18n/*.json` | Website visitors | Landing page copy, the privacy policy and the terms of use |
 | `assets/changelog/changelog.json` | App users and website visitors | What changed in each release |

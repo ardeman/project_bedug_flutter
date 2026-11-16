@@ -112,7 +112,7 @@ class GlassNavBar extends StatelessWidget {
     required this.items,
   });
 
-  /// Bar height without the system inset (see AGENTS.md).
+  /// Bar height without the system inset (see docs/apple-ui.md).
   static const height = 64.0;
 
   /// Bar height in a short window, such as a phone in landscape, where a
