@@ -1,3 +1,4 @@
+import 'package:cupertino_ui/cupertino_ui.dart' show CupertinoTextField;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:material_ui/material_ui.dart';
@@ -11,11 +12,12 @@ import '../../core/providers/locale_provider.dart';
 import '../../core/theme/app_tokens.dart';
 import '../../generated/l10n/app_localizations.dart';
 import '../settings/settings_section.dart';
+import 'dahlunas_config.dart';
 import 'infaq_provider.dart';
 
 /// The infaq page: store tiers and restore on Play and App Store builds,
-/// Trakteer and Ko-fi links elsewhere. Opened from Settings, never as a
-/// pop-up.
+/// Trakteer, Ko-fi and Dahlunas codes on direct builds. Opened from Settings,
+/// never as a pop-up.
 class InfaqScreen extends ConsumerStatefulWidget {
   const InfaqScreen({super.key});
 
@@ -66,13 +68,18 @@ class _InfaqScreenState extends ConsumerState<InfaqScreen> {
                   title: Text(
                     infaq.thanked ? l10n.infaqThanks : l10n.infaqThanksSubtitle,
                   ),
+                  subtitle: infaq.movesLeft != null
+                      ? Text(l10n.infaqCodeMovesLeft(infaq.movesLeft!))
+                      : null,
                 ),
               ],
             ),
+          if (infaq.codeMovedAway)
+            note(l10n.infaqCodeMoved, color: Theme.of(ctx).colorScheme.error),
           if (channel.usesStoreBilling)
             ..._storeOptions(ctx, l10n, infaq, note)
           else
-            ..._linkOptions(ctx, l10n),
+            ..._linkOptions(ctx, l10n, infaq, note),
         ],
       ),
     );
@@ -144,8 +151,14 @@ class _InfaqScreenState extends ConsumerState<InfaqScreen> {
     ];
   }
 
-  List<Widget> _linkOptions(BuildContext ctx, AppLocalizations l10n) {
+  List<Widget> _linkOptions(
+    BuildContext ctx,
+    AppLocalizations l10n,
+    InfaqState infaq,
+    Widget Function(String, {Color? color}) note,
+  ) {
     final accent = AppColors.accentOf(ctx);
+    final error = Theme.of(ctx).colorScheme.error;
     PlatformListTile link(String name, String methods, Uri url) =>
         PlatformListTile(
           leading: Icon(Icons.volunteer_activism_outlined, color: accent),
@@ -161,14 +174,88 @@ class _InfaqScreenState extends ConsumerState<InfaqScreen> {
     );
     final kofi = link(l10n.infaqKofi, l10n.infaqKofiMethods, InfaqLinks.kofi);
     // Trakteer takes Indonesian payments (QRIS, e-wallets); Ko-fi suits
-    // everyone else.
+    // everyone else. Dahlunas is sandbox-first until Bedug is on production.
     final indonesian = ref.watch(localeProvider).languageCode == 'id';
-    return [
-      SettingsSection(
-        title: l10n.infaq,
-        children: indonesian ? [trakteer, kofi] : [kofi, trakteer],
-      ),
+    final rows = <Widget>[
+      if (DahlunasConfig.codesEnabled)
+        link(
+          l10n.infaqDahlunas,
+          l10n.infaqDahlunasMethods,
+          InfaqLinks.dahlunas,
+        ),
+      ...indonesian ? [trakteer, kofi] : [kofi, trakteer],
     ];
+    return [
+      SettingsSection(title: l10n.infaq, children: rows),
+      if (DahlunasConfig.codesEnabled) ...[
+        SettingsSection(
+          children: [
+            PlatformListTile(
+              leading: Icon(Icons.vpn_key_outlined, color: accent),
+              title: Text(l10n.infaqHaveCode),
+              enabled: !infaq.redeeming,
+              onTap: () => _askCode(ctx, l10n),
+            ),
+          ],
+        ),
+        if (infaq.redeeming) note(l10n.infaqCodePending),
+        if (infaq.error case final err?)
+          note(_codeError(l10n, err), color: error),
+        note(l10n.infaqCodePrivacy),
+      ],
+    ];
+  }
+
+  Future<void> _askCode(BuildContext ctx, AppLocalizations l10n) async {
+    final controller = TextEditingController();
+    final submitted = await showDialog<String>(
+      context: ctx,
+      builder: (dialogCtx) {
+        final field = PlatformCapabilities.isApple
+            ? CupertinoTextField(
+                controller: controller,
+                placeholder: l10n.infaqCodeHint,
+                autocorrect: false,
+                enableSuggestions: false,
+                keyboardType: TextInputType.visiblePassword,
+              )
+            : TextField(
+                controller: controller,
+                decoration: InputDecoration(hintText: l10n.infaqCodeHint),
+                autocorrect: false,
+                enableSuggestions: false,
+                keyboardType: TextInputType.visiblePassword,
+              );
+        void submit() => Navigator.of(dialogCtx).pop(controller.text.trim());
+        if (PlatformCapabilities.isApple) {
+          return AlertDialog.adaptive(
+            title: Text(l10n.infaqHaveCode),
+            content: field,
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(dialogCtx).pop(),
+                child: Text(l10n.cancel),
+              ),
+              TextButton(onPressed: submit, child: Text(l10n.infaqCodeSubmit)),
+            ],
+          );
+        }
+        return AlertDialog(
+          title: Text(l10n.infaqHaveCode),
+          content: field,
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(dialogCtx).pop(),
+              child: Text(l10n.cancel),
+            ),
+            TextButton(onPressed: submit, child: Text(l10n.infaqCodeSubmit)),
+          ],
+        );
+      },
+    );
+    controller.dispose();
+    if (submitted == null || submitted.isEmpty || !ctx.mounted) return;
+    await ref.read(infaqProvider.notifier).redeemCode(submitted);
   }
 }
 
@@ -179,3 +266,13 @@ String _productName(AppLocalizations l10n, ProductDetails product) =>
       InfaqProducts.large => l10n.infaqLarge,
       _ => product.title,
     };
+
+String _codeError(AppLocalizations l10n, InfaqError error) => switch (error) {
+  InfaqError.codeInvalid => l10n.infaqCodeInvalid,
+  InfaqError.codeRejected => l10n.infaqCodeRejected,
+  InfaqError.codeMoveLimit => l10n.infaqCodeMoveLimit(
+    DahlunasConfig.supportEmail,
+  ),
+  InfaqError.codeBusy => l10n.infaqCodeBusy,
+  _ => l10n.infaqCodeRejected,
+};

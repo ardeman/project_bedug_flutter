@@ -480,6 +480,29 @@
   "infaqTrakteerMethods": "QRIS, dompet digital, dan transfer bank",
   "infaqKofi": "Ko-fi",
   "infaqKofiMethods": "PayPal dan kartu",
+  "infaqDahlunas": "Dahlunas",
+  "infaqDahlunasMethods": "QRIS lewat Midtrans",
+  "infaqHaveCode": "Punya kode?",
+  "infaqCodeHint": "Tempel kode DL1. Anda",
+  "infaqCodeSubmit": "Aktifkan",
+  "infaqCodePending": "Mengaktifkan kode…",
+  "infaqCodeInvalid": "Kode itu tidak valid untuk Bedug.",
+  "infaqCodeRejected": "Kode itu tidak bisa diaktifkan. Periksa dan coba lagi.",
+  "infaqCodeBusy": "Toko sedang sibuk. Simpan kode Anda dan coba lagi nanti.",
+  "infaqCodeMoveLimit": "Kode ini terlalu sering dipindah. Hubungi {email}.",
+  "@infaqCodeMoveLimit": {
+    "placeholders": {
+      "email": {"type": "String"}
+    }
+  },
+  "infaqCodeMoved": "Kode ini aktif di perangkat lain. Masukkan lagi di sini untuk memindahkannya kembali.",
+  "infaqCodeMovesLeft": "{count, plural, =0{Tidak ada sisa pindah perangkat} one{1 sisa pindah perangkat} other{{count} sisa pindah perangkat}}",
+  "@infaqCodeMovesLeft": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "infaqCodePrivacy": "Memasukkan kode mengirimkannya bersama ID instalasi acak ke Dahlunas, yang menyimpan hash ID itu agar kode tetap di satu perangkat pada satu waktu.",
   "widgetShowCurrent": "Tampilkan salat saat ini",
   "widgetShowCurrentDescription": "Utamakan salat saat ini di iPhone dan iPad; hitung mundur tetap menuju salat berikutnya. Pengaturan masing-masing widget dapat menggantikan pilihan ini.",
   "widgetNow": "Sekarang",

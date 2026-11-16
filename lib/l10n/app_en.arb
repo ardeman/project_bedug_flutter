@@ -284,6 +284,29 @@
   "infaqTrakteerMethods": "QRIS, e-wallets and bank transfer",
   "infaqKofi": "Ko-fi",
   "infaqKofiMethods": "PayPal and cards",
+  "infaqDahlunas": "Dahlunas",
+  "infaqDahlunasMethods": "QRIS via Midtrans",
+  "infaqHaveCode": "Have a code?",
+  "infaqCodeHint": "Paste your DL1. code",
+  "infaqCodeSubmit": "Activate",
+  "infaqCodePending": "Activating your code…",
+  "infaqCodeInvalid": "That code isn't valid for Bedug.",
+  "infaqCodeRejected": "That code couldn't be activated. Check it and try again.",
+  "infaqCodeBusy": "The shop is busy. Keep your code and try again later.",
+  "infaqCodeMoveLimit": "This code has moved too often. Contact {email}.",
+  "@infaqCodeMoveLimit": {
+    "placeholders": {
+      "email": {"type": "String"}
+    }
+  },
+  "infaqCodeMoved": "This code is active on another device. Enter it again here to move it back.",
+  "infaqCodeMovesLeft": "{count, plural, =0{No device moves left} one{1 device move left} other{{count} device moves left}}",
+  "@infaqCodeMovesLeft": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "infaqCodePrivacy": "Entering a code sends it and a random install ID to Dahlunas, which keeps a hash of the ID so the code stays on one device at a time.",
   "widgetShowCurrent": "Show current prayer",
   "widgetShowCurrentDescription": "Headline the current prayer on iPhone and iPad; the countdown still leads to the next prayer. Individual widget settings can override this.",
   "widgetNow": "Now",

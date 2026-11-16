@@ -228,7 +228,8 @@
         "heading": "Infaq",
         "body": [
           "In the Android and Apple apps, an infaq is an in-app purchase handled by Google Play or the App Store. We don't receive your payment details. The app only learns whether the purchase succeeded and stores that on your device to thank you.",
-          "An infaq through <a href=\"{trakteer}\">Trakteer</a> or <a href=\"{kofi}\">Ko-fi</a> is handled by that service under its own privacy policy. It shares with us only what you choose to give, such as a name and a message."
+          "An infaq through <a href=\"{trakteer}\">Trakteer</a> or <a href=\"{kofi}\">Ko-fi</a> is handled by that service under its own privacy policy. It shares with us only what you choose to give, such as a name and a message.",
+          "On Windows and Linux, you can also buy an infaq code at <a href=\"{dahlunas}\">Dahlunas</a>. Entering the code sends it and a random install ID to Dahlunas, which keeps a hash of the ID so the code stays on one device at a time. See <a href=\"{dahlunas_privacy}\">Dahlunas's privacy policy</a>."
         ]
       },
       {

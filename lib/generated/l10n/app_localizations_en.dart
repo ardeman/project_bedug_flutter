@@ -871,6 +871,60 @@ class AppLocalizationsEn extends AppLocalizations {
   String get infaqKofiMethods => 'PayPal and cards';
 
   @override
+  String get infaqDahlunas => 'Dahlunas';
+
+  @override
+  String get infaqDahlunasMethods => 'QRIS via Midtrans';
+
+  @override
+  String get infaqHaveCode => 'Have a code?';
+
+  @override
+  String get infaqCodeHint => 'Paste your DL1. code';
+
+  @override
+  String get infaqCodeSubmit => 'Activate';
+
+  @override
+  String get infaqCodePending => 'Activating your code…';
+
+  @override
+  String get infaqCodeInvalid => 'That code isn\'t valid for Bedug.';
+
+  @override
+  String get infaqCodeRejected =>
+      'That code couldn\'t be activated. Check it and try again.';
+
+  @override
+  String get infaqCodeBusy =>
+      'The shop is busy. Keep your code and try again later.';
+
+  @override
+  String infaqCodeMoveLimit(String email) {
+    return 'This code has moved too often. Contact $email.';
+  }
+
+  @override
+  String get infaqCodeMoved =>
+      'This code is active on another device. Enter it again here to move it back.';
+
+  @override
+  String infaqCodeMovesLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count device moves left',
+      one: '1 device move left',
+      zero: 'No device moves left',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get infaqCodePrivacy =>
+      'Entering a code sends it and a random install ID to Dahlunas, which keeps a hash of the ID so the code stays on one device at a time.';
+
+  @override
   String get widgetShowCurrent => 'Show current prayer';
 
   @override

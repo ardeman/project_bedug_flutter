@@ -860,6 +860,60 @@ class AppLocalizationsMs extends AppLocalizations {
   String get infaqKofiMethods => 'PayPal dan kad';
 
   @override
+  String get infaqDahlunas => 'Dahlunas';
+
+  @override
+  String get infaqDahlunasMethods => 'QRIS melalui Midtrans';
+
+  @override
+  String get infaqHaveCode => 'Ada kod?';
+
+  @override
+  String get infaqCodeHint => 'Tampal kod DL1. anda';
+
+  @override
+  String get infaqCodeSubmit => 'Aktifkan';
+
+  @override
+  String get infaqCodePending => 'Mengaktifkan kod…';
+
+  @override
+  String get infaqCodeInvalid => 'Kod itu tidak sah untuk Bedug.';
+
+  @override
+  String get infaqCodeRejected =>
+      'Kod itu tidak dapat diaktifkan. Semak dan cuba lagi.';
+
+  @override
+  String get infaqCodeBusy =>
+      'Kedai sedang sibuk. Simpan kod anda dan cuba lagi kemudian.';
+
+  @override
+  String infaqCodeMoveLimit(String email) {
+    return 'Kod ini terlalu kerap dipindahkan. Hubungi $email.';
+  }
+
+  @override
+  String get infaqCodeMoved =>
+      'Kod ini aktif pada peranti lain. Masukkan semula di sini untuk memindahkannya kembali.';
+
+  @override
+  String infaqCodeMovesLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count baki pindahan peranti',
+      one: '1 baki pindahan peranti',
+      zero: 'Tiada baki pindahan peranti',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get infaqCodePrivacy =>
+      'Memasukkan kod menghantarnya bersama ID pemasangan rawak kepada Dahlunas, yang menyimpan cincangan ID itu supaya kod kekal pada satu peranti pada satu masa.';
+
+  @override
   String get widgetShowCurrent => 'Tunjukkan solat semasa';
 
   @override

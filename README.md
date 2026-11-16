@@ -347,16 +347,16 @@ The infaq method depends on where the build is distributed, not only on the plat
 3. **UI (done; device visual checks pending):** an "Infaq" row in Settings → About opens a page (`InfaqScreen`) with the tiers and their store prices, a restore row and a thank-you state after payment; on direct builds, Trakteer and Ko-fi rows. It is a pushed page like the other Settings pages rather than a sheet, so it uses the same grouped rows on every platform and needs no double-open guard. No nag pop-ups.
 4. **l10n keys (done)** (`infaq*`) in every ARB file, and tests (`test/infaq_test.dart`) for the provider with a fake `InAppPurchase` and for the page.
 
-**Phase 2: Infaq through Dahlunas on direct builds**
+**Phase 2: Infaq through Dahlunas on direct builds** (app side done; production key pending)
 
-[Dahlunas](https://github.com/ardeman/project-dahlunas-go), Ardeman's own shop, sells Bedug infaq codes (project 2) at the same Rp 5,000, 19,000 and 49,000, paid by QRIS through Midtrans. It is in Dahlunas's sandbox since 2026-10-26; Dahlunas's production shop opens after Midtrans approves the account. Only `direct` (and later `fdroid`) builds use it: store builds keep in-app purchase, as store rules require. A code is active on one device at a time and moves to another up to 3 times. The contract is Dahlunas's `docs/activation.md`, with the code format in `docs/code-format.md`.
+[Dahlunas](https://github.com/ardeman/project-dahlunas-go), Ardeman's own shop, sells Bedug infaq codes (project 2) at the same Rp 5,000, 19,000 and 49,000, paid through Midtrans. Sandbox since 2026-10-26; Midtrans production is open, but Bedug is not yet in the production catalog. Only `direct` (and later `fdroid`) builds use codes: store builds keep in-app purchase. A code is active on one device at a time and moves up to 3 times ([`docs/activation.md`](https://github.com/ardeman/project-dahlunas-go/blob/main/docs/activation.md), [`docs/code-format.md`](https://github.com/ardeman/project-dahlunas-go/blob/main/docs/code-format.md)).
 
-1. **Install ID:** on first launch, 16 random bytes in `shared_preferences`, as 32 lowercase hex characters; never a hardware or advertising ID.
-2. **Code entry:** a "Have a code?" row on the infaq page on direct builds. It posts the code, the install ID and `"move": true` to `https://dahlunas.ardeman.com/activations`, verifies the returned `DA1.` activation with Dahlunas's public key for Bedug (Ed25519, `cryptography` package or a small pure-Dart verifier), stores code and activation, and sets `given`. Show the moves left, and the support email on `move_limit`.
-3. **Checks:** verify the stored activation offline on every launch. About once a week while online, post with `"move": false`; on `moved`, clear the activation and `given` and offer to enter the code again. Network failures and `busy` keep the current state, so prayer times never depend on Dahlunas.
-4. **Links:** a "Give infaq" row opening the Dahlunas shop in the browser, in place of Trakteer and Ko-fi once Dahlunas's production shop is open; until then keep the links.
-5. **Keys:** debug builds bundle the sandbox public key (key 1) `31267471750b709622d73dbf2dc88df415d67895609910fa967a0545b04f7e50` and use `https://dah-lunas-sandbox.web.app`; release builds bundle the production key, made when Dahlunas adds Bedug to production.
-6. **Privacy policy and l10n:** say that entering a code sends it and the random install ID to Dahlunas, which keeps the ID's hash to allow one device at a time; `infaqCode*` keys in every ARB file. Tests against the fixture in Dahlunas's `docs/activation.md`.
+1. **Install ID (done):** 16 random bytes in `shared_preferences`, 32 lowercase hex characters.
+2. **Code entry (done):** "Have a code?" on the infaq page for direct builds; posts to Dahlunas `/activations` with `"move": true`, verifies `DA1.` offline, stores code and activation, sets `given`.
+3. **Checks (done):** offline verify on launch; weekly online check with `"move": false`; on `moved`, clear and prompt re-entry.
+4. **Links (done):** Dahlunas shop row on direct builds (sandbox URL in debug/profile); Trakteer and Ko-fi stay until Bedug is on the production catalog.
+5. **Keys (sandbox done):** debug/profile use sandbox key 1 `31267471750b709622d73dbf2dc88df415d67895609910fa967a0545b04f7e50` and `dah-lunas-sandbox.web.app`. Remaining: production key once Dahlunas adds Bedug to production.
+6. **Privacy and l10n (done):** site privacy + `infaqCode*` ARB keys; tests in `test/dahlunas_test.dart`.
 
 **Owner setup (not code)**
 

@@ -1662,6 +1662,84 @@ abstract class AppLocalizations {
   /// **'PayPal dan kartu'**
   String get infaqKofiMethods;
 
+  /// No description provided for @infaqDahlunas.
+  ///
+  /// In id, this message translates to:
+  /// **'Dahlunas'**
+  String get infaqDahlunas;
+
+  /// No description provided for @infaqDahlunasMethods.
+  ///
+  /// In id, this message translates to:
+  /// **'QRIS lewat Midtrans'**
+  String get infaqDahlunasMethods;
+
+  /// No description provided for @infaqHaveCode.
+  ///
+  /// In id, this message translates to:
+  /// **'Punya kode?'**
+  String get infaqHaveCode;
+
+  /// No description provided for @infaqCodeHint.
+  ///
+  /// In id, this message translates to:
+  /// **'Tempel kode DL1. Anda'**
+  String get infaqCodeHint;
+
+  /// No description provided for @infaqCodeSubmit.
+  ///
+  /// In id, this message translates to:
+  /// **'Aktifkan'**
+  String get infaqCodeSubmit;
+
+  /// No description provided for @infaqCodePending.
+  ///
+  /// In id, this message translates to:
+  /// **'Mengaktifkan kode…'**
+  String get infaqCodePending;
+
+  /// No description provided for @infaqCodeInvalid.
+  ///
+  /// In id, this message translates to:
+  /// **'Kode itu tidak valid untuk Bedug.'**
+  String get infaqCodeInvalid;
+
+  /// No description provided for @infaqCodeRejected.
+  ///
+  /// In id, this message translates to:
+  /// **'Kode itu tidak bisa diaktifkan. Periksa dan coba lagi.'**
+  String get infaqCodeRejected;
+
+  /// No description provided for @infaqCodeBusy.
+  ///
+  /// In id, this message translates to:
+  /// **'Toko sedang sibuk. Simpan kode Anda dan coba lagi nanti.'**
+  String get infaqCodeBusy;
+
+  /// No description provided for @infaqCodeMoveLimit.
+  ///
+  /// In id, this message translates to:
+  /// **'Kode ini terlalu sering dipindah. Hubungi {email}.'**
+  String infaqCodeMoveLimit(String email);
+
+  /// No description provided for @infaqCodeMoved.
+  ///
+  /// In id, this message translates to:
+  /// **'Kode ini aktif di perangkat lain. Masukkan lagi di sini untuk memindahkannya kembali.'**
+  String get infaqCodeMoved;
+
+  /// No description provided for @infaqCodeMovesLeft.
+  ///
+  /// In id, this message translates to:
+  /// **'{count, plural, =0{Tidak ada sisa pindah perangkat} one{1 sisa pindah perangkat} other{{count} sisa pindah perangkat}}'**
+  String infaqCodeMovesLeft(int count);
+
+  /// No description provided for @infaqCodePrivacy.
+  ///
+  /// In id, this message translates to:
+  /// **'Memasukkan kode mengirimkannya bersama ID instalasi acak ke Dahlunas, yang menyimpan hash ID itu agar kode tetap di satu perangkat pada satu waktu.'**
+  String get infaqCodePrivacy;
+
   /// No description provided for @widgetShowCurrent.
   ///
   /// In id, this message translates to:

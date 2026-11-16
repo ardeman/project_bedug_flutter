@@ -869,6 +869,59 @@ class AppLocalizationsAr extends AppLocalizations {
   String get infaqKofiMethods => 'PayPal والبطاقات';
 
   @override
+  String get infaqDahlunas => 'Dahlunas';
+
+  @override
+  String get infaqDahlunasMethods => 'QRIS عبر Midtrans';
+
+  @override
+  String get infaqHaveCode => 'لديك رمز؟';
+
+  @override
+  String get infaqCodeHint => 'الصق رمز DL1. الخاص بك';
+
+  @override
+  String get infaqCodeSubmit => 'تفعيل';
+
+  @override
+  String get infaqCodePending => 'جارٍ تفعيل الرمز…';
+
+  @override
+  String get infaqCodeInvalid => 'هذا الرمز غير صالح لبدوق.';
+
+  @override
+  String get infaqCodeRejected =>
+      'تعذّر تفعيل هذا الرمز. تحقّق منه وحاول مجددًا.';
+
+  @override
+  String get infaqCodeBusy => 'المتجر مشغول. احتفظ برمزك وحاول لاحقًا.';
+
+  @override
+  String infaqCodeMoveLimit(String email) {
+    return 'نُقل هذا الرمز مرات كثيرة. تواصل مع $email.';
+  }
+
+  @override
+  String get infaqCodeMoved =>
+      'هذا الرمز نشط على جهاز آخر. أدخله هنا مجددًا لإعادته.';
+
+  @override
+  String infaqCodeMovesLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'يتبقّى $count من نقل الأجهزة',
+      one: 'يتبقّى نقل جهاز واحد',
+      zero: 'لا تبقّى نقل أجهزة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get infaqCodePrivacy =>
+      'إدخال الرمز يرسله مع معرّف تثبيت عشوائي إلى Dahlunas، التي تحتفظ بتجزئة المعرّف ليبقى الرمز على جهاز واحد في كل مرة.';
+
+  @override
   String get widgetShowCurrent => 'عرض الصلاة الحالية';
 
   @override

@@ -7,6 +7,19 @@
         {
           "type": "new",
           "platforms": [
+            "windows",
+            "linux"
+          ],
+          "text": {
+            "en": "Settings → Infaq: on Windows and Linux, open Dahlunas to give an infaq, or enter a code under Have a code? A code stays on one device and can move up to three times.",
+            "id": "Pengaturan → Infak: di Windows dan Linux, buka Dahlunas untuk berinfak, atau masukkan kode di Punya kode? Kode tetap di satu perangkat dan bisa dipindah hingga tiga kali.",
+            "ms": "Tetapan → Infak: pada Windows dan Linux, buka Dahlunas untuk berinfak, atau masukkan kod di Ada kod? Kod kekal pada satu peranti dan boleh dipindahkan sehingga tiga kali.",
+            "ar": "الإعدادات ← إنفاق: على Windows وLinux افتح Dahlunas للإنفاق، أو أدخل رمزًا عبر «لديك رمز؟». يبقى الرمز على جهاز واحد ويمكن نقله حتى ثلاث مرات."
+          }
+        },
+        {
+          "type": "new",
+          "platforms": [
             "android",
             "ios",
             "macos",

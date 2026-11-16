@@ -228,7 +228,8 @@
         "heading": "Infak",
         "body": [
           "Di aplikasi Android dan Apple, infak adalah pembelian dalam aplikasi yang diproses oleh Google Play atau App Store. Kami tidak menerima detail pembayaranmu. Aplikasi hanya mengetahui apakah pembelian berhasil dan menyimpannya di perangkatmu untuk mengucapkan terima kasih.",
-          "Infak melalui <a href=\"{trakteer}\">Trakteer</a> atau <a href=\"{kofi}\">Ko-fi</a> diproses oleh layanan tersebut sesuai kebijakan privasinya masing-masing. Layanan itu hanya membagikan kepada kami apa yang kamu pilih untuk diberikan, seperti nama dan pesan."
+          "Infak melalui <a href=\"{trakteer}\">Trakteer</a> atau <a href=\"{kofi}\">Ko-fi</a> diproses oleh layanan tersebut sesuai kebijakan privasinya masing-masing. Layanan itu hanya membagikan kepada kami apa yang kamu pilih untuk diberikan, seperti nama dan pesan.",
+          "Di Windows dan Linux, kamu juga bisa membeli kode infak di <a href=\"{dahlunas}\">Dahlunas</a>. Memasukkan kode mengirimkannya bersama ID instalasi acak ke Dahlunas, yang menyimpan hash ID itu agar kode tetap di satu perangkat pada satu waktu. Lihat <a href=\"{dahlunas_privacy}\">kebijakan privasi Dahlunas</a>."
         ]
       },
       {

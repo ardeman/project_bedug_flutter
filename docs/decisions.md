@@ -66,3 +66,5 @@ Architectural choices, one line each: date, decision, reason. Add new ones here.
 - 2026-11-06: Every build checks for updates on launch (a setting) and from Settings: GitHub builds (`BEDUG_DISTRIBUTION=github`) download the release file, verify it against `SHA256SUMS.txt` and install it themselves, while store builds use Play's in-app updates or open the App Store, because store policies forbid self-updating; the GitHub APK is signed with the Play upload key so releases install over each other.
 
 - 2026-11-06: The landing page counts home-page visits by source (`utm_source`, else the referrer) and country in the Worker with Workers Analytics Engine, storing no IP or identifier, so visits from Instagram and other links can be measured without cookies, client scripts or a third-party analytics service.
+
+- 2026-11-16: Direct builds redeem Bedug infaq codes through Dahlunas (`cryptography` for Ed25519, `POST /activations` with a random install ID), because Windows and Linux have no store billing and codes must stay on one device at a time.
