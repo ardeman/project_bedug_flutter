@@ -128,7 +128,7 @@
   },
   "download": {
     "title": "Unduh",
-    "note": "Google Play segera hadir. Sementara itu, APK Android tersedia di GitHub.",
+    "note": "Android sedang pengujian tertutup di Google Play. Bergabung lewat lencana, atau unduh APK dari GitHub.",
     "get": "Unduh",
     "coming_soon": "Segera hadir"
   },
@@ -140,7 +140,8 @@
     },
     "play": {
       "name": "Google Play",
-      "devices": "Ponsel dan tablet Android"
+      "devices": "Ponsel dan tablet Android",
+      "badge": "Pengujian tertutup di Google Play"
     },
     "github": {
       "name": "GitHub",

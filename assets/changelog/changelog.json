@@ -7,6 +7,18 @@
         {
           "type": "new",
           "platforms": [
+            "web"
+          ],
+          "text": {
+            "en": "The website Download section links Google Play closed testing (CLOSED TESTING badge) so Android testers can join; the GitHub APK remains available.",
+            "id": "Bagian Unduh di situs menautkan pengujian tertutup Google Play (lencana CLOSED TESTING) agar penguji Android bisa bergabung; APK di GitHub tetap tersedia.",
+            "ms": "Bahagian Muat turun di laman menautkan ujian tertutup Google Play (lencana CLOSED TESTING) supaya penguji Android boleh menyertai; APK di GitHub kekal tersedia.",
+            "ar": "يربط قسم التنزيل في الموقع باختبار Google Play المغلق (شارة CLOSED TESTING) لينضم مختبرو أندرويد؛ ويبقى ملف APK على GitHub متاحًا."
+          }
+        },
+        {
+          "type": "new",
+          "platforms": [
             "windows",
             "linux"
           ],

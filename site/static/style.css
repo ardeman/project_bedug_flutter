@@ -982,7 +982,7 @@ img {
 }
 
 .store-status a.store-badge {
-  /* Apple's badge is the whole control; it keeps its own shape and colors. */
+  /* Store badges are the whole control; they keep their own shape and colors. */
   display: inline-block;
   min-height: 0;
   padding: 0;

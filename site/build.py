@@ -38,9 +38,10 @@ ICONS = {
     "github": '<path d="M9 19c-4 1.3-4-2-6-2.5M15 21v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 0 0-6.2 0C6.6 2.8 5.6 3.1 5.6 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4.2 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/>',
 }
 
-# Official store badges in site/static/badges/, by store and by the
-# region Apple localizes them for.
-STORE_BADGES = {"appstore": "app-store"}
+# Store badges in site/static/badges/, by store and by the region the
+# artwork is localized for. Play uses a CLOSED TESTING top line while the
+# app is in Google Play closed testing (linked via TesBareng).
+STORE_BADGES = {"appstore": "app-store", "play": "google-play"}
 BADGE_REGIONS = {"id": "id-id", "en": "en-us", "ms": "ms-my"}
 
 PRAYERS = ("fajr", "dhuhr", "asr", "maghrib", "isha")
@@ -279,8 +280,8 @@ class Site:
         url = store.get("url")
         badge = STORE_BADGES.get(store["id"])
         if url and badge:
-            # Apple's official badge, black on light pages and white on dark.
-            # Apple publishes no Arabic badge, so Arabic uses the English one.
+            # Store badge, black on light pages and white on dark. Apple and
+            # Google publish no Arabic badge, so Arabic uses the English one.
             region = BADGE_REGIONS.get(loc, "en-us")
             src = f"/assets/badges/{badge}-{{}}-{region}.svg"
             status = (

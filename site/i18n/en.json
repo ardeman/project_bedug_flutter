@@ -128,7 +128,7 @@
   },
   "download": {
     "title": "Download",
-    "note": "Google Play is coming soon. Meanwhile, the Android APK is on GitHub.",
+    "note": "Android is in Google Play closed testing. Join through the badge, or get the APK from GitHub.",
     "get": "Get it",
     "coming_soon": "Coming soon"
   },
@@ -140,7 +140,8 @@
     },
     "play": {
       "name": "Google Play",
-      "devices": "Android phones and tablets"
+      "devices": "Android phones and tablets",
+      "badge": "Closed testing on Google Play"
     },
     "github": {
       "name": "GitHub",

@@ -17,7 +17,7 @@
   },
   "stores": [
     { "id": "appstore", "url": "https://apps.apple.com/app/id6824662589" },
-    { "id": "play", "url": null },
+    { "id": "play", "url": "https://tesbareng.vercel.app/apps/af9e78bf-83ce-4b48-b845-4ea99a4e8086" },
     { "id": "github", "url": "https://github.com/ardeman/project_bedug_flutter/releases/latest" }
   ],
   "infaq": {

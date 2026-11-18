@@ -128,7 +128,7 @@
   },
   "download": {
     "title": "التنزيل",
-    "note": "قريبًا على Google Play. وحتى ذلك الحين، يتوفر ملف APK لـ Android على GitHub.",
+    "note": "أندرويد في الاختبار المغلق على Google Play. انضم عبر الشارة، أو احصل على ملف APK من GitHub.",
     "get": "نزّله",
     "coming_soon": "قريبًا"
   },
@@ -140,7 +140,8 @@
     },
     "play": {
       "name": "Google Play",
-      "devices": "هواتف وأجهزة Android اللوحية"
+      "devices": "هواتف وأجهزة Android اللوحية",
+      "badge": "اختبار مغلق على Google Play"
     },
     "github": {
       "name": "GitHub",
