@@ -57,7 +57,9 @@ Architectural choices, one line each: date, decision, reason. Add new ones here.
 
 - 2026-11-01: The landing page shows the app as it is: the hero mock copies the prayer-times screen in HTML (kept live by `live.js`) and the features use real screens exported from the store renders by `site/screens.sh`, replacing a generic dark mock and a grid of icon cards, so the site can't drift into a stock template look.
 
-- 2026-11-05: The build number after the `+` in `pubspec.yaml` is the only one, used by Play, the App Store and the GitHub release (no `--build-number` overrides), so a build number means the same build everywhere.
+- 2026-11-05: The build number after the `+` in `pubspec.yaml` is the only one, used by Play, the App Store and the GitHub release binaries (no `--build-number` overrides), so a build number means the same build everywhere.
+
+- 2026-11-20: GitHub release titles and notes show only the marketing version (`Bedug v1.0.1`), not `(build N)`, because a store rejection can require another upload under the same version with a higher build number.
 
 - 2026-11-06: Windows and Linux are downloaded from the GitHub releases rather than the Microsoft Store or Flathub (the site links `/releases/latest`), since the release workflow already publishes those builds; the landing page links Apple's official badge for the App Store row (iPhone, iPad and Mac share one listing).
 

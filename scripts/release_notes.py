@@ -5,7 +5,8 @@ Usage: scripts/release_notes.py <version> <repo> <tag> > notes.md
 
 The changes come from the release with that version in
 assets/changelog/changelog.json; a table tells users which file to download.
-The build number comes from `version:` in pubspec.yaml, which the builds use.
+The build number stays in pubspec.yaml only: stores may reject a build and
+need another upload under the same version with a higher +N.
 """
 import json
 import sys
@@ -22,7 +23,11 @@ TITLES = {
 FILES = [
     ("bedug-android.apk", "Android phones and tablets", "Ponsel dan tablet Android"),
     ("bedug-windows.zip", "Windows 10 and 11 PCs (64-bit)", "PC Windows 10 dan 11 (64-bit)"),
-    ("bedug-macos.zip", "Macs with Apple silicon, macOS 26 or later", "Mac dengan Apple silicon, macOS 26 atau lebih baru"),
+    (
+        "bedug-macos.zip",
+        "Macs with Apple silicon, macOS 26 or later",
+        "Mac dengan Apple silicon, macOS 26 atau lebih baru",
+    ),
     ("bedug-linux.tar.gz", "Linux PCs (64-bit)", "PC Linux (64-bit)"),
 ]
 
@@ -33,12 +38,32 @@ TEXT = {
         "head": "| File | For |",
         "before": "### Before you install",
         "notes": [
-            "- **Updates:** once installed, Bedug checks for new releases when it opens and can download, verify and install them for you (Settings → Check for updates).
-- **Not the store version:** the macOS app is not signed and Android may ask you to allow installs from this source, so macOS may warn you the first time.",
-            "- **Android:** open the APK and allow the install. An APK signed differently (such as a store copy) can't be installed over this one.",
-            "- **Windows:** extract the zip (right-click → Extract All) and open `bedug.exe`. If Windows says it protected your PC, choose More info → Run anyway.",
-            "- **Mac:** open the zip and drag Bedug into Applications. The first time, Control-click it and choose Open, or run `xattr -dr com.apple.quarantine /Applications/bedug.app`.",
-            "- **Linux:** extract with `tar -xzf bedug-linux.tar.gz` and run `bundle/bedug`. It needs GTK 3 and GStreamer.",
+            (
+                "- **Updates:** once installed, Bedug checks for new releases when "
+                "it opens and can download, verify and install them for you "
+                "(Settings → Check for updates).\n"
+                "- **Not the store version:** the macOS app is not signed and "
+                "Android may ask you to allow installs from this source, so macOS "
+                "may warn you the first time."
+            ),
+            (
+                "- **Android:** open the APK and allow the install. An APK signed "
+                "differently (such as a store copy) can't be installed over this one."
+            ),
+            (
+                "- **Windows:** extract the zip (right-click → Extract All) and open "
+                "`bedug.exe`. If Windows says it protected your PC, choose More info "
+                "→ Run anyway."
+            ),
+            (
+                "- **Mac:** open the zip and drag Bedug into Applications. The first "
+                "time, Control-click it and choose Open, or run "
+                "`xattr -dr com.apple.quarantine /Applications/bedug.app`."
+            ),
+            (
+                "- **Linux:** extract with `tar -xzf bedug-linux.tar.gz` and run "
+                "`bundle/bedug`. It needs GTK 3 and GStreamer."
+            ),
         ],
     },
     "id": {
@@ -47,24 +72,36 @@ TEXT = {
         "head": "| File | Untuk |",
         "before": "### Sebelum memasang",
         "notes": [
-            "- **Pembaruan:** setelah terpasang, Bedug memeriksa rilis baru saat dibuka dan dapat mengunduh, memverifikasi, serta memasangnya untuk Anda (Pengaturan → Periksa pembaruan).
-- **Bukan versi toko:** aplikasi macOS belum ditandatangani dan Android mungkin meminta izin memasang dari sumber ini, jadi macOS mungkin memberi peringatan saat pertama dibuka.",
-            "- **Android:** buka APK lalu izinkan pemasangan. APK yang ditandatangani berbeda (misalnya salinan dari toko) tidak bisa dipasang di atas yang ini.",
-            "- **Windows:** ekstrak zip-nya (klik kanan → Extract All) lalu buka `bedug.exe`. Jika Windows bilang telah melindungi PC kamu, pilih More info → Run anyway.",
-            "- **Mac:** buka zip-nya lalu seret Bedug ke Applications. Pertama kali, klik sambil menahan Control lalu pilih Open, atau jalankan `xattr -dr com.apple.quarantine /Applications/bedug.app`.",
-            "- **Linux:** ekstrak dengan `tar -xzf bedug-linux.tar.gz` lalu jalankan `bundle/bedug`. Perlu GTK 3 dan GStreamer.",
+            (
+                "- **Pembaruan:** setelah terpasang, Bedug memeriksa rilis baru saat "
+                "dibuka dan dapat mengunduh, memverifikasi, serta memasangnya untuk "
+                "Anda (Pengaturan → Periksa pembaruan).\n"
+                "- **Bukan versi toko:** aplikasi macOS belum ditandatangani dan "
+                "Android mungkin meminta izin memasang dari sumber ini, jadi macOS "
+                "mungkin memberi peringatan saat pertama dibuka."
+            ),
+            (
+                "- **Android:** buka APK lalu izinkan pemasangan. APK yang "
+                "ditandatangani berbeda (misalnya salinan dari toko) tidak bisa "
+                "dipasang di atas yang ini."
+            ),
+            (
+                "- **Windows:** ekstrak zip-nya (klik kanan → Extract All) lalu buka "
+                "`bedug.exe`. Jika Windows bilang telah melindungi PC kamu, pilih "
+                "More info → Run anyway."
+            ),
+            (
+                "- **Mac:** buka zip-nya lalu seret Bedug ke Applications. Pertama "
+                "kali, klik sambil menahan Control lalu pilih Open, atau jalankan "
+                "`xattr -dr com.apple.quarantine /Applications/bedug.app`."
+            ),
+            (
+                "- **Linux:** ekstrak dengan `tar -xzf bedug-linux.tar.gz` lalu "
+                "jalankan `bundle/bedug`. Perlu GTK 3 dan GStreamer."
+            ),
         ],
     },
 }
-
-
-def build_number(version):
-    """The build number in pubspec.yaml when it holds this version."""
-    for line in (ROOT / "pubspec.yaml").read_text().splitlines():
-        if line.startswith("version:"):
-            name, _, build = line.split(":", 1)[1].strip().partition("+")
-            return build if name == version and build else None
-    return None
 
 
 def release_changes(version):
@@ -75,13 +112,9 @@ def release_changes(version):
     sys.exit(f"No release {version} in assets/changelog/changelog.json.")
 
 
-def language_notes(lang, version, build, changes, download):
+def language_notes(lang, changes, download):
     text = TEXT[lang]
-    out = []
-    if build:
-        label = "Version" if lang == "en" else "Versi"
-        out += [f"{label} {version} (build {build})", ""]
-    out += [text["new"], ""]
+    out = [text["new"], ""]
     for kind in ("new", "improved", "fixed"):
         items = [c["text"][lang] for c in changes if c["type"] == kind]
         if items:
@@ -90,7 +123,9 @@ def language_notes(lang, version, build, changes, download):
             out.append("")
     out += [text["which"], "", text["head"], "|---|---|"]
     for name, en, idn in FILES:
-        out.append(f"| [`{name}`]({download}/{name}) | {en if lang == 'en' else idn} |")
+        out.append(
+            f"| [`{name}`]({download}/{name}) | {en if lang == 'en' else idn} |"
+        )
     out += ["", text["before"], ""]
     out += text["notes"]
     out.append(
@@ -104,13 +139,17 @@ def language_notes(lang, version, build, changes, download):
 def main():
     version, repo, tag = sys.argv[1:4]
     changes = release_changes(version)
-    build = build_number(version)
     download = f"https://github.com/{repo}/releases/download/{tag}"
     # The blank lines around the Markdown inside <details> are required.
     lines = ['<details open><summary><b>English</b></summary>', ""]
-    lines += language_notes("en", version, build, changes, download)
-    lines += ["", "</details>", "<details><summary><b>Bahasa Indonesia</b></summary>", ""]
-    lines += language_notes("id", version, build, changes, download)
+    lines += language_notes("en", changes, download)
+    lines += [
+        "",
+        "</details>",
+        "<details><summary><b>Bahasa Indonesia</b></summary>",
+        "",
+    ]
+    lines += language_notes("id", changes, download)
     lines += ["", "</details>"]
     print("\n".join(lines))
 
