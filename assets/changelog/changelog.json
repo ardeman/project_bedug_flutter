@@ -30,6 +30,28 @@
           }
         },
         {
+          "type": "improved",
+          "platforms": [
+            "android",
+            "ios",
+            "macos",
+            "windows",
+            "linux"
+          ],
+          "text": {
+            "en": "Settings → What's New shows this version's changes and check for updates in one place; the full changelog stays on the website.",
+            "id": "Pengaturan → Yang Baru menampilkan perubahan versi ini dan periksa pembaruan di satu tempat; daftar perubahan lengkap tetap di situs.",
+            "ms": "Tetapan → Apa yang Baharu menunjukkan perubahan versi ini dan semak kemas kini di satu tempat; log perubahan penuh kekal di laman web.",
+            "ar": "الإعدادات ← ما الجديد يعرض تغييرات هذا الإصدار والتحقق من التحديثات في مكان واحد؛ ويبقى سجل التغييرات الكامل على الموقع."
+          },
+          "store": {
+            "en": "What's New: this version and updates.",
+            "id": "Yang Baru: versi ini dan pembaruan.",
+            "ms": "Apa yang Baharu: versi ini dan kemas kini.",
+            "ar": "ما الجديد: هذا الإصدار والتحديثات."
+          }
+        },
+        {
           "type": "new",
           "platforms": [
             "android",
@@ -39,22 +61,22 @@
             "linux"
           ],
           "text": {
-            "en": "Bedug checks for updates when it opens (you can turn this off in Settings), and Settings has a Check for updates button. Copies from GitHub download, verify and install the update once you confirm; store copies update through Google Play or the App Store.",
-            "id": "Bedug memeriksa pembaruan saat dibuka (bisa dimatikan di Pengaturan), dan Pengaturan punya tombol Periksa pembaruan. Versi dari GitHub mengunduh, memverifikasi, dan memasang pembaruan setelah Anda setuju; versi toko diperbarui lewat Google Play atau App Store.",
-            "ms": "Bedug menyemak kemas kini semasa dibuka (boleh dimatikan dalam Tetapan), dan Tetapan mempunyai butang Semak kemas kini. Versi dari GitHub memuat turun, mengesahkan dan memasang kemas kini selepas anda bersetuju; versi kedai dikemas kini melalui Google Play atau App Store.",
-            "ar": "يتحقق Bedug من التحديثات عند فتحه (يمكنك إيقاف ذلك من الإعدادات)، وفي الإعدادات زر للتحقق من التحديثات. تنزّل نسخ GitHub التحديث وتتحقق منه وتثبّته بعد موافقتك، بينما تتحدّث نسخ المتجر عبر Google Play أو App Store."
+            "en": "Bedug checks for updates when it opens (you can turn this off in What's New). Copies from GitHub download, verify and install the update once you confirm; store copies update through Google Play or the App Store.",
+            "id": "Bedug memeriksa pembaruan saat dibuka (bisa dimatikan di Yang Baru). Versi dari GitHub mengunduh, memverifikasi, dan memasang pembaruan setelah Anda setuju; versi toko diperbarui lewat Google Play atau App Store.",
+            "ms": "Bedug menyemak kemas kini semasa dibuka (boleh dimatikan dalam Apa yang Baharu). Versi dari GitHub memuat turun, mengesahkan dan memasang kemas kini selepas anda bersetuju; versi kedai dikemas kini melalui Google Play atau App Store.",
+            "ar": "يتحقق Bedug من التحديثات عند فتحه (يمكنك إيقاف ذلك من ما الجديد). تنزّل نسخ GitHub التحديث وتتحقق منه وتثبّته بعد موافقتك، بينما تتحدّث نسخ المتجر عبر Google Play أو App Store."
           },
           "apple": {
-            "en": "Bedug checks for updates when it opens (you can turn this off in Settings), and Settings has a Check for updates button that opens the App Store when a new version is out.",
-            "id": "Bedug memeriksa pembaruan saat dibuka (bisa dimatikan di Pengaturan), dan Pengaturan punya tombol Periksa pembaruan yang membuka App Store saat ada versi baru.",
-            "ms": "Bedug menyemak kemas kini semasa dibuka (boleh dimatikan dalam Tetapan), dan Tetapan mempunyai butang Semak kemas kini yang membuka App Store apabila ada versi baharu.",
-            "ar": "يتحقق Bedug من التحديثات عند فتحه (يمكنك إيقاف ذلك من الإعدادات)، وفي الإعدادات زر للتحقق من التحديثات يفتح App Store عند صدور إصدار جديد."
+            "en": "Bedug checks for updates when it opens (you can turn this off in What's New), and What's New can open the App Store when a new version is out.",
+            "id": "Bedug memeriksa pembaruan saat dibuka (bisa dimatikan di Yang Baru), dan Yang Baru dapat membuka App Store saat ada versi baru.",
+            "ms": "Bedug menyemak kemas kini semasa dibuka (boleh dimatikan dalam Apa yang Baharu), dan Apa yang Baharu boleh membuka App Store apabila ada versi baharu.",
+            "ar": "يتحقق Bedug من التحديثات عند فتحه (يمكنك إيقاف ذلك من ما الجديد)، وما الجديد يمكنه فتح App Store عند صدور إصدار جديد."
           },
           "store": {
-            "en": "Checks for updates when Bedug opens.",
-            "id": "Memeriksa pembaruan saat dibuka.",
+            "en": "Checks for updates on launch.",
+            "id": "Cek pembaruan saat dibuka.",
             "ms": "Semak kemas kini bila dibuka.",
-            "ar": "يتحقق من التحديثات عند فتحه."
+            "ar": "يتحقق من التحديثات عند الفتح."
           }
         },
         {
@@ -66,10 +88,10 @@
             "ar": "إذا رُفض إذن الموقع نهائياً، يعرض تفعيل اكتشاف الموقع تلقائياً مجدداً الآن فتح إعدادات تطبيق Bedug."
           },
           "store": {
-            "en": "If location was denied, turning auto location on offers app settings.",
-            "id": "Jika izin lokasi ditolak, lokasi otomatis menawarkan pengaturan aplikasi.",
-            "ms": "Jika lokasi ditolak, lokasi automatik menawarkan tetapan aplikasi.",
-            "ar": "إذا رُفض إذن الموقع، يعرض الموقع التلقائي فتح إعدادات التطبيق."
+            "en": "Denied location: auto location offers app settings.",
+            "id": "Lokasi ditolak: auto lokasi tawarkan pengaturan aplikasi.",
+            "ms": "Lokasi ditolak: lokasi automatik tawarkan tetapan aplikasi.",
+            "ar": "رفض الموقع: التلقائي يعرض إعدادات التطبيق."
           }
         },
         {
@@ -81,10 +103,10 @@
             "ar": "إذا كانت الإشعارات متوقفة في إعدادات النظام، يؤدي اختيار متابعة الآن إلى فتح إعدادات إشعارات Bedug."
           },
           "store": {
-            "en": "Continue opens notification settings when notifications are off.",
-            "id": "Lanjutkan membuka pengaturan notifikasi saat notifikasi nonaktif.",
-            "ms": "Teruskan membuka tetapan pemberitahuan apabila ia dimatikan.",
-            "ar": "يفتح زر متابعة إعدادات الإشعارات عند إيقافها."
+            "en": "Continue opens notification settings when they are off.",
+            "id": "Lanjutkan buka pengaturan notifikasi jika nonaktif.",
+            "ms": "Teruskan buka tetapan pemberitahuan jika dimatikan.",
+            "ar": "متابعة تفتح إعدادات الإشعارات عند إيقافها."
           }
         },
         {
@@ -146,7 +168,7 @@
           "store": {
             "en": "Reminders missed while the phone was off no longer pile up.",
             "id": "Pengingat yang terlewat saat ponsel mati tidak lagi menumpuk.",
-            "ms": "Peringatan yang terlepas semasa telefon dimatikan tidak lagi bertimbun.",
+            "ms": "Peringatan terlepas semasa telefon off tidak bertimbun.",
             "ar": "لم تعد التذكيرات الفائتة أثناء إيقاف الهاتف تتراكم."
           }
         },
@@ -161,7 +183,7 @@
           "store": {
             "en": "Matching Subuh and Maghrib icons in the app and widgets.",
             "id": "Ikon Subuh dan Magrib seragam di aplikasi dan widget.",
-            "ms": "Ikon Subuh dan Maghrib seragam dalam aplikasi dan widget.",
+            "ms": "Ikon Subuh dan Maghrib seragam di app dan widget.",
             "ar": "أيقونات موحدة للفجر والمغرب في التطبيق والأدوات."
           }
         },
@@ -308,7 +330,7 @@
           "store": {
             "en": "The countdown no longer restarts after a time zone change.",
             "id": "Hitung mundur tidak lagi berulang setelah pindah zona waktu.",
-            "ms": "Kiraan detik tidak lagi berulang selepas bertukar zon waktu.",
+            "ms": "Kiraan detik tidak berulang selepas tukar zon waktu.",
             "ar": "لم يعد العد التنازلي يبدأ من جديد بعد تغيير المنطقة الزمنية."
           }
         },

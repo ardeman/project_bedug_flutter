@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:bedug/features/changelog/changelog.dart';
-import 'package:bedug/features/changelog/changelog_screen.dart';
+import 'package:bedug/features/changelog/whats_new_screen.dart';
 import 'package:bedug/generated/l10n/app_localizations.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -75,7 +75,7 @@ void main() {
     }
   });
 
-  testWidgets('lists each release with its changes', (tester) async {
+  testWidgets('shows only the newest release', (tester) async {
     final sample = [
       Release(
         version: '1.1.0',
@@ -102,7 +102,7 @@ void main() {
             ...AppLocalizations.localizationsDelegates,
           ],
           supportedLocales: AppLocalizations.supportedLocales,
-          home: ChangelogScreen(),
+          home: WhatsNewScreen(),
         ),
       ),
     );
@@ -112,8 +112,7 @@ void main() {
     expect(find.text('Version 1.1.0'), findsOneWidget);
     expect(find.text('November 2, 2026'), findsOneWidget);
     expect(find.text('Fixed a thing.'), findsOneWidget);
-    expect(find.text('Version 1.0.0'), findsOneWidget);
-    expect(find.text('Not released yet'), findsOneWidget);
-    expect(find.text('NEW'), findsOneWidget);
+    expect(find.text('Version 1.0.0'), findsNothing);
+    expect(find.text('Added a thing.'), findsNothing);
   });
 }

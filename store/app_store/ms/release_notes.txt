@@ -1,5 +1,6 @@
-• Bedug menyemak kemas kini semasa dibuka (boleh dimatikan dalam Tetapan), dan Tetapan mempunyai butang Semak kemas kini yang membuka App Store apabila ada versi baharu.
+• Bedug menyemak kemas kini semasa dibuka (boleh dimatikan dalam Apa yang Baharu), dan Apa yang Baharu boleh membuka App Store apabila ada versi baharu.
 • Panduan aplikasi menyerlahkan setiap kawalan, menatalnya ke paparan dan menerangkannya dalam gelembung kecil berhampiran. Permintaan kebenaran tetap menunggu persetujuan anda.
+• Tetapan → Apa yang Baharu menunjukkan perubahan versi ini dan semak kemas kini di satu tempat; log perubahan penuh kekal di laman web.
 • Tarikh Hijrah kini mengikut kalendar MABIMS secara lalai, seperti yang digunakan di Malaysia, Brunei, Indonesia dan Singapura. Umm al-Qura masih tersedia dalam Tetapan.
 • Ikon Subuh menggunakan simbol tidur dan Maghrib simbol matahari terbenam secara konsisten dalam aplikasi, laman web, widget skrin utama dan widget skrin kunci.
 • Pada iPhone Duo yang separuh terlipat, halaman mushaf al-Quran kini memenuhi skrin.

@@ -536,7 +536,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get whatsNew => 'Yang Baru';
 
   @override
-  String get whatsNewSubtitle => 'Perubahan di setiap versi';
+  String get whatsNewSubtitle => 'Versi ini dan pembaruan';
 
   @override
   String get privacyPolicy => 'Kebijakan privasi';

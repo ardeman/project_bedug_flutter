@@ -535,7 +535,7 @@ class AppLocalizationsMs extends AppLocalizations {
   String get whatsNew => 'Apa yang Baharu';
 
   @override
-  String get whatsNewSubtitle => 'Perubahan dalam setiap versi';
+  String get whatsNewSubtitle => 'Versi ini dan kemas kini';
 
   @override
   String get privacyPolicy => 'Dasar privasi';

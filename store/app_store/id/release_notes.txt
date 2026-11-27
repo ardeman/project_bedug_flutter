@@ -1,5 +1,6 @@
-• Bedug memeriksa pembaruan saat dibuka (bisa dimatikan di Pengaturan), dan Pengaturan punya tombol Periksa pembaruan yang membuka App Store saat ada versi baru.
+• Bedug memeriksa pembaruan saat dibuka (bisa dimatikan di Yang Baru), dan Yang Baru dapat membuka App Store saat ada versi baru.
 • Panduan aplikasi menyorot setiap kontrol, menggulirnya agar terlihat, dan menjelaskannya dalam gelembung kecil di dekatnya. Permintaan izin tetap menunggu persetujuan Anda.
+• Pengaturan → Yang Baru menampilkan perubahan versi ini dan periksa pembaruan di satu tempat; daftar perubahan lengkap tetap di situs.
 • Tanggal Hijriah kini mengikuti kalender MABIMS secara bawaan, seperti yang dipakai Indonesia, Malaysia, Brunei, dan Singapura. Umm al-Qura tetap tersedia di Pengaturan.
 • Ikon Subuh menggunakan simbol tidur dan Magrib simbol matahari terbenam secara konsisten di aplikasi, situs web, widget layar utama, dan widget layar kunci.
 • Pada iPhone Duo yang setengah terlipat, halaman mushaf Al-Qur'an kini memenuhi layar.

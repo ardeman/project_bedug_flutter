@@ -1053,7 +1053,7 @@ abstract class AppLocalizations {
   /// No description provided for @whatsNewSubtitle.
   ///
   /// In id, this message translates to:
-  /// **'Perubahan di setiap versi'**
+  /// **'Versi ini dan pembaruan'**
   String get whatsNewSubtitle;
 
   /// No description provided for @privacyPolicy.

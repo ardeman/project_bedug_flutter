@@ -545,7 +545,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get whatsNew => 'ما الجديد';
 
   @override
-  String get whatsNewSubtitle => 'التغييرات في كل إصدار';
+  String get whatsNewSubtitle => 'هذا الإصدار والتحديثات';
 
   @override
   String get privacyPolicy => 'سياسة الخصوصية';

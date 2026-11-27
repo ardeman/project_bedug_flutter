@@ -41,7 +41,7 @@ TEXT = {
             (
                 "- **Updates:** once installed, Bedug checks for new releases when "
                 "it opens and can download, verify and install them for you "
-                "(Settings → Check for updates).\n"
+                "(Settings → What's New).\n"
                 "- **Not the store version:** the macOS app is not signed and "
                 "Android may ask you to allow installs from this source, so macOS "
                 "may warn you the first time."
@@ -75,7 +75,7 @@ TEXT = {
             (
                 "- **Pembaruan:** setelah terpasang, Bedug memeriksa rilis baru saat "
                 "dibuka dan dapat mengunduh, memverifikasi, serta memasangnya untuk "
-                "Anda (Pengaturan → Periksa pembaruan).\n"
+                "Anda (Pengaturan → Yang Baru).\n"
                 "- **Bukan versi toko:** aplikasi macOS belum ditandatangani dan "
                 "Android mungkin meminta izin memasang dari sumber ini, jadi macOS "
                 "mungkin memberi peringatan saat pertama dibuka."

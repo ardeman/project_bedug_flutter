@@ -332,7 +332,7 @@
     "meta_title": "Changelog · Bedug",
     "meta_description": "What's new and what changed in each version of Bedug.",
     "title": "Changelog",
-    "lead": "What's new and what changed in each version of Bedug. The app shows the same list in Settings → What's New.",
+    "lead": "What's new and what changed in each version of Bedug. The app shows this version in Settings → What's New; the full list lives here.",
     "version": "Version {version}",
     "unreleased": "Not released yet",
     "date_format": "{month} {day}, {year}",

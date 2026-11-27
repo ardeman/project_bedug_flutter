@@ -548,7 +548,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get whatsNew => 'What\'s New';
 
   @override
-  String get whatsNewSubtitle => 'Changes in each version';
+  String get whatsNewSubtitle => 'This version and updates';
 
   @override
   String get privacyPolicy => 'Privacy policy';

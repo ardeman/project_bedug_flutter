@@ -332,7 +332,7 @@
     "meta_title": "Catatan rilis · Bedug",
     "meta_description": "Yang baru dan yang berubah di setiap versi Bedug.",
     "title": "Catatan rilis",
-    "lead": "Yang baru dan yang berubah di setiap versi Bedug. Daftar yang sama ada di aplikasi, di Pengaturan → Yang Baru.",
+    "lead": "Yang baru dan yang berubah di setiap versi Bedug. Aplikasi menampilkan versi ini di Pengaturan → Yang Baru; daftar lengkap ada di sini.",
     "version": "Versi {version}",
     "unreleased": "Belum dirilis",
     "date_format": "{day} {month} {year}",

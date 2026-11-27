@@ -155,7 +155,7 @@ lib/
     qibla/           Qibla compass card
     prayer/          Prayer card widget
     settings/        Settings screen
-    changelog/       What's New screen and the changelog model
+    changelog/       What's New (this version + updates) and the changelog model
   l10n/              ARB files (app_id.arb is the template)
   generated/l10n/    Generated localizations (do not edit)
 bin/                 Command-line helper scripts

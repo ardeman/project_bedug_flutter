@@ -1,5 +1,6 @@
-• Bedug checks for updates when it opens (you can turn this off in Settings), and Settings has a Check for updates button that opens the App Store when a new version is out.
+• Bedug checks for updates when it opens (you can turn this off in What's New), and What's New can open the App Store when a new version is out.
 • A control-by-control app tour highlights each feature, scrolls it into view and explains it in a small nearby bubble. Permission requests still wait for your acknowledgement.
+• Settings → What's New shows this version's changes and check for updates in one place; the full changelog stays on the website.
 • Hijri dates follow the MABIMS calendar by default, as Indonesia, Malaysia, Brunei and Singapore reckon them. Umm al-Qura stays available in Settings.
 • Subuh uses a bedtime icon and Maghrib a sunset icon consistently in the app, website, home screen widgets and lock screen widgets.
 • On a half-folded iPhone Duo, the Quran's mushaf pages fill the screen.

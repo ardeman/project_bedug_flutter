@@ -32,13 +32,11 @@ import '../../core/widgets/glass_menu.dart';
 import '../../generated/l10n/app_localizations.dart';
 import '../tour/tour_targets.dart';
 import '../changelog/changelog.dart';
-import '../changelog/changelog_screen.dart';
+import '../changelog/whats_new_screen.dart';
 import '../tour/app_tour_provider.dart';
 import '../dzikir/dzikir.dart';
 import '../infaq/infaq_provider.dart';
 import '../infaq/infaq_screen.dart';
-import '../update/update_channel.dart';
-import '../update/update_flow.dart';
 import 'settings_section.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -269,10 +267,18 @@ class SettingsScreen extends ConsumerWidget {
       SettingsSection(
         title: l10n.about,
         children: [
-          if (ref.watch(updateChannelProvider) != UpdateChannel.none) ...[
-            const _UpdateCheckTile(),
-            const _UpdateOnLaunchTile(),
-          ],
+          PlatformListTile(
+            leading: Icon(
+              Icons.new_releases_outlined,
+              color: AppColors.accentOf(ctx),
+            ),
+            title: Text(l10n.whatsNew),
+            subtitle: Text(l10n.whatsNewSubtitle),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => Navigator.of(ctx).push(
+              MaterialPageRoute<void>(builder: (_) => const WhatsNewScreen()),
+            ),
+          ),
           PlatformListTile(
             key: TourAnchorScope.maybeOf(ctx)?.keys[TourControl.replay],
             leading: Icon(
@@ -298,18 +304,6 @@ class SettingsScreen extends ConsumerWidget {
             trailing: const Icon(Icons.chevron_right),
             onTap: () => Navigator.of(ctx).push(
               MaterialPageRoute<void>(builder: (_) => const InfaqScreen()),
-            ),
-          ),
-          PlatformListTile(
-            leading: Icon(
-              Icons.new_releases_outlined,
-              color: AppColors.accentOf(ctx),
-            ),
-            title: Text(l10n.whatsNew),
-            subtitle: Text(l10n.whatsNewSubtitle),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => Navigator.of(ctx).push(
-              MaterialPageRoute<void>(builder: (_) => const ChangelogScreen()),
             ),
           ),
           PlatformListTile(
@@ -410,84 +404,6 @@ String _soundLabel(
         : l10n.phoneNotificationSound,
   PrayerNotificationSound.silent => l10n.silentNotificationSound,
 };
-
-enum _UpdateCheckStatus { idle, checking, upToDate, updateAvailable, failed }
-
-/// Checks for an update on tap and offers to install it.
-class _UpdateCheckTile extends ConsumerStatefulWidget {
-  const _UpdateCheckTile();
-
-  @override
-  ConsumerState<_UpdateCheckTile> createState() => _UpdateCheckTileState();
-}
-
-class _UpdateCheckTileState extends ConsumerState<_UpdateCheckTile> {
-  _UpdateCheckStatus _status = _UpdateCheckStatus.idle;
-  String? _latestVersion;
-
-  Future<void> _onTap() async {
-    if (_status == _UpdateCheckStatus.checking) return;
-    setState(() => _status = _UpdateCheckStatus.checking);
-    final (outcome, version) = await runUpdateCheck(ref.read, quiet: false);
-    if (!mounted) return;
-    setState(() {
-      _latestVersion = version;
-      _status = switch (outcome) {
-        UpdateOutcome.upToDate => _UpdateCheckStatus.upToDate,
-        UpdateOutcome.available || UpdateOutcome.started =>
-          version == null
-              ? _UpdateCheckStatus.idle
-              : _UpdateCheckStatus.updateAvailable,
-        UpdateOutcome.failed => _UpdateCheckStatus.failed,
-      };
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final subtitle = switch (_status) {
-      _UpdateCheckStatus.idle => l10n.checkForUpdatesSubtitle,
-      _UpdateCheckStatus.checking => l10n.checkingForUpdates,
-      _UpdateCheckStatus.upToDate => l10n.upToDate,
-      _UpdateCheckStatus.updateAvailable => l10n.updateAvailable(
-        _latestVersion!,
-      ),
-      _UpdateCheckStatus.failed => l10n.updateCheckFailed,
-    };
-
-    return PlatformListTile(
-      leading: Icon(
-        Icons.system_update_alt,
-        color: AppColors.accentOf(context),
-      ),
-      title: Text(l10n.checkForUpdates),
-      subtitle: Text(subtitle),
-      trailing: _status == _UpdateCheckStatus.checking
-          ? const AdaptiveSpinner()
-          : const Icon(Icons.chevron_right),
-      onTap: _onTap,
-    );
-  }
-}
-
-class _UpdateOnLaunchTile extends ConsumerWidget {
-  const _UpdateOnLaunchTile();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
-    return PlatformListTile(
-      leading: Icon(Icons.update, color: AppColors.accentOf(context)),
-      title: Text(l10n.checkUpdatesOnLaunch),
-      subtitle: Text(l10n.checkUpdatesOnLaunchSubtitle),
-      trailing: _AdaptiveSwitch(
-        value: ref.watch(updateOnLaunchProvider),
-        onChanged: ref.read(updateOnLaunchProvider.notifier).set,
-      ),
-    );
-  }
-}
 
 /// Bumped to rebuild the notifications switch from its saved value after a
 /// tap that did not change the setting.

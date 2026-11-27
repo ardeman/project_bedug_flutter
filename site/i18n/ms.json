@@ -334,7 +334,7 @@
     "meta_title": "Log perubahan · Bedug",
     "meta_description": "Apa yang baharu dan apa yang berubah dalam setiap versi Bedug.",
     "title": "Log perubahan",
-    "lead": "Apa yang baharu dan apa yang berubah dalam setiap versi Bedug. Aplikasi menunjukkan senarai yang sama dalam Tetapan → Apa yang Baharu.",
+    "lead": "Apa yang baharu dan apa yang berubah dalam setiap versi Bedug. Aplikasi menunjukkan versi ini dalam Tetapan → Apa yang Baharu; senarai penuh ada di sini.",
     "version": "Versi {version}",
     "unreleased": "Belum dikeluarkan",
     "date_format": "{day} {month} {year}",

@@ -67,7 +67,9 @@ Architectural choices, one line each: date, decision, reason. Add new ones here.
 
 - 2026-11-03: The Hijri calendar defaults to MABIMS (Umm al-Qura stays a choice in Settings), because most of Bedug's users are in Indonesia, Malaysia, Brunei and Singapore, which reckon their dates by it.
 
-- 2026-11-06: Every build checks for updates on launch (a setting) and from Settings: GitHub builds (`BEDUG_DISTRIBUTION=github`) download the release file, verify it against `SHA256SUMS.txt` and install it themselves, while store builds use Play's in-app updates or open the App Store, because store policies forbid self-updating; the GitHub APK is signed with the Play upload key so releases install over each other.
+- 2026-11-06: Every build checks for updates on launch (a setting) and from Settings → What's New: GitHub builds (`BEDUG_DISTRIBUTION=github`) download the release file, verify it against `SHA256SUMS.txt` and install it themselves, while store builds use Play's in-app updates or open the App Store, because store policies forbid self-updating; the GitHub APK is signed with the Play upload key so releases install over each other.
+
+- 2026-11-27: Settings → What's New shows only the newest release plus check for updates; the full changelog stays on the website, so the in-app screen stays short and history has one home on the site.
 
 - 2026-11-06: The landing page counts home-page visits by source (`utm_source`, else the referrer) and country in the Worker with Workers Analytics Engine, storing no IP or identifier, so visits from Instagram and other links can be measured without cookies, client scripts or a third-party analytics service.
 
